@@ -1,7 +1,9 @@
 import episode01 from "./episodes/episode-01.json";
+import episode02 from "./episodes/episode-02.json";
 
 export const episodes = {
-  episode_01: episode01
+  episode_01: episode01,
+  episode_02: episode02
 };
 
 export const DEFAULT_EPISODE_ID = "episode_01";

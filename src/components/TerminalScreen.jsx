@@ -1,7 +1,7 @@
 import { useState } from "react";
 import MessageFeed from "./MessageFeed";
 import ChoicePanel from "./ChoicePanel";
-import PuzzleInput from "./PuzzleInput";
+import PuzzleRenderer from "./puzzles/PuzzleRenderer";
 import DataBankModal from "./DataBankModal";
 import FileViewerModal from "./FileViewerModal";
 import SignalOverlay from "./SignalOverlay";
@@ -18,17 +18,25 @@ export default function TerminalScreen({
   activePuzzle,
   onChoice,
   onPuzzleSubmit,
+  onFileRead,
   onReset
 }) {
   const [activeFile, setActiveFile] = useState(null);
   const [isDataBankOpen, setIsDataBankOpen] = useState(false);
 
   const collectedFiles = gameState.collectedFiles || [];
+  const unreadFileCount = collectedFiles.filter(
+  (file) => file.isNew
+).length;
   const canInteract = !isTyping && !isGlitching && !signalStatus;
 
-  function handleOpenDataBankFile(file) {
-    setActiveFile(file);
-  }
+function handleOpenDataBankFile(file) {
+  onFileRead?.(file.id);
+  setActiveFile({
+    ...file,
+    isNew: false
+  });
+}
 
   return (
     <main
@@ -65,9 +73,11 @@ export default function TerminalScreen({
                 onClick={() => setIsDataBankOpen(true)}
               >
                 DATA{" "}
-                {collectedFiles.length > 0 ? `(${collectedFiles.length})` : ""}
+{unreadFileCount > 0
+  ? `(${unreadFileCount})`
+  : ""}
 
-                {collectedFiles.length > 0 && (
+                {unreadFileCount > 0 && (
                   <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_10px_rgba(134,239,172,0.9)]" />
                 )}
               </button>
@@ -137,11 +147,11 @@ export default function TerminalScreen({
 
         <div className="shrink-0">
           {activePuzzle && canInteract && (
-            <PuzzleInput
-              puzzle={activePuzzle}
-              attempts={gameState.puzzleAttempts?.[activePuzzle.id] || 0}
-              onSubmit={onPuzzleSubmit}
-            />
+<PuzzleRenderer
+  puzzle={activePuzzle}
+  attempts={gameState.puzzleAttempts?.[activePuzzle.id] || 0}
+  onSubmit={onPuzzleSubmit}
+/>
           )}
 
           {canShowChoices && !activePuzzle && (
@@ -154,11 +164,12 @@ export default function TerminalScreen({
       </section>
 
       {isDataBankOpen && (
-        <DataBankModal
-          files={collectedFiles}
-          onOpenFile={handleOpenDataBankFile}
-          onClose={() => setIsDataBankOpen(false)}
-        />
+<DataBankModal
+  files={collectedFiles}
+  onOpenFile={handleOpenDataBankFile}
+  onFileRead={onFileRead}
+  onClose={() => setIsDataBankOpen(false)}
+/>
       )}
 
       <FileViewerModal file={activeFile} onClose={() => setActiveFile(null)} />

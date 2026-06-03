@@ -1,0 +1,455 @@
+{
+  "id": "episode_02",
+  "title": "Episode 02: The Disk",
+  "startNodeId": "disk_start",
+  "puzzles": {
+    "decrypt_disk_01": {
+      "id": "decrypt_disk_01",
+      "type": "decrypt",
+      "title": "DISK DECRYPTION",
+      "description": "The encrypted disk contains a damaged relay archive.",
+      "prompt": "ENTER TARGET FREQUENCY",
+      "placeholder": "000",
+      "inputMode": "numeric",
+      "maxLength": 3,
+      "submitLabel": "DECRYPT",
+      "seed": "ECHO",
+      "targetFrequency": "417",
+      "acceptedAnswers": ["417"],
+      "successNodeId": "disk_decrypted",
+      "failureNodeId": "decrypt_failed",
+      "submitCooldownMs": 500
+    }
+  },
+  "nodes": {
+    "disk_start": {
+      "id": "disk_start",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[RELAY ROOM CONNECTION RESTORED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "tone": "calm",
+          "text": "Command, I am still in the relay room."
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "The encrypted disk is intact. I connected it to the terminal."
+        },
+        {
+          "type": "file",
+          "id": "encrypted_disk_status",
+          "fileId": "encrypted_disk_status",
+          "title": "ENCRYPTED DISK STATUS",
+          "content": "[ENCRYPTED PAYLOAD DETECTED]\\nSIGNAL FREQUENCY LOCK ACTIVE\\nTARGET CHANNEL PARTIALLY RECOVERED: 4_7",
+          "caption": "Disk status report from the relay terminal.",
+          "source": "RELAY_TERMINAL",
+          "tags": ["disk", "encrypted", "frequency"],
+          "message": "[ENCRYPTED DISK STATUS ARCHIVED]",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "It wants a target frequency. Three digits."
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "decrypt_disk_01",
+          "pauseAfterMs": 500
+        }
+      ],
+      "choices": []
+    },
+    "decrypt_failed": {
+      "id": "decrypt_failed",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[DECRYPTION FAILED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "The disk rejected the frequency."
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "Wait. The terminal flashed something before it locked again."
+        },
+        {
+          "type": "log",
+          "id": "frequency_hint_417",
+          "fileId": "frequency_hint_417",
+          "title": "FREQUENCY TRACE",
+          "content": "Recovered trace: TARGET CHANNEL = 417",
+          "caption": "A short frequency trace captured after failed decryption.",
+          "source": "RELAY_TERMINAL",
+          "tags": ["frequency", "417", "decrypt"],
+          "message": "[FREQUENCY TRACE ARCHIVED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 5,
+            "morale": -3
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "retry_decrypt",
+          "text": "Try the frequency again.",
+          "puzzleId": "decrypt_disk_01"
+        }
+      ]
+    },
+    "disk_decrypted": {
+      "id": "disk_decrypted",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[DECRYPTION COMPLETE]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "file",
+          "id": "relay_record_142",
+          "fileId": "relay_record_142",
+          "title": "RELAY RECORD 142",
+          "content": "RELAY FACILITY — DAY 142\\nSignal anomalies increasing.\\nRecommendation: Suspend Project Echo immediately.\\nRequest denied.",
+          "caption": "Recovered relay archive record.",
+          "source": "ENCRYPTED_DISK",
+          "tags": ["project echo", "relay", "record"],
+          "message": "[RELAY RECORD 142 ARCHIVED]",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "That cannot be right."
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "Project Echo was supposed to be terminated before the evacuation."
+        },
+        {
+          "type": "signalLost",
+          "message": "[SIGNAL INTERRUPTION]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "duration": 2600,
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "corruptMessage",
+          "text": "Y̷o̵u̶ ̷a̸r̷e̴ ̸n̷o̶t̷ ̸a̵l̶o̶n̶e̵.",
+          "pauseAfterMs": 1300
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_about_project_echo",
+          "text": "Ask Hale what Project Echo really was.",
+          "nextNodeId": "project_echo_question",
+          "effects": {
+            "trust": 3,
+            "danger": 5
+          }
+        },
+        {
+          "id": "tell_him_leave_room",
+          "text": "Tell Hale to leave the relay room.",
+          "nextNodeId": "leave_room",
+          "effects": {
+            "danger": -3,
+            "morale": 3
+          }
+        }
+      ]
+    },
+    "project_echo_question": {
+      "id": "project_echo_question",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "It was a signal mapping project. At least that is what they told us."
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "But the relay was not mapping signals. It was receiving them."
+        },
+        {
+          "type": "crew",
+          "id": "crew_status_hale",
+          "fileId": "crew_status_hale",
+          "title": "CREW STATUS: DR. ELIAS HALE",
+          "content": "NAME: DR. ELIAS HALE\\nASSIGNMENT: SIGNAL RELAY RESEARCH\\nLAST CHECK-IN: 03:17\\nSTATUS: DECEASED",
+          "caption": "Recovered crew status from encrypted personnel cache.",
+          "source": "ENCRYPTED_DISK",
+          "tags": ["crew", "hale", "deceased"],
+          "message": "[CREW STATUS ARCHIVED]",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "tone": "panic",
+          "text": "No. That file is wrong."
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "tone": "panic",
+          "text": "I am here. I am talking to you."
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "trust": -5,
+            "danger": 10,
+            "morale": -10
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_hale_memory",
+          "text": "Ask Hale what he remembers before waking up.",
+          "nextNodeId": "hale_memory",
+          "effects": {
+            "trust": 4,
+            "danger": 5
+          }
+        },
+        {
+          "id": "hide_file_from_hale",
+          "text": "Do not tell Hale what the file says.",
+          "nextNodeId": "hide_truth",
+          "effects": {
+            "trust": -3,
+            "danger": -2
+          }
+        }
+      ]
+    },
+    "leave_room": {
+      "id": "leave_room",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "I am stepping back from the terminal."
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "The monitors turned on by themselves."
+        },
+        {
+          "type": "systemAlert",
+          "text": "[UNAUTHORIZED RELAY ACTIVITY DETECTED]",
+          "pauseAfterMs": 1000
+        }
+      ],
+      "choices": [
+        {
+          "id": "return_to_files",
+          "text": "Check the decrypted files anyway.",
+          "nextNodeId": "project_echo_question",
+          "effects": {
+            "danger": 5
+          }
+        }
+      ]
+    },
+    "hale_memory": {
+      "id": "hale_memory",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "I remember the evacuation alarm."
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "I remember someone calling my name from inside the relay."
+        },
+        {
+          "type": "glitch",
+          "duration": 1000,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "text": "H̶E̴ ̷D̷I̵D̸ ̷N̵O̷T̶ ̶W̸A̴K̷E̵ ̵U̶P̸.",
+          "pauseAfterMs": 1200
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_memory",
+          "text": "Keep Hale talking.",
+          "nextNodeId": "episode_02_end",
+          "effects": {
+            "trust": 5,
+            "danger": 5
+          }
+        }
+      ]
+    },
+    "hide_truth": {
+      "id": "hide_truth",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "Command?"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "You went quiet."
+        },
+        {
+          "type": "systemAlert",
+          "text": "[TRUST INSTABILITY DETECTED]",
+          "pauseAfterMs": 1000
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_after_hide",
+          "text": "Tell him to keep moving.",
+          "nextNodeId": "episode_02_end",
+          "effects": {
+            "trust": -5,
+            "danger": 3
+          }
+        }
+      ]
+    },
+    "episode_02_end": {
+      "id": "episode_02_end",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "There is another door behind the relay equipment."
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "tone": "panic",
+          "text": "It is marked SECTOR 7."
+        },
+        {
+          "type": "glitch",
+          "duration": 1100,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "text": "H̴E̵ ̸I̷S̵ ̴N̷O̷T̸ ̶D̴R̴.̴ ̸H̸A̶L̵E̷.",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "systemAlert",
+          "text": "[EPISODE 02 COMPLETE]"
+        }
+      ],
+      "choices": []
+    }
+  }
+}

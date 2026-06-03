@@ -22,7 +22,12 @@ function getCategoryCount(files, categoryId) {
   return files.filter((file) => file.type === categoryId).length;
 }
 
-export default function DataBankModal({ files = [], onOpenFile, onClose }) {
+export default function DataBankModal({
+  files = [],
+  onOpenFile,
+  onFileRead,
+  onClose
+}) {
   const [activeCategory, setActiveCategory] = useState("all");
 
   const filteredFiles = useMemo(() => {
@@ -30,9 +35,10 @@ export default function DataBankModal({ files = [], onOpenFile, onClose }) {
     return files.filter((file) => file.type === activeCategory);
   }, [files, activeCategory]);
 
-  function handleOpenFile(file) {
-    onOpenFile(file);
-  }
+function handleOpenFile(file) {
+  onFileRead?.(file.id);
+  onOpenFile(file);
+}
 
   return (
     <div className="fixed inset-0 z-[60] grid place-items-center bg-black/75 p-3 text-cyan-50 backdrop-blur-sm sm:p-6">

@@ -403,3 +403,28 @@ export function collectFile(gameState, file) {
 
   return nextState;
 }
+
+export function markFileAsRead(gameState, fileId) {
+  const normalizedState = normalizeGameState(gameState);
+
+  const nextState = normalizeGameState({
+    ...normalizedState,
+
+    collectedFiles: normalizedState.collectedFiles.map((file) =>
+      file.id === fileId
+        ? {
+            ...file,
+            isNew: false,
+            readAt: file.readAt || new Date().toISOString()
+          }
+        : file
+    )
+  });
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(nextState)
+  );
+
+  return nextState;
+}

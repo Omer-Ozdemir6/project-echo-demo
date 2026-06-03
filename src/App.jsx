@@ -8,7 +8,8 @@ import {
   getActivePuzzle,
   submitPuzzleAnswer,
   collectFile,
-  setActivePuzzle
+  setActivePuzzle,
+  markFileAsRead
 } from "./engine/gameEngine";
 import { playNodeEvents } from "./engine/eventPlayer";
 import { runIntroTimeline } from "./engine/introEngine";
@@ -234,6 +235,19 @@ function App() {
     saveGameState(result.nextState);
   }
 
+  function handleFileRead(fileId) {
+  setGameState((prevState) => {
+    const nextState = markFileAsRead(
+      prevState,
+      fileId
+    );
+
+    saveGameState(nextState);
+
+    return nextState;
+  });
+}
+
   function handleReset() {
     resetGame();
     window.location.reload();
@@ -328,6 +342,7 @@ const canShowChoices =
       activePuzzle={activePuzzle}
       onChoice={handleChoice}
       onPuzzleSubmit={handlePuzzleSubmit}
+      onFileRead={handleFileRead}
       onReset={handleReset}
     />
   );
