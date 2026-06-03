@@ -1,0 +1,592 @@
+{
+  "id": "episode_01",
+  "title": "Episode 01: First Contact",
+  "startNodeId": "boot_001",
+  "puzzles": {
+    "relay_door_code": {
+      "id": "relay_door_code",
+      "title": "RELAY ACCESS PANEL",
+      "description": "Remote authorization required. The panel accepts a four-digit access code.",
+      "prompt": "ENTER 4-DIGIT RELAY ACCESS CODE",
+      "placeholder": "0000",
+      "inputMode": "numeric",
+      "maxLength": 4,
+      "submitLabel": "AUTH",
+      "acceptedAnswers": ["7391"],
+      "successNodeId": "relay_door_opened",
+      "failureNodeId": "relay_door_wrong_code",
+      "submitCooldownMs": 400
+    }
+  },
+  "nodes": {
+    "boot_001": {
+      "id": "boot_001",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[COMMUNICATION CHANNEL OPEN]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "systemAlert",
+          "text": "[TRANSMISSION BUFFER STABILIZED]",
+          "pauseAfterMs": 1100
+        },
+        {
+          "type": "systemAlert",
+          "text": "[REMOTE AUDIO LINK ACTIVE]",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "tone": "panic",
+          "text": "...ello?"
+        },
+        {
+          "type": "glitch",
+          "duration": 900
+        },
+        {
+          "type": "systemAlert",
+          "text": "[SIGNAL CORRUPTION DETECTED]",
+          "pauseAfterMs": 1500
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "tone": "panic",
+          "text": "Can anyone read me?"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 10
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "tone": "panic",
+          "text": "Please respond."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_001",
+          "text": "I read you.",
+          "nextNodeId": "node_test_features",
+          "effects": {
+            "trust": 5,
+            "danger": -5,
+            "morale": 5
+          }
+        },
+        {
+          "id": "choice_002",
+          "text": "Identify yourself first.",
+          "nextNodeId": "node_test_features",
+          "effects": {
+            "trust": -5,
+            "danger": 5,
+            "morale": -2
+          }
+        }
+      ]
+    },
+    "node_test_features": {
+      "id": "node_test_features",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "Command... I found something."
+        },
+        {
+          "type": "typing",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "Sending image now..."
+        },
+        {
+          "type": "image",
+          "title": "[INCOMING PHOTO]",
+          "src": "/assets/corridor-01.jpg",
+          "caption": "Recovered frame from damaged suit camera.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "tone": "panic",
+          "text": "Wait."
+        },
+        {
+          "type": "signalLost",
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "duration": 4500,
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "typing",
+          "duration": 6000
+        },
+        {
+          "type": "corruptMessage",
+          "text": "D̷o̴ ̶n̶o̷t̵ ̶a̸n̵s̶w̵e̷r̵ ̷t̶h̴e̸ ̶v̶o̵i̶c̸e̵.",
+          "pauseAfterMs": 1400
+        },
+        {
+          "type": "glitch",
+          "duration": 1200
+        },
+        {
+          "type": "systemAlert",
+          "text": "[UNAUTHORIZED SIGNAL DETECTED]",
+          "pauseAfterMs": 1500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 15,
+            "trust": 5,
+            "morale": -5
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 4500
+        },
+        {
+          "type": "message",
+          "tone": "panic",
+          "text": "It's standing behind the relay."
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "There is a sealed relay door next to it."
+        },
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "Four digits. Remote authorization only. I cannot enter it from here."
+        },
+        {
+          "type": "systemAlert",
+          "text": "[LOCKED DEVICE DETECTED: RELAY ACCESS PANEL]",
+          "pauseAfterMs": 1000
+        }
+      ],
+      "choices": [
+        {
+          "id": "try_relay_code",
+          "text": "Try entering the relay door code.",
+          "puzzleId": "relay_door_code"
+        },
+        {
+          "id": "search_room",
+          "text": "Tell Hale to search the room for the code.",
+          "nextNodeId": "relay_room_search",
+          "effects": {
+            "trust": 5,
+            "danger": 5
+          }
+        },
+        {
+          "id": "inspect_relay",
+          "text": "Tell Hale to inspect the relay door first.",
+          "nextNodeId": "relay_door_inspection",
+          "effects": {
+            "trust": 3
+          }
+        }
+      ]
+    },
+    "relay_door_wrong_code": {
+      "id": "relay_door_wrong_code",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[ACCESS DENIED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "tone": "panic",
+          "text": "No. That made the panel flash red."
+        },
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "I do not think we should keep guessing."
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 5,
+            "morale": -2
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "try_relay_code_again",
+          "text": "Try another code.",
+          "puzzleId": "relay_door_code"
+        },
+        {
+          "id": "search_room_after_wrong",
+          "text": "Tell Hale to search the room.",
+          "nextNodeId": "relay_room_search",
+          "effects": {
+            "trust": 5
+          }
+        },
+        {
+          "id": "inspect_relay_after_wrong",
+          "text": "Tell Hale to inspect the panel.",
+          "nextNodeId": "relay_door_inspection",
+          "effects": {
+            "trust": 3
+          }
+        }
+      ]
+    },
+    "relay_door_inspection": {
+      "id": "relay_door_inspection",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "The panel is old, but still powered."
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "There are scratch marks around the keypad. Someone tried to force it open."
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "The display only shows: RELAY ACCESS — 4 DIGITS REQUIRED."
+        }
+      ],
+      "choices": [
+        {
+          "id": "try_code_after_inspection",
+          "text": "Try entering a code.",
+          "puzzleId": "relay_door_code"
+        },
+        {
+          "id": "search_room_after_inspection",
+          "text": "Tell Hale to search the room.",
+          "nextNodeId": "relay_room_search",
+          "effects": {
+            "trust": 5,
+            "danger": 5
+          }
+        }
+      ]
+    },
+    "relay_room_search": {
+      "id": "relay_room_search",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "Alright. I am checking the floor around the relay."
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "There are papers everywhere. Most of them are burned."
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "Wait... there is something carved into the underside of the desk."
+        },
+        {
+          "type": "glitch",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "Seven. Three. Nine. One."
+        },
+        {
+          "type": "systemAlert",
+          "text": "[POSSIBLE ACCESS CODE RECOVERED: 7391]",
+          "pauseAfterMs": 1000
+        }
+      ],
+      "choices": [
+        {
+          "id": "enter_found_code",
+          "text": "Enter 7391 into the relay panel.",
+          "puzzleId": "relay_door_code",
+          "effects": {
+            "trust": 5
+          }
+        },
+        {
+          "id": "ask_if_sure",
+          "text": "Ask Hale if he is sure about the code.",
+          "nextNodeId": "confirm_relay_code",
+          "effects": {
+            "trust": 2
+          }
+        }
+      ]
+    },
+    "confirm_relay_code": {
+      "id": "confirm_relay_code",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "I am not sure of anything anymore."
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "But the numbers are clear. 7391."
+        }
+      ],
+      "choices": [
+        {
+          "id": "enter_confirmed_code",
+          "text": "Enter 7391 into the relay panel.",
+          "puzzleId": "relay_door_code"
+        },
+        {
+          "id": "search_again",
+          "text": "Tell Hale to keep searching.",
+          "nextNodeId": "relay_room_search",
+          "effects": {
+            "danger": 5
+          }
+        }
+      ]
+    },
+    "relay_door_opened": {
+      "id": "relay_door_opened",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[ACCESS GRANTED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "systemAlert",
+          "text": "[RELAY DOOR UNLOCKED]",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "It opened."
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "tone": "panic",
+          "text": "Command... the relay room is not empty."
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "trust": 8,
+            "danger": 15,
+            "morale": -5
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_what_inside",
+          "text": "What is inside the relay room?",
+          "nextNodeId": "relay_room_entry",
+          "effects": {
+            "trust": 5,
+            "danger": 5
+          }
+        },
+        {
+          "id": "tell_him_back_away",
+          "text": "Back away from the doorway.",
+          "nextNodeId": "relay_back_away",
+          "effects": {
+            "danger": -5,
+            "morale": 5
+          }
+        }
+      ]
+    },
+    "relay_room_entry": {
+      "id": "relay_room_entry",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "Cables. Old monitors. A cot."
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "tone": "panic",
+          "text": "Someone has been living in here."
+        },
+        {
+          "type": "glitch",
+          "duration": 1100
+        },
+        {
+          "type": "corruptMessage",
+          "text": "Y̷o̶u̶ ̷s̷h̷o̸u̵l̶d̵ ̸n̴o̴t̵ ̶h̷a̵v̵e̵ ̶o̸p̴e̸n̴e̴d̵ ̷t̶h̶a̸t̶.",
+          "pauseAfterMs": 1500
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_episode",
+          "text": "Keep the channel open.",
+          "nextNodeId": "boot_001",
+          "effects": {
+            "danger": 10
+          }
+        }
+      ]
+    },
+    "relay_back_away": {
+      "id": "relay_back_away",
+      "speaker": "DR. HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "tone": "tense",
+          "text": "I am stepping back."
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "tone": "whisper",
+          "text": "The door is still open. Whatever is inside can see the corridor now."
+        }
+      ],
+      "choices": [
+        {
+          "id": "look_inside_anyway",
+          "text": "Look inside from a distance.",
+          "nextNodeId": "relay_room_entry",
+          "effects": {
+            "danger": 5
+          }
+        }
+      ]
+    }
+  }
+}
