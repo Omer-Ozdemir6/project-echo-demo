@@ -27,7 +27,8 @@ export function playNodeEvents({
   onSignalLost,
   onSignalRestored,
   onStatChange,
-  onCollectFile
+  onCollectFile,
+  onPuzzleStart
 }) {
   const timers = [];
   let accumulatedDelay = 0;
@@ -166,6 +167,20 @@ export function playNodeEvents({
       timers.push(fileTimer);
       return;
     }
+    if (event.type === "puzzle") {
+  const puzzleTimer = setTimeout(() => {
+    onTypingStop?.();
+
+    onPuzzleStart?.(
+      event.puzzleId
+    );
+  }, accumulatedDelay);
+
+  accumulatedDelay += event.pauseAfterMs ?? 500;
+
+  timers.push(puzzleTimer);
+  return;
+}
 
     if (event.type === "glitch") {
       const startTimer = setTimeout(() => {

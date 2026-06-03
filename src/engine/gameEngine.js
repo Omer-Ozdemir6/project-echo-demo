@@ -314,6 +314,22 @@ export function clearActivePuzzle(gameState) {
   return nextState;
 }
 
+export function setActivePuzzle(gameState, puzzleId) {
+  const normalizedState = normalizeGameState(gameState);
+
+  const nextState = normalizeGameState({
+    ...normalizedState,
+    activePuzzleId: puzzleId
+  });
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(nextState)
+  );
+
+  return nextState;
+}
+
 export function getActivePuzzle(gameState) {
   const normalizedState = normalizeGameState(gameState);
 

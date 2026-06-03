@@ -7,7 +7,8 @@ import {
   saveGameState,
   getActivePuzzle,
   submitPuzzleAnswer,
-  collectFile
+  collectFile,
+  setActivePuzzle
 } from "./engine/gameEngine";
 import { playNodeEvents } from "./engine/eventPlayer";
 import { runIntroTimeline } from "./engine/introEngine";
@@ -156,6 +157,18 @@ function App() {
           return nextState;
         });
       },
+      onPuzzleStart: (puzzleId) => {
+  setGameState((prevState) => {
+    const nextState = setActivePuzzle(
+      prevState,
+      puzzleId
+    );
+
+    saveGameState(nextState);
+
+    return nextState;
+  });
+},
 
       onStatChange: (changes) => {
         setGameState((prev) => {
@@ -294,12 +307,13 @@ function App() {
     )
   ).length;
 
-  const canShowChoices =
-    currentNodeMessageCount > 0 &&
-    !isTyping &&
-    !isGlitching &&
-    !signalStatus &&
-    currentNodeMessageCount === totalMessageEvents;
+const canShowChoices =
+  currentNodeMessageCount > 0 &&
+  !activePuzzle &&
+  !isTyping &&
+  !isGlitching &&
+  !signalStatus &&
+  currentNodeMessageCount === totalMessageEvents;
 
   return (
     <TerminalScreen
