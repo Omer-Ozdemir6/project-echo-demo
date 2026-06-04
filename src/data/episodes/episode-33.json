@@ -1,0 +1,647 @@
+{
+  "id": "episode_33",
+  "season": 2,
+  "episode": 18,
+  "title": "THE AWAKENED",
+  "startNodeId": "e33_n01",
+
+  "puzzles": {
+    "node07_access_terminal": {
+      "id": "node07_access_terminal",
+      "type": "multi_episode_code",
+      "title": "NODE 07 ACCESS",
+      "description": "A terminal requires a five-character code ending with 7.",
+      "prompt": "ACCESS CODE REQUIRED",
+      "codePattern": "____-7",
+      "hint": "The answer is hidden in Hale's old logs.",
+      "unlockEpisode": "episode_35"
+    }
+  },
+
+  "nodes": {
+    "e33_n01": {
+      "id": "e33_n01",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[NODE 07 OCCUPANTS DETECTED]"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_01",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n02"
+        }
+      ]
+    },
+
+    "e33_n02": {
+      "id": "e33_n02",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Okay."
+        },
+        {
+          "type": "message",
+          "text": "Nobody panic."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_02",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n03"
+        }
+      ]
+    },
+
+    "e33_n03": {
+      "id": "e33_n03",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "Whenever someone says that..."
+        },
+        {
+          "type": "message",
+          "text": "I panic."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_03",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n04"
+        }
+      ]
+    },
+
+    "e33_n04": {
+      "id": "e33_n04",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Fair."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_04",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n05"
+        }
+      ]
+    },
+
+    "e33_n05": {
+      "id": "e33_n05",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "There are people here."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_05",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n06"
+        }
+      ]
+    },
+
+    "e33_n06": {
+      "id": "e33_n06",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Alive?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_06",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n07"
+        }
+      ]
+    },
+
+    "e33_n07": {
+      "id": "e33_n07",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "text": "That's the problem."
+        },
+        {
+          "type": "message",
+          "text": "I don't know."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_07",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n08"
+        }
+      ]
+    },
+
+    "e33_n08": {
+      "id": "e33_n08",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "conditionalEvent",
+          "condition": "node07Route == 'A'",
+          "event": {
+            "type": "file",
+            "fileId": "node07_archive_fragment",
+            "title": "ARCHIVE FRAGMENT",
+            "content": "NODE 07\n\nTRANSFER REJECTS\n\n23"
+          }
+        },
+        {
+          "type": "conditionalEvent",
+          "condition": "node07Route == 'B'",
+          "event": {
+            "type": "systemAlert",
+            "text": "ARCHIVE DATA CORRUPTED"
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_08",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n09"
+        }
+      ]
+    },
+
+    "e33_n09": {
+      "id": "e33_n09",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "conditionalMessage",
+          "condition": "node07Route == 'A'",
+          "text": "Found an archive room on the way."
+        },
+        {
+          "type": "conditionalMessage",
+          "condition": "node07Route == 'B'",
+          "text": "I think I missed something."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_09",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n10"
+        }
+      ]
+    },
+
+    "e33_n10": {
+      "id": "e33_n10",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "image",
+          "fileId": "node07_corridor",
+          "title": "LOWER HABITATION RING",
+          "caption": "Abandoned corridor beneath Node 07.",
+          "src": "/images/node07_corridor.jpg"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_10",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n11"
+        }
+      ]
+    },
+
+    "e33_n11": {
+      "id": "e33_n11",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "I'm moving deeper."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_11",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n12"
+        }
+      ]
+    },
+
+    "e33_n12": {
+      "id": "e33_n12",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "message",
+          "text": "Don't."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_12",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n13"
+        }
+      ]
+    },
+
+    "e33_n13": {
+      "id": "e33_n13",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "You know..."
+        },
+        {
+          "type": "message",
+          "text": "I'm starting to get tired of people telling me that."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_13",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n14"
+        }
+      ]
+    },
+
+    "e33_n14": {
+      "id": "e33_n14",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "Personally I support ignoring mysterious voices."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_14",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n15"
+        }
+      ]
+    },
+
+    "e33_n15": {
+      "id": "e33_n15",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "message",
+          "text": "That's why you're still Grant."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_15",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n16"
+        }
+      ]
+    },
+
+    "e33_n16": {
+      "id": "e33_n16",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "I have no idea what that means."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_16",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n17"
+        }
+      ]
+    },
+
+    "e33_n17": {
+      "id": "e33_n17",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Neither do we."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_17",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n18"
+        }
+      ]
+    },
+
+    "e33_n18": {
+      "id": "e33_n18",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "node07_population",
+          "title": "NODE 07 POPULATION",
+          "content": "ACTIVE SUBJECTS\n\n11"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_18",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n19"
+        }
+      ]
+    },
+
+    "e33_n19": {
+      "id": "e33_n19",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Eleven?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_19",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n20"
+        }
+      ]
+    },
+
+    "e33_n20": {
+      "id": "e33_n20",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Yeah."
+        },
+        {
+          "type": "message",
+          "text": "Eleven."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_20",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n21"
+        }
+      ]
+    },
+
+    "e33_n21": {
+      "id": "e33_n21",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "That's impossible."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_21",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n22"
+        }
+      ]
+    },
+
+    "e33_n22": {
+      "id": "e33_n22",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "It's lonely."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_22",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n23"
+        }
+      ]
+    },
+
+    "e33_n23": {
+      "id": "e33_n23",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "node07_access_terminal",
+          "title": "NODE 07 ACCESS TERMINAL",
+          "content": "ACCESS CODE REQUIRED\n\n_ _ _ _ - 7\n\nHint: Hidden in Hale's logs."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_23",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n24"
+        }
+      ]
+    },
+
+    "e33_n24": {
+      "id": "e33_n24",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Noah..."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_24",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n25"
+        }
+      ]
+    },
+
+    "e33_n25": {
+      "id": "e33_n25",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Yeah?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_25",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n26"
+        }
+      ]
+    },
+
+    "e33_n26": {
+      "id": "e33_n26",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "If I stop responding..."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_26",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n27"
+        }
+      ]
+    },
+
+    "e33_n27": {
+      "id": "e33_n27",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Don't."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_27",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n28"
+        }
+      ]
+    },
+
+    "e33_n28": {
+      "id": "e33_n28",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "That's not really how death works."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_28",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n29"
+        }
+      ]
+    },
+
+    "e33_n29": {
+      "id": "e33_n29",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "I know."
+        },
+        {
+          "type": "message",
+          "text": "I'm just tired of losing people."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_29",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n30"
+        }
+      ]
+    },
+
+    "e33_n30": {
+      "id": "e33_n30",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[MOTION DETECTED]"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_30",
+          "text": "CONTINUE.",
+          "nextNodeId": "e33_n31"
+        }
+      ]
+    },
+
+    "e33_n31": {
+      "id": "e33_n31",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Guys..."
+        },
+        {
+          "type": "typing",
+          "duration": 6000
+        },
+        {
+          "type": "message",
+          "text": "One of them is awake."
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_33",
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_34"
+        }
+      ]
+    }
+  }
+}

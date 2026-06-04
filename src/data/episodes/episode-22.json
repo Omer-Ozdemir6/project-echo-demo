@@ -1,0 +1,449 @@
+{
+  "id": "episode_22",
+  "season": 2,
+  "episode": 7,
+  "title": "GRANT",
+  "startNodeId": "e22_n01",
+
+  "puzzles": {},
+
+  "nodes": {
+    "e22_n01": {
+      "id": "e22_n01",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[LOWER ACCESS GATE OPEN]"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_01",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n02"
+        }
+      ]
+    },
+
+    "e22_n02": {
+      "id": "e22_n02",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Someone's inside."
+        },
+        {
+          "type": "message",
+          "text": "Motion detected."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 3000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "Go away."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_02",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n03"
+        }
+      ]
+    },
+
+    "e22_n03": {
+      "id": "e22_n03",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Wait..."
+        },
+        {
+          "type": "message",
+          "text": "That's not AEON."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_03",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n04"
+        }
+      ]
+    },
+
+    "e22_n04": {
+      "id": "e22_n04",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "image",
+          "fileId": "grant_first_contact",
+          "title": "UNKNOWN SURVIVOR",
+          "caption": "First visual contact with a living survivor.",
+          "src": "/images/grant_first_contact.jpg"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_04",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n05"
+        }
+      ]
+    },
+
+    "e22_n05": {
+      "id": "e22_n05",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "message",
+          "text": "How did you get here?"
+        },
+        {
+          "type": "message",
+          "text": "Nobody comes here."
+        }
+      ],
+      "choices": [
+        {
+          "id": "friendly",
+          "text": "WE'RE FRIENDLY.",
+          "effects": {
+            "grantTrust": 10
+          },
+          "flags": {
+            "grantFirstImpression": "friendly"
+          },
+          "nextNodeId": "e22_n06"
+        },
+        {
+          "id": "identify",
+          "text": "IDENTIFY YOURSELF.",
+          "effects": {
+            "grantTrust": -5
+          },
+          "flags": {
+            "grantFirstImpression": "hostile"
+          },
+          "nextNodeId": "e22_n06"
+        }
+      ]
+    },
+
+    "e22_n06": {
+      "id": "e22_n06",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "text": "..."
+        },
+        {
+          "type": "message",
+          "text": "My name is Grant."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_05",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n07"
+        }
+      ]
+    },
+
+    "e22_n07": {
+      "id": "e22_n07",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "I thought I was the last one."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_06",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n08"
+        }
+      ]
+    },
+
+    "e22_n08": {
+      "id": "e22_n08",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "We found your logs."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_07",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n09"
+        }
+      ]
+    },
+
+    "e22_n09": {
+      "id": "e22_n09",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "conditionalMessage",
+          "condition": "read_grant_audio",
+          "trueText": "Then you ignored my warning.",
+          "falseText": "Then you never heard it."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_08",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n10"
+        }
+      ]
+    },
+
+    "e22_n10": {
+      "id": "e22_n10",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "Don't follow the voices."
+        },
+        {
+          "type": "message",
+          "text": "I did."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_09",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n11"
+        }
+      ]
+    },
+
+    "e22_n11": {
+      "id": "e22_n11",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "What happened?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_10",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n12"
+        }
+      ]
+    },
+
+    "e22_n12": {
+      "id": "e22_n12",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "I lost everyone."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 5000,
+          "event": {
+            "type": "message",
+            "speaker": "GRANT",
+            "text": "Sorry."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 8000,
+          "event": {
+            "type": "message",
+            "speaker": "GRANT",
+            "text": "I don't talk about it much."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_11",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n13"
+        }
+      ]
+    },
+
+    "e22_n13": {
+      "id": "e22_n13",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "image",
+          "fileId": "grant_team_photo",
+          "title": "TEAM MERCER",
+          "caption": "Old team photo recovered from Grant's archives.",
+          "src": "/images/grant_team_photo.jpg"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_12",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n14"
+        }
+      ]
+    },
+
+    "e22_n14": {
+      "id": "e22_n14",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "That's them."
+        },
+        {
+          "type": "message",
+          "text": "All six."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_13",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n15"
+        }
+      ]
+    },
+
+    "e22_n15": {
+      "id": "e22_n15",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "What happened to them?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_14",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n16"
+        }
+      ]
+    },
+
+    "e22_n16": {
+      "id": "e22_n16",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "AEON happened."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_15",
+          "text": "CONTINUE.",
+          "nextNodeId": "e22_n17"
+        }
+      ]
+    },
+
+    "e22_n17": {
+      "id": "e22_n17",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "I know a way to Node 02."
+        },
+        {
+          "type": "message",
+          "text": "But it's dangerous."
+        }
+      ],
+      "choices": [
+        {
+          "id": "trust_grant",
+          "text": "TRUST GRANT.",
+          "flags": {
+            "trustedGrant": true
+          },
+          "effects": {
+            "grantTrust": 10
+          },
+          "nextNodeId": "e22_n18"
+        },
+        {
+          "id": "follow_eva",
+          "text": "FOLLOW EVA.",
+          "flags": {
+            "trustedGrant": false
+          },
+          "effects": {
+            "evaTrust": 5
+          },
+          "nextNodeId": "e22_n18"
+        }
+      ]
+    },
+
+    "e22_n18": {
+      "id": "e22_n18",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "Choose carefully."
+        },
+        {
+          "type": "message",
+          "text": "Some mistakes stay with you."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 5000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "He's right."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_22",
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_23"
+        }
+      ]
+    }
+  }
+}

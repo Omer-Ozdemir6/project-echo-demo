@@ -1,0 +1,359 @@
+{
+  "id": "episode_44",
+  "season": 2,
+  "episode": 29,
+  "title": "THE CHOICE",
+  "description": "The first irreversible decision.",
+
+  "persistentVariables": {
+    "evaTrust": 50,
+    "observerTrust": 50,
+    "grantHealth": 100,
+    "maraHealth": 100
+  },
+
+  "startNodeId": "e44_n01",
+
+  "nodes": {
+    "e44_n01": {
+      "id": "e44_n01",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "message",
+          "text": "I abandoned Observer."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_01",
+          "text": "CONTINUE",
+          "nextNodeId": "e44_n02"
+        }
+      ]
+    },
+
+    "e44_n02": {
+      "id": "e44_n02",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Hale?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_02",
+          "text": "CONTINUE",
+          "nextNodeId": "e44_n03"
+        }
+      ]
+    },
+
+    "e44_n03": {
+      "id": "e44_n03",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "Not Hale."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_03",
+          "text": "CONTINUE",
+          "nextNodeId": "e44_n04"
+        }
+      ]
+    },
+
+    "e44_n04": {
+      "id": "e44_n04",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "signalTrace",
+          "text": "Signal source identified."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_04",
+          "text": "CONTINUE",
+          "nextNodeId": "e44_n05"
+        }
+      ]
+    },
+
+    "e44_n05": {
+      "id": "e44_n05",
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "The source is real."
+        },
+        {
+          "type": "message",
+          "text": "There is a surviving archive."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_05",
+          "text": "CONTINUE",
+          "nextNodeId": "e44_n06"
+        }
+      ]
+    },
+
+    "e44_n06": {
+      "id": "e44_n06",
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "Someone must go there."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_06",
+          "text": "CONTINUE",
+          "nextNodeId": "e44_choice"
+        }
+      ]
+    },
+
+    "e44_choice": {
+      "id": "e44_choice",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "decision",
+          "text": "Choose who enters the archive facility."
+        }
+      ],
+      "choices": [
+        {
+          "id": "send_eva",
+          "text": "SEND EVA",
+          "effects": {
+            "observerTrust": 15,
+            "evaTrust": -10
+          },
+          "nextNodeId": "eva_path_01"
+        },
+        {
+          "id": "send_mara",
+          "text": "SEND MARA",
+          "effects": {
+            "observerTrust": -10,
+            "evaTrust": 5
+          },
+          "nextNodeId": "mara_path_01"
+        }
+      ]
+    },
+
+    "eva_path_01": {
+      "id": "eva_path_01",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "You picked me?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_eva_01",
+          "text": "CONTINUE",
+          "nextNodeId": "eva_path_02"
+        }
+      ]
+    },
+
+    "eva_path_02": {
+      "id": "eva_path_02",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Fine."
+        },
+        {
+          "type": "message",
+          "text": "Let's see if that was a good idea."
+        }
+      ],
+      "waitTask": {
+        "id": "eva_exploration",
+        "durationMs": 3600000
+      },
+      "choices": [
+        {
+          "id": "continue_eva_02",
+          "text": "1 HOUR LATER",
+          "nextNodeId": "eva_path_03"
+        }
+      ]
+    },
+
+    "eva_path_03": {
+      "id": "eva_path_03",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Something's wrong."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_eva_03",
+          "text": "CONTINUE",
+          "nextNodeId": "eva_path_04"
+        }
+      ]
+    },
+
+    "eva_path_04": {
+      "id": "eva_path_04",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[FLOOR COLLAPSE DETECTED]"
+        }
+      ],
+      "effects": {
+        "evaHealth": -35
+      },
+      "choices": [
+        {
+          "id": "continue_eva_04",
+          "text": "CONTINUE",
+          "nextNodeId": "eva_path_05"
+        }
+      ]
+    },
+
+    "eva_path_05": {
+      "id": "eva_path_05",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "AHH—!"
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_eva_path",
+          "text": "CONTINUE",
+          "nextNodeId": "episode_end"
+        }
+      ]
+    },
+
+    "mara_path_01": {
+      "id": "mara_path_01",
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Understood."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_mara_01",
+          "text": "CONTINUE",
+          "nextNodeId": "mara_path_02"
+        }
+      ]
+    },
+
+    "mara_path_02": {
+      "id": "mara_path_02",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "wait",
+          "durationMs": 3600000
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_mara_02",
+          "text": "1 HOUR LATER",
+          "nextNodeId": "mara_path_03"
+        }
+      ]
+    },
+
+    "mara_path_03": {
+      "id": "mara_path_03",
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Archive reached."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_mara_03",
+          "text": "CONTINUE",
+          "nextNodeId": "mara_path_04"
+        }
+      ]
+    },
+
+    "mara_path_04": {
+      "id": "mara_path_04",
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "The Evelyn records are gone."
+        }
+      ],
+      "effects": {
+        "knowledgeLost": 1
+      },
+      "choices": [
+        {
+          "id": "end_mara_path",
+          "text": "CONTINUE",
+          "nextNodeId": "episode_end"
+        }
+      ]
+    },
+
+    "episode_end": {
+      "id": "episode_end",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "summary",
+          "text": "For the first time, your decision caused a permanent consequence."
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_44",
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_45"
+        }
+      ]
+    }
+  }
+}

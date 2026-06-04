@@ -1,0 +1,372 @@
+{
+  "id": "episode_16",
+  "season": 2,
+  "episode": 1,
+  "title": "THE AEON SIGNAL",
+  "startNodeId": "e16_n01",
+
+  "puzzles": {},
+
+  "nodes": {
+    "e16_n01": {
+      "id": "e16_n01",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "If you're hearing this..."
+        },
+        {
+          "type": "message",
+          "text": "Then I wasn't too late."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_01",
+          "text": "CONTINUE.",
+          "nextNodeId": "e16_n02"
+        }
+      ]
+    },
+
+    "e16_n02": {
+      "id": "e16_n02",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "I know who you are."
+        },
+        {
+          "type": "message",
+          "text": "You've been helping them."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_02",
+          "text": "CONTINUE.",
+          "nextNodeId": "e16_n03"
+        }
+      ]
+    },
+
+    "e16_n03": {
+      "id": "e16_n03",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Now I need your help."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_03",
+          "text": "CONTINUE.",
+          "nextNodeId": "e16_n04"
+        }
+      ]
+    },
+
+    "e16_n04": {
+      "id": "e16_n04",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "image",
+          "fileId": "helmet_cam_01",
+          "title": "EXTERNAL SURFACE FEED",
+          "caption": "Live helmet camera transmission.",
+          "src": "/images/helmet_cam_01.jpg"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_04",
+          "text": "CONTINUE.",
+          "nextNodeId": "e16_n05"
+        }
+      ]
+    },
+
+    "e16_n05": {
+      "id": "e16_n05",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "The coordinates from the AEON file point outside the station."
+        },
+        {
+          "type": "message",
+          "text": "I'm going there."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_05",
+          "text": "CONTINUE.",
+          "nextNodeId": "e16_n06"
+        }
+      ]
+    },
+
+    "e16_n06": {
+      "id": "e16_n06",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "surface_map_01",
+          "title": "SURFACE MAP",
+          "content": "[STATION]\n\n    |\n    |\n WEST --- EAST\n    |\n    |\n SOUTH RIDGE"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_06",
+          "text": "CONTINUE.",
+          "nextNodeId": "e16_n07"
+        }
+      ]
+    },
+
+    "e16_n07": {
+      "id": "e16_n07",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Three possible routes."
+        },
+        {
+          "type": "message",
+          "text": "West Ridge."
+        },
+        {
+          "type": "message",
+          "text": "East Crater."
+        },
+        {
+          "type": "message",
+          "text": "South Descent."
+        },
+        {
+          "type": "message",
+          "text": "Which one?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "west_ridge",
+          "text": "WEST RIDGE",
+          "effects": {
+            "trust": 2
+          },
+          "flags": {
+            "selectedRoute": "west"
+          },
+          "nextNodeId": "e16_n08"
+        },
+        {
+          "id": "east_crater",
+          "text": "EAST CRATER",
+          "effects": {
+            "danger": 2
+          },
+          "flags": {
+            "selectedRoute": "east"
+          },
+          "nextNodeId": "e16_n08"
+        },
+        {
+          "id": "south_descent",
+          "text": "SOUTH DESCENT",
+          "effects": {
+            "trust": 1
+          },
+          "flags": {
+            "selectedRoute": "south"
+          },
+          "nextNodeId": "e16_n08"
+        }
+      ]
+    },
+
+    "e16_n08": {
+      "id": "e16_n08",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Starting traversal."
+        },
+        {
+          "type": "message",
+          "text": "Stay online."
+        }
+      ],
+      "choices": [
+        {
+          "id": "start_travel",
+          "text": "ACKNOWLEDGED.",
+          "nextNodeId": "e16_n09"
+        }
+      ]
+    },
+
+    "e16_n09": {
+      "id": "e16_n09",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[TRAVEL IN PROGRESS]"
+        }
+      ],
+      "waitTask": {
+        "id": "surface_traversal",
+        "durationMs": 1800000,
+        "waitingNodeId": "e16_waiting",
+        "completeNodeId": "e16_n10"
+      },
+      "backgroundEvents": [
+        {
+          "delayMs": 900000,
+          "event": {
+            "type": "message",
+            "speaker": "EVA",
+            "text": "The signal is getting stronger."
+          }
+        },
+        {
+          "delayMs": 1500000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "Turn back."
+          }
+        }
+      ]
+    },
+
+    "e16_waiting": {
+      "id": "e16_waiting",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Traversal in progress..."
+        },
+        {
+          "type": "message",
+          "text": "Signal quality fluctuating."
+        }
+      ]
+    },
+
+    "e16_n10": {
+      "id": "e16_n10",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[TRAVEL COMPLETE]"
+        },
+        {
+          "type": "image",
+          "fileId": "helmet_cam_02",
+          "title": "UNKNOWN STRUCTURE DETECTED",
+          "caption": "Structure detected beyond the station perimeter.",
+          "src": "/images/helmet_cam_02.jpg"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_10",
+          "text": "CONTINUE.",
+          "nextNodeId": "e16_n11"
+        }
+      ]
+    },
+
+    "e16_n11": {
+      "id": "e16_n11",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "This wasn't built by the station."
+        },
+        {
+          "type": "message",
+          "text": "I've never seen this before."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_11",
+          "text": "CONTINUE.",
+          "nextNodeId": "e16_n12"
+        }
+      ]
+    },
+
+    "e16_n12": {
+      "id": "e16_n12",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "structure_scan_01",
+          "title": "STRUCTURE SCAN",
+          "content": "MATERIAL ANALYSIS\n\nUNKNOWN"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_12",
+          "text": "CONTINUE.",
+          "nextNodeId": "e16_n13"
+        }
+      ]
+    },
+
+    "e16_n13": {
+      "id": "e16_n13",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "I'm going inside."
+        },
+        {
+          "type": "message",
+          "text": "Whatever this place is..."
+        },
+        {
+          "type": "message",
+          "text": "It was waiting for someone."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 5000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "Welcome back."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_16",
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_17"
+        }
+      ]
+    }
+  }
+}
