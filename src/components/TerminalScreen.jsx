@@ -5,6 +5,39 @@ import PuzzleRenderer from "./puzzles/PuzzleRenderer";
 import DataBankModal from "./DataBankModal";
 import FileViewerModal from "./FileViewerModal";
 import SignalOverlay from "./SignalOverlay";
+import SettingsModal from "./SettingsModal";
+
+function getStatusLevel(value, type = "normal") {
+  const safeValue = Number(value) || 0;
+
+  if (type === "danger") {
+    if (safeValue >= 80) return "CRITICAL";
+    if (safeValue >= 60) return "HIGH";
+    if (safeValue >= 35) return "ELEVATED";
+    return "LOW";
+  }
+
+  if (safeValue >= 80) return "STRONG";
+  if (safeValue >= 60) return "STABLE";
+  if (safeValue >= 35) return "LOW";
+  return "CRITICAL";
+}
+
+function getStatusClass(level) {
+  if (level === "STRONG" || level === "LOW") {
+    return "text-emerald-200";
+  }
+
+  if (level === "STABLE" || level === "ELEVATED") {
+    return "text-cyan-200";
+  }
+
+  if (level === "HIGH") {
+    return "text-amber-200";
+  }
+
+  return "text-rose-300";
+}
 
 export default function TerminalScreen({
   config,
@@ -18,25 +51,30 @@ export default function TerminalScreen({
   activePuzzle,
   onChoice,
   onPuzzleSubmit,
+  settings,
+  onChangeSettings,
   onFileRead,
   onReset
 }) {
   const [activeFile, setActiveFile] = useState(null);
   const [isDataBankOpen, setIsDataBankOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const collectedFiles = gameState.collectedFiles || [];
-  const unreadFileCount = collectedFiles.filter(
-  (file) => file.isNew
-).length;
+  const unreadFileCount = collectedFiles.filter((file) => file.isNew).length;
   const canInteract = !isTyping && !isGlitching && !signalStatus;
 
-function handleOpenDataBankFile(file) {
-  onFileRead?.(file.id);
-  setActiveFile({
-    ...file,
-    isNew: false
-  });
-}
+  const trustLevel = getStatusLevel(gameState.trust);
+  const moraleLevel = getStatusLevel(gameState.morale);
+  const dangerLevel = getStatusLevel(gameState.danger, "danger");
+
+  function handleOpenDataBankFile(file) {
+    onFileRead?.(file.id);
+    setActiveFile({
+      ...file,
+      isNew: false
+    });
+  }
 
   return (
     <main
@@ -72,10 +110,7 @@ function handleOpenDataBankFile(file) {
                 ].join(" ")}
                 onClick={() => setIsDataBankOpen(true)}
               >
-                DATA{" "}
-{unreadFileCount > 0
-  ? `(${unreadFileCount})`
-  : ""}
+                DATA {unreadFileCount > 0 ? `(${unreadFileCount})` : ""}
 
                 {unreadFileCount > 0 && (
                   <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_10px_rgba(134,239,172,0.9)]" />
@@ -95,6 +130,7 @@ function handleOpenDataBankFile(file) {
               <div className="flex items-center gap-2">
                 <button
                   type="button"
+                  onClick={() => setIsSettingsOpen(true)}
                   className="grid h-9 w-9 place-items-center border border-cyan-300/25 bg-slate-900/60 text-cyan-100 transition hover:bg-cyan-400/10"
                   aria-label="Open settings"
                 >
@@ -117,7 +153,7 @@ function handleOpenDataBankFile(file) {
             </div>
           </header>
 
-          <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
             <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
               {config.statusLabels.link}
             </span>
@@ -127,11 +163,24 @@ function handleOpenDataBankFile(file) {
             </span>
 
             <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-              DANGER: {gameState.danger}
+              TRUST:{" "}
+              <strong className={getStatusClass(trustLevel)}>
+                {trustLevel}
+              </strong>
             </span>
 
             <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-              TRUST: {gameState.trust}
+              MORALE:{" "}
+              <strong className={getStatusClass(moraleLevel)}>
+                {moraleLevel}
+              </strong>
+            </span>
+
+            <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
+              DANGER:{" "}
+              <strong className={getStatusClass(dangerLevel)}>
+                {dangerLevel}
+              </strong>
             </span>
           </div>
         </div>
@@ -147,11 +196,11 @@ function handleOpenDataBankFile(file) {
 
         <div className="shrink-0">
           {activePuzzle && canInteract && (
-<PuzzleRenderer
-  puzzle={activePuzzle}
-  attempts={gameState.puzzleAttempts?.[activePuzzle.id] || 0}
-  onSubmit={onPuzzleSubmit}
-/>
+            <PuzzleRenderer
+              puzzle={activePuzzle}
+              attempts={gameState.puzzleAttempts?.[activePuzzle.id] || 0}
+              onSubmit={onPuzzleSubmit}
+            />
           )}
 
           {canShowChoices && !activePuzzle && (
@@ -164,16 +213,25 @@ function handleOpenDataBankFile(file) {
       </section>
 
       {isDataBankOpen && (
-<DataBankModal
-  files={collectedFiles}
-  onOpenFile={handleOpenDataBankFile}
-  onFileRead={onFileRead}
-  onClose={() => setIsDataBankOpen(false)}
-/>
+        <DataBankModal
+          files={collectedFiles}
+          onOpenFile={handleOpenDataBankFile}
+          onFileRead={onFileRead}
+          onClose={() => setIsDataBankOpen(false)}
+        />
       )}
 
       <FileViewerModal file={activeFile} onClose={() => setActiveFile(null)} />
       <SignalOverlay status={signalStatus} />
+
+      {isSettingsOpen && (
+        <SettingsModal
+          settings={settings}
+          onChangeSettings={onChangeSettings}
+          onReset={onReset}
+          onClose={() => setIsSettingsOpen(false)}
+        />
+      )}
     </main>
   );
 }

@@ -1,0 +1,377 @@
+{
+  "id": "episode_07",
+  "title": "GHOST CREW",
+  "startNodeId": "e07_n01",
+
+  "puzzles": {},
+
+  "nodes": {
+    "e07_n01": {
+      "id": "e07_n01",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[NEW DATABASE DISCOVERED]"
+        },
+        {
+          "type": "message",
+          "text": "Crew Psychological Evaluation Archive Found."
+        }
+      ],
+      "choices": [
+        {
+          "id": "open_database",
+          "text": "OPEN DATABASE.",
+          "nextNodeId": "e07_n02"
+        }
+      ]
+    },
+
+    "e07_n02": {
+      "id": "e07_n02",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "psych_eval_hale",
+          "title": "PSYCHOLOGICAL EVALUATION - ETHAN HALE",
+          "content": "Subject: Ethan Hale\nStatus: Stable\nRisk Level: Low\nRecommendation: Active Duty Approved"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_hale_eval",
+          "text": "CONTINUE.",
+          "nextNodeId": "e07_n03"
+        }
+      ]
+    },
+
+    "e07_n03": {
+      "id": "e07_n03",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "psych_eval_maya",
+          "title": "PSYCHOLOGICAL EVALUATION - MAYA CHEN",
+          "content": "Subject: Maya Chen\nStatus: Stable\nRisk Level: Low\nRecommendation: Active Duty Approved"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_maya_eval",
+          "text": "CONTINUE.",
+          "nextNodeId": "e07_n04"
+        }
+      ]
+    },
+
+    "e07_n04": {
+      "id": "e07_n04",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "psych_eval_voss",
+          "title": "PSYCHOLOGICAL EVALUATION - NOAH VOSS",
+          "content": "FILE NOT FOUND"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_voss_eval",
+          "text": "CONTINUE.",
+          "nextNodeId": "e07_n05"
+        }
+      ]
+    },
+
+    "e07_n05": {
+      "id": "e07_n05",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "backgroundEvent",
+          "delay": 12000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "Do not trust the evaluations."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 22000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "Look at the timestamps."
+          }
+        },
+        {
+          "type": "message",
+          "text": "Archive index recovered."
+        }
+      ],
+      "choices": [
+        {
+          "id": "inspect_index",
+          "text": "INSPECT INDEX.",
+          "nextNodeId": "e07_n06"
+        }
+      ]
+    },
+
+    "e07_n06": {
+      "id": "e07_n06",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "evaluation_index",
+          "title": "EVALUATION INDEX",
+          "content": "Created: 12 April\nLast Modified: 14 April\nVerification Status: Valid"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_timestamp",
+          "text": "CONTINUE.",
+          "nextNodeId": "e07_n07"
+        }
+      ]
+    },
+
+    "e07_n07": {
+      "id": "e07_n07",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "That's impossible."
+        },
+        {
+          "type": "message",
+          "text": "Incident Alpha happened on April 11."
+        },
+        {
+          "type": "message",
+          "text": "Someone altered the records."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_after_maya",
+          "text": "CONTINUE.",
+          "nextNodeId": "e07_n08"
+        }
+      ]
+    },
+
+    "e07_n08": {
+      "id": "e07_n08",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "Someone replaced them."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_conflict",
+          "text": "CONTINUE.",
+          "nextNodeId": "e07_n09"
+        }
+      ]
+    },
+
+    "e07_n09": {
+      "id": "e07_n09",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "backgroundEvent",
+          "delay": 5000,
+          "event": {
+            "type": "message",
+            "speaker": "HALE",
+            "text": "Stop digging."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 10000,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "Keep digging."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 15000,
+          "event": {
+            "type": "message",
+            "speaker": "HALE",
+            "text": "You're making it worse."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 20000,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "You're afraid."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "trust_maya",
+          "text": "TRUST MAYA",
+          "effects": {
+            "trust": -5
+          },
+          "nextNodeId": "e07_n10a"
+        },
+        {
+          "id": "trust_hale",
+          "text": "TRUST HALE",
+          "effects": {
+            "trust": 5
+          },
+          "nextNodeId": "e07_n10b"
+        }
+      ]
+    },
+
+    "e07_n10a": {
+      "id": "e07_n10a",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Good."
+        },
+        {
+          "type": "message",
+          "text": "Then help me uncover the truth."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_after_choice_a",
+          "text": "CONTINUE.",
+          "nextNodeId": "e07_n11"
+        }
+      ]
+    },
+
+    "e07_n10b": {
+      "id": "e07_n10b",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "You made the right decision."
+        },
+        {
+          "type": "message",
+          "text": "Some truths are dangerous."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_after_choice_b",
+          "text": "CONTINUE.",
+          "nextNodeId": "e07_n11"
+        }
+      ]
+    },
+
+    "e07_n11": {
+      "id": "e07_n11",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "image",
+          "fileId": "original_crew_photo",
+          "title": "ORIGINAL CREW PHOTO",
+          "caption": "Recovered original station photograph.",
+          "src": "/images/original_crew_photo.jpg"
+        }
+      ],
+      "choices": [
+        {
+          "id": "inspect_original_photo",
+          "text": "INSPECT PHOTO.",
+          "nextNodeId": "e07_n12"
+        }
+      ]
+    },
+
+    "e07_n12": {
+      "id": "e07_n12",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Personnel detected: 8"
+        },
+        {
+          "type": "message",
+          "text": "Manifest Count: 6"
+        },
+        {
+          "type": "message",
+          "text": "Recovered Crew Photo: 7"
+        },
+        {
+          "type": "message",
+          "text": "Original Crew Photo: 8"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_count",
+          "text": "CONTINUE.",
+          "nextNodeId": "e07_n13"
+        }
+      ]
+    },
+
+    "e07_n13": {
+      "id": "e07_n13",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Count again."
+        },
+        {
+          "type": "glitch",
+          "duration": 1200
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_07",
+          "text": "END TRANSMISSION.",
+          "nextEpisodeId": "episode_08"
+        }
+      ]
+    }
+  }
+}

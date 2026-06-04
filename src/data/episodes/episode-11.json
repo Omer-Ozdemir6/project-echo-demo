@@ -1,0 +1,350 @@
+{
+  "id": "episode_11",
+  "title": "THE BLACK BOX",
+  "startNodeId": "e11_n01",
+
+  "puzzles": {
+    "decrypt_voice_fragment": {
+      "id": "decrypt_voice_fragment",
+      "type": "decrypt",
+      "title": "VOICE FRAGMENT ANALYSIS",
+      "description": "Corrupted voice signature detected.",
+      "prompt": "ENTER IDENTIFIED NAME",
+      "acceptedAnswers": [
+        "VOSS",
+        "NOAH VOSS",
+        "NOAH"
+      ],
+      "successNodeId": "e11_n12",
+      "failureNodeId": "e11_n11"
+    }
+  },
+
+  "nodes": {
+    "e11_n01": {
+      "id": "e11_n01",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "The black box contains everything."
+        },
+        {
+          "type": "message",
+          "text": "The official reports were altered."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_blackbox",
+          "text": "CONTINUE.",
+          "nextNodeId": "e11_n02"
+        }
+      ]
+    },
+
+    "e11_n02": {
+      "id": "e11_n02",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "blackbox_fragment_01",
+          "title": "BLACK BOX FRAGMENT 01",
+          "correlationTags": [
+            "blackbox_reconstruction"
+          ],
+          "content": "21:09 Crew Assembly\n21:11 Unauthorized Access Request"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_fragment_01",
+          "text": "CONTINUE.",
+          "nextNodeId": "e11_n03"
+        }
+      ]
+    },
+
+    "e11_n03": {
+      "id": "e11_n03",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "Don't trust those records."
+        },
+        {
+          "type": "message",
+          "text": "They're corrupted."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_hale",
+          "text": "CONTINUE.",
+          "nextNodeId": "e11_n04"
+        }
+      ]
+    },
+
+    "e11_n04": {
+      "id": "e11_n04",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "blackbox_fragment_02",
+          "title": "BLACK BOX FRAGMENT 02",
+          "correlationTags": [
+            "blackbox_reconstruction"
+          ],
+          "content": "21:13 Emergency Lockdown\n21:14 Manual Override Requested"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_fragment_02",
+          "text": "CONTINUE.",
+          "nextNodeId": "e11_n05"
+        }
+      ]
+    },
+
+    "e11_n05": {
+      "id": "e11_n05",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "backgroundEvent",
+          "delay": 10000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "Keep searching."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 25000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "You're close."
+          }
+        },
+        {
+          "type": "message",
+          "text": "Additional recorder sectors located."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_fragment_03",
+          "text": "CONTINUE.",
+          "nextNodeId": "e11_n06"
+        }
+      ]
+    },
+
+    "e11_n06": {
+      "id": "e11_n06",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "blackbox_fragment_03",
+          "title": "BLACK BOX FRAGMENT 03",
+          "correlationTags": [
+            "blackbox_reconstruction"
+          ],
+          "content": "21:15 Voice Authorization Accepted\nIdentity Hidden"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_reconstruction",
+          "text": "CONTINUE.",
+          "nextNodeId": "e11_n07"
+        }
+      ]
+    },
+
+    "e11_n07": {
+      "id": "e11_n07",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Recorder reconstruction possible."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_after_reconstruction",
+          "text": "CONTINUE.",
+          "nextNodeId": "e11_n08"
+        }
+      ]
+    },
+
+    "e11_n08": {
+      "id": "e11_n08",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Someone opened the station."
+        },
+        {
+          "type": "message",
+          "text": "From the inside."
+        }
+      ],
+      "choices": [
+        {
+          "id": "was_it_hale",
+          "text": "WAS IT HALE?",
+          "effects": {
+            "trust": -5
+          },
+          "nextNodeId": "e11_n09"
+        },
+        {
+          "id": "was_it_you",
+          "text": "WAS IT YOU?",
+          "effects": {
+            "morale": -2
+          },
+          "nextNodeId": "e11_n09"
+        }
+      ]
+    },
+
+    "e11_n09": {
+      "id": "e11_n09",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "voice_fragment_unknown",
+          "title": "VOICE SAMPLE",
+          "content": "VOICE SAMPLE\nCORRUPTED\nRECOVERY POSSIBLE"
+        }
+      ],
+      "choices": [
+        {
+          "id": "analyze_voice",
+          "text": "ANALYZE SAMPLE.",
+          "nextNodeId": "e11_n11"
+        }
+      ]
+    },
+
+    "e11_n11": {
+      "id": "e11_n11",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "puzzle",
+          "puzzleId": "decrypt_voice_fragment"
+        }
+      ]
+    },
+
+    "e11_n12": {
+      "id": "e11_n12",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[MATCH FOUND]"
+        },
+        {
+          "type": "file",
+          "fileId": "voice_analysis_result",
+          "title": "VOICE ANALYSIS RESULT",
+          "content": "MATCH FOUND\n\nIDENTITY:\nNOAH VOSS"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_after_match",
+          "text": "CONTINUE.",
+          "nextNodeId": "e11_n13"
+        }
+      ]
+    },
+
+    "e11_n13": {
+      "id": "e11_n13",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "That's impossible."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_final_sequence",
+          "text": "CONTINUE.",
+          "nextNodeId": "e11_n14"
+        }
+      ]
+    },
+
+    "e11_n14": {
+      "id": "e11_n14",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "backgroundEvent",
+          "delay": 15000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "Now ask why."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_why",
+          "text": "WHY?",
+          "nextNodeId": "e11_n15"
+        }
+      ]
+    },
+
+    "e11_n15": {
+      "id": "e11_n15",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "If that voice was mine..."
+        },
+        {
+          "type": "message",
+          "text": "Then who am I?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_11",
+          "text": "END TRANSMISSION.",
+          "nextEpisodeId": "episode_12"
+        }
+      ]
+    }
+  }
+}

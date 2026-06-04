@@ -1,0 +1,354 @@
+{
+  "id": "episode_09",
+  "title": "THE RESCUE",
+  "startNodeId": "e09_n01",
+
+  "puzzles": {},
+
+  "nodes": {
+    "e09_n01": {
+      "id": "e09_n01",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[RESCUE TASK AVAILABLE]"
+        },
+        {
+          "type": "message",
+          "text": "Target: Emergency Pod"
+        }
+      ],
+      "choices": [
+        {
+          "id": "begin_rescue",
+          "text": "BEGIN OPERATION.",
+          "nextNodeId": "e09_n02"
+        }
+      ]
+    },
+
+    "e09_n02": {
+      "id": "e09_n02",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Life support is dropping."
+        },
+        {
+          "type": "message",
+          "text": "We don't have much time."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_maya",
+          "text": "CONTINUE.",
+          "nextNodeId": "e09_n03"
+        }
+      ]
+    },
+
+    "e09_n03": {
+      "id": "e09_n03",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "rescue_route_map",
+          "title": "RESCUE ROUTE MAP",
+          "content": "ROUTE A\nShort Route\nHigh Radiation\n\nROUTE B\nLong Route\nLow Radiation"
+        }
+      ],
+      "choices": [
+        {
+          "id": "route_a",
+          "text": "ROUTE A",
+          "effects": {
+            "danger": 15,
+            "morale": 5
+          },
+          "nextNodeId": "e09_route_a"
+        },
+        {
+          "id": "route_b",
+          "text": "ROUTE B",
+          "effects": {
+            "danger": -5,
+            "morale": -5
+          },
+          "nextNodeId": "e09_route_b"
+        }
+      ]
+    },
+
+    "e09_route_a": {
+      "id": "e09_route_a",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Route A selected."
+        },
+        {
+          "type": "message",
+          "text": "Radiation exposure risk increased."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_route_a",
+          "text": "CONTINUE.",
+          "nextNodeId": "e09_n04"
+        }
+      ]
+    },
+
+    "e09_route_b": {
+      "id": "e09_route_b",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Route B selected."
+        },
+        {
+          "type": "message",
+          "text": "Travel time increased."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_route_b",
+          "text": "CONTINUE.",
+          "nextNodeId": "e09_n04"
+        }
+      ]
+    },
+
+    "e09_n04": {
+      "id": "e09_n04",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[LIFE SUPPORT UPDATE]"
+        },
+        {
+          "type": "message",
+          "text": "Current Capacity: 18%"
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 15000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "Hurry."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 30000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "I'm still here."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_signal",
+          "text": "CONTINUE.",
+          "nextNodeId": "e09_n05"
+        }
+      ]
+    },
+
+    "e09_n05": {
+      "id": "e09_n05",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "image",
+          "fileId": "pod_internal_frame",
+          "title": "POD INTERNAL FRAME",
+          "caption": "Emergency pod interior scan.",
+          "src": "/images/pod_internal_frame.jpg"
+        }
+      ],
+      "choices": [
+        {
+          "id": "inspect_pod",
+          "text": "INSPECT POD.",
+          "nextNodeId": "e09_n06"
+        }
+      ]
+    },
+
+    "e09_n06": {
+      "id": "e09_n06",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "I can't identify the occupant."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_hale_warning",
+          "text": "CONTINUE.",
+          "nextNodeId": "e09_n07"
+        }
+      ]
+    },
+
+    "e09_n07": {
+      "id": "e09_n07",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "Don't open the pod."
+        }
+      ],
+      "choices": [
+        {
+          "id": "why_not",
+          "text": "WHY?",
+          "nextNodeId": "e09_n08"
+        }
+      ]
+    },
+
+    "e09_n08": {
+      "id": "e09_n08",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Because I already did."
+        }
+      ],
+      "choices": [
+        {
+          "id": "what_do_you_mean",
+          "text": "WHAT?",
+          "nextNodeId": "e09_n09"
+        }
+      ]
+    },
+
+    "e09_n09": {
+      "id": "e09_n09",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "The pod was empty."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 4000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "He's lying."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_conflict",
+          "text": "CONTINUE.",
+          "nextNodeId": "e09_n10"
+        }
+      ]
+    },
+
+    "e09_n10": {
+      "id": "e09_n10",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Rescue Team Arrived."
+        },
+        {
+          "type": "systemAlert",
+          "text": "[POD ACCESS AVAILABLE]"
+        }
+      ],
+      "choices": [
+        {
+          "id": "open_pod",
+          "text": "OPEN POD",
+          "effects": {
+            "danger": 10
+          },
+          "nextNodeId": "e09_open_branch"
+        },
+        {
+          "id": "abort_mission",
+          "text": "ABORT MISSION",
+          "effects": {
+            "morale": -20
+          },
+          "nextNodeId": "e09_abort_branch"
+        }
+      ]
+    },
+
+    "e09_open_branch": {
+      "id": "e09_open_branch",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Pod opening sequence authorized."
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_open",
+          "text": "END TRANSMISSION.",
+          "nextEpisodeId": "episode_10"
+        }
+      ]
+    },
+
+    "e09_abort_branch": {
+      "id": "e09_abort_branch",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Rescue operation aborted."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 5000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "Please..."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_abort",
+          "text": "END TRANSMISSION.",
+          "nextEpisodeId": "episode_10"
+        }
+      ]
+    }
+  }
+}

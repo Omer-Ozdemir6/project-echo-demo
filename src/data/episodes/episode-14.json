@@ -1,0 +1,389 @@
+{
+  "id": "episode_14",
+  "title": "THE SEVENTH",
+  "startNodeId": "e14_n01",
+
+  "puzzles": {
+    "memory_reconstruction_714": {
+      "id": "memory_reconstruction_714",
+      "type": "code",
+      "title": "MEMORY RECONSTRUCTION",
+      "description": "Reconstruct the missing incident access code using previously recovered evidence.",
+      "prompt": "ENTER INCIDENT ACCESS CODE",
+      "acceptedAnswers": [
+        "714",
+        "7.14",
+        "0714"
+      ],
+      "successNodeId": "e14_n08",
+      "failureNodeId": "e14_n07"
+    }
+  },
+
+  "nodes": {
+    "e14_n01": {
+      "id": "e14_n01",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "There were seven people."
+        },
+        {
+          "type": "message",
+          "text": "Not six."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_01",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n02"
+        }
+      ]
+    },
+
+    "e14_n02": {
+      "id": "e14_n02",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "The seventh name was removed."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_02",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n03"
+        }
+      ]
+    },
+
+    "e14_n03": {
+      "id": "e14_n03",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "crew_manifest_copy_a",
+          "title": "CREW MANIFEST COPY A",
+          "content": "HALE\nMAYA\nNOAH\nGRANT\nRIVERA\nKIM"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_03",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n04"
+        }
+      ]
+    },
+
+    "e14_n04": {
+      "id": "e14_n04",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "crew_manifest_copy_b",
+          "title": "CREW MANIFEST COPY B",
+          "content": "HALE\nMAYA\nNOAH\nGRANT\nRIVERA\nKIM\n[REDACTED]"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_04",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n05"
+        }
+      ]
+    },
+
+    "e14_n05": {
+      "id": "e14_n05",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "backgroundEvent",
+          "delay": 15000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "Find me."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 30000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "I was there."
+          }
+        },
+        {
+          "type": "message",
+          "text": "Personnel archive sector located."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_05",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n06"
+        }
+      ]
+    },
+
+    "e14_n06": {
+      "id": "e14_n06",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "personnel_archive",
+          "title": "PERSONNEL ARCHIVE",
+          "content": "Personnel Record Missing"
+        }
+      ],
+      "choices": [
+        {
+          "id": "start_memory_reconstruction",
+          "text": "RECONSTRUCT MEMORY.",
+          "nextNodeId": "e14_n07"
+        }
+      ]
+    },
+
+    "e14_n07": {
+      "id": "e14_n07",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "puzzle",
+          "puzzleId": "memory_reconstruction_714"
+        }
+      ]
+    },
+
+    "e14_n08": {
+      "id": "e14_n08",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[ACCESS CODE ACCEPTED]"
+        },
+        {
+          "type": "file",
+          "fileId": "crew_manifest_original",
+          "title": "ORIGINAL CREW MANIFEST",
+          "correlationTags": [
+            "eva_identity"
+          ],
+          "content": "HALE\nMAYA\nNOAH\nGRANT\nRIVERA\nKIM\n\nEVA THORNE"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_06",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n09"
+        }
+      ]
+    },
+
+    "e14_n09": {
+      "id": "e14_n09",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Eva..."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_07",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n10"
+        }
+      ]
+    },
+
+    "e14_n10": {
+      "id": "e14_n10",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "She wasn't supposed to be there."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_08",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n11"
+        }
+      ]
+    },
+
+    "e14_n11": {
+      "id": "e14_n11",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Personnel record comparison available."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_09",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n12"
+        }
+      ]
+    },
+
+    "e14_n12": {
+      "id": "e14_n12",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "deleted_personnel_record",
+          "title": "DELETED PERSONNEL RECORD",
+          "content": "EVA THORNE\n\nSTATUS: REMOVED\n\nAUTHORIZED BY:\nETHAN HALE",
+          "correlationTags": [
+            "eva_identity"
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_10",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n13"
+        }
+      ]
+    },
+
+    "e14_n13": {
+      "id": "e14_n13",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Hale erased her."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_11",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n14"
+        }
+      ]
+    },
+
+    "e14_n14": {
+      "id": "e14_n14",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "Stop digging."
+        },
+        {
+          "type": "message",
+          "text": "You don't understand what happened."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_12",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n15"
+        }
+      ]
+    },
+
+    "e14_n15": {
+      "id": "e14_n15",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "glitch",
+          "duration": 1500
+        },
+        {
+          "type": "signalLost",
+          "duration": 3000,
+          "restoreMessage": "[SIGNAL RESTORED]"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "EVA",
+          "text": "Find the truth."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_13",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n16"
+        }
+      ]
+    },
+
+    "e14_n16": {
+      "id": "e14_n16",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "incident_alpha_master_record",
+          "title": "INCIDENT ALPHA MASTER RECORD",
+          "content": "CLASSIFIED\n\nACCESS DENIED"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_14",
+          "text": "CONTINUE.",
+          "nextNodeId": "e14_n17"
+        }
+      ]
+    },
+
+    "e14_n17": {
+      "id": "e14_n17",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Everything started with Eva."
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_14",
+          "text": "END TRANSMISSION.",
+          "nextEpisodeId": "episode_15"
+        }
+      ]
+    }
+  }
+}

@@ -1,85 +1,181 @@
 {
   "id": "episode_01",
-  "title": "Episode 01: First Contact",
-  "startNodeId": "first_contact",
+  "title": "FIRST CONTACT",
+  "startNodeId": "e01_n01",
   "puzzles": {
-    "relay_access_code": {
-      "id": "relay_access_code",
-      "title": "RELAY ACCESS PANEL",
-      "description": "Remote authorization required. The relay panel accepts a four-digit access code.",
-      "prompt": "ENTER 4 DIGIT RELAY CODE",
+    "relay_password": {
+      "id": "relay_password",
+      "type": "code",
+      "title": "RELAY ACCESS",
+      "description": "Access code required.",
+      "prompt": "ENTER ACCESS CODE",
       "placeholder": "0000",
       "inputMode": "numeric",
       "maxLength": 4,
       "submitLabel": "AUTH",
       "acceptedAnswers": ["7391"],
-      "successNodeId": "relay_door_opened",
-      "failureNodeId": "relay_wrong_code",
+      "successNodeId": "e01_n05",
+      "failureNodeId": "e01_n04",
       "submitCooldownMs": 400
     }
   },
   "nodes": {
-    "first_contact": {
-      "id": "first_contact",
-      "speaker": "UNKNOWN",
+    "e01_n01": {
+      "id": "e01_n01",
+      "speaker": "HALE",
       "events": [
         {
           "type": "systemAlert",
-          "text": "[COMMUNICATION CHANNEL OPEN]",
+          "text": "[UNKNOWN RELAY SIGNAL DETECTED]",
           "pauseAfterMs": 900
         },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Can you hear me?"
+        },
+        {
+          "type": "pause",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "Finally..."
+        },
+        {
+          "type": "message",
+          "text": "I thought the relay was dead."
+        },
+        {
+          "type": "message",
+          "text": "My name is Dr. Ethan Hale."
+        },
+        {
+          "type": "message",
+          "text": "Chief Engineer. Orbital Research Station ECHO."
+        }
+      ],
+      "choices": [
+        {
+          "id": "who_are_you",
+          "text": "WHO ARE YOU?",
+          "effects": {
+            "trust": 1
+          },
+          "nextNodeId": "e01_n02"
+        },
+        {
+          "id": "where_am_i",
+          "text": "WHERE AM I?",
+          "effects": {
+            "trust": 0,
+            "morale": -1
+          },
+          "nextNodeId": "e01_n02"
+        }
+      ]
+    },
+    "e01_n02": {
+      "id": "e01_n02",
+      "speaker": "HALE",
+      "events": [
         {
           "type": "typing",
           "duration": 2200
         },
         {
           "type": "message",
-          "tone": "calm",
-          "text": "...hello?"
+          "text": "The station suffered a systems failure."
         },
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 2400
         },
         {
           "type": "message",
-          "tone": "calm",
-          "text": "I don't know who is receiving this."
-        },
-        {
-          "type": "typing",
-          "duration": 2600
+          "text": "Most communication channels collapsed."
         },
         {
           "type": "message",
-          "tone": "tense",
-          "text": "My suit says the relay is still connected. Barely."
+          "text": "You're the first signal I've received in months."
         }
       ],
       "choices": [
         {
-          "id": "answer_signal",
-          "text": "I read you. Stay calm.",
-          "nextNodeId": "hale_identifies",
+          "id": "i_can_help",
+          "text": "I CAN HELP.",
           "effects": {
             "trust": 5,
             "morale": 5
-          }
+          },
+          "nextNodeId": "e01_n03"
         },
         {
-          "id": "ask_identity",
-          "text": "Identify yourself first.",
-          "nextNodeId": "hale_identifies",
+          "id": "need_more_info",
+          "text": "I NEED MORE INFORMATION.",
           "effects": {
-            "trust": -2,
-            "danger": 3
+            "trust": 0,
+            "danger": -1
+          },
+          "nextNodeId": "e01_n03"
+        }
+      ]
+    },
+    "e01_n03": {
+      "id": "e01_n03",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "I'm sending the only crew record I can still access."
+        },
+        {
+          "type": "log",
+          "id": "crew_log_hale_01",
+          "fileId": "crew_log_hale_01",
+          "fileType": "log",
+          "title": "CREW LOG: ETHAN HALE",
+          "source": "STATION_ARCHIVE",
+          "content": "DR. ETHAN HALE — CHIEF ENGINEER. RELAY MAINTENANCE AUTHORIZATION: 7391. STATUS: ACTIVE.",
+          "caption": "Recovered identity and maintenance fragment.",
+          "tags": ["crew", "hale", "relay", "code"],
+          "message": "[CREW LOG ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "message",
+          "text": "That code may still open the relay door."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 9000,
+          "event": {
+            "type": "systemAlert",
+            "text": "[BACKGROUND SCAN: WEAK SECONDARY SIGNAL DETECTED]"
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_to_relay",
+          "text": "MOVE TO THE RELAY DOOR.",
+          "nextNodeId": "e01_n04",
+          "effects": {
+            "danger": 2
           }
         }
       ]
     },
-    "hale_identifies": {
-      "id": "hale_identifies",
-      "speaker": "DR. HALE",
+    "e01_n04": {
+      "id": "e01_n04",
+      "speaker": "HALE",
       "events": [
         {
           "type": "typing",
@@ -87,250 +183,33 @@
         },
         {
           "type": "message",
-          "tone": "calm",
-          "text": "My name is Dr. Elias Hale."
-        },
-        {
-          "type": "typing",
-          "duration": 3000
+          "text": "The relay room should still be operational."
         },
         {
           "type": "message",
-          "tone": "calm",
-          "text": "I was part of the relay research team stationed below the old facility."
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "tone": "tense",
-          "text": "Something interrupted the evacuation. I woke up alone."
-        },
-        {
-          "type": "log",
-          "id": "crew_log_hale_01",
-          "fileId": "crew_log_hale_01",
-          "title": "CREW LOG: DR. HALE",
-          "content": "DR. ELIAS HALE — SIGNAL RELAY RESEARCH UNIT. LAST KNOWN STATUS: ACTIVE. FINAL CHECK-IN: 03:17.",
-          "caption": "Recovered identity fragment from the relay archive.",
-          "source": "RELAY_ARCHIVE",
-          "tags": ["crew", "hale", "relay"],
-          "message": "[CREW LOG ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200
-        }
-      ],
-      "choices": [
-        {
-          "id": "ask_location",
-          "text": "Where are you now?",
-          "nextNodeId": "quiet_corridor",
-          "effects": {
-            "trust": 3
-          }
-        },
-        {
-          "id": "ask_systems",
-          "text": "Check your suit systems.",
-          "nextNodeId": "quiet_corridor",
-          "effects": {
-            "danger": -2
-          }
-        }
-      ]
-    },
-    "quiet_corridor": {
-      "id": "quiet_corridor",
-      "speaker": "DR. HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2800
-        },
-        {
-          "type": "message",
-          "tone": "calm",
-          "text": "I'm in a service corridor. Emergency lights are still on."
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "tone": "calm",
-          "text": "No movement. No voices. Just the relay hum."
-        },
-        {
-          "type": "image",
-          "id": "corridor_photo_01",
-          "fileId": "corridor_photo_01",
-          "fileType": "image",
-          "title": "SERVICE CORRIDOR PHOTO",
-          "src": "/assets/corridor-01.jpg",
-          "caption": "A quiet service corridor under emergency lighting.",
-          "source": "DR_HALE",
-          "tags": ["corridor", "relay", "photo"],
-          "pauseAfterMs": 1400
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "tone": "tense",
-          "text": "There is a sealed relay door ahead."
-        }
-      ],
-      "choices": [
-        {
-          "id": "approach_door",
-          "text": "Approach the relay door carefully.",
-          "nextNodeId": "relay_panel",
-          "effects": {
-            "danger": 5,
-            "trust": 3
-          }
-        },
-        {
-          "id": "scan_area",
-          "text": "Scan the corridor first.",
-          "nextNodeId": "corridor_scan",
-          "effects": {
-            "danger": -2
-          }
-        }
-      ]
-    },
-    "corridor_scan": {
-      "id": "corridor_scan",
-      "speaker": "DR. HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2800
-        },
-        {
-          "type": "message",
-          "tone": "calm",
-          "text": "Scanning."
+          "text": "But the access door is locked."
         },
         {
           "type": "systemAlert",
-          "text": "[LOW MOTION ACTIVITY DETECTED]",
-          "pauseAfterMs": 1000
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "tone": "tense",
-          "text": "That's strange. The scan says something moved behind the relay door."
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "danger": 8,
-            "morale": -3
-          }
-        }
-      ],
-      "choices": [
-        {
-          "id": "approach_after_scan",
-          "text": "Move to the relay door.",
-          "nextNodeId": "relay_panel",
-          "effects": {
-            "trust": 3
-          }
-        }
-      ]
-    },
-    "relay_panel": {
-      "id": "relay_panel",
-      "speaker": "DR. HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2500
-        },
-        {
-          "type": "message",
-          "tone": "tense",
-          "text": "The door has a remote access panel."
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "tone": "tense",
-          "text": "I can't enter the code from here. It needs authorization from your terminal."
-        },
-        {
-          "type": "image",
-          "id": "relay_panel_photo_01",
-          "fileId": "relay_panel_photo_01",
-          "fileType": "image",
-          "title": "RELAY ACCESS PANEL",
-          "src": "/assets/relay-panel-7391.jpg",
-          "caption": "Relay access panel. There may be markings near the lower edge.",
-          "source": "DR_HALE",
-          "tags": ["relay", "panel", "code"],
-          "pauseAfterMs": 1400
-        },
-        {
-          "type": "systemAlert",
-          "text": "[LOCKED DEVICE DETECTED: RELAY ACCESS PANEL]",
-          "pauseAfterMs": 1000
-        },
-        {
-          "type": "signalLost",
-          "message": "[SIGNAL LOST]",
-          "restoreMessage": "[SIGNAL RESTORED]",
-          "duration": 2500,
-          "pauseAfterMs": 800
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "tone": "panic",
-          "text": "Command... something just knocked from the other side."
-        },
-        {
-          "type": "glitch",
-          "duration": 900,
-          "pauseAfterMs": 500
-        },
-        {
-          "type": "corruptMessage",
-          "text": "D̷o̷ ̵n̵o̴t̸ ̴o̸p̵e̶n̸ ̷i̶t̴.",
-          "pauseAfterMs": 1200
+          "text": "[LOCKED DEVICE DETECTED: RELAY ACCESS]",
+          "pauseAfterMs": 900
         },
         {
           "type": "puzzle",
-          "puzzleId": "relay_access_code",
+          "puzzleId": "relay_password",
           "pauseAfterMs": 500
         }
       ],
       "choices": []
     },
-    "relay_wrong_code": {
-      "id": "relay_wrong_code",
-      "speaker": "DR. HALE",
+    "e01_n05": {
+      "id": "e01_n05",
+      "speaker": "HALE",
       "events": [
         {
           "type": "systemAlert",
-          "text": "[ACCESS DENIED]",
-          "pauseAfterMs": 900
+          "text": "[ACCESS GRANTED]",
+          "pauseAfterMs": 800
         },
         {
           "type": "typing",
@@ -338,8 +217,65 @@
         },
         {
           "type": "message",
-          "tone": "panic",
-          "text": "No. The panel flashed red."
+          "text": "Good."
+        },
+        {
+          "type": "message",
+          "text": "The relay is online."
+        },
+        {
+          "type": "image",
+          "id": "corridor_photo_01",
+          "fileId": "corridor_photo_01",
+          "fileType": "image",
+          "title": "CORRIDOR PHOTO",
+          "caption": "Recovered corridor image from Hale's suit camera.",
+          "src": "/images/corridor_01.jpg",
+          "source": "HALE_SUIT_CAMERA",
+          "tags": ["corridor", "relay", "photo"],
+          "pauseAfterMs": 1200
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_after_relay",
+          "text": "KEEP MOVING.",
+          "nextNodeId": "e01_n06",
+          "effects": {
+            "trust": 2
+          }
+        }
+      ]
+    },
+    "e01_n06": {
+      "id": "e01_n06",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Did you hear that?"
+        },
+        {
+          "type": "glitch",
+          "duration": 1200,
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "D0N'T TRU5T HIM",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "signalLost",
+          "duration": 3000,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 900
         },
         {
           "type": "typing",
@@ -347,194 +283,188 @@
         },
         {
           "type": "message",
-          "tone": "tense",
-          "text": "I don't think we should guess again."
+          "text": "Ignore that. The station systems are unstable."
         },
         {
           "type": "statChange",
           "changes": {
-            "danger": 5,
+            "danger": 6,
             "morale": -3
           }
         }
       ],
       "choices": [
         {
-          "id": "retry_code",
-          "text": "Try another code.",
-          "puzzleId": "relay_access_code"
-        },
-        {
-          "id": "search_for_code",
-          "text": "Search the nearby desk for clues.",
-          "nextNodeId": "search_desk",
+          "id": "continue_after_glitch",
+          "text": "CHECK THE STATION LOGS.",
+          "nextNodeId": "e01_n07",
           "effects": {
-            "trust": 4,
-            "danger": 3
+            "danger": 2
           }
         }
       ]
     },
-    "search_desk": {
-      "id": "search_desk",
-      "speaker": "DR. HALE",
+    "e01_n07": {
+      "id": "e01_n07",
+      "speaker": "SYSTEM",
       "events": [
         {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "tone": "whisper",
-          "text": "There is a desk near the panel. Most of the papers are burned."
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "tone": "tense",
-          "text": "Wait. Something is carved underneath."
-        },
-        {
-          "type": "log",
-          "id": "relay_note_7391",
-          "fileId": "relay_note_7391",
-          "title": "CARVED RELAY NOTE",
-          "content": "7391",
-          "caption": "Four digits carved into the underside of the desk.",
-          "source": "DR_HALE",
-          "tags": ["code", "relay", "7391"],
-          "message": "[POSSIBLE ACCESS CODE ARCHIVED]",
-          "pauseAfterMs": 1000
-        },
-        {
           "type": "systemAlert",
-          "text": "[POSSIBLE ACCESS CODE RECOVERED: 7391]",
+          "text": "[SECURITY CACHE RECOVERED]",
           "pauseAfterMs": 800
         },
         {
-          "type": "puzzle",
-          "puzzleId": "relay_access_code",
-          "pauseAfterMs": 500
-        }
-      ],
-      "choices": []
-    },
-    "relay_door_opened": {
-      "id": "relay_door_opened",
-      "speaker": "DR. HALE",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[ACCESS GRANTED]",
-          "pauseAfterMs": 900
-        },
-        {
-          "type": "systemAlert",
-          "text": "[RELAY DOOR UNLOCKED]",
-          "pauseAfterMs": 900
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "tone": "whisper",
-          "text": "It opened."
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "tone": "panic",
-          "text": "Command... the room is not empty."
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "trust": 8,
-            "danger": 15,
-            "morale": -5
-          }
+          "type": "log",
+          "id": "security_log_01",
+          "fileId": "security_log_01",
+          "fileType": "log",
+          "title": "SECURITY LOG",
+          "content": "Door 12 opened at 21:17. Manual override accepted. Operator identity redacted.",
+          "caption": "Recovered security event from the station archive.",
+          "source": "STATION_SECURITY",
+          "tags": ["security", "door_12", "timeline"],
+          "correlationTags": ["incident_alpha"],
+          "message": "[SECURITY LOG ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1100
         }
       ],
       "choices": [
         {
-          "id": "look_inside",
-          "text": "What do you see inside?",
-          "nextNodeId": "episode_end_hook",
-          "effects": {
-            "danger": 5
-          }
+          "id": "continue_to_medical",
+          "text": "SEARCH MEDICAL RECORDS.",
+          "nextNodeId": "e01_n08"
+        }
+      ]
+    },
+    "e01_n08": {
+      "id": "e01_n08",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[MEDICAL CACHE RECOVERED]",
+          "pauseAfterMs": 800
         },
         {
-          "id": "back_away",
-          "text": "Back away from the door.",
-          "nextNodeId": "episode_end_hook",
+          "type": "log",
+          "id": "medical_report_01",
+          "fileId": "medical_report_01",
+          "fileType": "log",
+          "title": "MEDICAL REPORT",
+          "content": "Casualty reported at 21:20. Cause of injury: decompression trauma. Location: Door 12 access corridor.",
+          "caption": "Recovered emergency medical report.",
+          "source": "STATION_MEDICAL",
+          "tags": ["medical", "casualty", "door_12", "timeline"],
+          "correlationTags": ["incident_alpha"],
+          "message": "[MEDICAL REPORT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1100
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_to_memory_gap",
+          "text": "ASK HALE ABOUT THE BLACKOUT.",
+          "nextNodeId": "e01_n09",
           "effects": {
-            "danger": -3,
-            "morale": 4
+            "trust": 1
           }
         }
       ]
     },
-    "episode_end_hook": {
-      "id": "episode_end_hook",
-      "speaker": "DR. HALE",
+    "e01_n09": {
+      "id": "e01_n09",
+      "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2600
         },
         {
           "type": "message",
-          "tone": "whisper",
-          "text": "There are monitors inside. They are still recording."
+          "text": "There's one more thing."
         },
         {
-          "type": "file",
-          "id": "encrypted_disk_01",
-          "fileId": "encrypted_disk_01",
-          "title": "ENCRYPTED DISK",
-          "content": "[ENCRYPTED PAYLOAD DETECTED]\\nDECRYPTION MODULE REQUIRED.",
-          "caption": "Recovered storage device from the relay room.",
-          "source": "UNKNOWN",
-          "tags": ["encrypted", "disk", "relay"],
-          "message": "[ENCRYPTED DISK ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1000
+          "type": "typing",
+          "duration": 2800
         },
         {
-          "type": "glitch",
-          "duration": 1000,
-          "pauseAfterMs": 700
+          "type": "message",
+          "text": "I don't remember what happened after the blackout."
         },
         {
-          "type": "corruptMessage",
-          "text": "Y̷o̸u̸ ̶w̶e̵r̵e̵ ̶n̵o̷t̸ ̸s̶u̵p̴p̴o̵s̸e̵d̴ ̸t̵o̵ ̶a̷n̵s̷w̸e̸r̴.",
-          "pauseAfterMs": 1400
-        },
-{
-  "type": "typing",
-  "duration": 3200
-},
-{
-  "type": "message",
-  "tone": "tense",
-  "text": "This disk... whatever is inside it was hidden for a reason."
-}
+          "type": "message",
+          "text": "Not clearly."
+        }
       ],
       "choices": [
-  {
-    "id": "decrypt_disk",
-    "text": "Examine the encrypted disk.",
-    "nextEpisodeId": "episode_02"
-  }
-]
+        {
+          "id": "believe_hale",
+          "text": "I BELIEVE YOU.",
+          "effects": {
+            "trust": 5,
+            "morale": 2
+          },
+          "nextNodeId": "e01_n10"
+        },
+        {
+          "id": "not_sure",
+          "text": "I'M NOT SURE.",
+          "effects": {
+            "trust": -2,
+            "danger": 2
+          },
+          "nextNodeId": "e01_n10"
+        }
+      ]
+    },
+    "e01_n10": {
+      "id": "e01_n10",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CAMERA FRAME RECOVERED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "image",
+          "id": "camera_feed_01",
+          "fileId": "camera_feed_01",
+          "fileType": "image",
+          "title": "CAMERA FEED",
+          "caption": "Recovered security frame from Door 12 corridor.",
+          "src": "/images/camera_feed_01.jpg",
+          "source": "STATION_CAMERA",
+          "tags": ["camera", "door_12", "timeline"],
+          "correlationTags": ["incident_alpha"],
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Transmission is breaking again."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 7000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "CHECK THE FILES"
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "episode_end",
+          "text": "END TRANSMISSION.",
+          "nextEpisodeId": "episode_02"
+        }
+      ]
     }
   }
 }

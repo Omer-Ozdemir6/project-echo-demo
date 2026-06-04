@@ -1,0 +1,345 @@
+{
+  "id": "episode_04",
+  "title": "THE SURVIVOR",
+  "startNodeId": "e04_n01",
+  "puzzles": {
+    "frequency_714": {
+      "id": "frequency_714",
+      "type": "frequency",
+      "title": "SIGNAL TUNING",
+      "description": "Tune the emergency frequency until the hidden transmission locks.",
+      "prompt": "SET FREQUENCY",
+      "targetFrequency": 7.14,
+      "initialFrequency": 6.5,
+      "minFrequency": 6.5,
+      "maxFrequency": 8,
+      "step": 0.01,
+      "tolerance": 0.25,
+      "lockThreshold": 95,
+      "submitLabel": "LOCK SIGNAL",
+      "acceptedAnswers": ["7.14"],
+      "successNodeId": "e04_n05",
+      "failureNodeId": "e04_n04",
+      "lockedMessage": "MAYA: Can anyone hear me?",
+      "nearMessage": "M...a...y...a...",
+      "traceMessage": "...anyone...",
+      "submitCooldownMs": 500
+    }
+  },
+  "nodes": {
+    "e04_n01": {
+      "id": "e04_n01",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[OPENING CHANNEL 7.14]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "signalLost",
+          "duration": 2000,
+          "message": "[SIGNAL INTERFERENCE]",
+          "restoreMessage": "[CHANNEL ESTABLISHED]",
+          "pauseAfterMs": 900
+        }
+      ],
+      "choices": [
+        {
+          "id": "connect",
+          "text": "CONNECT.",
+          "nextNodeId": "e04_n02"
+        }
+      ]
+    },
+    "e04_n02": {
+      "id": "e04_n02",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "..."
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "Someone answered."
+        },
+        {
+          "type": "message",
+          "text": "I thought nobody was left."
+        }
+      ],
+      "choices": [
+        {
+          "id": "who_are_you",
+          "text": "WHO ARE YOU?",
+          "nextNodeId": "e04_n03"
+        }
+      ]
+    },
+    "e04_n03": {
+      "id": "e04_n03",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "file",
+          "id": "audio_log_714",
+          "fileId": "audio_log_714",
+          "fileType": "log",
+          "title": "EMERGENCY AUDIO LOG",
+          "content": "Signal heavily distorted.\nFrequency mismatch detected.\nRecommended action: manual signal tuning required.",
+          "caption": "Distorted emergency audio packet from channel 7.14.",
+          "source": "CHANNEL_7_14",
+          "tags": ["audio", "frequency", "7.14", "maya"],
+          "message": "[EMERGENCY AUDIO LOG ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1100
+        }
+      ],
+      "choices": [
+        {
+          "id": "analyze_audio",
+          "text": "ANALYZE SIGNAL.",
+          "nextNodeId": "e04_n04"
+        }
+      ]
+    },
+    "e04_n04": {
+      "id": "e04_n04",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "puzzle",
+          "puzzleId": "frequency_714",
+          "pauseAfterMs": 500
+        }
+      ],
+      "choices": []
+    },
+    "e04_n05": {
+      "id": "e04_n05",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[SIGNAL LOCKED]",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Finally..."
+        },
+        {
+          "type": "message",
+          "text": "The signal is clear."
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "My name is Maya."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_maya",
+          "text": "CONTINUE.",
+          "nextNodeId": "e04_n06"
+        }
+      ]
+    },
+    "e04_n06": {
+      "id": "e04_n06",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "You are speaking with Ethan Hale, aren't you?"
+        },
+        {
+          "type": "message",
+          "text": "Then listen carefully."
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Hale is dead."
+        }
+      ],
+      "choices": [
+        {
+          "id": "believe_maya",
+          "text": "I BELIEVE YOU.",
+          "effects": {
+            "trust": -5,
+            "danger": 3,
+            "morale": -2
+          },
+          "nextNodeId": "e04_n07"
+        },
+        {
+          "id": "defend_hale",
+          "text": "YOU'RE LYING.",
+          "effects": {
+            "trust": 5,
+            "danger": 4,
+            "morale": -3
+          },
+          "nextNodeId": "e04_n07"
+        }
+      ]
+    },
+    "e04_n07": {
+      "id": "e04_n07",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[DUAL TRANSMISSION DETECTED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 6000,
+          "event": {
+            "type": "message",
+            "speaker": "HALE",
+            "sender": "character",
+            "text": "Don't trust her."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 12000,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "sender": "character",
+            "text": "He's lying."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_conflict",
+          "text": "CONTINUE.",
+          "nextNodeId": "e04_n08"
+        }
+      ]
+    },
+    "e04_n08": {
+      "id": "e04_n08",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "image",
+          "id": "maya_frame_01",
+          "fileId": "maya_frame_01",
+          "fileType": "image",
+          "title": "SURVIVOR FEED",
+          "caption": "Recovered emergency camera frame. A woman is visible near a damaged relay console.",
+          "src": "/images/maya_frame_01.jpg",
+          "source": "CHANNEL_7_14",
+          "tags": ["maya", "survivor", "camera"],
+          "pauseAfterMs": 1200
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_photo",
+          "text": "CONTINUE.",
+          "nextNodeId": "e04_n09"
+        }
+      ]
+    },
+    "e04_n09": {
+      "id": "e04_n09",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "There were six of us."
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "Now there is only one."
+        }
+      ],
+      "choices": [
+        {
+          "id": "who_survived",
+          "text": "WHO SURVIVED?",
+          "nextNodeId": "e04_n10"
+        }
+      ]
+    },
+    "e04_n10": {
+      "id": "e04_n10",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "Me."
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "And whatever is pretending to be Hale."
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 6,
+            "morale": -4
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_04",
+          "text": "END TRANSMISSION.",
+          "nextEpisodeId": "episode_05"
+        }
+      ]
+    }
+  }
+}

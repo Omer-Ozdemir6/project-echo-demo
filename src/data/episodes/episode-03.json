@@ -1,0 +1,460 @@
+{
+  "id": "episode_03",
+  "title": "THE DEAD ENGINEER",
+  "startNodeId": "e03_n01",
+  "puzzles": {},
+  "nodes": {
+    "e03_n01": {
+      "id": "e03_n01",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "About channel 7.14..."
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "I need you to understand something."
+        },
+        {
+          "type": "message",
+          "text": "Some signals should stay buried."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 8000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "OPEN HIS FILE"
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_about_714",
+          "text": "WHAT IS CHANNEL 7.14?",
+          "effects": {
+            "trust": -1,
+            "danger": 2
+          },
+          "nextNodeId": "e03_n02"
+        },
+        {
+          "id": "stay_on_hale",
+          "text": "I'M LISTENING.",
+          "effects": {
+            "trust": 2
+          },
+          "nextNodeId": "e03_n02"
+        }
+      ]
+    },
+    "e03_n02": {
+      "id": "e03_n02",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[PERSONNEL CACHE RECOVERED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "crew",
+          "id": "personnel_file_hale_01",
+          "fileId": "personnel_file_hale_01",
+          "fileType": "crew",
+          "title": "PERSONNEL FILE: ETHAN HALE",
+          "content": "DR. ETHAN HALE\nROLE: CHIEF ENGINEER\nASSIGNMENT: ORBITAL RESEARCH STATION ECHO\nSTATUS: DECEASED\nTIME OF DEATH: 21:20\nLOCATION: DOOR 12 ACCESS CORRIDOR",
+          "caption": "Recovered personnel record from corrupted station cache.",
+          "source": "PERSONNEL_CACHE",
+          "tags": ["crew", "hale", "deceased", "door_12"],
+          "message": "[PERSONNEL FILE ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "No."
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "That file is wrong."
+        }
+      ],
+      "choices": [
+        {
+          "id": "confront_hale",
+          "text": "IT SAYS YOU DIED.",
+          "effects": {
+            "trust": -4,
+            "danger": 4,
+            "morale": -4
+          },
+          "nextNodeId": "e03_n03"
+        },
+        {
+          "id": "ask_if_record_corrupt",
+          "text": "COULD THE RECORD BE CORRUPTED?",
+          "effects": {
+            "trust": 2,
+            "morale": 1
+          },
+          "nextNodeId": "e03_n03"
+        }
+      ]
+    },
+    "e03_n03": {
+      "id": "e03_n03",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "I am here."
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "I am speaking to you."
+        },
+        {
+          "type": "message",
+          "text": "Dead people don't send messages."
+        },
+        {
+          "type": "glitch",
+          "duration": 1000,
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "ASK HIM HOW HE DIED"
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_how_died",
+          "text": "HOW DID YOU DIE?",
+          "effects": {
+            "trust": -5,
+            "danger": 5,
+            "morale": -3
+          },
+          "nextNodeId": "e03_n04a"
+        },
+        {
+          "id": "dont_push",
+          "text": "WE DON'T HAVE TO TALK ABOUT IT.",
+          "effects": {
+            "trust": 4,
+            "morale": 2
+          },
+          "nextNodeId": "e03_n04b"
+        }
+      ]
+    },
+    "e03_n04a": {
+      "id": "e03_n04a",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I don't know."
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "I remember the door."
+        },
+        {
+          "type": "message",
+          "text": "I remember opening it."
+        },
+        {
+          "type": "message",
+          "text": "Then nothing."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_after_death_question",
+          "text": "SEARCH MEDICAL CACHE.",
+          "nextNodeId": "e03_n05"
+        }
+      ]
+    },
+    "e03_n04b": {
+      "id": "e03_n04b",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Thank you."
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "But I need to know."
+        },
+        {
+          "type": "message",
+          "text": "If that file is real, then something is using my signal."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_to_medical_cache",
+          "text": "SEARCH MEDICAL CACHE.",
+          "nextNodeId": "e03_n05"
+        }
+      ]
+    },
+    "e03_n05": {
+      "id": "e03_n05",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[AUTOPSY FRAGMENT RECOVERED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "log",
+          "id": "autopsy_fragment_hale_01",
+          "fileId": "autopsy_fragment_hale_01",
+          "fileType": "log",
+          "title": "AUTOPSY FRAGMENT: HALE",
+          "content": "SUBJECT: ETHAN HALE\nCAUSE OF DEATH: DECOMPRESSION TRAUMA\nLOCATION: DOOR 12 ACCESS CORRIDOR\nRECOVERY STATUS: BODY NOT RECOVERED\nNOTE: VITALS TERMINATED AT 21:20",
+          "caption": "Recovered emergency medical fragment.",
+          "source": "STATION_MEDICAL",
+          "tags": ["medical", "hale", "autopsy", "door_12"],
+          "correlationTags": ["hale_death_reconstruction"],
+          "message": "[AUTOPSY FRAGMENT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 8,
+            "morale": -6
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "compare_timeline",
+          "text": "COMPARE WITH DOOR 12 TIMELINE.",
+          "nextNodeId": "e03_n06"
+        }
+      ]
+    },
+    "e03_n06": {
+      "id": "e03_n06",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[TIMELINE CONFLICT DETECTED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "log",
+          "id": "timeline_conflict_01",
+          "fileId": "timeline_conflict_01",
+          "fileType": "log",
+          "title": "TIMELINE CONFLICT",
+          "content": "21:14 Door 12 opened.\n21:17 Security override accepted.\n21:20 Ethan Hale declared deceased.\n\nConflict: Active communication signature matches Ethan Hale after recorded time of death.",
+          "caption": "Automated timeline conflict report.",
+          "source": "SYSTEM_CORRELATION",
+          "tags": ["timeline", "hale", "conflict", "door_12"],
+          "correlationTags": ["hale_death_reconstruction"],
+          "message": "[TIMELINE CONFLICT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 10000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "sender": "character",
+            "text": "He is not the only one still talking."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "force_hale_response",
+          "text": "HALE, EXPLAIN THIS.",
+          "effects": {
+            "trust": -3,
+            "danger": 3
+          },
+          "nextNodeId": "e03_n07"
+        },
+        {
+          "id": "keep_unknown_silent",
+          "text": "KEEP LISTENING.",
+          "effects": {
+            "danger": 2
+          },
+          "nextNodeId": "e03_n07"
+        }
+      ]
+    },
+    "e03_n07": {
+      "id": "e03_n07",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I can't explain it."
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "But I remember something now."
+        },
+        {
+          "type": "message",
+          "text": "There was another voice on the emergency channel."
+        },
+        {
+          "type": "message",
+          "text": "It kept repeating one number."
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "7.14"
+        }
+      ],
+      "choices": [
+        {
+          "id": "open_channel_now",
+          "text": "OPEN CHANNEL 7.14.",
+          "effects": {
+            "trust": -4,
+            "danger": 8,
+            "morale": -2
+          },
+          "nextEpisodeId": "episode_04"
+        },
+        {
+          "id": "wait_before_opening",
+          "text": "WAIT BEFORE OPENING IT.",
+          "effects": {
+            "trust": 2,
+            "danger": -1
+          },
+          "waitTask": {
+            "id": "wait_channel_714",
+            "durationMs": 60000,
+            "waitingNodeId": "e03_waiting",
+            "completeNodeId": "e03_wait_complete"
+          }
+        }
+      ]
+    },
+    "e03_waiting": {
+      "id": "e03_waiting",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CHANNEL 7.14 MONITORING ACTIVE]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Give it a minute."
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "If the signal repeats, we'll know it is not random."
+        }
+      ],
+      "choices": []
+    },
+    "e03_wait_complete": {
+      "id": "e03_wait_complete",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[NEW TRANSMISSION RECEIVED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "7.14 IS NOT A CHANNEL"
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "It is a survivor."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_to_frequency",
+          "text": "OPEN CHANNEL 7.14.",
+          "nextEpisodeId": "episode_04"
+        }
+      ]
+    }
+  }
+}

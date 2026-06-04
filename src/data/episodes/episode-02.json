@@ -1,35 +1,38 @@
 {
   "id": "episode_02",
-  "title": "Episode 02: The Disk",
-  "startNodeId": "disk_start",
+  "title": "THE RECORDINGS",
+  "startNodeId": "e02_n01",
   "puzzles": {
-    "decrypt_disk_01": {
-      "id": "decrypt_disk_01",
+    "decrypt_disk_02": {
+      "id": "decrypt_disk_02",
       "type": "decrypt",
-      "title": "DISK DECRYPTION",
-      "description": "The encrypted disk contains a damaged relay archive.",
-      "prompt": "ENTER TARGET FREQUENCY",
-      "placeholder": "000",
-      "inputMode": "numeric",
-      "maxLength": 3,
+      "title": "ARCHIVE DECRYPTION",
+      "description": "Encrypted archive storage detected.",
+      "prompt": "DECRYPT ARCHIVE KEY",
+      "placeholder": "ALPHA",
+      "inputMode": "text",
+      "maxLength": 12,
       "submitLabel": "DECRYPT",
-      "seed": "ECHO",
-      "targetFrequency": "417",
-      "acceptedAnswers": ["417"],
-      "successNodeId": "disk_decrypted",
-      "failureNodeId": "decrypt_failed",
+      "seed": "INCIDENT",
+      "targetFrequency": "ALPHA",
+      "acceptedAnswers": ["ALPHA"],
+      "successNodeId": "e02_n05",
+      "failureNodeId": "e02_n04",
       "submitCooldownMs": 500
     }
   },
   "nodes": {
-    "disk_start": {
-      "id": "disk_start",
-      "speaker": "DR. HALE",
+    "e02_n01": {
+      "id": "e02_n01",
+      "speaker": "HALE",
       "events": [
         {
-          "type": "systemAlert",
-          "text": "[RELAY ROOM CONNECTION RESTORED]",
-          "pauseAfterMs": 900
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "You saw the Incident Alpha report."
         },
         {
           "type": "typing",
@@ -37,29 +40,153 @@
         },
         {
           "type": "message",
-          "tone": "calm",
-          "text": "Command, I am still in the relay room."
-        },
-        {
-          "type": "typing",
-          "duration": 3000
+          "text": "Those records are incomplete."
         },
         {
           "type": "message",
-          "tone": "tense",
-          "text": "The encrypted disk is intact. I connected it to the terminal."
+          "text": "Most of the archive sectors were corrupted during the blackout."
+        },
+        {
+          "type": "message",
+          "text": "Some things are simply gone."
+        }
+      ],
+      "choices": [
+        {
+          "id": "what_are_you_hiding",
+          "text": "WHAT ARE YOU HIDING?",
+          "effects": {
+            "trust": -2,
+            "danger": 2
+          },
+          "nextNodeId": "e02_n02"
+        },
+        {
+          "id": "continue",
+          "text": "CONTINUE.",
+          "effects": {
+            "trust": 1
+          },
+          "nextNodeId": "e02_n02"
+        }
+      ]
+    },
+    "e02_n02": {
+      "id": "e02_n02",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[ARCHIVE SECTOR DISCOVERED]",
+          "pauseAfterMs": 900
         },
         {
           "type": "file",
-          "id": "encrypted_disk_status",
-          "fileId": "encrypted_disk_status",
-          "title": "ENCRYPTED DISK STATUS",
-          "content": "[ENCRYPTED PAYLOAD DETECTED]\\nSIGNAL FREQUENCY LOCK ACTIVE\\nTARGET CHANNEL PARTIALLY RECOVERED: 4_7",
-          "caption": "Disk status report from the relay terminal.",
-          "source": "RELAY_TERMINAL",
-          "tags": ["disk", "encrypted", "frequency"],
-          "message": "[ENCRYPTED DISK STATUS ARCHIVED]",
-          "pauseAfterMs": 1000
+          "id": "archive_map_01",
+          "fileId": "archive_map_01",
+          "fileType": "map",
+          "title": "ARCHIVE MAP",
+          "content": "Recovered maintenance map of the station archive sector.\n\nSector A: Primary relay archive\nSector B: Corrupted personnel cache\nSector C: Emergency channel records",
+          "caption": "Recovered maintenance map of the station archive sector.",
+          "source": "STATION_ARCHIVE",
+          "tags": ["archive", "map", "sector"],
+          "message": "[ARCHIVE MAP ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1100
+        }
+      ],
+      "choices": [
+        {
+          "id": "enter_archive",
+          "text": "ENTER ARCHIVE.",
+          "nextNodeId": "e02_n03"
+        }
+      ]
+    },
+    "e02_n03": {
+      "id": "e02_n03",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "There may still be something left inside."
+        },
+        {
+          "type": "message",
+          "text": "If the archive survived, answers survived."
+        },
+        {
+          "type": "systemAlert",
+          "text": "[ENCRYPTED STORAGE DEVICE DETECTED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "file",
+          "id": "encrypted_disk_02",
+          "fileId": "encrypted_disk_02",
+          "fileType": "file",
+          "title": "ENCRYPTED STORAGE DEVICE",
+          "content": "[ENCRYPTED ARCHIVE FRAGMENT]\n\nArchive Key Hint: ALPHA\n\nStatus: Locked",
+          "caption": "Encrypted archive fragment recovered from the archive sector.",
+          "source": "STATION_ARCHIVE",
+          "tags": ["encrypted", "archive", "alpha"],
+          "message": "[ENCRYPTED DEVICE ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1100
+        }
+      ],
+      "choices": [
+        {
+          "id": "decrypt_disk",
+          "text": "DECRYPT DEVICE.",
+          "nextNodeId": "e02_n04"
+        }
+      ]
+    },
+    "e02_n04": {
+      "id": "e02_n04",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "puzzle",
+          "puzzleId": "decrypt_disk_02",
+          "pauseAfterMs": 500
+        }
+      ],
+      "choices": []
+    },
+    "e02_n05": {
+      "id": "e02_n05",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[ARCHIVE UNLOCKED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "file",
+          "id": "recording_transcript_01",
+          "fileId": "recording_transcript_01",
+          "fileType": "log",
+          "title": "RECORDING TRANSCRIPT",
+          "content": "21:14 Door 12 opened.\n21:15 Unidentified movement detected.\n21:17 Security override accepted.\n21:19 Signal interruption.",
+          "caption": "Partial recording transcript recovered from archive storage.",
+          "source": "ARCHIVE_STORAGE",
+          "tags": ["recording", "door_12", "timeline"],
+          "correlationTags": ["incident_alpha_reconstruction"],
+          "message": "[RECORDING TRANSCRIPT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1100
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "Wait..."
         },
         {
           "type": "typing",
@@ -67,55 +194,40 @@
         },
         {
           "type": "message",
-          "tone": "tense",
-          "text": "It wants a target frequency. Three digits."
-        },
-        {
-          "type": "puzzle",
-          "puzzleId": "decrypt_disk_01",
-          "pauseAfterMs": 500
+          "text": "That recording should not exist."
         }
       ],
-      "choices": []
+      "choices": [
+        {
+          "id": "ask_why",
+          "text": "WHY?",
+          "nextNodeId": "e02_n06a",
+          "effects": {
+            "trust": -2,
+            "danger": 2
+          }
+        },
+        {
+          "id": "keep_talking",
+          "text": "KEEP TALKING.",
+          "nextNodeId": "e02_n06b",
+          "effects": {
+            "trust": 1
+          }
+        }
+      ]
     },
-    "decrypt_failed": {
-      "id": "decrypt_failed",
-      "speaker": "DR. HALE",
+    "e02_n06a": {
+      "id": "e02_n06a",
+      "speaker": "HALE",
       "events": [
-        {
-          "type": "systemAlert",
-          "text": "[DECRYPTION FAILED]",
-          "pauseAfterMs": 900
-        },
-        {
-          "type": "typing",
-          "duration": 2400
-        },
-        {
-          "type": "message",
-          "tone": "tense",
-          "text": "The disk rejected the frequency."
-        },
         {
           "type": "typing",
           "duration": 2600
         },
         {
           "type": "message",
-          "tone": "whisper",
-          "text": "Wait. The terminal flashed something before it locked again."
-        },
-        {
-          "type": "log",
-          "id": "frequency_hint_417",
-          "fileId": "frequency_hint_417",
-          "title": "FREQUENCY TRACE",
-          "content": "Recovered trace: TARGET CHANNEL = 417",
-          "caption": "A short frequency trace captured after failed decryption.",
-          "source": "RELAY_TERMINAL",
-          "tags": ["frequency", "417", "decrypt"],
-          "message": "[FREQUENCY TRACE ARCHIVED]",
-          "pauseAfterMs": 900
+          "text": "Because I deleted that archive myself."
         },
         {
           "type": "statChange",
@@ -127,170 +239,15 @@
       ],
       "choices": [
         {
-          "id": "retry_decrypt",
-          "text": "Try the frequency again.",
-          "puzzleId": "decrypt_disk_01"
+          "id": "continue_after_why",
+          "text": "CONTINUE.",
+          "nextNodeId": "e02_n07"
         }
       ]
     },
-    "disk_decrypted": {
-      "id": "disk_decrypted",
-      "speaker": "DR. HALE",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[DECRYPTION COMPLETE]",
-          "pauseAfterMs": 900
-        },
-        {
-          "type": "file",
-          "id": "relay_record_142",
-          "fileId": "relay_record_142",
-          "title": "RELAY RECORD 142",
-          "content": "RELAY FACILITY — DAY 142\\nSignal anomalies increasing.\\nRecommendation: Suspend Project Echo immediately.\\nRequest denied.",
-          "caption": "Recovered relay archive record.",
-          "source": "ENCRYPTED_DISK",
-          "tags": ["project echo", "relay", "record"],
-          "message": "[RELAY RECORD 142 ARCHIVED]",
-          "pauseAfterMs": 1000
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "tone": "tense",
-          "text": "That cannot be right."
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "tone": "whisper",
-          "text": "Project Echo was supposed to be terminated before the evacuation."
-        },
-        {
-          "type": "signalLost",
-          "message": "[SIGNAL INTERRUPTION]",
-          "restoreMessage": "[SIGNAL RESTORED]",
-          "duration": 2600,
-          "pauseAfterMs": 900
-        },
-        {
-          "type": "corruptMessage",
-          "text": "Y̷o̵u̶ ̷a̸r̷e̴ ̸n̷o̶t̷ ̸a̵l̶o̶n̶e̵.",
-          "pauseAfterMs": 1300
-        }
-      ],
-      "choices": [
-        {
-          "id": "ask_about_project_echo",
-          "text": "Ask Hale what Project Echo really was.",
-          "nextNodeId": "project_echo_question",
-          "effects": {
-            "trust": 3,
-            "danger": 5
-          }
-        },
-        {
-          "id": "tell_him_leave_room",
-          "text": "Tell Hale to leave the relay room.",
-          "nextNodeId": "leave_room",
-          "effects": {
-            "danger": -3,
-            "morale": 3
-          }
-        }
-      ]
-    },
-    "project_echo_question": {
-      "id": "project_echo_question",
-      "speaker": "DR. HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "tone": "tense",
-          "text": "It was a signal mapping project. At least that is what they told us."
-        },
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "tone": "whisper",
-          "text": "But the relay was not mapping signals. It was receiving them."
-        },
-        {
-          "type": "crew",
-          "id": "crew_status_hale",
-          "fileId": "crew_status_hale",
-          "title": "CREW STATUS: DR. ELIAS HALE",
-          "content": "NAME: DR. ELIAS HALE\\nASSIGNMENT: SIGNAL RELAY RESEARCH\\nLAST CHECK-IN: 03:17\\nSTATUS: DECEASED",
-          "caption": "Recovered crew status from encrypted personnel cache.",
-          "source": "ENCRYPTED_DISK",
-          "tags": ["crew", "hale", "deceased"],
-          "message": "[CREW STATUS ARCHIVED]",
-          "pauseAfterMs": 1200
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "tone": "panic",
-          "text": "No. That file is wrong."
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "tone": "panic",
-          "text": "I am here. I am talking to you."
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "trust": -5,
-            "danger": 10,
-            "morale": -10
-          }
-        }
-      ],
-      "choices": [
-        {
-          "id": "ask_hale_memory",
-          "text": "Ask Hale what he remembers before waking up.",
-          "nextNodeId": "hale_memory",
-          "effects": {
-            "trust": 4,
-            "danger": 5
-          }
-        },
-        {
-          "id": "hide_file_from_hale",
-          "text": "Do not tell Hale what the file says.",
-          "nextNodeId": "hide_truth",
-          "effects": {
-            "trust": -3,
-            "danger": -2
-          }
-        }
-      ]
-    },
-    "leave_room": {
-      "id": "leave_room",
-      "speaker": "DR. HALE",
+    "e02_n06b": {
+      "id": "e02_n06b",
+      "speaker": "HALE",
       "events": [
         {
           "type": "typing",
@@ -298,158 +255,281 @@
         },
         {
           "type": "message",
-          "tone": "tense",
-          "text": "I am stepping back from the terminal."
+          "text": "Some records were never meant to survive."
         },
         {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "tone": "whisper",
-          "text": "The monitors turned on by themselves."
-        },
-        {
-          "type": "systemAlert",
-          "text": "[UNAUTHORIZED RELAY ACTIVITY DETECTED]",
-          "pauseAfterMs": 1000
+          "type": "statChange",
+          "changes": {
+            "danger": 3,
+            "morale": -1
+          }
         }
       ],
       "choices": [
         {
-          "id": "return_to_files",
-          "text": "Check the decrypted files anyway.",
-          "nextNodeId": "project_echo_question",
-          "effects": {
-            "danger": 5
-          }
+          "id": "continue_after_talk",
+          "text": "CONTINUE.",
+          "nextNodeId": "e02_n07"
         }
       ]
     },
-    "hale_memory": {
-      "id": "hale_memory",
-      "speaker": "DR. HALE",
+    "e02_n07": {
+      "id": "e02_n07",
+      "speaker": "SYSTEM",
       "events": [
         {
-          "type": "typing",
-          "duration": 4200
+          "type": "systemAlert",
+          "text": "[CAMERA FRAME RECOVERED]",
+          "pauseAfterMs": 900
         },
         {
-          "type": "message",
-          "tone": "whisper",
-          "text": "I remember the evacuation alarm."
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "tone": "whisper",
-          "text": "I remember someone calling my name from inside the relay."
-        },
-        {
-          "type": "glitch",
-          "duration": 1000,
-          "pauseAfterMs": 700
-        },
-        {
-          "type": "corruptMessage",
-          "text": "H̶E̴ ̷D̷I̵D̸ ̷N̵O̷T̶ ̶W̸A̴K̷E̵ ̵U̶P̸.",
+          "type": "image",
+          "id": "camera_frame_02",
+          "fileId": "camera_frame_02",
+          "fileType": "image",
+          "title": "CORRIDOR CAMERA FRAME",
+          "caption": "A blurred figure stands near Door 12. Facial identification unavailable.",
+          "src": "/images/camera_frame_02.jpg",
+          "source": "STATION_CAMERA",
+          "tags": ["camera", "door_12", "figure"],
+          "correlationTags": ["incident_alpha_reconstruction"],
           "pauseAfterMs": 1200
         }
       ],
       "choices": [
         {
-          "id": "end_episode_memory",
-          "text": "Keep Hale talking.",
-          "nextNodeId": "episode_02_end",
-          "effects": {
-            "trust": 5,
-            "danger": 5
-          }
+          "id": "continue_camera",
+          "text": "CONTINUE.",
+          "nextNodeId": "e02_n08"
         }
       ]
     },
-    "hide_truth": {
-      "id": "hide_truth",
-      "speaker": "DR. HALE",
+    "e02_n08": {
+      "id": "e02_n08",
+      "speaker": "SYSTEM",
       "events": [
         {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "tone": "tense",
-          "text": "Command?"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "tone": "tense",
-          "text": "You went quiet."
-        },
-        {
           "type": "systemAlert",
-          "text": "[TRUST INSTABILITY DETECTED]",
-          "pauseAfterMs": 1000
+          "text": "[SECURITY OVERRIDE LOG RECOVERED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "file",
+          "id": "security_override_log",
+          "fileId": "security_override_log",
+          "fileType": "log",
+          "title": "SECURITY OVERRIDE LOG",
+          "content": "Override User: REDACTED\nAuthorization: VALID\nSource: UNKNOWN",
+          "caption": "Recovered authorization record from Door 12.",
+          "source": "STATION_SECURITY",
+          "tags": ["security", "override", "door_12"],
+          "correlationTags": ["incident_alpha_reconstruction"],
+          "message": "[SECURITY OVERRIDE LOG ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1100
         }
       ],
       "choices": [
         {
-          "id": "continue_after_hide",
-          "text": "Tell him to keep moving.",
-          "nextNodeId": "episode_02_end",
+          "id": "continue_security",
+          "text": "CONTINUE.",
+          "nextNodeId": "e02_n09"
+        }
+      ]
+    },
+    "e02_n09": {
+      "id": "e02_n09",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Additional archive fragments recovered."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 7000,
+          "event": {
+            "type": "systemAlert",
+            "text": "[CORRELATION SCAN AVAILABLE IN DATA BANK]"
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_reconstruction",
+          "text": "CONTINUE.",
+          "nextNodeId": "e02_n10"
+        }
+      ]
+    },
+    "e02_n10": {
+      "id": "e02_n10",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "emergency_channel_note",
+          "fileId": "emergency_channel_note",
+          "fileType": "log",
+          "title": "EMERGENCY CHANNEL NOTE",
+          "content": "Emergency Backup Channel\n\n7.14 MHz\n\nUse only if primary communication systems fail.",
+          "caption": "Recovered emergency communication note.",
+          "source": "ARCHIVE_STORAGE",
+          "tags": ["frequency", "emergency", "7.14"],
+          "message": "[EMERGENCY CHANNEL NOTE ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1100
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_frequency",
+          "text": "CONTINUE.",
+          "nextNodeId": "e02_n11"
+        }
+      ]
+    },
+    "e02_n11": {
+      "id": "e02_n11",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "glitch",
+          "duration": 1200,
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "DO NOT TRUST THE VOICE",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "signalLost",
+          "duration": 3000,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 900
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_final",
+          "text": "CONTINUE.",
+          "nextNodeId": "e02_n12"
+        }
+      ]
+    },
+    "e02_n12": {
+      "id": "e02_n12",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2300
+        },
+        {
+          "type": "message",
+          "text": "Listen to me."
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Whatever happens next..."
+        },
+        {
+          "type": "message",
+          "text": "Do not open channel 7.14."
+        }
+      ],
+      "choices": [
+        {
+          "id": "why_not",
+          "text": "WHY NOT?",
+          "nextNodeId": "e02_n13",
           "effects": {
-            "trust": -5,
-            "danger": 3
+            "trust": -1,
+            "danger": 2
+          }
+        },
+        {
+          "id": "understood",
+          "text": "UNDERSTOOD.",
+          "nextNodeId": "e02_n14",
+          "effects": {
+            "trust": 2
           }
         }
       ]
     },
-    "episode_02_end": {
-      "id": "episode_02_end",
-      "speaker": "DR. HALE",
+    "e02_n13": {
+      "id": "e02_n13",
+      "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 2600
         },
         {
           "type": "message",
-          "tone": "whisper",
-          "text": "There is another door behind the relay equipment."
+          "text": "Because someone else is listening."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 5000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "7.14"
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_02a",
+          "text": "END TRANSMISSION.",
+          "nextEpisodeId": "episode_03"
+        }
+      ]
+    },
+    "e02_n14": {
+      "id": "e02_n14",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2300
+        },
+        {
+          "type": "message",
+          "text": "Good."
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2600
         },
         {
           "type": "message",
-          "tone": "panic",
-          "text": "It is marked SECTOR 7."
+          "text": "Then don't make the same mistake we did."
         },
         {
-          "type": "glitch",
-          "duration": 1100,
-          "pauseAfterMs": 700
-        },
-        {
-          "type": "corruptMessage",
-          "text": "H̴E̵ ̸I̷S̵ ̴N̷O̷T̸ ̶D̴R̴.̴ ̸H̸A̶L̵E̷.",
-          "pauseAfterMs": 1200
-        },
-        {
-          "type": "systemAlert",
-          "text": "[EPISODE 02 COMPLETE]"
+          "type": "backgroundEvent",
+          "delay": 5000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "7.14"
+          }
         }
       ],
-      "choices": []
+      "choices": [
+        {
+          "id": "end_episode_02b",
+          "text": "END TRANSMISSION.",
+          "nextEpisodeId": "episode_03"
+        }
+      ]
     }
   }
 }

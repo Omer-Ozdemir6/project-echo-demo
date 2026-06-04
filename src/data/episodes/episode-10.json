@@ -1,0 +1,385 @@
+{
+  "id": "episode_10",
+  "title": "THE POD",
+  "startNodeId": "e10_n01",
+  "puzzles": {},
+  "nodes": {
+    "e10_n01": {
+      "id": "e10_n01",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[POD OPENING SEQUENCE AUTHORIZED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "message",
+          "text": "POD OPENING... 10%"
+        },
+        {
+          "type": "message",
+          "text": "POD OPENING... 35%"
+        },
+        {
+          "type": "message",
+          "text": "POD OPENING... 68%"
+        },
+        {
+          "type": "message",
+          "text": "POD OPENING... 91%"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[POD SEAL RELEASED]",
+          "pauseAfterMs": 900
+        }
+      ],
+      "choices": [
+        {
+          "id": "inspect_pod",
+          "text": "INSPECT POD.",
+          "nextNodeId": "e10_n02"
+        }
+      ]
+    },
+    "e10_n02": {
+      "id": "e10_n02",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[LIFE SIGN DETECTED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "That's impossible."
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "No..."
+        }
+      ],
+      "choices": [
+        {
+          "id": "request_visual",
+          "text": "SHOW VISUAL FEED.",
+          "nextNodeId": "e10_n03"
+        }
+      ]
+    },
+    "e10_n03": {
+      "id": "e10_n03",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "image",
+          "id": "pod_occupant_01",
+          "fileId": "pod_occupant_01",
+          "fileType": "image",
+          "title": "POD OCCUPANT FEED",
+          "caption": "Cryostasis pod interior. Face obscured. Suit identifier visible: NV-08.",
+          "src": "/images/pod_occupant_01.jpg",
+          "source": "POD_INTERNAL_CAMERA",
+          "tags": ["pod", "occupant", "noah", "voss"],
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "message",
+          "text": "Partial suit identifier recovered."
+        },
+        {
+          "type": "message",
+          "text": "SUIT ID: NV-08"
+        }
+      ],
+      "choices": [
+        {
+          "id": "run_medical_scan",
+          "text": "RUN MEDICAL SCAN.",
+          "nextNodeId": "e10_n04"
+        }
+      ]
+    },
+    "e10_n04": {
+      "id": "e10_n04",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[MEDICAL SCAN COMPLETE]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "file",
+          "id": "occupant_scan_01",
+          "fileId": "occupant_scan_01",
+          "fileType": "log",
+          "title": "OCCUPANT MEDICAL SCAN",
+          "content": "NAME: NOAH VOSS\nSTATUS: ALIVE\nHEARTBEAT: DETECTED\nNEURAL ACTIVITY: LOW BUT PRESENT\nCRYOSTASIS STATE: UNSTABLE",
+          "caption": "Medical scan recovered from emergency pod system.",
+          "source": "POD_MEDICAL_SYSTEM",
+          "tags": ["medical", "noah", "voss", "alive"],
+          "message": "[OCCUPANT MEDICAL SCAN ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_maya",
+          "text": "MAYA, EXPLAIN THIS.",
+          "nextNodeId": "e10_n05"
+        }
+      ]
+    },
+    "e10_n05": {
+      "id": "e10_n05",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "That's not possible."
+        },
+        {
+          "type": "message",
+          "text": "Noah Voss never boarded the station."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 7000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "sender": "character",
+            "text": "Don't wake him."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 14000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "sender": "character",
+            "text": "Please."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "decide_noah",
+          "text": "DECIDE NOAH'S STATUS.",
+          "nextNodeId": "e10_n06"
+        }
+      ]
+    },
+    "e10_n06": {
+      "id": "e10_n06",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CRYOSTASIS DECISION REQUIRED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "message",
+          "text": "Subject: NOAH VOSS"
+        },
+        {
+          "type": "message",
+          "text": "Cryostasis unstable."
+        }
+      ],
+      "choices": [
+        {
+          "id": "wake_noah",
+          "text": "WAKE HIM.",
+          "effects": {
+            "danger": 15,
+            "trust": -10,
+            "morale": -3
+          },
+          "nextNodeId": "e10_wake_01"
+        },
+        {
+          "id": "keep_asleep",
+          "text": "KEEP HIM ASLEEP.",
+          "effects": {
+            "danger": -5,
+            "morale": -5
+          },
+          "nextNodeId": "e10_sleep_01"
+        }
+      ]
+    },
+    "e10_wake_01": {
+      "id": "e10_wake_01",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CRYOSTASIS TERMINATED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "message",
+          "text": "Neural activity rising."
+        },
+        {
+          "type": "message",
+          "text": "Heartbeat stabilizing."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_wake",
+          "text": "CONTINUE.",
+          "nextNodeId": "e10_wake_02"
+        }
+      ]
+    },
+    "e10_wake_02": {
+      "id": "e10_wake_02",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "How many are left?"
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "Did Hale survive?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_noah_what",
+          "text": "WHAT DO YOU MEAN?",
+          "nextNodeId": "e10_wake_03"
+        }
+      ]
+    },
+    "e10_wake_03": {
+      "id": "e10_wake_03",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Then we're already too late."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_after_wake",
+          "text": "CONTINUE.",
+          "nextNodeId": "e10_n11"
+        }
+      ]
+    },
+    "e10_sleep_01": {
+      "id": "e10_sleep_01",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CRYOSTASIS MAINTAINED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "file",
+          "id": "cryostasis_log",
+          "fileId": "cryostasis_log",
+          "fileType": "log",
+          "title": "CRYOSTASIS LOG",
+          "content": "EMERGENCY LOCK ENABLED\nREQUESTED BY: ETHAN HALE\nSUBJECT: NOAH VOSS\nSTATUS: DO NOT WAKE",
+          "caption": "Cryostasis lock record recovered from emergency pod.",
+          "source": "POD_SYSTEM",
+          "tags": ["cryostasis", "hale", "noah", "lock"],
+          "message": "[CRYOSTASIS LOG ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_after_sleep",
+          "text": "CONTINUE.",
+          "nextNodeId": "e10_n11"
+        }
+      ]
+    },
+    "e10_n11": {
+      "id": "e10_n11",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[BLACK BOX RECORDER DETECTED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "file",
+          "id": "incident_alpha_blackbox",
+          "fileId": "incident_alpha_blackbox",
+          "fileType": "file",
+          "title": "BLACK BOX RECORDER",
+          "content": "CORRUPTED\n\nRECOVERY POSSIBLE\n\nDECRYPTION MODULE REQUIRED.",
+          "caption": "Recovered black box recorder connected to Incident Alpha.",
+          "source": "POD_STORAGE",
+          "tags": ["blackbox", "incident_alpha", "encrypted"],
+          "message": "[BLACK BOX RECORDER ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "glitch",
+          "duration": 1200,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU WERE NEVER SUPPOSED TO FIND NOAH",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "signalLost",
+          "duration": 2500,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "Find the black box."
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_10",
+          "text": "END TRANSMISSION.",
+          "nextEpisodeId": "episode_11"
+        }
+      ]
+    }
+  }
+}

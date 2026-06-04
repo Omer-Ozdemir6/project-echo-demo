@@ -1,0 +1,279 @@
+{
+  "id": "episode_06",
+  "title": "THE NAME",
+  "startNodeId": "e06_n01",
+
+  "puzzles": {
+    "memory_name_01": {
+      "id": "memory_name_01",
+      "type": "code",
+      "title": "MEMORY RECONSTRUCTION",
+      "description": "Search previous records and identify the missing crew member.",
+      "prompt": "ENTER MISSING NAME",
+      "acceptedAnswers": [
+        "NOAH VOSS",
+        "NOAH",
+        "VOSS"
+      ],
+      "successNodeId": "e06_n08",
+      "failureNodeId": "e06_n07"
+    }
+  },
+
+  "nodes": {
+    "e06_n01": {
+      "id": "e06_n01",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "You heard him."
+        },
+        {
+          "type": "message",
+          "text": "He said you already saw the name."
+        },
+        {
+          "type": "message",
+          "text": "Then the answer must be somewhere in the archives."
+        }
+      ],
+      "choices": [
+        {
+          "id": "start_search",
+          "text": "SEARCH ARCHIVES.",
+          "nextNodeId": "e06_n02"
+        }
+      ]
+    },
+
+    "e06_n02": {
+      "id": "e06_n02",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[ARCHIVE RECONSTRUCTION ACTIVE]"
+        },
+        {
+          "type": "file",
+          "fileId": "corrupted_manifest_fragment",
+          "title": "CORRUPTED MANIFEST FRAGMENT",
+          "content": "CREW MEMBER #07\nSTATUS: REDACTED\nSURNAME: V---",
+          "source": "CORRUPTED DATABASE"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_fragment",
+          "text": "CONTINUE.",
+          "nextNodeId": "e06_n03"
+        }
+      ]
+    },
+
+    "e06_n03": {
+      "id": "e06_n03",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "Stop looking."
+        },
+        {
+          "type": "message",
+          "text": "That file was deleted for a reason."
+        }
+      ],
+      "choices": [
+        {
+          "id": "ignore_hale",
+          "text": "KEEP SEARCHING.",
+          "nextNodeId": "e06_n04"
+        },
+        {
+          "id": "listen_hale",
+          "text": "WHY?",
+          "nextNodeId": "e06_n04"
+        }
+      ]
+    },
+
+    "e06_n04": {
+      "id": "e06_n04",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "log",
+          "fileId": "maintenance_log_voss",
+          "title": "MAINTENANCE LOG",
+          "content": "Relay inspection completed.\nSigned: N. Voss"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_log",
+          "text": "CONTINUE.",
+          "nextNodeId": "e06_n05"
+        }
+      ]
+    },
+
+    "e06_n05": {
+      "id": "e06_n05",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "corruptMessage",
+          "text": "YOU SAW IT."
+        },
+        {
+          "type": "corruptMessage",
+          "text": "LOOK AGAIN."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_unknown",
+          "text": "CONTINUE.",
+          "nextNodeId": "e06_n06"
+        }
+      ]
+    },
+
+    "e06_n06": {
+      "id": "e06_n06",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "I think we've gathered enough."
+        },
+        {
+          "type": "message",
+          "text": "Try reconstructing the missing identity."
+        }
+      ],
+      "choices": [
+        {
+          "id": "solve_name",
+          "text": "RECONSTRUCT IDENTITY.",
+          "nextNodeId": "e06_n07"
+        }
+      ]
+    },
+
+    "e06_n07": {
+      "id": "e06_n07",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "puzzle",
+          "puzzleId": "memory_name_01"
+        }
+      ]
+    },
+
+    "e06_n08": {
+      "id": "e06_n08",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[IDENTITY RECONSTRUCTED]"
+        },
+        {
+          "type": "crew",
+          "fileId": "crew_profile_voss",
+          "title": "NOAH VOSS",
+          "content": "NOAH VOSS\nROLE: COMMUNICATIONS SPECIALIST\nCLEARANCE LEVEL: OMEGA\nSTATUS: UNKNOWN"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_voss",
+          "text": "CONTINUE.",
+          "nextNodeId": "e06_n09"
+        }
+      ]
+    },
+
+    "e06_n09": {
+      "id": "e06_n09",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Noah Voss..."
+        },
+        {
+          "type": "message",
+          "text": "That shouldn't be possible."
+        }
+      ],
+      "choices": [
+        {
+          "id": "why_impossible",
+          "text": "WHY?",
+          "nextNodeId": "e06_n10"
+        }
+      ]
+    },
+
+    "e06_n10": {
+      "id": "e06_n10",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Because Noah Voss never boarded the station."
+        },
+        {
+          "type": "message",
+          "text": "His transfer request was denied weeks before launch."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_twist",
+          "text": "CONTINUE.",
+          "nextNodeId": "e06_n11"
+        }
+      ]
+    },
+
+    "e06_n11": {
+      "id": "e06_n11",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "glitch",
+          "duration": 1200
+        },
+        {
+          "type": "corruptMessage",
+          "text": "SHE IS WRONG."
+        },
+        {
+          "type": "typing",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "text": "I was there."
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_06",
+          "text": "END TRANSMISSION.",
+          "nextEpisodeId": "episode_07"
+        }
+      ]
+    }
+  }
+}

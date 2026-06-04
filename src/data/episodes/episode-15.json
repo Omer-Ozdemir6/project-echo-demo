@@ -1,0 +1,434 @@
+{
+  "id": "episode_15",
+  "title": "INCIDENT ALPHA",
+  "startNodeId": "e15_n01",
+
+  "puzzles": {},
+
+  "nodes": {
+    "e15_n01": {
+      "id": "e15_n01",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "The master record still exists."
+        },
+        {
+          "type": "message",
+          "text": "But nobody has opened it since Incident Alpha."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_01",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n02"
+        }
+      ]
+    },
+
+    "e15_n02": {
+      "id": "e15_n02",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "incident_alpha_master_record",
+          "title": "INCIDENT ALPHA MASTER RECORD",
+          "content": "STATUS: ENCRYPTED"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_02",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n03"
+        }
+      ]
+    },
+
+    "e15_n03": {
+      "id": "e15_n03",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "I can recover it."
+        },
+        {
+          "type": "message",
+          "text": "But it will take time."
+        }
+      ],
+      "choices": [
+        {
+          "id": "start_recovery",
+          "text": "START RECOVERY.",
+          "nextNodeId": "e15_n04"
+        }
+      ]
+    },
+
+    "e15_n04": {
+      "id": "e15_n04",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[MASTER RECORD RECOVERY STARTED]"
+        },
+        {
+          "type": "message",
+          "text": "Estimated Completion Time: 15 Minutes"
+        }
+      ],
+      "waitTask": {
+        "id": "incident_alpha_recovery",
+        "durationMs": 900000,
+        "waitingNodeId": "e15_waiting",
+        "completeNodeId": "e15_n05"
+      }
+    },
+
+    "e15_waiting": {
+      "id": "e15_waiting",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Recovering archived incident data..."
+        },
+        {
+          "type": "message",
+          "text": "Deep storage reconstruction in progress."
+        }
+      ]
+    },
+
+    "e15_n05": {
+      "id": "e15_n05",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[RECOVERY COMPLETE]"
+        },
+        {
+          "type": "file",
+          "fileId": "incident_alpha_final_log",
+          "title": "INCIDENT ALPHA FINAL LOG",
+          "content": "CLASSIFIED RECORD\n\nOPEN?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "open_log",
+          "text": "OPEN FILE.",
+          "nextNodeId": "e15_n06"
+        }
+      ]
+    },
+
+    "e15_n06": {
+      "id": "e15_n06",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[PLAYING ARCHIVED RECORDING]"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_recording",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n07"
+        }
+      ]
+    },
+
+    "e15_n07": {
+      "id": "e15_n07",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "This is Eva Thorne."
+        },
+        {
+          "type": "message",
+          "text": "If you're hearing this..."
+        },
+        {
+          "type": "message",
+          "text": "The station has already fallen."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_03",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n08"
+        }
+      ]
+    },
+
+    "e15_n08": {
+      "id": "e15_n08",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "We found something."
+        },
+        {
+          "type": "message",
+          "text": "Not someone."
+        },
+        {
+          "type": "message",
+          "text": "Something."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_04",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n09"
+        }
+      ]
+    },
+
+    "e15_n09": {
+      "id": "e15_n09",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "artifact_report_01",
+          "title": "ARTIFACT REPORT",
+          "content": "OBJECT DESIGNATION:\n\nAEON"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_05",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n10"
+        }
+      ]
+    },
+
+    "e15_n10": {
+      "id": "e15_n10",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "The object could alter memory."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_06",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n11"
+        }
+      ]
+    },
+
+    "e15_n11": {
+      "id": "e15_n11",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Noah was exposed first."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_07",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n12"
+        }
+      ]
+    },
+
+    "e15_n12": {
+      "id": "e15_n12",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Then Hale."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_08",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n13"
+        }
+      ]
+    },
+
+    "e15_n13": {
+      "id": "e15_n13",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Then me."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_09",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n14"
+        }
+      ]
+    },
+
+    "e15_n14": {
+      "id": "e15_n14",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "eva_final_status",
+          "title": "EVA FINAL STATUS",
+          "content": "STATUS:\n\nALIVE"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_10",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n15"
+        }
+      ]
+    },
+
+    "e15_n15": {
+      "id": "e15_n15",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Hello."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_11",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n16"
+        }
+      ]
+    },
+
+    "e15_n16": {
+      "id": "e15_n16",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "signalLost",
+          "duration": 4000,
+          "restoreMessage": "[SIGNAL RESTORED]"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_12",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n17"
+        }
+      ]
+    },
+
+    "e15_n17": {
+      "id": "e15_n17",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "I'm still here."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_13",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n18"
+        }
+      ]
+    },
+
+    "e15_n18": {
+      "id": "e15_n18",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "aeon_coordinates",
+          "title": "AEON COORDINATES",
+          "content": "OUTER SECTOR\n\nCOORDINATES FOUND"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_14",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n19"
+        }
+      ]
+    },
+
+    "e15_n19": {
+      "id": "e15_n19",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "What is AEON?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_15",
+          "text": "CONTINUE.",
+          "nextNodeId": "e15_n20"
+        }
+      ]
+    },
+
+    "e15_n20": {
+      "id": "e15_n20",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "text": "You were never supposed to find it."
+        }
+      ],
+      "choices": [
+{
+  "id": "continue_to_season_2",
+  "text": "CONTINUE TRANSMISSION.",
+  "nextEpisodeId": "episode_16"
+}
+      ]
+    }
+  }
+}

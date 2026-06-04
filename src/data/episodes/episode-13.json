@@ -1,0 +1,351 @@
+{
+  "id": "episode_13",
+  "title": "THE BREACH",
+  "startNodeId": "e13_n01",
+
+  "puzzles": {},
+
+  "nodes": {
+    "e13_n01": {
+      "id": "e13_n01",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "I remember something."
+        },
+        {
+          "type": "message",
+          "text": "A breach."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_01",
+          "text": "CONTINUE.",
+          "nextNodeId": "e13_n02"
+        }
+      ]
+    },
+
+    "e13_n02": {
+      "id": "e13_n02",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "No..."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_02",
+          "text": "CONTINUE.",
+          "nextNodeId": "e13_n03"
+        }
+      ]
+    },
+
+    "e13_n03": {
+      "id": "e13_n03",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "Don't tell him."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_03",
+          "text": "CONTINUE.",
+          "nextNodeId": "e13_n04"
+        }
+      ]
+    },
+
+    "e13_n04": {
+      "id": "e13_n04",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Sector 7."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_04",
+          "text": "CONTINUE.",
+          "nextNodeId": "e13_n05"
+        }
+      ]
+    },
+
+    "e13_n05": {
+      "id": "e13_n05",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[HULL BREACH DETECTED]"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[PRESSURE LOSS IN PROGRESS]"
+        },
+        {
+          "type": "message",
+          "text": "Emergency containment required."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_05",
+          "text": "CONTINUE.",
+          "nextNodeId": "e13_n06"
+        }
+      ]
+    },
+
+    "e13_n06": {
+      "id": "e13_n06",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "I can seal the breach."
+        },
+        {
+          "type": "message",
+          "text": "But it will take time."
+        }
+      ],
+      "choices": [
+        {
+          "id": "start_repair",
+          "text": "START REPAIR.",
+          "nextNodeId": "e13_n07"
+        }
+      ]
+    },
+
+    "e13_n07": {
+      "id": "e13_n07",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[EMERGENCY REPAIR STARTED]"
+        },
+        {
+          "type": "message",
+          "text": "Estimated Completion Time: 10 Minutes"
+        }
+      ],
+      "waitTask": {
+        "id": "seal_breach",
+        "durationMs": 600000,
+        "waitingNodeId": "e13_waiting",
+        "completeNodeId": "e13_n08"
+      }
+    },
+
+    "e13_waiting": {
+      "id": "e13_waiting",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Repair drones deployed."
+        },
+        {
+          "type": "message",
+          "text": "Hull stabilization in progress."
+        }
+      ]
+    },
+
+    "e13_n08": {
+      "id": "e13_n08",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[EMERGENCY REPAIR COMPLETE]"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[PRESSURE STABILIZED]"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_after_wait",
+          "text": "CONTINUE.",
+          "nextNodeId": "e13_n09"
+        }
+      ]
+    },
+
+    "e13_n09": {
+      "id": "e13_n09",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "breach_report_01",
+          "title": "BREACH REPORT",
+          "content": "SECTOR 7\n\nHULL DAMAGE\n\nCAUSE:\nINTERNAL EXPLOSION"
+        }
+      ],
+      "choices": [
+        {
+          "id": "inspect_report",
+          "text": "INSPECT REPORT.",
+          "nextNodeId": "e13_n10"
+        }
+      ]
+    },
+
+    "e13_n10": {
+      "id": "e13_n10",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "There was never an accident."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_maya",
+          "text": "CONTINUE.",
+          "nextNodeId": "e13_n11"
+        }
+      ]
+    },
+
+    "e13_n11": {
+      "id": "e13_n11",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "What?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_noah",
+          "text": "CONTINUE.",
+          "nextNodeId": "e13_n12"
+        }
+      ]
+    },
+
+    "e13_n12": {
+      "id": "e13_n12",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Someone detonated it."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_truth",
+          "text": "CONTINUE.",
+          "nextNodeId": "e13_n13"
+        }
+      ]
+    },
+
+    "e13_n13": {
+      "id": "e13_n13",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "backgroundEvent",
+          "delay": 15000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "You're getting close."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 30000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "Too close."
+          }
+        },
+        {
+          "type": "message",
+          "text": "Additional personnel records recovered."
+        }
+      ],
+      "choices": [
+        {
+          "id": "open_manifest",
+          "text": "OPEN MANIFEST.",
+          "nextNodeId": "e13_n14"
+        }
+      ]
+    },
+
+    "e13_n14": {
+      "id": "e13_n14",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "crew_manifest_original",
+          "title": "ORIGINAL CREW MANIFEST",
+          "content": "OFFICIAL CREW COUNT:\n7"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_manifest",
+          "text": "CONTINUE.",
+          "nextNodeId": "e13_n15"
+        }
+      ]
+    },
+
+    "e13_n15": {
+      "id": "e13_n15",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Who was the seventh?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_13",
+          "text": "END TRANSMISSION.",
+          "nextEpisodeId": "episode_14"
+        }
+      ]
+    }
+  }
+}

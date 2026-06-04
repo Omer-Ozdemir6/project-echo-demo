@@ -1,0 +1,330 @@
+{
+  "id": "episode_08",
+  "title": "THE EIGHTH PASSENGER",
+  "startNodeId": "e08_n01",
+
+  "puzzles": {},
+
+  "nodes": {
+    "e08_n01": {
+      "id": "e08_n01",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "I found something."
+        },
+        {
+          "type": "message",
+          "text": "A life support module."
+        },
+        {
+          "type": "message",
+          "text": "It's still transmitting."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_discovery",
+          "text": "CONTINUE.",
+          "nextNodeId": "e08_n02"
+        }
+      ]
+    },
+
+    "e08_n02": {
+      "id": "e08_n02",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[EMERGENCY POD DETECTED]"
+        },
+        {
+          "type": "file",
+          "fileId": "pod_manifest_01",
+          "title": "POD MANIFEST",
+          "content": "Occupant: UNKNOWN\nStatus: CRITICAL\nLife Support: 23%"
+        }
+      ],
+      "choices": [
+        {
+          "id": "inspect_pod",
+          "text": "INSPECT POD.",
+          "nextNodeId": "e08_n03"
+        }
+      ]
+    },
+
+    "e08_n03": {
+      "id": "e08_n03",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[WAIT TASK CREATED]"
+        },
+        {
+          "type": "message",
+          "text": "Life Support Failure Estimated: 24 Hours"
+        },
+        {
+          "type": "message",
+          "text": "Task Added: RESCUE THE POD"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_wait_task",
+          "text": "CONTINUE.",
+          "nextNodeId": "e08_n04"
+        }
+      ]
+    },
+
+    "e08_n04": {
+      "id": "e08_n04",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "We can still reach it."
+        },
+        {
+          "type": "message",
+          "text": "But it will be dangerous."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_hale_response",
+          "text": "CONTINUE.",
+          "nextNodeId": "e08_n05"
+        }
+      ]
+    },
+
+    "e08_n05": {
+      "id": "e08_n05",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "Leave it."
+        },
+        {
+          "type": "message",
+          "text": "Whatever is inside that pod is not worth the risk."
+        }
+      ],
+      "choices": [
+        {
+          "id": "save_occupant",
+          "text": "SAVE THE OCCUPANT",
+          "effects": {
+            "danger": 10,
+            "morale": 10
+          },
+          "nextNodeId": "e08_n06a"
+        },
+        {
+          "id": "leave_pod",
+          "text": "LEAVE THE POD",
+          "effects": {
+            "danger": -10,
+            "morale": -15
+          },
+          "nextNodeId": "e08_n06b"
+        }
+      ]
+    },
+
+    "e08_n06a": {
+      "id": "e08_n06a",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Good."
+        },
+        {
+          "type": "message",
+          "text": "Then we'll try to reach the pod."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_after_save",
+          "text": "CONTINUE.",
+          "nextNodeId": "e08_n07"
+        }
+      ]
+    },
+
+    "e08_n06b": {
+      "id": "e08_n06b",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "A rational decision."
+        },
+        {
+          "type": "message",
+          "text": "Some lives cannot be saved."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_after_leave",
+          "text": "CONTINUE.",
+          "nextNodeId": "e08_n07"
+        }
+      ]
+    },
+
+    "e08_n07": {
+      "id": "e08_n07",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "image",
+          "fileId": "pod_camera_01",
+          "title": "POD CAMERA FEED",
+          "caption": "Emergency pod visual feed recovered.",
+          "src": "/images/pod_camera_01.jpg"
+        }
+      ],
+      "choices": [
+        {
+          "id": "inspect_feed",
+          "text": "INSPECT FEED.",
+          "nextNodeId": "e08_n08"
+        }
+      ]
+    },
+
+    "e08_n08": {
+      "id": "e08_n08",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Image quality degraded."
+        },
+        {
+          "type": "message",
+          "text": "Partial suit identifier recovered."
+        },
+        {
+          "type": "message",
+          "text": "SUIT ID: NV-08"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_nv",
+          "text": "CONTINUE.",
+          "nextNodeId": "e08_n09"
+        }
+      ]
+    },
+
+    "e08_n09": {
+      "id": "e08_n09",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "No..."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_hale_reaction",
+          "text": "CONTINUE.",
+          "nextNodeId": "e08_n10"
+        }
+      ]
+    },
+
+    "e08_n10": {
+      "id": "e08_n10",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "That's impossible."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_background",
+          "text": "CONTINUE.",
+          "nextNodeId": "e08_n11"
+        }
+      ]
+    },
+
+    "e08_n11": {
+      "id": "e08_n11",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "backgroundEvent",
+          "delay": 15000,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "Don't let me die."
+          }
+        },
+        {
+          "type": "message",
+          "text": "Life Support Status Updated."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_life_support",
+          "text": "CONTINUE.",
+          "nextNodeId": "e08_n12"
+        }
+      ]
+    },
+
+    "e08_n12": {
+      "id": "e08_n12",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[LIFE SUPPORT STATUS]"
+        },
+        {
+          "type": "message",
+          "text": "Current Capacity: 22%"
+        },
+        {
+          "type": "message",
+          "text": "Wait Task Active: RESCUE THE POD"
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_08",
+          "text": "END TRANSMISSION.",
+          "nextEpisodeId": "episode_09"
+        }
+      ]
+    }
+  }
+}

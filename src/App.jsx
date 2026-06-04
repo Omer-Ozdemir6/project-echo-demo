@@ -9,7 +9,9 @@ import {
   submitPuzzleAnswer,
   collectFile,
   setActivePuzzle,
-  markFileAsRead
+  markFileAsRead,
+  resolveActiveWaitTask,
+  clearPendingNotifications
 } from "./engine/gameEngine";
 import { playNodeEvents } from "./engine/eventPlayer";
 import { runIntroTimeline } from "./engine/introEngine";
@@ -30,7 +32,11 @@ import MissingNodeScreen from "./components/MissingNodeScreen";
 import "./index.css";
 
 function App() {
-  const [phase, setPhase] = useState("start");
+  const [phase, setPhase] = useState(() => {
+  const savedProgress = localStorage.getItem("project_echo_progress");
+
+  return savedProgress ? "game" : "start";
+});
   const [bootAttempt, setBootAttempt] = useState(1);
   const [bootStepIndex, setBootStepIndex] = useState(0);
   const [bootProgress, setBootProgress] = useState(0);
@@ -43,6 +49,18 @@ function App() {
   const [isTyping, setIsTyping] = useState(false);
   const [isGlitching, setIsGlitching] = useState(false);
   const [signalStatus, setSignalStatus] = useState(null);
+  const [settings, setSettings] = useState(() => {
+  const saved = localStorage.getItem("echo_settings");
+
+  return saved
+    ? JSON.parse(saved)
+    : {
+        language: "en",
+        textSpeed: "normal",
+        soundEnabled: true,
+        vibrationEnabled: true
+      };
+});
 
   const currentNode = getCurrentNode(gameState);
   const activePuzzle = getActivePuzzle(gameState);
@@ -67,6 +85,54 @@ function App() {
     setBootAttempt(2);
     setPhase("booting");
   }
+
+  useEffect(() => {
+  localStorage.setItem(
+    "echo_settings",
+    JSON.stringify(settings)
+  );
+}, [settings]);
+
+useEffect(() => {
+  if (phase !== "game") return;
+
+  const pendingNotifications = gameState.pendingNotifications || [];
+
+  if (!pendingNotifications.length) return;
+
+  pendingNotifications.forEach((notification) => {
+    setVisibleMessages((prev) => [
+      ...prev,
+      {
+        type: "systemAlert",
+        text: notification.message || "[NEW CONNECTION DETECTED]",
+        sender: "system",
+        speaker: "SYSTEM"
+      }
+    ]);
+  });
+
+  setGameState((prevState) => {
+    const nextState = clearPendingNotifications(prevState);
+
+    saveGameState(nextState);
+
+    return nextState;
+  });
+}, [phase, gameState.pendingNotifications?.length]);
+
+useEffect(() => {
+  const resolvedState = resolveActiveWaitTask(gameState);
+
+  if (
+    resolvedState.episodeId !== gameState.episodeId ||
+    resolvedState.currentNodeId !== gameState.currentNodeId ||
+    Boolean(resolvedState.activeWaitTask) !== Boolean(gameState.activeWaitTask)
+  ) {
+    setGameState(resolvedState);
+    saveGameState(resolvedState);
+  }
+}, [gameState]);
 
   useEffect(() => {
     if (phase !== "booting" || !activeStep) return;
@@ -344,6 +410,8 @@ const canShowChoices =
       onPuzzleSubmit={handlePuzzleSubmit}
       onFileRead={handleFileRead}
       onReset={handleReset}
+      settings={settings}
+      onChangeSettings={setSettings}
     />
   );
 }

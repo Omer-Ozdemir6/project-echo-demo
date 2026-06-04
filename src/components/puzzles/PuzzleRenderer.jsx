@@ -1,5 +1,6 @@
 import CodePuzzleInput from "./CodePuzzleInput";
 import DecryptPuzzleInput from "./DecryptPuzzleInput";
+import FrequencyPuzzleInput from "./FrequencyPuzzleInput";
 
 export default function PuzzleRenderer({ puzzle, attempts = 0, onSubmit }) {
   if (!puzzle) return null;
@@ -7,6 +8,16 @@ export default function PuzzleRenderer({ puzzle, attempts = 0, onSubmit }) {
   if (puzzle.type === "decrypt") {
     return (
       <DecryptPuzzleInput
+        puzzle={puzzle}
+        attempts={attempts}
+        onSubmit={onSubmit}
+      />
+    );
+  }
+
+  if (puzzle.type === "frequency") {
+    return (
+      <FrequencyPuzzleInput
         puzzle={puzzle}
         attempts={attempts}
         onSubmit={onSubmit}
