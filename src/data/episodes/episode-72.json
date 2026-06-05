@@ -1,0 +1,292 @@
+{
+  "id": "episode_72",
+  "season": 3,
+  "episode": 57,
+  "title": "THE FINAL SUBJECT",
+  "startNodeId": "e72_n01",
+  "storyArc": "PLAYER_REVELATION",
+  "flagsUsed": [
+    "anchorNoah",
+    "pushNoah"
+  ],
+  "persistentVariables": {
+    "playerAwareness": 0,
+    "realityIntegrity": 30,
+    "noahStability": 15,
+    "observerTrust": 0
+  },
+  "nodes": {
+    "e72_n01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "timestamp",
+          "text": "AFTER EXTERNAL USER LINK DETECTION"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e72_n02"
+        }
+      ]
+    },
+
+    "e72_n02": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "What does that mean?"
+        },
+        {
+          "type": "message",
+          "text": "Who answered?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e72_n03"
+        }
+      ]
+    },
+
+    "e72_n03": {
+      "speaker": "ELENA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Not you."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e72_n04"
+        }
+      ]
+    },
+
+    "e72_n04": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[EXTERNAL CONNECTION ACTIVE]"
+        }
+      ],
+      "effects": {
+        "playerAwareness": 10
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e72_n05"
+        }
+      ]
+    },
+
+    "e72_n05": {
+      "speaker": "MARA_OR_SURVIVOR",
+      "events": [
+        {
+          "type": "message",
+          "text": "Then who is she talking about?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e72_n06"
+        }
+      ]
+    },
+
+    "e72_n06": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "...don't."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e72_n07"
+        }
+      ]
+    },
+
+    "e72_n07": {
+      "speaker": "ELENA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Why?"
+        },
+        {
+          "type": "message",
+          "text": "They're already here."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e72_n08"
+        }
+      ]
+    },
+
+    "e72_n08": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[UNAUTHORIZED OBSERVER DETECTED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e72_n09"
+        }
+      ]
+    },
+
+    "e72_n09": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Observer?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e72_n10"
+        }
+      ]
+    },
+
+    "e72_n10": {
+      "speaker": "ELENA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Not that Observer."
+        }
+      ],
+      "effects": {
+        "playerAwareness": 20
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e72_n11"
+        }
+      ]
+    },
+
+    "e72_n11": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "external_subject",
+          "title": "SUBJECT_FINAL",
+          "content": "STATUS: OBSERVING"
+        }
+      ],
+      "choices": [
+        {
+          "text": "OPEN FILE",
+          "nextNodeId": "major_choice"
+        }
+      ]
+    },
+
+    "major_choice": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "decision",
+          "text": "Allow Elena to continue?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "allow",
+          "text": "LET HER SPEAK",
+          "effects": {
+            "truthProgress": 20,
+            "realityIntegrity": -10
+          },
+          "nextNodeId": "allow_path"
+        },
+        {
+          "id": "stop",
+          "text": "STOP HER",
+          "effects": {
+            "teamStability": 10
+          },
+          "nextNodeId": "stop_path"
+        }
+      ]
+    },
+
+    "allow_path": {
+      "speaker": "ELENA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Good."
+        },
+        {
+          "type": "message",
+          "text": "Then let's talk about the person reading this."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "stop_path": {
+      "speaker": "ELENA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Too late."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "final_01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[SUBJECT FINAL ACKNOWLEDGED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_73"
+        }
+      ]
+    }
+  }
+}

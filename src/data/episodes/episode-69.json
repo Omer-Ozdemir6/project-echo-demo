@@ -1,0 +1,375 @@
+{
+  "id": "episode_69",
+  "season": 3,
+  "episode": 54,
+  "title": "MARA",
+  "startNodeId": "e69_n01",
+  "storyArc": "SECOND_CASUALTY",
+  "flagsUsed": [
+    "comfortNoah",
+    "tellTruth",
+    "grantProtected",
+    "evaProtected"
+  ],
+  "persistentVariables": {
+    "maraAlive": true,
+    "secondCasualtyRisk": 50,
+    "teamStability": 15,
+    "noahStability": 35,
+    "guiltLevel": 100
+  },
+  "nodes": {
+    "e69_n01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "timestamp",
+          "text": "37 SECONDS AFTER TARGET IDENTIFICATION"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e69_n02"
+        }
+      ]
+    },
+
+    "e69_n02": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "..."
+        },
+        {
+          "type": "message",
+          "text": "Why is everyone staring at me?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e69_n03"
+        }
+      ]
+    },
+
+    "e69_n03": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Run."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e69_n04"
+        }
+      ]
+    },
+
+    "e69_n04": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "What?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e69_n05"
+        }
+      ]
+    },
+
+    "e69_n05": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[ACCESS DOORS UNLOCKED]"
+        },
+        {
+          "type": "alert",
+          "text": "[PURSUIT AUTHORIZED]"
+        }
+      ],
+      "effects": {
+        "secondCasualtyRisk": 15
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e69_n06"
+        }
+      ]
+    },
+
+    "e69_n06": {
+      "speaker": "GRANT_OR_EVA_SURVIVOR",
+      "events": [
+        {
+          "type": "message",
+          "text": "Mara! MOVE!"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e69_n07"
+        }
+      ]
+    },
+
+    "e69_n07": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "audioEvent",
+          "text": "[METAL IMPACT]"
+        },
+        {
+          "type": "audioEvent",
+          "text": "[SCREAM]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e69_n08"
+        }
+      ]
+    },
+
+    "e69_n08": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "MARA!"
+        }
+      ],
+      "effects": {
+        "noahStability": -15
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e69_n09"
+        }
+      ]
+    },
+
+    "e69_n09": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "...I'm okay."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e69_n10"
+        }
+      ]
+    },
+
+    "e69_n10": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[BIOMETRIC FAILURE DETECTED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e69_n11"
+        }
+      ]
+    },
+
+    "e69_n11": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "...wait."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e69_n12"
+        }
+      ]
+    },
+
+    "e69_n12": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Why can't I feel my arm?"
+        }
+      ],
+      "effects": {
+        "teamStability": -20
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e69_n13"
+        }
+      ]
+    },
+
+    "e69_n13": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "No no no..."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "major_choice"
+        }
+      ]
+    },
+
+    "major_choice": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "decision",
+          "text": "Emergency medical route available."
+        }
+      ],
+      "choices": [
+        {
+          "id": "save_mara",
+          "text": "SEND THE SURVIVOR TO HELP MARA",
+          "effects": {
+            "maraAlive": true,
+            "survivorRisk": 60
+          },
+          "nextNodeId": "save_path"
+        },
+        {
+          "id": "protect_survivor",
+          "text": "KEEP THE SURVIVOR SAFE",
+          "effects": {
+            "maraAlive": false,
+            "survivorRisk": 0
+          },
+          "nextNodeId": "protect_path"
+        }
+      ]
+    },
+
+    "save_path": {
+      "speaker": "GRANT_OR_EVA_SURVIVOR",
+      "events": [
+        {
+          "type": "message",
+          "text": "Hang on, Mara."
+        },
+        {
+          "type": "message",
+          "text": "I'm coming."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "protect_path": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "...I'm sorry."
+        }
+      ],
+      "effects": {
+        "guiltLevel": 50
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "final_01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[UNAUTHORIZED ACCESS DETECTED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_02"
+        }
+      ]
+    },
+
+    "final_02": {
+      "speaker": "ELENA",
+      "events": [
+        {
+          "type": "message",
+          "text": "That's strange."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_03"
+        }
+      ]
+    },
+
+    "final_03": {
+      "speaker": "ELENA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Observer wasn't supposed to be here."
+        }
+      ],
+      "effects": {
+        "observerAwareness": 25
+      },
+      "choices": [
+        {
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_70"
+        }
+      ]
+    }
+  }
+}

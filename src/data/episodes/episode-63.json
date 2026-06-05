@@ -1,0 +1,337 @@
+{
+  "id": "episode_63",
+  "season": 3,
+  "episode": 48,
+  "title": "THE SCREAM",
+  "startNodeId": "e63_n01",
+
+  "storyArc": "FIRST_CASUALTY",
+
+  "persistentVariables": {
+    "grantAlive": true,
+    "evaAlive": true,
+    "maraAlive": true,
+    "teamStability": 80,
+    "guiltLevel": 0
+  },
+
+  "nodes": {
+    "e63_n01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "timestamp",
+          "text": "2 MINUTES AFTER SIGNAL LOSS"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e63_n02"
+        }
+      ]
+    },
+
+    "e63_n02": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Answer me."
+        },
+        {
+          "type": "message",
+          "text": "Who screamed?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e63_n03"
+        }
+      ]
+    },
+
+    "e63_n03": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "connectionAttempt",
+          "text": "[RECONNECTING...]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "WAIT",
+          "nextNodeId": "e63_n04"
+        }
+      ]
+    },
+
+    "e63_n04": {
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "audio",
+          "text": "[HEAVY BREATHING]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e63_n05"
+        }
+      ]
+    },
+
+    "e63_n05": {
+      "speaker": "EVA_OR_GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "...help."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e63_n06"
+        }
+      ]
+    },
+
+    "e63_n06": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "It's inside the network."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e63_n07"
+        }
+      ]
+    },
+
+    "e63_n07": {
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "message",
+          "text": "Casualty Protocol never hunted bodies."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e63_n08"
+        }
+      ]
+    },
+
+    "e63_n08": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "What does that mean?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e63_n09"
+        }
+      ]
+    },
+
+    "e63_n09": {
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "message",
+          "text": "It hunts identities."
+        }
+      ],
+      "effects": {
+        "teamStability": -15
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e63_n10"
+        }
+      ]
+    },
+
+    "e63_n10": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[PERSONNEL RECORD CORRUPTION DETECTED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "OPEN LOG",
+          "nextNodeId": "e63_n11"
+        }
+      ]
+    },
+
+    "e63_n11": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "log",
+          "text": "USER RECORD REMOVED"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e63_n12"
+        }
+      ]
+    },
+
+    "e63_n12": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Whose record?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "major_choice"
+        }
+      ]
+    },
+
+    "major_choice": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "decision",
+          "text": "Emergency recovery possible. Only one profile can be restored."
+        }
+      ],
+      "choices": [
+        {
+          "text": "RESTORE GRANT",
+          "effects": {
+            "grantProtected": true,
+            "evaProtected": false
+          },
+          "nextNodeId": "grant_path"
+        },
+        {
+          "text": "RESTORE EVA",
+          "effects": {
+            "grantProtected": false,
+            "evaProtected": true
+          },
+          "nextNodeId": "eva_path"
+        }
+      ]
+    },
+
+    "grant_path": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "restore",
+          "text": "[GRANT PROFILE RECOVERED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "eva_path": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "restore",
+          "text": "[EVA PROFILE RECOVERED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "final_01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[SECOND PROFILE LOST]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_02"
+        }
+      ]
+    },
+
+    "final_02": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Wait..."
+        },
+        {
+          "type": "message",
+          "text": "What do you mean lost?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_03"
+        }
+      ]
+    },
+
+    "final_03": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[IDENTITY DELETION COMPLETE]"
+        }
+      ],
+      "effects": {
+        "guiltLevel": 25
+      },
+      "choices": [
+        {
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_64"
+        }
+      ]
+    }
+  }
+}

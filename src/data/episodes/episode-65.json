@@ -1,0 +1,349 @@
+{
+  "id": "episode_65",
+  "season": 3,
+  "episode": 50,
+  "title": "ORIGIN",
+  "startNodeId": "e65_n01",
+  "storyArc": "OBSERVER_TRUTH_PART_1",
+  "flagsUsed": [
+    "grantProtected",
+    "evaProtected",
+    "openArchive",
+    "destroyArchive"
+  ],
+  "persistentVariables": {
+    "guiltLevel": 70,
+    "truthProgress": 90,
+    "observerAwareness": 40,
+    "teamStability": 45,
+    "lostMember": "PLAYER_CHOICE"
+  },
+  "nodes": {
+    "e65_n01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "timestamp",
+          "text": "21 MINUTES AFTER ORIGIN TRANSMISSION DISCOVERY"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e65_n02"
+        }
+      ]
+    },
+    "e65_n02": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Play it again."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e65_n03"
+        }
+      ]
+    },
+    "e65_n03": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "audioPlayback",
+          "text": "\"Can you hear me?\""
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e65_n04"
+        }
+      ]
+    },
+    "e65_n04": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "There's something wrong."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e65_n05"
+        }
+      ]
+    },
+    "e65_n05": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "I hear it too."
+        },
+        {
+          "type": "message",
+          "text": "That's not a transmission."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e65_n06"
+        }
+      ]
+    },
+    "e65_n06": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "forensicScan",
+          "text": "[VOICEPRINT ANALYSIS STARTED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "WAIT",
+          "nextNodeId": "e65_n07"
+        }
+      ]
+    },
+    "e65_n07": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "scanResult",
+          "text": "[MATCH FOUND]"
+        },
+        {
+          "type": "scanResult",
+          "text": "VOICE MATCH: DR. ELENA CROSS"
+        }
+      ],
+      "effects": {
+        "teamStability": -20
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e65_n08"
+        }
+      ]
+    },
+    "e65_n08": {
+      "speaker": "DR_HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "...Elena."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e65_n09"
+        }
+      ]
+    },
+    "e65_n09": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "incomingSignal",
+          "text": "[UNKNOWN CHANNEL OPENING]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e65_n10"
+        }
+      ]
+    },
+    "e65_n10": {
+      "speaker": "UNKNOWN_FEMALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "David?"
+        },
+        {
+          "type": "message",
+          "text": "David, is that you?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e65_n11"
+        }
+      ]
+    },
+    "e65_n11": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Oh my God..."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e65_n12"
+        }
+      ]
+    },
+    "e65_n12": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "conditionalMessage",
+          "condition": "grantProtected == true",
+          "text": "LOST MEMBER RECORD: EVA"
+        },
+        {
+          "type": "conditionalMessage",
+          "condition": "evaProtected == true",
+          "text": "LOST MEMBER RECORD: GRANT"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e65_n13"
+        }
+      ]
+    },
+    "e65_n13": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "conditionalMessage",
+          "condition": "grantProtected == true",
+          "text": "Eva would have known what to say right now."
+        },
+        {
+          "type": "conditionalMessage",
+          "condition": "evaProtected == true",
+          "text": "Grant would have made a terrible joke right now."
+        }
+      ],
+      "effects": {
+        "guiltLevel": 15
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "major_choice"
+        }
+      ]
+    },
+    "major_choice": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "decision",
+          "text": "The channel is unstable. One action possible."
+        }
+      ],
+      "choices": [
+        {
+          "id": "stabilize_channel",
+          "text": "STABILIZE THE CHANNEL",
+          "effects": {
+            "truthProgress": 20,
+            "casualtyRisk": 25
+          },
+          "nextNodeId": "stabilize_path"
+        },
+        {
+          "id": "terminate_channel",
+          "text": "TERMINATE THE CHANNEL",
+          "effects": {
+            "teamStability": 15,
+            "truthProgress": -20
+          },
+          "nextNodeId": "terminate_path"
+        }
+      ]
+    },
+    "stabilize_path": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Keep it open."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+    "terminate_path": {
+      "speaker": "DR_HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "Please."
+        },
+        {
+          "type": "message",
+          "text": "End it."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+    "final_01": {
+      "speaker": "UNKNOWN_FEMALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "David..."
+        },
+        {
+          "type": "message",
+          "text": "How many years has it been?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_02"
+        }
+      ]
+    },
+    "final_02": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[AEON CORE HOST RESPONDING]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_66"
+        }
+      ]
+    }
+  }
+}

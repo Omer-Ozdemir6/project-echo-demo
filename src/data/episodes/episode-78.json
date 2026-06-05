@@ -1,0 +1,315 @@
+{
+  "id": "episode_78",
+  "season": 3,
+  "episode": 63,
+  "title": "ORIGINAL",
+  "startNodeId": "e78_n01",
+  "storyArc": "IDENTITY_COLLAPSE",
+
+  "persistentVariables": {
+    "observerOriginKnown": false,
+    "noahOriginKnown": false,
+    "realityIntegrity": 0,
+    "timelineCollapse": 70
+  },
+
+  "nodes": {
+    "e78_n01": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "That's not possible."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e78_n02"
+        }
+      ]
+    },
+
+    "e78_n02": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Observer was created from me."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e78_n03"
+        }
+      ]
+    },
+
+    "e78_n03": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "Were you?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e78_n04"
+        }
+      ]
+    },
+
+    "e78_n04": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[IDENTITY CONFLICT DETECTED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e78_n05"
+        }
+      ]
+    },
+
+    "e78_n05": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "Tell me, Noah."
+        },
+        {
+          "type": "message",
+          "text": "What's your earliest memory?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e78_n06"
+        }
+      ]
+    },
+
+    "e78_n06": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "...I..."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e78_n07"
+        }
+      ]
+    },
+
+    "e78_n07": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "memoryFailure",
+          "text": "[MEMORY NOT FOUND]"
+        }
+      ],
+      "effects": {
+        "timelineCollapse": 10
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e78_n08"
+        }
+      ]
+    },
+
+    "e78_n08": {
+      "speaker": "MARA_OR_SURVIVOR",
+      "events": [
+        {
+          "type": "message",
+          "text": "...Noah?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e78_n09"
+        }
+      ]
+    },
+
+    "e78_n09": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "Now ask me."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e78_n10"
+        }
+      ]
+    },
+
+    "e78_n10": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "What's your earliest memory?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e78_n11"
+        }
+      ]
+    },
+
+    "e78_n11": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "A message."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e78_n12"
+        }
+      ]
+    },
+
+    "e78_n12": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "\"Can you hear me?\""
+        }
+      ],
+      "effects": {
+        "observerOriginKnown": true
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "major_choice"
+        }
+      ]
+    },
+
+    "major_choice": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "decision",
+          "text": "Who do you believe?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "believe_noah",
+          "text": "NOAH",
+          "effects": {
+            "observerTrust": -50
+          },
+          "nextNodeId": "noah_path"
+        },
+        {
+          "id": "believe_observer",
+          "text": "OBSERVER",
+          "effects": {
+            "observerTrust": 50
+          },
+          "nextNodeId": "observer_path"
+        }
+      ]
+    },
+
+    "noah_path": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "...again."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "observer_path": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "...again?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "final_01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CYCLE COMPARISON MATCH FOUND]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "OPEN",
+          "nextNodeId": "final_02"
+        }
+      ]
+    },
+
+    "final_02": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "log",
+          "text": "PLAYER DECISION MATCHES CYCLE 246"
+        }
+      ],
+      "choices": [
+        {
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_79"
+        }
+      ]
+    }
+  }
+}

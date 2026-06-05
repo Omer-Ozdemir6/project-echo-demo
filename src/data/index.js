@@ -1,11 +1,25 @@
-import episode01 from "./episodes/episode-01.json";
-import episode02 from "./episodes/episode-02.json";
 import correlations from "./correlations.json";
 
-export const episodes = {
-  episode_01: episode01,
-  episode_02: episode02
-};
+const episodeModules = import.meta.glob("./episodes/episode-*.json", {
+  eager: true,
+  import: "default",
+});
+
+function toEpisodeId(path) {
+  const match = path.match(/episode-(\d+)\.json$/);
+
+  if (!match) {
+    return null;
+  }
+
+  return `episode_${match[1]}`;
+}
+
+export const episodes = Object.fromEntries(
+  Object.entries(episodeModules)
+    .map(([path, episode]) => [toEpisodeId(path), episode])
+    .filter(([episodeId]) => Boolean(episodeId))
+);
 
 export const DEFAULT_EPISODE_ID = "episode_01";
 

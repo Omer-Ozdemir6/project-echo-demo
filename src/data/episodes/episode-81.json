@@ -1,0 +1,326 @@
+{
+  "id": "episode_81",
+  "season": 3,
+  "episode": 66,
+  "title": "THE THIRD LOSS",
+  "startNodeId": "e81_n01",
+  "storyArc": "POINT_OF_NO_RETURN",
+
+  "persistentVariables": {
+    "thirdLossOccurred": false,
+    "teamStability": -50,
+    "guiltLevel": 150,
+    "survivorAlive": true,
+    "maraAlive": true
+  },
+
+  "nodes": {
+    "e81_n01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[LIFE SUPPORT FAILURE CONFIRMED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e81_n02"
+        }
+      ]
+    },
+
+    "e81_n02": {
+      "speaker": "SURVIVOR",
+      "events": [
+        {
+          "type": "message",
+          "text": "Guys..."
+        },
+        {
+          "type": "message",
+          "text": "I can't stop it."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e81_n03"
+        }
+      ]
+    },
+
+    "e81_n03": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "What failed?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e81_n04"
+        }
+      ]
+    },
+
+    "e81_n04": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[SECTOR 7 BREACH]"
+        },
+        {
+          "type": "alert",
+          "text": "[CONTAINMENT FAILURE]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e81_n05"
+        }
+      ]
+    },
+
+    "e81_n05": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Get out of there."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e81_n06"
+        }
+      ]
+    },
+
+    "e81_n06": {
+      "speaker": "SURVIVOR",
+      "events": [
+        {
+          "type": "message",
+          "text": "...can't."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e81_n07"
+        }
+      ]
+    },
+
+    "e81_n07": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[ONE EVACUATION ROUTE AVAILABLE]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "OPEN ROUTE",
+          "nextNodeId": "e81_n08"
+        }
+      ]
+    },
+
+    "e81_n08": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "ROUTE A → MARA"
+        },
+        {
+          "type": "alert",
+          "text": "ROUTE B → SURVIVOR"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e81_n09"
+        }
+      ]
+    },
+
+    "e81_n09": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "...Noah."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e81_n10"
+        }
+      ]
+    },
+
+    "e81_n10": {
+      "speaker": "SURVIVOR",
+      "events": [
+        {
+          "type": "conditionalMessage",
+          "condition": "grantProtected == true",
+          "text": "If this goes bad... tell Eva I finally admitted she was smarter than me."
+        },
+        {
+          "type": "conditionalMessage",
+          "condition": "evaProtected == true",
+          "text": "If this goes bad... tell Grant I hated almost all of his jokes."
+        }
+      ],
+      "effects": {
+        "guiltLevel": 20
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "major_choice"
+        }
+      ]
+    },
+
+    "major_choice": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "decision",
+          "text": "Only one route can be activated."
+        }
+      ],
+      "choices": [
+        {
+          "id": "save_mara",
+          "text": "SAVE MARA",
+          "effects": {
+            "maraAlive": true,
+            "survivorAlive": false
+          },
+          "nextNodeId": "mara_path"
+        },
+        {
+          "id": "save_survivor",
+          "text": "SAVE SURVIVOR",
+          "effects": {
+            "maraAlive": false,
+            "survivorAlive": true
+          },
+          "nextNodeId": "survivor_path"
+        }
+      ]
+    },
+
+    "mara_path": {
+      "speaker": "SURVIVOR",
+      "events": [
+        {
+          "type": "message",
+          "text": "...good."
+        },
+        {
+          "type": "message",
+          "text": "She'll know what to do."
+        }
+      ],
+      "effects": {
+        "thirdLossOccurred": true
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "survivor_path": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "...Noah."
+        },
+        {
+          "type": "message",
+          "text": "Don't let this be for nothing."
+        }
+      ],
+      "effects": {
+        "thirdLossOccurred": true
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "final_01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "audioEvent",
+          "text": "[CONNECTION LOST]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_02"
+        }
+      ]
+    },
+
+    "final_02": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "..."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_03"
+        }
+      ]
+    },
+
+    "final_03": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "I hate this place."
+        }
+      ],
+      "effects": {
+        "teamStability": -100
+      },
+      "choices": [
+        {
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_82"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,481 @@
+{
+  "id": "episode_48",
+  "season": 3,
+  "episode": 33,
+  "title": "AFTERMATH",
+  "startNodeId": "e48_n01",
+
+  "flagsUsed": [
+    "observerConnected",
+    "evelynCopyConnected"
+  ],
+
+  "persistentVariables": {
+    "evaTrust": 50,
+    "grantTrust": 50,
+    "maraTrust": 50,
+    "noahTrust": 50,
+    "teamMorale": 70
+  },
+
+  "nodes": {
+    "e48_n01": {
+      "id": "e48_n01",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "timestamp",
+          "text": "3 HOURS LATER"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_01",
+          "text": "CONTINUE.",
+          "nextNodeId": "branch_check"
+        }
+      ]
+    },
+
+    "branch_check": {
+      "id": "branch_check",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "conditionalBranch",
+          "condition": "observerConnected == false",
+          "targetNodeId": "observer_lost_01"
+        },
+        {
+          "type": "conditionalBranch",
+          "condition": "evelynCopyConnected == false",
+          "targetNodeId": "evelyn_lost_01"
+        }
+      ]
+    },
+
+    "observer_lost_01": {
+      "id": "observer_lost_01",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "archivedMessage",
+          "title": "LAST OBSERVER TRANSMISSION"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_obs_01",
+          "text": "CONTINUE.",
+          "nextNodeId": "observer_lost_02"
+        }
+      ]
+    },
+
+    "observer_lost_02": {
+      "id": "observer_lost_02",
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "When Hale lies to you..."
+        },
+        {
+          "type": "message",
+          "text": "remember this moment."
+        }
+      ],
+      "effects": {
+        "teamMorale": -10
+      },
+      "choices": [
+        {
+          "id": "merge_aftermath_obs",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_01"
+        }
+      ]
+    },
+
+    "evelyn_lost_01": {
+      "id": "evelyn_lost_01",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "timestamp",
+          "text": "2 HOURS OF SILENCE"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_eve_01",
+          "text": "CONTINUE.",
+          "nextNodeId": "evelyn_lost_02"
+        }
+      ]
+    },
+
+    "evelyn_lost_02": {
+      "id": "evelyn_lost_02",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 10000
+        },
+        {
+          "type": "message",
+          "text": "I know why you did it."
+        },
+        {
+          "type": "message",
+          "text": "But it still hurts."
+        }
+      ],
+      "effects": {
+        "noahTrust": -20
+      },
+      "choices": [
+        {
+          "id": "merge_aftermath_eve",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_01"
+        }
+      ]
+    },
+
+    "shared_01": {
+      "id": "shared_01",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Can we talk about what's happening now?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_01",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_02"
+        }
+      ]
+    },
+
+    "shared_02": {
+      "id": "shared_02",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "I'd love that."
+        },
+        {
+          "type": "message",
+          "text": "Because I feel like we're collecting trauma cards."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_02",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_03"
+        }
+      ]
+    },
+
+    "shared_03": {
+      "id": "shared_03",
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Hale is alive."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_03",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_04"
+        }
+      ]
+    },
+
+    "shared_04": {
+      "id": "shared_04",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "See?"
+        },
+        {
+          "type": "message",
+          "text": "Another trauma card."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_04",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_05"
+        }
+      ]
+    },
+
+    "shared_05": {
+      "id": "shared_05",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Mara."
+        },
+        {
+          "type": "message",
+          "text": "How scared should we be?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_05",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_06"
+        }
+      ]
+    },
+
+    "shared_06": {
+      "id": "shared_06",
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 8000
+        },
+        {
+          "type": "message",
+          "text": "Very."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_06",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_07"
+        }
+      ]
+    },
+
+    "shared_07": {
+      "id": "shared_07",
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Observer was a prisoner."
+        },
+        {
+          "type": "message",
+          "text": "Evelyn was a victim."
+        },
+        {
+          "type": "message",
+          "text": "Hale was the architect."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_07",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_08"
+        }
+      ]
+    },
+
+    "shared_08": {
+      "id": "shared_08",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_08",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_09"
+        }
+      ]
+    },
+
+    "shared_09": {
+      "id": "shared_09",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Hale wasn't like that."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_09",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_10"
+        }
+      ]
+    },
+
+    "shared_10": {
+      "id": "shared_10",
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "You haven't seen what I saw."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_10",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_11"
+        }
+      ]
+    },
+
+    "shared_11": {
+      "id": "shared_11",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "incomingSignal",
+          "source": "ANCHOR_03"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_11",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_12"
+        }
+      ]
+    },
+
+    "shared_12": {
+      "id": "shared_12",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 12000
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_12",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_13"
+        }
+      ]
+    },
+
+    "shared_13": {
+      "id": "shared_13",
+      "speaker": "DR_HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "Mara is right."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_13",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_14"
+        }
+      ]
+    },
+
+    "shared_14": {
+      "id": "shared_14",
+      "speaker": "DR_HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "You should be afraid of me."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_14",
+          "text": "CONTINUE.",
+          "nextNodeId": "shared_15"
+        }
+      ]
+    },
+
+    "shared_15": {
+      "id": "shared_15",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Well."
+        },
+        {
+          "type": "message",
+          "text": "I appreciate the honesty."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_shared_15",
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "final_01": {
+      "id": "final_01",
+      "speaker": "DR_HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "I didn't contact you to threaten you."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_final_01",
+          "text": "CONTINUE.",
+          "nextNodeId": "final_02"
+        }
+      ]
+    },
+
+    "final_02": {
+      "id": "final_02",
+      "speaker": "DR_HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "I contacted you because one of you is about to die."
+        }
+      ],
+      "choices": [
+        {
+          "id": "end_episode_48",
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_49"
+        }
+      ]
+    }
+  }
+}

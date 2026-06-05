@@ -1,0 +1,366 @@
+{
+  "id": "episode_79",
+  "season": 3,
+  "episode": 64,
+  "title": "CASUALTY PROTOCOL",
+  "startNodeId": "e79_n01",
+  "storyArc": "THE_FIRST_DOMINO",
+
+  "persistentVariables": {
+    "haleSecretKnown": false,
+    "maraTrust": 60,
+    "noahTrust": 50,
+    "teamStability": 5,
+    "thirdLossRisk": 40
+  },
+
+  "nodes": {
+    "e79_n01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CASUALTY PROTOCOL ORIGIN FILE FOUND]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "OPEN FILE",
+          "nextNodeId": "e79_n02"
+        }
+      ]
+    },
+
+    "e79_n02": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Finally."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e79_n03"
+        }
+      ]
+    },
+
+    "e79_n03": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "recording",
+          "text": "[DR. HALE - PRIVATE LOG]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "PLAY",
+          "nextNodeId": "e79_n04"
+        }
+      ]
+    },
+
+    "e79_n04": {
+      "speaker": "DR_HALE_RECORDING",
+      "events": [
+        {
+          "type": "message",
+          "text": "If you're hearing this..."
+        },
+        {
+          "type": "message",
+          "text": "Then Casualty Protocol has already failed."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e79_n05"
+        }
+      ]
+    },
+
+    "e79_n05": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Failed?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e79_n06"
+        }
+      ]
+    },
+
+    "e79_n06": {
+      "speaker": "DR_HALE_RECORDING",
+      "events": [
+        {
+          "type": "message",
+          "text": "Casualty Protocol was never designed to save people."
+        }
+      ],
+      "effects": {
+        "teamStability": -5
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e79_n07"
+        }
+      ]
+    },
+
+    "e79_n07": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "...what?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e79_n08"
+        }
+      ]
+    },
+
+    "e79_n08": {
+      "speaker": "DR_HALE_RECORDING",
+      "events": [
+        {
+          "type": "message",
+          "text": "It was designed to choose who dies."
+        }
+      ],
+      "effects": {
+        "thirdLossRisk": 10
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e79_n09"
+        }
+      ]
+    },
+
+    "e79_n09": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e79_n10"
+        }
+      ]
+    },
+
+    "e79_n10": {
+      "speaker": "DR_HALE_RECORDING",
+      "events": [
+        {
+          "type": "message",
+          "text": "There was never enough time."
+        },
+        {
+          "type": "message",
+          "text": "Never enough resources."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e79_n11"
+        }
+      ]
+    },
+
+    "e79_n11": {
+      "speaker": "DR_HALE_RECORDING",
+      "events": [
+        {
+          "type": "message",
+          "text": "Every cycle demanded a sacrifice."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e79_n12"
+        }
+      ]
+    },
+
+    "e79_n12": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "casualty_log",
+          "title": "CASUALTY_SELECTIONS",
+          "content": "CYCLE 112: EVA\nCYCLE 188: MARA\nCYCLE 201: GRANT\nCYCLE 246: NOAH"
+        }
+      ],
+      "choices": [
+        {
+          "text": "OPEN FILE",
+          "nextNodeId": "e79_n13"
+        }
+      ]
+    },
+
+    "e79_n13": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "...you were choosing us."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e79_n14"
+        }
+      ]
+    },
+
+    "e79_n14": {
+      "speaker": "DR_HALE_RECORDING",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "I was choosing humanity."
+        }
+      ],
+      "effects": {
+        "haleSecretKnown": true
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "major_choice"
+        }
+      ]
+    },
+
+    "major_choice": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "decision",
+          "text": "Do you believe Hale?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "believe_hale",
+          "text": "HE DID WHAT HE HAD TO",
+          "effects": {
+            "maraTrust": -20,
+            "noahTrust": 10
+          },
+          "nextNodeId": "hale_path"
+        },
+        {
+          "id": "condemn_hale",
+          "text": "HE WAS A MONSTER",
+          "effects": {
+            "maraTrust": 10,
+            "noahTrust": -10
+          },
+          "nextNodeId": "monster_path"
+        }
+      ]
+    },
+
+    "hale_path": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Don't."
+        },
+        {
+          "type": "message",
+          "text": "Don't you dare defend him."
+        }
+      ],
+      "effects": {
+        "maraTrust": -30
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "monster_path": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "...I wish it was that simple."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "final_01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[UNAUTHORIZED DATA TRANSFER DETECTED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_02"
+        }
+      ]
+    },
+
+    "final_02": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "...what did you just do?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_80"
+        }
+      ]
+    }
+  }
+}

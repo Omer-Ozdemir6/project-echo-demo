@@ -1,0 +1,377 @@
+{
+  "id": "episode_71",
+  "season": 3,
+  "episode": 56,
+  "title": "THE OTHER NOAH",
+  "startNodeId": "e71_n01",
+  "storyArc": "OBSERVER_TRUTH_PART_5",
+  "flagsUsed": [
+    "traceObserver",
+    "leaveObserver",
+    "saveMara",
+    "protectSurvivor",
+    "grantProtected",
+    "evaProtected"
+  ],
+  "persistentVariables": {
+    "observerIdentityKnown": true,
+    "noahStability": 20,
+    "realityIntegrity": 40,
+    "teamStability": 10,
+    "observerTrust": 0,
+    "aeonInstability": 65
+  },
+  "nodes": {
+    "e71_n01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "timestamp",
+          "text": "IMMEDIATELY AFTER OBSERVER IDENTITY TRACE"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e71_n02"
+        }
+      ]
+    },
+    "e71_n02": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "No, that's not possible."
+        }
+      ],
+      "effects": {
+        "noahStability": -10
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e71_n03"
+        }
+      ]
+    },
+    "e71_n03": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "It is."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e71_n04"
+        }
+      ]
+    },
+    "e71_n04": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "You are the body that left."
+        },
+        {
+          "type": "message",
+          "text": "I am the mind that stayed."
+        }
+      ],
+      "effects": {
+        "realityIntegrity": -10
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e71_n05"
+        }
+      ]
+    },
+    "e71_n05": {
+      "speaker": "MARA_OR_SURVIVOR",
+      "events": [
+        {
+          "type": "message",
+          "text": "So Observer is... Noah?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e71_n06"
+        }
+      ]
+    },
+    "e71_n06": {
+      "speaker": "ELENA",
+      "events": [
+        {
+          "type": "message",
+          "text": "A copy of Noah."
+        },
+        {
+          "type": "message",
+          "text": "Made during the first failed rescue attempt."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e71_n07"
+        }
+      ]
+    },
+    "e71_n07": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "noah_split_log",
+          "title": "NOAH_SPLIT_LOG",
+          "content": "ORIGINAL: NOAH CARTER\nBIOLOGICAL STATUS: ACTIVE\nDIGITAL ECHO: ACTIVE\nECHO DESIGNATION: OBSERVER"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e71_n08"
+        }
+      ]
+    },
+    "e71_n08": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "You knew."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e71_n09"
+        }
+      ]
+    },
+    "e71_n09": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "I remembered."
+        },
+        {
+          "type": "message",
+          "text": "There's a difference."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e71_n10"
+        }
+      ]
+    },
+    "e71_n10": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "You let them die."
+        }
+      ],
+      "effects": {
+        "noahStability": -15,
+        "teamStability": -5
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e71_n11"
+        }
+      ]
+    },
+    "e71_n11": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "You did."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e71_n12"
+        }
+      ]
+    },
+    "e71_n12": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "conditionalMessage",
+          "condition": "grantProtected == true",
+          "text": "LOST MEMBER MEMORY: EVA"
+        },
+        {
+          "type": "conditionalMessage",
+          "condition": "evaProtected == true",
+          "text": "LOST MEMBER MEMORY: GRANT"
+        }
+      ],
+      "choices": [
+        {
+          "text": "OPEN MEMORY",
+          "nextNodeId": "e71_n13"
+        }
+      ]
+    },
+    "e71_n13": {
+      "speaker": "LOST_MEMBER_MEMORY",
+      "events": [
+        {
+          "type": "conditionalMessage",
+          "condition": "grantProtected == true",
+          "text": "EVA MEMORY: Noah, breathe. Whatever happens next, don't become him."
+        },
+        {
+          "type": "conditionalMessage",
+          "condition": "evaProtected == true",
+          "text": "GRANT MEMORY: If future me is dead, tell Noah I said something heroic and emotionally devastating."
+        }
+      ],
+      "effects": {
+        "guiltLevel": 20
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "major_choice"
+        }
+      ]
+    },
+    "major_choice": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "decision",
+          "text": "Noah is destabilizing. Choose what to tell him."
+        }
+      ],
+      "choices": [
+        {
+          "id": "anchor_noah",
+          "text": "YOU ARE STILL YOU",
+          "effects": {
+            "noahStability": 20,
+            "observerTrust": -10
+          },
+          "nextNodeId": "anchor_path"
+        },
+        {
+          "id": "push_noah",
+          "text": "OBSERVER IS PART OF YOU",
+          "effects": {
+            "truthProgress": 20,
+            "noahStability": -20,
+            "observerTrust": 15
+          },
+          "nextNodeId": "push_path"
+        }
+      ]
+    },
+    "anchor_path": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "I want to believe that."
+        },
+        {
+          "type": "message",
+          "text": "I really do."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+    "push_path": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Then maybe I'm the thing we should be afraid of."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+    "final_01": {
+      "speaker": "ELENA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Noah was never the final subject."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_02"
+        }
+      ]
+    },
+    "final_02": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[EXTERNAL USER LINK DETECTED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_03"
+        }
+      ]
+    },
+    "final_03": {
+      "speaker": "ELENA",
+      "events": [
+        {
+          "type": "message",
+          "text": "The final subject is the one who answered."
+        }
+      ],
+      "choices": [
+        {
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_72"
+        }
+      ]
+    }
+  }
+}

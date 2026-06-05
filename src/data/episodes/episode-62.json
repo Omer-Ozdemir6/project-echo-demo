@@ -1,0 +1,353 @@
+{
+  "id": "episode_62",
+  "season": 3,
+  "episode": 47,
+  "title": "TARGET ACQUIRED",
+  "startNodeId": "e62_n01",
+
+  "storyArc": "CASUALTY_PROTOCOL",
+
+  "persistentVariables": {
+    "grantRisk": 40,
+    "evaRisk": 40,
+    "casualtyRisk": 25,
+    "teamStability": 90
+  },
+
+  "nodes": {
+    "e62_n01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "timestamp",
+          "text": "43 SECONDS AFTER TARGET ACQUISITION"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e62_n02"
+        }
+      ]
+    },
+
+    "e62_n02": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[SECURITY DOORS OVERRIDE]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e62_n03"
+        }
+      ]
+    },
+
+    "e62_n03": {
+      "speaker": "GRANT",
+      "conditions": {
+        "path": "grant_path"
+      },
+      "events": [
+        {
+          "type": "message",
+          "text": "The door just locked behind me."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e62_n05"
+        }
+      ]
+    },
+
+    "e62_n04": {
+      "speaker": "EVA",
+      "conditions": {
+        "path": "eva_path"
+      },
+      "events": [
+        {
+          "type": "message",
+          "text": "The door just locked behind me."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e62_n05"
+        }
+      ]
+    },
+
+    "e62_n05": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Get out of there."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e62_n06"
+        }
+      ]
+    },
+
+    "e62_n06": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "audioEvent",
+          "text": "[FOOTSTEPS DETECTED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e62_n07"
+        }
+      ]
+    },
+
+    "e62_n07": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "Those aren't footsteps."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e62_n08"
+        }
+      ]
+    },
+
+    "e62_n08": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "It's the drones."
+        }
+      ],
+      "effects": {
+        "teamStability": -10
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e62_n09"
+        }
+      ]
+    },
+
+    "e62_n09": {
+      "speaker": "GRANT_OR_EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "You're telling me murder drones are real now?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e62_n10"
+        }
+      ]
+    },
+
+    "e62_n10": {
+      "speaker": "GRANT",
+      "conditions": {
+        "path": "grant_path"
+      },
+      "events": [
+        {
+          "type": "message",
+          "text": "I preferred the ghosts."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e62_n12"
+        }
+      ]
+    },
+
+    "e62_n11": {
+      "speaker": "EVA",
+      "conditions": {
+        "path": "eva_path"
+      },
+      "events": [
+        {
+          "type": "message",
+          "text": "I preferred the conspiracy."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e62_n12"
+        }
+      ]
+    },
+
+    "e62_n12": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[TARGET LOCK CONFIRMED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "major_choice"
+        }
+      ]
+    },
+
+    "major_choice": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "decision",
+          "text": "One action available."
+        }
+      ],
+      "choices": [
+        {
+          "text": "OPEN SECURITY BULKHEAD",
+          "effects": {
+            "casualtyRisk": -10,
+            "aeonContainment": -40
+          },
+          "nextNodeId": "bulkhead_path"
+        },
+        {
+          "text": "KEEP BULKHEAD CLOSED",
+          "effects": {
+            "casualtyRisk": 30,
+            "aeonContainment": 20
+          },
+          "nextNodeId": "closed_path"
+        }
+      ]
+    },
+
+    "bulkhead_path": {
+      "speaker": "DR_HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "Don't do that."
+        },
+        {
+          "type": "message",
+          "text": "If you open it..."
+        },
+        {
+          "type": "message",
+          "text": "everything changes."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "closed_path": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "If you keep it closed..."
+        },
+        {
+          "type": "message",
+          "text": "someone dies."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "final_01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "audioEvent",
+          "text": "[SCREAM DETECTED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_02"
+        }
+      ]
+    },
+
+    "final_02": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "..."
+        },
+        {
+          "type": "message",
+          "text": "Who was that?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_03"
+        }
+      ]
+    },
+
+    "final_03": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[SIGNAL LOST]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_63"
+        }
+      ]
+    }
+  }
+}

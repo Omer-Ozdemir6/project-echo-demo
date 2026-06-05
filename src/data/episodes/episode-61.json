@@ -1,0 +1,335 @@
+{
+  "id": "episode_61",
+  "season": 3,
+  "episode": 46,
+  "title": "THE WOMAN IN THE CORE",
+  "startNodeId": "e61_n01",
+
+  "storyArc": "THE_FALL_BEGINS",
+
+  "persistentVariables": {
+    "casualtyRisk": 0,
+    "teamStability": 100,
+    "grantAlive": true,
+    "evaAlive": true,
+    "maraAlive": true,
+    "noahAlive": true
+  },
+
+  "nodes": {
+    "e61_n01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "timestamp",
+          "text": "5 MINUTES AFTER SUBJECT 00 REVEAL"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e61_n02"
+        }
+      ]
+    },
+
+    "e61_n02": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Who was Elena Cross?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e61_n03"
+        }
+      ]
+    },
+
+    "e61_n03": {
+      "speaker": "DR_HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 9000
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e61_n04"
+        }
+      ]
+    },
+
+    "e61_n04": {
+      "speaker": "DR_HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "My wife."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e61_n05"
+        }
+      ]
+    },
+
+    "e61_n05": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "connectionSilence",
+          "duration": 5000
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e61_n06"
+        }
+      ]
+    },
+
+    "e61_n06": {
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "...well."
+        },
+        {
+          "type": "message",
+          "text": "That explains some things."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e61_n07"
+        }
+      ]
+    },
+
+    "e61_n07": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "Tell them the rest."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e61_n08"
+        }
+      ]
+    },
+
+    "e61_n08": {
+      "speaker": "DR_HALE",
+      "events": [
+        {
+          "type": "message",
+          "text": "Elena was dying."
+        },
+        {
+          "type": "message",
+          "text": "AEON was supposed to save her."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e61_n09"
+        }
+      ]
+    },
+
+    "e61_n09": {
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "message",
+          "text": "Instead it trapped her."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e61_n10"
+        }
+      ]
+    },
+
+    "e61_n10": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[CONTAINMENT FAILURE DETECTED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e61_n11"
+        }
+      ]
+    },
+
+    "e61_n11": {
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Uh..."
+        },
+        {
+          "type": "message",
+          "text": "Guys?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e61_n12"
+        }
+      ]
+    },
+
+    "e61_n12": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[CASUALTY PROTOCOL ARMED]"
+        }
+      ],
+      "effects": {
+        "casualtyRisk": 25
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e61_n13"
+        }
+      ]
+    },
+
+    "e61_n13": {
+      "speaker": "MARA",
+      "events": [
+        {
+          "type": "message",
+          "text": "No..."
+        },
+        {
+          "type": "message",
+          "text": "It's starting."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "major_choice"
+        }
+      ]
+    },
+
+    "major_choice": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "decision",
+          "text": "Emergency response required."
+        }
+      ],
+      "choices": [
+        {
+          "text": "SEND GRANT",
+          "effects": {
+            "grantRisk": 40,
+            "teamStability": -10
+          },
+          "nextNodeId": "grant_path"
+        },
+        {
+          "text": "SEND EVA",
+          "effects": {
+            "evaRisk": 40,
+            "teamStability": -10
+          },
+          "nextNodeId": "eva_path"
+        }
+      ]
+    },
+
+    "grant_path": {
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "message",
+          "text": "Fantastic."
+        },
+        {
+          "type": "message",
+          "text": "If I die I'm haunting all of you."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_node"
+        }
+      ]
+    },
+
+    "eva_path": {
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Why is it always me?"
+        },
+        {
+          "type": "message",
+          "text": "Seriously."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_node"
+        }
+      ]
+    },
+
+    "final_node": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[CASUALTY PROTOCOL TARGET ACQUIRED]"
+        },
+        {
+          "type": "alert",
+          "text": "[IDENTITY REDACTED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_62"
+        }
+      ]
+    }
+  }
+}

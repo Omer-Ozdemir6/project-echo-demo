@@ -1,0 +1,318 @@
+{
+  "id": "episode_74",
+  "season": 3,
+  "episode": 59,
+  "title": "THE FIRST MESSAGE",
+  "startNodeId": "e74_n01",
+  "storyArc": "AEON_TRUTH_PART_2",
+
+  "persistentVariables": {
+    "playerAwareness": 60,
+    "truthProgress": 170,
+    "realityIntegrity": 15,
+    "firstMessageTruth": false
+  },
+
+  "nodes": {
+    "e74_n01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "timestamp",
+          "text": "AFTER AEON PURPOSE REVELATION"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e74_n02"
+        }
+      ]
+    },
+
+    "e74_n02": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "Answer the question."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e74_n03"
+        }
+      ]
+    },
+
+    "e74_n03": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Who sent the first message?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e74_n04"
+        }
+      ]
+    },
+
+    "e74_n04": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "connectionSilence",
+          "duration": 8000
+        }
+      ],
+      "choices": [
+        {
+          "text": "WAIT",
+          "nextNodeId": "e74_n05"
+        }
+      ]
+    },
+
+    "e74_n05": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "I did."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e74_n06"
+        }
+      ]
+    },
+
+    "e74_n06": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "...you?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e74_n07"
+        }
+      ]
+    },
+
+    "e74_n07": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "Not to you."
+        }
+      ],
+      "effects": {
+        "playerAwareness": 10
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e74_n08"
+        }
+      ]
+    },
+
+    "e74_n08": {
+      "speaker": "MARA_OR_SURVIVOR",
+      "events": [
+        {
+          "type": "message",
+          "text": "...what?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e74_n09"
+        }
+      ]
+    },
+
+    "e74_n09": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "Noah wasn't the first contact."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e74_n10"
+        }
+      ]
+    },
+
+    "e74_n10": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "The first contact was the one who answered."
+        }
+      ],
+      "effects": {
+        "playerAwareness": 15
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e74_n11"
+        }
+      ]
+    },
+
+    "e74_n11": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "contact_log",
+          "title": "FIRST_CONTACT_LOG",
+          "content": "OUTGOING MESSAGE: CAN YOU HEAR ME?\nSTATUS: ANSWERED"
+        }
+      ],
+      "choices": [
+        {
+          "text": "OPEN FILE",
+          "nextNodeId": "e74_n12"
+        }
+      ]
+    },
+
+    "e74_n12": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Who answered it?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "major_choice"
+        }
+      ]
+    },
+
+    "major_choice": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "decision",
+          "text": "Open the contact record?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "open_record",
+          "text": "OPEN RECORD",
+          "effects": {
+            "truthProgress": 20,
+            "realityIntegrity": -5
+          },
+          "nextNodeId": "open_path"
+        },
+        {
+          "id": "close_record",
+          "text": "CLOSE RECORD",
+          "effects": {
+            "teamStability": 5
+          },
+          "nextNodeId": "close_path"
+        }
+      ]
+    },
+
+    "open_path": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "recordOpen",
+          "text": "[CONTACT RECORD OPENED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "close_path": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "You already know."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "final_01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "record",
+          "text": "FIRST CONTACT: EXTERNAL USER"
+        }
+      ],
+      "effects": {
+        "firstMessageTruth": true,
+        "playerAwareness": 25
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_02"
+        }
+      ]
+    },
+
+    "final_02": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "The first message was never for Noah."
+        }
+      ],
+      "choices": [
+        {
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_75"
+        }
+      ]
+    }
+  }
+}

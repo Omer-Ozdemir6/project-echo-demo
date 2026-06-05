@@ -1,0 +1,360 @@
+{
+  "id": "episode_70",
+  "season": 3,
+  "episode": 55,
+  "title": "OBSERVER",
+  "startNodeId": "e70_n01",
+  "storyArc": "OBSERVER_TRUTH_PART_4",
+  "flagsUsed": [
+    "saveMara",
+    "protectSurvivor",
+    "allowElena",
+    "denyElena"
+  ],
+  "persistentVariables": {
+    "observerAwareness": 85,
+    "teamStability": 10,
+    "guiltLevel": 100,
+    "realityIntegrity": 60,
+    "observerIdentityKnown": false
+  },
+  "nodes": {
+    "e70_n01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "timestamp",
+          "text": "8 MINUTES AFTER ELENA'S WARNING"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e70_n02"
+        }
+      ]
+    },
+
+    "e70_n02": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "What do you mean Observer wasn't supposed to be here?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e70_n03"
+        }
+      ]
+    },
+
+    "e70_n03": {
+      "speaker": "ELENA",
+      "events": [
+        {
+          "type": "message",
+          "text": "Because Observer isn't part of AEON."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e70_n04"
+        }
+      ]
+    },
+
+    "e70_n04": {
+      "speaker": "MARA_OR_SURVIVOR",
+      "events": [
+        {
+          "type": "message",
+          "text": "Then what is it?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e70_n05"
+        }
+      ]
+    },
+
+    "e70_n05": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "alert",
+          "text": "[OBSERVER CONNECTION ACTIVE]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e70_n06"
+        }
+      ]
+    },
+
+    "e70_n06": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "Careful, Elena."
+        },
+        {
+          "type": "message",
+          "text": "You're getting close."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e70_n07"
+        }
+      ]
+    },
+
+    "e70_n07": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Who are you?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e70_n08"
+        }
+      ]
+    },
+
+    "e70_n08": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 8000
+        }
+      ],
+      "choices": [
+        {
+          "text": "WAIT",
+          "nextNodeId": "e70_n09"
+        }
+      ]
+    },
+
+    "e70_n09": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "I've answered that question before."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e70_n10"
+        }
+      ]
+    },
+
+    "e70_n10": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Not to me."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e70_n11"
+        }
+      ]
+    },
+
+    "e70_n11": {
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "message",
+          "text": "..."
+        },
+        {
+          "type": "message",
+          "text": "That's what worries me."
+        }
+      ],
+      "effects": {
+        "realityIntegrity": -10
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "e70_n12"
+        }
+      ]
+    },
+
+    "e70_n12": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "fileId": "observer_log_01",
+          "title": "OBSERVER_ACCESS_LOG",
+          "content": "ACCESS COUNT: 247\nFIRST ACCESS: UNKNOWN\nLAST ACCESS: NOW"
+        }
+      ],
+      "choices": [
+        {
+          "text": "OPEN FILE",
+          "nextNodeId": "e70_n13"
+        }
+      ]
+    },
+
+    "e70_n13": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "247 accesses?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "major_choice"
+        }
+      ]
+    },
+
+    "major_choice": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "decision",
+          "text": "Observer identity trace available."
+        }
+      ],
+      "choices": [
+        {
+          "id": "trace_observer",
+          "text": "TRACE OBSERVER",
+          "effects": {
+            "observerAwareness": 25,
+            "realityIntegrity": -20
+          },
+          "nextNodeId": "trace_path"
+        },
+        {
+          "id": "leave_observer",
+          "text": "LEAVE IT",
+          "effects": {
+            "teamStability": 10
+          },
+          "nextNodeId": "leave_path"
+        }
+      ]
+    },
+
+    "trace_path": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "trace",
+          "text": "[IDENTITY TRACE STARTED]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "leave_path": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "Not worth it."
+        }
+      ],
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_01"
+        }
+      ]
+    },
+
+    "final_01": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "traceResult",
+          "text": "[MATCH FOUND]"
+        }
+      ],
+      "choices": [
+        {
+          "text": "OPEN RESULT",
+          "nextNodeId": "final_02"
+        }
+      ]
+    },
+
+    "final_02": {
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "traceResult",
+          "text": "OBSERVER IDENTITY: NOAH CARTER"
+        }
+      ],
+      "effects": {
+        "observerIdentityKnown": true,
+        "realityIntegrity": -20
+      },
+      "choices": [
+        {
+          "text": "CONTINUE.",
+          "nextNodeId": "final_03"
+        }
+      ]
+    },
+
+    "final_03": {
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "...what?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "END TRANSMISSION",
+          "nextEpisodeId": "episode_71"
+        }
+      ]
+    }
+  }
+}
