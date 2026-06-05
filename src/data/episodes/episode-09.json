@@ -2,9 +2,7 @@
   "id": "episode_09",
   "title": "THE RESCUE",
   "startNodeId": "e09_n01",
-
   "puzzles": {},
-
   "nodes": {
     "e09_n01": {
       "id": "e09_n01",
@@ -15,8 +13,16 @@
           "text": "[RESCUE TASK AVAILABLE]"
         },
         {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
           "type": "message",
           "text": "Target: Emergency Pod"
+        },
+        {
+          "type": "message",
+          "text": "Beacon lock unstable. Pod trajectory is drifting."
         }
       ],
       "choices": [
@@ -27,18 +33,25 @@
         }
       ]
     },
-
     "e09_n02": {
       "id": "e09_n02",
       "speaker": "MAYA",
       "events": [
+        {
+          "type": "typing",
+          "duration": 1800
+        },
         {
           "type": "message",
           "text": "Life support is dropping."
         },
         {
           "type": "message",
-          "text": "We don't have much time."
+          "text": "We do not have much time."
+        },
+        {
+          "type": "message",
+          "text": "And before anyone asks, no, I do not have a calm version of that sentence."
         }
       ],
       "choices": [
@@ -49,7 +62,6 @@
         }
       ]
     },
-
     "e09_n03": {
       "id": "e09_n03",
       "speaker": "SYSTEM",
@@ -58,13 +70,13 @@
           "type": "file",
           "fileId": "rescue_route_map",
           "title": "RESCUE ROUTE MAP",
-          "content": "ROUTE A\nShort Route\nHigh Radiation\n\nROUTE B\nLong Route\nLow Radiation"
+          "content": "ROUTE A\nShort Route\nHigh Radiation\nEstimated Arrival: Fast\nCrew Risk: Severe\n\nROUTE B\nLong Route\nLow Radiation\nEstimated Arrival: Delayed\nCrew Risk: Moderate\nLife Support Risk: Severe"
         }
       ],
       "choices": [
         {
           "id": "route_a",
-          "text": "ROUTE A",
+          "text": "ROUTE A - FAST / HIGH RISK",
           "effects": {
             "danger": 15,
             "morale": 5
@@ -73,7 +85,7 @@
         },
         {
           "id": "route_b",
-          "text": "ROUTE B",
+          "text": "ROUTE B - SAFE / SLOW",
           "effects": {
             "danger": -5,
             "morale": -5
@@ -82,7 +94,6 @@
         }
       ]
     },
-
     "e09_route_a": {
       "id": "e09_route_a",
       "speaker": "SYSTEM",
@@ -92,8 +103,26 @@
           "text": "Route A selected."
         },
         {
-          "type": "message",
-          "text": "Radiation exposure risk increased."
+          "type": "systemAlert",
+          "text": "[RADIATION EXPOSURE RISK INCREASED]"
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 4500,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "Fast route. Terrible route. Very us."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 8500,
+          "event": {
+            "type": "message",
+            "speaker": "HALE",
+            "text": "Keep moving. Do not stop in the exposed corridor."
+          }
         }
       ],
       "choices": [
@@ -104,7 +133,6 @@
         }
       ]
     },
-
     "e09_route_b": {
       "id": "e09_route_b",
       "speaker": "SYSTEM",
@@ -114,8 +142,26 @@
           "text": "Route B selected."
         },
         {
-          "type": "message",
-          "text": "Travel time increased."
+          "type": "systemAlert",
+          "text": "[TRAVEL TIME INCREASED]"
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 4500,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "This is safer for us."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 8500,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "Not for whoever is in that pod."
+          }
         }
       ],
       "choices": [
@@ -126,7 +172,6 @@
         }
       ]
     },
-
     "e09_n04": {
       "id": "e09_n04",
       "speaker": "SYSTEM",
@@ -140,8 +185,12 @@
           "text": "Current Capacity: 18%"
         },
         {
+          "type": "message",
+          "text": "Pod beacon pulse weakening."
+        },
+        {
           "type": "backgroundEvent",
-          "delay": 15000,
+          "delay": 6500,
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
@@ -150,11 +199,20 @@
         },
         {
           "type": "backgroundEvent",
-          "delay": 30000,
+          "delay": 12000,
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
-            "text": "I'm still here."
+            "text": "I can hear you outside."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 17500,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "Do not let Hale open it first."
           }
         }
       ],
@@ -166,11 +224,14 @@
         }
       ]
     },
-
     "e09_n05": {
       "id": "e09_n05",
       "speaker": "SYSTEM",
       "events": [
+        {
+          "type": "message",
+          "text": "Emergency pod interior scan received."
+        },
         {
           "type": "image",
           "fileId": "pod_internal_frame",
@@ -187,14 +248,21 @@
         }
       ]
     },
-
     "e09_n06": {
       "id": "e09_n06",
       "speaker": "MAYA",
       "events": [
         {
+          "type": "typing",
+          "duration": 2300
+        },
+        {
           "type": "message",
-          "text": "I can't identify the occupant."
+          "text": "I cannot identify the occupant."
+        },
+        {
+          "type": "message",
+          "text": "The scan keeps folding over itself, like the image is trying not to show us a face."
         }
       ],
       "choices": [
@@ -205,14 +273,21 @@
         }
       ]
     },
-
     "e09_n07": {
       "id": "e09_n07",
       "speaker": "HALE",
       "events": [
         {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
           "type": "message",
-          "text": "Don't open the pod."
+          "text": "Do not open the pod."
+        },
+        {
+          "type": "message",
+          "text": "I am not asking."
         }
       ],
       "choices": [
@@ -223,14 +298,13 @@
         }
       ]
     },
-
     "e09_n08": {
       "id": "e09_n08",
       "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 2500
+          "duration": 3000
         },
         {
           "type": "message",
@@ -245,22 +319,47 @@
         }
       ]
     },
-
     "e09_n09": {
       "id": "e09_n09",
       "speaker": "HALE",
       "events": [
         {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
           "type": "message",
           "text": "The pod was empty."
         },
         {
+          "type": "message",
+          "text": "No body. No blood. No suit. Just frost on the inside of the glass."
+        },
+        {
           "type": "backgroundEvent",
-          "delay": 4000,
+          "delay": 4500,
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
             "text": "He's lying."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 9000,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "Hale... when?"
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 13500,
+          "event": {
+            "type": "message",
+            "speaker": "HALE",
+            "text": "Before Alpha."
           }
         }
       ],
@@ -272,40 +371,54 @@
         }
       ]
     },
-
     "e09_n10": {
       "id": "e09_n10",
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "message",
-          "text": "Rescue Team Arrived."
-        },
-        {
           "type": "systemAlert",
           "text": "[POD ACCESS AVAILABLE]"
+        },
+        {
+          "type": "message",
+          "text": "Rescue team has reached emergency pod exterior."
+        },
+        {
+          "type": "message",
+          "text": "Manual override required."
+        },
+        {
+          "type": "glitch",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "Internal motion detected."
         }
       ],
       "choices": [
         {
           "id": "open_pod",
-          "text": "OPEN POD",
+          "text": "OPEN POD.",
           "effects": {
-            "danger": 10
+            "danger": 10,
+            "morale": 5,
+            "trust": -5
           },
           "nextNodeId": "e09_open_branch"
         },
         {
           "id": "abort_mission",
-          "text": "ABORT MISSION",
+          "text": "ABORT MISSION.",
           "effects": {
-            "morale": -20
+            "danger": -5,
+            "morale": -20,
+            "trust": 5
           },
           "nextNodeId": "e09_abort_branch"
         }
       ]
     },
-
     "e09_open_branch": {
       "id": "e09_open_branch",
       "speaker": "SYSTEM",
@@ -313,17 +426,55 @@
         {
           "type": "message",
           "text": "Pod opening sequence authorized."
+        },
+        {
+          "type": "systemAlert",
+          "text": "[SEAL PRESSURE RELEASED]"
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 4500,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "I have visual."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 8500,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "There is someone inside."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 12500,
+          "event": {
+            "type": "message",
+            "speaker": "HALE",
+            "text": "Step away from it. Now."
+          }
+        },
+        {
+          "type": "glitch",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Audio channel contamination detected."
         }
       ],
       "choices": [
         {
-          "id": "end_episode_open",
-          "text": "END TRANSMISSION.",
+          "id": "continue_after_open",
+          "text": "KEEP THE POD OPEN.",
           "nextEpisodeId": "episode_10"
         }
       ]
     },
-
     "e09_abort_branch": {
       "id": "e09_abort_branch",
       "speaker": "SYSTEM",
@@ -333,19 +484,45 @@
           "text": "Rescue operation aborted."
         },
         {
+          "type": "systemAlert",
+          "text": "[POD ACCESS DENIED]"
+        },
+        {
           "type": "backgroundEvent",
-          "delay": 5000,
+          "delay": 4500,
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
             "text": "Please..."
           }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 8500,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "Maya, don't leave me again."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 12500,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "Again?"
+          }
+        },
+        {
+          "type": "message",
+          "text": "Pod beacon remains active."
         }
       ],
       "choices": [
         {
-          "id": "end_episode_abort",
-          "text": "END TRANSMISSION.",
+          "id": "continue_after_abort",
+          "text": "TRACK THE BEACON.",
           "nextEpisodeId": "episode_10"
         }
       ]

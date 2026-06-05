@@ -6,6 +6,7 @@ import DataBankModal from "./DataBankModal";
 import FileViewerModal from "./FileViewerModal";
 import SignalOverlay from "./SignalOverlay";
 import SettingsModal from "./SettingsModal";
+import ProgressTaskModal from "./ProgressTaskModal";
 
 function getStatusLevel(value, type = "normal") {
   const safeValue = Number(value) || 0;
@@ -24,18 +25,9 @@ function getStatusLevel(value, type = "normal") {
 }
 
 function getStatusClass(level) {
-  if (level === "STRONG" || level === "LOW") {
-    return "text-emerald-200";
-  }
-
-  if (level === "STABLE" || level === "ELEVATED") {
-    return "text-cyan-200";
-  }
-
-  if (level === "HIGH") {
-    return "text-amber-200";
-  }
-
+  if (level === "STRONG" || level === "LOW") return "text-emerald-200";
+  if (level === "STABLE" || level === "ELEVATED") return "text-cyan-200";
+  if (level === "HIGH") return "text-amber-200";
   return "text-rose-300";
 }
 
@@ -47,6 +39,7 @@ export default function TerminalScreen({
   isTyping,
   isGlitching,
   signalStatus,
+  progressTask,
   canShowChoices,
   activePuzzle,
   onChoice,
@@ -62,7 +55,7 @@ export default function TerminalScreen({
 
   const collectedFiles = gameState.collectedFiles || [];
   const unreadFileCount = collectedFiles.filter((file) => file.isNew).length;
-  const canInteract = !isTyping && !isGlitching && !signalStatus;
+  const canInteract = !isTyping && !isGlitching && !signalStatus && !progressTask;
 
   const trustLevel = getStatusLevel(gameState.trust);
   const moraleLevel = getStatusLevel(gameState.morale);
@@ -163,24 +156,15 @@ export default function TerminalScreen({
             </span>
 
             <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-              TRUST:{" "}
-              <strong className={getStatusClass(trustLevel)}>
-                {trustLevel}
-              </strong>
+              TRUST: <strong className={getStatusClass(trustLevel)}>{trustLevel}</strong>
             </span>
 
             <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-              MORALE:{" "}
-              <strong className={getStatusClass(moraleLevel)}>
-                {moraleLevel}
-              </strong>
+              MORALE: <strong className={getStatusClass(moraleLevel)}>{moraleLevel}</strong>
             </span>
 
             <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-              DANGER:{" "}
-              <strong className={getStatusClass(dangerLevel)}>
-                {dangerLevel}
-              </strong>
+              DANGER: <strong className={getStatusClass(dangerLevel)}>{dangerLevel}</strong>
             </span>
           </div>
         </div>
@@ -203,7 +187,7 @@ export default function TerminalScreen({
             />
           )}
 
-          {canShowChoices && !activePuzzle && (
+          {canShowChoices && !activePuzzle && !progressTask && (
             <ChoicePanel
               choices={currentNode.choices || []}
               onChoice={onChoice}
@@ -211,6 +195,8 @@ export default function TerminalScreen({
           )}
         </div>
       </section>
+
+      {progressTask && <ProgressTaskModal task={progressTask} />}
 
       {isDataBankOpen && (
         <DataBankModal

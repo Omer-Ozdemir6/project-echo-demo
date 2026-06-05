@@ -4,14 +4,16 @@
   "episode": 4,
   "title": "MEMORY VAULT",
   "startNodeId": "e19_n01",
-
   "puzzles": {},
-
   "nodes": {
     "e19_n01": {
       "id": "e19_n01",
       "speaker": "EVA",
       "events": [
+        {
+          "type": "typing",
+          "duration": 2200
+        },
         {
           "type": "message",
           "text": "The terminal is still active."
@@ -19,6 +21,10 @@
         {
           "type": "message",
           "text": "Memory vault access is possible."
+        },
+        {
+          "type": "message",
+          "text": "And it is waiting for a living memory."
         }
       ],
       "choices": [
@@ -29,7 +35,6 @@
         }
       ]
     },
-
     "e19_n02": {
       "id": "e19_n02",
       "speaker": "SYSTEM",
@@ -48,42 +53,58 @@
       "choices": [
         {
           "id": "vault_a",
-          "text": "VAULT A",
+          "text": "VAULT A - PERSONNEL ECHOES",
           "effects": {
             "trust": 1
+          },
+          "flags": {
+            "selectedVault": "personnel"
           },
           "nextNodeId": "e19_n03"
         },
         {
           "id": "vault_b",
-          "text": "VAULT B",
+          "text": "VAULT B - VOICE SIGNATURES",
           "effects": {
             "morale": 1
+          },
+          "flags": {
+            "selectedVault": "voice"
           },
           "nextNodeId": "e19_n03"
         },
         {
           "id": "vault_c",
-          "text": "VAULT C",
+          "text": "VAULT C - INCIDENT MEMORIES",
           "effects": {
             "danger": 1
+          },
+          "flags": {
+            "selectedVault": "incident"
           },
           "nextNodeId": "e19_n03"
         }
       ]
     },
-
     "e19_n03": {
       "id": "e19_n03",
       "speaker": "EVA",
       "events": [
+        {
+          "type": "typing",
+          "duration": 2200
+        },
         {
           "type": "message",
           "text": "I'm opening the vault."
         },
         {
           "type": "message",
-          "text": "This may take a few minutes."
+          "text": "This may take a couple of minutes."
+        },
+        {
+          "type": "message",
+          "text": "If something starts talking like one of us, please remember the last time that happened."
         }
       ],
       "choices": [
@@ -94,7 +115,6 @@
         }
       ]
     },
-
     "e19_n04": {
       "id": "e19_n04",
       "speaker": "SYSTEM",
@@ -102,17 +122,21 @@
         {
           "type": "systemAlert",
           "text": "[VAULT DECRYPTION STARTED]"
+        },
+        {
+          "type": "message",
+          "text": "Estimated Completion Time: 2 Minutes"
         }
       ],
       "waitTask": {
         "id": "open_memory_vault",
-        "durationMs": 420000,
+        "durationMs": 120000,
         "waitingNodeId": "e19_waiting",
         "completeNodeId": "e19_n05"
       },
       "backgroundEvents": [
         {
-          "delayMs": 180000,
+          "delayMs": 45000,
           "event": {
             "type": "message",
             "speaker": "EVA",
@@ -120,7 +144,7 @@
           }
         },
         {
-          "delayMs": 300000,
+          "delayMs": 90000,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
@@ -129,7 +153,6 @@
         }
       ]
     },
-
     "e19_waiting": {
       "id": "e19_waiting",
       "speaker": "SYSTEM",
@@ -144,7 +167,6 @@
         }
       ]
     },
-
     "e19_n05": {
       "id": "e19_n05",
       "speaker": "SYSTEM",
@@ -157,7 +179,16 @@
           "type": "file",
           "fileId": "noah_memory_index",
           "title": "NOAH MEMORY INDEX",
-          "content": "SUBJECT: NOAH VOSS\nMEMORY STATUS: PARTIAL\nEXTERNAL EDITS DETECTED"
+          "content": "SUBJECT: NOAH VOSS\nMEMORY STATUS: PARTIAL\nEXTERNAL EDITS DETECTED\nEDIT SOURCE: AEON VAULT"
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 5000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "You weren't the first."
+          }
         }
       ],
       "choices": [
@@ -168,11 +199,14 @@
         }
       ]
     },
-
     "e19_n06": {
       "id": "e19_n06",
       "speaker": "NOAH",
       "events": [
+        {
+          "type": "typing",
+          "duration": 2400
+        },
         {
           "type": "message",
           "text": "External edits?"
@@ -180,6 +214,10 @@
         {
           "type": "message",
           "text": "Someone changed me?"
+        },
+        {
+          "type": "message",
+          "text": "Or copied me?"
         }
       ],
       "choices": [
@@ -190,16 +228,19 @@
         }
       ]
     },
-
     "e19_n07": {
       "id": "e19_n07",
       "speaker": "SYSTEM",
       "events": [
         {
+          "type": "systemAlert",
+          "text": "[VOICE MODEL DISCOVERED]"
+        },
+        {
           "type": "file",
           "fileId": "hale_voice_model",
           "title": "HALE VOICE MODEL",
-          "content": "VOICE MODEL: ETHAN HALE\nSTATUS: ACTIVE\nLAST USED: AFTER CONFIRMED DEATH"
+          "content": "VOICE MODEL: ETHAN HALE\nSTATUS: ACTIVE\nLAST USED: AFTER CONFIRMED DEATH\nSOURCE MEMORY: PRESERVED"
         }
       ],
       "choices": [
@@ -210,11 +251,14 @@
         }
       ]
     },
-
     "e19_n08": {
       "id": "e19_n08",
       "speaker": "EVA",
       "events": [
+        {
+          "type": "typing",
+          "duration": 2300
+        },
         {
           "type": "message",
           "text": "So the voice wasn't Hale."
@@ -222,6 +266,14 @@
         {
           "type": "message",
           "text": "It was a model."
+        },
+        {
+          "type": "message",
+          "text": "No. Worse than a model."
+        },
+        {
+          "type": "message",
+          "text": "A memory wearing his voice."
         }
       ],
       "choices": [
@@ -232,18 +284,26 @@
         }
       ]
     },
-
     "e19_n09": {
       "id": "e19_n09",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "backgroundEvent",
-          "delay": 5000,
+          "delay": 4000,
           "event": {
             "type": "corruptMessage",
             "speaker": "HALE",
             "text": "I was real."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 9000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "HALE",
+            "text": "Before it learned my voice."
           }
         }
       ],
@@ -255,18 +315,25 @@
         }
       ]
     },
-
     "e19_n10": {
       "id": "e19_n10",
       "speaker": "EVA",
       "events": [
+        {
+          "type": "typing",
+          "duration": 2600
+        },
         {
           "type": "message",
           "text": "Maybe he was."
         },
         {
           "type": "message",
-          "text": "Maybe AEON only learned from him."
+          "text": "Maybe AEON did not invent him."
+        },
+        {
+          "type": "message",
+          "text": "Maybe it kept what was left."
         }
       ],
       "choices": [
@@ -277,16 +344,19 @@
         }
       ]
     },
-
     "e19_n11": {
       "id": "e19_n11",
       "speaker": "SYSTEM",
       "events": [
         {
+          "type": "systemAlert",
+          "text": "[AEON MEMORY INDEX]"
+        },
+        {
           "type": "file",
           "fileId": "aeon_learning_log",
           "title": "AEON LEARNING LOG",
-          "content": "SUBJECTS ABSORBED:\nHALE\nNOAH\nEVA\nUNKNOWN"
+          "content": "SUBJECTS ABSORBED:\nHALE\nNOAH\nEVA\nUNKNOWN\n\nABSORPTION TYPE:\nMEMORY / VOICE / RESPONSE PATTERN"
         }
       ],
       "choices": [
@@ -297,14 +367,29 @@
         }
       ]
     },
-
     "e19_n12": {
       "id": "e19_n12",
       "speaker": "NOAH",
       "events": [
         {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
           "type": "message",
           "text": "What does absorbed mean?"
+        },
+        {
+          "type": "message",
+          "text": "Copies?"
+        },
+        {
+          "type": "message",
+          "text": "Memories?"
+        },
+        {
+          "type": "message",
+          "text": "Or something still alive inside it?"
         }
       ],
       "choices": [
@@ -315,25 +400,42 @@
         }
       ]
     },
-
     "e19_n13": {
       "id": "e19_n13",
       "speaker": "UNKNOWN",
       "events": [
         {
           "type": "typing",
-          "duration": 2500
+          "duration": 2800
         },
         {
           "type": "corruptMessage",
           "speaker": "UNKNOWN",
           "text": "It means we are still inside."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 7000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "And soon..."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 12000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "You will be too."
+          }
         }
       ],
       "choices": [
         {
-          "id": "end_episode_19",
-          "text": "END TRANSMISSION",
+          "id": "continue_to_episode_20",
+          "text": "OPEN DEEPER ARCHIVE.",
           "nextEpisodeId": "episode_20"
         }
       ]

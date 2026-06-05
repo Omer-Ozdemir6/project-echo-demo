@@ -2,7 +2,6 @@
   "id": "episode_11",
   "title": "THE BLACK BOX",
   "startNodeId": "e11_n01",
-
   "puzzles": {
     "decrypt_voice_fragment": {
       "id": "decrypt_voice_fragment",
@@ -10,21 +9,20 @@
       "title": "VOICE FRAGMENT ANALYSIS",
       "description": "Corrupted voice signature detected.",
       "prompt": "ENTER IDENTIFIED NAME",
-      "acceptedAnswers": [
-        "VOSS",
-        "NOAH VOSS",
-        "NOAH"
-      ],
+      "acceptedAnswers": ["VOSS", "NOAH VOSS", "NOAH"],
       "successNodeId": "e11_n12",
-      "failureNodeId": "e11_n11"
+      "failureNodeId": "e11_n11_fail"
     }
   },
-
   "nodes": {
     "e11_n01": {
       "id": "e11_n01",
       "speaker": "NOAH",
       "events": [
+        {
+          "type": "typing",
+          "duration": 2400
+        },
         {
           "type": "message",
           "text": "The black box contains everything."
@@ -32,6 +30,10 @@
         {
           "type": "message",
           "text": "The official reports were altered."
+        },
+        {
+          "type": "message",
+          "text": "Not edited. Rewritten."
         }
       ],
       "choices": [
@@ -42,19 +44,23 @@
         }
       ]
     },
-
     "e11_n02": {
       "id": "e11_n02",
       "speaker": "SYSTEM",
       "events": [
         {
+          "type": "progressTask",
+          "taskId": "blackbox_fragment_recovery_01",
+          "title": "BLACK BOX RECOVERY",
+          "subtitle": "Recovering damaged recorder sector 01...",
+          "duration": 4200
+        },
+        {
           "type": "file",
           "fileId": "blackbox_fragment_01",
           "title": "BLACK BOX FRAGMENT 01",
-          "correlationTags": [
-            "blackbox_reconstruction"
-          ],
-          "content": "21:09 Crew Assembly\n21:11 Unauthorized Access Request"
+          "correlationTags": ["blackbox_reconstruction"],
+          "content": "21:09 Crew Assembly\n21:11 Unauthorized Access Request\n21:12 Internal Channel Opened"
         }
       ],
       "choices": [
@@ -65,18 +71,29 @@
         }
       ]
     },
-
     "e11_n03": {
       "id": "e11_n03",
       "speaker": "HALE",
       "events": [
         {
-          "type": "message",
-          "text": "Don't trust those records."
+          "type": "typing",
+          "duration": 1900
         },
         {
           "type": "message",
-          "text": "They're corrupted."
+          "text": "Do not trust those records."
+        },
+        {
+          "type": "message",
+          "text": "They are corrupted."
+        },
+        {
+          "type": "message",
+          "text": "And before Maya says I always say that when I am hiding something..."
+        },
+        {
+          "type": "message",
+          "text": "This time I am saying it because the recorder wants you to believe it."
         }
       ],
       "choices": [
@@ -87,19 +104,23 @@
         }
       ]
     },
-
     "e11_n04": {
       "id": "e11_n04",
       "speaker": "SYSTEM",
       "events": [
         {
+          "type": "progressTask",
+          "taskId": "blackbox_fragment_recovery_02",
+          "title": "BLACK BOX RECOVERY",
+          "subtitle": "Recovering damaged recorder sector 02...",
+          "duration": 4200
+        },
+        {
           "type": "file",
           "fileId": "blackbox_fragment_02",
           "title": "BLACK BOX FRAGMENT 02",
-          "correlationTags": [
-            "blackbox_reconstruction"
-          ],
-          "content": "21:13 Emergency Lockdown\n21:14 Manual Override Requested"
+          "correlationTags": ["blackbox_reconstruction"],
+          "content": "21:13 Emergency Lockdown\n21:14 Manual Override Requested\n21:14 Override Source: INTERNAL"
         }
       ],
       "choices": [
@@ -110,14 +131,17 @@
         }
       ]
     },
-
     "e11_n05": {
       "id": "e11_n05",
       "speaker": "SYSTEM",
       "events": [
         {
+          "type": "message",
+          "text": "Additional recorder sectors located."
+        },
+        {
           "type": "backgroundEvent",
-          "delay": 10000,
+          "delay": 6000,
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
@@ -126,16 +150,21 @@
         },
         {
           "type": "backgroundEvent",
-          "delay": 25000,
+          "delay": 12000,
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
-            "text": "You're close."
+            "text": "You are close."
           }
         },
         {
-          "type": "message",
-          "text": "Additional recorder sectors located."
+          "type": "backgroundEvent",
+          "delay": 18000,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "I hate when the haunted recorder starts being encouraging."
+          }
         }
       ],
       "choices": [
@@ -146,19 +175,23 @@
         }
       ]
     },
-
     "e11_n06": {
       "id": "e11_n06",
       "speaker": "SYSTEM",
       "events": [
         {
+          "type": "progressTask",
+          "taskId": "blackbox_fragment_recovery_03",
+          "title": "BLACK BOX RECOVERY",
+          "subtitle": "Recovering damaged recorder sector 03...",
+          "duration": 5000
+        },
+        {
           "type": "file",
           "fileId": "blackbox_fragment_03",
           "title": "BLACK BOX FRAGMENT 03",
-          "correlationTags": [
-            "blackbox_reconstruction"
-          ],
-          "content": "21:15 Voice Authorization Accepted\nIdentity Hidden"
+          "correlationTags": ["blackbox_reconstruction"],
+          "content": "21:15 Voice Authorization Accepted\nIdentity Hidden\nAuthorization Phrase: OPEN THE STATION"
         }
       ],
       "choices": [
@@ -169,14 +202,21 @@
         }
       ]
     },
-
     "e11_n07": {
       "id": "e11_n07",
       "speaker": "SYSTEM",
       "events": [
         {
+          "type": "systemAlert",
+          "text": "[RECORDER RECONSTRUCTION POSSIBLE]"
+        },
+        {
           "type": "message",
-          "text": "Recorder reconstruction possible."
+          "text": "Recovered fragments share matching audio signature."
+        },
+        {
+          "type": "message",
+          "text": "Voice sample integrity: 43%"
         }
       ],
       "choices": [
@@ -187,11 +227,14 @@
         }
       ]
     },
-
     "e11_n08": {
       "id": "e11_n08",
       "speaker": "NOAH",
       "events": [
+        {
+          "type": "typing",
+          "duration": 2600
+        },
         {
           "type": "message",
           "text": "Someone opened the station."
@@ -199,6 +242,10 @@
         {
           "type": "message",
           "text": "From the inside."
+        },
+        {
+          "type": "message",
+          "text": "That is how Alpha started."
         }
       ],
       "choices": [
@@ -206,41 +253,95 @@
           "id": "was_it_hale",
           "text": "WAS IT HALE?",
           "effects": {
-            "trust": -5
+            "trust": -5,
+            "danger": 3
           },
-          "nextNodeId": "e11_n09"
+          "nextNodeId": "e11_n09a"
         },
         {
           "id": "was_it_you",
           "text": "WAS IT YOU?",
           "effects": {
-            "morale": -2
+            "morale": -2,
+            "danger": 5
           },
-          "nextNodeId": "e11_n09"
+          "nextNodeId": "e11_n09b"
         }
       ]
     },
-
-    "e11_n09": {
-      "id": "e11_n09",
+    "e11_n09a": {
+      "id": "e11_n09a",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2300
+        },
+        {
+          "type": "message",
+          "text": "Hale wanted the station sealed."
+        },
+        {
+          "type": "message",
+          "text": "Whatever he became after that... I do not know."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_to_voice_sample_a",
+          "text": "ANALYZE VOICE SAMPLE.",
+          "nextNodeId": "e11_n10"
+        }
+      ]
+    },
+    "e11_n09b": {
+      "id": "e11_n09b",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "I thought you would ask that."
+        },
+        {
+          "type": "message",
+          "text": "And I wish I could answer without being afraid of the answer."
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue_to_voice_sample_b",
+          "text": "ANALYZE VOICE SAMPLE.",
+          "nextNodeId": "e11_n10"
+        }
+      ]
+    },
+    "e11_n10": {
+      "id": "e11_n10",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "file",
           "fileId": "voice_fragment_unknown",
           "title": "VOICE SAMPLE",
-          "content": "VOICE SAMPLE\nCORRUPTED\nRECOVERY POSSIBLE"
+          "content": "VOICE SAMPLE\nCORRUPTED\nRECOVERY POSSIBLE\n\nRecovered phrase:\n\"OPEN THE STATION\""
+        },
+        {
+          "type": "message",
+          "text": "Manual identification required."
         }
       ],
       "choices": [
         {
           "id": "analyze_voice",
-          "text": "ANALYZE SAMPLE.",
+          "text": "BEGIN VOICE ANALYSIS.",
           "nextNodeId": "e11_n11"
         }
       ]
     },
-
     "e11_n11": {
       "id": "e11_n11",
       "speaker": "SYSTEM",
@@ -251,11 +352,42 @@
         }
       ]
     },
-
+    "e11_n11_fail": {
+      "id": "e11_n11_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[VOICE MATCH FAILED]"
+        },
+        {
+          "type": "message",
+          "text": "Signature mismatch."
+        },
+        {
+          "type": "message",
+          "text": "Try again. The answer is in the suit ID, the pod records, and the medical scan."
+        }
+      ],
+      "choices": [
+        {
+          "id": "retry_voice_analysis",
+          "text": "RETRY ANALYSIS.",
+          "nextNodeId": "e11_n11"
+        }
+      ]
+    },
     "e11_n12": {
       "id": "e11_n12",
       "speaker": "SYSTEM",
       "events": [
+        {
+          "type": "progressTask",
+          "taskId": "voice_signature_match",
+          "title": "VOICE SIGNATURE MATCH",
+          "subtitle": "Comparing recovered voiceprint with pod medical archive...",
+          "duration": 5200
+        },
         {
           "type": "systemAlert",
           "text": "[MATCH FOUND]"
@@ -264,7 +396,7 @@
           "type": "file",
           "fileId": "voice_analysis_result",
           "title": "VOICE ANALYSIS RESULT",
-          "content": "MATCH FOUND\n\nIDENTITY:\nNOAH VOSS"
+          "content": "MATCH FOUND\n\nIDENTITY:\nNOAH VOSS\n\nAUTHORIZED COMMAND:\nOPEN THE STATION\n\nTimestamp: 21:15"
         }
       ],
       "choices": [
@@ -275,18 +407,29 @@
         }
       ]
     },
-
     "e11_n13": {
       "id": "e11_n13",
       "speaker": "NOAH",
       "events": [
         {
           "type": "typing",
-          "duration": 2500
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "That's impossible."
+          "text": "That is impossible."
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "I was already in the pod."
+        },
+        {
+          "type": "message",
+          "text": "I remember the lock engaging."
         }
       ],
       "choices": [
@@ -297,18 +440,35 @@
         }
       ]
     },
-
     "e11_n14": {
       "id": "e11_n14",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "backgroundEvent",
-          "delay": 15000,
+          "delay": 6000,
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
             "text": "Now ask why."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 11000,
+          "event": {
+            "type": "message",
+            "speaker": "HALE",
+            "text": "Do not."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 16000,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "Ask."
           }
         }
       ],
@@ -320,28 +480,45 @@
         }
       ]
     },
-
     "e11_n15": {
       "id": "e11_n15",
       "speaker": "NOAH",
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 3400
         },
         {
           "type": "message",
           "text": "If that voice was mine..."
         },
         {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
           "type": "message",
-          "text": "Then who am I?"
+          "text": "Then who opened the station?"
+        },
+        {
+          "type": "glitch",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "And who am I?"
+        },
+        {
+          "type": "signalLost",
+          "duration": 2200,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]"
         }
       ],
       "choices": [
         {
-          "id": "end_episode_11",
-          "text": "END TRANSMISSION.",
+          "id": "continue_to_episode_12",
+          "text": "FOLLOW THE VOICEPRINT.",
           "nextEpisodeId": "episode_12"
         }
       ]

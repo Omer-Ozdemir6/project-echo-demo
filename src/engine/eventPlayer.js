@@ -13,6 +13,9 @@ function createFilePayload(event, fallbackType = "file") {
     content: event.content || "",
     source: event.source || "",
     tags: Array.isArray(event.tags) ? event.tags : [],
+    correlationTags: Array.isArray(event.correlationTags)
+      ? event.correlationTags
+      : [],
     isNew: event.isNew ?? true
   };
 }
@@ -30,29 +33,38 @@ function playSingleEvent({
   onSignalRestored,
   onStatChange,
   onCollectFile,
-  onPuzzleStart
+  onPuzzleStart,
+  onProgressTaskStart,
+  onProgressTaskEnd
 }) {
+  if (!event || typeof event !== "object") {
+    return 0;
+  }
+
   if (event.type === "pause") {
     return event.duration || 1000;
   }
 
   if (event.type === "typing") {
+    const duration = event.duration || 1000;
+
     const startTimer = setTimeout(() => {
       onTypingStart?.();
     }, delay);
 
     const stopTimer = setTimeout(() => {
       onTypingStop?.();
-    }, delay + event.duration);
+    }, delay + duration);
 
     timers.push(startTimer, stopTimer);
 
-    return event.duration + (event.pauseAfterMs ?? 300);
+    return duration + (event.pauseAfterMs ?? 300);
   }
 
   if (event.type === "message") {
     const messageTimer = setTimeout(() => {
       onTypingStop?.();
+
       onMessage?.({
         type: "message",
         speaker: event.speaker,
@@ -70,6 +82,7 @@ function playSingleEvent({
   if (event.type === "corruptMessage") {
     const corruptTimer = setTimeout(() => {
       onTypingStop?.();
+
       onMessage?.({
         type: "corruptMessage",
         speaker: event.speaker,
@@ -87,6 +100,7 @@ function playSingleEvent({
   if (event.type === "systemAlert") {
     const alertTimer = setTimeout(() => {
       onTypingStop?.();
+
       onMessage?.({
         type: "systemAlert",
         speaker: event.speaker || "SYSTEM",
@@ -171,6 +185,8 @@ function playSingleEvent({
   }
 
   if (event.type === "glitch") {
+    const duration = event.duration || 900;
+
     const startTimer = setTimeout(() => {
       onTypingStop?.();
       onGlitchStart?.();
@@ -178,14 +194,16 @@ function playSingleEvent({
 
     const stopTimer = setTimeout(() => {
       onGlitchStop?.();
-    }, delay + (event.duration || 900));
+    }, delay + duration);
 
     timers.push(startTimer, stopTimer);
 
-    return (event.duration || 900) + (event.pauseAfterMs ?? 400);
+    return duration + (event.pauseAfterMs ?? 400);
   }
 
   if (event.type === "signalLost") {
+    const duration = event.duration || 3000;
+
     const lostTimer = setTimeout(() => {
       onTypingStop?.();
       onGlitchStop?.();
@@ -194,11 +212,47 @@ function playSingleEvent({
 
     const restoredTimer = setTimeout(() => {
       onSignalRestored?.(event.restoreMessage || "[SIGNAL RESTORED]");
-    }, delay + (event.duration || 3000));
+    }, delay + duration);
 
     timers.push(lostTimer, restoredTimer);
 
-    return (event.duration || 3000) + (event.pauseAfterMs ?? 800);
+    return duration + (event.pauseAfterMs ?? 800);
+  }
+
+  if (event.type === "progressTask") {
+    const duration = event.duration || 6000;
+
+    const startTimer = setTimeout(() => {
+      onTypingStop?.();
+      onGlitchStop?.();
+
+      onProgressTaskStart?.({
+        id: event.id || `progress_${Date.now()}`,
+        title: event.title || "SYSTEM PROCESS",
+        subtitle: event.subtitle || "",
+        duration,
+        completeText: event.completeText || "",
+        tone: event.tone || "system"
+      });
+    }, delay);
+
+    const endTimer = setTimeout(() => {
+      onProgressTaskEnd?.();
+
+      if (event.completeText) {
+        onMessage?.({
+          type: "systemAlert",
+          speaker: event.speaker || "SYSTEM",
+          sender: "system",
+          text: event.completeText,
+          tone: "system"
+        });
+      }
+    }, delay + duration);
+
+    timers.push(startTimer, endTimer);
+
+    return duration + (event.pauseAfterMs ?? 900);
   }
 
   if (event.type === "statChange") {
@@ -225,7 +279,9 @@ export function playNodeEvents({
   onSignalRestored,
   onStatChange,
   onCollectFile,
-  onPuzzleStart
+  onPuzzleStart,
+  onProgressTaskStart,
+  onProgressTaskEnd
 }) {
   const timers = [];
   let accumulatedDelay = 0;
@@ -241,7 +297,9 @@ export function playNodeEvents({
     onSignalRestored,
     onStatChange,
     onCollectFile,
-    onPuzzleStart
+    onPuzzleStart,
+    onProgressTaskStart,
+    onProgressTaskEnd
   };
 
   events.forEach((event) => {

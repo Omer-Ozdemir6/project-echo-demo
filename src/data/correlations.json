@@ -2,6 +2,7 @@
   "incident_alpha": {
     "id": "incident_alpha",
     "title": "INCIDENT ALPHA",
+    "description": "Connects Door 12 medical, security, and camera evidence into a single reconstructed incident report.",
     "requiredFiles": [
       "medical_report_01",
       "security_log_01",
@@ -12,11 +13,26 @@
       "id": "incident_alpha_report",
       "fileType": "log",
       "title": "INCIDENT ALPHA REPORT",
-      "content": "Door 12 was opened before the casualty occurred. The security timeline does not match the official report.",
-      "caption": "Auto-generated incident report from connected evidence.",
+      "content": "Door 12 was opened before the casualty occurred.\n\nSecurity records confirm a manual override was accepted at 21:17.\nMedical records place the casualty in the Door 12 access corridor at 21:20.\nRecovered camera data shows Ethan Hale near Door 12 before the official casualty timestamp.\n\nConclusion: The official station report was altered.",
+      "caption": "Auto-generated incident report from connected Door 12 evidence.",
       "source": "SYSTEM_CORRELATION",
-      "tags": ["incident", "alpha", "classified"],
-      "message": "[NEW CONNECTION DETECTED]"
+      "tags": [
+        "incident",
+        "alpha",
+        "door_12",
+        "timeline",
+        "classified"
+      ],
+      "correlationTags": [
+        "incident_alpha"
+      ],
+      "message": "[INCIDENT ALPHA CONNECTION DETECTED]"
+    },
+    "notification": {
+      "type": "correlation",
+      "displayMode": "toast",
+      "message": "[INCIDENT ALPHA CONNECTION DETECTED]",
+      "detail": "A new reconstructed report has been added to the Data Bank."
     }
   }
 }

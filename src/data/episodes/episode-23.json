@@ -95,14 +95,6 @@
           "trueText": "At least someone here is listening.",
           "falseSpeaker": "EVA",
           "falseText": "Thank you."
-        },
-        {
-          "type": "conditionalMessage",
-          "condition": "trustedGrant",
-          "trueSpeaker": "SYSTEM",
-          "trueText": "[EVA TRUST -5]",
-          "falseSpeaker": "GRANT",
-          "falseText": "You're making a mistake."
         }
       ],
       "choices": [
@@ -122,7 +114,7 @@
           "type": "file",
           "fileId": "route_comparison",
           "title": "ROUTE COMPARISON",
-          "content": "PATH A\nEstimated Time: 3 Hours\nRisk: Medium\n\nPATH B\nEstimated Time: 1 Hour\nRisk: Extreme"
+          "content": "PATH A\nEstimated Time: 3 Hours\nRisk: Medium\n\nPATH B\nEstimated Time: 1 Hour\nRisk: Extreme\n\nWARNING:\nAEON ACTIVITY DETECTED ON PATH B"
         }
       ],
       "choices": [
@@ -150,6 +142,9 @@
           "flags": {
             "routeChoice": "A"
           },
+          "effects": {
+            "danger": -5
+          },
           "nextNodeId": "e23_n08"
         },
         {
@@ -157,6 +152,9 @@
           "text": "PATH B",
           "flags": {
             "routeChoice": "B"
+          },
+          "effects": {
+            "danger": 10
           },
           "nextNodeId": "e23_n08"
         }
@@ -208,6 +206,10 @@
       "speaker": "GRANT",
       "events": [
         {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
           "type": "message",
           "text": "You know..."
         },
@@ -217,7 +219,7 @@
         },
         {
           "type": "message",
-          "text": "Now I miss hearing people."
+          "text": "Now I miss hearing real people."
         }
       ],
       "choices": [
@@ -244,7 +246,7 @@
         },
         {
           "type": "backgroundEvent",
-          "delay": 13000,
+          "delay": 14000,
           "event": {
             "type": "message",
             "speaker": "EVA",
@@ -272,36 +274,10 @@
       ],
       "waitTask": {
         "id": "crossing_to_node02",
-        "durationMs": 1800000,
+        "durationMs": 120000,
         "waitingNodeId": "e23_waiting",
         "completeNodeId": "e23_n13"
-      },
-      "backgroundEvents": [
-        {
-          "delayMs": 600000,
-          "event": {
-            "type": "message",
-            "speaker": "GRANT",
-            "text": "Signal spike detected."
-          }
-        },
-        {
-          "delayMs": 1200000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "Wrong way."
-          }
-        },
-        {
-          "delayMs": 1500000,
-          "event": {
-            "type": "message",
-            "speaker": "EVA",
-            "text": "I don't like this."
-          }
-        }
-      ]
+      }
     },
 
     "e23_waiting": {
@@ -365,6 +341,10 @@
         {
           "type": "message",
           "text": "Much bigger."
+        },
+        {
+          "type": "message",
+          "text": "And much older."
         }
       ],
       "choices": [
@@ -384,7 +364,7 @@
           "type": "file",
           "fileId": "node_network_map",
           "title": "NODE NETWORK MAP",
-          "content": "NODE 01\nNODE 02\nNODE 03\nNODE 04\nNODE 05\nNODE 06\nNODE 07"
+          "content": "NODE 01\nNODE 02\nNODE 03\nNODE 04\nNODE 05\nNODE 06\nNODE 07\n\nSTATUS:\nALL NODES ACTIVE"
         }
       ],
       "choices": [
@@ -401,8 +381,16 @@
       "speaker": "UNKNOWN",
       "events": [
         {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
           "type": "message",
           "text": "You're already late."
+        },
+        {
+          "type": "message",
+          "text": "Node 02 has already awakened."
         }
       ],
       "choices": [

@@ -2,17 +2,23 @@
   "id": "episode_08",
   "title": "THE EIGHTH PASSENGER",
   "startNodeId": "e08_n01",
-
   "puzzles": {},
-
   "nodes": {
     "e08_n01": {
       "id": "e08_n01",
       "speaker": "MAYA",
       "events": [
         {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
           "type": "message",
           "text": "I found something."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
@@ -21,6 +27,10 @@
         {
           "type": "message",
           "text": "It's still transmitting."
+        },
+        {
+          "type": "message",
+          "text": "Please tell me the universe is done being weird for one minute."
         }
       ],
       "choices": [
@@ -31,7 +41,6 @@
         }
       ]
     },
-
     "e08_n02": {
       "id": "e08_n02",
       "speaker": "SYSTEM",
@@ -41,10 +50,14 @@
           "text": "[EMERGENCY POD DETECTED]"
         },
         {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
           "type": "file",
           "fileId": "pod_manifest_01",
           "title": "POD MANIFEST",
-          "content": "Occupant: UNKNOWN\nStatus: CRITICAL\nLife Support: 23%"
+          "content": "Occupant: UNKNOWN\nStatus: CRITICAL\nLife Support: 23%\nSignal Origin: External emergency pod\nBeacon Integrity: unstable\nManifest Link: corrupted"
         }
       ],
       "choices": [
@@ -55,7 +68,6 @@
         }
       ]
     },
-
     "e08_n03": {
       "id": "e08_n03",
       "speaker": "SYSTEM",
@@ -71,6 +83,13 @@
         {
           "type": "message",
           "text": "Task Added: RESCUE THE POD"
+        },
+        {
+          "type": "progressTask",
+          "taskId": "rescue_the_pod",
+          "title": "RESCUE THE POD",
+          "status": "active",
+          "timeLimitHours": 24
         }
       ],
       "choices": [
@@ -81,18 +100,25 @@
         }
       ]
     },
-
     "e08_n04": {
       "id": "e08_n04",
       "speaker": "MAYA",
       "events": [
+        {
+          "type": "typing",
+          "duration": 1800
+        },
         {
           "type": "message",
           "text": "We can still reach it."
         },
         {
           "type": "message",
-          "text": "But it will be dangerous."
+          "text": "Not easily. Not safely. Honestly, not in any way that makes my survival instincts happy."
+        },
+        {
+          "type": "message",
+          "text": "But there is someone inside."
         }
       ],
       "choices": [
@@ -103,11 +129,14 @@
         }
       ]
     },
-
     "e08_n05": {
       "id": "e08_n05",
       "speaker": "HALE",
       "events": [
+        {
+          "type": "typing",
+          "duration": 1600
+        },
         {
           "type": "message",
           "text": "No."
@@ -117,43 +146,72 @@
           "text": "Leave it."
         },
         {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
           "type": "message",
           "text": "Whatever is inside that pod is not worth the risk."
+        },
+        {
+          "type": "message",
+          "text": "And before Maya says I sound heartless, I know exactly how I sound."
+        },
+        {
+          "type": "message",
+          "text": "That is why you should listen."
         }
       ],
       "choices": [
         {
           "id": "save_occupant",
-          "text": "SAVE THE OCCUPANT",
+          "text": "SAVE THE OCCUPANT.",
           "effects": {
             "danger": 10,
-            "morale": 10
+            "morale": 10,
+            "trust": -5
           },
           "nextNodeId": "e08_n06a"
         },
         {
           "id": "leave_pod",
-          "text": "LEAVE THE POD",
+          "text": "LEAVE THE POD.",
           "effects": {
             "danger": -10,
-            "morale": -15
+            "morale": -15,
+            "trust": 5
           },
           "nextNodeId": "e08_n06b"
         }
       ]
     },
-
     "e08_n06a": {
       "id": "e08_n06a",
       "speaker": "MAYA",
       "events": [
+        {
+          "type": "typing",
+          "duration": 1700
+        },
         {
           "type": "message",
           "text": "Good."
         },
         {
           "type": "message",
-          "text": "Then we'll try to reach the pod."
+          "text": "Thank you."
+        },
+        {
+          "type": "message",
+          "text": "If this gets us killed, I will write a very passive-aggressive apology note in the afterlife."
+        },
+        {
+          "type": "systemAlert",
+          "text": "[MORALE INCREASED]"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[DANGER LEVEL INCREASED]"
         }
       ],
       "choices": [
@@ -164,18 +222,42 @@
         }
       ]
     },
-
     "e08_n06b": {
       "id": "e08_n06b",
       "speaker": "HALE",
       "events": [
+        {
+          "type": "typing",
+          "duration": 1800
+        },
         {
           "type": "message",
           "text": "A rational decision."
         },
         {
           "type": "message",
-          "text": "Some lives cannot be saved."
+          "text": "Not a kind one."
+        },
+        {
+          "type": "message",
+          "text": "But rational."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 5500,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "There is still someone breathing in there, Hale."
+          }
+        },
+        {
+          "type": "systemAlert",
+          "text": "[MORALE DECREASED]"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[DANGER LEVEL REDUCED]"
         }
       ],
       "choices": [
@@ -186,11 +268,14 @@
         }
       ]
     },
-
     "e08_n07": {
       "id": "e08_n07",
       "speaker": "SYSTEM",
       "events": [
+        {
+          "type": "message",
+          "text": "Emergency pod visual feed recovered."
+        },
         {
           "type": "image",
           "fileId": "pod_camera_01",
@@ -207,11 +292,14 @@
         }
       ]
     },
-
     "e08_n08": {
       "id": "e08_n08",
       "speaker": "SYSTEM",
       "events": [
+        {
+          "type": "typing",
+          "duration": 1200
+        },
         {
           "type": "message",
           "text": "Image quality degraded."
@@ -221,8 +309,16 @@
           "text": "Partial suit identifier recovered."
         },
         {
+          "type": "glitch",
+          "duration": 900
+        },
+        {
           "type": "message",
           "text": "SUIT ID: NV-08"
+        },
+        {
+          "type": "message",
+          "text": "Archive match found: Noah Voss."
         }
       ],
       "choices": [
@@ -233,18 +329,33 @@
         }
       ]
     },
-
     "e08_n09": {
       "id": "e08_n09",
       "speaker": "MAYA",
       "events": [
         {
           "type": "typing",
-          "duration": 2500
+          "duration": 2800
         },
         {
           "type": "message",
           "text": "No..."
+        },
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "That suit belonged to Noah Voss."
+        },
+        {
+          "type": "message",
+          "text": "His psych file was missing because there was not supposed to be a file anymore."
+        },
+        {
+          "type": "message",
+          "text": "Voss died before Alpha."
         }
       ],
       "choices": [
@@ -255,14 +366,37 @@
         }
       ]
     },
-
     "e08_n10": {
       "id": "e08_n10",
       "speaker": "HALE",
       "events": [
         {
+          "type": "typing",
+          "duration": 2300
+        },
+        {
           "type": "message",
-          "text": "That's impossible."
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "text": "Voss is dead."
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "I saw the body myself."
+        },
+        {
+          "type": "message",
+          "text": "And if that thing is using his suit ID, then it is not asking for help."
+        },
+        {
+          "type": "message",
+          "text": "It is baiting us."
         }
       ],
       "choices": [
@@ -273,23 +407,40 @@
         }
       ]
     },
-
     "e08_n11": {
       "id": "e08_n11",
       "speaker": "SYSTEM",
       "events": [
         {
+          "type": "message",
+          "text": "Life Support Status Updated."
+        },
+        {
           "type": "backgroundEvent",
-          "delay": 15000,
+          "delay": 6500,
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
-            "text": "Don't let me die."
+            "text": "Maya..."
           }
         },
         {
-          "type": "message",
-          "text": "Life Support Status Updated."
+          "type": "backgroundEvent",
+          "delay": 11500,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "You promised you'd come back."
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 16500,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "Don't leave me in the dark again."
+          }
         }
       ],
       "choices": [
@@ -300,7 +451,6 @@
         }
       ]
     },
-
     "e08_n12": {
       "id": "e08_n12",
       "speaker": "SYSTEM",
@@ -310,18 +460,34 @@
           "text": "[LIFE SUPPORT STATUS]"
         },
         {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
           "type": "message",
           "text": "Current Capacity: 22%"
         },
         {
           "type": "message",
           "text": "Wait Task Active: RESCUE THE POD"
+        },
+        {
+          "type": "message",
+          "text": "Signal lock unstable."
+        },
+        {
+          "type": "glitch",
+          "duration": 1100
+        },
+        {
+          "type": "message",
+          "text": "Emergency pod beacon is moving."
         }
       ],
       "choices": [
         {
-          "id": "end_episode_08",
-          "text": "END TRANSMISSION.",
+          "id": "continue_to_episode_09",
+          "text": "TRACK POD SIGNAL.",
           "nextEpisodeId": "episode_09"
         }
       ]

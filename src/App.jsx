@@ -33,10 +33,10 @@ import "./index.css";
 
 function App() {
   const [phase, setPhase] = useState(() => {
-  const savedProgress = localStorage.getItem("project_echo_progress");
+    const savedProgress = localStorage.getItem("project_echo_progress");
+    return savedProgress ? "game" : "start";
+  });
 
-  return savedProgress ? "game" : "start";
-});
   const [bootAttempt, setBootAttempt] = useState(1);
   const [bootStepIndex, setBootStepIndex] = useState(0);
   const [bootProgress, setBootProgress] = useState(0);
@@ -45,22 +45,23 @@ function App() {
 
   const [gameState, setGameState] = useState(getInitialGameState);
   const [visibleMessages, setVisibleMessages] = useState([]);
-  const [currentNodeMessageCount, setCurrentNodeMessageCount] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [isGlitching, setIsGlitching] = useState(false);
   const [signalStatus, setSignalStatus] = useState(null);
-  const [settings, setSettings] = useState(() => {
-  const saved = localStorage.getItem("echo_settings");
+  const [progressTask, setProgressTask] = useState(null);
 
-  return saved
-    ? JSON.parse(saved)
-    : {
-        language: "en",
-        textSpeed: "normal",
-        soundEnabled: true,
-        vibrationEnabled: true
-      };
-});
+  const [settings, setSettings] = useState(() => {
+    const saved = localStorage.getItem("echo_settings");
+
+    return saved
+      ? JSON.parse(saved)
+      : {
+          language: "en",
+          textSpeed: "normal",
+          soundEnabled: true,
+          vibrationEnabled: true
+        };
+  });
 
   const currentNode = getCurrentNode(gameState);
   const activePuzzle = getActivePuzzle(gameState);
@@ -87,52 +88,47 @@ function App() {
   }
 
   useEffect(() => {
-  localStorage.setItem(
-    "echo_settings",
-    JSON.stringify(settings)
-  );
-}, [settings]);
+    localStorage.setItem("echo_settings", JSON.stringify(settings));
+  }, [settings]);
 
-useEffect(() => {
-  if (phase !== "game") return;
+  useEffect(() => {
+    if (phase !== "game") return;
 
-  const pendingNotifications = gameState.pendingNotifications || [];
+    const pendingNotifications = gameState.pendingNotifications || [];
 
-  if (!pendingNotifications.length) return;
+    if (!pendingNotifications.length) return;
 
-  pendingNotifications.forEach((notification) => {
-    setVisibleMessages((prev) => [
-      ...prev,
-      {
-        type: "systemAlert",
-        text: notification.message || "[NEW CONNECTION DETECTED]",
-        sender: "system",
-        speaker: "SYSTEM"
-      }
-    ]);
-  });
+    pendingNotifications.forEach((notification) => {
+      setVisibleMessages((prev) => [
+        ...prev,
+        {
+          type: "systemAlert",
+          text: notification.message || "[NEW CONNECTION DETECTED]",
+          sender: "system",
+          speaker: "SYSTEM"
+        }
+      ]);
+    });
 
-  setGameState((prevState) => {
-    const nextState = clearPendingNotifications(prevState);
+    setGameState((prevState) => {
+      const nextState = clearPendingNotifications(prevState);
+      saveGameState(nextState);
+      return nextState;
+    });
+  }, [phase, gameState.pendingNotifications?.length]);
 
-    saveGameState(nextState);
+  useEffect(() => {
+    const resolvedState = resolveActiveWaitTask(gameState);
 
-    return nextState;
-  });
-}, [phase, gameState.pendingNotifications?.length]);
-
-useEffect(() => {
-  const resolvedState = resolveActiveWaitTask(gameState);
-
-  if (
-    resolvedState.episodeId !== gameState.episodeId ||
-    resolvedState.currentNodeId !== gameState.currentNodeId ||
-    Boolean(resolvedState.activeWaitTask) !== Boolean(gameState.activeWaitTask)
-  ) {
-    setGameState(resolvedState);
-    saveGameState(resolvedState);
-  }
-}, [gameState]);
+    if (
+      resolvedState.episodeId !== gameState.episodeId ||
+      resolvedState.currentNodeId !== gameState.currentNodeId ||
+      Boolean(resolvedState.activeWaitTask) !== Boolean(gameState.activeWaitTask)
+    ) {
+      setGameState(resolvedState);
+      saveGameState(resolvedState);
+    }
+  }, [gameState]);
 
   useEffect(() => {
     if (phase !== "booting" || !activeStep) return;
@@ -144,13 +140,10 @@ useEffect(() => {
       currentBoot,
       criticalErrorHoldMs: bootConfig.criticalErrorHoldMs,
       afterBootHoldMs: bootConfig.afterBootHoldMs,
-
       onProgress: setBootProgress,
-
       onStepComplete: (completedStep) => {
         setCompletedSteps((prev) => [...prev, completedStep]);
       },
-
       onCriticalError: (holdMs) => {
         setShowError(true);
 
@@ -159,11 +152,9 @@ useEffect(() => {
           setPhase("rebootConfirm");
         }, holdMs);
       },
-
       onNextStep: () => {
         setBootStepIndex((prev) => prev + 1);
       },
-
       onBootComplete: () => {
         setPhase("transmissionInit");
       }
@@ -173,10 +164,10 @@ useEffect(() => {
   useEffect(() => {
     if (phase !== "game" || !currentNode) return;
 
-    setCurrentNodeMessageCount(0);
     setIsTyping(false);
     setIsGlitching(false);
     setSignalStatus(null);
+    setProgressTask(null);
 
     return playNodeEvents({
       events: currentNode.events || [],
@@ -199,9 +190,15 @@ useEffect(() => {
         }, 1200);
       },
 
-      onMessage: (message) => {
-        setCurrentNodeMessageCount((prev) => prev + 1);
+      onProgressTaskStart: (task) => {
+        setProgressTask(task);
+      },
 
+      onProgressTaskEnd: () => {
+        setProgressTask(null);
+      },
+
+      onMessage: (message) => {
         const enrichedMessage = {
           ...message,
           sender: message.sender || "character",
@@ -220,22 +217,17 @@ useEffect(() => {
           });
 
           saveGameState(nextState);
-
           return nextState;
         });
       },
+
       onPuzzleStart: (puzzleId) => {
-  setGameState((prevState) => {
-    const nextState = setActivePuzzle(
-      prevState,
-      puzzleId
-    );
-
-    saveGameState(nextState);
-
-    return nextState;
-  });
-},
+        setGameState((prevState) => {
+          const nextState = setActivePuzzle(prevState, puzzleId);
+          saveGameState(nextState);
+          return nextState;
+        });
+      },
 
       onStatChange: (changes) => {
         setGameState((prev) => {
@@ -247,7 +239,6 @@ useEffect(() => {
           };
 
           saveGameState(nextState);
-
           return nextState;
         });
       }
@@ -302,17 +293,12 @@ useEffect(() => {
   }
 
   function handleFileRead(fileId) {
-  setGameState((prevState) => {
-    const nextState = markFileAsRead(
-      prevState,
-      fileId
-    );
-
-    saveGameState(nextState);
-
-    return nextState;
-  });
-}
+    setGameState((prevState) => {
+      const nextState = markFileAsRead(prevState, fileId);
+      saveGameState(nextState);
+      return nextState;
+    });
+  }
 
   function handleReset() {
     resetGame();
@@ -381,19 +367,16 @@ useEffect(() => {
     );
   }
 
-  const totalMessageEvents = (currentNode.events || []).filter((event) =>
-    ["message", "corruptMessage", "systemAlert", "image", "file", "log", "map", "crew"].includes(
-      event.type
-    )
-  ).length;
+  const hasChoices =
+    Array.isArray(currentNode?.choices) && currentNode.choices.length > 0;
 
-const canShowChoices =
-  currentNodeMessageCount > 0 &&
-  !activePuzzle &&
-  !isTyping &&
-  !isGlitching &&
-  !signalStatus &&
-  currentNodeMessageCount === totalMessageEvents;
+  const canShowChoices =
+    hasChoices &&
+    !activePuzzle &&
+    !isTyping &&
+    !isGlitching &&
+    !signalStatus &&
+    !progressTask;
 
   return (
     <TerminalScreen
@@ -404,6 +387,7 @@ const canShowChoices =
       isTyping={isTyping}
       isGlitching={isGlitching}
       signalStatus={signalStatus}
+      progressTask={progressTask}
       canShowChoices={canShowChoices}
       activePuzzle={activePuzzle}
       onChoice={handleChoice}

@@ -2,7 +2,6 @@
   "id": "episode_06",
   "title": "THE NAME",
   "startNodeId": "e06_n01",
-
   "puzzles": {
     "memory_name_01": {
       "id": "memory_name_01",
@@ -10,32 +9,62 @@
       "title": "MEMORY RECONSTRUCTION",
       "description": "Search previous records and identify the missing crew member.",
       "prompt": "ENTER MISSING NAME",
+      "placeholder": "NOAH VOSS",
+      "inputMode": "text",
+      "maxLength": 20,
+      "submitLabel": "RECONSTRUCT",
       "acceptedAnswers": [
         "NOAH VOSS",
         "NOAH",
-        "VOSS"
+        "VOSS",
+        "N VOSS",
+        "N. VOSS"
       ],
       "successNodeId": "e06_n08",
-      "failureNodeId": "e06_n07"
+      "failureNodeId": "e06_n07",
+      "submitCooldownMs": 500
     }
   },
-
   "nodes": {
     "e06_n01": {
       "id": "e06_n01",
       "speaker": "MAYA",
       "events": [
         {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
           "type": "message",
           "text": "You heard him."
+        },
+        {
+          "type": "typing",
+          "duration": 3800
         },
         {
           "type": "message",
           "text": "He said you already saw the name."
         },
         {
+          "type": "pause",
+          "duration": 1000
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
           "type": "message",
           "text": "Then the answer must be somewhere in the archives."
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "And I really hate when the archives start acting smug."
         }
       ],
       "choices": [
@@ -46,21 +75,50 @@
         }
       ]
     },
-
     "e06_n02": {
       "id": "e06_n02",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
-          "text": "[ARCHIVE RECONSTRUCTION ACTIVE]"
+          "text": "[ARCHIVE RECONSTRUCTION ACTIVE]",
+          "pauseAfterMs": 1000
         },
         {
           "type": "file",
+          "id": "corrupted_manifest_fragment",
           "fileId": "corrupted_manifest_fragment",
+          "fileType": "log",
           "title": "CORRUPTED MANIFEST FRAGMENT",
           "content": "CREW MEMBER #07\nSTATUS: REDACTED\nSURNAME: V---",
-          "source": "CORRUPTED DATABASE"
+          "caption": "Partially recovered crew record from corrupted personnel database.",
+          "source": "CORRUPTED_DATABASE",
+          "tags": [
+            "crew",
+            "manifest",
+            "redacted",
+            "unknown_personnel"
+          ],
+          "message": "[CORRUPTED MANIFEST FRAGMENT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1400
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "V."
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "I don't remember anyone with a V surname on ECHO."
         }
       ],
       "choices": [
@@ -71,43 +129,99 @@
         }
       ]
     },
-
     "e06_n03": {
       "id": "e06_n03",
       "speaker": "HALE",
       "events": [
         {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
           "type": "message",
           "text": "Stop looking."
         },
         {
+          "type": "pause",
+          "duration": 1000
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
           "type": "message",
           "text": "That file was deleted for a reason."
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "And no, before Maya says it, not because I'm secretly dramatic."
         }
       ],
       "choices": [
         {
           "id": "ignore_hale",
           "text": "KEEP SEARCHING.",
+          "effects": {
+            "trust": -2,
+            "danger": 2
+          },
           "nextNodeId": "e06_n04"
         },
         {
           "id": "listen_hale",
           "text": "WHY?",
+          "effects": {
+            "trust": 1,
+            "danger": 1
+          },
           "nextNodeId": "e06_n04"
         }
       ]
     },
-
     "e06_n04": {
       "id": "e06_n04",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "log",
+          "id": "maintenance_log_voss",
           "fileId": "maintenance_log_voss",
+          "fileType": "log",
           "title": "MAINTENANCE LOG",
-          "content": "Relay inspection completed.\nSigned: N. Voss"
+          "content": "Relay inspection completed.\nSignal bleed detected on emergency carrier.\nManual reset recommended.\n\nSigned: N. Voss",
+          "caption": "Recovered relay maintenance entry with partial signature.",
+          "source": "STATION_MAINTENANCE",
+          "tags": [
+            "maintenance",
+            "relay",
+            "voss",
+            "7.14"
+          ],
+          "message": "[MAINTENANCE LOG ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1400
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "N. Voss."
+        },
+        {
+          "type": "typing",
+          "duration": 4800
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "No. I would remember that signature."
         }
       ],
       "choices": [
@@ -118,18 +232,26 @@
         }
       ]
     },
-
     "e06_n05": {
       "id": "e06_n05",
       "speaker": "UNKNOWN",
       "events": [
         {
-          "type": "corruptMessage",
-          "text": "YOU SAW IT."
+          "type": "glitch",
+          "duration": 1300,
+          "pauseAfterMs": 900
         },
         {
           "type": "corruptMessage",
-          "text": "LOOK AGAIN."
+          "speaker": "UNKNOWN",
+          "text": "YOU SAW IT.",
+          "pauseAfterMs": 1300
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "LOOK AGAIN.",
+          "pauseAfterMs": 1400
         }
       ],
       "choices": [
@@ -140,14 +262,33 @@
         }
       ]
     },
-
     "e06_n06": {
       "id": "e06_n06",
       "speaker": "MAYA",
       "events": [
         {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
           "type": "message",
-          "text": "I think we've gathered enough."
+          "text": "We have enough pieces."
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Crew seven. Surname Voss. First initial N."
+        },
+        {
+          "type": "pause",
+          "duration": 1200
+        },
+        {
+          "type": "typing",
+          "duration": 4400
         },
         {
           "type": "message",
@@ -162,31 +303,45 @@
         }
       ]
     },
-
     "e06_n07": {
       "id": "e06_n07",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "puzzle",
-          "puzzleId": "memory_name_01"
+          "puzzleId": "memory_name_01",
+          "pauseAfterMs": 700
         }
-      ]
+      ],
+      "choices": []
     },
-
     "e06_n08": {
       "id": "e06_n08",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
-          "text": "[IDENTITY RECONSTRUCTED]"
+          "text": "[IDENTITY RECONSTRUCTED]",
+          "pauseAfterMs": 1000
         },
         {
           "type": "crew",
+          "id": "crew_profile_voss",
           "fileId": "crew_profile_voss",
+          "fileType": "crew",
           "title": "NOAH VOSS",
-          "content": "NOAH VOSS\nROLE: COMMUNICATIONS SPECIALIST\nCLEARANCE LEVEL: OMEGA\nSTATUS: UNKNOWN"
+          "content": "NOAH VOSS\nROLE: COMMUNICATIONS SPECIALIST\nCLEARANCE LEVEL: OMEGA\nSTATUS: UNKNOWN\nTRANSFER STATUS: DENIED",
+          "caption": "Reconstructed personnel profile from fragmented archive records.",
+          "source": "SYSTEM_RECONSTRUCTION",
+          "tags": [
+            "crew",
+            "noah_voss",
+            "communications",
+            "omega",
+            "unknown_personnel"
+          ],
+          "message": "[NOAH VOSS PROFILE ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1400
         }
       ],
       "choices": [
@@ -197,18 +352,45 @@
         }
       ]
     },
-
     "e06_n09": {
       "id": "e06_n09",
       "speaker": "MAYA",
       "events": [
         {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
           "type": "message",
           "text": "Noah Voss..."
         },
         {
+          "type": "pause",
+          "duration": 1300
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
           "type": "message",
           "text": "That shouldn't be possible."
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "I know I keep saying that."
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I would love for one thing today to be possible."
         }
       ],
       "choices": [
@@ -219,22 +401,45 @@
         }
       ]
     },
-
     "e06_n10": {
       "id": "e06_n10",
       "speaker": "MAYA",
       "events": [
         {
           "type": "typing",
-          "duration": 2500
+          "duration": 5200
         },
         {
           "type": "message",
           "text": "Because Noah Voss never boarded the station."
         },
         {
+          "type": "pause",
+          "duration": 1200
+        },
+        {
+          "type": "typing",
+          "duration": 4800
+        },
+        {
           "type": "message",
           "text": "His transfer request was denied weeks before launch."
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "I remember Rivera making a joke about it."
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "Something about communications specialists being terrible at communicating with HR."
         }
       ],
       "choices": [
@@ -245,32 +450,53 @@
         }
       ]
     },
-
     "e06_n11": {
       "id": "e06_n11",
       "speaker": "UNKNOWN",
       "events": [
         {
           "type": "glitch",
-          "duration": 1200
+          "duration": 1400,
+          "pauseAfterMs": 900
         },
         {
           "type": "corruptMessage",
-          "text": "SHE IS WRONG."
+          "speaker": "UNKNOWN",
+          "text": "SHE IS WRONG.",
+          "pauseAfterMs": 1500
         },
         {
           "type": "typing",
-          "duration": 2000
+          "duration": 4200
         },
         {
           "type": "message",
           "text": "I was there."
+        },
+        {
+          "type": "pause",
+          "duration": 1200
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "I was the first voice you heard."
+        },
+        {
+          "type": "signalLost",
+          "duration": 3200,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 1200
         }
       ],
       "choices": [
         {
-          "id": "end_episode_06",
-          "text": "END TRANSMISSION.",
+          "id": "continue_story",
+          "text": "CONTINUE.",
           "nextEpisodeId": "episode_07"
         }
       ]
