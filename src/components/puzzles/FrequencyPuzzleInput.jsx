@@ -8,6 +8,18 @@ function toFixedFrequency(value) {
   return Number(value).toFixed(2);
 }
 
+function resolveText(t, key, fallback = "") {
+  if (key && typeof t === "function") {
+    const translated = t(key);
+
+    if (translated && translated !== key) {
+      return translated;
+    }
+  }
+
+  return fallback;
+}
+
 function getSignalQuality(frequency, targetFrequency, tolerance = 0.25) {
   const distance = Math.abs(frequency - targetFrequency);
   const quality = Math.max(0, 100 - (distance / tolerance) * 100);
@@ -15,32 +27,44 @@ function getSignalQuality(frequency, targetFrequency, tolerance = 0.25) {
   return Math.round(quality);
 }
 
-function getSignalLabel(quality) {
-  if (quality >= 95) return "SIGNAL LOCKED";
-  if (quality >= 75) return "SIGNAL STRONG";
-  if (quality >= 45) return "SIGNAL UNSTABLE";
-  if (quality >= 20) return "WEAK TRACE";
-  return "STATIC";
+function getSignalLabel(quality, t) {
+  if (quality >= 95) return resolveText(t, "puzzle.frequency.signalLocked", "SIGNAL LOCKED");
+  if (quality >= 75) return resolveText(t, "puzzle.frequency.signalStrong", "SIGNAL STRONG");
+  if (quality >= 45) return resolveText(t, "puzzle.frequency.signalUnstable", "SIGNAL UNSTABLE");
+  if (quality >= 20) return resolveText(t, "puzzle.frequency.weakTrace", "WEAK TRACE");
+  return resolveText(t, "puzzle.frequency.static", "STATIC");
 }
 
-function getDecodedPreview(quality, puzzle) {
+function getDecodedPreview(quality, puzzle, t) {
   if (quality >= 95) {
-    return puzzle?.lockedMessage || "MAYA: Can anyone hear me?";
+    return resolveText(
+      t,
+      puzzle?.lockedMessageKey,
+      puzzle?.lockedMessage || "MAYA: Can anyone hear me?"
+    );
   }
 
   if (quality >= 75) {
-    return puzzle?.nearMessage || "M...a...y...a...";
+    return resolveText(
+      t,
+      puzzle?.nearMessageKey,
+      puzzle?.nearMessage || "M...a...y...a..."
+    );
   }
 
   if (quality >= 45) {
-    return puzzle?.traceMessage || "...a... anyone...";
+    return resolveText(
+      t,
+      puzzle?.traceMessageKey,
+      puzzle?.traceMessage || "...a... anyone..."
+    );
   }
 
   if (quality >= 20) {
-    return "...krrrzzzt...";
+    return resolveText(t, "puzzle.frequency.noiseWeak", "...krrrzzzt...");
   }
 
-  return "~~~~~~~~~~~~";
+  return resolveText(t, "puzzle.frequency.noiseStatic", "~~~~~~~~~~~~");
 }
 
 function buildBars(quality) {
@@ -52,7 +76,8 @@ function buildBars(quality) {
 export default function FrequencyPuzzleInput({
   puzzle,
   attempts = 0,
-  onSubmit
+  onSubmit,
+  t
 }) {
   const minFrequency = Number(puzzle?.minFrequency ?? 6.5);
   const maxFrequency = Number(puzzle?.maxFrequency ?? 8.0);
@@ -72,15 +97,31 @@ export default function FrequencyPuzzleInput({
     [frequency, targetFrequency, tolerance]
   );
 
-  const signalLabel = getSignalLabel(signalQuality);
-  const decodedPreview = getDecodedPreview(signalQuality, puzzle);
+  const signalLabel = getSignalLabel(signalQuality, t);
+  const decodedPreview = getDecodedPreview(signalQuality, puzzle, t);
   const bars = buildBars(signalQuality);
+
+  const title = resolveText(
+    t,
+    puzzle?.titleKey,
+    puzzle?.title || "FREQUENCY SCANNER"
+  );
+
+  const description = resolveText(
+    t,
+    puzzle?.descriptionKey,
+    puzzle?.description || ""
+  );
+
+  const submitLabel = resolveText(
+    t,
+    puzzle?.submitLabelKey,
+    puzzle?.submitLabel || "LOCK SIGNAL"
+  );
 
   function adjustFrequency(amount) {
     setFrequency((prev) =>
-      Number(
-        clamp(prev + amount, minFrequency, maxFrequency).toFixed(2)
-      )
+      Number(clamp(prev + amount, minFrequency, maxFrequency).toFixed(2))
     );
   }
 
@@ -107,24 +148,24 @@ export default function FrequencyPuzzleInput({
       <div className="mb-3 flex items-start justify-between gap-4 border-b border-cyan-300/20 pb-3">
         <div>
           <p className="m-0 text-[10px] tracking-[0.25em] text-cyan-300/60">
-            SIGNAL TUNER ACTIVE
+            {resolveText(t, "puzzle.frequency.tunerActive", "SIGNAL TUNER ACTIVE")}
           </p>
 
           <h3 className="mt-1 text-xs tracking-[0.24em] text-cyan-200">
-            {puzzle?.title || "FREQUENCY SCANNER"}
+            {title}
           </h3>
         </div>
 
         {attempts > 0 && (
           <span className="shrink-0 text-[10px] tracking-[0.18em] text-rose-300">
-            ATTEMPTS: {attempts}
+            {resolveText(t, "puzzle.common.attempts", "ATTEMPTS")}: {attempts}
           </span>
         )}
       </div>
 
-      {puzzle?.description && (
+      {description && (
         <p className="mb-3 text-xs leading-5 text-cyan-50/55">
-          {puzzle.description}
+          {description}
         </p>
       )}
 
@@ -132,7 +173,7 @@ export default function FrequencyPuzzleInput({
         <div className="mb-3 flex items-end justify-between gap-3">
           <div>
             <p className="m-0 text-[10px] tracking-[0.22em] text-cyan-300/45">
-              CURRENT FREQUENCY
+              {resolveText(t, "puzzle.frequency.currentFrequency", "CURRENT FREQUENCY")}
             </p>
 
             <div className="mt-1 text-3xl tracking-[0.16em] text-cyan-100 drop-shadow-[0_0_12px_rgba(103,232,249,0.35)]">
@@ -143,7 +184,7 @@ export default function FrequencyPuzzleInput({
 
           <div className="text-right">
             <p className="m-0 text-[10px] tracking-[0.22em] text-cyan-300/45">
-              QUALITY
+              {resolveText(t, "puzzle.frequency.quality", "QUALITY")}
             </p>
 
             <strong className="mt-1 block text-lg tracking-[0.14em] text-emerald-200">
@@ -227,7 +268,9 @@ export default function FrequencyPuzzleInput({
         onClick={handleSubmit}
         className="mt-3 w-full border border-emerald-300/45 bg-emerald-950/20 px-4 py-3 text-[11px] tracking-[0.22em] text-emerald-200 transition hover:bg-emerald-400/10 disabled:cursor-not-allowed disabled:opacity-40"
       >
-        {isSubmitting ? "LOCKING..." : puzzle?.submitLabel || "LOCK SIGNAL"}
+        {isSubmitting
+          ? resolveText(t, "puzzle.frequency.locking", "LOCKING...")
+          : submitLabel}
       </button>
     </div>
   );

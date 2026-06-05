@@ -1,12 +1,51 @@
+import { useTranslation } from "react-i18next";
 import {
   TransformComponent,
   TransformWrapper
 } from "react-zoom-pan-pinch";
 
+function resolveText(t, key, fallback = "") {
+  if (key && typeof t === "function") {
+    const translated = t(key);
+
+    if (translated && translated !== key) {
+      return translated;
+    }
+  }
+
+  return fallback;
+}
+
 export default function FileViewerModal({ file, onClose }) {
+  const { t } = useTranslation();
+
   if (!file) return null;
 
   const isImage = file.type === "image" || Boolean(file.src);
+
+  const title = resolveText(
+    t,
+    file.titleKey,
+    file.title || "[INCOMING FILE]"
+  );
+
+  const caption = resolveText(
+    t,
+    file.captionKey,
+    file.caption || ""
+  );
+
+  const content = resolveText(
+    t,
+    file.contentKey,
+    file.content || ""
+  );
+
+  const source = resolveText(
+    t,
+    file.sourceKey,
+    file.source || ""
+  );
 
   return (
     <div
@@ -24,11 +63,11 @@ export default function FileViewerModal({ file, onClose }) {
         <header className="flex shrink-0 items-start justify-between gap-4 border-b border-cyan-300/20 p-4">
           <div className="min-w-0">
             <p className="m-0 text-[11px] tracking-[0.3em] text-cyan-50/55">
-              FILE VIEWER
+              {t("fileViewer.title", "FILE VIEWER")}
             </p>
 
             <h2 className="mt-1 truncate text-base tracking-[0.16em] text-cyan-300 sm:text-lg">
-              {file.title || "[INCOMING FILE]"}
+              {title}
             </h2>
           </div>
 
@@ -37,7 +76,7 @@ export default function FileViewerModal({ file, onClose }) {
             onClick={onClose}
             className="shrink-0 border border-rose-400/50 px-3 py-2 text-[11px] tracking-[0.2em] text-rose-300 transition hover:bg-rose-400/10"
           >
-            CLOSE
+            {t("common.close", "CLOSE")}
           </button>
         </header>
 
@@ -58,7 +97,8 @@ export default function FileViewerModal({ file, onClose }) {
                 <div className="flex h-full min-h-0 flex-col overflow-hidden border border-cyan-300/20 bg-black">
                   <div className="flex shrink-0 items-center justify-between gap-3 border-b border-cyan-300/15 bg-slate-950/90 p-2">
                     <span className="text-[10px] tracking-[0.18em] text-cyan-50/45">
-                      ZOOM {Math.round(state.scale * 100)}%
+                      {t("fileViewer.zoom", "ZOOM")}{" "}
+                      {Math.round(state.scale * 100)}%
                     </span>
 
                     <div className="flex shrink-0 gap-2">
@@ -83,7 +123,7 @@ export default function FileViewerModal({ file, onClose }) {
                         onClick={() => resetTransform()}
                         className="border border-cyan-300/30 px-3 text-[10px] tracking-[0.14em] text-cyan-200 transition hover:bg-cyan-400/10"
                       >
-                        RESET
+                        {t("common.reset", "RESET")}
                       </button>
                     </div>
                   </div>
@@ -101,7 +141,11 @@ export default function FileViewerModal({ file, onClose }) {
                     >
                       <img
                         src={file.src}
-                        alt={file.caption || file.title || "Recovered file"}
+                        alt={
+                          caption ||
+                          title ||
+                          t("fileViewer.recoveredFile", "Recovered file")
+                        }
                         className="h-full w-full object-contain contrast-125 saturate-75 brightness-90"
                         draggable={false}
                       />
@@ -112,22 +156,26 @@ export default function FileViewerModal({ file, onClose }) {
             </TransformWrapper>
           ) : (
             <div className="terminal-scrollbar h-full overflow-y-auto border border-cyan-300/20 bg-slate-900/50 p-4 text-sm leading-7 text-cyan-50/75 whitespace-pre-wrap">
-              {file.content || "[NO READABLE CONTENT AVAILABLE]"}
+              {content ||
+                t(
+                  "fileViewer.noReadableContent",
+                  "[NO READABLE CONTENT AVAILABLE]"
+                )}
             </div>
           )}
         </div>
 
-        {(file.caption || file.source) && (
+        {(caption || source) && (
           <footer className="terminal-scrollbar max-h-28 shrink-0 overflow-y-auto border-t border-cyan-300/15 p-3 sm:p-4">
-            {file.caption && (
+            {caption && (
               <p className="text-sm leading-6 text-cyan-50/65">
-                {file.caption}
+                {caption}
               </p>
             )}
 
-            {file.source && (
+            {source && (
               <p className="mt-2 text-[10px] tracking-[0.2em] text-emerald-200/55">
-                SOURCE: {file.source}
+                {t("fileViewer.source", "SOURCE")}: {source}
               </p>
             )}
           </footer>

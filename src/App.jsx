@@ -49,6 +49,7 @@ function App() {
   const [isGlitching, setIsGlitching] = useState(false);
   const [signalStatus, setSignalStatus] = useState(null);
   const [progressTask, setProgressTask] = useState(null);
+  const [nodeFinished, setNodeFinished] = useState(false);
 
   const [settings, setSettings] = useState(() => {
     const saved = localStorage.getItem("echo_settings");
@@ -168,6 +169,7 @@ function App() {
     setIsGlitching(false);
     setSignalStatus(null);
     setProgressTask(null);
+    setNodeFinished(false);
 
     return playNodeEvents({
       events: currentNode.events || [],
@@ -241,6 +243,10 @@ function App() {
           saveGameState(nextState);
           return nextState;
         });
+      },
+
+      onComplete: () => {
+        setNodeFinished(true);
       }
     });
   }, [phase, currentNode?.id]);
@@ -261,6 +267,8 @@ function App() {
         }
       ]);
     }
+
+    setNodeFinished(false);
 
     const nextState = chooseOption(gameState, choiceId);
     setGameState(nextState);
@@ -288,6 +296,7 @@ function App() {
       }
     ]);
 
+    setNodeFinished(false);
     setGameState(result.nextState);
     saveGameState(result.nextState);
   }
@@ -371,6 +380,7 @@ function App() {
     Array.isArray(currentNode?.choices) && currentNode.choices.length > 0;
 
   const canShowChoices =
+    nodeFinished &&
     hasChoices &&
     !activePuzzle &&
     !isTyping &&

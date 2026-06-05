@@ -1,4 +1,19 @@
-function createFilePayload(event, fallbackType = "file") {
+function resolveText(source, keyName, fallbackName, translate) {
+  const key = source?.[keyName];
+  const fallback = source?.[fallbackName] || "";
+
+  if (key && typeof translate === "function") {
+    const translated = translate(key);
+
+    if (translated && translated !== key) {
+      return translated;
+    }
+  }
+
+  return fallback;
+}
+
+function createFilePayload(event, fallbackType = "file", translate) {
   const fileType = event.fileType || event.type || fallbackType;
 
   return {
@@ -7,10 +22,13 @@ function createFilePayload(event, fallbackType = "file") {
       event.id ||
       `${fileType}_${event.title || event.src || Date.now()}`,
     type: fileType,
-    title: event.title || "[INCOMING FILE]",
-    caption: event.caption || event.description || "",
+    title:
+      resolveText(event, "titleKey", "title", translate) || "[INCOMING FILE]",
+    caption:
+      resolveText(event, "captionKey", "caption", translate) ||
+      resolveText(event, "descriptionKey", "description", translate),
     src: event.src || "",
-    content: event.content || "",
+    content: resolveText(event, "contentKey", "content", translate),
     source: event.source || "",
     tags: Array.isArray(event.tags) ? event.tags : [],
     correlationTags: Array.isArray(event.correlationTags)
@@ -24,6 +42,7 @@ function playSingleEvent({
   event,
   delay = 0,
   timers,
+  translate,
   onTypingStart,
   onTypingStop,
   onMessage,
@@ -37,9 +56,7 @@ function playSingleEvent({
   onProgressTaskStart,
   onProgressTaskEnd
 }) {
-  if (!event || typeof event !== "object") {
-    return 0;
-  }
+  if (!event || typeof event !== "object") return 0;
 
   if (event.type === "pause") {
     return event.duration || 1000;
@@ -57,7 +74,6 @@ function playSingleEvent({
     }, delay + duration);
 
     timers.push(startTimer, stopTimer);
-
     return duration + (event.pauseAfterMs ?? 300);
   }
 
@@ -69,13 +85,12 @@ function playSingleEvent({
         type: "message",
         speaker: event.speaker,
         sender: event.sender,
-        text: event.text,
+        text: resolveText(event, "textKey", "text", translate),
         tone: event.tone || event.mood || "calm"
       });
     }, delay);
 
     timers.push(messageTimer);
-
     return event.pauseAfterMs ?? 700;
   }
 
@@ -87,13 +102,12 @@ function playSingleEvent({
         type: "corruptMessage",
         speaker: event.speaker,
         sender: event.sender,
-        text: event.text,
+        text: resolveText(event, "textKey", "text", translate),
         tone: "corrupt"
       });
     }, delay);
 
     timers.push(corruptTimer);
-
     return event.pauseAfterMs ?? 1200;
   }
 
@@ -105,19 +119,18 @@ function playSingleEvent({
         type: "systemAlert",
         speaker: event.speaker || "SYSTEM",
         sender: "system",
-        text: event.text,
+        text: resolveText(event, "textKey", "text", translate),
         tone: "system"
       });
     }, delay);
 
     timers.push(alertTimer);
-
     return event.pauseAfterMs ?? 1200;
   }
 
   if (event.type === "image") {
     const imageTimer = setTimeout(() => {
-      const file = createFilePayload(event, "image");
+      const file = createFilePayload(event, "image", translate);
 
       onTypingStop?.();
 
@@ -142,7 +155,6 @@ function playSingleEvent({
     }, delay);
 
     timers.push(imageTimer);
-
     return event.pauseAfterMs ?? 1200;
   }
 
@@ -153,7 +165,7 @@ function playSingleEvent({
     event.type === "crew"
   ) {
     const fileTimer = setTimeout(() => {
-      const file = createFilePayload(event, event.type);
+      const file = createFilePayload(event, event.type, translate);
 
       onTypingStop?.();
 
@@ -161,7 +173,9 @@ function playSingleEvent({
         type: "systemAlert",
         speaker: event.speaker || "SYSTEM",
         sender: "system",
-        text: event.message || `[${file.title} ARCHIVED TO DATA BANK]`,
+        text:
+          resolveText(event, "messageKey", "message", translate) ||
+          `[${file.title} ARCHIVED TO DATA BANK]`,
         tone: "system"
       });
 
@@ -169,7 +183,6 @@ function playSingleEvent({
     }, delay);
 
     timers.push(fileTimer);
-
     return event.pauseAfterMs ?? 1000;
   }
 
@@ -180,7 +193,6 @@ function playSingleEvent({
     }, delay);
 
     timers.push(puzzleTimer);
-
     return event.pauseAfterMs ?? 500;
   }
 
@@ -197,7 +209,6 @@ function playSingleEvent({
     }, delay + duration);
 
     timers.push(startTimer, stopTimer);
-
     return duration + (event.pauseAfterMs ?? 400);
   }
 
@@ -207,15 +218,20 @@ function playSingleEvent({
     const lostTimer = setTimeout(() => {
       onTypingStop?.();
       onGlitchStop?.();
-      onSignalLost?.(event.message || "[SIGNAL LOST]");
+      onSignalLost?.(
+        resolveText(event, "messageKey", "message", translate) ||
+          "[SIGNAL LOST]"
+      );
     }, delay);
 
     const restoredTimer = setTimeout(() => {
-      onSignalRestored?.(event.restoreMessage || "[SIGNAL RESTORED]");
+      onSignalRestored?.(
+        resolveText(event, "restoreMessageKey", "restoreMessage", translate) ||
+          "[SIGNAL RESTORED]"
+      );
     }, delay + duration);
 
     timers.push(lostTimer, restoredTimer);
-
     return duration + (event.pauseAfterMs ?? 800);
   }
 
@@ -228,10 +244,17 @@ function playSingleEvent({
 
       onProgressTaskStart?.({
         id: event.id || `progress_${Date.now()}`,
-        title: event.title || "SYSTEM PROCESS",
-        subtitle: event.subtitle || "",
+        title:
+          resolveText(event, "titleKey", "title", translate) ||
+          "SYSTEM PROCESS",
+        subtitle: resolveText(event, "subtitleKey", "subtitle", translate),
         duration,
-        completeText: event.completeText || "",
+        completeText: resolveText(
+          event,
+          "completeTextKey",
+          "completeText",
+          translate
+        ),
         tone: event.tone || "system"
       });
     }, delay);
@@ -239,19 +262,25 @@ function playSingleEvent({
     const endTimer = setTimeout(() => {
       onProgressTaskEnd?.();
 
-      if (event.completeText) {
+      const completeText = resolveText(
+        event,
+        "completeTextKey",
+        "completeText",
+        translate
+      );
+
+      if (completeText) {
         onMessage?.({
           type: "systemAlert",
           speaker: event.speaker || "SYSTEM",
           sender: "system",
-          text: event.completeText,
+          text: completeText,
           tone: "system"
         });
       }
     }, delay + duration);
 
     timers.push(startTimer, endTimer);
-
     return duration + (event.pauseAfterMs ?? 900);
   }
 
@@ -261,7 +290,6 @@ function playSingleEvent({
     }, delay);
 
     timers.push(statTimer);
-
     return event.pauseAfterMs ?? 200;
   }
 
@@ -270,6 +298,7 @@ function playSingleEvent({
 
 export function playNodeEvents({
   events = [],
+  translate,
   onTypingStart,
   onTypingStop,
   onMessage,
@@ -281,13 +310,15 @@ export function playNodeEvents({
   onCollectFile,
   onPuzzleStart,
   onProgressTaskStart,
-  onProgressTaskEnd
+  onProgressTaskEnd,
+  onComplete
 }) {
   const timers = [];
   let accumulatedDelay = 0;
 
   const handlers = {
     timers,
+    translate,
     onTypingStart,
     onTypingStop,
     onMessage,
@@ -307,9 +338,7 @@ export function playNodeEvents({
       const backgroundDelay = event.delay || event.delayMs || 0;
       const nestedEvent = event.event;
 
-      if (!nestedEvent || typeof nestedEvent !== "object") {
-        return;
-      }
+      if (!nestedEvent || typeof nestedEvent !== "object") return;
 
       playSingleEvent({
         ...handlers,
@@ -328,6 +357,14 @@ export function playNodeEvents({
 
     accumulatedDelay += consumedDelay;
   });
+
+  const completeTimer = setTimeout(() => {
+    onTypingStop?.();
+    onGlitchStop?.();
+    onComplete?.();
+  }, accumulatedDelay);
+
+  timers.push(completeTimer);
 
   return () => {
     timers.forEach(clearTimeout);

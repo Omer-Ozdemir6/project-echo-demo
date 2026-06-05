@@ -2,7 +2,6 @@
   "id": "episode_09",
   "title": "THE RESCUE",
   "startNodeId": "e09_n01",
-  "puzzles": {},
   "nodes": {
     "e09_n01": {
       "id": "e09_n01",
@@ -10,7 +9,8 @@
       "events": [
         {
           "type": "systemAlert",
-          "text": "[RESCUE TASK AVAILABLE]"
+          "text": "[RESCUE TASK AVAILABLE]",
+          "textKey": "episode_09.e09_n01.event0.text"
         },
         {
           "type": "typing",
@@ -18,18 +18,21 @@
         },
         {
           "type": "message",
-          "text": "Target: Emergency Pod"
+          "text": "Target: Emergency Pod",
+          "textKey": "episode_09.e09_n01.event2.text"
         },
         {
           "type": "message",
-          "text": "Beacon lock unstable. Pod trajectory is drifting."
+          "text": "Beacon lock unstable. Pod trajectory is drifting.",
+          "textKey": "episode_09.e09_n01.event3.text"
         }
       ],
       "choices": [
         {
           "id": "begin_rescue",
           "text": "BEGIN OPERATION.",
-          "nextNodeId": "e09_n02"
+          "nextNodeId": "e09_n02",
+          "textKey": "episode_09.e09_n01.choice0.text"
         }
       ]
     },
@@ -43,24 +46,11 @@
         },
         {
           "type": "message",
-          "text": "Life support is dropping."
-        },
-        {
-          "type": "message",
-          "text": "We do not have much time."
-        },
-        {
-          "type": "message",
-          "text": "And before anyone asks, no, I do not have a calm version of that sentence."
+          "text": "Life support is dropping. We do not have much time. And before anyone asks, no, I do not have a calm version of that sentence.",
+          "textKey": "episode_09.e09_n02.event1.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_maya",
-          "text": "CONTINUE.",
-          "nextNodeId": "e09_n03"
-        }
-      ]
+      "nextNodeId": "e09_n03"
     },
     "e09_n03": {
       "id": "e09_n03",
@@ -68,9 +58,12 @@
       "events": [
         {
           "type": "file",
+          "id": "rescue_route_map",
           "fileId": "rescue_route_map",
           "title": "RESCUE ROUTE MAP",
-          "content": "ROUTE A\nShort Route\nHigh Radiation\nEstimated Arrival: Fast\nCrew Risk: Severe\n\nROUTE B\nLong Route\nLow Radiation\nEstimated Arrival: Delayed\nCrew Risk: Moderate\nLife Support Risk: Severe"
+          "content": "ROUTE A\nShort Route\nHigh Radiation\nEstimated Arrival: Fast\nCrew Risk: Severe\n\nROUTE B\nLong Route\nLow Radiation\nEstimated Arrival: Delayed\nCrew Risk: Moderate\nLife Support Risk: Severe",
+          "titleKey": "episode_09.e09_n03.event0.title",
+          "contentKey": "episode_09.e09_n03.event0.content"
         }
       ],
       "choices": [
@@ -81,7 +74,8 @@
             "danger": 15,
             "morale": 5
           },
-          "nextNodeId": "e09_route_a"
+          "nextNodeId": "e09_route_a",
+          "textKey": "episode_09.e09_n03.choice0.text"
         },
         {
           "id": "route_b",
@@ -90,7 +84,8 @@
             "danger": -5,
             "morale": -5
           },
-          "nextNodeId": "e09_route_b"
+          "nextNodeId": "e09_route_b",
+          "textKey": "episode_09.e09_n03.choice1.text"
         }
       ]
     },
@@ -100,11 +95,13 @@
       "events": [
         {
           "type": "message",
-          "text": "Route A selected."
+          "text": "Route A selected.",
+          "textKey": "episode_09.e09_route_a.event0.text"
         },
         {
           "type": "systemAlert",
-          "text": "[RADIATION EXPOSURE RISK INCREASED]"
+          "text": "[RADIATION EXPOSURE RISK INCREASED]",
+          "textKey": "episode_09.e09_route_a.event1.text"
         },
         {
           "type": "backgroundEvent",
@@ -112,7 +109,8 @@
           "event": {
             "type": "message",
             "speaker": "MAYA",
-            "text": "Fast route. Terrible route. Very us."
+            "text": "Fast route. Terrible route. Very us.",
+            "textKey": "episode_09.e09_route_a.backgroundEvent2.text"
           }
         },
         {
@@ -121,17 +119,12 @@
           "event": {
             "type": "message",
             "speaker": "HALE",
-            "text": "Keep moving. Do not stop in the exposed corridor."
+            "text": "Keep moving. Do not stop in the exposed corridor.",
+            "textKey": "episode_09.e09_route_a.backgroundEvent3.text"
           }
         }
       ],
-      "choices": [
-        {
-          "id": "continue_route_a",
-          "text": "CONTINUE.",
-          "nextNodeId": "e09_n04"
-        }
-      ]
+      "nextNodeId": "e09_n04"
     },
     "e09_route_b": {
       "id": "e09_route_b",
@@ -139,11 +132,13 @@
       "events": [
         {
           "type": "message",
-          "text": "Route B selected."
+          "text": "Route B selected.",
+          "textKey": "episode_09.e09_route_b.event0.text"
         },
         {
           "type": "systemAlert",
-          "text": "[TRAVEL TIME INCREASED]"
+          "text": "[TRAVEL TIME INCREASED]",
+          "textKey": "episode_09.e09_route_b.event1.text"
         },
         {
           "type": "backgroundEvent",
@@ -151,7 +146,8 @@
           "event": {
             "type": "message",
             "speaker": "MAYA",
-            "text": "This is safer for us."
+            "text": "This is safer for us.",
+            "textKey": "episode_09.e09_route_b.backgroundEvent2.text"
           }
         },
         {
@@ -160,17 +156,12 @@
           "event": {
             "type": "message",
             "speaker": "MAYA",
-            "text": "Not for whoever is in that pod."
+            "text": "Not for whoever is in that pod.",
+            "textKey": "episode_09.e09_route_b.backgroundEvent3.text"
           }
         }
       ],
-      "choices": [
-        {
-          "id": "continue_route_b",
-          "text": "CONTINUE.",
-          "nextNodeId": "e09_n04"
-        }
-      ]
+      "nextNodeId": "e09_n04"
     },
     "e09_n04": {
       "id": "e09_n04",
@@ -178,15 +169,18 @@
       "events": [
         {
           "type": "systemAlert",
-          "text": "[LIFE SUPPORT UPDATE]"
+          "text": "[LIFE SUPPORT UPDATE]",
+          "textKey": "episode_09.e09_n04.event0.text"
         },
         {
           "type": "message",
-          "text": "Current Capacity: 18%"
+          "text": "Current Capacity: 18%",
+          "textKey": "episode_09.e09_n04.event1.text"
         },
         {
           "type": "message",
-          "text": "Pod beacon pulse weakening."
+          "text": "Pod beacon pulse weakening.",
+          "textKey": "episode_09.e09_n04.event2.text"
         },
         {
           "type": "backgroundEvent",
@@ -194,7 +188,8 @@
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
-            "text": "Hurry."
+            "text": "Hurry.",
+            "textKey": "episode_09.e09_n04.backgroundEvent3.text"
           }
         },
         {
@@ -203,7 +198,8 @@
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
-            "text": "I can hear you outside."
+            "text": "I can hear you outside.",
+            "textKey": "episode_09.e09_n04.backgroundEvent4.text"
           }
         },
         {
@@ -212,17 +208,12 @@
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
-            "text": "Do not let Hale open it first."
+            "text": "Do not let Hale open it first.",
+            "textKey": "episode_09.e09_n04.backgroundEvent5.text"
           }
         }
       ],
-      "choices": [
-        {
-          "id": "continue_signal",
-          "text": "CONTINUE.",
-          "nextNodeId": "e09_n05"
-        }
-      ]
+      "nextNodeId": "e09_n05"
     },
     "e09_n05": {
       "id": "e09_n05",
@@ -230,21 +221,26 @@
       "events": [
         {
           "type": "message",
-          "text": "Emergency pod interior scan received."
+          "text": "Emergency pod interior scan received.",
+          "textKey": "episode_09.e09_n05.event0.text"
         },
         {
           "type": "image",
+          "id": "pod_internal_frame",
           "fileId": "pod_internal_frame",
           "title": "POD INTERNAL FRAME",
           "caption": "Emergency pod interior scan.",
-          "src": "/images/pod_internal_frame.jpg"
+          "src": "/images/pod_internal_frame.jpg",
+          "titleKey": "episode_09.e09_n05.event1.title",
+          "captionKey": "episode_09.e09_n05.event1.caption"
         }
       ],
       "choices": [
         {
           "id": "inspect_pod",
           "text": "INSPECT POD.",
-          "nextNodeId": "e09_n06"
+          "nextNodeId": "e09_n06",
+          "textKey": "episode_09.e09_n05.choice0.text"
         }
       ]
     },
@@ -258,20 +254,11 @@
         },
         {
           "type": "message",
-          "text": "I cannot identify the occupant."
-        },
-        {
-          "type": "message",
-          "text": "The scan keeps folding over itself, like the image is trying not to show us a face."
+          "text": "I cannot identify the occupant. The scan keeps folding over itself, like the image is trying not to show us a face.",
+          "textKey": "episode_09.e09_n06.event1.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_hale_warning",
-          "text": "CONTINUE.",
-          "nextNodeId": "e09_n07"
-        }
-      ]
+      "nextNodeId": "e09_n07"
     },
     "e09_n07": {
       "id": "e09_n07",
@@ -283,18 +270,16 @@
         },
         {
           "type": "message",
-          "text": "Do not open the pod."
-        },
-        {
-          "type": "message",
-          "text": "I am not asking."
+          "text": "Do not open the pod. I am not asking.",
+          "textKey": "episode_09.e09_n07.event1.text"
         }
       ],
       "choices": [
         {
           "id": "why_not",
           "text": "WHY?",
-          "nextNodeId": "e09_n08"
+          "nextNodeId": "e09_n08",
+          "textKey": "episode_09.e09_n07.choice0.text"
         }
       ]
     },
@@ -308,14 +293,16 @@
         },
         {
           "type": "message",
-          "text": "Because I already did."
+          "text": "Because I already did.",
+          "textKey": "episode_09.e09_n08.event1.text"
         }
       ],
       "choices": [
         {
           "id": "what_do_you_mean",
           "text": "WHAT?",
-          "nextNodeId": "e09_n09"
+          "nextNodeId": "e09_n09",
+          "textKey": "episode_09.e09_n08.choice0.text"
         }
       ]
     },
@@ -329,11 +316,8 @@
         },
         {
           "type": "message",
-          "text": "The pod was empty."
-        },
-        {
-          "type": "message",
-          "text": "No body. No blood. No suit. Just frost on the inside of the glass."
+          "text": "The pod was empty. No body. No blood. No suit. Just frost on the inside of the glass.",
+          "textKey": "episode_09.e09_n09.event1.text"
         },
         {
           "type": "backgroundEvent",
@@ -341,7 +325,8 @@
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
-            "text": "He's lying."
+            "text": "He's lying.",
+            "textKey": "episode_09.e09_n09.backgroundEvent2.text"
           }
         },
         {
@@ -350,7 +335,8 @@
           "event": {
             "type": "message",
             "speaker": "MAYA",
-            "text": "Hale... when?"
+            "text": "Hale... when?",
+            "textKey": "episode_09.e09_n09.backgroundEvent3.text"
           }
         },
         {
@@ -359,17 +345,12 @@
           "event": {
             "type": "message",
             "speaker": "HALE",
-            "text": "Before Alpha."
+            "text": "Before Alpha.",
+            "textKey": "episode_09.e09_n09.backgroundEvent4.text"
           }
         }
       ],
-      "choices": [
-        {
-          "id": "continue_conflict",
-          "text": "CONTINUE.",
-          "nextNodeId": "e09_n10"
-        }
-      ]
+      "nextNodeId": "e09_n10"
     },
     "e09_n10": {
       "id": "e09_n10",
@@ -377,15 +358,18 @@
       "events": [
         {
           "type": "systemAlert",
-          "text": "[POD ACCESS AVAILABLE]"
+          "text": "[POD ACCESS AVAILABLE]",
+          "textKey": "episode_09.e09_n10.event0.text"
         },
         {
           "type": "message",
-          "text": "Rescue team has reached emergency pod exterior."
+          "text": "Rescue team has reached emergency pod exterior.",
+          "textKey": "episode_09.e09_n10.event1.text"
         },
         {
           "type": "message",
-          "text": "Manual override required."
+          "text": "Manual override required.",
+          "textKey": "episode_09.e09_n10.event2.text"
         },
         {
           "type": "glitch",
@@ -393,7 +377,8 @@
         },
         {
           "type": "message",
-          "text": "Internal motion detected."
+          "text": "Internal motion detected.",
+          "textKey": "episode_09.e09_n10.event4.text"
         }
       ],
       "choices": [
@@ -405,7 +390,8 @@
             "morale": 5,
             "trust": -5
           },
-          "nextNodeId": "e09_open_branch"
+          "nextNodeId": "e09_open_branch",
+          "textKey": "episode_09.e09_n10.choice0.text"
         },
         {
           "id": "abort_mission",
@@ -415,7 +401,8 @@
             "morale": -20,
             "trust": 5
           },
-          "nextNodeId": "e09_abort_branch"
+          "nextNodeId": "e09_abort_branch",
+          "textKey": "episode_09.e09_n10.choice1.text"
         }
       ]
     },
@@ -425,11 +412,13 @@
       "events": [
         {
           "type": "message",
-          "text": "Pod opening sequence authorized."
+          "text": "Pod opening sequence authorized.",
+          "textKey": "episode_09.e09_open_branch.event0.text"
         },
         {
           "type": "systemAlert",
-          "text": "[SEAL PRESSURE RELEASED]"
+          "text": "[SEAL PRESSURE RELEASED]",
+          "textKey": "episode_09.e09_open_branch.event1.text"
         },
         {
           "type": "backgroundEvent",
@@ -437,7 +426,8 @@
           "event": {
             "type": "message",
             "speaker": "MAYA",
-            "text": "I have visual."
+            "text": "I have visual.",
+            "textKey": "episode_09.e09_open_branch.backgroundEvent2.text"
           }
         },
         {
@@ -446,7 +436,8 @@
           "event": {
             "type": "message",
             "speaker": "MAYA",
-            "text": "There is someone inside."
+            "text": "There is someone inside.",
+            "textKey": "episode_09.e09_open_branch.backgroundEvent3.text"
           }
         },
         {
@@ -455,7 +446,8 @@
           "event": {
             "type": "message",
             "speaker": "HALE",
-            "text": "Step away from it. Now."
+            "text": "Step away from it. Now.",
+            "textKey": "episode_09.e09_open_branch.backgroundEvent4.text"
           }
         },
         {
@@ -464,14 +456,16 @@
         },
         {
           "type": "message",
-          "text": "Audio channel contamination detected."
+          "text": "Audio channel contamination detected.",
+          "textKey": "episode_09.e09_open_branch.event6.text"
         }
       ],
       "choices": [
         {
           "id": "continue_after_open",
           "text": "KEEP THE POD OPEN.",
-          "nextEpisodeId": "episode_10"
+          "nextEpisodeId": "episode_10",
+          "textKey": "episode_09.e09_open_branch.choice0.text"
         }
       ]
     },
@@ -481,11 +475,13 @@
       "events": [
         {
           "type": "message",
-          "text": "Rescue operation aborted."
+          "text": "Rescue operation aborted.",
+          "textKey": "episode_09.e09_abort_branch.event0.text"
         },
         {
           "type": "systemAlert",
-          "text": "[POD ACCESS DENIED]"
+          "text": "[POD ACCESS DENIED]",
+          "textKey": "episode_09.e09_abort_branch.event1.text"
         },
         {
           "type": "backgroundEvent",
@@ -493,7 +489,8 @@
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
-            "text": "Please..."
+            "text": "Please...",
+            "textKey": "episode_09.e09_abort_branch.backgroundEvent2.text"
           }
         },
         {
@@ -502,7 +499,8 @@
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
-            "text": "Maya, don't leave me again."
+            "text": "Maya, don't leave me again.",
+            "textKey": "episode_09.e09_abort_branch.backgroundEvent3.text"
           }
         },
         {
@@ -511,21 +509,25 @@
           "event": {
             "type": "message",
             "speaker": "MAYA",
-            "text": "Again?"
+            "text": "Again?",
+            "textKey": "episode_09.e09_abort_branch.backgroundEvent4.text"
           }
         },
         {
           "type": "message",
-          "text": "Pod beacon remains active."
+          "text": "Pod beacon remains active.",
+          "textKey": "episode_09.e09_abort_branch.event5.text"
         }
       ],
       "choices": [
         {
           "id": "continue_after_abort",
           "text": "TRACK THE BEACON.",
-          "nextEpisodeId": "episode_10"
+          "nextEpisodeId": "episode_10",
+          "textKey": "episode_09.e09_abort_branch.choice0.text"
         }
       ]
     }
-  }
+  },
+  "titleKey": "episode_09.meta.episode0.title"
 }

@@ -4,19 +4,18 @@
   "episode": 32,
   "title": "THE FALSE EVELYN",
   "startNodeId": "e47_n01",
-
   "flagsUsed": [
     "focusEvelyn",
-    "focusObserver"
+    "focusObserver",
+    "disconnectedObserver",
+    "disconnectedEvelynCopy"
   ],
-
   "persistentVariables": {
     "observerConnected": true,
     "evelynCopyConnected": true,
     "observerTrust": 50,
     "noahTrust": 50
   },
-
   "nodes": {
     "e47_n01": {
       "id": "e47_n01",
@@ -24,130 +23,52 @@
       "events": [
         {
           "type": "systemAlert",
-          "text": "[ANCHOR CONFLICT ACTIVE]"
-        }
-      ],
-      "choices": [
+          "text": "[ANCHOR CONFLICT ACTIVE]",
+          "textKey": "episode_47.e47_n01.event0.text"
+        },
         {
-          "id": "continue_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n02"
-        }
-      ]
-    },
-
-    "e47_n02": {
-      "id": "e47_n02",
-      "speaker": "EVELYN",
-      "events": [
-        {
-          "type": "message",
-          "text": "Noah..."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n03"
-        }
-      ]
-    },
-
-    "e47_n03": {
-      "id": "e47_n03",
-      "speaker": "OBSERVER",
-      "events": [
-        {
-          "type": "message",
-          "text": "Don't listen."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_03",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n04"
-        }
-      ]
-    },
-
-    "e47_n04": {
-      "id": "e47_n04",
-      "speaker": "EVELYN",
-      "events": [
-        {
-          "type": "message",
-          "text": "He's lying."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_04",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n05"
-        }
-      ]
-    },
-
-    "e47_n05": {
-      "id": "e47_n05",
-      "speaker": "OBSERVER",
-      "events": [
-        {
-          "type": "message",
-          "text": "She is."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_05",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n06"
-        }
-      ]
-    },
-
-    "e47_n06": {
-      "id": "e47_n06",
-      "speaker": "GRANT",
-      "events": [
-        {
-          "type": "message",
-          "text": "Awesome."
+          "type": "typing",
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "Now we have two ghosts."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_06",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n07"
-        }
-      ]
-    },
-
-    "e47_n07": {
-      "id": "e47_n07",
-      "speaker": "EVA",
-      "events": [
+          "speaker": "EVELYN",
+          "text": "Noah...",
+          "textKey": "episode_47.e47_n01.event2.text"
+        },
         {
           "type": "message",
-          "text": "Grant."
+          "speaker": "OBSERVER",
+          "text": "Don't listen.",
+          "textKey": "episode_47.e47_n01.event3.text"
+        },
+        {
+          "type": "message",
+          "speaker": "EVELYN",
+          "text": "He's lying.",
+          "textKey": "episode_47.e47_n01.event4.text"
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "She is.",
+          "textKey": "episode_47.e47_n01.event5.text"
+        },
+        {
+          "type": "message",
+          "speaker": "GRANT",
+          "text": "Awesome. Now we have two ghosts.",
+          "textKey": "episode_47.e47_n01.event6.text"
+        },
+        {
+          "type": "message",
+          "speaker": "EVA",
+          "text": "Grant.",
+          "textKey": "episode_47.e47_n01.event7.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_07",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_branch"
-        }
-      ]
+      "nextNodeId": "e47_branch"
     },
-
     "e47_branch": {
       "id": "e47_branch",
       "speaker": "SYSTEM",
@@ -164,248 +85,183 @@
         }
       ]
     },
-
     "focus_evelyn_path": {
       "id": "focus_evelyn_path",
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "status",
-          "text": "EVELYN SIGNAL STRENGTH: HIGH"
+          "type": "systemAlert",
+          "text": "[EVELYN SIGNAL STRENGTH: HIGH]",
+          "textKey": "episode_47.focus_evelyn_path.event0.text"
         },
         {
-          "type": "status",
-          "text": "OBSERVER INFLUENCE: INCREASING"
+          "type": "systemAlert",
+          "text": "[OBSERVER INFLUENCE: INCREASING]",
+          "textKey": "episode_47.focus_evelyn_path.event1.text"
         }
       ],
-      "choices": [
-        {
-          "id": "merge_focus_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n08"
-        }
-      ]
+      "nextNodeId": "e47_reveal"
     },
-
     "focus_observer_path": {
       "id": "focus_observer_path",
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "status",
-          "text": "OBSERVER SIGNAL STRENGTH: HIGH"
+          "type": "systemAlert",
+          "text": "[OBSERVER SIGNAL STRENGTH: HIGH]",
+          "textKey": "episode_47.focus_observer_path.event0.text"
         },
         {
-          "type": "status",
-          "text": "EVELYN CONNECTION: DEGRADED"
+          "type": "systemAlert",
+          "text": "[EVELYN CONNECTION: DEGRADED]",
+          "textKey": "episode_47.focus_observer_path.event1.text"
         }
       ],
-      "choices": [
-        {
-          "id": "merge_focus_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n08"
-        }
-      ]
+      "nextNodeId": "e47_reveal"
     },
-
-    "e47_n08": {
-      "id": "e47_n08",
+    "e47_reveal": {
+      "id": "e47_reveal",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "file",
           "fileId": "anchor_duplication_log",
           "title": "ANCHOR DUPLICATION LOG",
-          "content": "ANCHOR COPY CREATED\n\nSOURCE: EVELYN CARTER\n\nSTATUS: INCOMPLETE"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_08",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n09"
-        }
-      ]
-    },
-
-    "e47_n09": {
-      "id": "e47_n09",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "message",
-          "text": "What does that mean?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_09",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n10"
-        }
-      ]
-    },
-
-    "e47_n10": {
-      "id": "e47_n10",
-      "speaker": "MARA",
-      "events": [
-        {
-          "type": "message",
-          "text": "Someone copied part of Evelyn."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_10",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n11"
-        }
-      ]
-    },
-
-    "e47_n11": {
-      "id": "e47_n11",
-      "speaker": "OBSERVER",
-      "events": [
-        {
-          "type": "message",
-          "text": "Not someone."
+          "content": "ANCHOR COPY CREATED\n\nSOURCE: EVELYN CARTER\n\nSTATUS: INCOMPLETE",
+          "titleKey": "episode_47.e47_reveal.event0.title",
+          "contentKey": "episode_47.e47_reveal.event0.content"
         },
         {
           "type": "message",
-          "text": "Me."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_11",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n12"
-        }
-      ]
-    },
-
-    "e47_n12": {
-      "id": "e47_n12",
-      "speaker": "OBSERVER",
-      "events": [
-        {
-          "type": "message",
-          "text": "She was disappearing."
+          "speaker": "EVA",
+          "text": "What does that mean?",
+          "textKey": "episode_47.e47_reveal.event1.text"
         },
         {
           "type": "message",
-          "text": "I couldn't save her."
+          "speaker": "MARA",
+          "text": "Someone copied part of Evelyn.",
+          "textKey": "episode_47.e47_reveal.event2.text"
         },
         {
           "type": "message",
-          "text": "So I copied what remained."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_12",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n13"
-        }
-      ]
-    },
-
-    "e47_n13": {
-      "id": "e47_n13",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "message",
-          "text": "You cloned her?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_13",
-          "text": "CONTINUE.",
-          "nextNodeId": "e47_n14"
-        }
-      ]
-    },
-
-    "e47_n14": {
-      "id": "e47_n14",
-      "speaker": "OBSERVER",
-      "events": [
-        {
-          "type": "message",
-          "text": "No."
+          "speaker": "OBSERVER",
+          "text": "Not someone.",
+          "textKey": "episode_47.e47_reveal.event3.text"
         },
         {
           "type": "message",
-          "text": "I preserved her."
+          "speaker": "OBSERVER",
+          "text": "Me.",
+          "textKey": "episode_47.e47_reveal.event4.text"
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "She was disappearing.",
+          "textKey": "episode_47.e47_reveal.event5.text"
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "I couldn't save her.",
+          "textKey": "episode_47.e47_reveal.event6.text"
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "So I copied what remained.",
+          "textKey": "episode_47.e47_reveal.event7.text"
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "You cloned her?",
+          "textKey": "episode_47.e47_reveal.event8.text"
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "No.",
+          "textKey": "episode_47.e47_reveal.event9.text"
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "I preserved her.",
+          "textKey": "episode_47.e47_reveal.event10.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_14",
-          "text": "CONTINUE.",
-          "nextNodeId": "disconnect_choice"
-        }
-      ]
+      "nextNodeId": "disconnect_choice"
     },
-
     "disconnect_choice": {
       "id": "disconnect_choice",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
-          "text": "[ANCHOR INSTABILITY RISING]"
+          "text": "[ANCHOR INSTABILITY RISING]",
+          "textKey": "episode_47.disconnect_choice.event0.text"
         },
         {
           "type": "message",
-          "text": "One anchor must be disconnected."
+          "text": "One anchor must be disconnected.",
+          "textKey": "episode_47.disconnect_choice.event1.text"
         }
       ],
       "choices": [
         {
           "id": "disconnect_observer",
-          "text": "DISCONNECT OBSERVER",
+          "text": "DISCONNECT OBSERVER.",
           "effects": {
             "observerConnected": false,
-            "observerTrust": -30
+            "observerTrust": -30,
+            "noahTrust": 10
           },
-          "nextNodeId": "observer_disconnect_path"
+          "flags": {
+            "disconnectedObserver": true
+          },
+          "nextNodeId": "observer_disconnect_path",
+          "textKey": "episode_47.disconnect_choice.choice0.text"
         },
         {
           "id": "disconnect_evelyn_copy",
-          "text": "DISCONNECT EVELYN COPY",
+          "text": "DISCONNECT EVELYN COPY.",
           "effects": {
             "evelynCopyConnected": false,
-            "noahTrust": -25
+            "noahTrust": -25,
+            "observerTrust": 10
           },
-          "nextNodeId": "evelyn_disconnect_path"
+          "flags": {
+            "disconnectedEvelynCopy": true
+          },
+          "nextNodeId": "evelyn_disconnect_path",
+          "textKey": "episode_47.disconnect_choice.choice1.text"
         }
       ]
     },
-
     "observer_disconnect_path": {
       "id": "observer_disconnect_path",
       "speaker": "NOAH",
       "events": [
         {
+          "type": "typing",
+          "duration": 4000
+        },
+        {
           "type": "message",
-          "text": "I hope you're right."
+          "text": "I hope you're right.",
+          "textKey": "episode_47.observer_disconnect_path.event1.text"
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "You are making the same mistake again.",
+          "textKey": "episode_47.observer_disconnect_path.event2.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_obs_disconnect",
-          "text": "CONTINUE.",
-          "nextNodeId": "separation_start"
-        }
-      ]
+      "nextNodeId": "separation_start"
     },
-
     "evelyn_disconnect_path": {
       "id": "evelyn_disconnect_path",
       "speaker": "NOAH",
@@ -416,182 +272,175 @@
         },
         {
           "type": "message",
-          "text": "..."
+          "text": "...",
+          "textKey": "episode_47.evelyn_disconnect_path.event1.text"
         },
         {
           "type": "message",
-          "text": "I don't know if I can forgive that."
+          "text": "I don't know if I can forgive that.",
+          "textKey": "episode_47.evelyn_disconnect_path.event2.text"
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Forgiveness is easier when the truth is dead.",
+          "textKey": "episode_47.evelyn_disconnect_path.event3.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_eve_disconnect",
-          "text": "CONTINUE.",
-          "nextNodeId": "separation_start"
-        }
-      ]
+      "nextNodeId": "separation_start"
     },
-
     "separation_start": {
       "id": "separation_start",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
-          "text": "[ANCHOR SEPARATION STARTED]"
+          "text": "[ANCHOR SEPARATION STARTED]",
+          "textKey": "episode_47.separation_start.event0.text"
+        },
+        {
+          "type": "progressTask",
+          "title": "ANCHOR SEPARATION",
+          "subtitle": "Separating unstable consciousness anchors...",
+          "duration": 10800000,
+          "titleKey": "episode_47.separation_start.event1.title"
         }
       ],
       "waitTask": {
         "id": "anchor_disconnect",
         "durationMs": 10800000,
         "waitingNodeId": "separation_wait",
-        "completeNodeId": "final_01"
+        "completeNodeId": "final_reveal"
       },
-
       "backgroundEvents": [
         {
           "delayMs": 3600000,
           "event": {
             "type": "systemAlert",
-            "text": "Anchor separation started."
+            "text": "[ANCHOR SEPARATION: 33%]"
           }
         },
         {
           "delayMs": 7200000,
           "event": {
             "type": "systemAlert",
-            "text": "UNKNOWN SIGNAL DETECTED"
+            "text": "[UNKNOWN SIGNAL DETECTED]"
           }
         }
       ]
     },
-
     "separation_wait": {
       "id": "separation_wait",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "message",
-          "text": "Separating anchors..."
+          "text": "Separating anchors...",
+          "textKey": "episode_47.separation_wait.event0.text"
+        },
+        {
+          "type": "message",
+          "text": "Signal interference increasing.",
+          "textKey": "episode_47.separation_wait.event1.text"
         }
       ]
     },
-
-    "final_01": {
-      "id": "final_01",
+    "final_reveal": {
+      "id": "final_reveal",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "conditionalMessage",
           "condition": "observerConnected == false",
-          "text": "EVELYN: Noah..."
+          "text": "EVELYN: Noah...",
+          "textKey": "episode_47.final_reveal.event0.text"
         },
         {
           "type": "conditionalMessage",
           "condition": "evelynCopyConnected == false",
-          "text": "OBSERVER: Noah..."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_final_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "final_02"
-        }
-      ]
-    },
-
-    "final_02": {
-      "id": "final_02",
-      "speaker": "SYSTEM",
-      "events": [
+          "text": "OBSERVER: Noah...",
+          "textKey": "episode_47.final_reveal.event1.text"
+        },
         {
           "type": "systemAlert",
-          "text": "[THIRD ANCHOR DETECTED]"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_final_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "final_03"
-        }
-      ]
-    },
-
-    "final_03": {
-      "id": "final_03",
-      "speaker": "MARA",
-      "events": [
+          "text": "[THIRD ANCHOR DETECTED]",
+          "textKey": "episode_47.final_reveal.event2.text"
+        },
         {
           "type": "message",
-          "text": "No."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_final_03",
-          "text": "CONTINUE.",
-          "nextNodeId": "final_04"
-        }
-      ]
-    },
-
-    "final_04": {
-      "id": "final_04",
-      "speaker": "EVA",
-      "events": [
+          "speaker": "MARA",
+          "text": "No.",
+          "textKey": "episode_47.final_reveal.event3.text"
+        },
         {
           "type": "message",
-          "text": "What now?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_final_04",
-          "text": "CONTINUE.",
-          "nextNodeId": "final_05"
-        }
-      ]
-    },
-
-    "final_05": {
-      "id": "final_05",
-      "speaker": "SYSTEM",
-      "events": [
+          "speaker": "EVA",
+          "text": "What now?",
+          "textKey": "episode_47.final_reveal.event4.text"
+        },
         {
           "type": "file",
           "fileId": "anchor_03",
           "title": "ANCHOR_03",
-          "content": "STATUS: ACTIVE"
+          "content": "STATUS: ACTIVE",
+          "titleKey": "episode_47.final_reveal.event5.title",
+          "contentKey": "episode_47.final_reveal.event5.content"
+        },
+        {
+          "type": "typing",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "speaker": "SYSTEM",
+          "text": "Recovering identity...",
+          "textKey": "episode_47.final_reveal.event7.text"
+        },
+        {
+          "type": "message",
+          "speaker": "SYSTEM",
+          "text": "12%",
+          "textKey": "episode_47.final_reveal.event8.text"
+        },
+        {
+          "type": "message",
+          "speaker": "SYSTEM",
+          "text": "34%",
+          "textKey": "episode_47.final_reveal.event9.text"
+        },
+        {
+          "type": "message",
+          "speaker": "SYSTEM",
+          "text": "67%",
+          "textKey": "episode_47.final_reveal.event10.text"
+        },
+        {
+          "type": "message",
+          "speaker": "SYSTEM",
+          "text": "91%",
+          "textKey": "episode_47.final_reveal.event11.text"
+        },
+        {
+          "type": "file",
+          "fileId": "anchor_03_identity",
+          "title": "ANCHOR_03 IDENTITY",
+          "content": "IDENTITY:\nDR. HALE",
+          "titleKey": "episode_47.final_reveal.event12.title",
+          "contentKey": "episode_47.final_reveal.event12.content"
+        },
+        {
+          "type": "typing",
+          "duration": 6000
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Hello again.",
+          "textKey": "episode_47.final_reveal.event14.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_final_05",
-          "text": "CONTINUE.",
-          "nextNodeId": "final_06"
-        }
-      ]
-    },
-
-    "final_06": {
-      "id": "final_06",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "fileUpdate",
-          "fileId": "anchor_03",
-          "content": "IDENTITY: DR. HALE"
-        }
-      ],
-      "choices": [
-        {
-          "id": "end_episode_47",
-          "text": "END TRANSMISSION",
-          "nextEpisodeId": "episode_48"
-        }
-      ]
+      "nextEpisodeId": "episode_48"
     }
-  }
+  },
+  "titleKey": "episode_47.meta.episode0.title"
 }

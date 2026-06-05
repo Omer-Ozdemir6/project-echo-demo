@@ -1,7 +1,21 @@
+import { useTranslation } from "react-i18next";
+
 export default function ChoicePanel({ choices, onChoice }) {
+  const { t } = useTranslation();
+
+  function resolveChoiceText(choice) {
+    if (choice.textKey) {
+      const translated = t(choice.textKey);
+
+      if (translated && translated !== choice.textKey) {
+        return translated;
+      }
+    }
+
+    return choice.text || "";
+  }
+
   return (
-    /* Üstteki çizgiyi (border-t) ve başlık alanını tamamen kaldırdık, 
-       sadece kutuları saran ana grid yapısını bıraktık. */
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       {choices.map((choice, index) => (
         <button
@@ -21,17 +35,15 @@ export default function ChoicePanel({ choices, onChoice }) {
           style={{ animationDelay: `${index * 90}ms` }}
         >
           <div className="flex items-center gap-3">
-            {/* Sol taraftaki şık terminal imleci (>) */}
             <span className="shrink-0 font-mono text-sm text-cyan-400/40 transition-all duration-200 group-hover:text-cyan-300 group-hover:translate-x-0.5">
               &gt;
             </span>
 
             <span className="flex-1 text-sm leading-snug text-cyan-50/90 sm:text-base">
-              {choice.text}
+              {resolveChoiceText(choice)}
             </span>
           </div>
 
-          {/* Sol kenardaki hover parlaması */}
           <div className="absolute left-0 top-0 h-full w-1 bg-cyan-300/0 transition-all duration-200 group-hover:bg-cyan-300/70" />
         </button>
       ))}

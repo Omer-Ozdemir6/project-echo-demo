@@ -1,28 +1,80 @@
 import { useMemo, useState } from "react";
 
-function buildDecryptLines(puzzle) {
+function resolveText(t, key, fallback = "") {
+  if (key && typeof t === "function") {
+    const translated = t(key);
+
+    if (translated && translated !== key) {
+      return translated;
+    }
+  }
+
+  return fallback;
+}
+
+function buildDecryptLines(puzzle, t) {
   const seed = puzzle?.seed || "ECHO";
   const target = puzzle?.targetFrequency || "417";
 
   return [
-    `[SOURCE] ${seed}`,
-    "[PACKET] FRAGMENTED",
-    "[CIPHER] ROTATIONAL SIGNAL MASK",
-    `[TARGET FREQUENCY] ${target}`,
-    "[STATUS] INPUT REQUIRED"
+    `${resolveText(t, "puzzle.decrypt.source", "[SOURCE]")} ${seed}`,
+    resolveText(t, "puzzle.decrypt.packetFragmented", "[PACKET] FRAGMENTED"),
+    resolveText(
+      t,
+      "puzzle.decrypt.cipherRotationalSignalMask",
+      "[CIPHER] ROTATIONAL SIGNAL MASK"
+    ),
+    `${resolveText(t, "puzzle.decrypt.targetFrequency", "[TARGET FREQUENCY]")} ${target}`,
+    resolveText(t, "puzzle.decrypt.statusInputRequired", "[STATUS] INPUT REQUIRED")
   ];
 }
 
-export default function DecryptPuzzleInput({ puzzle, attempts = 0, onSubmit }) {
+export default function DecryptPuzzleInput({
+  puzzle,
+  attempts = 0,
+  onSubmit,
+  t
+}) {
   const [value, setValue] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const decryptLines = useMemo(() => buildDecryptLines(puzzle), [puzzle]);
+  const decryptLines = useMemo(
+    () => buildDecryptLines(puzzle, t),
+    [puzzle, t]
+  );
 
   const maxLength = puzzle?.maxLength || undefined;
   const inputMode = puzzle?.inputMode || "text";
-  const placeholder = puzzle?.placeholder || "";
-  const submitLabel = puzzle?.submitLabel || "DECRYPT";
+
+  const title = resolveText(
+    t,
+    puzzle?.titleKey,
+    puzzle?.title || "DECRYPTION MODULE"
+  );
+
+  const description = resolveText(
+    t,
+    puzzle?.descriptionKey,
+    puzzle?.description || ""
+  );
+
+  const prompt = resolveText(
+    t,
+    puzzle?.promptKey,
+    puzzle?.prompt || "INPUT REQUIRED"
+  );
+
+  const placeholder = resolveText(
+    t,
+    puzzle?.placeholderKey,
+    puzzle?.placeholder || ""
+  );
+
+  const submitLabel = resolveText(
+    t,
+    puzzle?.submitLabelKey,
+    puzzle?.submitLabel || "DECRYPT"
+  );
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -48,24 +100,28 @@ export default function DecryptPuzzleInput({ puzzle, attempts = 0, onSubmit }) {
       <div className="mb-3 flex items-start justify-between gap-4 border-b border-cyan-300/20 pb-3">
         <div>
           <p className="m-0 text-[10px] tracking-[0.25em] text-cyan-300/60">
-            DECRYPTION MODULE ACTIVE
+            {resolveText(
+              t,
+              "puzzle.decrypt.moduleActive",
+              "DECRYPTION MODULE ACTIVE"
+            )}
           </p>
 
           <h3 className="mt-1 text-xs tracking-[0.24em] text-cyan-200">
-            {puzzle?.title || "DECRYPTION MODULE"}
+            {title}
           </h3>
         </div>
 
         {attempts > 0 && (
           <span className="shrink-0 text-[10px] tracking-[0.18em] text-rose-300">
-            ATTEMPTS: {attempts}
+            {resolveText(t, "puzzle.common.attempts", "ATTEMPTS")}: {attempts}
           </span>
         )}
       </div>
 
-      {puzzle?.description && (
+      {description && (
         <p className="mb-3 text-xs leading-5 text-cyan-50/55">
-          {puzzle.description}
+          {description}
         </p>
       )}
 
@@ -81,7 +137,7 @@ export default function DecryptPuzzleInput({ puzzle, attempts = 0, onSubmit }) {
       </div>
 
       <div className="mb-3 border border-cyan-300/15 bg-slate-950/45 p-3 text-xs leading-5 tracking-[0.12em] text-cyan-100 sm:text-sm">
-        {puzzle?.prompt || "INPUT REQUIRED"}
+        {prompt}
       </div>
 
       <div className="flex items-center gap-2 border border-cyan-300/20 bg-slate-950/70 p-2">
@@ -103,7 +159,9 @@ export default function DecryptPuzzleInput({ puzzle, attempts = 0, onSubmit }) {
           disabled={!value.trim() || isSubmitting}
           className="shrink-0 border border-cyan-300/40 px-3 py-2 text-[11px] tracking-[0.18em] text-cyan-200 transition hover:bg-cyan-400/10 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {isSubmitting ? "..." : submitLabel}
+          {isSubmitting
+            ? resolveText(t, "puzzle.common.submitting", "...")
+            : submitLabel}
         </button>
       </div>
     </form>

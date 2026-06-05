@@ -1,35 +1,32 @@
+import { useTranslation } from "react-i18next";
+
 import CodePuzzleInput from "./CodePuzzleInput";
 import DecryptPuzzleInput from "./DecryptPuzzleInput";
 import FrequencyPuzzleInput from "./FrequencyPuzzleInput";
 
-export default function PuzzleRenderer({ puzzle, attempts = 0, onSubmit }) {
+export default function PuzzleRenderer({
+  puzzle,
+  attempts = 0,
+  onSubmit
+}) {
+  const { t } = useTranslation();
+
   if (!puzzle) return null;
 
+  const sharedProps = {
+    puzzle,
+    attempts,
+    onSubmit,
+    t
+  };
+
   if (puzzle.type === "decrypt") {
-    return (
-      <DecryptPuzzleInput
-        puzzle={puzzle}
-        attempts={attempts}
-        onSubmit={onSubmit}
-      />
-    );
+    return <DecryptPuzzleInput {...sharedProps} />;
   }
 
   if (puzzle.type === "frequency") {
-    return (
-      <FrequencyPuzzleInput
-        puzzle={puzzle}
-        attempts={attempts}
-        onSubmit={onSubmit}
-      />
-    );
+    return <FrequencyPuzzleInput {...sharedProps} />;
   }
 
-  return (
-    <CodePuzzleInput
-      puzzle={puzzle}
-      attempts={attempts}
-      onSubmit={onSubmit}
-    />
-  );
+  return <CodePuzzleInput {...sharedProps} />;
 }
