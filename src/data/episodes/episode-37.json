@@ -4,7 +4,6 @@
   "episode": 22,
   "title": "THE OBSERVER",
   "startNodeId": "e37_n01",
-
   "puzzles": {
     "observer_fragment_chain": {
       "id": "observer_fragment_chain",
@@ -21,7 +20,6 @@
       "unlockEpisode": "episode_39"
     }
   },
-
   "nodes": {
     "e37_n01": {
       "id": "e37_n01",
@@ -30,204 +28,108 @@
         {
           "type": "systemAlert",
           "text": "[OBSERVER SIGNAL ACTIVE]"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_n02"
-        }
-      ]
-    },
-
-    "e37_n02": {
-      "id": "e37_n02",
-      "speaker": "GRANT",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "GRANT",
           "text": "I don't like that name."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_n03"
-        }
-      ]
-    },
-
-    "e37_n03": {
-      "id": "e37_n03",
-      "speaker": "EVA",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "EVA",
           "text": "Observer?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_03",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_n04"
-        }
-      ]
-    },
-
-    "e37_n04": {
-      "id": "e37_n04",
-      "speaker": "GRANT",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "GRANT",
           "text": "No."
         },
         {
           "type": "message",
+          "speaker": "GRANT",
           "text": "The fact that it's active."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_04",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_n05"
-        }
-      ]
-    },
-
-    "e37_n05": {
-      "id": "e37_n05",
-      "speaker": "NOAH",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "NOAH",
           "text": "Agreed."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_05",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_n06"
-        }
-      ]
+      "nextNodeId": "e37_branch"
     },
-
-    "e37_n06": {
-      "id": "e37_n06",
+    "e37_branch": {
+      "id": "e37_branch",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "conditionalBranch",
           "condition": "subject06Approach == 'talk'",
-          "targetNodeId": "e37_talk_01"
+          "targetNodeId": "e37_talk"
         },
         {
           "type": "conditionalBranch",
           "condition": "subject06Approach == 'hide'",
-          "targetNodeId": "e37_hide_01"
+          "targetNodeId": "e37_hide"
         }
       ]
     },
-
-    "e37_talk_01": {
-      "id": "e37_talk_01",
+    "e37_talk": {
+      "id": "e37_talk",
       "speaker": "EVA",
       "events": [
         {
           "type": "message",
           "text": "Daniel followed me."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_talk_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_talk_02"
-        }
-      ]
-    },
-
-    "e37_talk_02": {
-      "id": "e37_talk_02",
-      "speaker": "MARA",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "MARA",
           "text": "You let him see you?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_talk_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_talk_03"
-        }
-      ]
-    },
-
-    "e37_talk_03": {
-      "id": "e37_talk_03",
-      "speaker": "EVA",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "EVA",
           "text": "I didn't think—"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_talk_03",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_talk_04"
-        }
-      ]
-    },
-
-    "e37_talk_04": {
-      "id": "e37_talk_04",
-      "speaker": "MARA",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "MARA",
           "text": "No."
         },
         {
           "type": "message",
+          "speaker": "MARA",
           "text": "You didn't."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_talk_04",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_common_01"
-        }
-      ]
+      "nextNodeId": "e37_common_01"
     },
-
-    "e37_hide_01": {
-      "id": "e37_hide_01",
+    "e37_hide": {
+      "id": "e37_hide",
       "speaker": "MARA",
       "events": [
         {
           "type": "message",
           "text": "You should've spoken to him."
+        },
+        {
+          "type": "message",
+          "speaker": "EVA",
+          "text": "And you would've yelled at me if I did."
+        },
+        {
+          "type": "message",
+          "speaker": "MARA",
+          "text": "Probably."
+        },
+        {
+          "type": "message",
+          "speaker": "MARA",
+          "text": "But at least then we'd know what he wanted."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_hide_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_common_01"
-        }
-      ]
+      "nextNodeId": "e37_common_01"
     },
-
     "e37_common_01": {
       "id": "e37_common_01",
       "speaker": "SYSTEM",
@@ -237,197 +139,109 @@
           "fileId": "observer_fragment_01",
           "title": "OBSERVER FRAGMENT 01",
           "content": "0 2 7\n\n7 2 0\n\n2 0 7"
-        }
-      ],
-      "choices": [
+        },
         {
-          "id": "continue_06",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_common_02"
-        }
-      ]
-    },
-
-    "e37_common_02": {
-      "id": "e37_common_02",
-      "speaker": "GRANT",
-      "events": [
+          "type": "systemAlert",
+          "text": "[OBSERVER PATTERN FRAGMENT RECOVERED: 1/3]"
+        },
         {
           "type": "message",
+          "speaker": "GRANT",
           "text": "Great."
         },
         {
           "type": "message",
+          "speaker": "GRANT",
           "text": "Numbers."
         },
         {
           "type": "message",
+          "speaker": "GRANT",
           "text": "My favorite."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_07",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_common_03"
-        }
-      ]
-    },
-
-    "e37_common_03": {
-      "id": "e37_common_03",
-      "speaker": "EVA",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "EVA",
           "text": "Your favorite is complaining."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_08",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_common_04"
-        }
-      ]
-    },
-
-    "e37_common_04": {
-      "id": "e37_common_04",
-      "speaker": "GRANT",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "GRANT",
           "text": "Numbers are second."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_09",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_common_05"
-        }
-      ]
+      "nextNodeId": "e37_common_02"
     },
-
-    "e37_common_05": {
-      "id": "e37_common_05",
+    "e37_common_02": {
+      "id": "e37_common_02",
       "speaker": "EVA",
       "events": [
+        {
+          "type": "typing",
+          "duration": 2600
+        },
         {
           "type": "message",
           "text": "Can I ask something?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_10",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_common_06"
-        }
-      ]
-    },
-
-    "e37_common_06": {
-      "id": "e37_common_06",
-      "speaker": "NOAH",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "NOAH",
           "text": "Sure."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_11",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_common_07"
-        }
-      ]
-    },
-
-    "e37_common_07": {
-      "id": "e37_common_07",
-      "speaker": "EVA",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "EVA",
           "text": "Evelyn."
-        }
-      ],
-      "choices": [
+        },
         {
-          "id": "continue_12",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_common_08"
-        }
-      ]
-    },
-
-    "e37_common_08": {
-      "id": "e37_common_08",
-      "speaker": "EVA",
-      "events": [
+          "type": "typing",
+          "duration": 2200
+        },
         {
           "type": "message",
+          "speaker": "EVA",
           "text": "Do you still love her?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_13",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_common_09"
-        }
-      ]
-    },
-
-    "e37_common_09": {
-      "id": "e37_common_09",
-      "speaker": "NOAH",
-      "events": [
+        },
         {
           "type": "typing",
           "duration": 8000
         },
         {
           "type": "message",
+          "speaker": "NOAH",
           "text": "That's the problem."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_14",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_common_10"
-        }
-      ]
-    },
-
-    "e37_common_10": {
-      "id": "e37_common_10",
-      "speaker": "NOAH",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "NOAH",
           "text": "I don't remember enough of her to know."
         },
         {
           "type": "message",
+          "speaker": "NOAH",
+          "text": "Sometimes I remember her laugh."
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "Then I forget it again."
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "That scares me more than AEON."
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
           "text": "And I hate that."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_15",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_common_11"
-        }
-      ]
+      "nextNodeId": "e37_trace"
     },
-
-    "e37_common_11": {
-      "id": "e37_common_11",
+    "e37_trace": {
+      "id": "e37_trace",
       "speaker": "SYSTEM",
       "events": [
         {
@@ -439,9 +253,8 @@
         "id": "observer_trace",
         "durationMs": 10800000,
         "waitingNodeId": "e37_waiting",
-        "completeNodeId": "e37_final_01"
+        "completeNodeId": "e37_final"
       },
-
       "backgroundEvents": [
         {
           "delayMs": 1200000,
@@ -476,7 +289,6 @@
         }
       ]
     },
-
     "e37_waiting": {
       "id": "e37_waiting",
       "speaker": "SYSTEM",
@@ -484,12 +296,15 @@
         {
           "type": "message",
           "text": "Tracing Observer signal..."
+        },
+        {
+          "type": "message",
+          "text": "Pattern lock unstable."
         }
       ]
     },
-
-    "e37_final_01": {
-      "id": "e37_final_01",
+    "e37_final": {
+      "id": "e37_final",
       "speaker": "SYSTEM",
       "events": [
         {
@@ -501,91 +316,52 @@
           "fileId": "observer_origin",
           "title": "OBSERVER ORIGIN",
           "content": "ORIGIN\n\nNODE 00"
-        }
-      ],
-      "choices": [
+        },
         {
-          "id": "continue_16",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_final_02"
-        }
-      ]
-    },
-
-    "e37_final_02": {
-      "id": "e37_final_02",
-      "speaker": "MARA",
-      "events": [
+          "type": "typing",
+          "duration": 5000
+        },
         {
           "type": "message",
+          "speaker": "MARA",
           "text": "No."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_17",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_final_03"
-        }
-      ]
-    },
-
-    "e37_final_03": {
-      "id": "e37_final_03",
-      "speaker": "NOAH",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "MARA",
           "text": "That's impossible."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_18",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_final_04"
-        }
-      ]
-    },
-
-    "e37_final_04": {
-      "id": "e37_final_04",
-      "speaker": "EVA",
-      "events": [
+        },
         {
           "type": "message",
-          "text": "What's Node 00?"
-        }
-      ],
-      "choices": [
+          "speaker": "MARA",
+          "text": "Node 00 was erased."
+        },
         {
-          "id": "continue_19",
-          "text": "CONTINUE.",
-          "nextNodeId": "e37_final_05"
-        }
-      ]
-    },
-
-    "e37_final_05": {
-      "id": "e37_final_05",
-      "speaker": "MARA",
-      "events": [
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "Erased by who?"
+        },
+        {
+          "type": "message",
+          "speaker": "EVA",
+          "text": "What's Node 00?"
+        },
         {
           "type": "typing",
           "duration": 7000
         },
         {
           "type": "message",
+          "speaker": "MARA",
           "text": "Nobody was supposed to know about Node 00."
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "OBSERVER",
+          "text": "I never left."
         }
       ],
-      "choices": [
-        {
-          "id": "end_episode_37",
-          "text": "END TRANSMISSION",
-          "nextEpisodeId": "episode_38"
-        }
-      ]
+      "nextEpisodeId": "episode_38"
     }
   }
 }

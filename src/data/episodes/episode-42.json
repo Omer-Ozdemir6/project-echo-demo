@@ -4,24 +4,15 @@
   "episode": 27,
   "title": "THE MEMORY THAT WAS TAKEN",
   "startNodeId": "e42_n01",
-
   "puzzles": {
     "observer_memory_lock": {
       "id": "observer_memory_lock",
-      "status": "unlocking",
-      "requiredKeys": [
-        "NODE00",
-        "SUBJECT01",
-        "UNKNOWN"
-      ],
-      "foundKeys": [
-        "NODE00",
-        "SUBJECT01"
-      ],
-      "remainingKeys": 1
+      "status": "unlocked",
+      "requiredKeys": ["NODE00", "SUBJECT01", "EVELYN"],
+      "foundKeys": ["NODE00", "SUBJECT01", "EVELYN"],
+      "remainingKeys": 0
     }
   },
-
   "nodes": {
     "e42_n01": {
       "id": "e42_n01",
@@ -34,474 +25,230 @@
         {
           "type": "message",
           "text": "No..."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n02"
-        }
-      ]
-    },
-
-    "e42_n02": {
-      "id": "e42_n02",
-      "speaker": "NOAH",
-      "events": [
+        },
         {
           "type": "message",
           "text": "No no no."
+        },
+        {
+          "type": "message",
+          "speaker": "EVA",
+          "text": "Noah?"
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "I remember."
+        },
+        {
+          "type": "message",
+          "speaker": "GRANT",
+          "text": "Those are usually dangerous words."
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "I remember Evelyn."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n03"
-        }
-      ]
+      "nextNodeId": "e42_n02"
     },
-
+    "e42_n02": {
+      "id": "e42_n02",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[MEMORY RECOVERY]"
+        },
+        {
+          "type": "file",
+          "fileId": "evelyn_memory_fragment",
+          "title": "EVELYN MEMORY FRAGMENT",
+          "content": "YOUNG EVELYN:\nIf this works...\nPromise me something.\n\nYOUNG NOAH:\nAnything.\n\nYOUNG EVELYN:\nIf I don't come back...\nDon't follow me."
+        },
+        {
+          "type": "typing",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "I forgot that."
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "You didn't forget."
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "It was removed."
+        }
+      ],
+      "nextNodeId": "e42_n03"
+    },
     "e42_n03": {
       "id": "e42_n03",
       "speaker": "EVA",
       "events": [
         {
           "type": "message",
-          "text": "Noah?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_03",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n04"
-        }
-      ]
-    },
-
-    "e42_n04": {
-      "id": "e42_n04",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "message",
-          "text": "I remember."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_04",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n05"
-        }
-      ]
-    },
-
-    "e42_n05": {
-      "id": "e42_n05",
-      "speaker": "GRANT",
-      "events": [
-        {
-          "type": "message",
-          "text": "Those are usually dangerous words."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_05",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n06"
-        }
-      ]
-    },
-
-    "e42_n06": {
-      "id": "e42_n06",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "message",
-          "text": "I remember Evelyn."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_06",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n07"
-        }
-      ]
-    },
-
-    "e42_n07": {
-      "id": "e42_n07",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "memoryPlayback",
-          "title": "MEMORY RECOVERY"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_07",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n08"
-        }
-      ]
-    },
-
-    "e42_n08": {
-      "id": "e42_n08",
-      "speaker": "YOUNG_EVELYN",
-      "events": [
-        {
-          "type": "message",
-          "text": "If this works..."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_08",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n09"
-        }
-      ]
-    },
-
-    "e42_n09": {
-      "id": "e42_n09",
-      "speaker": "YOUNG_EVELYN",
-      "events": [
-        {
-          "type": "message",
-          "text": "Promise me something."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_09",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n10"
-        }
-      ]
-    },
-
-    "e42_n10": {
-      "id": "e42_n10",
-      "speaker": "YOUNG_NOAH",
-      "events": [
-        {
-          "type": "message",
-          "text": "Anything."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_10",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n11"
-        }
-      ]
-    },
-
-    "e42_n11": {
-      "id": "e42_n11",
-      "speaker": "YOUNG_EVELYN",
-      "events": [
-        {
-          "type": "message",
-          "text": "If I don't come back..."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_11",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n12"
-        }
-      ]
-    },
-
-    "e42_n12": {
-      "id": "e42_n12",
-      "speaker": "YOUNG_EVELYN",
-      "events": [
-        {
-          "type": "message",
-          "text": "Don't follow me."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_12",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n13"
-        }
-      ]
-    },
-
-    "e42_n13": {
-      "id": "e42_n13",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "message",
-          "text": "I forgot that."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_13",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n14"
-        }
-      ]
-    },
-
-    "e42_n14": {
-      "id": "e42_n14",
-      "speaker": "OBSERVER",
-      "events": [
-        {
-          "type": "message",
-          "text": "You didn't forget."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_14",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n15"
-        }
-      ]
-    },
-
-    "e42_n15": {
-      "id": "e42_n15",
-      "speaker": "OBSERVER",
-      "events": [
-        {
-          "type": "message",
-          "text": "It was removed."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_15",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n16"
-        }
-      ]
-    },
-
-    "e42_n16": {
-      "id": "e42_n16",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "message",
           "text": "Removed by who?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_16",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n17"
-        }
-      ]
-    },
-
-    "e42_n17": {
-      "id": "e42_n17",
-      "speaker": "SYSTEM",
-      "events": [
+        },
         {
           "type": "file",
           "fileId": "memory_suppression_log",
           "title": "MEMORY SUPPRESSION LOG",
           "content": "AUTHORIZED BY: DR. HALE"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_17",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n18"
-        }
-      ]
-    },
-
-    "e42_n18": {
-      "id": "e42_n18",
-      "speaker": "MARA",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "MARA",
           "text": "Hale erased your memories?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_18",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n19"
-        }
-      ]
-    },
-
-    "e42_n19": {
-      "id": "e42_n19",
-      "speaker": "NOAH",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "NOAH",
           "text": "Why?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_19",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n20"
-        }
-      ]
-    },
-
-    "e42_n20": {
-      "id": "e42_n20",
-      "speaker": "SYSTEM",
-      "events": [
+        },
         {
           "type": "file",
           "fileId": "hale_directive",
           "title": "HALE DIRECTIVE",
-          "content": "IF NOAH REMEMBERS THE TRANSFER, HE WILL ATTEMPT RECOVERY."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_20",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n21"
-        }
-      ]
-    },
-
-    "e42_n21": {
-      "id": "e42_n21",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "fileUpdate",
-          "fileId": "hale_directive",
-          "content": "RECOVERY ATTEMPTS MAY DESTABILIZE AEON."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_21",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n22"
-        }
-      ]
-    },
-
-    "e42_n22": {
-      "id": "e42_n22",
-      "speaker": "GRANT",
-      "events": [
+          "content": "IF NOAH REMEMBERS THE TRANSFER, HE WILL ATTEMPT RECOVERY.\n\nRECOVERY ATTEMPTS MAY DESTABILIZE AEON."
+        },
         {
           "type": "message",
+          "speaker": "GRANT",
           "text": "That's bad."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_22",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n23"
-        }
-      ]
-    },
-
-    "e42_n23": {
-      "id": "e42_n23",
-      "speaker": "EVA",
-      "events": [
+        },
         {
           "type": "message",
+          "speaker": "EVA",
           "text": "How bad?"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_23",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n24"
-        }
-      ]
+      "nextNodeId": "e42_n04"
     },
-
-    "e42_n24": {
-      "id": "e42_n24",
+    "e42_n04": {
+      "id": "e42_n04",
       "speaker": "OBSERVER",
       "events": [
+        {
+          "type": "typing",
+          "duration": 4000
+        },
         {
           "type": "message",
           "text": "Bad enough to kill me."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_24",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n25"
-        }
-      ]
-    },
-
-    "e42_n25": {
-      "id": "e42_n25",
-      "speaker": "OBSERVER",
-      "events": [
+        },
         {
           "type": "message",
           "text": "Bad enough to kill Evelyn."
+        },
+        {
+          "type": "message",
+          "text": "Bad enough to destroy everything inside AEON."
+        },
+        {
+          "type": "message",
+          "speaker": "MARA",
+          "text": "That's why Hale buried it."
+        },
+        {
+          "type": "message",
+          "speaker": "MARA",
+          "text": "Not to protect Noah."
+        },
+        {
+          "type": "message",
+          "speaker": "MARA",
+          "text": "To protect AEON from him."
         }
       ],
       "choices": [
         {
-          "id": "continue_25",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n26"
+          "id": "trust_observer",
+          "text": "BELIEVE OBSERVER.",
+          "effects": {
+            "observerTrust": 15,
+            "noahTrust": -10,
+            "danger": 8
+          },
+          "flags": {
+            "trustedObserverMemory": true
+          },
+          "nextNodeId": "e42_n05_observer"
+        },
+        {
+          "id": "trust_noah",
+          "text": "PROTECT NOAH.",
+          "effects": {
+            "observerTrust": -10,
+            "noahTrust": 15,
+            "danger": 5,
+            "noahStability": 10
+          },
+          "flags": {
+            "protectedNoahMemory": true
+          },
+          "nextNodeId": "e42_n05_noah"
         }
       ]
     },
-
-    "e42_n26": {
-      "id": "e42_n26",
+    "e42_n05_observer": {
+      "id": "e42_n05_observer",
       "speaker": "OBSERVER",
       "events": [
         {
           "type": "message",
-          "text": "Bad enough to destroy everything inside AEON."
+          "text": "Good."
+        },
+        {
+          "type": "message",
+          "text": "Truth hurts less when you stop defending the knife."
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "I wasn't trying to hurt her."
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Intentions don't undo corpses."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_26",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n27"
-        }
-      ]
+      "nextNodeId": "e42_n06"
     },
-
-    "e42_n27": {
-      "id": "e42_n27",
+    "e42_n05_noah": {
+      "id": "e42_n05_noah",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "message",
+          "text": "Thank you."
+        },
+        {
+          "type": "message",
+          "text": "I don't know what I did yet."
+        },
+        {
+          "type": "message",
+          "text": "But I need one person here to believe I didn't want this."
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Belief is what made him dangerous the first time."
+        }
+      ],
+      "nextNodeId": "e42_n06"
+    },
+    "e42_n06": {
+      "id": "e42_n06",
       "speaker": "SYSTEM",
       "events": [
         {
@@ -509,72 +256,60 @@
           "fileId": "observer_memory_lock",
           "title": "OBSERVER MEMORY LOCK",
           "content": "KEY 3 IDENTIFIED"
-        }
-      ],
-      "choices": [
+        },
         {
-          "id": "continue_27",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n28"
-        }
-      ]
-    },
-
-    "e42_n28": {
-      "id": "e42_n28",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "fileUpdate",
-          "fileId": "observer_memory_lock",
-          "content": "KEY 3 = EVELYN"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_28",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n29"
-        }
-      ]
-    },
-
-    "e42_n29": {
-      "id": "e42_n29",
-      "speaker": "SYSTEM",
-      "events": [
+          "type": "file",
+          "fileId": "observer_memory_lock_v2",
+          "title": "OBSERVER MEMORY LOCK - UPDATED",
+          "content": "KEY 1: NODE00\nKEY 2: SUBJECT01\nKEY 3: EVELYN\n\nSTATUS: UNLOCKED"
+        },
         {
           "type": "systemAlert",
           "text": "[MEMORY LOCK RELEASED]"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[AEON CORE INSTABILITY DETECTED]"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_29",
-          "text": "CONTINUE.",
-          "nextNodeId": "e42_n30"
-        }
-      ]
+      "nextNodeId": "e42_n07"
     },
-
-    "e42_n30": {
-      "id": "e42_n30",
+    "e42_n07": {
+      "id": "e42_n07",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "file",
           "fileId": "observer_hidden_memory",
           "title": "OBSERVER HIDDEN MEMORY",
-          "content": "CLASSIFICATION: ORIGIN EVENT"
+          "content": "CLASSIFICATION: ORIGIN EVENT\n\nRECOVERY STATUS: AVAILABLE\n\nWARNING:\nOPENING THIS MEMORY MAY ALTER OBSERVER, NOAH VOSS, AND EVELYN ARCHIVE STATE."
+        },
+        {
+          "type": "message",
+          "speaker": "EVA",
+          "text": "So Evelyn wasn't just the second transfer."
+        },
+        {
+          "type": "message",
+          "speaker": "MARA",
+          "text": "No."
+        },
+        {
+          "type": "message",
+          "speaker": "MARA",
+          "text": "She was the key they stole from him."
+        },
+        {
+          "type": "typing",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Now open what Hale buried."
         }
       ],
-      "choices": [
-        {
-          "id": "end_episode_42",
-          "text": "END TRANSMISSION",
-          "nextEpisodeId": "episode_43"
-        }
-      ]
+      "nextEpisodeId": "episode_43"
     }
   }
 }

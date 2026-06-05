@@ -4,11 +4,6 @@
   "episode": 31,
   "title": "THE INNER LAYER",
   "startNodeId": "e46_n01",
-
-  "flagsUsed": [
-    "openedInnerLayer"
-  ],
-
   "persistentVariables": {
     "evelynConnection": 0,
     "observerPower": 0,
@@ -16,7 +11,11 @@
     "aeonStability": 100,
     "noahTrust": 50
   },
-
+  "flagsUsed": [
+    "openedInnerLayer",
+    "savedEvelynAnchor",
+    "savedObserverAnchor"
+  ],
   "nodes": {
     "e46_n01": {
       "id": "e46_n01",
@@ -33,97 +32,28 @@
       ],
       "choices": [
         {
-          "id": "continue_01",
-          "text": "CONTINUE.",
+          "id": "enter_inner_layer",
+          "text": "ENTER INNER LAYER.",
           "nextNodeId": "e46_n02"
         }
       ]
     },
-
     "e46_n02": {
       "id": "e46_n02",
       "speaker": "EVA",
       "events": [
         {
           "type": "message",
-          "text": "Okay."
-        },
-        {
-          "type": "message",
-          "text": "Before anyone says anything stupid..."
-        },
-        {
-          "type": "message",
           "text": "Is everyone alive?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "e46_n03"
-        }
-      ]
-    },
-
-    "e46_n03": {
-      "id": "e46_n03",
-      "speaker": "GRANT",
-      "events": [
-        {
-          "type": "message",
-          "text": "Define alive."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_03",
-          "text": "CONTINUE.",
-          "nextNodeId": "e46_n04"
-        }
-      ]
-    },
-
-    "e46_n04": {
-      "id": "e46_n04",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "message",
-          "text": "Breathing."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_04",
-          "text": "CONTINUE.",
-          "nextNodeId": "e46_n05"
-        }
-      ]
-    },
-
-    "e46_n05": {
-      "id": "e46_n05",
-      "speaker": "GRANT",
-      "events": [
-        {
-          "type": "message",
-          "text": "Then yes."
         },
         {
           "type": "message",
-          "text": "Emotionally? Absolutely not."
+          "speaker": "GRANT",
+          "text": "Breathing? Yes. Emotionally? Absolutely not."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_05",
-          "text": "CONTINUE.",
-          "nextNodeId": "e46_branch"
-        }
-      ]
+      "nextNodeId": "e46_branch"
     },
-
     "e46_branch": {
       "id": "e46_branch",
       "speaker": "SYSTEM",
@@ -131,7 +61,7 @@
         {
           "type": "conditionalBranch",
           "condition": "openedInnerLayer == true",
-          "targetNodeId": "open_branch_01"
+          "targetNodeId": "shared_01"
         },
         {
           "type": "conditionalBranch",
@@ -140,549 +70,114 @@
         }
       ]
     },
-
-    "open_branch_01": {
-      "id": "open_branch_01",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[INNER LAYER CONNECTION ACTIVE]"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_open_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "open_branch_02"
-        }
-      ]
-    },
-
-    "open_branch_02": {
-      "id": "open_branch_02",
-      "speaker": "EVELYN",
-      "events": [
-        {
-          "type": "message",
-          "text": "Noah?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_open_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "open_branch_03"
-        }
-      ]
-    },
-
-    "open_branch_03": {
-      "id": "open_branch_03",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "message",
-          "text": "Evelyn..."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_open_03",
-          "text": "CONTINUE.",
-          "nextNodeId": "open_branch_04"
-        }
-      ]
-    },
-
-    "open_branch_04": {
-      "id": "open_branch_04",
-      "speaker": "EVELYN",
-      "events": [
-        {
-          "type": "message",
-          "text": "You opened the door."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_open_04",
-          "text": "CONTINUE.",
-          "nextNodeId": "open_branch_05"
-        }
-      ]
-    },
-
-    "open_branch_05": {
-      "id": "open_branch_05",
-      "speaker": "OBSERVER",
-      "events": [
-        {
-          "type": "message",
-          "text": "So did I."
-        }
-      ],
-      "choices": [
-        {
-          "id": "merge_path_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "shared_01"
-        }
-      ]
-    },
-
     "sealed_branch_01": {
       "id": "sealed_branch_01",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
-          "text": "[INNER LAYER SEALED]"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_sealed_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "sealed_branch_02"
-        }
-      ]
-    },
-
-    "sealed_branch_02": {
-      "id": "sealed_branch_02",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "message",
-          "text": "I heard her."
+          "text": "[INNER LAYER SEALED // DELAYED INEVITABLE]"
         },
         {
           "type": "message",
-          "text": "For one second."
+          "speaker": "NOAH",
+          "text": "I heard her for one second."
         },
         {
           "type": "message",
-          "text": "And then she was gone."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_sealed_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "sealed_branch_03"
-        }
-      ]
-    },
-
-    "sealed_branch_03": {
-      "id": "sealed_branch_03",
-      "speaker": "EVA",
-      "events": [
+          "speaker": "NOAH",
+          "text": "Then she was gone."
+        },
         {
           "type": "message",
-          "text": "Noah..."
+          "speaker": "OBSERVER",
+          "text": "You only delayed the inevitable."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_sealed_03",
-          "text": "CONTINUE.",
-          "nextNodeId": "sealed_branch_04"
-        }
-      ]
+      "nextNodeId": "shared_01"
     },
-
-    "sealed_branch_04": {
-      "id": "sealed_branch_04",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "message",
-          "text": "Don't."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_sealed_04",
-          "text": "CONTINUE.",
-          "nextNodeId": "sealed_branch_05"
-        }
-      ]
-    },
-
-    "sealed_branch_05": {
-      "id": "sealed_branch_05",
-      "speaker": "OBSERVER",
-      "events": [
-        {
-          "type": "message",
-          "text": "You delayed the inevitable."
-        }
-      ],
-      "choices": [
-        {
-          "id": "merge_path_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "shared_01"
-        }
-      ]
-    },
-
     "shared_01": {
       "id": "shared_01",
       "speaker": "EVELYN",
       "events": [
         {
+          "type": "typing",
+          "duration": 5000
+        },
+        {
           "type": "message",
           "text": "Noah..."
         },
         {
           "type": "message",
-          "text": "If this is really you..."
+          "text": "Do not trust the first voice."
         },
         {
           "type": "message",
-          "text": "do not trust the first voice."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_shared_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "shared_02"
-        }
-      ]
-    },
-
-    "shared_02": {
-      "id": "shared_02",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "message",
-          "text": "First voice?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_shared_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "shared_03"
-        }
-      ]
-    },
-
-    "shared_03": {
-      "id": "shared_03",
-      "speaker": "MARA",
-      "events": [
-        {
-          "type": "message",
-          "text": "Observer."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_shared_03",
-          "text": "CONTINUE.",
-          "nextNodeId": "shared_04"
-        }
-      ]
-    },
-
-    "shared_04": {
-      "id": "shared_04",
-      "speaker": "OBSERVER",
-      "events": [
-        {
-          "type": "message",
-          "text": "Careful, Mara."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_shared_04",
-          "text": "CONTINUE.",
-          "nextNodeId": "shared_05"
-        }
-      ]
-    },
-
-    "shared_05": {
-      "id": "shared_05",
-      "speaker": "MARA",
-      "events": [
-        {
-          "type": "message",
-          "text": "No."
+          "speaker": "OBSERVER",
+          "text": "Careful, Evelyn. Your instability is showing."
         },
         {
           "type": "message",
-          "text": "I stayed quiet for twenty-five years."
-        },
-        {
-          "type": "message",
+          "speaker": "MARA",
           "text": "I'm done being careful."
-        }
-      ],
-      "choices": [
+        },
         {
-          "id": "continue_shared_05",
-          "text": "CONTINUE.",
-          "nextNodeId": "shared_06"
-        }
-      ]
-    },
-
-    "shared_06": {
-      "id": "shared_06",
-      "speaker": "SYSTEM",
-      "events": [
+          "type": "message",
+          "speaker": "MARA",
+          "text": "Look at the structure."
+        },
         {
           "type": "file",
           "fileId": "inner_layer_structure",
           "title": "INNER LAYER STRUCTURE",
-          "content": "Contains: Transferred consciousness fragments\n\nPrimary Anchor: EVELYN CARTER\n\nSecondary Anchor: OBSERVER\n\nWarning: Opening one anchor may wake the other."
+          "content": "ANCHOR CONFLICT DETECTED\n\nPRIMARY ANCHOR: EVELYN CARTER\nSECONDARY ANCHOR: OBSERVER\n\nONLY ONE ANCHOR CAN STABILIZE."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_shared_06",
-          "text": "CONTINUE.",
-          "nextNodeId": "focus_choice"
-        }
-      ]
+      "nextNodeId": "anchor_choice"
     },
-
-    "focus_choice": {
-      "id": "focus_choice",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "decision",
-          "text": "Which anchor do you focus on?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "focus_evelyn",
-          "text": "FOCUS ON EVELYN",
-          "effects": {
-            "evelynConnection": 15,
-            "observerPower": 10,
-            "aeonStability": -10
-          },
-          "nextNodeId": "sync_start"
-        },
-        {
-          "id": "focus_observer",
-          "text": "FOCUS ON OBSERVER",
-          "effects": {
-            "observerKnowledge": 15,
-            "evelynConnection": -10,
-            "noahTrust": -10
-          },
-          "nextNodeId": "sync_start"
-        }
-      ]
-    },
-
-    "sync_start": {
-      "id": "sync_start",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[INNER LAYER SYNCHRONIZATION REQUIRED]"
-        }
-      ],
-      "waitTask": {
-        "id": "inner_layer_sync",
-        "durationMs": 7200000,
-        "waitingNodeId": "sync_wait",
-        "completeNodeId": "final_01"
-      },
-
-      "backgroundEvents": [
-        {
-          "delayMs": 1200000,
-          "event": {
-            "type": "message",
-            "speaker": "EVELYN",
-            "text": "It's cold here."
-          }
-        },
-        {
-          "delayMs": 1260000,
-          "event": {
-            "type": "message",
-            "speaker": "GRANT",
-            "text": "Great. Digital ghosts get weather now."
-          }
-        },
-        {
-          "delayMs": 1320000,
-          "event": {
-            "type": "message",
-            "speaker": "EVA",
-            "text": "Grant."
-          }
-        },
-        {
-          "delayMs": 1380000,
-          "event": {
-            "type": "message",
-            "speaker": "GRANT",
-            "text": "Sorry. Fear talking."
-          }
-        },
-        {
-          "delayMs": 3600000,
-          "event": {
-            "type": "message",
-            "speaker": "OBSERVER",
-            "text": "She is not what you remember."
-          }
-        },
-        {
-          "delayMs": 6600000,
-          "event": {
-            "type": "message",
-            "speaker": "EVELYN",
-            "text": "Noah..."
-          }
-        },
-        {
-          "delayMs": 6660000,
-          "event": {
-            "type": "message",
-            "speaker": "EVELYN",
-            "text": "I remember the promise."
-          }
-        }
-      ]
-    },
-
-    "sync_wait": {
-      "id": "sync_wait",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "message",
-          "text": "Synchronizing Inner Layer..."
-        }
-      ]
-    },
-
-    "final_01": {
-      "id": "final_01",
+    "anchor_choice": {
+      "id": "anchor_choice",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[ANCHOR CONFLICT DETECTED]"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_final_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "final_02"
-        }
-      ]
-    },
-
-    "final_02": {
-      "id": "final_02",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "message",
-          "text": "What does that mean?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_final_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "final_03"
-        }
-      ]
-    },
-
-    "final_03": {
-      "id": "final_03",
-      "speaker": "MARA",
-      "events": [
-        {
-          "type": "message",
-          "text": "It means only one of them can stabilize."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_final_03",
-          "text": "CONTINUE.",
-          "nextNodeId": "final_04"
-        }
-      ]
-    },
-
-    "final_04": {
-      "id": "final_04",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "message",
-          "text": "No."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_final_04",
-          "text": "CONTINUE.",
-          "nextNodeId": "final_05"
-        }
-      ]
-    },
-
-    "final_05": {
-      "id": "final_05",
-      "speaker": "OBSERVER",
-      "events": [
-        {
-          "type": "message",
-          "text": "Choose carefully."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_final_05",
-          "text": "CONTINUE.",
-          "nextNodeId": "final_06"
-        }
-      ]
-    },
-
-    "final_06": {
-      "id": "final_06",
-      "speaker": "EVELYN",
-      "events": [
-        {
-          "type": "message",
-          "text": "Please..."
         },
         {
           "type": "message",
-          "text": "Don't let him wear my voice."
+          "text": "Only one anchor can stabilize."
         }
       ],
       "choices": [
         {
-          "id": "end_episode_46",
-          "text": "END TRANSMISSION",
-          "nextEpisodeId": "episode_47"
+          "id": "save_evelyn",
+          "text": "SAVE EVELYN.",
+          "effects": {
+            "evelynConnection": 25,
+            "observerPower": -15,
+            "noahTrust": 15,
+            "aeonStability": -20
+          },
+          "flags": {
+            "savedEvelynAnchor": true
+          },
+          "nextEpisodeId": "episode_47_evelyn"
+        },
+        {
+          "id": "save_observer",
+          "text": "SAVE OBSERVER.",
+          "effects": {
+            "observerKnowledge": 25,
+            "observerPower": 15,
+            "evelynConnection": -20,
+            "noahTrust": -20,
+            "aeonStability": -10
+          },
+          "flags": {
+            "savedObserverAnchor": true
+          },
+          "nextEpisodeId": "episode_47_observer"
         }
       ]
     }
