@@ -73,56 +73,62 @@ function playSingleEvent({
     return duration + (event.pauseAfterMs ?? 300);
   }
 
-  if (event.type === "message") {
-    const messageTimer = setTimeout(() => {
-      onTypingStop?.();
+if (event.type === "message") {
+  const messageTimer = setTimeout(() => {
+    onTypingStop?.();
 
-      onMessage?.({
-        type: "message",
-        speaker: event.speaker,
-        sender: event.sender,
-        text: resolveText(event, "textKey", "text", translate),
-        tone: event.tone || event.mood || "calm"
-      });
-    }, delay);
+    onMessage?.({
+      type: "message",
+      speaker: event.speaker,
+      sender: event.sender,
+      textKey: event.textKey,
+      fallbackText: event.text,
+      text: resolveText(event, "textKey", "text", translate),
+      tone: event.tone || event.mood || "calm"
+    });
+  }, delay);
 
-    timers.push(messageTimer);
-    return event.pauseAfterMs ?? 700;
-  }
+  timers.push(messageTimer);
+  return event.pauseAfterMs ?? 700;
+}
 
-  if (event.type === "corruptMessage") {
-    const corruptTimer = setTimeout(() => {
-      onTypingStop?.();
+if (event.type === "corruptMessage") {
+  const corruptTimer = setTimeout(() => {
+    onTypingStop?.();
 
-      onMessage?.({
-        type: "corruptMessage",
-        speaker: event.speaker,
-        sender: event.sender,
-        text: resolveText(event, "textKey", "text", translate),
-        tone: "corrupt"
-      });
-    }, delay);
+    onMessage?.({
+      type: "corruptMessage",
+      speaker: event.speaker,
+      sender: event.sender,
+      textKey: event.textKey,
+      fallbackText: event.text,
+      text: resolveText(event, "textKey", "text", translate),
+      tone: "corrupt"
+    });
+  }, delay);
 
-    timers.push(corruptTimer);
-    return event.pauseAfterMs ?? 1200;
-  }
+  timers.push(corruptTimer);
+  return event.pauseAfterMs ?? 1200;
+}
 
-  if (event.type === "systemAlert") {
-    const alertTimer = setTimeout(() => {
-      onTypingStop?.();
+if (event.type === "systemAlert") {
+  const alertTimer = setTimeout(() => {
+    onTypingStop?.();
 
-      onMessage?.({
-        type: "systemAlert",
-        speaker: event.speaker || "SYSTEM",
-        sender: "system",
-        text: resolveText(event, "textKey", "text", translate),
-        tone: "system"
-      });
-    }, delay);
+    onMessage?.({
+      type: "systemAlert",
+      speaker: event.speaker || "SYSTEM",
+      sender: "system",
+      textKey: event.textKey,
+      fallbackText: event.text,
+      text: resolveText(event, "textKey", "text", translate),
+      tone: "system"
+    });
+  }, delay);
 
-    timers.push(alertTimer);
-    return event.pauseAfterMs ?? 1200;
-  }
+  timers.push(alertTimer);
+  return event.pauseAfterMs ?? 1200;
+}
 
   if (event.type === "image") {
     const imageTimer = setTimeout(() => {

@@ -164,27 +164,20 @@ function App() {
   }, [phase, activeStep, bootStepIndex, bootAttempt, currentBoot]);
 
   useEffect(() => {
-    if (phase !== "game" || !currentNode) return;
+  if (phase !== "game" || !currentNode) return;
 
-    setIsTyping(false);
-    setIsGlitching(false);
-    setSignalStatus(null);
-    setProgressTask(null);
-    setNodeFinished(false);
-    setVisibleMessages([]);
+  setIsTyping(false);
+  setIsGlitching(false);
+  setSignalStatus(null);
+  setProgressTask(null);
+  setNodeFinished(false);
 
-    return playNodeEvents({
-      events: currentNode.events || [],
-translate: (key, fallback = "") => {
-  const value = getGameText(key, fallback, settings.language);
-  console.log("TRANSLATE TEST:", {
-    language: settings.language,
-    key,
-    fallback,
-    value
-  });
-  return value;
-},
+  return playNodeEvents({
+    events: currentNode.events || [],
+
+    translate: (key, fallback = "") => {
+      return getGameText(key, fallback, settings.language);
+    },
 
       onTypingStart: () => setIsTyping(true),
       onTypingStop: () => setIsTyping(false),
@@ -261,7 +254,7 @@ translate: (key, fallback = "") => {
         setNodeFinished(true);
       }
     });
-  }, [phase, currentNode?.id, settings.language]);
+  }, [phase, currentNode?.id]);
 
 function handleChoice(choiceId) {
   const selectedChoice = currentNode?.choices?.find(

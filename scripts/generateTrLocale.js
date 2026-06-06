@@ -1,13 +1,16 @@
 import fs from "fs";
 import path from "path";
 
-const EN_LOCALE_PATH = path.resolve("src/locales/en/game.json");
-const TR_LOCALE_PATH = path.resolve("src/locales/tr/game.json");
+const EN_LOCALE_DIR = path.resolve("src/locales/en");
+const TR_LOCALE_DIR = path.resolve("src/locales/tr");
 
 function readJson(filePath, fallback = {}) {
   if (!fs.existsSync(filePath)) return fallback;
+
   const content = fs.readFileSync(filePath, "utf8").trim();
+
   if (!content) return fallback;
+
   return JSON.parse(content);
 }
 
@@ -22,7 +25,7 @@ function mirrorLocaleShape(enNode, trNode = {}) {
   }
 
   if (Array.isArray(enNode)) {
-    return enNode.map((item, index) => mirrorLocaleShape(item, trNode[index]));
+    return enNode.map((item, index) => mirrorLocaleShape(item, trNode?.[index]));
   }
 
   if (enNode && typeof enNode === "object") {
@@ -39,15 +42,31 @@ function mirrorLocaleShape(enNode, trNode = {}) {
 }
 
 function main() {
-  const enLocale = readJson(EN_LOCALE_PATH, {});
-  const existingTrLocale = readJson(TR_LOCALE_PATH, {});
+  if (!fs.existsSync(EN_LOCALE_DIR)) {
+    throw new Error(`EN locale folder not found: ${EN_LOCALE_DIR}`);
+  }
 
-  const nextTrLocale = mirrorLocaleShape(enLocale, existingTrLocale);
+  const localeFiles = fs
+    .readdirSync(EN_LOCALE_DIR)
+    .filter((file) => file.endsWith(".json"))
+    .sort();
 
-  writeJson(TR_LOCALE_PATH, nextTrLocale);
+  localeFiles.forEach((fileName) => {
+    const enPath = path.join(EN_LOCALE_DIR, fileName);
+    const trPath = path.join(TR_LOCALE_DIR, fileName);
 
-  console.log("TR locale generated.");
-  console.log(`Updated: ${TR_LOCALE_PATH}`);
+    const enLocale = readJson(enPath, {});
+    const existingTrLocale = readJson(trPath, {});
+
+    const nextTrLocale = mirrorLocaleShape(enLocale, existingTrLocale);
+
+    writeJson(trPath, nextTrLocale);
+
+    console.log(`TR locale generated: ${fileName}`);
+  });
+
+  console.log("Done.");
+  console.log(`TR locale folder updated: ${TR_LOCALE_DIR}`);
 }
 
 main();

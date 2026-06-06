@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 
 const EPISODES_DIR = path.resolve("src/data/episodes");
-const EN_LOCALE_PATH = path.resolve("src/locales/en/game.json");
+const EN_LOCALE_DIR = path.resolve("src/locales/en");
 
 const TRANSLATABLE_FIELDS = [
   "text",
@@ -24,7 +24,12 @@ function toKeyField(field) {
 
 function readJson(filePath, fallback = {}) {
   if (!fs.existsSync(filePath)) return fallback;
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+
+  const content = fs.readFileSync(filePath, "utf8").trim();
+
+  if (!content) return fallback;
+
+  return JSON.parse(content);
 }
 
 function writeJson(filePath, data) {
@@ -57,9 +62,22 @@ function normalizeEpisodeKey(episodeId) {
 
 function makeTranslationKey({ episodeId, nodeId, section, index, field }) {
   const safeEpisode = normalizeEpisodeKey(episodeId);
-  const safeNode = String(nodeId || section || "meta").replace(/[^a-zA-Z0-9_]/g, "_");
+  const safeNode = String(nodeId || section || "meta").replace(
+    /[^a-zA-Z0-9_]/g,
+    "_"
+  );
 
   return `${safeEpisode}.${safeNode}.${section}${index}.${field}`;
+}
+
+function getLocaleFileName(episodeId) {
+  const match = String(episodeId || "").match(/episode_(\d+)/);
+
+  if (match?.[1]) {
+    return `episode-${match[1].padStart(2, "0")}.json`;
+  }
+
+  return `${normalizeEpisodeKey(episodeId)}.json`;
 }
 
 function shouldTranslate(value) {
@@ -80,17 +98,21 @@ function processObject({
     const keyField = toKeyField(field);
 
     if (!shouldTranslate(target[field])) return;
-    if (target[keyField]) return;
 
-    const translationKey = makeTranslationKey({
-      episodeId,
-      nodeId,
-      section,
-      index,
-      field
-    });
+    let translationKey = target[keyField];
 
-    target[keyField] = translationKey;
+    if (!translationKey) {
+      translationKey = makeTranslationKey({
+        episodeId,
+        nodeId,
+        section,
+        index,
+        field
+      });
+
+      target[keyField] = translationKey;
+    }
+
     setNestedValue(locale, translationKey, target[field]);
   });
 }
@@ -107,37 +129,44 @@ function processEpisode(episode, locale) {
     locale
   });
 
-  Object.entries(episode.puzzles || {}).forEach(([puzzleId, puzzle], puzzleIndex) => {
-    processObject({
-      target: puzzle,
-      episodeId,
-      nodeId: puzzleId,
-      section: "puzzle",
-      index: puzzleIndex,
-      locale
-    });
-
-    if (Array.isArray(puzzle.fragments)) {
-      puzzle.fragments = puzzle.fragments.map((fragment, fragmentIndex) => {
-        if (!shouldTranslate(fragment)) return fragment;
-
-        const key = makeTranslationKey({
-          episodeId,
-          nodeId: puzzleId,
-          section: "fragment",
-          index: fragmentIndex,
-          field: "text"
-        });
-
-        setNestedValue(locale, key, fragment);
-
-        return {
-          textKey: key,
-          text: fragment
-        };
+  Object.entries(episode.puzzles || {}).forEach(
+    ([puzzleId, puzzle], puzzleIndex) => {
+      processObject({
+        target: puzzle,
+        episodeId,
+        nodeId: puzzleId,
+        section: "puzzle",
+        index: puzzleIndex,
+        locale
       });
+
+      if (Array.isArray(puzzle.fragments)) {
+        puzzle.fragments = puzzle.fragments.map((fragment, fragmentIndex) => {
+          if (typeof fragment === "object" && fragment?.textKey) {
+            setNestedValue(locale, fragment.textKey, fragment.text || "");
+            return fragment;
+          }
+
+          if (!shouldTranslate(fragment)) return fragment;
+
+          const key = makeTranslationKey({
+            episodeId,
+            nodeId: puzzleId,
+            section: "fragment",
+            index: fragmentIndex,
+            field: "text"
+          });
+
+          setNestedValue(locale, key, fragment);
+
+          return {
+            textKey: key,
+            text: fragment
+          };
+        });
+      }
     }
-  });
+  );
 
   Object.entries(episode.nodes || {}).forEach(([nodeId, node]) => {
     processObject({
@@ -191,28 +220,34 @@ function main() {
     throw new Error(`Episodes folder not found: ${EPISODES_DIR}`);
   }
 
-  const locale = readJson(EN_LOCALE_PATH, {});
-
   const episodeFiles = fs
     .readdirSync(EPISODES_DIR)
     .filter((file) => file.endsWith(".json"))
     .sort();
 
   episodeFiles.forEach((fileName) => {
-    const filePath = path.join(EPISODES_DIR, fileName);
-    const episode = readJson(filePath);
+    const episodePath = path.join(EPISODES_DIR, fileName);
+    const episode = readJson(episodePath);
 
+    if (!episode?.id) {
+      console.warn(`Skipped: ${fileName} has no episode id.`);
+      return;
+    }
+
+    const locale = {};
     const updatedEpisode = processEpisode(episode, locale);
+    const localeFileName = getLocaleFileName(episode.id);
+    const localePath = path.join(EN_LOCALE_DIR, localeFileName);
 
-    writeJson(filePath, updatedEpisode);
+    writeJson(episodePath, updatedEpisode);
+    writeJson(localePath, locale);
 
-    console.log(`Updated: ${fileName}`);
+    console.log(`Updated episode: ${fileName}`);
+    console.log(`Created locale: ${localeFileName}`);
   });
 
-  writeJson(EN_LOCALE_PATH, locale);
-
   console.log("Done.");
-  console.log(`Locale updated: ${EN_LOCALE_PATH}`);
+  console.log(`Locale folder updated: ${EN_LOCALE_DIR}`);
 }
 
 main();

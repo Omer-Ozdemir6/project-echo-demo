@@ -198,13 +198,14 @@ export default function TerminalScreen({
         </div>
 
         <div className="min-h-0 flex-1 overflow-hidden">
-          <MessageFeed
-            speaker={currentNode.speaker}
-            messages={visibleMessages}
-            isTyping={isTyping}
-            onOpenFile={setActiveFile}
-            language={language}
-          />
+<MessageFeed
+  speaker={currentNode.speaker}
+  messages={visibleMessages}
+  isTyping={isTyping}
+  onOpenFile={setActiveFile}
+  language={language}
+  hasBottomPanel={canShowChoices || Boolean(activePuzzle)}
+/>
         </div>
 
         <div className="shrink-0">

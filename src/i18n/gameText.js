@@ -1,9 +1,9 @@
-import enGame from "../locales/en/game.json";
-import trGame from "../locales/tr/game.json";
+import enLocale from "../locales/en";
+import trLocale from "../locales/tr";
 
 const LOCALES = {
-  en: enGame,
-  tr: trGame
+  en: enLocale,
+  tr: trLocale
 };
 
 export function getGameText(key, fallback = "", language = "en") {

@@ -10,7 +10,8 @@ export default function MessageFeed({
   messages,
   isTyping,
   onOpenFile,
-  language = "en"
+  language = "en",
+  hasBottomPanel = false
 }) {
   const feedScrollRef = useRef(null);
 
@@ -21,7 +22,7 @@ export default function MessageFeed({
         behavior: "smooth"
       });
     }
-  }, [messages, isTyping]);
+  }, [messages, isTyping, hasBottomPanel]);
 
   function getSpeakerLabel(message) {
     if (message.sender === "player") {
@@ -36,13 +37,18 @@ export default function MessageFeed({
   }
 
   function getMessageText(message) {
-    return resolveText(message.textKey, message.text || "", language);
+    return getGameText(
+      message.textKey,
+      message.fallbackText || message.text || "",
+      language
+    );
   }
 
   function getMessageTitle(message) {
     return resolveText(
       message.titleKey,
-      message.title || resolveText("messageFeed.incomingImage", "[INCOMING IMAGE]", language),
+      message.title ||
+        resolveText("messageFeed.incomingImage", "[INCOMING IMAGE]", language),
       language
     );
   }
@@ -54,7 +60,10 @@ export default function MessageFeed({
   return (
     <div
       ref={feedScrollRef}
-      className="terminal-scrollbar flex h-full min-h-0 flex-col gap-5 overflow-y-auto border border-cyan-300/15 bg-slate-900/35 p-3 sm:p-4"
+      className={[
+        "terminal-scrollbar flex h-full min-h-0 flex-col gap-5 overflow-y-auto border border-cyan-300/15 bg-slate-900/35 p-3 sm:p-4",
+        hasBottomPanel ? "pb-28 sm:pb-32" : ""
+      ].join(" ")}
     >
       {messages.map((message, index) => {
         const messageSpeaker = getSpeakerLabel(message);
@@ -77,12 +86,14 @@ export default function MessageFeed({
 
               <div className="border border-cyan-300/25 bg-slate-950/75 p-3 shadow-[0_0_24px_rgba(34,211,238,0.08),inset_0_0_20px_rgba(34,211,238,0.04)]">
                 <div className="mb-3 flex justify-between gap-3 border-b border-cyan-300/15 pb-2 text-[11px] tracking-[0.12em] text-blue-300">
-                  <span className="truncate">
-                    {imageTitle}
-                  </span>
+                  <span className="truncate">{imageTitle}</span>
 
                   <span className="shrink-0">
-                    {resolveText("messageFeed.fileReceived", "FILE RECEIVED", language)}
+                    {resolveText(
+                      "messageFeed.fileReceived",
+                      "FILE RECEIVED",
+                      language
+                    )}
                   </span>
                 </div>
 
@@ -92,7 +103,11 @@ export default function MessageFeed({
                     alt={
                       imageCaption ||
                       imageTitle ||
-                      resolveText("messageFeed.recoveredImage", "Recovered image", language)
+                      resolveText(
+                        "messageFeed.recoveredImage",
+                        "Recovered image",
+                        language
+                      )
                     }
                     className="block max-h-72 w-full object-cover contrast-125 saturate-75 brightness-90"
                   />
