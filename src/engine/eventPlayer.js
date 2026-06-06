@@ -9,6 +9,40 @@ function resolveText(source, keyName, fallbackName, translate) {
   return fallback;
 }
 
+function clampSignal(value) {
+  const number = Number(value);
+
+  if (Number.isNaN(number)) return 96;
+
+  return Math.max(5, Math.min(100, number));
+}
+
+function corruptTextBySignal(text = "", signalStrength = 100) {
+  const signal = clampSignal(signalStrength);
+
+  if (!text || signal >= 80) return text;
+
+  let corruptionRate = 0;
+
+  if (signal >= 50) {
+    corruptionRate = 0.08;
+  } else if (signal >= 20) {
+    corruptionRate = 0.18;
+  } else {
+    corruptionRate = 0.32;
+  }
+
+  return text
+    .split("")
+    .map((char) => {
+      if (char === " " || char === "\n") return char;
+      if (Math.random() > corruptionRate) return char;
+
+      return Math.random() > 0.5 ? "-" : "█";
+    })
+    .join("");
+}
+
 function createFilePayload(event, fallbackType = "file", translate) {
   const fileType = event.fileType || event.type || fallbackType;
 
@@ -50,7 +84,8 @@ function playSingleEvent({
   onCollectFile,
   onPuzzleStart,
   onProgressTaskStart,
-  onProgressTaskEnd
+  onProgressTaskEnd,
+   signalStrength = 100
 }) {
   if (!event || typeof event !== "object") return 0;
 
@@ -83,7 +118,10 @@ if (event.type === "message") {
       sender: event.sender,
       textKey: event.textKey,
       fallbackText: event.text,
-      text: resolveText(event, "textKey", "text", translate),
+      text: corruptTextBySignal(
+  resolveText(event, "textKey", "text", translate),
+  signalStrength
+),
       tone: event.tone || event.mood || "calm"
     });
   }, delay);
@@ -313,7 +351,8 @@ export function playNodeEvents({
   onPuzzleStart,
   onProgressTaskStart,
   onProgressTaskEnd,
-  onComplete
+  onComplete,
+  signalStrength = 100
 }) {
   const timers = [];
   let accumulatedDelay = 0;
@@ -333,7 +372,8 @@ export function playNodeEvents({
     onCollectFile,
     onPuzzleStart,
     onProgressTaskStart,
-    onProgressTaskEnd
+    onProgressTaskEnd,
+    signalStrength
   };
 
   events.forEach((event) => {

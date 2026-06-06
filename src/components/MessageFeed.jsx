@@ -61,7 +61,7 @@ export default function MessageFeed({
     <div
       ref={feedScrollRef}
       className={[
-        "terminal-scrollbar flex h-full min-h-0 flex-col gap-5 overflow-y-auto border border-cyan-300/15 bg-slate-900/35 p-3 sm:p-4",
+        "terminal-scrollbar flex h-full min-h-0 flex-col gap-5 overflow-y-auto overscroll-contain touch-pan-y border border-cyan-300/15 bg-slate-900/35 p-3 sm:p-4",
         hasBottomPanel ? "pb-28 sm:pb-32" : ""
       ].join(" ")}
     >

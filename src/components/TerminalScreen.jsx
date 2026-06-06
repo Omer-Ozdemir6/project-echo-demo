@@ -76,21 +76,67 @@ const baseSignal = Number(gameState.signalStrength ?? 96);
 
 const signalValue =
   signalStatus?.type === "lost"
-    ? 0
+    ? 5
     : isGlitching
       ? Math.max(5, Math.min(baseSignal, 18))
       : progressTask
         ? Math.max(20, Math.min(baseSignal, 62))
-        : baseSignal;
-  const canInteract = !isTyping && !isGlitching && !signalStatus && !progressTask;
-  const signalBars = Math.round(signalValue / 10);
-const signalBar = "█".repeat(signalBars) + "░".repeat(10 - signalBars);
+        : clampSignal(baseSignal);
 
-const signalIcon =
-  signalValue <= 20 ? "🔴" : signalValue <= 65 ? "🟡" : "🟢";
+const signalMeta = getSignalMeta(signalValue);
+const signalBar = getSignalBar(signalValue);
+  const canInteract = !isTyping && !isGlitching && !signalStatus && !progressTask;
+
   const [decodeFile, setDecodeFile] = useState(null);
 
+function clampSignal(value) {
+  const number = Number(value);
 
+  if (Number.isNaN(number)) return 96;
+
+  return Math.max(5, Math.min(100, number));
+}
+
+function getSignalMeta(value) {
+  const safeValue = clampSignal(value);
+
+  if (safeValue >= 80) {
+    return {
+      icon: "🟢",
+      label: "STABLE",
+      className: "text-emerald-200"
+    };
+  }
+
+  if (safeValue >= 50) {
+    return {
+      icon: "🟡",
+      label: "DEGRADED",
+      className: "text-amber-200"
+    };
+  }
+
+  if (safeValue >= 20) {
+    return {
+      icon: "🟠",
+      label: "CRITICAL",
+      className: "text-orange-300"
+    };
+  }
+
+  return {
+    icon: "🔴",
+    label: "COLLAPSE",
+    className: "text-rose-300"
+  };
+}
+
+function getSignalBar(value) {
+  const safeValue = clampSignal(value);
+  const filled = Math.max(1, Math.round(safeValue / 10));
+
+  return "█".repeat(filled) + "░".repeat(10 - filled);
+}
 
 function handleOpenDataBankFile(file) {
   const shouldDecode = file.isNew;
@@ -204,19 +250,11 @@ className={[
   </span>
 
   <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-    {signalLabel}:{" "}
-<strong
-  className={
-    signalValue <= 20
-      ? "text-rose-300"
-      : signalValue <= 65
-        ? "text-amber-200"
-        : "text-emerald-200"
-  }
->
-  {signalIcon} %{signalValue} [{signalBar}]
-</strong>
-  </span>
+  {signalLabel}:{" "}
+  <strong className={signalMeta.className}>
+    {signalMeta.icon} %{signalValue} {signalMeta.label} [{signalBar}]
+  </strong>
+</span>
 </div>
         </div>
 

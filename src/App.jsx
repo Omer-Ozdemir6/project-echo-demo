@@ -11,7 +11,8 @@ import {
   setActivePuzzle,
   markFileAsRead,
   resolveActiveWaitTask,
-  clearPendingNotifications
+  clearPendingNotifications,
+  getCurrentEpisode
 } from "./engine/gameEngine";
 import { playNodeEvents } from "./engine/eventPlayer";
 import { runIntroTimeline } from "./engine/introEngine";
@@ -174,6 +175,7 @@ function App() {
 
   return playNodeEvents({
     events: currentNode.events || [],
+    signalStrength: gameState.signalStrength,
 
     translate: (key, fallback = "") => {
       return getGameText(key, fallback, settings.language);
@@ -254,9 +256,45 @@ onStatChange: (changes) => {
   });
 },
 
-      onComplete: () => {
-        setNodeFinished(true);
-      }
+onComplete: () => {
+  setNodeFinished(true);
+
+  if (currentNode?.nextNodeId) {
+    setTimeout(() => {
+      setGameState((prev) => {
+        const nextState = {
+          ...prev,
+          currentNodeId: currentNode.nextNodeId
+        };
+
+        saveGameState(nextState);
+        return nextState;
+      });
+    }, 500);
+
+    return;
+  }
+
+  if (currentNode?.nextEpisodeId) {
+  setTimeout(() => {
+    setGameState((prev) => {
+      const nextEpisode = getCurrentEpisode({
+        ...prev,
+        episodeId: currentNode.nextEpisodeId
+      });
+
+      const nextState = {
+        ...prev,
+        episodeId: currentNode.nextEpisodeId,
+        currentNodeId: nextEpisode.startNodeId
+      };
+
+      saveGameState(nextState);
+      return nextState;
+    });
+  }, 500);
+}
+}
     });
   }, [phase, currentNode?.id]);
 

@@ -2,8 +2,12 @@ import { DEFAULT_EPISODE_ID, getEpisode, correlations } from "../data";
 
 const STORAGE_KEY = "project_echo_progress";
 
-function clampStat(value) {
-  return Math.max(0, Math.min(100, value));
+function clampStat(value, min = 0, max = 100) {
+  const number = Number(value);
+
+  if (Number.isNaN(number)) return min;
+
+  return Math.max(min, Math.min(max, number));
 }
 
 function createFreshGameState() {
@@ -98,15 +102,21 @@ function normalizeGameState(state) {
 }
 
 function applyEffectsToState(gameState, effects = {}) {
-return {
-  ...gameState,
-  trust: clampStat(gameState.trust + (effects.trust || 0)),
-  danger: clampStat(gameState.danger + (effects.danger || 0)),
-  morale: clampStat(gameState.morale + (effects.morale || 0)),
-  signalStrength: clampStat(
-    (gameState.signalStrength ?? 96) + (effects.signalStrength || 0)
-  )
-};
+  return {
+    ...gameState,
+    trust: clampStat(gameState.trust + (effects.trust || 0)),
+    danger: clampStat(gameState.danger + (effects.danger || 0)),
+    morale: clampStat(gameState.morale + (effects.morale || 0)),
+
+    signalStrength: clampStat(
+      (gameState.signalStrength ?? 96) + (effects.signalStrength || 0),
+      5,
+      100
+    ),
+
+    mayaTrust: clampStat((gameState.mayaTrust ?? 0) + (effects.mayaTrust || 0), -100, 100),
+    haleTrust: clampStat((gameState.haleTrust ?? 0) + (effects.haleTrust || 0), -100, 100)
+  };
 }
 
 function normalizeAnswer(value) {

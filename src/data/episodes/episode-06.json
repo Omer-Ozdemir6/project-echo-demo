@@ -21,7 +21,7 @@
         "N. VOSS"
       ],
       "successNodeId": "e06_n08",
-      "failureNodeId": "e06_n07",
+      "failureNodeId": "e06_n07_fail",
       "submitCooldownMs": 500,
       "titleKey": "episode_06.memory_name_01.puzzle0.title",
       "descriptionKey": "episode_06.memory_name_01.puzzle0.description",
@@ -118,6 +118,16 @@
           "messageKey": "episode_06.e06_n02.event1.message"
         },
         {
+          "type": "backgroundEvent",
+          "delay": 5000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "V...",
+            "textKey": "episode_06.e06_n02.backgroundEvent2.text"
+          }
+        },
+        {
           "type": "typing",
           "duration": 3400
         },
@@ -181,23 +191,92 @@
           "id": "ignore_hale",
           "text": "KEEP SEARCHING.",
           "effects": {
-            "trust": -2,
-            "danger": 2
+            "trust": -3,
+            "danger": 3,
+            "haleTrust": -4,
+            "mayaTrust": 2,
+            "signalStrength": -3
           },
-          "nextNodeId": "e06_n04",
+          "nextNodeId": "e06_n03_ignore",
           "textKey": "episode_06.e06_n03.choice0.text"
         },
         {
           "id": "listen_hale",
           "text": "WHY?",
           "effects": {
-            "trust": 1,
-            "danger": 1
+            "trust": 2,
+            "danger": 1,
+            "haleTrust": 3
           },
-          "nextNodeId": "e06_n04",
+          "nextNodeId": "e06_n03_listen",
           "textKey": "episode_06.e06_n03.choice1.text"
         }
       ]
+    },
+    "e06_n03_ignore": {
+      "id": "e06_n03_ignore",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Of course.",
+          "textKey": "episode_06.e06_n03_ignore.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "You ask me for help, then keep digging the moment I tell you the ground is unstable.",
+          "textKey": "episode_06.e06_n03_ignore.event1.text"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[HALE COOPERATION DEGRADED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_06.e06_n03_ignore.event2.text"
+        }
+      ],
+      "nextNodeId": "e06_n04"
+    },
+    "e06_n03_listen": {
+      "id": "e06_n03_listen",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Because names are not just labels in this system.",
+          "textKey": "episode_06.e06_n03_listen.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "A name can wake permissions. Doors. Dead processes. Things we shut down for a reason.",
+          "textKey": "episode_06.e06_n03_listen.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "If this is the name I think it is, you need to be careful.",
+          "textKey": "episode_06.e06_n03_listen.event2.text"
+        }
+      ],
+      "nextNodeId": "e06_n04"
     },
     "e06_n04": {
       "id": "e06_n04",
@@ -244,6 +323,36 @@
           "speaker": "MAYA",
           "text": "No. I would remember that signature.",
           "textKey": "episode_06.e06_n04.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Noah Voss wasn't supposed to be in that database.",
+          "textKey": "episode_06.e06_n04.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "You know that name.",
+          "textKey": "episode_06.e06_n04.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "I know the absence of it.",
+          "textKey": "episode_06.e06_n04.event10.text"
         }
       ],
       "nextNodeId": "e06_n05"
@@ -323,6 +432,58 @@
       "id": "e06_n07",
       "speaker": "SYSTEM",
       "events": [
+        {
+          "type": "puzzle",
+          "puzzleId": "memory_name_01",
+          "pauseAfterMs": 700
+        }
+      ]
+    },
+    "e06_n07_fail": {
+      "id": "e06_n07_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[RECONSTRUCTION FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_06.e06_n07_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 3,
+            "signalStrength": -5,
+            "morale": -2
+          }
+        },
+        {
+          "type": "glitch",
+          "duration": 900,
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "systemAlert",
+          "text": "[ARCHIVE CORRUPTION INCREASED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_06.e06_n07_fail.event3.text"
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "Wrong reconstruction. The archive didn't like that.",
+          "textKey": "episode_06.e06_n07_fail.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Neither did I.",
+          "textKey": "episode_06.e06_n07_fail.event6.text"
+        },
         {
           "type": "puzzle",
           "puzzleId": "memory_name_01",
@@ -491,6 +652,28 @@
           "type": "message",
           "text": "I was there.",
           "textKey": "episode_06.e06_n11.event3.text"
+        },
+        {
+          "type": "file",
+          "id": "first_transmission_voss",
+          "fileId": "first_transmission_voss",
+          "fileType": "log",
+          "title": "FIRST TRANSMISSION",
+          "content": "SOURCE: NOAH VOSS\nSIGNAL CLASS: EMERGENCY RELAY\nTIMESTAMP: SIX MONTHS BEFORE HALE'S FIRST MESSAGE\nSTATUS: SUPPRESSED",
+          "caption": "Recovered source marker from the earliest emergency relay transmission.",
+          "source": "CHANNEL_7_14",
+          "tags": [
+            "noah_voss",
+            "first_transmission",
+            "7.14",
+            "suppressed"
+          ],
+          "message": "[FIRST TRANSMISSION ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1400,
+          "titleKey": "episode_06.e06_n11.event4.title",
+          "contentKey": "episode_06.e06_n11.event4.content",
+          "captionKey": "episode_06.e06_n11.event4.caption",
+          "messageKey": "episode_06.e06_n11.event4.message"
         },
         {
           "type": "pause",
