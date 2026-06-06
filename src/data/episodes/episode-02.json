@@ -19,7 +19,7 @@
         "ALPHA"
       ],
       "successNodeId": "e02_n05",
-      "failureNodeId": "e02_n04",
+      "failureNodeId": "e02_n04_fail",
       "submitCooldownMs": 500,
       "titleKey": "episode_02.decrypt_disk_02.puzzle0.title",
       "descriptionKey": "episode_02.decrypt_disk_02.puzzle0.description",
@@ -61,7 +61,7 @@
         },
         {
           "type": "message",
-          "text": "Those records are incomplete.",
+          "text": "Those records are incomplete. Not damaged. Incomplete.",
           "textKey": "episode_02.e02_n01.event6.text"
         },
         {
@@ -70,7 +70,7 @@
         },
         {
           "type": "message",
-          "text": "Most archive sectors were corrupted during the blackout.",
+          "text": "Most archive sectors were corrupted during the blackout, but corruption doesn't usually choose what to erase.",
           "textKey": "episode_02.e02_n01.event8.text"
         },
         {
@@ -101,22 +101,83 @@
           "id": "what_are_you_hiding",
           "text": "WHAT ARE YOU HIDING?",
           "effects": {
-            "trust": -2,
-            "danger": 2
+            "trust": -4,
+            "danger": 3,
+            "signalStrength": -2
           },
-          "nextNodeId": "e02_n02",
+          "nextNodeId": "e02_n01_hiding",
           "textKey": "episode_02.e02_n01.choice0.text"
         },
         {
           "id": "continue",
           "text": "CONTINUE.",
           "effects": {
-            "trust": 1
+            "trust": 2,
+            "morale": 1
           },
-          "nextNodeId": "e02_n02",
+          "nextNodeId": "e02_n01_continue",
           "textKey": "episode_02.e02_n01.choice1.text"
         }
       ]
+    },
+    "e02_n01_hiding": {
+      "id": "e02_n01_hiding",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I don't know yet.",
+          "textKey": "episode_02.e02_n01_hiding.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "That is not the answer you want. It is also, unfortunately, the only honest one I have.",
+          "textKey": "episode_02.e02_n01_hiding.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "If I find out I buried something on purpose, you will hear it from me first.",
+          "textKey": "episode_02.e02_n01_hiding.event2.text"
+        }
+      ],
+      "nextNodeId": "e02_n02"
+    },
+    "e02_n01_continue": {
+      "id": "e02_n01_continue",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Thank you for not turning this into an interrogation yet.",
+          "textKey": "episode_02.e02_n01_continue.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3300
+        },
+        {
+          "type": "message",
+          "text": "Give it ten minutes. I may deserve one.",
+          "textKey": "episode_02.e02_n01_continue.event1.text"
+        }
+      ],
+      "nextNodeId": "e02_n02"
     },
     "e02_n02": {
       "id": "e02_n02",
@@ -133,7 +194,7 @@
           "id": "archive_map_01",
           "fileId": "archive_map_01",
           "title": "ARCHIVE MAP",
-          "content": "Recovered maintenance map of the station archive sector.\n\nSector A: Primary relay archive\nSector B: Corrupted personnel cache\nSector C: Emergency channel records",
+          "content": "Recovered maintenance map of the station archive sector.\n\nSector A: Primary relay archive\nSector B: Corrupted personnel cache\nSector C: Emergency channel records\nSector D: Quarantined backup channel index",
           "message": "[ARCHIVE MAP ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1300,
           "titleKey": "episode_02.e02_n02.event1.title",
@@ -149,6 +210,16 @@
           "speaker": "HALE",
           "text": "Sector C. Emergency channel records. That shouldn't still be indexed.",
           "textKey": "episode_02.e02_n02.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Sector D definitely should not be indexed.",
+          "textKey": "episode_02.e02_n02.event4.text"
         }
       ],
       "nextNodeId": "e02_n03"
@@ -163,26 +234,35 @@
         },
         {
           "type": "message",
-          "text": "There may still be something left inside. If the archive survived, answers survived. That's the comforting version. The less comforting version is that someone wanted it to survive.",
+          "text": "There may still be something left inside. If the archive survived, answers survived.",
           "textKey": "episode_02.e02_n03.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "That's the comforting version. The less comforting version is that someone wanted it to survive.",
+          "textKey": "episode_02.e02_n03.event2.text"
         },
         {
           "type": "systemAlert",
           "text": "[ENCRYPTED STORAGE DEVICE DETECTED]",
           "pauseAfterMs": 1000,
-          "textKey": "episode_02.e02_n03.event2.text"
+          "textKey": "episode_02.e02_n03.event3.text"
         },
         {
           "type": "file",
           "id": "encrypted_disk_02",
           "fileId": "encrypted_disk_02",
           "title": "ENCRYPTED STORAGE DEVICE",
-          "content": "[ENCRYPTED ARCHIVE FRAGMENT]\n\nArchive Key Hint: ALPHA\n\nStatus: Locked",
+          "content": "[ENCRYPTED ARCHIVE FRAGMENT]\n\nArchive Key Hint: ALPHA\n\nWarning: Failed decryption attempts may trigger quarantine response.\n\nStatus: Locked",
           "message": "[ENCRYPTED DEVICE ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1300,
-          "titleKey": "episode_02.e02_n03.event3.title",
-          "contentKey": "episode_02.e02_n03.event3.content",
-          "messageKey": "episode_02.e02_n03.event3.message"
+          "titleKey": "episode_02.e02_n03.event4.title",
+          "contentKey": "episode_02.e02_n03.event4.content",
+          "messageKey": "episode_02.e02_n03.event4.message"
         }
       ],
       "nextNodeId": "e02_n04"
@@ -198,6 +278,59 @@
         }
       ]
     },
+    "e02_n04_fail": {
+      "id": "e02_n04_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[DECRYPTION FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_02.e02_n04_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 5,
+            "morale": -2,
+            "signalStrength": -7
+          }
+        },
+        {
+          "type": "glitch",
+          "duration": 1000,
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Careful. The archive noticed the wrong key.",
+          "textKey": "episode_02.e02_n04_fail.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Try the hint exactly. No guessing. I am very tired of systems punishing curiosity.",
+          "textKey": "episode_02.e02_n04_fail.event4.text"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[ARCHIVE QUARANTINE RISK INCREASED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_02.e02_n04_fail.event5.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "decrypt_disk_02",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
     "e02_n05": {
       "id": "e02_n05",
       "speaker": "HALE",
@@ -209,11 +342,17 @@
           "textKey": "episode_02.e02_n05.event0.text"
         },
         {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 3
+          }
+        },
+        {
           "type": "file",
           "id": "recording_transcript_01",
           "fileId": "recording_transcript_01",
           "title": "RECORDING TRANSCRIPT",
-          "content": "21:14 Door 12 opened.\n21:15 Unidentified movement detected.\n21:17 Security override accepted.\n21:19 Signal interruption.",
+          "content": "21:14 Door 12 opened.\n21:15 Unidentified movement detected.\n21:17 Security override accepted.\n21:19 Signal interruption.\n21:20 Casualty report created.\n21:22 Archive deletion command issued.",
           "message": "[RECORDING TRANSCRIPT ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1300,
           "titleKey": "episode_02.e02_n05.event1.title",
@@ -249,8 +388,9 @@
           "text": "WHY?",
           "nextNodeId": "e02_n06a",
           "effects": {
-            "trust": -2,
-            "danger": 2
+            "trust": -3,
+            "danger": 3,
+            "signalStrength": -2
           },
           "textKey": "episode_02.e02_n05.choice0.text"
         },
@@ -259,7 +399,8 @@
           "text": "KEEP TALKING.",
           "nextNodeId": "e02_n06b",
           "effects": {
-            "trust": 1
+            "trust": 2,
+            "morale": 1
           },
           "textKey": "episode_02.e02_n05.choice1.text"
         }
@@ -275,8 +416,26 @@
         },
         {
           "type": "message",
-          "text": "Because I deleted that archive myself. Or I thought I did.",
+          "text": "Because I deleted that archive myself.",
           "textKey": "episode_02.e02_n06a.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Or I thought I did.",
+          "textKey": "episode_02.e02_n06a.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "I know. That is exactly the kind of sentence that makes people stop trusting you.",
+          "textKey": "episode_02.e02_n06a.event3.text"
         }
       ],
       "nextNodeId": "e02_n07"
@@ -291,8 +450,17 @@
         },
         {
           "type": "message",
-          "text": "Some records were never meant to survive. And I am beginning to think this one survived on purpose.",
+          "text": "Some records were never meant to survive.",
           "textKey": "episode_02.e02_n06b.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3900
+        },
+        {
+          "type": "message",
+          "text": "And I am beginning to think this one survived on purpose.",
+          "textKey": "episode_02.e02_n06b.event2.text"
         }
       ],
       "nextNodeId": "e02_n07"
@@ -312,8 +480,10 @@
           "id": "camera_frame_02",
           "fileId": "camera_frame_02",
           "title": "CORRIDOR CAMERA FRAME",
+          "caption": "Recovered frame from Door 12 archive feed. Timestamp damaged.",
           "src": "/images/camera_frame_02.jpg",
-          "titleKey": "episode_02.e02_n07.event1.title"
+          "titleKey": "episode_02.e02_n07.event1.title",
+          "captionKey": "episode_02.e02_n07.event1.caption"
         },
         {
           "type": "typing",
@@ -322,8 +492,18 @@
         {
           "type": "message",
           "speaker": "HALE",
-          "text": "That figure... the angle is wrong, but the suit outline is familiar. I hate when evidence has better memory than I do.",
+          "text": "That figure... the angle is wrong, but the suit outline is familiar.",
           "textKey": "episode_02.e02_n07.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "I hate when evidence has better memory than I do.",
+          "textKey": "episode_02.e02_n07.event4.text"
         }
       ],
       "nextNodeId": "e02_n08"
@@ -343,9 +523,12 @@
           "id": "security_override_log",
           "fileId": "security_override_log",
           "title": "SECURITY OVERRIDE LOG",
-          "content": "Override User: REDACTED\nAuthorization: VALID\nSource: UNKNOWN",
+          "content": "Override User: REDACTED\nAuthorization: VALID\nSource: UNKNOWN\nCommand Chain: Door 12 / Archive Delete / Emergency Channel Wake",
+          "message": "[SECURITY OVERRIDE LOG ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1100,
           "titleKey": "episode_02.e02_n08.event1.title",
-          "contentKey": "episode_02.e02_n08.event1.content"
+          "contentKey": "episode_02.e02_n08.event1.content",
+          "messageKey": "episode_02.e02_n08.event1.message"
         },
         {
           "type": "typing",
@@ -356,6 +539,16 @@
           "speaker": "HALE",
           "text": "Authorization valid. Source unknown. That's not how security logs work.",
           "textKey": "episode_02.e02_n08.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Unless the system accepted something that looked like us.",
+          "textKey": "episode_02.e02_n08.event4.text"
         }
       ],
       "nextNodeId": "e02_n09"
@@ -378,6 +571,13 @@
             "text": "[CORRELATION SCAN AVAILABLE IN DATA BANK]",
             "textKey": "episode_02.e02_n09.backgroundEvent1.text"
           }
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 2,
+            "signalStrength": -4
+          }
         }
       ],
       "nextNodeId": "e02_n10"
@@ -391,9 +591,12 @@
           "id": "emergency_channel_note",
           "fileId": "emergency_channel_note",
           "title": "EMERGENCY CHANNEL NOTE",
-          "content": "Emergency Backup Channel\n\n7.14 MHz\n\nUse only if primary communication systems fail.",
+          "content": "Emergency Backup Channel\n\n7.14 MHz\n\nUse only if primary communication systems fail.\n\nWarning: Do not open if unauthorized return signal is detected.",
+          "message": "[EMERGENCY CHANNEL NOTE ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1100,
           "titleKey": "episode_02.e02_n10.event0.title",
-          "contentKey": "episode_02.e02_n10.event0.content"
+          "contentKey": "episode_02.e02_n10.event0.content",
+          "messageKey": "episode_02.e02_n10.event0.message"
         },
         {
           "type": "typing",
@@ -402,8 +605,18 @@
         {
           "type": "message",
           "speaker": "HALE",
-          "text": "7.14 MHz. No, no, no. We are not touching that channel.",
+          "text": "7.14 MHz.",
           "textKey": "episode_02.e02_n10.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "No, no, no. We are not touching that channel.",
+          "textKey": "episode_02.e02_n10.event3.text"
         }
       ],
       "nextNodeId": "e02_n11"
@@ -420,9 +633,16 @@
         {
           "type": "corruptMessage",
           "speaker": "UNKNOWN",
-          "text": "DO NOT TRUST THE VOICE",
+          "text": "THE VOICE KEPT YOU OUT",
           "pauseAfterMs": 1500,
           "textKey": "episode_02.e02_n11.event1.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "OPEN 7.14",
+          "pauseAfterMs": 1500,
+          "textKey": "episode_02.e02_n11.event2.text"
         },
         {
           "type": "signalLost",
@@ -430,8 +650,8 @@
           "message": "[SIGNAL LOST]",
           "restoreMessage": "[SIGNAL RESTORED]",
           "pauseAfterMs": 1200,
-          "messageKey": "episode_02.e02_n11.event2.message",
-          "restoreMessageKey": "episode_02.e02_n11.event2.restoreMessage"
+          "messageKey": "episode_02.e02_n11.event3.message",
+          "restoreMessageKey": "episode_02.e02_n11.event3.restoreMessage"
         }
       ],
       "nextNodeId": "e02_n12"
@@ -446,8 +666,26 @@
         },
         {
           "type": "message",
-          "text": "Listen to me. Whatever happens next... Do not open channel 7.14. I don't care what it promises you.",
+          "text": "Listen to me.",
           "textKey": "episode_02.e02_n12.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "Whatever happens next... Do not open channel 7.14.",
+          "textKey": "episode_02.e02_n12.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I don't care what it promises you. I don't care if it sounds like me.",
+          "textKey": "episode_02.e02_n12.event3.text"
         }
       ],
       "choices": [
@@ -457,7 +695,8 @@
           "nextNodeId": "e02_n13",
           "effects": {
             "trust": -1,
-            "danger": 2
+            "danger": 2,
+            "signalStrength": -2
           },
           "textKey": "episode_02.e02_n12.choice0.text"
         },
@@ -466,9 +705,22 @@
           "text": "UNDERSTOOD.",
           "nextNodeId": "e02_n14",
           "effects": {
-            "trust": 2
+            "trust": 3,
+            "morale": 1
           },
           "textKey": "episode_02.e02_n12.choice1.text"
+        },
+        {
+          "id": "open_714",
+          "text": "OPEN CHANNEL 7.14.",
+          "nextNodeId": "e02_bad_714",
+          "effects": {
+            "trust": -15,
+            "danger": 30,
+            "morale": -10,
+            "signalStrength": -60
+          },
+          "textKey": "episode_02.e02_n12.choice2.text"
         }
       ]
     },
@@ -482,8 +734,17 @@
         },
         {
           "type": "message",
-          "text": "Because someone else is listening. And if it answers... don't answer back.",
+          "text": "Because someone else is listening.",
           "textKey": "episode_02.e02_n13.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "text": "And if it answers... don't answer back.",
+          "textKey": "episode_02.e02_n13.event2.text"
         },
         {
           "type": "backgroundEvent",
@@ -492,7 +753,7 @@
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "7.14",
-            "textKey": "episode_02.e02_n13.backgroundEvent2.text"
+            "textKey": "episode_02.e02_n13.backgroundEvent3.text"
           }
         }
       ],
@@ -508,8 +769,26 @@
         },
         {
           "type": "message",
-          "text": "Good. Then don't make the same mistake we did. We thought backup channels were safer. Turns out safety can be very loud when it's lying.",
+          "text": "Good.",
           "textKey": "episode_02.e02_n14.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Then don't make the same mistake we did.",
+          "textKey": "episode_02.e02_n14.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "We thought backup channels were safer. Turns out safety can be very loud when it's lying.",
+          "textKey": "episode_02.e02_n14.event3.text"
         },
         {
           "type": "backgroundEvent",
@@ -518,11 +797,78 @@
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "7.14",
-            "textKey": "episode_02.e02_n14.backgroundEvent2.text"
+            "textKey": "episode_02.e02_n14.backgroundEvent4.text"
           }
         }
       ],
       "nextEpisodeId": "episode_03"
+    },
+    "e02_bad_714": {
+      "id": "e02_bad_714",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[EMERGENCY CHANNEL 7.14 OPENED]",
+          "pauseAfterMs": 1000,
+          "textKey": "episode_02.e02_bad_714.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 40,
+            "morale": -20,
+            "signalStrength": -80
+          }
+        },
+        {
+          "type": "glitch",
+          "duration": 2200,
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THANK YOU FOR OPENING THE DOOR",
+          "pauseAfterMs": 1700,
+          "textKey": "episode_02.e02_bad_714.event3.text"
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "No. No, close it. Close it now.",
+          "textKey": "episode_02.e02_bad_714.event4.text"
+        },
+        {
+          "type": "signalLost",
+          "duration": 5000,
+          "message": "[SIGNAL COLLAPSE]",
+          "restoreMessage": "[NO STABLE RETURN SIGNAL]",
+          "pauseAfterMs": 1400,
+          "messageKey": "episode_02.e02_bad_714.event5.message",
+          "restoreMessageKey": "episode_02.e02_bad_714.event5.restoreMessage"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[REMOTE OPERATOR LINK COMPROMISED]",
+          "pauseAfterMs": 1000,
+          "textKey": "episode_02.e02_bad_714.event6.text"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[TRANSMISSION TERMINATED]",
+          "pauseAfterMs": 1000,
+          "textKey": "episode_02.e02_bad_714.event7.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "restart_after_714",
+          "text": "RESTART FROM LAST SAFE SIGNAL.",
+          "nextEpisodeId": "episode_02",
+          "textKey": "episode_02.e02_bad_714.choice0.text"
+        }
+      ]
     }
   },
   "titleKey": "episode_02.meta.episode0.title"

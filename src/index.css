@@ -31,6 +31,78 @@ img {
   max-width: 100%;
 }
 
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image:
+    repeating-radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.22) 0px,
+      rgba(255, 255, 255, 0) 2px
+    );
+  animation: noiseMove 0.18s infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes producerLogoFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes producerLogoFadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.04);
+    filter: blur(8px);
+  }
+}
+
+@keyframes startScreenFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes noiseMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-2px, 1px);
+  }
+  50% {
+    transform: translate(2px, -1px);
+  }
+  75% {
+    transform: translate(-1px, 2px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
 @keyframes quoteFadeIn {
   from {
     opacity: 0;

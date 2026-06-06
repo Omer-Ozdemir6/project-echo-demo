@@ -45,10 +45,20 @@ export default function DataBankModal({
   const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState("all");
 
-  const filteredFiles = useMemo(() => {
-    if (activeCategory === "all") return files;
-    return files.filter((file) => file.type === activeCategory);
-  }, [files, activeCategory]);
+const filteredFiles = useMemo(() => {
+  const sortedFiles = [...files].sort((a, b) => {
+    const aTime = a.collectedAt ? new Date(a.collectedAt).getTime() : 0;
+    const bTime = b.collectedAt ? new Date(b.collectedAt).getTime() : 0;
+
+    return bTime - aTime;
+  });
+
+  if (activeCategory === "all") {
+    return sortedFiles;
+  }
+
+  return sortedFiles.filter((file) => file.type === activeCategory);
+}, [files, activeCategory]);
 
   function handleOpenFile(file) {
     onFileRead?.(file.id);

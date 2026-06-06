@@ -9,29 +9,11 @@ import FileViewerModal from "./FileViewerModal";
 import SignalOverlay from "./SignalOverlay";
 import SettingsModal from "./SettingsModal";
 import ProgressTaskModal from "./ProgressTaskModal";
+import DecodeFileModal from "./DecodeFileModal";
 
-function getStatusLevel(value, type = "normal") {
-  const safeValue = Number(value) || 0;
 
-  if (type === "danger") {
-    if (safeValue >= 80) return "CRITICAL";
-    if (safeValue >= 60) return "HIGH";
-    if (safeValue >= 35) return "ELEVATED";
-    return "LOW";
-  }
 
-  if (safeValue >= 80) return "STRONG";
-  if (safeValue >= 60) return "STABLE";
-  if (safeValue >= 35) return "LOW";
-  return "CRITICAL";
-}
 
-function getStatusClass(level) {
-  if (level === "STRONG" || level === "LOW") return "text-emerald-200";
-  if (level === "STABLE" || level === "ELEVATED") return "text-cyan-200";
-  if (level === "HIGH") return "text-amber-200";
-  return "text-rose-300";
-}
 
 export default function TerminalScreen({
   config,
@@ -69,34 +51,64 @@ export default function TerminalScreen({
     language
   );
 
-  const statusLink = getGameText(
-    config?.statusLabels?.linkKey,
-    config?.statusLabels?.link || "LINK: ACTIVE",
-    language
-  );
 
-  const statusSignal = getGameText(
-    config?.statusLabels?.signalKey,
-    config?.statusLabels?.signal || "SIGNAL: 38%",
-    language
-  );
 
   const collectedFiles = gameState.collectedFiles || [];
   const unreadFileCount = collectedFiles.filter((file) => file.isNew).length;
+  const connectionLabel = getGameText(
+  "status.connection",
+  language === "tr" ? "BAĞLANTI" : "LINK",
+  language
+);
+
+const signalLabel = getGameText(
+  "status.signal",
+  language === "tr" ? "SİNYAL" : "SIGNAL",
+  language
+);
+
+const connectionValue =
+  signalStatus?.type === "lost"
+    ? getGameText("status.lost", language === "tr" ? "KOPTU" : "LOST", language)
+    : getGameText("status.active", language === "tr" ? "AKTİF" : "ACTIVE", language);
+
+const baseSignal = Number(gameState.signalStrength ?? 96);
+
+const signalValue =
+  signalStatus?.type === "lost"
+    ? 0
+    : isGlitching
+      ? Math.max(5, Math.min(baseSignal, 18))
+      : progressTask
+        ? Math.max(20, Math.min(baseSignal, 62))
+        : baseSignal;
   const canInteract = !isTyping && !isGlitching && !signalStatus && !progressTask;
+  const signalBars = Math.round(signalValue / 10);
+const signalBar = "█".repeat(signalBars) + "░".repeat(10 - signalBars);
 
-  const trustLevel = getStatusLevel(gameState.trust);
-  const moraleLevel = getStatusLevel(gameState.morale);
-  const dangerLevel = getStatusLevel(gameState.danger, "danger");
+const signalIcon =
+  signalValue <= 20 ? "🔴" : signalValue <= 65 ? "🟡" : "🟢";
+  const [decodeFile, setDecodeFile] = useState(null);
 
-  function handleOpenDataBankFile(file) {
-    onFileRead?.(file.id);
-    setActiveFile({
-      ...file,
-      isNew: false
-    });
+
+
+function handleOpenDataBankFile(file) {
+  const shouldDecode = file.isNew;
+
+  onFileRead?.(file.id);
+
+  const openedFile = {
+    ...file,
+    isNew: false
+  };
+
+  if (shouldDecode) {
+    setDecodeFile(openedFile);
+    return;
   }
 
+  setActiveFile(openedFile);
+}
   return (
     <main
       className={[
@@ -109,6 +121,10 @@ export default function TerminalScreen({
       ].join(" ")}
     >
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.12),transparent_35%)]" />
+
+      {(isGlitching || signalStatus?.type === "lost") && (
+  <div className="noise-overlay" />
+)}
 
       <section
         className={[
@@ -123,12 +139,13 @@ export default function TerminalScreen({
             <div className="grid grid-cols-[auto_1fr_auto] items-start gap-3">
               <button
                 type="button"
-                className={[
-                  "relative border border-cyan-300/35 bg-cyan-950/30 px-2.5 py-2",
-                  "text-[10px] tracking-[0.2em] text-cyan-100",
-                  "transition hover:bg-cyan-400/10",
-                  "sm:px-3 sm:text-xs"
-                ].join(" ")}
+className={[
+  "relative border border-cyan-300/35 bg-cyan-950/30 px-2.5 py-2",
+  "text-[10px] tracking-[0.2em] text-cyan-100",
+  "transition hover:bg-cyan-400/10",
+  "sm:px-3 sm:text-xs",
+  unreadFileCount > 0 ? "animate-pulse border-emerald-300/70" : ""
+].join(" ")}
                 onClick={() => setIsDataBankOpen(true)}
               >
                 DATA {unreadFileCount > 0 ? `(${unreadFileCount})` : ""}
@@ -174,27 +191,33 @@ export default function TerminalScreen({
             </div>
           </header>
 
-          <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
-            <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-              {statusLink}
-            </span>
+<div className="mb-4 grid grid-cols-2 gap-2">
+  <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
+    {connectionLabel}:{" "}
+    <strong
+      className={
+        signalStatus?.type === "lost" ? "text-rose-300" : "text-emerald-200"
+      }
+    >
+      {connectionValue}
+    </strong>
+  </span>
 
-            <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-              {statusSignal}
-            </span>
-
-            <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-              TRUST: <strong className={getStatusClass(trustLevel)}>{trustLevel}</strong>
-            </span>
-
-            <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-              MORALE: <strong className={getStatusClass(moraleLevel)}>{moraleLevel}</strong>
-            </span>
-
-            <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-              DANGER: <strong className={getStatusClass(dangerLevel)}>{dangerLevel}</strong>
-            </span>
-          </div>
+  <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
+    {signalLabel}:{" "}
+<strong
+  className={
+    signalValue <= 20
+      ? "text-rose-300"
+      : signalValue <= 65
+        ? "text-amber-200"
+        : "text-emerald-200"
+  }
+>
+  {signalIcon} %{signalValue} [{signalBar}]
+</strong>
+  </span>
+</div>
         </div>
 
         <div className="min-h-0 flex-1 overflow-hidden">
@@ -237,7 +260,16 @@ export default function TerminalScreen({
         />
       )}
 
-      <FileViewerModal file={activeFile} onClose={() => setActiveFile(null)} />
+      <DecodeFileModal
+  file={decodeFile}
+  onComplete={(file) => {
+    setDecodeFile(null);
+    setActiveFile(file);
+  }}
+  onClose={() => setDecodeFile(null)}
+/>
+
+<FileViewerModal file={activeFile} onClose={() => setActiveFile(null)} />
       <SignalOverlay status={signalStatus} />
 
       {isSettingsOpen && (

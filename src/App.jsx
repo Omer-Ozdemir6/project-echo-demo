@@ -236,19 +236,23 @@ function App() {
         });
       },
 
-      onStatChange: (changes) => {
-        setGameState((prev) => {
-          const nextState = {
-            ...prev,
-            trust: Math.max(0, Math.min(100, prev.trust + (changes.trust || 0))),
-            danger: Math.max(0, Math.min(100, prev.danger + (changes.danger || 0))),
-            morale: Math.max(0, Math.min(100, prev.morale + (changes.morale || 0)))
-          };
+onStatChange: (changes) => {
+  setGameState((prev) => {
+    const nextState = {
+      ...prev,
+      trust: Math.max(0, Math.min(100, prev.trust + (changes.trust || 0))),
+      danger: Math.max(0, Math.min(100, prev.danger + (changes.danger || 0))),
+      morale: Math.max(0, Math.min(100, prev.morale + (changes.morale || 0))),
+      signalStrength: Math.max(
+        0,
+        Math.min(100, (prev.signalStrength ?? 96) + (changes.signalStrength || 0))
+      )
+    };
 
-          saveGameState(nextState);
-          return nextState;
-        });
-      },
+    saveGameState(nextState);
+    return nextState;
+  });
+},
 
       onComplete: () => {
         setNodeFinished(true);
@@ -325,11 +329,14 @@ function handleChoice(choiceId) {
 
   if (phase === "start") {
     return (
-      <StartScreen
-        gameTitle={gameConfig.gameTitle}
-        subtitle={gameConfig.subtitle}
-        onStart={startGame}
-      />
+<StartScreen
+  gameTitle={gameConfig.gameTitle}
+  subtitle={gameConfig.subtitle}
+  onStart={startGame}
+  settings={settings}
+  onChangeSettings={setSettings}
+  onReset={handleReset}
+/>
     );
   }
 

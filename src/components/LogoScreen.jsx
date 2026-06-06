@@ -1,4 +1,33 @@
+import { useEffect, useMemo, useState } from "react";
+
 export default function LogoScreen({ gameTitle }) {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const steps = [
+      { value: 10, delay: 300 },
+      { value: 30, delay: 700 },
+      { value: 60, delay: 1200 },
+      { value: 84, delay: 1700 },
+      { value: 100, delay: 2200 }
+    ];
+
+    const timers = steps.map((step) =>
+      setTimeout(() => {
+        setProgress(step.value);
+      }, step.delay)
+    );
+
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
+  const bar = useMemo(() => {
+    const filled = Math.round(progress / 10);
+    return "█".repeat(filled) + "░".repeat(10 - filled);
+  }, [progress]);
+
+  const isComplete = progress >= 100;
+
   return (
     <main className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-black">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.12),transparent_65%)]" />
@@ -26,12 +55,20 @@ export default function LogoScreen({ gameTitle }) {
 
         <div className="mt-10 text-center">
           <p className="text-[10px] tracking-[0.45em] text-cyan-300/60">
-            SIGNAL ACQUIRED
+            {isComplete ? "SIGNAL ACQUIRED" : "ACQUIRING SIGNAL"}
           </p>
 
-          <div className="mt-4 h-[2px] w-48 overflow-hidden bg-cyan-300/10">
-            <div className="h-full w-full animate-[pulse_1.5s_linear_infinite] bg-cyan-300" />
+          <div className="mt-4 border border-cyan-300/20 bg-slate-950/70 px-4 py-3 font-mono text-xs tracking-[0.18em] text-cyan-200 shadow-[0_0_18px_rgba(34,211,238,0.1)]">
+            <span className="text-cyan-300/55">&gt;</span>{" "}
+            <span>{bar}</span>{" "}
+            <span className={isComplete ? "text-emerald-300" : "text-cyan-100/70"}>
+              {progress}%
+            </span>
           </div>
+
+          <p className="mt-3 text-[10px] tracking-[0.22em] text-cyan-50/35">
+            {isComplete ? "CHANNEL ESTABLISHED" : "SYNCING RELAY CHANNEL"}
+          </p>
         </div>
       </div>
     </main>

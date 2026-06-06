@@ -16,6 +16,7 @@ function createFreshGameState() {
     trust: 50,
     danger: 10,
     morale: 60,
+    signalStrength: 96,
     solvedPuzzles: {},
     puzzleAttempts: {},
     knownClues: {},
@@ -54,6 +55,8 @@ function normalizeGameState(state) {
     trust: typeof state.trust === "number" ? state.trust : 50,
     danger: typeof state.danger === "number" ? state.danger : 10,
     morale: typeof state.morale === "number" ? state.morale : 60,
+    signalStrength:
+  typeof state.signalStrength === "number" ? state.signalStrength : 96,
 
     solvedPuzzles:
       state.solvedPuzzles && typeof state.solvedPuzzles === "object"
@@ -95,12 +98,15 @@ function normalizeGameState(state) {
 }
 
 function applyEffectsToState(gameState, effects = {}) {
-  return {
-    ...gameState,
-    trust: clampStat(gameState.trust + (effects.trust || 0)),
-    danger: clampStat(gameState.danger + (effects.danger || 0)),
-    morale: clampStat(gameState.morale + (effects.morale || 0))
-  };
+return {
+  ...gameState,
+  trust: clampStat(gameState.trust + (effects.trust || 0)),
+  danger: clampStat(gameState.danger + (effects.danger || 0)),
+  morale: clampStat(gameState.morale + (effects.morale || 0)),
+  signalStrength: clampStat(
+    (gameState.signalStrength ?? 96) + (effects.signalStrength || 0)
+  )
+};
 }
 
 function normalizeAnswer(value) {
