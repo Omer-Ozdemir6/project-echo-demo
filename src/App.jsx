@@ -19,6 +19,7 @@ import { runBootStep } from "./engine/bootEngine";
 
 import gameConfig from "./data/game.config.json";
 import bootConfig from "./data/boot.config.json";
+import { getGameText } from "./i18n/gameText";
 
 import StartScreen from "./components/StartScreen";
 import QuoteScreen from "./components/QuoteScreen";
@@ -170,9 +171,20 @@ function App() {
     setSignalStatus(null);
     setProgressTask(null);
     setNodeFinished(false);
+    setVisibleMessages([]);
 
     return playNodeEvents({
       events: currentNode.events || [],
+translate: (key, fallback = "") => {
+  const value = getGameText(key, fallback, settings.language);
+  console.log("TRANSLATE TEST:", {
+    language: settings.language,
+    key,
+    fallback,
+    value
+  });
+  return value;
+},
 
       onTypingStart: () => setIsTyping(true),
       onTypingStop: () => setIsTyping(false),
@@ -249,31 +261,35 @@ function App() {
         setNodeFinished(true);
       }
     });
-  }, [phase, currentNode?.id]);
+  }, [phase, currentNode?.id, settings.language]);
 
-  function handleChoice(choiceId) {
-    const selectedChoice = currentNode?.choices?.find(
-      (choice) => choice.id === choiceId
-    );
+function handleChoice(choiceId) {
+  const selectedChoice = currentNode?.choices?.find(
+    (choice) => choice.id === choiceId
+  );
 
-    if (selectedChoice) {
-      setVisibleMessages((prev) => [
-        ...prev,
-        {
-          type: "playerMessage",
-          text: selectedChoice.text,
-          sender: "player",
-          speaker: "YOU"
-        }
-      ]);
-    }
-
-    setNodeFinished(false);
-
-    const nextState = chooseOption(gameState, choiceId);
-    setGameState(nextState);
-    saveGameState(nextState);
+  if (selectedChoice) {
+    setVisibleMessages((prev) => [
+      ...prev,
+      {
+        type: "playerMessage",
+        text: getGameText(
+          selectedChoice.textKey,
+          selectedChoice.text,
+          settings.language
+        ),
+        sender: "player",
+        speaker: "YOU"
+      }
+    ]);
   }
+
+  setNodeFinished(false);
+
+  const nextState = chooseOption(gameState, choiceId);
+  setGameState(nextState);
+  saveGameState(nextState);
+}
 
   function handlePuzzleSubmit(answer) {
     if (!activePuzzle) return;
@@ -329,7 +345,7 @@ function App() {
   }
 
   if (phase === "quote") {
-    return <QuoteScreen quote={gameConfig.introQuote} />;
+    return <QuoteScreen quote={gameConfig.introQuote}  language={settings.language} />;
   }
 
   if (phase === "logo") {
@@ -345,6 +361,7 @@ function App() {
         bootProgress={bootProgress}
         showError={showError}
         criticalError={bootConfig.criticalError}
+         language={settings.language}
       />
     );
   }
@@ -354,6 +371,7 @@ function App() {
       <RebootConfirmScreen
         config={bootConfig.recovery}
         onRestart={startRecoveryBoot}
+        language={settings.language}
       />
     );
   }
@@ -363,6 +381,7 @@ function App() {
       <TransmissionInitScreen
         config={bootConfig.transmissionInit}
         onComplete={() => setPhase("game")}
+        language={settings.language}
       />
     );
   }
@@ -372,6 +391,7 @@ function App() {
       <MissingNodeScreen
         nodeId={gameState.currentNodeId}
         onReset={handleReset}
+        language={settings.language}
       />
     );
   }

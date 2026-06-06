@@ -1,25 +1,17 @@
 import { useEffect, useRef } from "react";
-import { useTranslation } from "react-i18next";
+import { getGameText } from "../i18n/gameText";
 
-function resolveText(t, key, fallback = "") {
-  if (key && typeof t === "function") {
-    const translated = t(key);
-
-    if (translated && translated !== key) {
-      return translated;
-    }
-  }
-
-  return fallback;
+function resolveText(key, fallback = "", language = "en") {
+  return getGameText(key, fallback, language);
 }
 
 export default function MessageFeed({
   speaker,
   messages,
   isTyping,
-  onOpenFile
+  onOpenFile,
+  language = "en"
 }) {
-  const { t } = useTranslation();
   const feedScrollRef = useRef(null);
 
   useEffect(() => {
@@ -32,25 +24,31 @@ export default function MessageFeed({
   }, [messages, isTyping]);
 
   function getSpeakerLabel(message) {
-    if (message.sender === "player") return t("speaker.you", "YOU");
-    if (message.sender === "system") return t("speaker.system", "SYSTEM");
+    if (message.sender === "player") {
+      return resolveText("speaker.you", "YOU", language);
+    }
+
+    if (message.sender === "system") {
+      return resolveText("speaker.system", "SYSTEM", language);
+    }
+
     return message.speaker || speaker;
   }
 
   function getMessageText(message) {
-    return resolveText(t, message.textKey, message.text || "");
+    return resolveText(message.textKey, message.text || "", language);
   }
 
   function getMessageTitle(message) {
     return resolveText(
-      t,
       message.titleKey,
-      message.title || t("messageFeed.incomingImage", "[INCOMING IMAGE]")
+      message.title || resolveText("messageFeed.incomingImage", "[INCOMING IMAGE]", language),
+      language
     );
   }
 
   function getMessageCaption(message) {
-    return resolveText(t, message.captionKey, message.caption || "");
+    return resolveText(message.captionKey, message.caption || "", language);
   }
 
   return (
@@ -84,7 +82,7 @@ export default function MessageFeed({
                   </span>
 
                   <span className="shrink-0">
-                    {t("messageFeed.fileReceived", "FILE RECEIVED")}
+                    {resolveText("messageFeed.fileReceived", "FILE RECEIVED", language)}
                   </span>
                 </div>
 
@@ -94,7 +92,7 @@ export default function MessageFeed({
                     alt={
                       imageCaption ||
                       imageTitle ||
-                      t("messageFeed.recoveredImage", "Recovered image")
+                      resolveText("messageFeed.recoveredImage", "Recovered image", language)
                     }
                     className="block max-h-72 w-full object-cover contrast-125 saturate-75 brightness-90"
                   />
@@ -111,7 +109,7 @@ export default function MessageFeed({
                   className="mt-3 w-full border border-cyan-300/35 bg-cyan-950/40 px-3 py-2 text-[11px] tracking-[0.2em] text-cyan-50 transition hover:bg-cyan-400/10"
                   onClick={() => onOpenFile?.(message)}
                 >
-                  {t("messageFeed.viewImage", "VIEW IMAGE")}
+                  {resolveText("messageFeed.viewImage", "VIEW IMAGE", language)}
                 </button>
               </div>
             </div>

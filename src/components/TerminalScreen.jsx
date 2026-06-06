@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { getGameText } from "../i18n/gameText";
+
 import MessageFeed from "./MessageFeed";
 import ChoicePanel from "./ChoicePanel";
 import PuzzleRenderer from "./puzzles/PuzzleRenderer";
@@ -52,6 +54,32 @@ export default function TerminalScreen({
   const [activeFile, setActiveFile] = useState(null);
   const [isDataBankOpen, setIsDataBankOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const language = settings?.language || "en";
+
+  const terminalTitle = getGameText(
+    config?.terminalTitleKey,
+    config?.terminalTitle || "ECHO COMMAND",
+    language
+  );
+
+  const terminalSubtitle = getGameText(
+    config?.terminalSubtitleKey,
+    config?.terminalSubtitle || "REMOTE OPERATIONS TERMINAL",
+    language
+  );
+
+  const statusLink = getGameText(
+    config?.statusLabels?.linkKey,
+    config?.statusLabels?.link || "LINK: ACTIVE",
+    language
+  );
+
+  const statusSignal = getGameText(
+    config?.statusLabels?.signalKey,
+    config?.statusLabels?.signal || "SIGNAL: 38%",
+    language
+  );
 
   const collectedFiles = gameState.collectedFiles || [];
   const unreadFileCount = collectedFiles.filter((file) => file.isNew).length;
@@ -112,11 +140,11 @@ export default function TerminalScreen({
 
               <div className="min-w-0 text-center">
                 <h1 className="m-0 truncate text-base tracking-[0.25em] text-cyan-300 sm:text-2xl">
-                  {config.terminalTitle}
+                  {terminalTitle}
                 </h1>
 
                 <p className="mt-1 truncate text-[11px] text-cyan-50/55 sm:text-sm">
-                  {config.terminalSubtitle}
+                  {terminalSubtitle}
                 </p>
               </div>
 
@@ -148,11 +176,11 @@ export default function TerminalScreen({
 
           <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
             <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-              {config.statusLabels.link}
+              {statusLink}
             </span>
 
             <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-              {config.statusLabels.signal}
+              {statusSignal}
             </span>
 
             <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
@@ -175,6 +203,7 @@ export default function TerminalScreen({
             messages={visibleMessages}
             isTyping={isTyping}
             onOpenFile={setActiveFile}
+            language={language}
           />
         </div>
 

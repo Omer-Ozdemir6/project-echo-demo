@@ -3,11 +3,7 @@ function resolveText(source, keyName, fallbackName, translate) {
   const fallback = source?.[fallbackName] || "";
 
   if (key && typeof translate === "function") {
-    const translated = translate(key);
-
-    if (translated && translated !== key) {
-      return translated;
-    }
+    return translate(key, fallback);
   }
 
   return fallback;
@@ -315,6 +311,7 @@ export function playNodeEvents({
 }) {
   const timers = [];
   let accumulatedDelay = 0;
+  let maxBackgroundDelay = 0;
 
   const handlers = {
     timers,
@@ -340,11 +337,16 @@ export function playNodeEvents({
 
       if (!nestedEvent || typeof nestedEvent !== "object") return;
 
-      playSingleEvent({
+      const consumedDelay = playSingleEvent({
         ...handlers,
         event: nestedEvent,
         delay: backgroundDelay
       });
+
+      maxBackgroundDelay = Math.max(
+        maxBackgroundDelay,
+        backgroundDelay + consumedDelay
+      );
 
       return;
     }
@@ -358,11 +360,13 @@ export function playNodeEvents({
     accumulatedDelay += consumedDelay;
   });
 
+  const finalDelay = Math.max(accumulatedDelay, maxBackgroundDelay);
+
   const completeTimer = setTimeout(() => {
     onTypingStop?.();
     onGlitchStop?.();
     onComplete?.();
-  }, accumulatedDelay);
+  }, finalDelay);
 
   timers.push(completeTimer);
 

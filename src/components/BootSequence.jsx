@@ -1,10 +1,23 @@
+import { getGameText } from "../i18n/gameText";
+
+function resolveConfigText(value, language = "en") {
+  if (typeof value === "string") return value;
+
+  if (value && typeof value === "object") {
+    return getGameText(value.textKey, value.text || "", language);
+  }
+
+  return "";
+}
+
 export default function BootSequence({
   gameTitle,
   completedSteps,
   activeStep,
   bootProgress,
   showError,
-  criticalError
+  criticalError,
+  language = "en"
 }) {
   function getLineColor(status) {
     return status === "failed"
@@ -26,37 +39,47 @@ export default function BootSequence({
         </div>
 
         <div className="min-h-[300px] w-full max-w-2xl border border-cyan-300/25 bg-slate-950/75 p-4 shadow-[0_0_28px_rgba(34,211,238,0.08),inset_0_0_24px_rgba(34,211,238,0.05)] animate-[terminalSlideIn_1s_ease-out_both]">
-          {completedSteps.map((step, index) => (
-            <p
-              key={`${step.label}-${index}`}
-              className={[
-                "mb-3 text-sm tracking-[0.04em] last:mb-0 sm:text-base",
-                "animate-[bootLineIn_0.22s_ease-out_both]",
-                step.status === "failed"
-                  ? "animate-[bootLineIn_0.22s_ease-out_both,errorPulse_0.45s_infinite]"
-                  : "animate-[bootLineIn_0.22s_ease-out_both,flicker_1.8s_infinite]",
-                getLineColor(step.status)
-              ].join(" ")}
-            >
-              <span className="text-cyan-50/35">&gt;</span>{" "}
-              <span>[{step.label}]</span>
+          {completedSteps.map((step, index) => {
+            const label = resolveConfigText(
+              {
+                text: step.label,
+                textKey: step.labelKey
+              },
+              language
+            );
 
-              <span className="ml-3 inline-block min-w-12 text-cyan-50/70">
-                {step.currentProgress}%
-              </span>
-
-              <span
+            return (
+              <p
+                key={`${label}-${index}`}
                 className={[
-                  "ml-3 inline-block min-w-16",
+                  "mb-3 text-sm tracking-[0.04em] last:mb-0 sm:text-base",
+                  "animate-[bootLineIn_0.22s_ease-out_both]",
                   step.status === "failed"
-                    ? "text-rose-400"
-                    : "text-emerald-300"
+                    ? "animate-[bootLineIn_0.22s_ease-out_both,errorPulse_0.45s_infinite]"
+                    : "animate-[bootLineIn_0.22s_ease-out_both,flicker_1.8s_infinite]",
+                  getLineColor(step.status)
                 ].join(" ")}
               >
-                {step.status === "failed" ? "FAILED" : "OK"}
-              </span>
-            </p>
-          ))}
+                <span className="text-cyan-50/35">&gt;</span>{" "}
+                <span>[{label}]</span>
+
+                <span className="ml-3 inline-block min-w-12 text-cyan-50/70">
+                  {step.currentProgress}%
+                </span>
+
+                <span
+                  className={[
+                    "ml-3 inline-block min-w-16",
+                    step.status === "failed"
+                      ? "text-rose-400"
+                      : "text-emerald-300"
+                  ].join(" ")}
+                >
+                  {step.status === "failed" ? "FAILED" : "OK"}
+                </span>
+              </p>
+            );
+          })}
 
           {!showError && activeStep && (
             <p
@@ -69,7 +92,17 @@ export default function BootSequence({
               ].join(" ")}
             >
               <span className="text-cyan-50/35">&gt;</span>{" "}
-              <span>[{activeStep.label}]</span>
+              <span>
+                [
+                {resolveConfigText(
+                  {
+                    text: activeStep.label,
+                    textKey: activeStep.labelKey
+                  },
+                  language
+                )}
+                ]
+              </span>
 
               <span className="ml-3 inline-block min-w-12 text-cyan-50/70">
                 {bootProgress}%
@@ -83,14 +116,18 @@ export default function BootSequence({
 
           {showError && (
             <div className="mt-4 border border-rose-400/65 bg-rose-950/25 p-4 text-rose-400 shadow-[0_0_20px_rgba(251,113,133,0.12)] animate-[criticalErrorBlink_0.45s_infinite]">
-              {criticalError.map((line) => (
-                <p
-                  key={line}
-                  className="mb-2 text-sm tracking-[0.08em] drop-shadow-[0_0_10px_rgba(251,113,133,0.9)] last:mb-0 sm:text-base"
-                >
-                  {line}
-                </p>
-              ))}
+              {criticalError.map((line, index) => {
+                const text = resolveConfigText(line, language);
+
+                return (
+                  <p
+                    key={`${text}-${index}`}
+                    className="mb-2 text-sm tracking-[0.08em] drop-shadow-[0_0_10px_rgba(251,113,133,0.9)] last:mb-0 sm:text-base"
+                  >
+                    {text}
+                  </p>
+                );
+              })}
             </div>
           )}
         </div>

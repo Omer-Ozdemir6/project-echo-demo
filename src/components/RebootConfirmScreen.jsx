@@ -1,8 +1,59 @@
 import { useEffect, useState } from "react";
+import { getGameText } from "../i18n/gameText";
 
-export default function RebootConfirmScreen({ config, onRestart }) {
+function resolveConfigText(value, language = "en", fallback = "") {
+  if (typeof value === "string") return value;
+
+  if (value && typeof value === "object") {
+    return getGameText(value.textKey, value.text || fallback, language);
+  }
+
+  return fallback;
+}
+
+export default function RebootConfirmScreen({
+  config,
+  onRestart,
+  language = "en"
+}) {
   const [countdown, setCountdown] = useState(config?.countdownSeconds || 10);
   const [isRestarting, setIsRestarting] = useState(false);
+
+  const kicker = getGameText(
+    config?.kickerKey,
+    config?.kicker || "SYSTEM RECOVERY MODE",
+    language
+  );
+
+  const title = getGameText(
+    config?.titleKey,
+    config?.title || "SYSTEM RESTART REQUIRED",
+    language
+  );
+
+  const restartingText = getGameText(
+    config?.restartingTextKey,
+    config?.restartingText || "USER RESTART AUTHORIZATION ACCEPTED",
+    language
+  );
+
+  const countdownLabel = getGameText(
+    config?.countdownLabelKey,
+    config?.countdownLabel || "AUTO RESTART IN",
+    language
+  );
+
+  const buttonLoadingText = getGameText(
+    config?.buttonLoadingTextKey,
+    config?.buttonLoadingText || "RESTARTING...",
+    language
+  );
+
+  const buttonText = getGameText(
+    config?.buttonTextKey,
+    config?.buttonText || "RESTART NOW",
+    language
+  );
 
   function handleRestart() {
     if (isRestarting) return;
@@ -39,32 +90,36 @@ export default function RebootConfirmScreen({ config, onRestart }) {
 
       <section className="relative z-10 w-full max-w-2xl border border-rose-400/45 bg-slate-950/90 p-5 shadow-[0_0_50px_rgba(251,113,133,0.12),inset_0_0_36px_rgba(251,113,133,0.04)] sm:p-7">
         <p className="mb-3 text-xs tracking-[0.3em] text-rose-300/85">
-          {config?.kicker || "SYSTEM RECOVERY MODE"}
+          {kicker}
         </p>
 
         <h1 className="mb-6 text-xl tracking-[0.18em] text-rose-400 drop-shadow-[0_0_16px_rgba(251,113,133,0.75)] sm:text-2xl">
-          {config?.title || "SYSTEM RESTART REQUIRED"}
+          {title}
         </h1>
 
         <div className="mb-6 border border-rose-400/25 bg-rose-950/20 p-4">
-          {(config?.warnings || []).map((warning) => (
-            <p
-              key={warning}
-              className="mb-2 text-sm leading-6 text-rose-50/90 last:mb-0"
-            >
-              {warning}
-            </p>
-          ))}
+          {(config?.warnings || []).map((warning, index) => {
+            const warningText = resolveConfigText(warning, language);
+
+            return (
+              <p
+                key={`${warningText}-${index}`}
+                className="mb-2 text-sm leading-6 text-rose-50/90 last:mb-0"
+              >
+                {warningText}
+              </p>
+            );
+          })}
         </div>
 
         <div className="mb-5 border border-rose-400/20 bg-slate-950/60 p-3 text-sm tracking-[0.16em] text-cyan-50/70">
           {isRestarting ? (
             <span className="text-emerald-200">
-              {config?.restartingText || "USER RESTART AUTHORIZATION ACCEPTED"}
+              {restartingText}
             </span>
           ) : (
             <>
-              {config?.countdownLabel || "AUTO RESTART IN"}{" "}
+              {countdownLabel}{" "}
               <strong className="ml-2 text-3xl text-rose-400">
                 {countdown}
               </strong>
@@ -78,9 +133,7 @@ export default function RebootConfirmScreen({ config, onRestart }) {
           onClick={handleRestart}
           disabled={isRestarting}
         >
-          {isRestarting
-            ? config?.buttonLoadingText || "RESTARTING..."
-            : config?.buttonText || "RESTART NOW"}
+          {isRestarting ? buttonLoadingText : buttonText}
         </button>
       </section>
     </main>
