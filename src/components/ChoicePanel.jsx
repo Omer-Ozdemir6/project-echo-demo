@@ -1,25 +1,26 @@
-import { useTranslation } from "react-i18next";
+import { getGameText } from "../i18n/gameText";
 import { playSound } from "../audio/soundManager";
 
-export default function ChoicePanel({ choices = [], onChoice, settings }) {
-  const { t } = useTranslation();
-
+export default function ChoicePanel({
+  choices = [],
+  onChoice,
+  settings,
+  language = "en"
+}) {
   function handleChoice(choice) {
-  playSound("choiceSelect", settings);
-  onChoice?.(choice);
-}
+    playSound("choiceSelect", settings);
+    onChoice?.(choice.id);
+  }
 
   function resolveChoiceText(choice) {
-    if (choice.textKey) {
-      const translated = t(choice.textKey);
-
-      if (translated && translated !== choice.textKey) {
-        return translated;
-      }
-    }
-
-    return choice.text || "";
+    return getGameText(
+      choice.textKey,
+      choice.text || "",
+      language
+    );
   }
+
+  if (!choices.length) return null;
 
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -27,7 +28,6 @@ export default function ChoicePanel({ choices = [], onChoice, settings }) {
         <button
           key={choice.id}
           type="button"
-          onClick={() => onChoice(choice.id)}
           onClick={() => handleChoice(choice)}
           className={[
             "group relative w-full overflow-hidden",
@@ -42,7 +42,7 @@ export default function ChoicePanel({ choices = [], onChoice, settings }) {
           style={{ animationDelay: `${index * 90}ms` }}
         >
           <div className="flex items-center gap-3">
-            <span className="shrink-0 font-mono text-sm text-cyan-400/40 transition-all duration-200 group-hover:text-cyan-300 group-hover:translate-x-0.5">
+            <span className="shrink-0 font-mono text-sm text-cyan-400/40 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-cyan-300">
               &gt;
             </span>
 

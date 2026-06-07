@@ -1,19 +1,21 @@
-import { useTranslation } from "react-i18next";
-
 import CodePuzzleInput from "./CodePuzzleInput";
 import DecryptPuzzleInput from "./DecryptPuzzleInput";
 import FrequencyPuzzleInput from "./FrequencyPuzzleInput";
 import MatchingPuzzleInput from "./MatchingPuzzleInput";
 import SatellitePuzzleInput from "./SatellitePuzzleInput";
+import { getGameText } from "../../i18n/gameText";
 
 export default function PuzzleRenderer({
   puzzle,
   attempts = 0,
-  onSubmit
+  onSubmit,
+  language = "en"
 }) {
-  const { t } = useTranslation();
-
   if (!puzzle) return null;
+
+  function t(key) {
+    return getGameText(key, key, language);
+  }
 
   const sharedProps = {
     puzzle,
@@ -29,19 +31,14 @@ export default function PuzzleRenderer({
   if (puzzle.type === "frequency") {
     return <FrequencyPuzzleInput {...sharedProps} />;
   }
+
   if (puzzle.type === "satellite") {
-  return <SatellitePuzzleInput {...sharedProps} />;
-}
+    return <SatellitePuzzleInput {...sharedProps} />;
+  }
+
   if (puzzle.type === "matching") {
-  return (
-    <MatchingPuzzleInput
-      puzzle={puzzle}
-      attempts={attempts}
-      onSubmit={onSubmit}
-      t={t}
-    />
-  );
-}
+    return <MatchingPuzzleInput {...sharedProps} />;
+  }
 
   return <CodePuzzleInput {...sharedProps} />;
 }

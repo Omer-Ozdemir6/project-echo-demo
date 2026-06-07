@@ -282,34 +282,38 @@ onClick={() => {
         </div>
 
         <div className="min-h-0 flex-1 overflow-hidden">
-<MessageFeed
-  speaker={currentNode.speaker}
-  messages={visibleMessages}
-  isTyping={isTyping}
-  onOpenFile={setActiveFile}
-  language={language}
-  settings={settings}
-  hasBottomPanel={canShowChoices || Boolean(activePuzzle)}
-/>
+          <MessageFeed
+            speaker={currentNode.speaker}
+            messages={visibleMessages}
+            isTyping={isTyping}
+            onOpenFile={setActiveFile}
+            language={language}
+            settings={settings}
+            hasBottomPanel={canShowChoices || Boolean(activePuzzle)}
+          />
         </div>
 
-        <div className="shrink-0">
-          {activePuzzle && canInteract && (
+        {activePuzzle && canInteract && (
+          <div className="shrink-0 max-h-[42dvh] overflow-y-auto border-t border-cyan-300/20 bg-slate-950/95 pt-3">
 <PuzzleRenderer
   puzzle={activePuzzle}
   attempts={gameState.puzzleAttempts?.[activePuzzle.id] || 0}
   onSubmit={handlePuzzleSubmit}
+  language={language}
 />
-          )}
+          </div>
+        )}
 
-          {canShowChoices && !activePuzzle && !progressTask && (
-<ChoicePanel
-  choices={currentNode.choices || []}
-  onChoice={onChoice}
-  settings={settings}
-/>
-          )}
-        </div>
+        {canShowChoices && !activePuzzle && !progressTask && (
+          <div className="shrink-0 border-t border-cyan-300/20 bg-slate-950/95 pt-3">
+            <ChoicePanel
+              choices={currentNode.choices || []}
+              onChoice={onChoice}
+              settings={settings}
+              language={language}
+            />
+          </div>
+        )}
       </section>
 
       {progressTask && <ProgressTaskModal task={progressTask} />}
