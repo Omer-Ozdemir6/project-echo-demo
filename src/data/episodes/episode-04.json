@@ -16,12 +16,16 @@
       "step": 0.01,
       "tolerance": 0.25,
       "lockThreshold": 95,
+      "requiredLockHoldMs": 3000,
+      "driftEnabled": true,
+      "driftIntervalMs": 1500,
+      "driftAmount": 0.01,
       "submitLabel": "LOCK SIGNAL",
       "acceptedAnswers": [
         "7.14"
       ],
       "successNodeId": "e04_n05",
-      "failureNodeId": "e04_n04",
+      "failureNodeId": "e04_n04_fail",
       "lockedMessage": "MAYA: Can anyone hear me?",
       "nearMessage": "M...a...y...a...",
       "traceMessage": "...anyone...",
@@ -52,10 +56,10 @@
           "type": "signalLost",
           "duration": 2500,
           "message": "[SIGNAL INTERFERENCE]",
-          "restoreMessage": "[CHANNEL ESTABLISHED]",
+          "restoreMessage": "[CHANNEL PARTIALLY ESTABLISHED]",
           "pauseAfterMs": 1000,
-          "messageKey": "episode_04.e04_n01.event2.message",
-          "restoreMessageKey": "episode_04.e04_n01.event2.restoreMessage"
+          "messageKey": "episode_04.e04_n01.event1.message",
+          "restoreMessageKey": "episode_04.e04_n01.event1.restoreMessage"
         }
       ],
       "nextNodeId": "e04_n02"
@@ -71,11 +75,7 @@
         {
           "type": "message",
           "text": "...",
-          "textKey": "episode_04.e04_n02.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1200
+          "textKey": "episode_04.e04_n02.event0.text"
         },
         {
           "type": "typing",
@@ -84,7 +84,7 @@
         {
           "type": "message",
           "text": "No.",
-          "textKey": "episode_04.e04_n02.event4.text"
+          "textKey": "episode_04.e04_n02.event1.text"
         },
         {
           "type": "typing",
@@ -93,7 +93,7 @@
         {
           "type": "message",
           "text": "No, wait.",
-          "textKey": "episode_04.e04_n02.event6.text"
+          "textKey": "episode_04.e04_n02.event2.text"
         },
         {
           "type": "typing",
@@ -102,11 +102,7 @@
         {
           "type": "message",
           "text": "Someone actually answered.",
-          "textKey": "episode_04.e04_n02.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1300
+          "textKey": "episode_04.e04_n02.event3.text"
         },
         {
           "type": "typing",
@@ -115,38 +111,103 @@
         {
           "type": "message",
           "text": "Please don't be a recording.",
-          "textKey": "episode_04.e04_n02.event11.text"
+          "textKey": "episode_04.e04_n02.event4.text"
         }
       ],
       "choices": [
         {
-          "id": "who_are_you",
-          "text": "WHO ARE YOU?",
-          "nextNodeId": "e04_n03",
+          "id": "identify_yourself",
+          "text": "IDENTIFY YOURSELF.",
+          "effects": {
+            "mayaTrust": 1,
+            "signalStrength": 1
+          },
+          "nextNodeId": "e04_n03_identify",
           "textKey": "episode_04.e04_n02.choice0.text"
+        },
+        {
+          "id": "verify_transmission",
+          "text": "VERIFY TRANSMISSION FIRST.",
+          "effects": {
+            "mayaTrust": -1,
+            "danger": -1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e04_n03_verify",
+          "textKey": "episode_04.e04_n02.choice1.text"
         }
       ]
     },
-    "e04_n03": {
-      "id": "e04_n03",
+    "e04_n03_identify": {
+      "id": "e04_n03_identify",
       "speaker": "UNKNOWN",
       "events": [
         {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "I will, but your signal is tearing apart.",
+          "textKey": "episode_04.e04_n03_identify.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "If you want my name, keep the channel alive long enough for me to say it.",
+          "textKey": "episode_04.e04_n03_identify.event1.text"
+        }
+      ],
+      "nextNodeId": "e04_n03"
+    },
+    "e04_n03_verify": {
+      "id": "e04_n03_verify",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "You sound like mission control.",
+          "textKey": "episode_04.e04_n03_verify.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Annoying. Useful, maybe. But annoying.",
+          "textKey": "episode_04.e04_n03_verify.event1.text"
+        }
+      ],
+      "nextNodeId": "e04_n03"
+    },
+    "e04_n03": {
+      "id": "e04_n03",
+      "speaker": "SYSTEM",
+      "events": [
+        {
           "type": "file",
-          "id": "audio_log_714",
-          "fileId": "audio_log_714",
+          "id": "audio_transcript_714",
+          "fileId": "audio_transcript_714",
           "fileType": "log",
-          "title": "EMERGENCY AUDIO LOG",
-          "content": "Signal heavily distorted.\nFrequency mismatch detected.\nRecommended action: manual signal tuning required.",
-          "caption": "Distorted emergency audio packet from channel 7.14.",
+          "title": "EMERGENCY AUDIO TRANSCRIPT",
+          "content": "CHANNEL: 7.14 MHz\nSIGNAL STATE: DISTORTED\nVOICEPRINT: UNKNOWN FEMALE\nRECOVERED FRAGMENTS:\n\n\"...anyone...\"\n\"...relay is drifting...\"\n\"...not Hale...\"\n\nRecommended action: manual signal tuning required.",
+          "caption": "Text reconstruction of distorted emergency audio from channel 7.14.",
           "source": "CHANNEL_7_14",
           "tags": [
-            "audio",
+            "audio_transcript",
             "frequency",
             "7.14",
             "maya"
           ],
-          "message": "[EMERGENCY AUDIO LOG ARCHIVED TO DATA BANK]",
+          "message": "[EMERGENCY AUDIO TRANSCRIPT ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1300,
           "titleKey": "episode_04.e04_n03.event0.title",
           "contentKey": "episode_04.e04_n03.event0.content",
@@ -161,7 +222,7 @@
           "type": "message",
           "speaker": "UNKNOWN",
           "text": "Signal is slipping.",
-          "textKey": "episode_04.e04_n03.event2.text"
+          "textKey": "episode_04.e04_n03.event1.text"
         },
         {
           "type": "typing",
@@ -171,17 +232,64 @@
           "type": "message",
           "speaker": "UNKNOWN",
           "text": "If you can tune it, do it now.",
-          "textKey": "episode_04.e04_n03.event4.text"
+          "textKey": "episode_04.e04_n03.event2.text"
         }
       ],
       "choices": [
         {
-          "id": "analyze_audio",
-          "text": "ANALYZE SIGNAL.",
+          "id": "manual_tune",
+          "text": "MANUALLY TUNE THE SIGNAL.",
+          "effects": {
+            "signalStrength": 1,
+            "mayaTrust": 1
+          },
           "nextNodeId": "e04_n04",
           "textKey": "episode_04.e04_n03.choice0.text"
+        },
+        {
+          "id": "ask_hale_before_tuning",
+          "text": "ASK HALE BEFORE TUNING.",
+          "effects": {
+            "haleTrust": 2,
+            "mayaTrust": -2,
+            "danger": 2,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e04_n04_hale_warning",
+          "textKey": "episode_04.e04_n03.choice1.text"
         }
       ]
+    },
+    "e04_n04_hale_warning": {
+      "id": "e04_n04_hale_warning",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "Do not let that channel lead.",
+          "textKey": "episode_04.e04_n04_hale_warning.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "Tune it if you have to, but keep one hand on the exit.",
+          "textKey": "episode_04.e04_n04_hale_warning.event1.text"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[MAYA SIGNAL DEGRADING]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_04.e04_n04_hale_warning.event2.text"
+        }
+      ],
+      "nextNodeId": "e04_n04"
     },
     "e04_n04": {
       "id": "e04_n04",
@@ -192,7 +300,51 @@
           "puzzleId": "frequency_714",
           "pauseAfterMs": 700
         }
-      ]
+      ],
+      "choices": []
+    },
+    "e04_n04_fail": {
+      "id": "e04_n04_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[SIGNAL LOCK FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_04.e04_n04_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -7,
+            "mayaTrust": -1
+          }
+        },
+        {
+          "type": "glitch",
+          "duration": 1000,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "No— don't let it drift.",
+          "textKey": "episode_04.e04_n04_fail.event1.text"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[MANUAL RETUNE REQUIRED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_04.e04_n04_fail.event2.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "frequency_714",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
     },
     "e04_n05": {
       "id": "e04_n05",
@@ -205,13 +357,20 @@
           "textKey": "episode_04.e04_n05.event0.text"
         },
         {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 8,
+            "mayaTrust": 2
+          }
+        },
+        {
           "type": "typing",
           "duration": 2600
         },
         {
           "type": "message",
           "text": "Finally...",
-          "textKey": "episode_04.e04_n05.event2.text"
+          "textKey": "episode_04.e04_n05.event1.text"
         },
         {
           "type": "typing",
@@ -220,11 +379,7 @@
         {
           "type": "message",
           "text": "The signal is clear.",
-          "textKey": "episode_04.e04_n05.event4.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1000
+          "textKey": "episode_04.e04_n05.event2.text"
         },
         {
           "type": "typing",
@@ -233,7 +388,7 @@
         {
           "type": "message",
           "text": "My name is Maya.",
-          "textKey": "episode_04.e04_n05.event7.text"
+          "textKey": "episode_04.e04_n05.event3.text"
         },
         {
           "type": "typing",
@@ -242,7 +397,7 @@
         {
           "type": "message",
           "text": "I was starting to think I'd die talking to static.",
-          "textKey": "episode_04.e04_n05.event8.text"
+          "textKey": "episode_04.e04_n05.event4.text"
         },
         {
           "type": "typing",
@@ -251,7 +406,7 @@
         {
           "type": "message",
           "text": "And if Ethan Hale is on your other channel, you need to stop listening to him.",
-          "textKey": "episode_04.e04_n05.event9.text"
+          "textKey": "episode_04.e04_n05.event5.text"
         }
       ],
       "nextNodeId": "e04_n06"
@@ -267,11 +422,7 @@
         {
           "type": "message",
           "text": "You are speaking with Ethan Hale, aren't you?",
-          "textKey": "episode_04.e04_n06.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1200
+          "textKey": "episode_04.e04_n06.event0.text"
         },
         {
           "type": "typing",
@@ -280,7 +431,7 @@
         {
           "type": "message",
           "text": "Of course you are.",
-          "textKey": "episode_04.e04_n06.event4.text"
+          "textKey": "episode_04.e04_n06.event1.text"
         },
         {
           "type": "typing",
@@ -289,7 +440,7 @@
         {
           "type": "message",
           "text": "He always finds someone.",
-          "textKey": "episode_04.e04_n06.event6.text"
+          "textKey": "episode_04.e04_n06.event2.text"
         },
         {
           "type": "typing",
@@ -298,11 +449,7 @@
         {
           "type": "message",
           "text": "Listen carefully.",
-          "textKey": "episode_04.e04_n06.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1600
+          "textKey": "episode_04.e04_n06.event3.text"
         },
         {
           "type": "typing",
@@ -311,7 +458,7 @@
         {
           "type": "message",
           "text": "Hale is dead.",
-          "textKey": "episode_04.e04_n06.event11.text"
+          "textKey": "episode_04.e04_n06.event4.text"
         }
       ],
       "choices": [
@@ -443,7 +590,7 @@
           "speaker": "HALE",
           "sender": "character",
           "text": "Don't trust her.",
-          "textKey": "episode_04.e04_n07.event2.text"
+          "textKey": "episode_04.e04_n07.event1.text"
         },
         {
           "type": "typing",
@@ -454,7 +601,7 @@
           "speaker": "MAYA",
           "sender": "character",
           "text": "Of course that's the first thing he says.",
-          "textKey": "episode_04.e04_n07.event4.text"
+          "textKey": "episode_04.e04_n07.event2.text"
         },
         {
           "type": "typing",
@@ -465,7 +612,7 @@
           "speaker": "HALE",
           "sender": "character",
           "text": "Maya—",
-          "textKey": "episode_04.e04_n07.event6.text"
+          "textKey": "episode_04.e04_n07.event3.text"
         },
         {
           "type": "typing",
@@ -476,7 +623,7 @@
           "speaker": "MAYA",
           "sender": "character",
           "text": "No. Be quiet for once.",
-          "textKey": "episode_04.e04_n07.event8.text"
+          "textKey": "episode_04.e04_n07.event4.text"
         },
         {
           "type": "typing",
@@ -487,7 +634,7 @@
           "speaker": "HALE",
           "sender": "character",
           "text": "You don't know what you're doing.",
-          "textKey": "episode_04.e04_n07.event9.text"
+          "textKey": "episode_04.e04_n07.event5.text"
         },
         {
           "type": "typing",
@@ -498,50 +645,44 @@
           "speaker": "MAYA",
           "sender": "character",
           "text": "I know exactly what happens when everyone lets you speak first.",
-          "textKey": "episode_04.e04_n07.event10.text"
+          "textKey": "episode_04.e04_n07.event6.text"
         }
       ],
-      "nextNodeId": "e04_n08"
+      "choices": [
+        {
+          "id": "mute_hale",
+          "text": "TEMPORARILY MUTE HALE.",
+          "effects": {
+            "mayaTrust": 5,
+            "haleTrust": -6,
+            "danger": 2
+          },
+          "nextNodeId": "e04_n08_mute_hale",
+          "textKey": "episode_04.e04_n07.choice0.text"
+        },
+        {
+          "id": "keep_both_channels",
+          "text": "KEEP BOTH CHANNELS OPEN.",
+          "effects": {
+            "mayaTrust": -2,
+            "haleTrust": 2,
+            "signalStrength": -4,
+            "danger": 3
+          },
+          "nextNodeId": "e04_n08_both",
+          "textKey": "episode_04.e04_n07.choice1.text"
+        }
+      ]
     },
-    "e04_n08": {
-      "id": "e04_n08",
-      "speaker": "MAYA",
+    "e04_n08_mute_hale": {
+      "id": "e04_n08_mute_hale",
+      "speaker": "SYSTEM",
       "events": [
         {
-          "type": "image",
-          "id": "maya_frame_01",
-          "fileId": "maya_frame_01",
-          "fileType": "image",
-          "title": "SURVIVOR FEED",
-          "caption": "Recovered emergency camera frame. A woman is visible near a damaged relay console.",
-          "src": "/images/maya_frame_01.jpg",
-          "source": "CHANNEL_7_14",
-          "tags": [
-            "maya",
-            "survivor",
-            "camera"
-          ],
-          "pauseAfterMs": 1400,
-          "titleKey": "episode_04.e04_n08.event0.title",
-          "captionKey": "episode_04.e04_n08.event0.caption"
-        },
-        {
-          "type": "typing",
-          "duration": 3400
-        },
-        {
-          "type": "message",
-          "text": "That's me.",
-          "textKey": "episode_04.e04_n08.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "Alive. Barely. But alive.",
-          "textKey": "episode_04.e04_n08.event4.text"
+          "type": "systemAlert",
+          "text": "[HALE CHANNEL TEMPORARILY MUTED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_04.e04_n08_mute_hale.event0.text"
         },
         {
           "type": "typing",
@@ -549,14 +690,171 @@
         },
         {
           "type": "message",
-          "text": "Which is more than I can say for Hale.",
-          "textKey": "episode_04.e04_n08.event6.text"
+          "speaker": "MAYA",
+          "text": "Thank you.",
+          "textKey": "episode_04.e04_n08_mute_hale.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "I don't have much time, so I'm going to be blunt.",
+          "textKey": "episode_04.e04_n08_mute_hale.event2.text"
+        }
+      ],
+      "nextNodeId": "e04_n09"
+    },
+    "e04_n08_both": {
+      "id": "e04_n08_both",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[DUAL CHANNEL LOAD INCREASED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_04.e04_n08_both.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": -5,
+            "danger": 2
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "Fine. Let him listen.",
+          "textKey": "episode_04.e04_n08_both.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "But if he starts steering this conversation, I cut the channel myself.",
+          "textKey": "episode_04.e04_n08_both.event2.text"
         }
       ],
       "nextNodeId": "e04_n09"
     },
     "e04_n09": {
       "id": "e04_n09",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "log",
+          "id": "survivor_biometric_scan_maya",
+          "fileId": "survivor_biometric_scan_maya",
+          "fileType": "log",
+          "title": "SURVIVOR BIOMETRIC SCAN",
+          "content": "CHANNEL SOURCE: 7.14 MHz\nVOICEPRINT MATCH: MAYA CHEN\nLIFE SIGNS: ACTIVE\nOXYGEN: 18%\nLOCATION ESTIMATE: DAMAGED RELAY CONSOLE / LOWER ACCESS SPINE\nVISUAL FEED: UNAVAILABLE\nSTATUS: ALIVE / CRITICAL",
+          "caption": "Automated survivor verification generated from channel telemetry. No image recovered.",
+          "source": "CHANNEL_7_14",
+          "tags": [
+            "maya",
+            "survivor",
+            "biometric",
+            "relay"
+          ],
+          "message": "[SURVIVOR BIOMETRIC SCAN ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1300,
+          "titleKey": "episode_04.e04_n09.event0.title",
+          "contentKey": "episode_04.e04_n09.event0.content",
+          "captionKey": "episode_04.e04_n09.event0.caption",
+          "messageKey": "episode_04.e04_n09.event0.message"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "That's me.",
+          "textKey": "episode_04.e04_n09.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "Alive. Barely. But alive.",
+          "textKey": "episode_04.e04_n09.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "Which is more than I can say for Hale.",
+          "textKey": "episode_04.e04_n09.event3.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_for_proof",
+          "text": "PROVE HALE IS DEAD.",
+          "effects": {
+            "mayaTrust": -2,
+            "danger": 2,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e04_n10_proof",
+          "textKey": "episode_04.e04_n09.choice0.text"
+        },
+        {
+          "id": "ask_what_happened",
+          "text": "WHAT HAPPENED TO THE CREW?",
+          "effects": {
+            "mayaTrust": 3,
+            "morale": -1
+          },
+          "nextNodeId": "e04_n10_crew",
+          "textKey": "episode_04.e04_n09.choice1.text"
+        }
+      ]
+    },
+    "e04_n10_proof": {
+      "id": "e04_n10_proof",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "You want proof. Good. Keep wanting proof.",
+          "textKey": "episode_04.e04_n10_proof.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "But understand this: the station is very good at giving you records after everyone who could explain them is gone.",
+          "textKey": "episode_04.e04_n10_proof.event1.text"
+        }
+      ],
+      "nextNodeId": "e04_n11"
+    },
+    "e04_n10_crew": {
+      "id": "e04_n10_crew",
       "speaker": "MAYA",
       "events": [
         {
@@ -566,11 +864,7 @@
         {
           "type": "message",
           "text": "There were six of us.",
-          "textKey": "episode_04.e04_n09.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1200
+          "textKey": "episode_04.e04_n10_crew.event0.text"
         },
         {
           "type": "typing",
@@ -578,45 +872,38 @@
         },
         {
           "type": "message",
-          "text": "Hale, Rourke, Lin, Patel, Arman...",
-          "textKey": "episode_04.e04_n09.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "and me.",
-          "textKey": "episode_04.e04_n09.event6.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1500
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "Now there is only one.",
-          "textKey": "episode_04.e04_n09.event9.text"
+          "text": "Hale, Rourke, Lin, Patel, Arman... and me.",
+          "textKey": "episode_04.e04_n10_crew.event1.text"
         }
       ],
-      "choices": [
-        {
-          "id": "who_survived",
-          "text": "WHO SURVIVED?",
-          "nextNodeId": "e04_n10",
-          "textKey": "episode_04.e04_n09.choice0.text"
-        }
-      ]
+      "nextNodeId": "e04_n11"
     },
-    "e04_n10": {
-      "id": "e04_n10",
+    "e04_n11": {
+      "id": "e04_n11",
       "speaker": "MAYA",
       "events": [
+        {
+          "type": "file",
+          "id": "survivor_statement_maya_01",
+          "fileId": "survivor_statement_maya_01",
+          "fileType": "log",
+          "title": "SURVIVOR STATEMENT: MAYA",
+          "content": "TEXT TRANSCRIPT / CHANNEL 7.14\n\nMAYA CHEN:\n\"There were six assigned crew members on ECHO. After the breach, only one confirmed biological survivor remained: me. The signal using Ethan Hale's identity is not a living crew member. Do not allow it to control station routing.\"\n\nTranscript confidence: 91%",
+          "caption": "Text transcript reconstructed from Maya's stabilized emergency channel.",
+          "source": "CHANNEL_7_14",
+          "tags": [
+            "maya",
+            "crew",
+            "hale",
+            "survivor"
+          ],
+          "message": "[SURVIVOR STATEMENT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_04.e04_n11.event0.title",
+          "contentKey": "episode_04.e04_n11.event0.content",
+          "captionKey": "episode_04.e04_n11.event0.caption",
+          "messageKey": "episode_04.e04_n11.event0.message"
+        },
         {
           "type": "typing",
           "duration": 3200
@@ -624,11 +911,7 @@
         {
           "type": "message",
           "text": "Me.",
-          "textKey": "episode_04.e04_n10.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1300
+          "textKey": "episode_04.e04_n11.event1.text"
         },
         {
           "type": "typing",
@@ -637,7 +920,7 @@
         {
           "type": "message",
           "text": "And whatever is pretending to be Hale.",
-          "textKey": "episode_04.e04_n10.event4.text"
+          "textKey": "episode_04.e04_n11.event2.text"
         },
         {
           "type": "glitch",
@@ -649,7 +932,7 @@
           "speaker": "UNKNOWN",
           "text": "ASK HER WHAT SHE DID",
           "pauseAfterMs": 1400,
-          "textKey": "episode_04.e04_n10.event6.text"
+          "textKey": "episode_04.e04_n11.event3.text"
         },
         {
           "type": "backgroundEvent",
@@ -658,7 +941,7 @@
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "SHE OPENED THE DOOR",
-            "textKey": "episode_04.e04_n10.backgroundEvent7.text"
+            "textKey": "episode_04.e04_n11.backgroundEvent0.text"
           }
         },
         {
@@ -672,10 +955,26 @@
       ],
       "choices": [
         {
-          "id": "continue_story",
-          "text": "CONTINUE.",
+          "id": "ask_maya_what_she_did",
+          "text": "MAYA, WHAT DID YOU DO?",
+          "effects": {
+            "mayaTrust": -5,
+            "danger": 3,
+            "signalStrength": -3
+          },
           "nextEpisodeId": "episode_05",
-          "textKey": "episode_04.e04_n10.choice0.text"
+          "textKey": "episode_04.e04_n11.choice0.text"
+        },
+        {
+          "id": "save_maya_statement",
+          "text": "SAVE HER STATEMENT AND CONTINUE.",
+          "effects": {
+            "mayaTrust": 3,
+            "danger": 1,
+            "signalStrength": 1
+          },
+          "nextEpisodeId": "episode_05",
+          "textKey": "episode_04.e04_n11.choice1.text"
         }
       ]
     }

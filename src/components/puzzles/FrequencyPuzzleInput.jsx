@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
@@ -85,17 +85,26 @@ export default function FrequencyPuzzleInput({
   const targetFrequency = Number(puzzle?.targetFrequency ?? 7.14);
   const tolerance = Number(puzzle?.tolerance ?? 0.25);
   const lockThreshold = Number(puzzle?.lockThreshold ?? 95);
+  const requiredLockHoldMs = Number(puzzle?.requiredLockHoldMs ?? 2500);
+const driftEnabled = puzzle?.driftEnabled ?? true;
+const driftIntervalMs = Number(puzzle?.driftIntervalMs ?? 1500);
+const driftAmount = Number(puzzle?.driftAmount ?? step);
 
   const [frequency, setFrequency] = useState(
     Number(puzzle?.initialFrequency ?? minFrequency)
   );
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [lockProgress, setLockProgress] = useState(0);
+const [driftDirection, setDriftDirection] = useState(1);
 
-  const signalQuality = useMemo(
-    () => getSignalQuality(frequency, targetFrequency, tolerance),
-    [frequency, targetFrequency, tolerance]
-  );
+const signalQuality = useMemo(
+  () => getSignalQuality(frequency, targetFrequency, tolerance),
+  [frequency, targetFrequency, tolerance]
+);
+
+const isInLockRange = signalQuality >= lockThreshold;
+const isSignalReady = lockProgress >= 100;
 
   const signalLabel = getSignalLabel(signalQuality, t);
   const decodedPreview = getDecodedPreview(signalQuality, puzzle, t);
@@ -125,12 +134,60 @@ export default function FrequencyPuzzleInput({
     );
   }
 
+  useEffect(() => {
+  if (!isInLockRange) {
+    setLockProgress(0);
+    return;
+  }
+
+  const interval = setInterval(() => {
+    setLockProgress((prev) => {
+      const next = prev + 100 / (requiredLockHoldMs / 100);
+      return Math.min(100, next);
+    });
+  }, 100);
+
+  return () => clearInterval(interval);
+}, [isInLockRange, requiredLockHoldMs]);
+
+useEffect(() => {
+  if (!driftEnabled || isSignalReady) return;
+
+  const interval = setInterval(() => {
+    setFrequency((prev) => {
+      const next = prev + driftAmount * driftDirection;
+
+      if (next >= maxFrequency) {
+        setDriftDirection(-1);
+        return Number(maxFrequency.toFixed(2));
+      }
+
+      if (next <= minFrequency) {
+        setDriftDirection(1);
+        return Number(minFrequency.toFixed(2));
+      }
+
+      return Number(next.toFixed(2));
+    });
+  }, driftIntervalMs);
+
+  return () => clearInterval(interval);
+}, [
+  driftEnabled,
+  isSignalReady,
+  driftAmount,
+  driftDirection,
+  driftIntervalMs,
+  minFrequency,
+  maxFrequency
+]);
+
   function handleSubmit() {
     if (isSubmitting) return;
 
     setIsSubmitting(true);
 
-    const isLocked = signalQuality >= lockThreshold;
+    const isLocked = isSignalReady;
 
     onSubmit(
       isLocked
@@ -215,6 +272,33 @@ export default function FrequencyPuzzleInput({
           <p className="mt-2 min-h-6 text-sm leading-6 tracking-[0.08em] text-cyan-50/70">
             {decodedPreview}
           </p>
+
+          <div className="mt-3 border-t border-cyan-300/10 pt-3">
+  <div className="mb-2 flex items-center justify-between text-[10px] tracking-[0.18em] text-cyan-300/55">
+    <span>
+      {resolveText(t, "puzzle.frequency.lockProgress", "LOCK PROGRESS")}
+    </span>
+
+    <span>{Math.round(lockProgress)}%</span>
+  </div>
+
+  <div className="h-2 overflow-hidden bg-slate-900">
+    <div
+      className="h-full bg-cyan-300 transition-all duration-100"
+      style={{ width: `${lockProgress}%` }}
+    />
+  </div>
+
+  {!isInLockRange && (
+    <p className="mt-2 text-[10px] tracking-[0.14em] text-rose-300/80">
+      {resolveText(
+        t,
+        "puzzle.frequency.holdSignalHint",
+        "HOLD SIGNAL ABOVE LOCK THRESHOLD"
+      )}
+    </p>
+  )}
+</div>
         </div>
       </div>
 
@@ -264,13 +348,15 @@ export default function FrequencyPuzzleInput({
 
       <button
         type="button"
-        disabled={isSubmitting}
+        disabled={isSubmitting || !isSignalReady}
         onClick={handleSubmit}
         className="mt-3 w-full border border-emerald-300/45 bg-emerald-950/20 px-4 py-3 text-[11px] tracking-[0.22em] text-emerald-200 transition hover:bg-emerald-400/10 disabled:cursor-not-allowed disabled:opacity-40"
       >
         {isSubmitting
-          ? resolveText(t, "puzzle.frequency.locking", "LOCKING...")
-          : submitLabel}
+  ? resolveText(t, "puzzle.frequency.locking", "LOCKING...")
+  : isSignalReady
+    ? submitLabel
+    : resolveText(t, "puzzle.frequency.stabilizing", "STABILIZING...")}
       </button>
     </div>
   );

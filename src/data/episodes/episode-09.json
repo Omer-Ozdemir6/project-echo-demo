@@ -2,6 +2,122 @@
   "id": "episode_09",
   "title": "THE RESCUE",
   "startNodeId": "e09_n01",
+  "puzzles": {
+    "pod_beacon_alignment_09": {
+      "id": "pod_beacon_alignment_09",
+      "type": "matching",
+      "title": "POD BEACON ALIGNMENT",
+      "description": "Match each rescue system with the correct stabilization target.",
+      "submitLabel": "LOCK RESCUE BEACON",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e09_n06",
+      "failureNodeId": "e09_n05_fail",
+      "leftItems": [
+        {
+          "id": "relay_array",
+          "label": "RELAY ARRAY"
+        },
+        {
+          "id": "guidance_ping",
+          "label": "GUIDANCE PING"
+        },
+        {
+          "id": "life_support_trace",
+          "label": "LIFE SUPPORT TRACE"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "pod_beacon",
+          "label": "POD BEACON"
+        },
+        {
+          "id": "trajectory_lock",
+          "label": "TRAJECTORY LOCK"
+        },
+        {
+          "id": "occupant_biometrics",
+          "label": "OCCUPANT BIOMETRICS"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "relay_array",
+          "rightId": "pod_beacon"
+        },
+        {
+          "leftId": "guidance_ping",
+          "rightId": "trajectory_lock"
+        },
+        {
+          "leftId": "life_support_trace",
+          "rightId": "occupant_biometrics"
+        }
+      ],
+      "titleKey": "episode_09.pod_beacon_alignment_09.puzzle0.title",
+      "descriptionKey": "episode_09.pod_beacon_alignment_09.puzzle0.description",
+      "submitLabelKey": "episode_09.pod_beacon_alignment_09.puzzle0.submitLabel"
+    },
+    "pod_access_correlation_09": {
+      "id": "pod_access_correlation_09",
+      "type": "matching",
+      "title": "POD ACCESS CORRELATION",
+      "description": "Match each pod access record with the correct conclusion.",
+      "submitLabel": "CONFIRM ACCESS RISK",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e09_n13",
+      "failureNodeId": "e09_n12_fail",
+      "leftItems": [
+        {
+          "id": "motion_scan",
+          "label": "INTERNAL MOTION SCAN"
+        },
+        {
+          "id": "old_access_log",
+          "label": "OLD POD ACCESS LOG"
+        },
+        {
+          "id": "pressure_report",
+          "label": "SEAL PRESSURE REPORT"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "movement_inside",
+          "label": "MOVEMENT DETECTED INSIDE"
+        },
+        {
+          "id": "hale_opened_before_alpha",
+          "label": "HALE OPENED POD BEFORE ALPHA"
+        },
+        {
+          "id": "manual_override_required",
+          "label": "MANUAL OVERRIDE REQUIRED"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "motion_scan",
+          "rightId": "movement_inside"
+        },
+        {
+          "leftId": "old_access_log",
+          "rightId": "hale_opened_before_alpha"
+        },
+        {
+          "leftId": "pressure_report",
+          "rightId": "manual_override_required"
+        }
+      ],
+      "titleKey": "episode_09.pod_access_correlation_09.puzzle1.title",
+      "descriptionKey": "episode_09.pod_access_correlation_09.puzzle1.description",
+      "submitLabelKey": "episode_09.pod_access_correlation_09.puzzle1.submitLabel"
+    }
+  },
   "nodes": {
     "e09_n01": {
       "id": "e09_n01",
@@ -10,31 +126,79 @@
         {
           "type": "systemAlert",
           "text": "[RESCUE TASK AVAILABLE]",
+          "pauseAfterMs": 900,
           "textKey": "episode_09.e09_n01.event0.text"
         },
         {
           "type": "typing",
-          "duration": 1200
+          "duration": 1400
         },
         {
           "type": "message",
           "text": "Target: Emergency Pod",
-          "textKey": "episode_09.e09_n01.event2.text"
+          "textKey": "episode_09.e09_n01.event1.text"
         },
         {
           "type": "message",
           "text": "Beacon lock unstable. Pod trajectory is drifting.",
-          "textKey": "episode_09.e09_n01.event3.text"
+          "textKey": "episode_09.e09_n01.event2.text"
         }
       ],
       "choices": [
         {
           "id": "begin_rescue",
           "text": "BEGIN OPERATION.",
+          "effects": {
+            "danger": 2,
+            "signalStrength": -1
+          },
           "nextNodeId": "e09_n02",
           "textKey": "episode_09.e09_n01.choice0.text"
+        },
+        {
+          "id": "stabilize_before_operation",
+          "text": "STABILIZE BEACON FIRST.",
+          "effects": {
+            "danger": -1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e09_n01_stabilize",
+          "textKey": "episode_09.e09_n01.choice1.text"
         }
       ]
+    },
+    "e09_n01_stabilize": {
+      "id": "e09_n01_stabilize",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "pre_rescue_beacon_stabilization",
+          "title": "PRE-RESCUE BEACON STABILIZATION",
+          "subtitle": "Reducing pod drift before route selection",
+          "duration": 45000,
+          "completeText": "[BEACON STABILIZATION COMPLETE]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_09.e09_n01_stabilize.event0.title",
+          "subtitleKey": "episode_09.e09_n01_stabilize.event0.subtitle",
+          "completeTextKey": "episode_09.e09_n01_stabilize.event0.completeText"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": -2
+          }
+        },
+        {
+          "type": "systemAlert",
+          "text": "[NOTIFICATION QUEUED: BEACON STABILIZATION COMPLETE]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_09.e09_n01_stabilize.event1.text"
+        }
+      ],
+      "nextNodeId": "e09_n02"
     },
     "e09_n02": {
       "id": "e09_n02",
@@ -42,11 +206,20 @@
       "events": [
         {
           "type": "typing",
-          "duration": 1800
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "Life support is dropping. We do not have much time. And before anyone asks, no, I do not have a calm version of that sentence.",
+          "text": "Life support is dropping.",
+          "textKey": "episode_09.e09_n02.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4400
+        },
+        {
+          "type": "message",
+          "text": "We do not have much time. And before anyone asks, no, I do not have a calm version of that sentence.",
           "textKey": "episode_09.e09_n02.event1.text"
         }
       ],
@@ -60,29 +233,49 @@
           "type": "file",
           "id": "rescue_route_map",
           "fileId": "rescue_route_map",
+          "fileType": "log",
           "title": "RESCUE ROUTE MAP",
-          "content": "ROUTE A\nShort Route\nHigh Radiation\nEstimated Arrival: Fast\nCrew Risk: Severe\n\nROUTE B\nLong Route\nLow Radiation\nEstimated Arrival: Delayed\nCrew Risk: Moderate\nLife Support Risk: Severe",
+          "content": "ROUTE A\nShort Route\nHigh Radiation\nEstimated Arrival: Fast\nCrew Risk: Severe\nPod Life Support Risk: Moderate\n\nROUTE B\nLong Route\nLow Radiation\nEstimated Arrival: Delayed\nCrew Risk: Moderate\nPod Life Support Risk: Severe",
+          "caption": "Recovered rescue route analysis. Both routes carry significant trade-offs.",
+          "source": "RESCUE_NAVIGATION",
+          "tags": [
+            "rescue",
+            "route",
+            "pod",
+            "risk"
+          ],
+          "correlationTags": [
+            "pod_rescue"
+          ],
+          "message": "[RESCUE ROUTE MAP ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
           "titleKey": "episode_09.e09_n03.event0.title",
-          "contentKey": "episode_09.e09_n03.event0.content"
+          "contentKey": "episode_09.e09_n03.event0.content",
+          "captionKey": "episode_09.e09_n03.event0.caption",
+          "messageKey": "episode_09.e09_n03.event0.message"
         }
       ],
       "choices": [
         {
           "id": "route_a",
-          "text": "ROUTE A - FAST / HIGH RISK",
+          "text": "ROUTE A - FAST / HIGH RISK.",
           "effects": {
             "danger": 15,
-            "morale": 5
+            "morale": 5,
+            "signalStrength": -5,
+            "selectedRouteA": true
           },
           "nextNodeId": "e09_route_a",
           "textKey": "episode_09.e09_n03.choice0.text"
         },
         {
           "id": "route_b",
-          "text": "ROUTE B - SAFE / SLOW",
+          "text": "ROUTE B - SAFE / SLOW.",
           "effects": {
             "danger": -5,
-            "morale": -5
+            "morale": -5,
+            "signalStrength": 2,
+            "selectedRouteB": true
           },
           "nextNodeId": "e09_route_b",
           "textKey": "episode_09.e09_n03.choice1.text"
@@ -96,12 +289,22 @@
         {
           "type": "message",
           "text": "Route A selected.",
+          "pauseAfterMs": 800,
           "textKey": "episode_09.e09_route_a.event0.text"
         },
         {
           "type": "systemAlert",
           "text": "[RADIATION EXPOSURE RISK INCREASED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_09.e09_route_a.event1.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 8,
+            "signalStrength": -4,
+            "morale": 3
+          }
         },
         {
           "type": "backgroundEvent",
@@ -110,7 +313,7 @@
             "type": "message",
             "speaker": "MAYA",
             "text": "Fast route. Terrible route. Very us.",
-            "textKey": "episode_09.e09_route_a.backgroundEvent2.text"
+            "textKey": "episode_09.e09_route_a.backgroundEvent0.text"
           }
         },
         {
@@ -120,7 +323,7 @@
             "type": "message",
             "speaker": "HALE",
             "text": "Keep moving. Do not stop in the exposed corridor.",
-            "textKey": "episode_09.e09_route_a.backgroundEvent3.text"
+            "textKey": "episode_09.e09_route_a.backgroundEvent1.text"
           }
         }
       ],
@@ -133,12 +336,22 @@
         {
           "type": "message",
           "text": "Route B selected.",
+          "pauseAfterMs": 800,
           "textKey": "episode_09.e09_route_b.event0.text"
         },
         {
           "type": "systemAlert",
           "text": "[TRAVEL TIME INCREASED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_09.e09_route_b.event1.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": -3,
+            "signalStrength": 2,
+            "morale": -4
+          }
         },
         {
           "type": "backgroundEvent",
@@ -147,7 +360,7 @@
             "type": "message",
             "speaker": "MAYA",
             "text": "This is safer for us.",
-            "textKey": "episode_09.e09_route_b.backgroundEvent2.text"
+            "textKey": "episode_09.e09_route_b.backgroundEvent0.text"
           }
         },
         {
@@ -157,7 +370,7 @@
             "type": "message",
             "speaker": "MAYA",
             "text": "Not for whoever is in that pod.",
-            "textKey": "episode_09.e09_route_b.backgroundEvent3.text"
+            "textKey": "episode_09.e09_route_b.backgroundEvent1.text"
           }
         }
       ],
@@ -168,19 +381,39 @@
       "speaker": "SYSTEM",
       "events": [
         {
+          "type": "progressTask",
+          "id": "rescue_route_traversal",
+          "title": "RESCUE ROUTE TRAVERSAL",
+          "subtitle": "Guiding Maya through selected route toward pod exterior",
+          "duration": 60000,
+          "completeText": "[RESCUE TEAM APPROACHING POD]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_09.e09_n04.event0.title",
+          "subtitleKey": "episode_09.e09_n04.event0.subtitle",
+          "completeTextKey": "episode_09.e09_n04.event0.completeText"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[NOTIFICATION QUEUED: RESCUE TEAM APPROACHING POD]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_09.e09_n04.event1.text"
+        },
+        {
           "type": "systemAlert",
           "text": "[LIFE SUPPORT UPDATE]",
-          "textKey": "episode_09.e09_n04.event0.text"
+          "pauseAfterMs": 900,
+          "textKey": "episode_09.e09_n04.event2.text"
         },
         {
           "type": "message",
           "text": "Current Capacity: 18%",
-          "textKey": "episode_09.e09_n04.event1.text"
+          "textKey": "episode_09.e09_n04.event3.text"
         },
         {
           "type": "message",
           "text": "Pod beacon pulse weakening.",
-          "textKey": "episode_09.e09_n04.event2.text"
+          "textKey": "episode_09.e09_n04.event4.text"
         },
         {
           "type": "backgroundEvent",
@@ -189,7 +422,7 @@
             "type": "message",
             "speaker": "UNKNOWN",
             "text": "Hurry.",
-            "textKey": "episode_09.e09_n04.backgroundEvent3.text"
+            "textKey": "episode_09.e09_n04.backgroundEvent0.text"
           }
         },
         {
@@ -199,7 +432,7 @@
             "type": "message",
             "speaker": "UNKNOWN",
             "text": "I can hear you outside.",
-            "textKey": "episode_09.e09_n04.backgroundEvent4.text"
+            "textKey": "episode_09.e09_n04.backgroundEvent1.text"
           }
         },
         {
@@ -209,7 +442,7 @@
             "type": "message",
             "speaker": "UNKNOWN",
             "text": "Do not let Hale open it first.",
-            "textKey": "episode_09.e09_n04.backgroundEvent5.text"
+            "textKey": "episode_09.e09_n04.backgroundEvent2.text"
           }
         }
       ],
@@ -220,94 +453,172 @@
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "message",
-          "text": "Emergency pod interior scan received.",
+          "type": "systemAlert",
+          "text": "[POD BEACON ALIGNMENT REQUIRED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_09.e09_n05.event0.text"
         },
         {
-          "type": "image",
-          "id": "pod_internal_frame",
-          "fileId": "pod_internal_frame",
-          "title": "POD INTERNAL FRAME",
-          "caption": "Emergency pod interior scan.",
-          "src": "/images/pod_internal_frame.jpg",
-          "titleKey": "episode_09.e09_n05.event1.title",
-          "captionKey": "episode_09.e09_n05.event1.caption"
+          "type": "puzzle",
+          "puzzleId": "pod_beacon_alignment_09",
+          "pauseAfterMs": 700
         }
       ],
-      "choices": [
-        {
-          "id": "inspect_pod",
-          "text": "INSPECT POD.",
-          "nextNodeId": "e09_n06",
-          "textKey": "episode_09.e09_n05.choice0.text"
-        }
-      ]
+      "choices": []
     },
-    "e09_n06": {
-      "id": "e09_n06",
-      "speaker": "MAYA",
+    "e09_n05_fail": {
+      "id": "e09_n05_fail",
+      "speaker": "SYSTEM",
       "events": [
         {
-          "type": "typing",
-          "duration": 2300
+          "type": "systemAlert",
+          "text": "[BEACON ALIGNMENT FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_09.e09_n05_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 5,
+            "signalStrength": -8,
+            "morale": -2
+          }
         },
         {
           "type": "message",
-          "text": "I cannot identify the occupant. The scan keeps folding over itself, like the image is trying not to show us a face.",
-          "textKey": "episode_09.e09_n06.event1.text"
+          "speaker": "MAYA",
+          "text": "No, the beacon is slipping. Relay to pod, guidance to trajectory, life support to biometrics. Try again.",
+          "textKey": "episode_09.e09_n05_fail.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "pod_beacon_alignment_09",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e09_n06": {
+      "id": "e09_n06",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[BEACON ALIGNMENT CONFIRMED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_09.e09_n06.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 10,
+            "danger": -2
+          }
+        },
+        {
+          "type": "file",
+          "id": "pod_internal_scan_report",
+          "fileId": "pod_internal_scan_report",
+          "fileType": "log",
+          "title": "POD INTERNAL SCAN REPORT",
+          "content": "Visual Feed: unavailable\nInterior Motion: intermittent\nThermal Bloom: one occupant-sized mass\nSuit Seal Trace: present\nOccupant Identity: unresolved\nScan Distortion: recursive signal folding detected",
+          "caption": "Interior scan reconstructed without image data. Occupant cannot be visually identified.",
+          "source": "POD_REMOTE_SCAN",
+          "tags": [
+            "pod",
+            "scan",
+            "interior",
+            "occupant"
+          ],
+          "correlationTags": [
+            "pod_rescue"
+          ],
+          "message": "[POD INTERNAL SCAN REPORT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_09.e09_n06.event1.title",
+          "contentKey": "episode_09.e09_n06.event1.content",
+          "captionKey": "episode_09.e09_n06.event1.caption",
+          "messageKey": "episode_09.e09_n06.event1.message"
         }
       ],
       "nextNodeId": "e09_n07"
     },
     "e09_n07": {
       "id": "e09_n07",
-      "speaker": "HALE",
+      "speaker": "MAYA",
       "events": [
         {
           "type": "typing",
-          "duration": 1800
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "Do not open the pod. I am not asking.",
+          "text": "I cannot identify the occupant.",
+          "textKey": "episode_09.e09_n07.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4800
+        },
+        {
+          "type": "message",
+          "text": "The scan keeps folding over itself, like the system is trying not to show us a person.",
           "textKey": "episode_09.e09_n07.event1.text"
         }
       ],
       "choices": [
         {
-          "id": "why_not",
-          "text": "WHY?",
+          "id": "ask_hale_why_not_open",
+          "text": "HALE, WHY NOT OPEN IT?",
+          "effects": {
+            "haleTrust": 1,
+            "mayaTrust": -1,
+            "danger": 1
+          },
           "nextNodeId": "e09_n08",
           "textKey": "episode_09.e09_n07.choice0.text"
+        },
+        {
+          "id": "ask_maya_prepare_override",
+          "text": "MAYA, PREPARE THE OVERRIDE.",
+          "effects": {
+            "mayaTrust": 3,
+            "haleTrust": -3,
+            "danger": 4,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e09_n07_prepare",
+          "textKey": "episode_09.e09_n07.choice1.text"
         }
       ]
     },
-    "e09_n08": {
-      "id": "e09_n08",
-      "speaker": "HALE",
+    "e09_n07_prepare": {
+      "id": "e09_n07_prepare",
+      "speaker": "MAYA",
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "Because I already did.",
-          "textKey": "episode_09.e09_n08.event1.text"
+          "text": "Already reaching for it.",
+          "textKey": "episode_09.e09_n07_prepare.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Which is probably a bad sign about my decision-making, but a good sign for whoever is inside.",
+          "textKey": "episode_09.e09_n07_prepare.event1.text"
         }
       ],
-      "choices": [
-        {
-          "id": "what_do_you_mean",
-          "text": "WHAT?",
-          "nextNodeId": "e09_n09",
-          "textKey": "episode_09.e09_n08.choice0.text"
-        }
-      ]
+      "nextNodeId": "e09_n08"
     },
-    "e09_n09": {
-      "id": "e09_n09",
+    "e09_n08": {
+      "id": "e09_n08",
       "speaker": "HALE",
       "events": [
         {
@@ -316,17 +627,107 @@
         },
         {
           "type": "message",
-          "text": "The pod was empty. No body. No blood. No suit. Just frost on the inside of the glass.",
+          "text": "Do not open the pod.",
+          "textKey": "episode_09.e09_n08.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "I am not asking.",
+          "textKey": "episode_09.e09_n08.event1.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "demand_reason",
+          "text": "GIVE ME A REASON.",
+          "effects": {
+            "haleTrust": -1,
+            "danger": 2
+          },
+          "nextNodeId": "e09_n09",
+          "textKey": "episode_09.e09_n08.choice0.text"
+        },
+        {
+          "id": "pause_override",
+          "text": "PAUSE THE OVERRIDE.",
+          "effects": {
+            "haleTrust": 3,
+            "mayaTrust": -2,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e09_n08_pause",
+          "textKey": "episode_09.e09_n08.choice1.text"
+        }
+      ]
+    },
+    "e09_n08_pause": {
+      "id": "e09_n08_pause",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Pausing.",
+          "textKey": "episode_09.e09_n08_pause.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "For the record, I hate that this is the smart thing to do.",
+          "textKey": "episode_09.e09_n08_pause.event1.text"
+        }
+      ],
+      "nextNodeId": "e09_n09"
+    },
+    "e09_n09": {
+      "id": "e09_n09",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Because I already did.",
+          "textKey": "episode_09.e09_n09.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "Before Alpha. The pod was empty.",
           "textKey": "episode_09.e09_n09.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "No body. No blood. No suit. Just frost on the inside of the glass.",
+          "textKey": "episode_09.e09_n09.event2.text"
         },
         {
           "type": "backgroundEvent",
           "delay": 4500,
           "event": {
-            "type": "message",
+            "type": "corruptMessage",
             "speaker": "UNKNOWN",
-            "text": "He's lying.",
-            "textKey": "episode_09.e09_n09.backgroundEvent2.text"
+            "text": "HE'S LYING.",
+            "textKey": "episode_09.e09_n09.backgroundEvent0.text"
           }
         },
         {
@@ -336,7 +737,7 @@
             "type": "message",
             "speaker": "MAYA",
             "text": "Hale... when?",
-            "textKey": "episode_09.e09_n09.backgroundEvent3.text"
+            "textKey": "episode_09.e09_n09.backgroundEvent1.text"
           }
         },
         {
@@ -346,7 +747,7 @@
             "type": "message",
             "speaker": "HALE",
             "text": "Before Alpha.",
-            "textKey": "episode_09.e09_n09.backgroundEvent4.text"
+            "textKey": "episode_09.e09_n09.backgroundEvent2.text"
           }
         }
       ],
@@ -357,28 +758,144 @@
       "speaker": "SYSTEM",
       "events": [
         {
+          "type": "file",
+          "id": "old_pod_access_log",
+          "fileId": "old_pod_access_log",
+          "fileType": "log",
+          "title": "OLD POD ACCESS LOG",
+          "content": "Access Event: Emergency Pod Manual Inspection\nTimestamp: Before Incident Alpha\nOperator: Ethan Hale\nPod State: empty\nInterior Residue: frost / no biological matter detected\nSeal Reclosure: completed manually\nConflict: current pod telemetry reports active biometric motion",
+          "caption": "Recovered old pod access record. Hale previously opened the same pod before Alpha.",
+          "source": "POD_ACCESS_ARCHIVE",
+          "tags": [
+            "pod",
+            "hale",
+            "access_log",
+            "alpha"
+          ],
+          "correlationTags": [
+            "pod_rescue"
+          ],
+          "message": "[OLD POD ACCESS LOG ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_09.e09_n10.event0.title",
+          "contentKey": "episode_09.e09_n10.event0.content",
+          "captionKey": "episode_09.e09_n10.event0.caption",
+          "messageKey": "episode_09.e09_n10.event0.message"
+        }
+      ],
+      "nextNodeId": "e09_n11"
+    },
+    "e09_n11": {
+      "id": "e09_n11",
+      "speaker": "SYSTEM",
+      "events": [
+        {
           "type": "systemAlert",
           "text": "[POD ACCESS AVAILABLE]",
-          "textKey": "episode_09.e09_n10.event0.text"
+          "pauseAfterMs": 900,
+          "textKey": "episode_09.e09_n11.event0.text"
         },
         {
           "type": "message",
           "text": "Rescue team has reached emergency pod exterior.",
-          "textKey": "episode_09.e09_n10.event1.text"
+          "textKey": "episode_09.e09_n11.event1.text"
         },
         {
           "type": "message",
           "text": "Manual override required.",
-          "textKey": "episode_09.e09_n10.event2.text"
+          "textKey": "episode_09.e09_n11.event2.text"
         },
         {
           "type": "glitch",
-          "duration": 900
+          "duration": 900,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "file",
+          "id": "pod_access_risk_report",
+          "fileId": "pod_access_risk_report",
+          "fileType": "log",
+          "title": "POD ACCESS RISK REPORT",
+          "content": "Internal Motion: detected\nSeal Pressure: unstable\nManual Override: required\nAudio Channel Contamination: rising\nExternal Voice Traffic: unauthorized\nRecommendation: correlate access records before opening",
+          "caption": "Recovered pod access risk report.",
+          "source": "POD_ACCESS_CONTROL",
+          "tags": [
+            "pod",
+            "motion",
+            "access",
+            "risk"
+          ],
+          "correlationTags": [
+            "pod_rescue"
+          ],
+          "message": "[POD ACCESS RISK REPORT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_09.e09_n11.event3.title",
+          "contentKey": "episode_09.e09_n11.event3.content",
+          "captionKey": "episode_09.e09_n11.event3.caption",
+          "messageKey": "episode_09.e09_n11.event3.message"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[POD ACCESS CORRELATION REQUIRED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_09.e09_n11.event4.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "pod_access_correlation_09",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e09_n12_fail": {
+      "id": "e09_n12_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[POD ACCESS CORRELATION FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_09.e09_n12_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -6
+          }
         },
         {
           "type": "message",
-          "text": "Internal motion detected.",
-          "textKey": "episode_09.e09_n10.event4.text"
+          "speaker": "HALE",
+          "text": "No. Motion means something is inside now. The old log means I opened it before Alpha. Seal pressure means manual override. Separate the facts.",
+          "textKey": "episode_09.e09_n12_fail.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "pod_access_correlation_09",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e09_n13": {
+      "id": "e09_n13",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[POD ACCESS CORRELATION CONFIRMED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_09.e09_n13.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": 2
+          }
         }
       ],
       "choices": [
@@ -388,10 +905,14 @@
           "effects": {
             "danger": 10,
             "morale": 5,
-            "trust": -5
+            "trust": -5,
+            "mayaTrust": 5,
+            "haleTrust": -5,
+            "signalStrength": -6,
+            "openedPod": true
           },
           "nextNodeId": "e09_open_branch",
-          "textKey": "episode_09.e09_n10.choice0.text"
+          "textKey": "episode_09.e09_n13.choice0.text"
         },
         {
           "id": "abort_mission",
@@ -399,10 +920,14 @@
           "effects": {
             "danger": -5,
             "morale": -20,
-            "trust": 5
+            "trust": 5,
+            "mayaTrust": -8,
+            "haleTrust": 6,
+            "signalStrength": 2,
+            "abortedPodMission": true
           },
           "nextNodeId": "e09_abort_branch",
-          "textKey": "episode_09.e09_n10.choice1.text"
+          "textKey": "episode_09.e09_n13.choice1.text"
         }
       ]
     },
@@ -411,13 +936,22 @@
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "message",
-          "text": "Pod opening sequence authorized.",
-          "textKey": "episode_09.e09_open_branch.event0.text"
+          "type": "progressTask",
+          "id": "pod_opening_sequence",
+          "title": "POD OPENING SEQUENCE",
+          "subtitle": "Releasing seal pressure and stabilizing contaminated audio channel",
+          "duration": 50000,
+          "completeText": "[POD SEAL RELEASED]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_09.e09_open_branch.event0.title",
+          "subtitleKey": "episode_09.e09_open_branch.event0.subtitle",
+          "completeTextKey": "episode_09.e09_open_branch.event0.completeText"
         },
         {
           "type": "systemAlert",
-          "text": "[SEAL PRESSURE RELEASED]",
+          "text": "[NOTIFICATION QUEUED: POD SEAL RELEASED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_09.e09_open_branch.event1.text"
         },
         {
@@ -426,8 +960,8 @@
           "event": {
             "type": "message",
             "speaker": "MAYA",
-            "text": "I have visual.",
-            "textKey": "episode_09.e09_open_branch.backgroundEvent2.text"
+            "text": "I have telemetry.",
+            "textKey": "episode_09.e09_open_branch.backgroundEvent0.text"
           }
         },
         {
@@ -437,7 +971,7 @@
             "type": "message",
             "speaker": "MAYA",
             "text": "There is someone inside.",
-            "textKey": "episode_09.e09_open_branch.backgroundEvent3.text"
+            "textKey": "episode_09.e09_open_branch.backgroundEvent1.text"
           }
         },
         {
@@ -447,25 +981,43 @@
             "type": "message",
             "speaker": "HALE",
             "text": "Step away from it. Now.",
-            "textKey": "episode_09.e09_open_branch.backgroundEvent4.text"
+            "textKey": "episode_09.e09_open_branch.backgroundEvent2.text"
           }
         },
         {
           "type": "glitch",
-          "duration": 1400
+          "duration": 1400,
+          "pauseAfterMs": 800
         },
         {
-          "type": "message",
-          "text": "Audio channel contamination detected.",
-          "textKey": "episode_09.e09_open_branch.event6.text"
+          "type": "systemAlert",
+          "text": "[AUDIO CHANNEL CONTAMINATION DETECTED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_09.e09_open_branch.event2.text"
         }
       ],
       "choices": [
         {
-          "id": "continue_after_open",
+          "id": "keep_pod_open",
           "text": "KEEP THE POD OPEN.",
+          "effects": {
+            "danger": 4,
+            "signalStrength": -4,
+            "keptPodOpen": true
+          },
           "nextEpisodeId": "episode_10",
           "textKey": "episode_09.e09_open_branch.choice0.text"
+        },
+        {
+          "id": "stabilize_open_pod",
+          "text": "STABILIZE OPEN POD FIRST.",
+          "effects": {
+            "danger": 2,
+            "signalStrength": 3,
+            "stabilizedOpenPod": true
+          },
+          "nextEpisodeId": "episode_10",
+          "textKey": "episode_09.e09_open_branch.choice1.text"
         }
       ]
     },
@@ -476,11 +1028,13 @@
         {
           "type": "message",
           "text": "Rescue operation aborted.",
+          "pauseAfterMs": 900,
           "textKey": "episode_09.e09_abort_branch.event0.text"
         },
         {
           "type": "systemAlert",
           "text": "[POD ACCESS DENIED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_09.e09_abort_branch.event1.text"
         },
         {
@@ -490,7 +1044,7 @@
             "type": "message",
             "speaker": "UNKNOWN",
             "text": "Please...",
-            "textKey": "episode_09.e09_abort_branch.backgroundEvent2.text"
+            "textKey": "episode_09.e09_abort_branch.backgroundEvent0.text"
           }
         },
         {
@@ -500,7 +1054,7 @@
             "type": "message",
             "speaker": "UNKNOWN",
             "text": "Maya, don't leave me again.",
-            "textKey": "episode_09.e09_abort_branch.backgroundEvent3.text"
+            "textKey": "episode_09.e09_abort_branch.backgroundEvent1.text"
           }
         },
         {
@@ -510,21 +1064,45 @@
             "type": "message",
             "speaker": "MAYA",
             "text": "Again?",
-            "textKey": "episode_09.e09_abort_branch.backgroundEvent4.text"
+            "textKey": "episode_09.e09_abort_branch.backgroundEvent2.text"
           }
         },
         {
           "type": "message",
           "text": "Pod beacon remains active.",
-          "textKey": "episode_09.e09_abort_branch.event5.text"
+          "textKey": "episode_09.e09_abort_branch.event2.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "morale": -8,
+            "danger": 2,
+            "signalStrength": -3
+          }
         }
       ],
       "choices": [
         {
-          "id": "continue_after_abort",
+          "id": "track_beacon_after_abort",
           "text": "TRACK THE BEACON.",
+          "effects": {
+            "danger": 3,
+            "signalStrength": -3,
+            "trackedBeaconAfterAbort": true
+          },
           "nextEpisodeId": "episode_10",
           "textKey": "episode_09.e09_abort_branch.choice0.text"
+        },
+        {
+          "id": "reopen_rescue_channel",
+          "text": "REOPEN RESCUE CHANNEL.",
+          "effects": {
+            "danger": 5,
+            "signalStrength": -6,
+            "reopenedRescueChannel": true
+          },
+          "nextEpisodeId": "episode_10",
+          "textKey": "episode_09.e09_abort_branch.choice1.text"
         }
       ]
     }

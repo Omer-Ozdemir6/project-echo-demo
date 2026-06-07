@@ -2,7 +2,65 @@
   "id": "episode_03",
   "title": "THE DEAD ENGINEER",
   "startNodeId": "e03_n01",
-  "puzzles": {},
+  "puzzles": {
+    "hale_death_correlation_03": {
+      "id": "hale_death_correlation_03",
+      "type": "matching",
+      "title": "DEATH RECORD CORRELATION",
+      "description": "Match the recovered records with the correct contradiction.",
+      "submitLabel": "CONFIRM CONFLICT",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e03_n07",
+      "failureNodeId": "e03_n06_fail",
+      "leftItems": [
+        {
+          "id": "personnel_file",
+          "label": "PERSONNEL FILE"
+        },
+        {
+          "id": "autopsy_fragment",
+          "label": "AUTOPSY FRAGMENT"
+        },
+        {
+          "id": "timeline_conflict",
+          "label": "TIMELINE CONFLICT"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "hale_deceased",
+          "label": "HALE DECLARED DEAD AT 21:20"
+        },
+        {
+          "id": "body_missing",
+          "label": "BODY NOT RECOVERED"
+        },
+        {
+          "id": "voice_active",
+          "label": "HALE SIGNAL ACTIVE AFTER DEATH"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "personnel_file",
+          "rightId": "hale_deceased"
+        },
+        {
+          "leftId": "autopsy_fragment",
+          "rightId": "body_missing"
+        },
+        {
+          "leftId": "timeline_conflict",
+          "rightId": "voice_active"
+        }
+      ],
+      "titleKey": "episode_03.hale_death_correlation_03.puzzle0.title",
+      "descriptionKey": "episode_03.hale_death_correlation_03.puzzle0.description",
+      "submitLabelKey": "episode_03.hale_death_correlation_03.puzzle0.submitLabel"
+    }
+  },
   "nodes": {
     "e03_n01": {
       "id": "e03_n01",
@@ -15,11 +73,7 @@
         {
           "type": "message",
           "text": "About channel 7.14...",
-          "textKey": "episode_03.e03_n01.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1000
+          "textKey": "episode_03.e03_n01.event0.text"
         },
         {
           "type": "typing",
@@ -27,44 +81,35 @@
         },
         {
           "type": "message",
-          "text": "I need you to understand something before we go anywhere near it.",
-          "textKey": "episode_03.e03_n01.event4.text"
+          "text": "Before we go anywhere near it, I need you to understand something.",
+          "textKey": "episode_03.e03_n01.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 4000
         },
         {
           "type": "message",
-          "text": "Some signals should stay buried.",
-          "textKey": "episode_03.e03_n01.event6.text"
+          "text": "Some signals should stay buried. Yes, I know how dramatic that sounds.",
+          "textKey": "episode_03.e03_n01.event2.text"
         },
         {
           "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "That sounds dramatic. I know.",
-          "textKey": "episode_03.e03_n01.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
+          "duration": 3000
         },
         {
           "type": "message",
           "text": "Unfortunately, space has made me very dramatic.",
-          "textKey": "episode_03.e03_n01.event10.text"
+          "textKey": "episode_03.e03_n01.event3.text"
         },
         {
           "type": "backgroundEvent",
-          "delay": 7000,
+          "delay": 6500,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "OPEN HIS FILE",
-            "textKey": "episode_03.e03_n01.backgroundEvent11.text"
+            "textKey": "episode_03.e03_n01.backgroundEvent0.text"
           }
         }
       ],
@@ -75,19 +120,21 @@
           "effects": {
             "trust": -2,
             "danger": 3,
-            "signalStrength": -3
+            "signalStrength": -3,
+            "haleTrust": -2
           },
           "nextNodeId": "e03_n01_ask714",
           "textKey": "episode_03.e03_n01.choice0.text"
         },
         {
-          "id": "stay_on_hale",
-          "text": "I'M LISTENING.",
+          "id": "open_hale_file",
+          "text": "OPEN HALE'S FILE FIRST.",
           "effects": {
-            "trust": 3,
-            "morale": 1
+            "danger": 1,
+            "signalStrength": 1,
+            "haleTrust": 2
           },
-          "nextNodeId": "e03_n01_listening",
+          "nextNodeId": "e03_n01_file",
           "textKey": "episode_03.e03_n01.choice1.text"
         }
       ]
@@ -107,28 +154,28 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 3900
         },
         {
           "type": "message",
-          "text": "Fine. But if that channel starts answering us, I need you to remember this was not curiosity. This was a door handle.",
+          "text": "Fine. But if that channel answers us, remember this wasn't curiosity. It was a door handle.",
           "textKey": "episode_03.e03_n01_ask714.event1.text"
         }
       ],
       "nextNodeId": "e03_n02"
     },
-    "e03_n01_listening": {
-      "id": "e03_n01_listening",
+    "e03_n01_file": {
+      "id": "e03_n01_file",
       "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 2800
         },
         {
           "type": "message",
-          "text": "Thank you.",
-          "textKey": "episode_03.e03_n01_listening.event0.text"
+          "text": "Good. Records first.",
+          "textKey": "episode_03.e03_n01_file.event0.text"
         },
         {
           "type": "typing",
@@ -136,8 +183,8 @@
         },
         {
           "type": "message",
-          "text": "I know I sound like a man asking you to trust a locked room because he says the monster is outside.",
-          "textKey": "episode_03.e03_n01_listening.event1.text"
+          "text": "I hate that the unknown voice gave useful advice. That feels unfair.",
+          "textKey": "episode_03.e03_n01_file.event1.text"
         }
       ],
       "nextNodeId": "e03_n02"
@@ -167,6 +214,9 @@
             "deceased",
             "door_12"
           ],
+          "correlationTags": [
+            "hale_death_reconstruction"
+          ],
           "message": "[PERSONNEL FILE ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1400,
           "titleKey": "episode_03.e03_n02.event1.title",
@@ -182,41 +232,27 @@
           "type": "message",
           "speaker": "HALE",
           "text": "No.",
-          "textKey": "episode_03.e03_n02.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1200
+          "textKey": "episode_03.e03_n02.event2.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 3800
         },
         {
           "type": "message",
           "speaker": "HALE",
           "text": "No, that file is wrong.",
-          "textKey": "episode_03.e03_n02.event6.text"
+          "textKey": "episode_03.e03_n02.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 4200
         },
         {
           "type": "message",
           "speaker": "HALE",
-          "text": "Or the system is wrong.",
-          "textKey": "episode_03.e03_n02.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "Please let it be the system.",
-          "textKey": "episode_03.e03_n02.event10.text"
+          "text": "Or the system is wrong. Please let it be the system.",
+          "textKey": "episode_03.e03_n02.event4.text"
         },
         {
           "type": "statChange",
@@ -234,7 +270,8 @@
             "trust": -5,
             "danger": 5,
             "morale": -4,
-            "signalStrength": -4
+            "signalStrength": -4,
+            "haleTrust": -5
           },
           "nextNodeId": "e03_n02_confront",
           "textKey": "episode_03.e03_n02.choice0.text"
@@ -245,7 +282,8 @@
           "effects": {
             "trust": 3,
             "morale": 1,
-            "danger": 1
+            "danger": 1,
+            "haleTrust": 3
           },
           "nextNodeId": "e03_n02_corrupt",
           "textKey": "episode_03.e03_n02.choice1.text"
@@ -267,7 +305,7 @@
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 4700
         },
         {
           "type": "message",
@@ -298,7 +336,7 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 4300
         },
         {
           "type": "message",
@@ -314,34 +352,21 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "I am here.",
-          "textKey": "episode_03.e03_n03.event1.text"
-        },
-        {
-          "type": "typing",
           "duration": 3200
         },
         {
           "type": "message",
-          "text": "I am speaking to you.",
-          "textKey": "episode_03.e03_n03.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1000
+          "text": "I am here. I am speaking to you.",
+          "textKey": "episode_03.e03_n03.event0.text"
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 4300
         },
         {
           "type": "message",
           "text": "Dead people don't send messages.",
-          "textKey": "episode_03.e03_n03.event6.text"
+          "textKey": "episode_03.e03_n03.event1.text"
         },
         {
           "type": "glitch",
@@ -353,7 +378,7 @@
           "speaker": "UNKNOWN",
           "text": "ASK HIM HOW HE DIED",
           "pauseAfterMs": 1500,
-          "textKey": "episode_03.e03_n03.event8.text"
+          "textKey": "episode_03.e03_n03.event2.text"
         },
         {
           "type": "typing",
@@ -362,7 +387,7 @@
         {
           "type": "message",
           "text": "I really wish it had said something less horrible.",
-          "textKey": "episode_03.e03_n03.event10.text"
+          "textKey": "episode_03.e03_n03.event3.text"
         }
       ],
       "choices": [
@@ -373,18 +398,20 @@
             "trust": -6,
             "danger": 6,
             "morale": -4,
-            "signalStrength": -5
+            "signalStrength": -5,
+            "haleTrust": -6
           },
           "nextNodeId": "e03_n04a",
           "textKey": "episode_03.e03_n03.choice0.text"
         },
         {
-          "id": "dont_push",
-          "text": "WE DON'T HAVE TO TALK ABOUT IT.",
+          "id": "search_records_instead",
+          "text": "SEARCH MEDICAL RECORDS INSTEAD.",
           "effects": {
             "trust": 4,
             "morale": 2,
-            "danger": 1
+            "danger": 1,
+            "haleTrust": 4
           },
           "nextNodeId": "e03_n04b",
           "textKey": "episode_03.e03_n03.choice1.text"
@@ -402,20 +429,7 @@
         {
           "type": "message",
           "text": "I don't know.",
-          "textKey": "episode_03.e03_n04a.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1400
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "I remember the door.",
-          "textKey": "episode_03.e03_n04a.event4.text"
+          "textKey": "episode_03.e03_n04a.event0.text"
         },
         {
           "type": "typing",
@@ -423,40 +437,17 @@
         },
         {
           "type": "message",
-          "text": "I remember opening it.",
-          "textKey": "episode_03.e03_n04a.event6.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1500
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "Then nothing.",
-          "textKey": "episode_03.e03_n04a.event9.text"
+          "text": "I remember the door. I remember opening it. Then nothing.",
+          "textKey": "episode_03.e03_n04a.event1.text"
         },
         {
           "type": "systemAlert",
           "text": "[HALE RESPONSE WITHHELD: EMOTIONAL STRESS DETECTED]",
           "pauseAfterMs": 900,
-          "textKey": "episode_03.e03_n04a.event10.text"
+          "textKey": "episode_03.e03_n04a.event2.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_after_death_question",
-          "text": "SEARCH MEDICAL CACHE.",
-          "nextNodeId": "e03_n05",
-          "effects": {
-            "danger": 2
-          },
-          "textKey": "episode_03.e03_n04a.choice0.text"
-        }
-      ]
+      "nextNodeId": "e03_n05"
     },
     "e03_n04b": {
       "id": "e03_n04b",
@@ -469,51 +460,28 @@
         {
           "type": "message",
           "text": "Thank you.",
+          "textKey": "episode_03.e03_n04b.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "But I need to know. If that file is real, then something is using my signal.",
           "textKey": "episode_03.e03_n04b.event1.text"
         },
         {
-          "type": "pause",
-          "duration": 1200
-        },
-        {
           "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "But I need to know.",
-          "textKey": "episode_03.e03_n04b.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4600
-        },
-        {
-          "type": "message",
-          "text": "If that file is real, then something is using my signal.",
-          "textKey": "episode_03.e03_n04b.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
+          "duration": 3200
         },
         {
           "type": "message",
           "text": "And I don't like sharing. Especially with ghosts.",
-          "textKey": "episode_03.e03_n04b.event8.text"
+          "textKey": "episode_03.e03_n04b.event2.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_to_medical_cache",
-          "text": "SEARCH MEDICAL CACHE.",
-          "nextNodeId": "e03_n05",
-          "effects": {
-            "trust": 1
-          },
-          "textKey": "episode_03.e03_n04b.choice0.text"
-        }
-      ]
+      "nextNodeId": "e03_n05"
     },
     "e03_n05": {
       "id": "e03_n05",
@@ -558,11 +526,7 @@
           "type": "message",
           "speaker": "HALE",
           "text": "Body not recovered.",
-          "textKey": "episode_03.e03_n05.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1200
+          "textKey": "episode_03.e03_n05.event2.text"
         },
         {
           "type": "typing",
@@ -572,7 +536,7 @@
           "type": "message",
           "speaker": "HALE",
           "text": "That's somehow worse than recovered.",
-          "textKey": "episode_03.e03_n05.event6.text"
+          "textKey": "episode_03.e03_n05.event3.text"
         },
         {
           "type": "statChange",
@@ -589,11 +553,60 @@
           "text": "COMPARE WITH DOOR 12 TIMELINE.",
           "nextNodeId": "e03_n06",
           "effects": {
-            "danger": 1
+            "danger": 1,
+            "signalStrength": 1
           },
           "textKey": "episode_03.e03_n05.choice0.text"
+        },
+        {
+          "id": "check_signal_signature",
+          "text": "CHECK HALE'S SIGNAL SIGNATURE.",
+          "nextNodeId": "e03_n05_signal",
+          "effects": {
+            "danger": 2,
+            "signalStrength": -2
+          },
+          "textKey": "episode_03.e03_n05.choice1.text"
         }
       ]
+    },
+    "e03_n05_signal": {
+      "id": "e03_n05_signal",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[VOICE SIGNATURE SCAN ACTIVE]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_03.e03_n05_signal.event0.text"
+        },
+        {
+          "type": "log",
+          "id": "voice_signature_hale_01",
+          "fileId": "voice_signature_hale_01",
+          "fileType": "log",
+          "title": "VOICE SIGNATURE REPORT",
+          "content": "ACTIVE SPEAKER: ETHAN HALE\nVOICEPRINT MATCH: 84%\nSIGNAL DELAY: NONLINEAR\nCARRIER TRACE: 7.14 MHz harmonic residue detected",
+          "caption": "Recovered voiceprint comparison from live relay traffic.",
+          "source": "RELAY_ANALYSIS",
+          "tags": [
+            "voiceprint",
+            "hale",
+            "signal",
+            "714"
+          ],
+          "correlationTags": [
+            "hale_death_reconstruction"
+          ],
+          "message": "[VOICE SIGNATURE REPORT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_03.e03_n05_signal.event1.title",
+          "contentKey": "episode_03.e03_n05_signal.event1.content",
+          "captionKey": "episode_03.e03_n05_signal.event1.caption",
+          "messageKey": "episode_03.e03_n05_signal.event1.message"
+        }
+      ],
+      "nextNodeId": "e03_n06"
     },
     "e03_n06": {
       "id": "e03_n06",
@@ -611,7 +624,7 @@
           "fileId": "timeline_conflict_01",
           "fileType": "log",
           "title": "TIMELINE CONFLICT",
-          "content": "21:14 Door 12 opened.\n21:17 Security override accepted.\n21:20 Ethan Hale declared deceased.\n\nConflict: Active communication signature matches Ethan Hale after recorded time of death.\nSecondary conflict: Communication signature contains 7.14 MHz harmonic residue.",
+          "content": "21:14 — Door 12 opened.\n21:17 — Security override accepted.\n21:20 — Ethan Hale declared deceased.\n\nConflict: Active communication signature matches Ethan Hale after recorded time of death.\nSecondary conflict: Communication signature contains 7.14 MHz harmonic residue.",
           "caption": "Automated timeline conflict report.",
           "source": "SYSTEM_CORRELATION",
           "tags": [
@@ -631,14 +644,75 @@
           "messageKey": "episode_03.e03_n06.event1.message"
         },
         {
+          "type": "systemAlert",
+          "text": "[CORRELATION REQUIRED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_03.e03_n06.event2.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "hale_death_correlation_03",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e03_n06_fail": {
+      "id": "e03_n06_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CORRELATION FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_03.e03_n06_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5
+          }
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "No. Those records don't line up that way. Try again before the archive decides we are tampering with it.",
+          "textKey": "episode_03.e03_n06_fail.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "hale_death_correlation_03",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e03_n07": {
+      "id": "e03_n07",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CORRELATION CONFIRMED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_03.e03_n07.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": -1
+          }
+        },
+        {
           "type": "backgroundEvent",
-          "delay": 8500,
+          "delay": 2500,
           "event": {
-            "type": "message",
+            "type": "corruptMessage",
             "speaker": "UNKNOWN",
-            "sender": "character",
-            "text": "He is not the only one still talking.",
-            "textKey": "episode_03.e03_n06.backgroundEvent2.text"
+            "text": "HE IS NOT THE ONLY ONE STILL TALKING",
+            "textKey": "episode_03.e03_n07.backgroundEvent0.text"
           }
         }
       ],
@@ -650,25 +724,27 @@
             "trust": -4,
             "danger": 4,
             "morale": -2,
-            "signalStrength": -3
+            "signalStrength": -3,
+            "haleTrust": -4
           },
-          "nextNodeId": "e03_n07_force",
-          "textKey": "episode_03.e03_n06.choice0.text"
+          "nextNodeId": "e03_n08_force",
+          "textKey": "episode_03.e03_n07.choice0.text"
         },
         {
-          "id": "keep_unknown_silent",
-          "text": "KEEP LISTENING.",
+          "id": "listen_for_other_voice",
+          "text": "LISTEN FOR THE OTHER VOICE.",
           "effects": {
             "danger": 3,
-            "signalStrength": -2
+            "signalStrength": -2,
+            "listenedToUnknown": true
           },
-          "nextNodeId": "e03_n07_listen",
-          "textKey": "episode_03.e03_n06.choice1.text"
+          "nextNodeId": "e03_n08_listen",
+          "textKey": "episode_03.e03_n07.choice1.text"
         }
       ]
     },
-    "e03_n07_force": {
-      "id": "e03_n07_force",
+    "e03_n08_force": {
+      "id": "e03_n08_force",
       "speaker": "HALE",
       "events": [
         {
@@ -678,39 +754,30 @@
         {
           "type": "message",
           "text": "I can't explain it because I don't know what I am explaining.",
-          "textKey": "episode_03.e03_n07_force.event0.text"
+          "textKey": "episode_03.e03_n08_force.event0.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 4300
         },
         {
           "type": "message",
           "text": "And every time you say my name like an accusation, it gets harder to think.",
-          "textKey": "episode_03.e03_n07_force.event1.text"
+          "textKey": "episode_03.e03_n08_force.event1.text"
         },
         {
           "type": "systemAlert",
           "text": "[COOPERATION INSTABILITY DETECTED]",
           "pauseAfterMs": 900,
-          "textKey": "episode_03.e03_n07_force.event2.text"
+          "textKey": "episode_03.e03_n08_force.event2.text"
         }
       ],
-      "nextNodeId": "e03_n07"
+      "nextNodeId": "e03_n09"
     },
-    "e03_n07_listen": {
-      "id": "e03_n07_listen",
+    "e03_n08_listen": {
+      "id": "e03_n08_listen",
       "speaker": "UNKNOWN",
       "events": [
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "Good.",
-          "textKey": "episode_03.e03_n07_listen.event0.text"
-        },
         {
           "type": "glitch",
           "duration": 900,
@@ -721,7 +788,7 @@
           "speaker": "UNKNOWN",
           "text": "HE OPENED IT FIRST",
           "pauseAfterMs": 1300,
-          "textKey": "episode_03.e03_n07_listen.event2.text"
+          "textKey": "episode_03.e03_n08_listen.event0.text"
         },
         {
           "type": "statChange",
@@ -731,10 +798,10 @@
           }
         }
       ],
-      "nextNodeId": "e03_n07"
+      "nextNodeId": "e03_n09"
     },
-    "e03_n07": {
-      "id": "e03_n07",
+    "e03_n09": {
+      "id": "e03_n09",
       "speaker": "HALE",
       "events": [
         {
@@ -744,7 +811,7 @@
         {
           "type": "message",
           "text": "I remember something now.",
-          "textKey": "episode_03.e03_n07.event4.text"
+          "textKey": "episode_03.e03_n09.event0.text"
         },
         {
           "type": "typing",
@@ -753,7 +820,7 @@
         {
           "type": "message",
           "text": "There was another voice on the emergency channel.",
-          "textKey": "episode_03.e03_n07.event6.text"
+          "textKey": "episode_03.e03_n09.event1.text"
         },
         {
           "type": "typing",
@@ -762,7 +829,7 @@
         {
           "type": "message",
           "text": "It kept repeating one number.",
-          "textKey": "episode_03.e03_n07.event8.text"
+          "textKey": "episode_03.e03_n09.event2.text"
         },
         {
           "type": "glitch",
@@ -774,13 +841,13 @@
           "speaker": "UNKNOWN",
           "text": "7.14",
           "pauseAfterMs": 1200,
-          "textKey": "episode_03.e03_n07.event10.text"
+          "textKey": "episode_03.e03_n09.event3.text"
         }
       ],
       "choices": [
         {
           "id": "open_channel_now",
-          "text": "OPEN CHANNEL 7.14.",
+          "text": "OPEN CHANNEL 7.14 NOW.",
           "effects": {
             "trust": -8,
             "danger": 12,
@@ -789,24 +856,20 @@
             "opened714Immediately": true
           },
           "nextNodeId": "e03_open_714_early",
-          "textKey": "episode_03.e03_n07.choice0.text"
+          "textKey": "episode_03.e03_n09.choice0.text"
         },
         {
-          "id": "wait_before_opening",
-          "text": "WAIT BEFORE OPENING IT.",
+          "id": "stabilize_before_opening",
+          "text": "STABILIZE SIGNAL FIRST.",
           "effects": {
             "trust": 3,
             "danger": -1,
             "morale": 1,
-            "waited714": true
+            "waited714": true,
+            "signalStrength": 3
           },
-          "waitTask": {
-            "id": "wait_channel_714",
-            "durationMs": 60000,
-            "waitingNodeId": "e03_waiting",
-            "completeNodeId": "e03_wait_complete"
-          },
-          "textKey": "episode_03.e03_n07.choice1.text"
+          "nextNodeId": "e03_stabilize_714",
+          "textKey": "episode_03.e03_n09.choice1.text"
         }
       ]
     },
@@ -838,13 +901,13 @@
           "speaker": "UNKNOWN",
           "text": "TOO SOON",
           "pauseAfterMs": 1400,
-          "textKey": "episode_03.e03_open_714_early.event3.text"
+          "textKey": "episode_03.e03_open_714_early.event1.text"
         },
         {
           "type": "message",
           "speaker": "HALE",
-          "text": "No— I said wait.",
-          "textKey": "episode_03.e03_open_714_early.event4.text"
+          "text": "No— I said stabilize it first.",
+          "textKey": "episode_03.e03_open_714_early.event2.text"
         },
         {
           "type": "typing",
@@ -854,84 +917,72 @@
           "type": "message",
           "speaker": "HALE",
           "text": "The channel is open now. We did not lose anyone. But we lost control of how it opens.",
-          "textKey": "episode_03.e03_open_714_early.event5.text"
+          "textKey": "episode_03.e03_open_714_early.event3.text"
         },
         {
           "type": "systemAlert",
           "text": "[FUTURE TRANSMISSIONS MAY BE CONTAMINATED]",
           "pauseAfterMs": 1000,
-          "textKey": "episode_03.e03_open_714_early.event6.text"
+          "textKey": "episode_03.e03_open_714_early.event4.text"
         }
       ],
       "choices": [
         {
           "id": "continue_after_early_714",
-          "text": "CONTINUE.",
+          "text": "CONTINUE TO CHANNEL LOCK.",
           "nextEpisodeId": "episode_04",
           "effects": {
             "danger": 3,
             "signalStrength": -5
           },
           "textKey": "episode_03.e03_open_714_early.choice0.text"
+        },
+        {
+          "id": "try_to_close_early_714",
+          "text": "TRY TO CLOSE IT FIRST.",
+          "nextEpisodeId": "episode_04",
+          "effects": {
+            "danger": 5,
+            "signalStrength": -8,
+            "attemptedClose714": true
+          },
+          "textKey": "episode_03.e03_open_714_early.choice1.text"
         }
       ]
     },
-    "e03_waiting": {
-      "id": "e03_waiting",
+    "e03_stabilize_714": {
+      "id": "e03_stabilize_714",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[CHANNEL 7.14 MONITORING ACTIVE]",
           "pauseAfterMs": 1000,
-          "textKey": "episode_03.e03_waiting.event0.text"
+          "textKey": "episode_03.e03_stabilize_714.event0.text"
         },
         {
-          "type": "typing",
-          "duration": 2200
+          "type": "progressTask",
+          "id": "signal_stabilize_714",
+          "title": "SIGNAL STABILIZATION",
+          "subtitle": "Monitoring emergency carrier before opening channel",
+          "duration": 6500,
+          "completeText": "[SIGNAL PATTERN STABILIZED]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_03.e03_stabilize_714.event1.title",
+          "subtitleKey": "episode_03.e03_stabilize_714.event1.subtitle",
+          "completeTextKey": "episode_03.e03_stabilize_714.event1.completeText"
         },
         {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "Give it a minute.",
-          "textKey": "episode_03.e03_waiting.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "If the signal repeats, we'll know it is not random.",
-          "textKey": "episode_03.e03_waiting.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "And if it is random, I will happily apologize to the terrifying space radio.",
-          "textKey": "episode_03.e03_waiting.event6.text"
-        }
-      ],
-      "choices": []
-    },
-    "e03_wait_complete": {
-      "id": "e03_wait_complete",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[NEW TRANSMISSION RECEIVED]",
-          "pauseAfterMs": 1000,
-          "textKey": "episode_03.e03_wait_complete.event0.text"
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 8,
+            "danger": -2
+          }
         },
         {
           "type": "glitch",
-          "duration": 1200,
+          "duration": 1000,
           "pauseAfterMs": 800
         },
         {
@@ -939,28 +990,18 @@
           "speaker": "UNKNOWN",
           "text": "7.14 IS NOT A CHANNEL",
           "pauseAfterMs": 1500,
-          "textKey": "episode_03.e03_wait_complete.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
+          "textKey": "episode_03.e03_stabilize_714.event2.text"
         },
         {
           "type": "message",
           "speaker": "UNKNOWN",
           "text": "It is a survivor.",
-          "textKey": "episode_03.e03_wait_complete.event4.text"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[SIGNAL PATTERN STABILIZED]",
-          "pauseAfterMs": 1000,
-          "textKey": "episode_03.e03_wait_complete.event5.text"
+          "textKey": "episode_03.e03_stabilize_714.event3.text"
         }
       ],
       "choices": [
         {
-          "id": "continue_to_frequency",
+          "id": "open_after_stabilize",
           "text": "OPEN CHANNEL 7.14.",
           "effects": {
             "waited714": true,
@@ -968,7 +1009,19 @@
             "signalStrength": -4
           },
           "nextEpisodeId": "episode_04",
-          "textKey": "episode_03.e03_wait_complete.choice0.text"
+          "textKey": "episode_03.e03_stabilize_714.choice0.text"
+        },
+        {
+          "id": "record_before_open",
+          "text": "RECORD THE PATTERN FIRST.",
+          "effects": {
+            "waited714": true,
+            "danger": 1,
+            "signalStrength": 2,
+            "recorded714Pattern": true
+          },
+          "nextEpisodeId": "episode_04",
+          "textKey": "episode_03.e03_stabilize_714.choice1.text"
         }
       ]
     }

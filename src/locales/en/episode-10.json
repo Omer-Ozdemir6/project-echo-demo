@@ -5,15 +5,23 @@
         "title": "THE POD"
       }
     },
+    "occupant_identity_correlation_10": {
+      "puzzle0": {
+        "title": "OCCUPANT IDENTITY CORRELATION",
+        "description": "Match each recovered pod record with the correct identity conclusion.",
+        "submitLabel": "CONFIRM OCCUPANT IDENTITY"
+      }
+    },
     "e10_n01": {
       "event0": {
         "text": "[POD OPENING SEQUENCE AUTHORIZED]"
       },
       "event1": {
-        "title": "POD OPENING"
+        "title": "POD OPENING",
+        "completeText": "[POD SEAL RELEASED]"
       },
       "event2": {
-        "text": "[POD SEAL RELEASED]"
+        "text": "[NOTIFICATION QUEUED: POD SEAL RELEASED]"
       },
       "event3": {
         "text": "Internal atmosphere exposed."
@@ -22,7 +30,16 @@
         "text": "Cryostasis chamber responding."
       },
       "choice0": {
-        "text": "INSPECT POD."
+        "text": "INSPECT POD SYSTEMS."
+      },
+      "choice1": {
+        "text": "STABILIZE POD CHANNEL FIRST."
+      }
+    },
+    "e10_n01_stabilize": {
+      "event0": {
+        "title": "POD CHANNEL STABILIZATION",
+        "completeText": "[POD CHANNEL STABLE]"
       }
     },
     "e10_n02": {
@@ -36,13 +53,26 @@
         "text": "No..."
       },
       "choice0": {
-        "text": "SHOW VISUAL FEED."
+        "text": "RUN INTERNAL SCAN."
+      },
+      "choice1": {
+        "text": "HALE, WHY IMPOSSIBLE?"
+      }
+    },
+    "e10_n02_hale": {
+      "event0": {
+        "text": "Because dead men don't develop a pulse just because we open a door."
+      },
+      "event1": {
+        "text": "And before Maya says it, yes, I hear how that sounds coming from me."
       }
     },
     "e10_n03": {
       "event0": {
-        "title": "POD OCCUPANT FEED",
-        "caption": "Cryostasis pod interior. Face obscured. Suit identifier visible: NV-08."
+        "title": "POD OCCUPANT SCAN",
+        "content": "Visual Feed: unavailable\nCryostasis Interior: occupied\nFace Recognition: failed\nSuit Identifier: NV-08\nArchive Match: Noah Voss\nBiometric State: active\nSignal Distortion: severe",
+        "caption": "Pod occupant scan reconstructed without image feed.",
+        "message": "[POD OCCUPANT SCAN ARCHIVED TO DATA BANK]"
       },
       "event1": {
         "text": "Partial suit identifier recovered."
@@ -55,43 +85,94 @@
       },
       "choice0": {
         "text": "RUN MEDICAL SCAN."
+      },
+      "choice1": {
+        "text": "CHECK CRYOSTASIS LOCK."
+      }
+    },
+    "e10_n03_lock": {
+      "event0": {
+        "title": "CRYOSTASIS LOCK WARNING",
+        "content": "LOCK STATE: active\nSubject: NOAH VOSS\nInstruction: DO NOT WAKE\nRequested By: Ethan Hale\nOverride Status: available\nWarning: manual override may trigger neural shock",
+        "caption": "Cryostasis warning recovered from pod control layer.",
+        "message": "[CRYOSTASIS LOCK WARNING ARCHIVED TO DATA BANK]"
       }
     },
     "e10_n04": {
       "event0": {
-        "title": "MEDICAL SCAN"
+        "title": "MEDICAL SCAN",
+        "completeText": "[MEDICAL SCAN COMPLETE]"
       },
       "event1": {
-        "text": "[MEDICAL SCAN COMPLETE]"
+        "text": "[NOTIFICATION QUEUED: MEDICAL SCAN COMPLETE]"
       },
       "event2": {
         "title": "OCCUPANT MEDICAL SCAN",
-        "content": "NAME: NOAH VOSS\nSTATUS: ALIVE\nHEARTBEAT: DETECTED\nNEURAL ACTIVITY: LOW BUT PRESENT\nCRYOSTASIS STATE: UNSTABLE",
+        "content": "NAME: NOAH VOSS\nSTATUS: ALIVE\nHEARTBEAT: DETECTED\nNEURAL ACTIVITY: LOW BUT PRESENT\nCRYOSTASIS STATE: UNSTABLE\nWAKE RISK: HIGH\nPRESERVATION RISK: RISING",
         "caption": "Medical scan recovered from emergency pod system.",
         "message": "[OCCUPANT MEDICAL SCAN ARCHIVED TO DATA BANK]"
       },
-      "choice0": {
-        "text": "MAYA, EXPLAIN THIS."
+      "event3": {
+        "text": "[OCCUPANT IDENTITY CORRELATION REQUIRED]"
+      }
+    },
+    "e10_n04_fail": {
+      "event0": {
+        "text": "[OCCUPANT IDENTITY CORRELATION FAILED]"
+      },
+      "event1": {
+        "text": "No. Suit says NV-08. Medical says alive. Lock says do not wake. Keep them separate."
       }
     },
     "e10_n05": {
+      "event0": {
+        "text": "[OCCUPANT IDENTITY CONFIRMED]"
+      },
       "event1": {
+        "text": "Noah Voss."
+      },
+      "event2": {
         "text": "No. Noah Voss was not on the manifest. He was not even supposed to exist."
       },
-      "backgroundEvent2": {
-        "text": "Don't wake him."
+      "backgroundEvent0": {
+        "text": "DON'T WAKE HIM."
       },
-      "backgroundEvent3": {
+      "backgroundEvent1": {
         "text": "Please."
       },
-      "backgroundEvent4": {
+      "backgroundEvent2": {
         "text": "Do not touch the cryostasis controls."
       },
       "choice0": {
-        "text": "DECIDE NOAH'S STATUS."
+        "text": "MAYA, EXPLAIN THIS."
+      },
+      "choice1": {
+        "text": "HALE, WHY NOT TOUCH CONTROLS?"
       }
     },
-    "e10_n06": {
+    "e10_n06_maya": {
+      "event0": {
+        "text": "I can't explain it. That's the problem."
+      },
+      "event1": {
+        "text": "A missing man. A forbidden file. A pod that shouldn't have anyone inside."
+      },
+      "event2": {
+        "text": "If this is a rescue, it feels like someone arranged it years ago."
+      }
+    },
+    "e10_n06_hale": {
+      "event0": {
+        "text": "Because cryostasis is not sleep."
+      },
+      "event1": {
+        "text": "You wake someone too fast, you can save their body and destroy everything that makes them a person."
+      },
+      "event2": {
+        "text": "And that is the generous version of what could happen."
+      }
+    },
+    "e10_n07": {
       "event0": {
         "text": "[CRYOSTASIS DECISION REQUIRED]"
       },
@@ -100,6 +181,9 @@
       },
       "event2": {
         "text": "Cryostasis unstable."
+      },
+      "event3": {
+        "text": "Wake Risk: high. Preservation Risk: rising."
       },
       "choice0": {
         "text": "WAKE HIM."
@@ -113,25 +197,43 @@
         "text": "[CRYOSTASIS TERMINATION AUTHORIZED]"
       },
       "event1": {
-        "title": "CRYOSTASIS TERMINATION"
+        "title": "CRYOSTASIS TERMINATION",
+        "completeText": "[CRYOSTASIS TERMINATED]"
       },
       "event2": {
-        "text": "[CRYOSTASIS TERMINATED]"
+        "text": "[NOTIFICATION QUEUED: CRYOSTASIS TERMINATED]"
       },
       "event3": {
+        "text": "[CRYOSTASIS TERMINATED]"
+      },
+      "event4": {
         "text": "Neural activity rising. Heartbeat stabilizing."
       }
     },
     "e10_wake_02": {
+      "event0": {
+        "text": "What day is it?"
+      },
       "event1": {
-        "text": "What day is it? How many are left? Did Hale survive?"
+        "text": "How many are left?"
+      },
+      "event2": {
+        "text": "Did Hale survive?"
       },
       "choice0": {
         "text": "WHAT DO YOU MEAN?"
+      },
+      "choice1": {
+        "text": "HALE IS HERE."
+      }
+    },
+    "e10_wake_03_hale": {
+      "event0": {
+        "text": "Then don't let him near the black box."
       }
     },
     "e10_wake_03": {
-      "event1": {
+      "event0": {
         "text": "Then we are already too late."
       }
     },
@@ -140,15 +242,16 @@
         "text": "[CRYOSTASIS MAINTAINED]"
       },
       "event1": {
-        "title": "CRYOSTASIS LOCK"
+        "title": "CRYOSTASIS LOCK",
+        "completeText": "[CRYOSTASIS LOCK STABLE]"
       },
       "event2": {
         "title": "CRYOSTASIS LOG",
-        "content": "EMERGENCY LOCK ENABLED\nREQUESTED BY: ETHAN HALE\nSUBJECT: NOAH VOSS\nSTATUS: DO NOT WAKE",
+        "content": "EMERGENCY LOCK ENABLED\nREQUESTED BY: ETHAN HALE\nSUBJECT: NOAH VOSS\nSTATUS: DO NOT WAKE\nSECONDARY NOTE: BLACK BOX RECORDER LINKED TO SUBJECT POD",
         "caption": "Cryostasis lock record recovered from emergency pod.",
         "message": "[CRYOSTASIS LOG ARCHIVED TO DATA BANK]"
       },
-      "backgroundEvent3": {
+      "backgroundEvent0": {
         "text": "Thank you."
       }
     },
@@ -157,11 +260,15 @@
         "text": "[BLACK BOX RECORDER DETECTED]"
       },
       "event1": {
-        "title": "BLACK BOX RECOVERY"
+        "title": "BLACK BOX RECOVERY",
+        "completeText": "[BLACK BOX RECOVERY COMPLETE]"
       },
       "event2": {
+        "text": "[NOTIFICATION QUEUED: BLACK BOX RECOVERY COMPLETE]"
+      },
+      "event3": {
         "title": "BLACK BOX RECORDER",
-        "content": "CORRUPTED\n\nRECOVERY POSSIBLE\n\nDECRYPTION MODULE REQUIRED.",
+        "content": "CORRUPTED\n\nRECOVERY POSSIBLE\n\nDECRYPTION MODULE REQUIRED.\n\nLinked Subject: NOAH VOSS\nLinked Event: INCIDENT ALPHA\nWarning: access may expose suppressed command audio.",
         "caption": "Recovered black box recorder connected to Incident Alpha.",
         "message": "[BLACK BOX RECORDER ARCHIVED TO DATA BANK]"
       },
@@ -177,6 +284,9 @@
       },
       "choice0": {
         "text": "TRACK BLACK BOX SIGNAL."
+      },
+      "choice1": {
+        "text": "SECURE BLACK BOX FIRST."
       }
     }
   }

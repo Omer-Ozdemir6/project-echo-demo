@@ -2,6 +2,65 @@
   "id": "episode_12",
   "title": "THE VOICE",
   "startNodeId": "e12_n01",
+  "puzzles": {
+    "voice_memory_correlation_12": {
+      "id": "voice_memory_correlation_12",
+      "type": "matching",
+      "title": "VOICE MEMORY CORRELATION",
+      "description": "Match each recovered voice record with the correct memory conflict.",
+      "submitLabel": "CONFIRM MEMORY CONFLICT",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e12_n08",
+      "failureNodeId": "e12_n07_fail",
+      "leftItems": [
+        {
+          "id": "voice_signature",
+          "label": "VOICE SIGNATURE"
+        },
+        {
+          "id": "blackbox_phrase",
+          "label": "BLACK BOX PHRASE"
+        },
+        {
+          "id": "pod_memory",
+          "label": "POD MEMORY"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "noah_match",
+          "label": "MATCHES NOAH VOSS"
+        },
+        {
+          "id": "open_station",
+          "label": "OPEN THE STATION"
+        },
+        {
+          "id": "already_locked",
+          "label": "NOAH WAS ALREADY LOCKED INSIDE"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "voice_signature",
+          "rightId": "noah_match"
+        },
+        {
+          "leftId": "blackbox_phrase",
+          "rightId": "open_station"
+        },
+        {
+          "leftId": "pod_memory",
+          "rightId": "already_locked"
+        }
+      ],
+      "titleKey": "episode_12.voice_memory_correlation_12.puzzle0.title",
+      "descriptionKey": "episode_12.voice_memory_correlation_12.puzzle0.description",
+      "submitLabelKey": "episode_12.voice_memory_correlation_12.puzzle0.submitLabel"
+    }
+  },
   "nodes": {
     "e12_n01": {
       "id": "e12_n01",
@@ -9,87 +68,199 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 3200
         },
         {
           "type": "message",
-          "text": "I've seen that voice signature before. But I don't remember where. And that should scare all of us.",
+          "text": "I've seen that voice signature before.",
+          "textKey": "episode_12.e12_n01.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "But I don't remember where. And that should scare all of us.",
           "textKey": "episode_12.e12_n01.event1.text"
         }
       ],
-      "nextNodeId": "e12_n02"
+      "choices": [
+        {
+          "id": "ask_noah_focus",
+          "text": "NOAH, FOCUS ON THE MEMORY.",
+          "effects": {
+            "noahTrust": 4,
+            "danger": 2,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e12_n02_noah",
+          "textKey": "episode_12.e12_n01.choice0.text"
+        },
+        {
+          "id": "ask_hale_warning",
+          "text": "HALE, IS THIS DANGEROUS?",
+          "effects": {
+            "haleTrust": 3,
+            "noahTrust": -1,
+            "signalStrength": 1
+          },
+          "nextNodeId": "e12_n02_hale",
+          "textKey": "episode_12.e12_n01.choice1.text"
+        }
+      ]
     },
-    "e12_n02": {
-      "id": "e12_n02",
+    "e12_n02_noah": {
+      "id": "e12_n02_noah",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4400
+        },
+        {
+          "type": "message",
+          "text": "I'm trying.",
+          "textKey": "episode_12.e12_n02_noah.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "It feels like looking at a room through someone else's eyes.",
+          "textKey": "episode_12.e12_n02_noah.event1.text"
+        }
+      ],
+      "nextNodeId": "e12_n03"
+    },
+    "e12_n02_hale": {
+      "id": "e12_n02_hale",
       "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 1800
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "Stop listening to him. The black box is corrupt. And now it's corrupting him.",
-          "textKey": "episode_12.e12_n02.event1.text"
+          "text": "Yes.",
+          "textKey": "episode_12.e12_n02_hale.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "A corrupted memory is not a clue. It is a trap wearing a familiar face.",
+          "textKey": "episode_12.e12_n02_hale.event1.text"
         }
       ],
       "nextNodeId": "e12_n03"
     },
     "e12_n03": {
       "id": "e12_n03",
-      "speaker": "NOAH",
+      "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 2500
+          "duration": 2800
         },
         {
           "type": "message",
-          "text": "I can recover the missing voice layer. It won't be fast. Give me a minute.",
+          "text": "Stop listening to him.",
+          "textKey": "episode_12.e12_n03.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "The black box is corrupt. And now it's corrupting him.",
           "textKey": "episode_12.e12_n03.event1.text"
         }
       ],
       "choices": [
         {
-          "id": "start_recovery",
-          "text": "START RECOVERY.",
-          "nextNodeId": "e12_n04",
+          "id": "authorize_noah_recovery",
+          "text": "AUTHORIZE NOAH'S RECOVERY.",
+          "effects": {
+            "noahTrust": 5,
+            "haleTrust": -4,
+            "danger": 4,
+            "signalStrength": -3,
+            "authorizedNoahRecovery": true
+          },
+          "nextNodeId": "e12_n04_noah",
           "textKey": "episode_12.e12_n03.choice0.text"
+        },
+        {
+          "id": "force_system_recovery",
+          "text": "USE SYSTEM RECOVERY ONLY.",
+          "effects": {
+            "haleTrust": 4,
+            "noahTrust": -2,
+            "danger": 1,
+            "signalStrength": 2,
+            "usedSystemRecoveryOnly": true
+          },
+          "nextNodeId": "e12_n04_system",
+          "textKey": "episode_12.e12_n03.choice1.text"
         }
       ]
     },
-    "e12_n04": {
-      "id": "e12_n04",
+    "e12_n04_noah": {
+      "id": "e12_n04_noah",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "I can recover the missing voice layer.",
+          "textKey": "episode_12.e12_n04_noah.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "It won't be fast. And it might not be clean.",
+          "textKey": "episode_12.e12_n04_noah.event1.text"
+        }
+      ],
+      "nextNodeId": "e12_n05"
+    },
+    "e12_n04_system": {
+      "id": "e12_n04_system",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
-          "text": "[VOICE RECOVERY TASK CREATED]",
-          "textKey": "episode_12.e12_n04.event0.text"
+          "text": "[NOAH INPUT RESTRICTED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_12.e12_n04_system.event0.text"
         },
         {
           "type": "message",
-          "text": "Estimated Time Remaining: 1 Minute",
-          "textKey": "episode_12.e12_n04.event1.text"
-        }
-      ],
-      "waitTask": {
-        "id": "recover_voice_layer",
-        "durationMs": 60000,
-        "waitingNodeId": "e12_waiting",
-        "completeNodeId": "e12_n05"
-      }
-    },
-    "e12_waiting": {
-      "id": "e12_waiting",
-      "speaker": "SYSTEM",
-      "events": [
+          "speaker": "HALE",
+          "text": "Good. Keep the recovery procedural.",
+          "textKey": "episode_12.e12_n04_system.event1.text"
+        },
         {
           "type": "message",
-          "text": "Voice recovery in progress... You will be notified when analysis is complete.",
-          "textKey": "episode_12.e12_waiting.event0.text"
+          "speaker": "NOAH",
+          "text": "Procedural. That's a gentle word for locked out.",
+          "textKey": "episode_12.e12_n04_system.event2.text"
         }
-      ]
+      ],
+      "nextNodeId": "e12_n05"
     },
     "e12_n05": {
       "id": "e12_n05",
@@ -97,17 +268,54 @@
       "events": [
         {
           "type": "systemAlert",
-          "text": "[VOICE RECOVERY COMPLETE]",
+          "text": "[VOICE RECOVERY TASK CREATED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_12.e12_n05.event0.text"
+        },
+        {
+          "type": "progressTask",
+          "id": "recover_voice_layer",
+          "title": "VOICE LAYER RECOVERY",
+          "subtitle": "Recovering damaged authorization phrase from black box residue",
+          "duration": 60000,
+          "completeText": "[VOICE RECOVERY COMPLETE]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_12.e12_n05.event1.title",
+          "subtitleKey": "episode_12.e12_n05.event1.subtitle",
+          "completeTextKey": "episode_12.e12_n05.event1.completeText"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[NOTIFICATION QUEUED: VOICE RECOVERY COMPLETE]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_12.e12_n05.event2.text"
         },
         {
           "type": "file",
           "id": "recovered_voice_layer",
           "fileId": "recovered_voice_layer",
+          "fileType": "log",
           "title": "RECOVERED VOICE LAYER",
-          "content": "Voice layer successfully reconstructed.",
-          "titleKey": "episode_12.e12_n05.event1.title",
-          "contentKey": "episode_12.e12_n05.event1.content"
+          "content": "Voice layer successfully reconstructed.\n\nRecovered phrase sequence:\n01 Authorization accepted.\n02 Open the station.\n\nVoiceprint status: unstable match.\nMemory conflict detected.",
+          "caption": "Recovered authorization layer from black box residue.",
+          "source": "BLACK_BOX_RECORDER",
+          "tags": [
+            "voice_layer",
+            "blackbox",
+            "authorization",
+            "memory_conflict"
+          ],
+          "correlationTags": [
+            "voice_identity",
+            "memory_source"
+          ],
+          "message": "[RECOVERED VOICE LAYER ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_12.e12_n05.event3.title",
+          "contentKey": "episode_12.e12_n05.event3.content",
+          "captionKey": "episode_12.e12_n05.event3.caption",
+          "messageKey": "episode_12.e12_n05.event3.message"
         }
       ],
       "nextNodeId": "e12_n06"
@@ -119,6 +327,7 @@
         {
           "type": "message",
           "text": "VOICE TRANSCRIPT:",
+          "pauseAfterMs": 700,
           "textKey": "episode_12.e12_n06.event0.text"
         },
         {
@@ -130,106 +339,294 @@
           "type": "message",
           "text": "\"Open the station.\"",
           "textKey": "episode_12.e12_n06.event2.text"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[MEMORY CONFLICT DETECTED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_12.e12_n06.event3.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_noah_room",
+          "text": "NOAH, WHAT ROOM DO YOU REMEMBER?",
+          "effects": {
+            "noahTrust": 3,
+            "danger": 2,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e12_n06_noah_room",
+          "textKey": "episode_12.e12_n06.choice0.text"
+        },
+        {
+          "id": "ask_hale_pod_lock",
+          "text": "HALE, WHY DID YOU LOCK THE POD?",
+          "effects": {
+            "haleTrust": -4,
+            "noahTrust": 1,
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e12_n06_hale_lock",
+          "textKey": "episode_12.e12_n06.choice1.text"
+        }
+      ]
+    },
+    "e12_n06_noah_room": {
+      "id": "e12_n06_noah_room",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "text": "White walls. Frost on the glass. A light above me flickering like it was trying to count down.",
+          "textKey": "episode_12.e12_n06_noah_room.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "I remember saying those words. But I remember saying them from inside the pod.",
+          "textKey": "episode_12.e12_n06_noah_room.event1.text"
+        }
+      ],
+      "nextNodeId": "e12_n07"
+    },
+    "e12_n06_hale_lock": {
+      "id": "e12_n06_hale_lock",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "Because the station kept answering in his voice.",
+          "textKey": "episode_12.e12_n06_hale_lock.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "I locked the pod because I needed to know whether Noah was the source... or the disguise.",
+          "textKey": "episode_12.e12_n06_hale_lock.event1.text"
         }
       ],
       "nextNodeId": "e12_n07"
     },
     "e12_n07": {
       "id": "e12_n07",
-      "speaker": "NOAH",
+      "speaker": "SYSTEM",
       "events": [
         {
-          "type": "typing",
-          "duration": 3200
+          "type": "file",
+          "id": "memory_conflict_report_01",
+          "fileId": "memory_conflict_report_01",
+          "fileType": "log",
+          "title": "MEMORY CONFLICT REPORT",
+          "content": "SUBJECT: NOAH VOSS\nVOICE PHRASE: OPEN THE STATION\nVOICEPRINT: MATCHING NOAH VOSS\nPOD MEMORY: SUBJECT CLAIMS POD LOCK WAS ALREADY ENGAGED\nCONFLICT: SUBJECT REMEMBERS SPEAKING FROM A LOCATION WHERE EXTERNAL AUTHORIZATION SHOULD BE IMPOSSIBLE",
+          "caption": "Recovered memory conflict report from voice and pod telemetry comparison.",
+          "source": "VOICE_MEMORY_ANALYSIS",
+          "tags": [
+            "noah_voss",
+            "memory",
+            "voiceprint",
+            "pod"
+          ],
+          "correlationTags": [
+            "memory_source",
+            "voice_identity"
+          ],
+          "message": "[MEMORY CONFLICT REPORT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_12.e12_n07.event0.title",
+          "contentKey": "episode_12.e12_n07.event0.content",
+          "captionKey": "episode_12.e12_n07.event0.caption",
+          "messageKey": "episode_12.e12_n07.event0.message"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[VOICE MEMORY CORRELATION REQUIRED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_12.e12_n07.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "voice_memory_correlation_12",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e12_n07_fail": {
+      "id": "e12_n07_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[MEMORY CORRELATION FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_12.e12_n07_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5,
+            "morale": -1
+          }
         },
         {
           "type": "message",
-          "text": "No. No, that's impossible. I remember saying it. I remember the room. But I don't remember opening the station.",
-          "textKey": "episode_12.e12_n07.event1.text"
+          "speaker": "MAYA",
+          "text": "No. Voice matches Noah. Phrase opens the station. Memory says he was already locked inside. Put those together.",
+          "textKey": "episode_12.e12_n07_fail.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "voice_memory_correlation_12",
+          "pauseAfterMs": 700
         }
       ],
-      "nextNodeId": "e12_n08"
+      "choices": []
     },
     "e12_n08": {
       "id": "e12_n08",
-      "speaker": "NOAH",
+      "speaker": "SYSTEM",
       "events": [
         {
-          "type": "typing",
-          "duration": 2200
+          "type": "systemAlert",
+          "text": "[MEMORY CONFLICT CONFIRMED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_12.e12_n08.event0.text"
         },
         {
-          "type": "message",
-          "text": "I remember saying those words. But I don't remember why. Something is missing.",
-          "textKey": "episode_12.e12_n08.event1.text"
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": 2
+          }
         }
       ],
       "nextNodeId": "e12_n09"
     },
     "e12_n09": {
       "id": "e12_n09",
-      "speaker": "SYSTEM",
+      "speaker": "NOAH",
       "events": [
         {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
           "type": "message",
-          "text": "Additional anomalies detected.",
+          "text": "No. No, that's impossible.",
           "textKey": "episode_12.e12_n09.event0.text"
         },
         {
-          "type": "backgroundEvent",
-          "delay": 7000,
-          "event": {
-            "type": "message",
-            "speaker": "UNKNOWN",
-            "text": "Memory can be altered.",
-            "textKey": "episode_12.e12_n09.backgroundEvent1.text"
-          }
+          "type": "typing",
+          "duration": 5600
         },
         {
-          "type": "backgroundEvent",
-          "delay": 13000,
-          "event": {
-            "type": "message",
-            "speaker": "UNKNOWN",
-            "text": "Ask Noah what happened before the pod.",
-            "textKey": "episode_12.e12_n09.backgroundEvent2.text"
-          }
+          "type": "message",
+          "text": "I remember saying it. I remember the room. But I don't remember opening the station.",
+          "textKey": "episode_12.e12_n09.event1.text"
         },
         {
-          "type": "backgroundEvent",
-          "delay": 19000,
-          "event": {
-            "type": "message",
-            "speaker": "UNKNOWN",
-            "text": "Identity can be replaced.",
-            "textKey": "episode_12.e12_n09.backgroundEvent3.text"
-          }
+          "type": "typing",
+          "duration": 4400
         },
         {
-          "type": "backgroundEvent",
-          "delay": 25000,
-          "event": {
-            "type": "message",
-            "speaker": "UNKNOWN",
-            "text": "Ask Hale why he locked the pod.",
-            "textKey": "episode_12.e12_n09.backgroundEvent4.text"
-          }
+          "type": "message",
+          "text": "Something is missing.",
+          "textKey": "episode_12.e12_n09.event2.text"
         }
       ],
       "nextNodeId": "e12_n10"
     },
     "e12_n10": {
       "id": "e12_n10",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "message",
+          "text": "Additional anomalies detected.",
+          "pauseAfterMs": 900,
+          "textKey": "episode_12.e12_n10.event0.text"
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 5000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "NOAH IS REMEMBERING.",
+            "textKey": "episode_12.e12_n10.backgroundEvent0.text"
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 9500,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "HE LOCKED THE POD.",
+            "textKey": "episode_12.e12_n10.backgroundEvent1.text"
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 14000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "ASK HIM ABOUT EVA.",
+            "textKey": "episode_12.e12_n10.backgroundEvent2.text"
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 18500,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "Eva? Who the hell is Eva?",
+            "textKey": "episode_12.e12_n10.backgroundEvent3.text"
+          }
+        }
+      ],
+      "nextNodeId": "e12_n11"
+    },
+    "e12_n11": {
+      "id": "e12_n11",
       "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 5200
         },
         {
           "type": "message",
-          "text": "Don't believe what you're hearing. Someone is manipulating the records. You think memories can't be edited? Look at this station. Everything here has been edited.",
-          "textKey": "episode_12.e12_n10.event1.text"
+          "text": "Don't believe what you're hearing.",
+          "textKey": "episode_12.e12_n11.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "Someone is manipulating the records. You think memories can't be edited? Look at this station. Everything here has been edited.",
+          "textKey": "episode_12.e12_n11.event1.text"
         }
       ],
       "choices": [
@@ -237,58 +634,187 @@
           "id": "trust_hale",
           "text": "TRUST HALE.",
           "effects": {
-            "trust": 10
+            "haleTrust": 10,
+            "noahTrust": -6,
+            "mayaTrust": -2,
+            "danger": 1,
+            "signalStrength": 3,
+            "trustedHaleOverNoah": true
           },
-          "nextNodeId": "e12_n11",
-          "textKey": "episode_12.e12_n10.choice0.text"
+          "nextNodeId": "e12_hale_path",
+          "textKey": "episode_12.e12_n11.choice0.text"
         },
         {
           "id": "trust_noah",
           "text": "TRUST NOAH.",
           "effects": {
-            "trust": -10
+            "noahTrust": 10,
+            "haleTrust": -6,
+            "mayaTrust": 2,
+            "danger": 4,
+            "signalStrength": -3,
+            "trustedNoahOverHale": true
           },
-          "nextNodeId": "e12_n11",
-          "textKey": "episode_12.e12_n10.choice1.text"
+          "nextNodeId": "e12_noah_path",
+          "textKey": "episode_12.e12_n11.choice1.text"
         }
       ]
     },
-    "e12_n11": {
-      "id": "e12_n11",
-      "speaker": "SYSTEM",
+    "e12_hale_path": {
+      "id": "e12_hale_path",
+      "speaker": "HALE",
       "events": [
         {
-          "type": "file",
-          "id": "memory_fragment_01",
-          "fileId": "memory_fragment_01",
-          "title": "MEMORY FRAGMENT",
-          "content": "SUBJECT: NOAH VOSS\nSTATUS: MEMORY INCONSISTENCY DETECTED\nSOURCE: UNKNOWN",
-          "titleKey": "episode_12.e12_n11.event0.title",
-          "contentKey": "episode_12.e12_n11.event0.content"
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Good.",
+          "textKey": "episode_12.e12_hale_path.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "Noah is already doubting his own memories. If he cannot trust his mind, he cannot safely guide yours.",
+          "textKey": "episode_12.e12_hale_path.event1.text"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[HALE TRUST INCREASED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_12.e12_hale_path.event2.text"
+        }
+      ],
+      "nextNodeId": "e12_n12"
+    },
+    "e12_noah_path": {
+      "id": "e12_noah_path",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Thank you.",
+          "textKey": "episode_12.e12_noah_path.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "Something is wrong with my memory. But Hale knows what that something is.",
+          "textKey": "episode_12.e12_noah_path.event1.text"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[NOAH TRUST INCREASED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_12.e12_noah_path.event2.text"
         }
       ],
       "nextNodeId": "e12_n12"
     },
     "e12_n12": {
       "id": "e12_n12",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "memory_fragment_01",
+          "fileId": "memory_fragment_01",
+          "fileType": "log",
+          "title": "MEMORY FRAGMENT",
+          "content": "SUBJECT: NOAH VOSS\nSTATUS: MEMORY INCONSISTENCY DETECTED\nSOURCE: UNKNOWN\nADDITIONAL MARKER: EVA\nWARNING: MEMORY SOURCE MAY NOT BELONG TO SUBJECT",
+          "caption": "Recovered memory fragment connected to Noah Voss and an unknown Eva marker.",
+          "source": "MEMORY_ANALYSIS_MODULE",
+          "tags": [
+            "memory",
+            "noah_voss",
+            "eva",
+            "identity"
+          ],
+          "correlationTags": [
+            "memory_source",
+            "eva_marker"
+          ],
+          "message": "[MEMORY FRAGMENT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_12.e12_n12.event0.title",
+          "contentKey": "episode_12.e12_n12.event0.content",
+          "captionKey": "episode_12.e12_n12.event0.caption",
+          "messageKey": "episode_12.e12_n12.event0.message"
+        }
+      ],
+      "nextNodeId": "e12_n13"
+    },
+    "e12_n13": {
+      "id": "e12_n13",
       "speaker": "NOAH",
       "events": [
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 5200
         },
         {
           "type": "message",
-          "text": "If my memories are wrong... Then somebody changed them. And if they changed mine... Whose memories am I carrying?",
-          "textKey": "episode_12.e12_n12.event1.text"
+          "text": "If those memories aren't mine...",
+          "textKey": "episode_12.e12_n13.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "then somebody put them there.",
+          "textKey": "episode_12.e12_n13.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "And if somebody can rewrite a memory... they can rewrite a person.",
+          "textKey": "episode_12.e12_n13.event2.text"
         }
       ],
       "choices": [
         {
-          "id": "continue_to_episode_13",
-          "text": "TRACE MEMORY SOURCE.",
+          "id": "follow_noah_memories",
+          "text": "FOLLOW NOAH'S MEMORIES.",
+          "effects": {
+            "noahTrust": 5,
+            "haleTrust": -3,
+            "danger": 3,
+            "signalStrength": -2,
+            "followedNoahMemoryPath": true
+          },
           "nextEpisodeId": "episode_13",
-          "textKey": "episode_12.e12_n12.choice0.text"
+          "nextNodeId": "e13_noah_memory_start",
+          "textKey": "episode_12.e12_n13.choice0.text"
+        },
+        {
+          "id": "investigate_hale",
+          "text": "INVESTIGATE HALE.",
+          "effects": {
+            "haleTrust": -4,
+            "mayaTrust": 3,
+            "danger": 2,
+            "signalStrength": 1,
+            "investigatedHaleMemoryLink": true
+          },
+          "nextEpisodeId": "episode_13",
+          "nextNodeId": "e13_hale_investigation_start",
+          "textKey": "episode_12.e12_n13.choice1.text"
         }
       ]
     }

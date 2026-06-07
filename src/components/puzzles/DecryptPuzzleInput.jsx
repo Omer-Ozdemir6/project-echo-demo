@@ -25,8 +25,26 @@ function buildDecryptLines(puzzle, t) {
       "[CIPHER] ROTATIONAL SIGNAL MASK"
     ),
     `${resolveText(t, "puzzle.decrypt.targetFrequency", "[TARGET FREQUENCY]")} ${target}`,
-    resolveText(t, "puzzle.decrypt.statusInputRequired", "[STATUS] INPUT REQUIRED")
+    resolveText(
+      t,
+      "puzzle.decrypt.statusInputRequired",
+      "[STATUS] INPUT REQUIRED"
+    )
   ];
+}
+
+function resolveHintText(hint, index, t) {
+  if (typeof hint === "string") return hint;
+
+  if (hint && typeof hint === "object") {
+    return resolveText(
+      t,
+      hint.textKey,
+      hint.text || `HINT ${index + 1}`
+    );
+  }
+
+  return `HINT ${index + 1}`;
 }
 
 export default function DecryptPuzzleInput({
@@ -37,11 +55,17 @@ export default function DecryptPuzzleInput({
 }) {
   const [value, setValue] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [visibleHints, setVisibleHints] = useState(0);
+  const [verifyStep, setVerifyStep] = useState(null);
 
   const decryptLines = useMemo(
     () => buildDecryptLines(puzzle, t),
     [puzzle, t]
   );
+
+  const hints = Array.isArray(puzzle?.hints) ? puzzle.hints : [];
+  const visibleHintList = hints.slice(0, visibleHints);
+  const canRevealHint = visibleHints < hints.length && !isSubmitting;
 
   const maxLength = puzzle?.maxLength || undefined;
   const inputMode = puzzle?.inputMode || "text";
@@ -76,6 +100,24 @@ export default function DecryptPuzzleInput({
     puzzle?.submitLabel || "DECRYPT"
   );
 
+  const expectedFormat = resolveText(
+    t,
+    puzzle?.expectedFormatKey,
+    puzzle?.expectedFormat || ""
+  );
+
+  const knownFragment = resolveText(
+    t,
+    puzzle?.knownFragmentKey,
+    puzzle?.knownFragment || ""
+  );
+
+  function revealHint() {
+    if (!canRevealHint) return;
+
+    setVisibleHints((prev) => prev + 1);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -84,12 +126,36 @@ export default function DecryptPuzzleInput({
     if (!normalizedValue || isSubmitting) return;
 
     setIsSubmitting(true);
-    onSubmit(normalizedValue);
-    setValue("");
+    setVerifyStep(
+      resolveText(t, "puzzle.decrypt.verifyingInput", "VERIFYING INPUT...")
+    );
 
     setTimeout(() => {
+      setVerifyStep(
+        resolveText(
+          t,
+          "puzzle.decrypt.checkingArchiveHash",
+          "CHECKING ARCHIVE HASH..."
+        )
+      );
+    }, 500);
+
+    setTimeout(() => {
+      setVerifyStep(
+        resolveText(
+          t,
+          "puzzle.decrypt.comparingPersonnelIndex",
+          "COMPARING PERSONNEL INDEX..."
+        )
+      );
+    }, 1000);
+
+    setTimeout(() => {
+      onSubmit(normalizedValue);
+      setValue("");
+      setVerifyStep(null);
       setIsSubmitting(false);
-    }, puzzle?.submitCooldownMs || 500);
+    }, 1600);
   }
 
   return (
@@ -135,6 +201,68 @@ export default function DecryptPuzzleInput({
           </p>
         ))}
       </div>
+
+      {(expectedFormat || knownFragment) && (
+        <div className="mb-3 border border-cyan-300/15 bg-slate-950/45 p-3">
+          {expectedFormat && (
+            <p className="m-0 mb-1 text-[11px] tracking-[0.14em] text-cyan-100/60">
+              &gt;{" "}
+              {resolveText(
+                t,
+                "puzzle.decrypt.expectedFormat",
+                "EXPECTED FORMAT"
+              )}
+              : {expectedFormat}
+            </p>
+          )}
+
+          {knownFragment && (
+            <p className="m-0 text-[11px] tracking-[0.14em] text-cyan-100/60">
+              &gt;{" "}
+              {resolveText(
+                t,
+                "puzzle.decrypt.knownFragment",
+                "KNOWN FRAGMENT"
+              )}
+              : {knownFragment}
+            </p>
+          )}
+        </div>
+      )}
+
+      {visibleHintList.length > 0 && (
+        <div className="mb-3 border border-amber-300/20 bg-amber-950/10 p-3">
+          {visibleHintList.map((hint, index) => (
+            <p
+              key={`${resolveHintText(hint, index, t)}-${index}`}
+              className="m-0 mb-1 text-[11px] tracking-[0.12em] text-amber-200/80 last:mb-0"
+            >
+              &gt;{" "}
+              {resolveText(t, "puzzle.decrypt.hint", "HINT")} {index + 1}:{" "}
+              {resolveHintText(hint, index, t)}
+            </p>
+          ))}
+        </div>
+      )}
+
+      {hints.length > 0 && (
+        <button
+          type="button"
+          disabled={!canRevealHint}
+          onClick={revealHint}
+          className="mb-3 w-full border border-amber-300/30 bg-amber-950/10 px-3 py-2 text-[10px] tracking-[0.2em] text-amber-200 transition hover:bg-amber-400/10 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          {visibleHints >= hints.length
+            ? resolveText(t, "puzzle.decrypt.noMoreHints", "NO MORE HINTS")
+            : resolveText(t, "puzzle.decrypt.requestHint", "REQUEST HINT")}
+        </button>
+      )}
+
+      {verifyStep && (
+        <div className="mb-3 border border-emerald-300/20 bg-emerald-950/10 p-3 text-[11px] tracking-[0.16em] text-emerald-200">
+          &gt; {verifyStep}
+        </div>
+      )}
 
       <div className="mb-3 border border-cyan-300/15 bg-slate-950/45 p-3 text-xs leading-5 tracking-[0.12em] text-cyan-100 sm:text-sm">
         {prompt}

@@ -2,6 +2,65 @@
   "id": "episode_10",
   "title": "THE POD",
   "startNodeId": "e10_n01",
+  "puzzles": {
+    "occupant_identity_correlation_10": {
+      "id": "occupant_identity_correlation_10",
+      "type": "matching",
+      "title": "OCCUPANT IDENTITY CORRELATION",
+      "description": "Match each recovered pod record with the correct identity conclusion.",
+      "submitLabel": "CONFIRM OCCUPANT IDENTITY",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e10_n05",
+      "failureNodeId": "e10_n04_fail",
+      "leftItems": [
+        {
+          "id": "suit_id",
+          "label": "SUIT ID TRACE"
+        },
+        {
+          "id": "medical_scan",
+          "label": "MEDICAL SCAN"
+        },
+        {
+          "id": "cryostasis_log",
+          "label": "CRYOSTASIS LOG"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "nv_08",
+          "label": "NV-08"
+        },
+        {
+          "id": "alive",
+          "label": "ALIVE / UNSTABLE"
+        },
+        {
+          "id": "do_not_wake",
+          "label": "DO NOT WAKE"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "suit_id",
+          "rightId": "nv_08"
+        },
+        {
+          "leftId": "medical_scan",
+          "rightId": "alive"
+        },
+        {
+          "leftId": "cryostasis_log",
+          "rightId": "do_not_wake"
+        }
+      ],
+      "titleKey": "episode_10.occupant_identity_correlation_10.puzzle0.title",
+      "descriptionKey": "episode_10.occupant_identity_correlation_10.puzzle0.description",
+      "submitLabelKey": "episode_10.occupant_identity_correlation_10.puzzle0.submitLabel"
+    }
+  },
   "nodes": {
     "e10_n01": {
       "id": "e10_n01",
@@ -15,15 +74,20 @@
         },
         {
           "type": "progressTask",
-          "taskId": "pod_opening_sequence",
+          "id": "pod_opening_sequence",
           "title": "POD OPENING",
           "subtitle": "Seal pressure release in progress...",
-          "duration": 6500,
-          "titleKey": "episode_10.e10_n01.event1.title"
+          "duration": 50000,
+          "completeText": "[POD SEAL RELEASED]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_10.e10_n01.event1.title",
+          "subtitleKey": "episode_10.e10_n01.event1.subtitle",
+          "completeTextKey": "episode_10.e10_n01.event1.completeText"
         },
         {
           "type": "systemAlert",
-          "text": "[POD SEAL RELEASED]",
+          "text": "[NOTIFICATION QUEUED: POD SEAL RELEASED]",
           "pauseAfterMs": 900,
           "textKey": "episode_10.e10_n01.event2.text"
         },
@@ -40,12 +104,53 @@
       ],
       "choices": [
         {
-          "id": "inspect_pod",
-          "text": "INSPECT POD.",
+          "id": "inspect_pod_systems",
+          "text": "INSPECT POD SYSTEMS.",
+          "effects": {
+            "signalStrength": -1,
+            "danger": 1
+          },
           "nextNodeId": "e10_n02",
           "textKey": "episode_10.e10_n01.choice0.text"
+        },
+        {
+          "id": "stabilize_pod_channel",
+          "text": "STABILIZE POD CHANNEL FIRST.",
+          "effects": {
+            "signalStrength": 3,
+            "danger": -1
+          },
+          "nextNodeId": "e10_n01_stabilize",
+          "textKey": "episode_10.e10_n01.choice1.text"
         }
       ]
+    },
+    "e10_n01_stabilize": {
+      "id": "e10_n01_stabilize",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "pod_channel_stabilization",
+          "title": "POD CHANNEL STABILIZATION",
+          "subtitle": "Filtering cryostasis telemetry from contaminated audio carrier",
+          "duration": 35000,
+          "completeText": "[POD CHANNEL STABLE]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_10.e10_n01_stabilize.event0.title",
+          "subtitleKey": "episode_10.e10_n01_stabilize.event0.subtitle",
+          "completeTextKey": "episode_10.e10_n01_stabilize.event0.completeText"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": -2
+          }
+        }
+      ],
+      "nextNodeId": "e10_n02"
     },
     "e10_n02": {
       "id": "e10_n02",
@@ -72,35 +177,81 @@
       ],
       "choices": [
         {
-          "id": "request_visual",
-          "text": "SHOW VISUAL FEED.",
+          "id": "run_internal_scan",
+          "text": "RUN INTERNAL SCAN.",
+          "effects": {
+            "signalStrength": -2,
+            "danger": 2
+          },
           "nextNodeId": "e10_n03",
           "textKey": "episode_10.e10_n02.choice0.text"
+        },
+        {
+          "id": "ask_hale_impossible",
+          "text": "HALE, WHY IMPOSSIBLE?",
+          "effects": {
+            "haleTrust": -1,
+            "danger": 1
+          },
+          "nextNodeId": "e10_n02_hale",
+          "textKey": "episode_10.e10_n02.choice1.text"
         }
       ]
+    },
+    "e10_n02_hale": {
+      "id": "e10_n02_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Because dead men don't develop a pulse just because we open a door.",
+          "textKey": "episode_10.e10_n02_hale.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "And before Maya says it, yes, I hear how that sounds coming from me.",
+          "textKey": "episode_10.e10_n02_hale.event1.text"
+        }
+      ],
+      "nextNodeId": "e10_n03"
     },
     "e10_n03": {
       "id": "e10_n03",
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "image",
-          "id": "pod_occupant_01",
-          "fileId": "pod_occupant_01",
-          "fileType": "image",
-          "title": "POD OCCUPANT FEED",
-          "caption": "Cryostasis pod interior. Face obscured. Suit identifier visible: NV-08.",
-          "src": "/images/pod_occupant_01.jpg",
-          "source": "POD_INTERNAL_CAMERA",
+          "type": "file",
+          "id": "pod_occupant_scan_01",
+          "fileId": "pod_occupant_scan_01",
+          "fileType": "log",
+          "title": "POD OCCUPANT SCAN",
+          "content": "Visual Feed: unavailable\nCryostasis Interior: occupied\nFace Recognition: failed\nSuit Identifier: NV-08\nArchive Match: Noah Voss\nBiometric State: active\nSignal Distortion: severe",
+          "caption": "Pod occupant scan reconstructed without image feed.",
+          "source": "POD_INTERNAL_SCAN",
           "tags": [
             "pod",
             "occupant",
             "noah",
-            "voss"
+            "voss",
+            "nv_08"
           ],
+          "correlationTags": [
+            "pod_occupant"
+          ],
+          "message": "[POD OCCUPANT SCAN ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1200,
           "titleKey": "episode_10.e10_n03.event0.title",
-          "captionKey": "episode_10.e10_n03.event0.caption"
+          "contentKey": "episode_10.e10_n03.event0.content",
+          "captionKey": "episode_10.e10_n03.event0.caption",
+          "messageKey": "episode_10.e10_n03.event0.message"
         },
         {
           "type": "message",
@@ -122,10 +273,56 @@
         {
           "id": "run_medical_scan",
           "text": "RUN MEDICAL SCAN.",
+          "effects": {
+            "danger": 2,
+            "signalStrength": -2
+          },
           "nextNodeId": "e10_n04",
           "textKey": "episode_10.e10_n03.choice0.text"
+        },
+        {
+          "id": "check_cryostasis_lock",
+          "text": "CHECK CRYOSTASIS LOCK.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e10_n03_lock",
+          "textKey": "episode_10.e10_n03.choice1.text"
         }
       ]
+    },
+    "e10_n03_lock": {
+      "id": "e10_n03_lock",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "cryostasis_lock_warning",
+          "fileId": "cryostasis_lock_warning",
+          "fileType": "log",
+          "title": "CRYOSTASIS LOCK WARNING",
+          "content": "LOCK STATE: active\nSubject: NOAH VOSS\nInstruction: DO NOT WAKE\nRequested By: Ethan Hale\nOverride Status: available\nWarning: manual override may trigger neural shock",
+          "caption": "Cryostasis warning recovered from pod control layer.",
+          "source": "POD_CRYOSTASIS_CONTROL",
+          "tags": [
+            "cryostasis",
+            "lock",
+            "hale",
+            "noah"
+          ],
+          "correlationTags": [
+            "pod_occupant"
+          ],
+          "message": "[CRYOSTASIS LOCK WARNING ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_10.e10_n03_lock.event0.title",
+          "contentKey": "episode_10.e10_n03_lock.event0.content",
+          "captionKey": "episode_10.e10_n03_lock.event0.caption",
+          "messageKey": "episode_10.e10_n03_lock.event0.message"
+        }
+      ],
+      "nextNodeId": "e10_n04"
     },
     "e10_n04": {
       "id": "e10_n04",
@@ -133,32 +330,41 @@
       "events": [
         {
           "type": "progressTask",
-          "taskId": "occupant_medical_scan",
+          "id": "occupant_medical_scan",
           "title": "MEDICAL SCAN",
           "subtitle": "Reading heartbeat, neural activity and cryostasis stability...",
-          "duration": 5200,
-          "titleKey": "episode_10.e10_n04.event0.title"
+          "duration": 40000,
+          "completeText": "[MEDICAL SCAN COMPLETE]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_10.e10_n04.event0.title",
+          "subtitleKey": "episode_10.e10_n04.event0.subtitle",
+          "completeTextKey": "episode_10.e10_n04.event0.completeText"
         },
         {
           "type": "systemAlert",
-          "text": "[MEDICAL SCAN COMPLETE]",
+          "text": "[NOTIFICATION QUEUED: MEDICAL SCAN COMPLETE]",
           "pauseAfterMs": 900,
           "textKey": "episode_10.e10_n04.event1.text"
         },
         {
           "type": "file",
-          "id": "occupant_scan_01",
-          "fileId": "occupant_scan_01",
+          "id": "occupant_medical_scan_01",
+          "fileId": "occupant_medical_scan_01",
           "fileType": "log",
           "title": "OCCUPANT MEDICAL SCAN",
-          "content": "NAME: NOAH VOSS\nSTATUS: ALIVE\nHEARTBEAT: DETECTED\nNEURAL ACTIVITY: LOW BUT PRESENT\nCRYOSTASIS STATE: UNSTABLE",
+          "content": "NAME: NOAH VOSS\nSTATUS: ALIVE\nHEARTBEAT: DETECTED\nNEURAL ACTIVITY: LOW BUT PRESENT\nCRYOSTASIS STATE: UNSTABLE\nWAKE RISK: HIGH\nPRESERVATION RISK: RISING",
           "caption": "Medical scan recovered from emergency pod system.",
           "source": "POD_MEDICAL_SYSTEM",
           "tags": [
             "medical",
             "noah",
             "voss",
-            "alive"
+            "alive",
+            "cryostasis"
+          ],
+          "correlationTags": [
+            "pod_occupant"
           ],
           "message": "[OCCUPANT MEDICAL SCAN ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1200,
@@ -166,39 +372,96 @@
           "contentKey": "episode_10.e10_n04.event2.content",
           "captionKey": "episode_10.e10_n04.event2.caption",
           "messageKey": "episode_10.e10_n04.event2.message"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[OCCUPANT IDENTITY CORRELATION REQUIRED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_10.e10_n04.event3.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "occupant_identity_correlation_10",
+          "pauseAfterMs": 700
         }
       ],
-      "choices": [
+      "choices": []
+    },
+    "e10_n04_fail": {
+      "id": "e10_n04_fail",
+      "speaker": "SYSTEM",
+      "events": [
         {
-          "id": "ask_maya",
-          "text": "MAYA, EXPLAIN THIS.",
-          "nextNodeId": "e10_n05",
-          "textKey": "episode_10.e10_n04.choice0.text"
+          "type": "systemAlert",
+          "text": "[OCCUPANT IDENTITY CORRELATION FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_10.e10_n04_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5
+          }
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "No. Suit says NV-08. Medical says alive. Lock says do not wake. Keep them separate.",
+          "textKey": "episode_10.e10_n04_fail.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "occupant_identity_correlation_10",
+          "pauseAfterMs": 700
         }
-      ]
+      ],
+      "choices": []
     },
     "e10_n05": {
       "id": "e10_n05",
       "speaker": "MAYA",
       "events": [
         {
+          "type": "systemAlert",
+          "text": "[OCCUPANT IDENTITY CONFIRMED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_10.e10_n05.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": 2
+          }
+        },
+        {
           "type": "typing",
-          "duration": 2800
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Noah Voss.",
+          "textKey": "episode_10.e10_n05.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5000
         },
         {
           "type": "message",
           "text": "No. Noah Voss was not on the manifest. He was not even supposed to exist.",
-          "textKey": "episode_10.e10_n05.event1.text"
+          "textKey": "episode_10.e10_n05.event2.text"
         },
         {
           "type": "backgroundEvent",
           "delay": 7000,
           "event": {
-            "type": "message",
+            "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "sender": "character",
-            "text": "Don't wake him.",
-            "textKey": "episode_10.e10_n05.backgroundEvent2.text"
+            "text": "DON'T WAKE HIM.",
+            "textKey": "episode_10.e10_n05.backgroundEvent0.text"
           }
         },
         {
@@ -209,7 +472,7 @@
             "speaker": "UNKNOWN",
             "sender": "character",
             "text": "Please.",
-            "textKey": "episode_10.e10_n05.backgroundEvent3.text"
+            "textKey": "episode_10.e10_n05.backgroundEvent1.text"
           }
         },
         {
@@ -220,38 +483,126 @@
             "speaker": "HALE",
             "sender": "character",
             "text": "Do not touch the cryostasis controls.",
-            "textKey": "episode_10.e10_n05.backgroundEvent4.text"
+            "textKey": "episode_10.e10_n05.backgroundEvent2.text"
           }
         }
       ],
       "choices": [
         {
-          "id": "decide_noah",
-          "text": "DECIDE NOAH'S STATUS.",
-          "nextNodeId": "e10_n06",
+          "id": "ask_maya_explain",
+          "text": "MAYA, EXPLAIN THIS.",
+          "effects": {
+            "mayaTrust": 2,
+            "danger": 1
+          },
+          "nextNodeId": "e10_n06_maya",
           "textKey": "episode_10.e10_n05.choice0.text"
+        },
+        {
+          "id": "ask_hale_controls",
+          "text": "HALE, WHY NOT TOUCH CONTROLS?",
+          "effects": {
+            "haleTrust": 2,
+            "mayaTrust": -1,
+            "danger": 1
+          },
+          "nextNodeId": "e10_n06_hale",
+          "textKey": "episode_10.e10_n05.choice1.text"
         }
       ]
     },
-    "e10_n06": {
-      "id": "e10_n06",
+    "e10_n06_maya": {
+      "id": "e10_n06_maya",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "I can't explain it. That's the problem.",
+          "textKey": "episode_10.e10_n06_maya.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "A missing man. A forbidden file. A pod that shouldn't have anyone inside.",
+          "textKey": "episode_10.e10_n06_maya.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "If this is a rescue, it feels like someone arranged it years ago.",
+          "textKey": "episode_10.e10_n06_maya.event2.text"
+        }
+      ],
+      "nextNodeId": "e10_n07"
+    },
+    "e10_n06_hale": {
+      "id": "e10_n06_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "Because cryostasis is not sleep.",
+          "textKey": "episode_10.e10_n06_hale.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "You wake someone too fast, you can save their body and destroy everything that makes them a person.",
+          "textKey": "episode_10.e10_n06_hale.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "And that is the generous version of what could happen.",
+          "textKey": "episode_10.e10_n06_hale.event2.text"
+        }
+      ],
+      "nextNodeId": "e10_n07"
+    },
+    "e10_n07": {
+      "id": "e10_n07",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[CRYOSTASIS DECISION REQUIRED]",
           "pauseAfterMs": 900,
-          "textKey": "episode_10.e10_n06.event0.text"
+          "textKey": "episode_10.e10_n07.event0.text"
         },
         {
           "type": "message",
           "text": "Subject: NOAH VOSS",
-          "textKey": "episode_10.e10_n06.event1.text"
+          "textKey": "episode_10.e10_n07.event1.text"
         },
         {
           "type": "message",
           "text": "Cryostasis unstable.",
-          "textKey": "episode_10.e10_n06.event2.text"
+          "textKey": "episode_10.e10_n07.event2.text"
+        },
+        {
+          "type": "message",
+          "text": "Wake Risk: high. Preservation Risk: rising.",
+          "textKey": "episode_10.e10_n07.event3.text"
         }
       ],
       "choices": [
@@ -261,10 +612,14 @@
           "effects": {
             "danger": 15,
             "trust": -10,
-            "morale": -3
+            "morale": -3,
+            "mayaTrust": 3,
+            "haleTrust": -8,
+            "signalStrength": -8,
+            "wokeNoah": true
           },
           "nextNodeId": "e10_wake_01",
-          "textKey": "episode_10.e10_n06.choice0.text"
+          "textKey": "episode_10.e10_n07.choice0.text"
         },
         {
           "id": "keep_asleep",
@@ -272,10 +627,14 @@
           "effects": {
             "danger": -5,
             "morale": -5,
-            "trust": 5
+            "trust": 5,
+            "mayaTrust": -4,
+            "haleTrust": 6,
+            "signalStrength": 3,
+            "keptNoahAsleep": true
           },
           "nextNodeId": "e10_sleep_01",
-          "textKey": "episode_10.e10_n06.choice1.text"
+          "textKey": "episode_10.e10_n07.choice1.text"
         }
       ]
     },
@@ -291,22 +650,33 @@
         },
         {
           "type": "progressTask",
-          "taskId": "cryostasis_termination",
+          "id": "cryostasis_termination",
           "title": "CRYOSTASIS TERMINATION",
           "subtitle": "Restoring neural activity and chamber pressure...",
-          "duration": 7000,
-          "titleKey": "episode_10.e10_wake_01.event1.title"
+          "duration": 60000,
+          "completeText": "[CRYOSTASIS TERMINATED]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_10.e10_wake_01.event1.title",
+          "subtitleKey": "episode_10.e10_wake_01.event1.subtitle",
+          "completeTextKey": "episode_10.e10_wake_01.event1.completeText"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[NOTIFICATION QUEUED: CRYOSTASIS TERMINATED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_10.e10_wake_01.event2.text"
         },
         {
           "type": "systemAlert",
           "text": "[CRYOSTASIS TERMINATED]",
           "pauseAfterMs": 900,
-          "textKey": "episode_10.e10_wake_01.event2.text"
+          "textKey": "episode_10.e10_wake_01.event3.text"
         },
         {
           "type": "message",
           "text": "Neural activity rising. Heartbeat stabilizing.",
-          "textKey": "episode_10.e10_wake_01.event3.text"
+          "textKey": "episode_10.e10_wake_01.event4.text"
         }
       ],
       "nextNodeId": "e10_wake_02"
@@ -317,22 +687,76 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 5200
         },
         {
           "type": "message",
-          "text": "What day is it? How many are left? Did Hale survive?",
+          "text": "What day is it?",
+          "textKey": "episode_10.e10_wake_02.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4800
+        },
+        {
+          "type": "message",
+          "text": "How many are left?",
           "textKey": "episode_10.e10_wake_02.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "Did Hale survive?",
+          "textKey": "episode_10.e10_wake_02.event2.text"
         }
       ],
       "choices": [
         {
           "id": "ask_noah_what",
           "text": "WHAT DO YOU MEAN?",
+          "effects": {
+            "danger": 2,
+            "signalStrength": -2
+          },
           "nextNodeId": "e10_wake_03",
           "textKey": "episode_10.e10_wake_02.choice0.text"
+        },
+        {
+          "id": "tell_noah_hale_is_here",
+          "text": "HALE IS HERE.",
+          "effects": {
+            "danger": 5,
+            "signalStrength": -5,
+            "toldNoahHaleHere": true
+          },
+          "nextNodeId": "e10_wake_03_hale",
+          "textKey": "episode_10.e10_wake_02.choice1.text"
         }
       ]
+    },
+    "e10_wake_03_hale": {
+      "id": "e10_wake_03_hale",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "Then don't let him near the black box.",
+          "textKey": "episode_10.e10_wake_03_hale.event0.text"
+        },
+        {
+          "type": "glitch",
+          "duration": 1100,
+          "pauseAfterMs": 700
+        }
+      ],
+      "nextNodeId": "e10_n11"
     },
     "e10_wake_03": {
       "id": "e10_wake_03",
@@ -340,12 +764,12 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 4200
         },
         {
           "type": "message",
           "text": "Then we are already too late.",
-          "textKey": "episode_10.e10_wake_03.event1.text"
+          "textKey": "episode_10.e10_wake_03.event0.text"
         }
       ],
       "nextNodeId": "e10_n11"
@@ -362,11 +786,16 @@
         },
         {
           "type": "progressTask",
-          "taskId": "cryostasis_lock",
+          "id": "cryostasis_lock",
           "title": "CRYOSTASIS LOCK",
           "subtitle": "Stabilizing pod pressure and preserving subject...",
-          "duration": 5200,
-          "titleKey": "episode_10.e10_sleep_01.event1.title"
+          "duration": 45000,
+          "completeText": "[CRYOSTASIS LOCK STABLE]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_10.e10_sleep_01.event1.title",
+          "subtitleKey": "episode_10.e10_sleep_01.event1.subtitle",
+          "completeTextKey": "episode_10.e10_sleep_01.event1.completeText"
         },
         {
           "type": "file",
@@ -374,14 +803,19 @@
           "fileId": "cryostasis_log",
           "fileType": "log",
           "title": "CRYOSTASIS LOG",
-          "content": "EMERGENCY LOCK ENABLED\nREQUESTED BY: ETHAN HALE\nSUBJECT: NOAH VOSS\nSTATUS: DO NOT WAKE",
+          "content": "EMERGENCY LOCK ENABLED\nREQUESTED BY: ETHAN HALE\nSUBJECT: NOAH VOSS\nSTATUS: DO NOT WAKE\nSECONDARY NOTE: BLACK BOX RECORDER LINKED TO SUBJECT POD",
           "caption": "Cryostasis lock record recovered from emergency pod.",
           "source": "POD_SYSTEM",
           "tags": [
             "cryostasis",
             "hale",
             "noah",
-            "lock"
+            "lock",
+            "blackbox"
+          ],
+          "correlationTags": [
+            "pod_occupant",
+            "black_box"
           ],
           "message": "[CRYOSTASIS LOG ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1200,
@@ -397,7 +831,7 @@
             "type": "message",
             "speaker": "UNKNOWN",
             "text": "Thank you.",
-            "textKey": "episode_10.e10_sleep_01.backgroundEvent3.text"
+            "textKey": "episode_10.e10_sleep_01.backgroundEvent0.text"
           }
         }
       ],
@@ -415,11 +849,22 @@
         },
         {
           "type": "progressTask",
-          "taskId": "black_box_recovery",
+          "id": "black_box_recovery",
           "title": "BLACK BOX RECOVERY",
           "subtitle": "Recovering corrupted Incident Alpha recorder...",
-          "duration": 6000,
-          "titleKey": "episode_10.e10_n11.event1.title"
+          "duration": 50000,
+          "completeText": "[BLACK BOX RECOVERY COMPLETE]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_10.e10_n11.event1.title",
+          "subtitleKey": "episode_10.e10_n11.event1.subtitle",
+          "completeTextKey": "episode_10.e10_n11.event1.completeText"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[NOTIFICATION QUEUED: BLACK BOX RECOVERY COMPLETE]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_10.e10_n11.event2.text"
         },
         {
           "type": "file",
@@ -427,20 +872,25 @@
           "fileId": "incident_alpha_blackbox",
           "fileType": "file",
           "title": "BLACK BOX RECORDER",
-          "content": "CORRUPTED\n\nRECOVERY POSSIBLE\n\nDECRYPTION MODULE REQUIRED.",
+          "content": "CORRUPTED\n\nRECOVERY POSSIBLE\n\nDECRYPTION MODULE REQUIRED.\n\nLinked Subject: NOAH VOSS\nLinked Event: INCIDENT ALPHA\nWarning: access may expose suppressed command audio.",
           "caption": "Recovered black box recorder connected to Incident Alpha.",
           "source": "POD_STORAGE",
           "tags": [
             "blackbox",
             "incident_alpha",
-            "encrypted"
+            "encrypted",
+            "noah_voss"
+          ],
+          "correlationTags": [
+            "black_box",
+            "incident_alpha"
           ],
           "message": "[BLACK BOX RECORDER ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1200,
-          "titleKey": "episode_10.e10_n11.event2.title",
-          "contentKey": "episode_10.e10_n11.event2.content",
-          "captionKey": "episode_10.e10_n11.event2.caption",
-          "messageKey": "episode_10.e10_n11.event2.message"
+          "titleKey": "episode_10.e10_n11.event3.title",
+          "contentKey": "episode_10.e10_n11.event3.content",
+          "captionKey": "episode_10.e10_n11.event3.caption",
+          "messageKey": "episode_10.e10_n11.event3.message"
         },
         {
           "type": "glitch",
@@ -472,10 +922,26 @@
       ],
       "choices": [
         {
-          "id": "continue_to_episode_11",
+          "id": "track_black_box_signal",
           "text": "TRACK BLACK BOX SIGNAL.",
+          "effects": {
+            "danger": 2,
+            "signalStrength": -2,
+            "trackedBlackBox": true
+          },
           "nextEpisodeId": "episode_11",
           "textKey": "episode_10.e10_n11.choice0.text"
+        },
+        {
+          "id": "secure_black_box_first",
+          "text": "SECURE BLACK BOX FIRST.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": 2,
+            "securedBlackBox": true
+          },
+          "nextEpisodeId": "episode_11",
+          "textKey": "episode_10.e10_n11.choice1.text"
         }
       ]
     }

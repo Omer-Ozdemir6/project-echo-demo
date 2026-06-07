@@ -9,16 +9,79 @@
       "title": "MEMORY RECONSTRUCTION",
       "description": "Reconstruct the missing incident access code using previously recovered evidence.",
       "prompt": "ENTER INCIDENT ACCESS CODE",
+      "placeholder": "7.14",
+      "inputMode": "text",
+      "maxLength": 8,
+      "submitLabel": "RECONSTRUCT",
       "acceptedAnswers": [
         "714",
         "7.14",
         "0714"
       ],
-      "successNodeId": "e14_n08",
+      "successNodeId": "e14_n09",
       "failureNodeId": "e14_fail",
       "titleKey": "episode_14.memory_reconstruction_714.puzzle0.title",
       "descriptionKey": "episode_14.memory_reconstruction_714.puzzle0.description",
-      "promptKey": "episode_14.memory_reconstruction_714.puzzle0.prompt"
+      "promptKey": "episode_14.memory_reconstruction_714.puzzle0.prompt",
+      "placeholderKey": "episode_14.memory_reconstruction_714.puzzle0.placeholder",
+      "submitLabelKey": "episode_14.memory_reconstruction_714.puzzle0.submitLabel"
+    },
+    "eva_identity_correlation_14": {
+      "id": "eva_identity_correlation_14",
+      "type": "matching",
+      "title": "EVA IDENTITY CORRELATION",
+      "description": "Match each recovered record with the correct conclusion.",
+      "submitLabel": "CONFIRM EVA IDENTITY",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e14_n16",
+      "failureNodeId": "e14_n15_fail",
+      "leftItems": [
+        {
+          "id": "manifest_copy_a",
+          "label": "MANIFEST COPY A"
+        },
+        {
+          "id": "manifest_copy_b",
+          "label": "MANIFEST COPY B"
+        },
+        {
+          "id": "deleted_record",
+          "label": "DELETED PERSONNEL RECORD"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "six_names",
+          "label": "ONLY 6 NAMES"
+        },
+        {
+          "id": "redacted_seventh",
+          "label": "REDACTED SEVENTH"
+        },
+        {
+          "id": "eva_erased_by_hale",
+          "label": "EVA REMOVED BY HALE"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "manifest_copy_a",
+          "rightId": "six_names"
+        },
+        {
+          "leftId": "manifest_copy_b",
+          "rightId": "redacted_seventh"
+        },
+        {
+          "leftId": "deleted_record",
+          "rightId": "eva_erased_by_hale"
+        }
+      ],
+      "titleKey": "episode_14.eva_identity_correlation_14.puzzle1.title",
+      "descriptionKey": "episode_14.eva_identity_correlation_14.puzzle1.description",
+      "submitLabelKey": "episode_14.eva_identity_correlation_14.puzzle1.submitLabel"
     }
   },
   "nodes": {
@@ -28,28 +91,94 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2400
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "There were seven people. Not six.",
+          "text": "There were seven people.",
+          "textKey": "episode_14.e14_n01.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Not six. Not a counting error. Not a corrupted archive being poetic.",
           "textKey": "episode_14.e14_n01.event1.text"
         }
       ],
-      "nextNodeId": "e14_n02"
+      "choices": [
+        {
+          "id": "ask_noah_seventh",
+          "text": "NOAH, WHO WAS THE SEVENTH?",
+          "effects": {
+            "noahTrust": 3,
+            "danger": 2,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e14_n02_noah",
+          "textKey": "episode_14.e14_n01.choice0.text"
+        },
+        {
+          "id": "ask_maya_removed_name",
+          "text": "MAYA, WHO REMOVED THE NAME?",
+          "effects": {
+            "mayaTrust": 3,
+            "danger": 2,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e14_n02_maya",
+          "textKey": "episode_14.e14_n01.choice1.text"
+        }
+      ]
     },
-    "e14_n02": {
-      "id": "e14_n02",
+    "e14_n02_noah": {
+      "id": "e14_n02_noah",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "I don't know. That's what scares me.",
+          "textKey": "episode_14.e14_n02_noah.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "I remember the absence of her before I remember her name.",
+          "textKey": "episode_14.e14_n02_noah.event1.text"
+        }
+      ],
+      "nextNodeId": "e14_n03"
+    },
+    "e14_n02_maya": {
+      "id": "e14_n02_maya",
       "speaker": "MAYA",
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 4200
         },
         {
           "type": "message",
           "text": "The seventh name was removed.",
-          "textKey": "episode_14.e14_n02.event1.text"
+          "textKey": "episode_14.e14_n02_maya.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "And before you ask, no, I don't like how quickly Hale comes to mind.",
+          "textKey": "episode_14.e14_n02_maya.event1.text"
         }
       ],
       "nextNodeId": "e14_n03"
@@ -62,10 +191,68 @@
           "type": "file",
           "id": "crew_manifest_copy_a",
           "fileId": "crew_manifest_copy_a",
+          "fileType": "crew",
           "title": "CREW MANIFEST COPY A",
           "content": "HALE\nMAYA\nNOAH\nGRANT\nRIVERA\nKIM",
+          "caption": "Recovered manifest copy showing only six listed personnel.",
+          "source": "PERSONNEL_ARCHIVE",
+          "tags": [
+            "manifest",
+            "crew",
+            "copy_a",
+            "six"
+          ],
+          "correlationTags": [
+            "eva_identity"
+          ],
+          "message": "[CREW MANIFEST COPY A ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
           "titleKey": "episode_14.e14_n03.event0.title",
-          "contentKey": "episode_14.e14_n03.event0.content"
+          "contentKey": "episode_14.e14_n03.event0.content",
+          "captionKey": "episode_14.e14_n03.event0.caption",
+          "messageKey": "episode_14.e14_n03.event0.message"
+        }
+      ],
+      "choices": [
+        {
+          "id": "open_second_manifest",
+          "text": "OPEN SECOND MANIFEST.",
+          "effects": {
+            "danger": 2,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e14_n04",
+          "textKey": "episode_14.e14_n03.choice0.text"
+        },
+        {
+          "id": "backup_copy_a",
+          "text": "BACK UP COPY A FIRST.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": 2,
+            "backedUpManifestA": true
+          },
+          "nextNodeId": "e14_n03_backup",
+          "textKey": "episode_14.e14_n03.choice1.text"
+        }
+      ]
+    },
+    "e14_n03_backup": {
+      "id": "e14_n03_backup",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[MANIFEST COPY A BACKED UP]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_14.e14_n03_backup.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 3,
+            "danger": -1
+          }
         }
       ],
       "nextNodeId": "e14_n04"
@@ -78,10 +265,46 @@
           "type": "file",
           "id": "crew_manifest_copy_b",
           "fileId": "crew_manifest_copy_b",
+          "fileType": "crew",
           "title": "CREW MANIFEST COPY B",
           "content": "HALE\nMAYA\nNOAH\nGRANT\nRIVERA\nKIM\n[REDACTED]",
+          "caption": "Recovered manifest copy showing a seventh redacted personnel entry.",
+          "source": "PERSONNEL_ARCHIVE",
+          "tags": [
+            "manifest",
+            "crew",
+            "copy_b",
+            "redacted"
+          ],
+          "correlationTags": [
+            "eva_identity"
+          ],
+          "message": "[CREW MANIFEST COPY B ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
           "titleKey": "episode_14.e14_n04.event0.title",
-          "contentKey": "episode_14.e14_n04.event0.content"
+          "contentKey": "episode_14.e14_n04.event0.content",
+          "captionKey": "episode_14.e14_n04.event0.caption",
+          "messageKey": "episode_14.e14_n04.event0.message"
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 5000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "FIND ME.",
+            "textKey": "episode_14.e14_n04.backgroundEvent0.text"
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 10000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "I WAS THERE.",
+            "textKey": "episode_14.e14_n04.backgroundEvent1.text"
+          }
         }
       ],
       "nextNodeId": "e14_n05"
@@ -93,27 +316,81 @@
         {
           "type": "message",
           "text": "Personnel archive sector located.",
+          "pauseAfterMs": 900,
           "textKey": "episode_14.e14_n05.event0.text"
         },
         {
-          "type": "backgroundEvent",
-          "delay": 8000,
-          "event": {
-            "type": "message",
-            "speaker": "UNKNOWN",
-            "text": "Find me.",
-            "textKey": "episode_14.e14_n05.backgroundEvent1.text"
-          }
+          "type": "file",
+          "id": "personnel_archive",
+          "fileId": "personnel_archive",
+          "fileType": "log",
+          "title": "PERSONNEL ARCHIVE",
+          "content": "PERSONNEL RECORD MISSING\n\nRecord slot exists.\nIdentity layer removed.\nRecovery requires incident access code.\nPossible index marker: 7.14",
+          "caption": "Recovered personnel archive slot. Identity layer is missing.",
+          "source": "PERSONNEL_ARCHIVE",
+          "tags": [
+            "personnel",
+            "missing",
+            "identity",
+            "7.14"
+          ],
+          "correlationTags": [
+            "eva_identity",
+            "incident_alpha"
+          ],
+          "message": "[PERSONNEL ARCHIVE SLOT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_14.e14_n05.event1.title",
+          "contentKey": "episode_14.e14_n05.event1.content",
+          "captionKey": "episode_14.e14_n05.event1.caption",
+          "messageKey": "episode_14.e14_n05.event1.message"
+        }
+      ],
+      "choices": [
+        {
+          "id": "start_memory_reconstruction",
+          "text": "RECONSTRUCT MEMORY.",
+          "effects": {
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e14_n06",
+          "textKey": "episode_14.e14_n05.choice0.text"
         },
         {
-          "type": "backgroundEvent",
-          "delay": 16000,
-          "event": {
-            "type": "message",
-            "speaker": "UNKNOWN",
-            "text": "I was there.",
-            "textKey": "episode_14.e14_n05.backgroundEvent2.text"
-          }
+          "id": "ask_hale_before_reconstruction",
+          "text": "HALE, WHAT IS 7.14?",
+          "effects": {
+            "haleTrust": -3,
+            "danger": 2,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e14_n05_hale",
+          "textKey": "episode_14.e14_n05.choice1.text"
+        }
+      ]
+    },
+    "e14_n05_hale": {
+      "id": "e14_n05_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "A frequency. A door. A scar.",
+          "textKey": "episode_14.e14_n05_hale.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "And if the archive is asking for it now, then we are already standing too close to the blast.",
+          "textKey": "episode_14.e14_n05_hale.event1.text"
         }
       ],
       "nextNodeId": "e14_n06"
@@ -123,33 +400,12 @@
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "file",
-          "id": "personnel_archive",
-          "fileId": "personnel_archive",
-          "title": "PERSONNEL ARCHIVE",
-          "content": "Personnel Record Missing",
-          "titleKey": "episode_14.e14_n06.event0.title",
-          "contentKey": "episode_14.e14_n06.event0.content"
+          "type": "puzzle",
+          "puzzleId": "memory_reconstruction_714",
+          "pauseAfterMs": 700
         }
       ],
-      "choices": [
-        {
-          "id": "start_memory_reconstruction",
-          "text": "RECONSTRUCT MEMORY.",
-          "nextNodeId": "e14_n07",
-          "textKey": "episode_14.e14_n06.choice0.text"
-        }
-      ]
-    },
-    "e14_n07": {
-      "id": "e14_n07",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "puzzle",
-          "puzzleId": "memory_reconstruction_714"
-        }
-      ]
+      "choices": []
     },
     "e14_fail": {
       "id": "e14_fail",
@@ -158,87 +414,181 @@
         {
           "type": "systemAlert",
           "text": "[ACCESS DENIED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_14.e14_fail.event0.text"
         },
         {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5,
+            "morale": -1
+          }
+        },
+        {
           "type": "message",
-          "text": "Memory reconstruction failed. Review previously recovered evidence.",
+          "text": "Memory reconstruction failed. Review the emergency frequency recovered from channel 7.14.",
           "textKey": "episode_14.e14_fail.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "memory_reconstruction_714",
+          "pauseAfterMs": 700
         }
       ],
-      "choices": [
-        {
-          "id": "retry_memory_reconstruction",
-          "text": "TRY AGAIN.",
-          "nextNodeId": "e14_n07",
-          "textKey": "episode_14.e14_fail.choice0.text"
-        }
-      ]
+      "choices": []
     },
-    "e14_n08": {
-      "id": "e14_n08",
+    "e14_n09": {
+      "id": "e14_n09",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[ACCESS CODE ACCEPTED]",
-          "textKey": "episode_14.e14_n08.event0.text"
+          "pauseAfterMs": 900,
+          "textKey": "episode_14.e14_n09.event0.text"
+        },
+        {
+          "type": "progressTask",
+          "id": "eva_manifest_reconstruction",
+          "title": "EVA MANIFEST RECONSTRUCTION",
+          "subtitle": "Restoring deleted personnel identity layer",
+          "duration": 50000,
+          "completeText": "[PERSONNEL IDENTITY RESTORED]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_14.e14_n09.event1.title",
+          "subtitleKey": "episode_14.e14_n09.event1.subtitle",
+          "completeTextKey": "episode_14.e14_n09.event1.completeText"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[NOTIFICATION QUEUED: PERSONNEL IDENTITY RESTORED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_14.e14_n09.event2.text"
         },
         {
           "type": "file",
           "id": "crew_manifest_original",
           "fileId": "crew_manifest_original",
+          "fileType": "crew",
           "title": "ORIGINAL CREW MANIFEST",
+          "content": "HALE\nMAYA\nNOAH\nGRANT\nRIVERA\nKIM\n\nEVA THORNE",
+          "caption": "Original manifest recovered. Seventh personnel identity restored.",
+          "source": "PERSONNEL_ARCHIVE_ORIGINAL",
+          "tags": [
+            "manifest",
+            "crew",
+            "eva_thorne",
+            "seventh"
+          ],
           "correlationTags": [
             "eva_identity"
           ],
-          "content": "HALE\nMAYA\nNOAH\nGRANT\nRIVERA\nKIM\n\nEVA THORNE",
-          "titleKey": "episode_14.e14_n08.event1.title",
-          "contentKey": "episode_14.e14_n08.event1.content"
-        }
-      ],
-      "nextNodeId": "e14_n09"
-    },
-    "e14_n09": {
-      "id": "e14_n09",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "Eva... No. She died. I saw her die.",
-          "textKey": "episode_14.e14_n09.event1.text"
+          "message": "[ORIGINAL CREW MANIFEST ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_14.e14_n09.event3.title",
+          "contentKey": "episode_14.e14_n09.event3.content",
+          "captionKey": "episode_14.e14_n09.event3.caption",
+          "messageKey": "episode_14.e14_n09.event3.message"
         }
       ],
       "nextNodeId": "e14_n10"
     },
     "e14_n10": {
       "id": "e14_n10",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "Eva...",
+          "textKey": "episode_14.e14_n10.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "No. She died. I saw her die.",
+          "textKey": "episode_14.e14_n10.event1.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_noah_how_eva_died",
+          "text": "NOAH, HOW DID EVA DIE?",
+          "effects": {
+            "noahTrust": 3,
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e14_n11_noah",
+          "textKey": "episode_14.e14_n10.choice0.text"
+        },
+        {
+          "id": "ask_maya_eva_presence",
+          "text": "MAYA, WHY WAS EVA THERE?",
+          "effects": {
+            "mayaTrust": 3,
+            "danger": 2,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e14_n11_maya",
+          "textKey": "episode_14.e14_n10.choice1.text"
+        }
+      ]
+    },
+    "e14_n11_noah": {
+      "id": "e14_n11_noah",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "There was fire first. Then pressure loss. Then Hale shouting for nobody to open the seal.",
+          "textKey": "episode_14.e14_n11_noah.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "But Eva was already on the wrong side.",
+          "textKey": "episode_14.e14_n11_noah.event1.text"
+        }
+      ],
+      "nextNodeId": "e14_n12"
+    },
+    "e14_n11_maya": {
+      "id": "e14_n11_maya",
       "speaker": "MAYA",
       "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 5200
         },
         {
           "type": "message",
-          "text": "She wasn't supposed to be there. I thought all references were deleted. Every single one.",
-          "textKey": "episode_14.e14_n10.event1.text"
-        }
-      ],
-      "nextNodeId": "e14_n11"
-    },
-    "e14_n11": {
-      "id": "e14_n11",
-      "speaker": "SYSTEM",
-      "events": [
+          "text": "She wasn't supposed to be there.",
+          "textKey": "episode_14.e14_n11_maya.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5600
+        },
         {
           "type": "message",
-          "text": "Personnel record comparison available.",
-          "textKey": "episode_14.e14_n11.event0.text"
+          "text": "I thought all references were deleted. Every single one.",
+          "textKey": "episode_14.e14_n11_maya.event1.text"
         }
       ],
       "nextNodeId": "e14_n12"
@@ -251,108 +601,318 @@
           "type": "file",
           "id": "deleted_personnel_record",
           "fileId": "deleted_personnel_record",
+          "fileType": "log",
           "title": "DELETED PERSONNEL RECORD",
-          "content": "EVA THORNE\n\nSTATUS: REMOVED\n\nAUTHORIZED BY:\nETHAN HALE",
+          "content": "EVA THORNE\n\nSTATUS: REMOVED\n\nAUTHORIZED BY:\nETHAN HALE\n\nREMOVAL CLASS: TOTAL PERSONNEL SCRUB\nREASON: CLASSIFIED",
+          "caption": "Deleted personnel record showing Eva Thorne was removed by Ethan Hale.",
+          "source": "PERSONNEL_ARCHIVE_DELETED",
+          "tags": [
+            "eva_thorne",
+            "deleted",
+            "hale",
+            "personnel_scrub"
+          ],
           "correlationTags": [
             "eva_identity"
           ],
+          "message": "[DELETED PERSONNEL RECORD ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
           "titleKey": "episode_14.e14_n12.event0.title",
-          "contentKey": "episode_14.e14_n12.event0.content"
-        }
-      ],
-      "nextNodeId": "e14_n13"
-    },
-    "e14_n13": {
-      "id": "e14_n13",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2200
+          "contentKey": "episode_14.e14_n12.event0.content",
+          "captionKey": "episode_14.e14_n12.event0.caption",
+          "messageKey": "episode_14.e14_n12.event0.message"
         },
         {
-          "type": "message",
-          "text": "Hale erased her.",
-          "textKey": "episode_14.e14_n13.event1.text"
-        }
-      ],
-      "nextNodeId": "e14_n14"
-    },
-    "e14_n14": {
-      "id": "e14_n14",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2600
+          "type": "systemAlert",
+          "text": "[EVA IDENTITY CORRELATION REQUIRED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_14.e14_n12.event1.text"
         },
         {
-          "type": "message",
-          "text": "Stop digging. You don't understand what she was. You don't understand what she did.",
-          "textKey": "episode_14.e14_n14.event1.text"
+          "type": "puzzle",
+          "puzzleId": "eva_identity_correlation_14",
+          "pauseAfterMs": 700
         }
       ],
-      "nextNodeId": "e14_n15"
+      "choices": []
     },
-    "e14_n15": {
-      "id": "e14_n15",
+    "e14_n15_fail": {
+      "id": "e14_n15_fail",
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "glitch",
-          "duration": 1500
+          "type": "systemAlert",
+          "text": "[EVA IDENTITY CORRELATION FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_14.e14_n15_fail.event0.text"
         },
         {
-          "type": "signalLost",
-          "duration": 3000,
-          "restoreMessage": "[SIGNAL RESTORED]",
-          "restoreMessageKey": "episode_14.e14_n15.event1.restoreMessage"
+          "type": "statChange",
+          "changes": {
+            "danger": 5,
+            "signalStrength": -6,
+            "morale": -2
+          }
         },
         {
-          "type": "corruptMessage",
-          "speaker": "EVA",
-          "text": "Find the truth. Before he deletes it again.",
-          "textKey": "episode_14.e14_n15.event2.text"
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "No. Copy A hides her. Copy B redacts her. Deleted record says Hale removed her. Put it together.",
+          "textKey": "episode_14.e14_n15_fail.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "eva_identity_correlation_14",
+          "pauseAfterMs": 700
         }
       ],
-      "nextNodeId": "e14_n16"
+      "choices": []
     },
     "e14_n16": {
       "id": "e14_n16",
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "file",
-          "id": "incident_alpha_master_record",
-          "fileId": "incident_alpha_master_record",
-          "title": "INCIDENT ALPHA MASTER RECORD",
-          "content": "CLASSIFIED\n\nACCESS DENIED",
-          "titleKey": "episode_14.e14_n16.event0.title",
-          "contentKey": "episode_14.e14_n16.event0.content"
+          "type": "systemAlert",
+          "text": "[EVA IDENTITY CONFIRMED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_14.e14_n16.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": 4
+          }
         }
       ],
       "nextNodeId": "e14_n17"
     },
     "e14_n17": {
       "id": "e14_n17",
-      "speaker": "MAYA",
+      "speaker": "NOAH",
       "events": [
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "Everything started with Eva.",
-          "textKey": "episode_14.e14_n17.event1.text"
+          "text": "Hale erased her.",
+          "textKey": "episode_14.e14_n17.event0.text"
+        }
+      ],
+      "nextNodeId": "e14_n18"
+    },
+    "e14_n18": {
+      "id": "e14_n18",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "Stop digging.",
+          "textKey": "episode_14.e14_n18.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "You don't understand what she was. You don't understand what she did.",
+          "textKey": "episode_14.e14_n18.event1.text"
         }
       ],
       "choices": [
         {
-          "id": "continue_to_episode_15",
+          "id": "accuse_hale_erasing_eva",
+          "text": "YOU ERASED EVA.",
+          "effects": {
+            "haleTrust": -8,
+            "mayaTrust": 2,
+            "noahTrust": 2,
+            "danger": 6,
+            "signalStrength": -5,
+            "accusedHaleEva": true
+          },
+          "nextNodeId": "e14_n19_accuse",
+          "textKey": "episode_14.e14_n18.choice0.text"
+        },
+        {
+          "id": "ask_hale_what_eva_did",
+          "text": "WHAT DID EVA DO?",
+          "effects": {
+            "haleTrust": 3,
+            "mayaTrust": -1,
+            "danger": 3,
+            "signalStrength": -1,
+            "askedWhatEvaDid": true
+          },
+          "nextNodeId": "e14_n19_ask",
+          "textKey": "episode_14.e14_n18.choice1.text"
+        }
+      ]
+    },
+    "e14_n19_accuse": {
+      "id": "e14_n19_accuse",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "Yes.",
+          "textKey": "episode_14.e14_n19_accuse.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "And if you think that was the worst thing I did, then you still don't understand the situation.",
+          "textKey": "episode_14.e14_n19_accuse.event1.text"
+        }
+      ],
+      "nextNodeId": "e14_n20"
+    },
+    "e14_n19_ask": {
+      "id": "e14_n19_ask",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "She opened something that should have stayed sealed.",
+          "textKey": "episode_14.e14_n19_ask.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "And I spent the rest of my life trying to make the station forget her name.",
+          "textKey": "episode_14.e14_n19_ask.event1.text"
+        }
+      ],
+      "nextNodeId": "e14_n20"
+    },
+    "e14_n20": {
+      "id": "e14_n20",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "glitch",
+          "duration": 1500,
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "signalLost",
+          "duration": 3000,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 900,
+          "messageKey": "episode_14.e14_n20.event1.message",
+          "restoreMessageKey": "episode_14.e14_n20.event1.restoreMessage"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "EVA",
+          "text": "Find the truth. Before he deletes it again.",
+          "pauseAfterMs": 1200,
+          "textKey": "episode_14.e14_n20.event2.text"
+        }
+      ],
+      "nextNodeId": "e14_n21"
+    },
+    "e14_n21": {
+      "id": "e14_n21",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "incident_alpha_master_record",
+          "fileId": "incident_alpha_master_record",
+          "fileType": "file",
+          "title": "INCIDENT ALPHA MASTER RECORD",
+          "content": "CLASSIFIED\n\nACCESS DENIED\n\nACCESS REQUIREMENT:\nOMEGA / EVA THORNE / INCIDENT ALPHA",
+          "caption": "Master record for Incident Alpha. Access remains denied.",
+          "source": "INCIDENT_ALPHA_ARCHIVE",
+          "tags": [
+            "incident_alpha",
+            "eva_thorne",
+            "classified",
+            "omega"
+          ],
+          "correlationTags": [
+            "incident_alpha",
+            "eva_identity"
+          ],
+          "message": "[INCIDENT ALPHA MASTER RECORD ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_14.e14_n21.event0.title",
+          "contentKey": "episode_14.e14_n21.event0.content",
+          "captionKey": "episode_14.e14_n21.event0.caption",
+          "messageKey": "episode_14.e14_n21.event0.message"
+        }
+      ],
+      "nextNodeId": "e14_n22"
+    },
+    "e14_n22": {
+      "id": "e14_n22",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Everything started with Eva.",
+          "textKey": "episode_14.e14_n22.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "And Hale has been trying to keep us away from her since the first signal.",
+          "textKey": "episode_14.e14_n22.event1.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "access_incident_alpha",
           "text": "ACCESS INCIDENT ALPHA.",
+          "effects": {
+            "danger": 4,
+            "signalStrength": -4,
+            "accessingIncidentAlpha": true
+          },
           "nextEpisodeId": "episode_15",
-          "textKey": "episode_14.e14_n17.choice0.text"
+          "textKey": "episode_14.e14_n22.choice0.text"
+        },
+        {
+          "id": "secure_eva_records_first",
+          "text": "SECURE EVA RECORDS FIRST.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": 3,
+            "securedEvaRecords": true
+          },
+          "nextEpisodeId": "episode_15",
+          "textKey": "episode_14.e14_n22.choice1.text"
         }
       ]
     }

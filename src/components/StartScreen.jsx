@@ -101,7 +101,7 @@ export default function StartScreen({
     );
   }
 
-  return (
+ return (
   <main className="relative flex min-h-dvh items-center justify-center overflow-hidden px-6 py-10 text-cyan-50 animate-[startScreenFadeIn_0.9s_ease-out_both]">
     <img
       src="/echo-menu-bg.jpg"
@@ -110,15 +110,11 @@ export default function StartScreen({
       draggable={false}
     />
 
-    <div className="absolute inset-0 bg-black/55" />
+    <div className="absolute inset-0 bg-black/35" />
 
-    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent,rgba(0,0,0,0.72))]" />
+    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent,rgba(0,0,0,0.48))]" />
 
-    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.65),transparent_35%,transparent_65%,rgba(0,0,0,0.75))]" />
-
-    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.08),transparent_70%)]" />
-
-    <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.025),rgba(255,255,255,0.025)_1px,transparent_1px,transparent_5px)] opacity-45" />
+    <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.018),rgba(255,255,255,0.018)_1px,transparent_1px,transparent_5px)] opacity-35" />
 
     <button
       type="button"
@@ -126,7 +122,7 @@ export default function StartScreen({
       className={[
         "absolute right-5 top-5 z-20",
         "grid h-10 w-10 place-items-center",
-        "border border-cyan-300/25 bg-slate-950/60",
+        "border border-cyan-300/25 bg-slate-950/45",
         "text-cyan-100 backdrop-blur-sm",
         "transition hover:border-cyan-300/50 hover:bg-cyan-400/10"
       ].join(" ")}
@@ -136,44 +132,28 @@ export default function StartScreen({
     </button>
 
     <section className="relative z-10 flex w-full max-w-xl flex-col items-center text-center">
-      <div className="mb-8 text-center">
-        <h1 className="text-4xl font-light tracking-[0.35em] text-cyan-100 drop-shadow-[0_0_22px_rgba(34,211,238,0.55)] sm:text-6xl">
+      <div className="mb-10 text-center">
+        <h1 className="text-5xl font-light tracking-[0.32em] text-cyan-100 drop-shadow-[0_0_26px_rgba(34,211,238,0.65)] sm:text-7xl">
           {gameTitle}
         </h1>
 
-        <div className="mx-auto mt-4 h-px w-56 bg-cyan-300/35 shadow-[0_0_18px_rgba(34,211,238,0.6)]" />
+        <div className="mx-auto mt-5 h-px w-64 bg-cyan-300/40 shadow-[0_0_20px_rgba(34,211,238,0.65)]" />
       </div>
-
-      <p className="mb-3 text-[10px] tracking-[0.35em] text-cyan-300/70">
-        {getGameText(
-          "start.remoteSignalDetected",
-          "REMOTE SIGNAL DETECTED",
-          language
-        )}
-      </p>
-
-      <p className="mb-10 max-w-md text-sm leading-7 text-cyan-50/70 sm:text-base">
-        {subtitle}
-      </p>
 
       <button
         type="button"
         onClick={onStart}
         className={[
-          "w-full max-w-xs border border-cyan-300/45 bg-slate-950/45 px-8 py-4",
+          "w-full max-w-xs border border-cyan-300/50 bg-slate-950/40 px-8 py-4",
           "text-sm tracking-[0.28em] text-cyan-100 backdrop-blur-sm",
           "transition-all duration-300",
-          "hover:border-cyan-300/80 hover:bg-cyan-400/10",
-          "hover:shadow-[0_0_30px_rgba(34,211,238,0.22)]",
+          "hover:border-cyan-300/85 hover:bg-cyan-400/10",
+          "hover:shadow-[0_0_30px_rgba(34,211,238,0.24)]",
           "active:scale-[0.98]"
         ].join(" ")}
       >
         {getGameText("start.establishLink", "ESTABLISH LINK", language)}
       </button>
-
-      <div className="mt-8 text-[10px] tracking-[0.35em] text-cyan-50/40">
-        {getGameText("start.statusUnstable", "STATUS: UNSTABLE", language)}
-      </div>
     </section>
 
     {isSettingsOpen && (

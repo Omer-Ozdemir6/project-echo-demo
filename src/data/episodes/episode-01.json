@@ -7,8 +7,8 @@
       "id": "relay_password",
       "type": "code",
       "title": "RELAY ACCESS",
-      "description": "Access code required.",
-      "prompt": "ENTER ACCESS CODE",
+      "description": "Access code required. Use the active relay authorization, not the deprecated fragment.",
+      "prompt": "ENTER ACTIVE RELAY CODE",
       "placeholder": "0000",
       "inputMode": "numeric",
       "maxLength": 4,
@@ -16,14 +16,79 @@
       "acceptedAnswers": [
         "7391"
       ],
-      "successNodeId": "e01_n05",
-      "failureNodeId": "e01_n04_fail",
+      "successNodeId": "e01_n06",
+      "failureNodeId": "e01_n05_fail",
       "submitCooldownMs": 500,
+      "accessLevel": "MAINTENANCE",
+      "panelStatus": "LOCKED",
+      "expectedFormat": "4 DIGITS",
+      "hints": [
+        "CHECK HALE'S CREW LOG",
+        "USE THE CURRENT RELAY AUTHORIZATION",
+        "DEPRECATED FRAGMENT IS NOT VALID"
+      ],
       "titleKey": "episode_01.relay_password.puzzle0.title",
       "descriptionKey": "episode_01.relay_password.puzzle0.description",
       "promptKey": "episode_01.relay_password.puzzle0.prompt",
       "submitLabelKey": "episode_01.relay_password.puzzle0.submitLabel",
       "placeholderKey": "episode_01.relay_password.puzzle0.placeholder"
+    },
+    "power_routing_01": {
+      "id": "power_routing_01",
+      "type": "matching",
+      "title": "RELAY POWER ROUTING",
+      "description": "Match unstable power nodes with the correct station systems.",
+      "submitLabel": "CONFIRM ROUTING",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e01_n07",
+      "failureNodeId": "e01_n06_route_fail",
+      "leftItems": [
+        {
+          "id": "node_a",
+          "label": "NODE A: LOW DRAW / STABLE"
+        },
+        {
+          "id": "node_b",
+          "label": "NODE B: HIGH DRAW / UNSTABLE"
+        },
+        {
+          "id": "node_c",
+          "label": "NODE C: EMERGENCY RESERVE"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "relay_spine",
+          "label": "RELAY SPINE"
+        },
+        {
+          "id": "life_support",
+          "label": "LIFE SUPPORT"
+        },
+        {
+          "id": "archive_cache",
+          "label": "ARCHIVE CACHE"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "node_a",
+          "rightId": "archive_cache"
+        },
+        {
+          "leftId": "node_b",
+          "rightId": "relay_spine"
+        },
+        {
+          "leftId": "node_c",
+          "rightId": "life_support"
+        }
+      ],
+      "titleKey": "episode_01.power_routing_01.puzzle1.title",
+      "descriptionKey": "episode_01.power_routing_01.puzzle1.description",
+      "submitLabelKey": "episode_01.power_routing_01.puzzle1.submitLabel"
     }
   },
   "nodes": {
@@ -44,20 +109,7 @@
         {
           "type": "message",
           "text": "Can you hear me?",
-          "textKey": "episode_01.e01_n01.event2.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1500
-        },
-        {
-          "type": "typing",
-          "duration": 1700
-        },
-        {
-          "type": "message",
-          "text": "If this is another automated relay echo, I swear I'm going to lose what little patience I have left.",
-          "textKey": "episode_01.e01_n01.event5.text"
+          "textKey": "episode_01.e01_n01.event1.text"
         },
         {
           "type": "pause",
@@ -65,12 +117,21 @@
         },
         {
           "type": "typing",
-          "duration": 1500
+          "duration": 2400
         },
         {
           "type": "message",
-          "text": "Wait...",
-          "textKey": "episode_01.e01_n01.event8.text"
+          "text": "Please don't be another automated relay echo. I have been losing arguments with machines for weeks.",
+          "textKey": "episode_01.e01_n01.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Wait.",
+          "textKey": "episode_01.e01_n01.event3.text"
         },
         {
           "type": "typing",
@@ -79,25 +140,16 @@
         {
           "type": "message",
           "text": "You answered.",
-          "textKey": "episode_01.e01_n01.event10.text"
+          "textKey": "episode_01.e01_n01.event4.text"
         },
         {
           "type": "typing",
-          "duration": 2500
+          "duration": 2600
         },
         {
           "type": "message",
-          "text": "Okay. Okay, that's real. You're real.",
-          "textKey": "episode_01.e01_n01.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2800
-        },
-        {
-          "type": "message",
-          "text": "My name is Dr. Ethan Hale.",
-          "textKey": "episode_01.e01_n01.event14.text"
+          "text": "Okay. That's real. You're real.",
+          "textKey": "episode_01.e01_n01.event5.text"
         },
         {
           "type": "typing",
@@ -105,8 +157,17 @@
         },
         {
           "type": "message",
-          "text": "Chief Engineer. Orbital Research Station ECHO. And before you ask, no, I don't have a better distress protocol than begging a stranger through a broken relay.",
-          "textKey": "episode_01.e01_n01.event16.text"
+          "text": "I'm Dr. Ethan Hale. Chief Engineer, Orbital Research Station ECHO.",
+          "textKey": "episode_01.e01_n01.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "And before you ask, no, my official emergency plan was not supposed to be begging a stranger through a half-dead relay.",
+          "textKey": "episode_01.e01_n01.event7.text"
         }
       ],
       "choices": [
@@ -115,7 +176,8 @@
           "text": "WHO ARE YOU?",
           "effects": {
             "trust": 3,
-            "morale": 1
+            "morale": 1,
+            "haleTrust": 2
           },
           "nextNodeId": "e01_n02_who",
           "textKey": "episode_01.e01_n01.choice0.text"
@@ -126,7 +188,8 @@
           "effects": {
             "trust": -4,
             "danger": 2,
-            "signalStrength": -3
+            "signalStrength": -3,
+            "haleTrust": -3
           },
           "nextNodeId": "e01_n02_prove",
           "textKey": "episode_01.e01_n01.choice1.text"
@@ -148,21 +211,12 @@
         },
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "I'm Hale. Engineering lead. I kept the relay spine alive after the blackout.",
+          "text": "I kept the relay spine alive after the blackout. Which sounds heroic until you remember the relay is currently coughing blood.",
           "textKey": "episode_01.e01_n02_who.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2900
-        },
-        {
-          "type": "message",
-          "text": "That sounds impressive until you remember I'm currently talking to you through a dying antenna and a prayer.",
-          "textKey": "episode_01.e01_n02_who.event2.text"
         }
       ],
       "nextNodeId": "e01_n02"
@@ -173,7 +227,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 2400
         },
         {
           "type": "message",
@@ -181,12 +235,8 @@
           "textKey": "episode_01.e01_n02_prove.event0.text"
         },
         {
-          "type": "pause",
-          "duration": 900
-        },
-        {
           "type": "typing",
-          "duration": 2700
+          "duration": 2800
         },
         {
           "type": "message",
@@ -195,11 +245,11 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3400
         },
         {
           "type": "message",
-          "text": "I have oxygen at thirty-two percent, a suit battery that keeps lying to me, and a station that answers back in voices it shouldn't have.",
+          "text": "Oxygen is at thirty-two percent. Suit battery says forty, which means twenty if it's feeling honest.",
           "textKey": "episode_01.e01_n02_prove.event2.text"
         },
         {
@@ -209,10 +259,25 @@
           "textKey": "episode_01.e01_n02_prove.event3.text"
         },
         {
-          "type": "statChange",
-          "changes": {
-            "signalStrength": -4
-          }
+          "type": "log",
+          "id": "biometric_fragment_hale",
+          "fileId": "biometric_fragment_hale",
+          "fileType": "log",
+          "title": "BIOMETRIC FRAGMENT: HALE",
+          "source": "SUIT_TELEMETRY",
+          "content": "SUBJECT: ETHAN HALE\nHEART RATE: ELEVATED\nOXYGEN: 32%\nSUIT LINK: UNSTABLE\nVOICEPRINT MATCH: 81%",
+          "caption": "Partial telemetry fragment transmitted through the relay.",
+          "tags": [
+            "hale",
+            "biometric",
+            "telemetry"
+          ],
+          "message": "[BIOMETRIC FRAGMENT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_01.e01_n02_prove.event4.title",
+          "contentKey": "episode_01.e01_n02_prove.event4.content",
+          "captionKey": "episode_01.e01_n02_prove.event4.caption",
+          "messageKey": "episode_01.e01_n02_prove.event4.message"
         }
       ],
       "nextNodeId": "e01_n02"
@@ -223,34 +288,30 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2400
-        },
-        {
-          "type": "message",
-          "text": "The station suffered a major systems failure.",
-          "textKey": "episode_01.e01_n02.event5.text"
-        },
-        {
-          "type": "typing",
           "duration": 2800
         },
         {
           "type": "message",
-          "text": "Most communication channels collapsed. Internal routing is fragmented. External traffic is basically dead.",
-          "textKey": "episode_01.e01_n02.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 900
+          "text": "Something happened here. Something very wrong.",
+          "textKey": "episode_01.e01_n02.event0.text"
         },
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 3200
         },
         {
           "type": "message",
-          "text": "You're the first real signal I've received in months.",
-          "textKey": "episode_01.e01_n02.event10.text"
+          "text": "The station went dark. Comms folded. Internal routing broke into pieces.",
+          "textKey": "episode_01.e01_n02.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "You're the first signal I've had in months that didn't sound like a ghost wearing someone else's mouth.",
+          "textKey": "episode_01.e01_n02.event2.text"
         },
         {
           "type": "backgroundEvent",
@@ -258,7 +319,7 @@
           "event": {
             "type": "systemAlert",
             "text": "[UNAUTHORIZED OBSERVER DETECTED]",
-            "textKey": "episode_01.e01_n02.backgroundEvent11.text"
+            "textKey": "episode_01.e01_n02.backgroundEvent0.text"
           }
         }
       ],
@@ -269,7 +330,8 @@
           "effects": {
             "trust": 5,
             "morale": 5,
-            "signalStrength": 2
+            "signalStrength": 2,
+            "haleTrust": 4
           },
           "nextNodeId": "e01_n03_help",
           "textKey": "episode_01.e01_n02.choice0.text"
@@ -279,7 +341,8 @@
           "text": "I NEED MORE INFORMATION.",
           "effects": {
             "trust": 1,
-            "danger": -1
+            "danger": -1,
+            "haleTrust": 1
           },
           "nextNodeId": "e01_n03_info",
           "textKey": "episode_01.e01_n02.choice1.text"
@@ -292,7 +355,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 2400
         },
         {
           "type": "message",
@@ -301,11 +364,11 @@
         },
         {
           "type": "typing",
-          "duration": 2400
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "Stay sharp, though. Helping me may not mean trusting me.",
+          "text": "But don't confuse helping me with trusting me. Those are different wires. Cross them and something sparks.",
           "textKey": "episode_01.e01_n03_help.event1.text"
         }
       ],
@@ -326,11 +389,11 @@
         },
         {
           "type": "typing",
-          "duration": 2900
+          "duration": 3200
         },
         {
           "type": "message",
-          "text": "Ask questions. Just don't take forever. The station isn't waiting for us to become friends.",
+          "text": "Ask questions. Just don't take forever. The station has a habit of punishing hesitation.",
           "textKey": "episode_01.e01_n03_info.event1.text"
         }
       ],
@@ -342,21 +405,21 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 2700
         },
         {
           "type": "message",
-          "text": "Information is something I can still give you.",
-          "textKey": "episode_01.e01_n03.event1.text"
+          "text": "I'm sending the only crew record I can still access.",
+          "textKey": "episode_01.e01_n03.event0.text"
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3500
         },
         {
           "type": "message",
-          "text": "I'm sending the only crew record I can still access. If it cuts out halfway, don't blame me. Blame the relay. Or the corpse of the relay.",
-          "textKey": "episode_01.e01_n03.event3.text"
+          "text": "If it cuts out halfway, blame the relay. Or the corpse of the relay. It was never very good at dying gracefully.",
+          "textKey": "episode_01.e01_n03.event1.text"
         },
         {
           "type": "log",
@@ -365,8 +428,8 @@
           "fileType": "log",
           "title": "CREW LOG: ETHAN HALE",
           "source": "STATION_ARCHIVE",
-          "content": "DR. ETHAN HALE — CHIEF ENGINEER. RELAY MAINTENANCE AUTHORIZATION: 7391. STATUS: ACTIVE.\n\nNOTE: Secondary maintenance index lists deprecated authorization fragment 7319. Use latest active relay authorization only.",
-          "caption": "Recovered identity and maintenance fragment.",
+          "content": "DR. ETHAN HALE — CHIEF ENGINEER\nRELAY MAINTENANCE AUTHORIZATION: 73_1\nSTATUS: ACTIVE\n\nNOTE: Secondary maintenance index lists deprecated fragment: _319.\nCurrent authorization must be reconstructed from active record.",
+          "caption": "Recovered identity and maintenance fragment. Authorization appears partially damaged.",
           "tags": [
             "crew",
             "hale",
@@ -375,59 +438,84 @@
           ],
           "message": "[CREW LOG ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1300,
-          "titleKey": "episode_01.e01_n03.event4.title",
-          "contentKey": "episode_01.e01_n03.event4.content",
-          "captionKey": "episode_01.e01_n03.event4.caption",
-          "messageKey": "episode_01.e01_n03.event4.message"
+          "titleKey": "episode_01.e01_n03.event2.title",
+          "contentKey": "episode_01.e01_n03.event2.content",
+          "captionKey": "episode_01.e01_n03.event2.caption",
+          "messageKey": "episode_01.e01_n03.event2.message"
         },
         {
           "type": "typing",
-          "duration": 2700
+          "duration": 3100
         },
         {
           "type": "message",
-          "text": "That maintenance code may still open the relay door. The current one. Not the deprecated one.",
-          "textKey": "episode_01.e01_n03.event6.text"
+          "text": "That code should still open the relay door, but the file is damaged.",
+          "textKey": "episode_01.e01_n03.event3.text"
         },
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 3400
         },
         {
           "type": "message",
-          "text": "And yes, I realize I just sent you a file with my authorization code in it.",
-          "textKey": "episode_01.e01_n03.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "Please don't make that the most embarrassing thing that happens today.",
-          "textKey": "episode_01.e01_n03.event10.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 9000,
-          "event": {
-            "type": "systemAlert",
-            "text": "[BACKGROUND SCAN: WEAK SECONDARY SIGNAL DETECTED]",
-            "textKey": "episode_01.e01_n03.backgroundEvent11.text"
-          }
+          "text": "You'll need to read it properly. Current authorization, not deprecated fragment.",
+          "textKey": "episode_01.e01_n03.event4.text"
         }
       ],
       "choices": [
         {
-          "id": "continue_to_relay",
-          "text": "MOVE TO THE RELAY DOOR.",
-          "nextNodeId": "e01_n04",
+          "id": "ask_for_direct_code",
+          "text": "CAN YOU JUST TELL ME THE CODE?",
           "effects": {
-            "danger": 2
+            "trust": -2,
+            "danger": 1,
+            "haleTrust": -2
           },
+          "nextNodeId": "e01_n04_direct",
           "textKey": "episode_01.e01_n03.choice0.text"
+        },
+        {
+          "id": "move_to_relay",
+          "text": "MOVE TO THE RELAY DOOR.",
+          "effects": {
+            "danger": 2,
+            "haleTrust": 1
+          },
+          "nextNodeId": "e01_n04",
+          "textKey": "episode_01.e01_n03.choice1.text"
         }
       ]
+    },
+    "e01_n04_direct": {
+      "id": "e01_n04_direct",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "I would love to. Truly. Unfortunately, my memory currently has the structural integrity of wet paper.",
+          "textKey": "episode_01.e01_n04_direct.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "The log says active authorization starts with seventy-three and ends with one. The old fragment has a nine in it.",
+          "textKey": "episode_01.e01_n04_direct.event1.text"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[HALE COOPERATION DEGRADED]",
+          "pauseAfterMs": 800,
+          "textKey": "episode_01.e01_n04_direct.event2.text"
+        }
+      ],
+      "nextNodeId": "e01_n04"
     },
     "e01_n04": {
       "id": "e01_n04",
@@ -440,7 +528,7 @@
         {
           "type": "message",
           "text": "The relay room should still be operational.",
-          "textKey": "episode_01.e01_n04.event1.text"
+          "textKey": "episode_01.e01_n04.event0.text"
         },
         {
           "type": "typing",
@@ -449,11 +537,7 @@
         {
           "type": "message",
           "text": "Should.",
-          "textKey": "episode_01.e01_n04.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 800
+          "textKey": "episode_01.e01_n04.event1.text"
         },
         {
           "type": "typing",
@@ -462,22 +546,13 @@
         {
           "type": "message",
           "text": "I hate that word now.",
-          "textKey": "episode_01.e01_n04.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "The access door is locked. Four digits. If you picked up the wrong fragment, the door will flag us as hostile.",
-          "textKey": "episode_01.e01_n04.event8.text"
+          "textKey": "episode_01.e01_n04.event2.text"
         },
         {
           "type": "systemAlert",
           "text": "[LOCKED DEVICE DETECTED: RELAY ACCESS]",
-          "pauseAfterMs": 1000,
-          "textKey": "episode_01.e01_n04.event9.text"
+          "pauseAfterMs": 900,
+          "textKey": "episode_01.e01_n04.event3.text"
         },
         {
           "type": "puzzle",
@@ -487,15 +562,15 @@
       ],
       "choices": []
     },
-    "e01_n04_fail": {
-      "id": "e01_n04_fail",
+    "e01_n05_fail": {
+      "id": "e01_n05_fail",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[ACCESS DENIED]",
           "pauseAfterMs": 900,
-          "textKey": "episode_01.e01_n04_fail.event0.text"
+          "textKey": "episode_01.e01_n05_fail.event0.text"
         },
         {
           "type": "statChange",
@@ -513,34 +588,34 @@
         {
           "type": "message",
           "speaker": "HALE",
-          "text": "That was the wrong code.",
-          "textKey": "episode_01.e01_n04_fail.event3.text"
+          "text": "Wrong code.",
+          "textKey": "episode_01.e01_n05_fail.event1.text"
         },
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 2800
         },
         {
           "type": "message",
           "speaker": "HALE",
-          "text": "The panel noticed. Of course it noticed.",
-          "textKey": "episode_01.e01_n04_fail.event4.text"
+          "text": "The panel noticed. Of course it noticed. It has one job and apparently it's good at being offended.",
+          "textKey": "episode_01.e01_n05_fail.event2.text"
         },
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 3200
         },
         {
           "type": "message",
           "speaker": "HALE",
-          "text": "Try again, but carefully. Current relay authorization. Not the old maintenance fragment.",
-          "textKey": "episode_01.e01_n04_fail.event5.text"
+          "text": "Try again. Active relay authorization. Not the deprecated fragment.",
+          "textKey": "episode_01.e01_n05_fail.event3.text"
         },
         {
           "type": "systemAlert",
           "text": "[SECURITY ATTENTION INCREASED]",
           "pauseAfterMs": 900,
-          "textKey": "episode_01.e01_n04_fail.event6.text"
+          "textKey": "episode_01.e01_n05_fail.event4.text"
         },
         {
           "type": "puzzle",
@@ -550,39 +625,22 @@
       ],
       "choices": []
     },
-    "e01_n05": {
-      "id": "e01_n05",
+    "e01_n06": {
+      "id": "e01_n06",
       "speaker": "HALE",
       "events": [
         {
           "type": "systemAlert",
           "text": "[ACCESS GRANTED]",
           "pauseAfterMs": 900,
-          "textKey": "episode_01.e01_n05.event0.text"
+          "textKey": "episode_01.e01_n06.event0.text"
         },
         {
           "type": "statChange",
           "changes": {
-            "signalStrength": 4
+            "signalStrength": 6,
+            "haleTrust": 2
           }
-        },
-        {
-          "type": "typing",
-          "duration": 1700
-        },
-        {
-          "type": "message",
-          "text": "Good.",
-          "textKey": "episode_01.e01_n05.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2300
-        },
-        {
-          "type": "message",
-          "text": "Either you're very smart...",
-          "textKey": "episode_01.e01_n05.event4.text"
         },
         {
           "type": "typing",
@@ -590,60 +648,214 @@
         },
         {
           "type": "message",
-          "text": "or I accidentally gave you enough rope to drag us both into a security lockout.",
-          "textKey": "episode_01.e01_n05.event6.text"
+          "text": "Good. Either you're very smart, or I accidentally taught a stranger how to break into my station.",
+          "textKey": "episode_01.e01_n06.event1.text"
         },
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Let's pretend it's the first one.",
+          "textKey": "episode_01.e01_n06.event2.text"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[RELAY SPINE POWER UNSTABLE]",
+          "pauseAfterMs": 1000,
+          "textKey": "episode_01.e01_n06.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Door's open, but the relay spine is starving. I need you to route power before this link collapses again.",
+          "textKey": "episode_01.e01_n06.event4.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "power_routing_01",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e01_n06_route_fail": {
+      "id": "e01_n06_route_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[POWER ROUTING FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_01.e01_n06_route_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": -10,
+            "danger": 4,
+            "morale": -2
+          }
+        },
+        {
+          "type": "glitch",
+          "duration": 1100,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "No, no— don't feed the relay from reserve. Life support gets reserve. Relay gets the unstable node because apparently everything today is a moral compromise.",
+          "textKey": "episode_01.e01_n06_route_fail.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "power_routing_01",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e01_n07": {
+      "id": "e01_n07",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[POWER ROUTING ACCEPTED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_01.e01_n07.event0.text"
+        },
+        {
+          "type": "progressTask",
+          "id": "relay_repair_01",
+          "title": "RELAY REPAIR",
+          "subtitle": "Stabilizing relay spine and restoring signal carrier",
+          "duration": 7000,
+          "completeText": "[RELAY STABILIZED]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_01.e01_n07.event1.title",
+          "subtitleKey": "episode_01.e01_n07.event1.subtitle",
+          "completeTextKey": "episode_01.e01_n07.event1.completeText"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 15,
+            "danger": -2,
+            "morale": 3
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "There. That's better.",
+          "textKey": "episode_01.e01_n07.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Still terrible. But now it's professionally terrible.",
+          "textKey": "episode_01.e01_n07.event3.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_about_observer",
+          "text": "WHAT WAS THE OBSERVER WARNING?",
+          "effects": {
+            "danger": 2,
+            "signalStrength": -2,
+            "haleTrust": -1
+          },
+          "nextNodeId": "e01_n08_observer",
+          "textKey": "episode_01.e01_n07.choice0.text"
+        },
+        {
+          "id": "keep_hale_moving",
+          "text": "KEEP MOVING.",
+          "effects": {
+            "trust": 2,
+            "danger": 1,
+            "haleTrust": 2
+          },
+          "nextNodeId": "e01_n08_move",
+          "textKey": "episode_01.e01_n07.choice1.text"
+        }
+      ]
+    },
+    "e01_n08_observer": {
+      "id": "e01_n08_observer",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "I was hoping you didn't notice that.",
+          "textKey": "episode_01.e01_n08_observer.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4400
+        },
+        {
+          "type": "message",
+          "text": "Which is a stupid hope, since you are apparently the only competent thing connected to this relay.",
+          "textKey": "episode_01.e01_n08_observer.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "Something is listening through the carrier. Not a person. Not exactly.",
+          "textKey": "episode_01.e01_n08_observer.event2.text"
+        }
+      ],
+      "nextNodeId": "e01_n09"
+    },
+    "e01_n08_move": {
+      "id": "e01_n08_move",
+      "speaker": "HALE",
+      "events": [
         {
           "type": "typing",
           "duration": 2600
         },
         {
           "type": "message",
-          "text": "Let's pretend it's the first one.",
-          "textKey": "episode_01.e01_n05.event8.text"
+          "text": "Good. One nightmare at a time.",
+          "textKey": "episode_01.e01_n08_move.event0.text"
         },
         {
           "type": "typing",
-          "duration": 2400
+          "duration": 3200
         },
         {
           "type": "message",
-          "text": "The relay is online. Barely. But barely counts.",
-          "textKey": "episode_01.e01_n05.event10.text"
-        },
-        {
-          "type": "image",
-          "id": "corridor_photo_01",
-          "fileId": "corridor_photo_01",
-          "fileType": "image",
-          "title": "CORRIDOR PHOTO",
-          "caption": "Recovered corridor image from Hale's suit camera.",
-          "src": "/images/corridor_01.jpg",
-          "source": "HALE_SUIT_CAMERA",
-          "tags": [
-            "corridor",
-            "relay",
-            "photo"
-          ],
-          "pauseAfterMs": 1300,
-          "titleKey": "episode_01.e01_n05.event11.title",
-          "captionKey": "episode_01.e01_n05.event11.caption"
+          "text": "I can work with one nightmare. I have a system.",
+          "textKey": "episode_01.e01_n08_move.event1.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_after_relay",
-          "text": "KEEP MOVING.",
-          "nextNodeId": "e01_n06",
-          "effects": {
-            "trust": 2
-          },
-          "textKey": "episode_01.e01_n05.choice0.text"
-        }
-      ]
+      "nextNodeId": "e01_n09"
     },
-    "e01_n06": {
-      "id": "e01_n06",
+    "e01_n09": {
+      "id": "e01_n09",
       "speaker": "HALE",
       "events": [
         {
@@ -653,11 +865,11 @@
         {
           "type": "message",
           "text": "Hold on.",
-          "textKey": "episode_01.e01_n06.event1.text"
+          "textKey": "episode_01.e01_n09.event0.text"
         },
         {
           "type": "pause",
-          "duration": 1000
+          "duration": 900
         },
         {
           "type": "typing",
@@ -666,7 +878,7 @@
         {
           "type": "message",
           "text": "Did you hear that?",
-          "textKey": "episode_01.e01_n06.event4.text"
+          "textKey": "episode_01.e01_n09.event1.text"
         },
         {
           "type": "glitch",
@@ -678,7 +890,7 @@
           "speaker": "UNKNOWN",
           "text": "ASK HIM ABOUT DOOR 12",
           "pauseAfterMs": 1500,
-          "textKey": "episode_01.e01_n06.event6.text"
+          "textKey": "episode_01.e01_n09.event2.text"
         },
         {
           "type": "signalLost",
@@ -686,44 +898,8 @@
           "message": "[SIGNAL LOST]",
           "restoreMessage": "[SIGNAL RESTORED]",
           "pauseAfterMs": 1000,
-          "messageKey": "episode_01.e01_n06.event7.message",
-          "restoreMessageKey": "episode_01.e01_n06.event7.restoreMessage"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "Ignore that.",
-          "textKey": "episode_01.e01_n06.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "No. Sorry. That's a stupid thing to say.",
-          "textKey": "episode_01.e01_n06.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "Don't ignore it. Just don't obey it without thinking.",
-          "textKey": "episode_01.e01_n06.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "The station systems are unstable, and something is piggybacking on the relay.",
-          "textKey": "episode_01.e01_n06.event15.text"
+          "messageKey": "episode_01.e01_n09.event3.message",
+          "restoreMessageKey": "episode_01.e01_n09.event3.restoreMessage"
         },
         {
           "type": "statChange",
@@ -732,29 +908,136 @@
             "morale": -3,
             "signalStrength": -10
           }
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "Ignore that.",
+          "textKey": "episode_01.e01_n09.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "No. Sorry. That's a stupid thing to say.",
+          "textKey": "episode_01.e01_n09.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Don't ignore it. Just don't obey it without thinking.",
+          "textKey": "episode_01.e01_n09.event6.text"
         }
       ],
       "choices": [
         {
-          "id": "continue_after_glitch",
-          "text": "CHECK THE STATION LOGS.",
-          "nextNodeId": "e01_n07",
+          "id": "obey_unknown",
+          "text": "ASK ABOUT DOOR 12.",
           "effects": {
-            "danger": 2
+            "trust": -2,
+            "danger": 4,
+            "signalStrength": -5,
+            "haleTrust": -3
           },
-          "textKey": "episode_01.e01_n06.choice0.text"
+          "nextNodeId": "e01_n10_ask",
+          "textKey": "episode_01.e01_n09.choice0.text"
+        },
+        {
+          "id": "check_logs_first",
+          "text": "CHECK THE LOGS FIRST.",
+          "effects": {
+            "trust": 2,
+            "danger": 1,
+            "signalStrength": 1,
+            "haleTrust": 2
+          },
+          "nextNodeId": "e01_n10_logs",
+          "textKey": "episode_01.e01_n09.choice1.text"
         }
       ]
     },
-    "e01_n07": {
-      "id": "e01_n07",
+    "e01_n10_ask": {
+      "id": "e01_n10_ask",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "Door 12?",
+          "textKey": "episode_01.e01_n10_ask.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "text": "You heard a voice from nowhere and immediately handed it the steering wheel.",
+          "textKey": "episode_01.e01_n10_ask.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4300
+        },
+        {
+          "type": "message",
+          "text": "Fine. If it wants Door 12, we check Door 12. But we do it with records, not obedience.",
+          "textKey": "episode_01.e01_n10_ask.event2.text"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[HALE TRUST DEGRADED]",
+          "pauseAfterMs": 800,
+          "textKey": "episode_01.e01_n10_ask.event3.text"
+        }
+      ],
+      "nextNodeId": "e01_n11"
+    },
+    "e01_n10_logs": {
+      "id": "e01_n10_logs",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Good. Records first. Voices second.",
+          "textKey": "episode_01.e01_n10_logs.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "That is the closest thing to a survival philosophy I have left.",
+          "textKey": "episode_01.e01_n10_logs.event1.text"
+        }
+      ],
+      "nextNodeId": "e01_n11"
+    },
+    "e01_n11": {
+      "id": "e01_n11",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[SECURITY CACHE RECOVERED]",
           "pauseAfterMs": 900,
-          "textKey": "episode_01.e01_n07.event0.text"
+          "textKey": "episode_01.e01_n11.event0.text"
         },
         {
           "type": "log",
@@ -762,7 +1045,7 @@
           "fileId": "security_log_01",
           "fileType": "log",
           "title": "SECURITY LOG",
-          "content": "Door 12 opened at 21:17. Manual override accepted. Operator identity redacted. Internal sensor flagged decompression risk three minutes later.",
+          "content": "21:17 — Door 12 opened.\n21:17 — Manual override accepted.\n21:18 — Operator identity redacted.\n21:20 — Internal sensor flagged decompression risk.",
           "caption": "Recovered security event from the station archive.",
           "source": "STATION_SECURITY",
           "tags": [
@@ -775,67 +1058,16 @@
           ],
           "message": "[SECURITY LOG ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1200,
-          "titleKey": "episode_01.e01_n07.event1.title",
-          "contentKey": "episode_01.e01_n07.event1.content",
-          "captionKey": "episode_01.e01_n07.event1.caption",
-          "messageKey": "episode_01.e01_n07.event1.message"
+          "titleKey": "episode_01.e01_n11.event1.title",
+          "contentKey": "episode_01.e01_n11.event1.content",
+          "captionKey": "episode_01.e01_n11.event1.caption",
+          "messageKey": "episode_01.e01_n11.event1.message"
         },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "Door 12...",
-          "textKey": "episode_01.e01_n07.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "I know that corridor.",
-          "textKey": "episode_01.e01_n07.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1200
-        },
-        {
-          "type": "typing",
-          "duration": 4400
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "No. I don't like that sentence. I don't like knowing it before I remember it.",
-          "textKey": "episode_01.e01_n07.event8.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_to_medical",
-          "text": "SEARCH MEDICAL RECORDS.",
-          "nextNodeId": "e01_n08",
-          "effects": {
-            "danger": 1
-          },
-          "textKey": "episode_01.e01_n07.choice0.text"
-        }
-      ]
-    },
-    "e01_n08": {
-      "id": "e01_n08",
-      "speaker": "SYSTEM",
-      "events": [
         {
           "type": "systemAlert",
           "text": "[MEDICAL CACHE RECOVERED]",
           "pauseAfterMs": 900,
-          "textKey": "episode_01.e01_n08.event0.text"
+          "textKey": "episode_01.e01_n11.event2.text"
         },
         {
           "type": "log",
@@ -843,7 +1075,7 @@
           "fileId": "medical_report_01",
           "fileType": "log",
           "title": "MEDICAL REPORT",
-          "content": "Casualty reported at 21:20. Cause of injury: decompression trauma. Location: Door 12 access corridor. Status: fatal.",
+          "content": "21:20 — Casualty reported.\nCause: decompression trauma.\nLocation: Door 12 access corridor.\nStatus: fatal.",
           "caption": "Recovered emergency medical report.",
           "source": "STATION_MEDICAL",
           "tags": [
@@ -857,123 +1089,65 @@
           ],
           "message": "[MEDICAL REPORT ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1200,
-          "titleKey": "episode_01.e01_n08.event1.title",
-          "contentKey": "episode_01.e01_n08.event1.content",
-          "captionKey": "episode_01.e01_n08.event1.caption",
-          "messageKey": "episode_01.e01_n08.event1.message"
+          "titleKey": "episode_01.e01_n11.event3.title",
+          "contentKey": "episode_01.e01_n11.event3.content",
+          "captionKey": "episode_01.e01_n11.event3.caption",
+          "messageKey": "episode_01.e01_n11.event3.message"
         },
         {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "21:20.",
-          "textKey": "episode_01.e01_n08.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4400
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "Three minutes after the door opened.",
-          "textKey": "episode_01.e01_n08.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1500
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "No.",
-          "textKey": "episode_01.e01_n08.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "No, that can't be right.",
-          "textKey": "episode_01.e01_n08.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4400
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "I don't remember a casualty report. I don't remember anyone dying in that corridor.",
-          "textKey": "episode_01.e01_n08.event10.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "morale": -4,
-            "danger": 2
-          }
+          "type": "log",
+          "id": "camera_analysis_01",
+          "fileId": "camera_analysis_01",
+          "fileType": "log",
+          "title": "CAMERA ANALYSIS REPORT",
+          "content": "SOURCE: DOOR 12 SECURITY FEED\nFRAME STATUS: VISUAL DATA CORRUPTED\nANALYSIS RESULT:\n- One subject detected outside Door 12.\n- Subject biometric outline matches Ethan Hale.\n- Object detected in subject's right hand: manual override handle.\n- Frame terminated before decompression event.",
+          "caption": "Automated analysis generated from corrupted visual feed. No image recovered.",
+          "source": "STATION_CAMERA_ANALYSIS",
+          "tags": [
+            "camera_analysis",
+            "door_12",
+            "hale",
+            "override"
+          ],
+          "correlationTags": [
+            "incident_alpha"
+          ],
+          "message": "[CAMERA ANALYSIS REPORT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_01.e01_n11.event4.title",
+          "contentKey": "episode_01.e01_n11.event4.content",
+          "captionKey": "episode_01.e01_n11.event4.caption",
+          "messageKey": "episode_01.e01_n11.event4.message"
         }
       ],
       "choices": [
         {
-          "id": "press_hale_blackout",
-          "text": "ASK HALE ABOUT THE BLACKOUT.",
-          "nextNodeId": "e01_n09_press",
+          "id": "press_hale",
+          "text": "HALE, EXPLAIN THIS.",
           "effects": {
-            "trust": -1,
-            "danger": 2
+            "trust": -3,
+            "danger": 3,
+            "morale": -2,
+            "haleTrust": -4
           },
-          "textKey": "episode_01.e01_n08.choice0.text"
+          "nextNodeId": "e01_n12_press",
+          "textKey": "episode_01.e01_n11.choice0.text"
         },
         {
-          "id": "give_hale_a_second",
-          "text": "GIVE HIM A SECOND.",
-          "nextNodeId": "e01_n09_soft",
+          "id": "ask_gently",
+          "text": "DO YOU REMEMBER ANY OF THIS?",
           "effects": {
             "trust": 3,
-            "morale": 2
+            "morale": 2,
+            "haleTrust": 3
           },
-          "textKey": "episode_01.e01_n08.choice1.text"
+          "nextNodeId": "e01_n12_soft",
+          "textKey": "episode_01.e01_n11.choice1.text"
         }
       ]
     },
-    "e01_n09_press": {
-      "id": "e01_n09_press",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "text": "You're pressing because you should.",
-          "textKey": "episode_01.e01_n09_press.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "I hate that, but you're right.",
-          "textKey": "episode_01.e01_n09_press.event1.text"
-        }
-      ],
-      "nextNodeId": "e01_n09"
-    },
-    "e01_n09_soft": {
-      "id": "e01_n09_soft",
+    "e01_n12_press": {
+      "id": "e01_n12_press",
       "speaker": "HALE",
       "events": [
         {
@@ -982,8 +1156,8 @@
         },
         {
           "type": "message",
-          "text": "Thanks.",
-          "textKey": "episode_01.e01_n09_soft.event0.text"
+          "text": "I can't explain evidence I don't remember making.",
+          "textKey": "episode_01.e01_n12_press.event0.text"
         },
         {
           "type": "typing",
@@ -991,243 +1165,75 @@
         },
         {
           "type": "message",
-          "text": "I don't think I can afford the kindness, but... thanks.",
-          "textKey": "episode_01.e01_n09_soft.event1.text"
+          "text": "And every time you say my name like a charge being read in court, it gets harder to think.",
+          "textKey": "episode_01.e01_n12_press.event1.text"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[HALE COOPERATION DEGRADED]",
+          "pauseAfterMs": 800,
+          "textKey": "episode_01.e01_n12_press.event2.text"
         }
       ],
-      "nextNodeId": "e01_n09"
+      "nextNodeId": "e01_n13"
     },
-    "e01_n09": {
-      "id": "e01_n09",
+    "e01_n12_soft": {
+      "id": "e01_n12_soft",
       "speaker": "HALE",
       "events": [
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "There's one more thing.",
-          "textKey": "episode_01.e01_n09.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1400
-        },
-        {
-          "type": "typing",
-          "duration": 4800
-        },
-        {
-          "type": "message",
-          "text": "I don't remember what happened after the blackout.",
-          "textKey": "episode_01.e01_n09.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Not clearly.",
-          "textKey": "episode_01.e01_n09.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "text": "There are pieces.",
-          "textKey": "episode_01.e01_n09.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4400
-        },
-        {
-          "type": "message",
-          "text": "A warning alarm. Door 12. Someone shouting my name.",
-          "textKey": "episode_01.e01_n09.event10.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1800
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "Then nothing.",
-          "textKey": "episode_01.e01_n09.event13.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "believe_hale",
-          "text": "I BELIEVE YOU.",
-          "effects": {
-            "trust": 6,
-            "morale": 3,
-            "signalStrength": 2
-          },
-          "nextNodeId": "e01_n10_believe",
-          "textKey": "episode_01.e01_n09.choice0.text"
-        },
-        {
-          "id": "not_sure",
-          "text": "I'M NOT SURE.",
-          "effects": {
-            "trust": -5,
-            "danger": 4,
-            "morale": -2,
-            "signalStrength": -4
-          },
-          "nextNodeId": "e01_n10_suspect",
-          "textKey": "episode_01.e01_n09.choice1.text"
-        }
-      ]
-    },
-    "e01_n10_believe": {
-      "id": "e01_n10_believe",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3400
-        },
-        {
-          "type": "message",
-          "text": "Thank you.",
-          "textKey": "episode_01.e01_n10_believe.event0.text"
-        },
         {
           "type": "typing",
           "duration": 4200
         },
         {
           "type": "message",
-          "text": "You have no reason to. Not really. But thank you anyway.",
-          "textKey": "episode_01.e01_n10_believe.event1.text"
-        }
-      ],
-      "nextNodeId": "e01_n10"
-    },
-    "e01_n10_suspect": {
-      "id": "e01_n10_suspect",
-      "speaker": "HALE",
-      "events": [
+          "text": "Pieces.",
+          "textKey": "episode_01.e01_n12_soft.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "text": "A warning alarm. Door 12. Someone shouting my name like I had already done something unforgivable.",
+          "textKey": "episode_01.e01_n12_soft.event1.text"
+        },
         {
           "type": "typing",
           "duration": 3600
         },
         {
           "type": "message",
-          "text": "Fair enough.",
-          "textKey": "episode_01.e01_n10_suspect.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4300
-        },
-        {
-          "type": "message",
-          "text": "Honestly? I'm not sure I'd trust me either.",
-          "textKey": "episode_01.e01_n10_suspect.event1.text"
+          "text": "Then nothing.",
+          "textKey": "episode_01.e01_n12_soft.event2.text"
         }
       ],
-      "nextNodeId": "e01_n10"
+      "nextNodeId": "e01_n13"
     },
-    "e01_n10": {
-      "id": "e01_n10",
-      "speaker": "SYSTEM",
+    "e01_n13": {
+      "id": "e01_n13",
+      "speaker": "UNKNOWN",
       "events": [
         {
-          "type": "systemAlert",
-          "text": "[CAMERA FRAME RECOVERED]",
-          "pauseAfterMs": 1000,
-          "textKey": "episode_01.e01_n10.event0.text"
-        },
-        {
-          "type": "image",
-          "id": "camera_feed_01",
-          "fileId": "camera_feed_01",
-          "fileType": "image",
-          "title": "CAMERA FEED",
-          "caption": "Recovered security frame from Door 12 corridor.",
-          "src": "/images/camera_feed_01.jpg",
-          "source": "STATION_CAMERA",
-          "tags": [
-            "camera",
-            "door_12",
-            "timeline"
-          ],
-          "correlationTags": [
-            "incident_alpha"
-          ],
-          "pauseAfterMs": 1400,
-          "titleKey": "episode_01.e01_n10.event1.title",
-          "captionKey": "episode_01.e01_n10.event1.caption"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "That's me.",
-          "textKey": "episode_01.e01_n10.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "That's me standing outside Door 12.",
-          "textKey": "episode_01.e01_n10.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1600
-        },
-        {
-          "type": "typing",
-          "duration": 6200
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "Why am I holding the manual override?",
-          "textKey": "episode_01.e01_n10.event8.text"
-        },
-        {
           "type": "backgroundEvent",
-          "delay": 5200,
+          "delay": 1200,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "ASK HIM WHAT HAPPENED AFTER HE OPENED THE DOOR",
-            "textKey": "episode_01.e01_n10.backgroundEvent9.text"
+            "textKey": "episode_01.e01_n13.backgroundEvent0.text"
           }
         },
         {
           "type": "backgroundEvent",
-          "delay": 9500,
+          "delay": 5600,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "ASK HIM WHY SOMEONE DIED",
-            "textKey": "episode_01.e01_n10.backgroundEvent10.text"
+            "textKey": "episode_01.e01_n13.backgroundEvent1.text"
           }
-        },
-        {
-          "type": "pause",
-          "duration": 1800
         },
         {
           "type": "signalLost",
@@ -1235,8 +1241,8 @@
           "message": "[SIGNAL LOST]",
           "restoreMessage": "[SIGNAL RESTORED]",
           "pauseAfterMs": 1200,
-          "messageKey": "episode_01.e01_n10.event11.message",
-          "restoreMessageKey": "episode_01.e01_n10.event11.restoreMessage"
+          "messageKey": "episode_01.e01_n13.event0.message",
+          "restoreMessageKey": "episode_01.e01_n13.event0.restoreMessage"
         },
         {
           "type": "statChange",
@@ -1248,10 +1254,23 @@
       ],
       "choices": [
         {
-          "id": "continue_story",
-          "text": "CONTINUE.",
+          "id": "continue_to_records",
+          "text": "SAVE THE RECORDS AND CONTINUE.",
           "nextEpisodeId": "episode_02",
-          "textKey": "episode_01.e01_n10.choice0.text"
+          "effects": {
+            "danger": 1
+          },
+          "textKey": "episode_01.e01_n13.choice0.text"
+        },
+        {
+          "id": "keep_channel_open",
+          "text": "KEEP THE CHANNEL OPEN A LITTLE LONGER.",
+          "nextEpisodeId": "episode_02",
+          "effects": {
+            "danger": 3,
+            "signalStrength": -4
+          },
+          "textKey": "episode_01.e01_n13.choice1.text"
         }
       ]
     }

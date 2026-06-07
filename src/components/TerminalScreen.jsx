@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getGameText } from "../i18n/gameText";
 
 import MessageFeed from "./MessageFeed";
@@ -10,6 +10,7 @@ import SignalOverlay from "./SignalOverlay";
 import SettingsModal from "./SettingsModal";
 import ProgressTaskModal from "./ProgressTaskModal";
 import DecodeFileModal from "./DecodeFileModal";
+import { playSound } from "../audio/soundManager";
 
 
 
@@ -96,6 +97,10 @@ function clampSignal(value) {
 
   return Math.max(5, Math.min(100, number));
 }
+function handlePuzzleSubmit(value) {
+  playSound("puzzleSubmit", settings);
+  onPuzzleSubmit?.(value);
+}
 
 function getSignalMeta(value) {
   const safeValue = clampSignal(value);
@@ -138,6 +143,16 @@ function getSignalBar(value) {
   return "█".repeat(filled) + "░".repeat(10 - filled);
 }
 
+useEffect(() => {
+  if (signalStatus?.type === "lost") {
+    playSound("signalLost", settings);
+  }
+
+  if (signalStatus?.type === "restored") {
+    playSound("signalRestored", settings);
+  }
+}, [signalStatus, settings]);
+
 function handleOpenDataBankFile(file) {
   const shouldDecode = file.isNew;
 
@@ -154,6 +169,8 @@ function handleOpenDataBankFile(file) {
   }
 
   setActiveFile(openedFile);
+
+
 }
   return (
     <main
@@ -192,7 +209,10 @@ className={[
   "sm:px-3 sm:text-xs",
   unreadFileCount > 0 ? "animate-pulse border-emerald-300/70" : ""
 ].join(" ")}
-                onClick={() => setIsDataBankOpen(true)}
+onClick={() => {
+  playSound("uiClick", settings);
+  setIsDataBankOpen(true);
+}}
               >
                 DATA {unreadFileCount > 0 ? `(${unreadFileCount})` : ""}
 
@@ -214,7 +234,10 @@ className={[
               <div className="flex items-center gap-2">
                 <button
                   type="button"
-                  onClick={() => setIsSettingsOpen(true)}
+onClick={() => {
+  playSound("uiClick", settings);
+  setIsSettingsOpen(true);
+}}
                   className="grid h-9 w-9 place-items-center border border-cyan-300/25 bg-slate-900/60 text-cyan-100 transition hover:bg-cyan-400/10"
                   aria-label="Open settings"
                 >
@@ -265,24 +288,26 @@ className={[
   isTyping={isTyping}
   onOpenFile={setActiveFile}
   language={language}
+  settings={settings}
   hasBottomPanel={canShowChoices || Boolean(activePuzzle)}
 />
         </div>
 
         <div className="shrink-0">
           {activePuzzle && canInteract && (
-            <PuzzleRenderer
-              puzzle={activePuzzle}
-              attempts={gameState.puzzleAttempts?.[activePuzzle.id] || 0}
-              onSubmit={onPuzzleSubmit}
-            />
+<PuzzleRenderer
+  puzzle={activePuzzle}
+  attempts={gameState.puzzleAttempts?.[activePuzzle.id] || 0}
+  onSubmit={handlePuzzleSubmit}
+/>
           )}
 
           {canShowChoices && !activePuzzle && !progressTask && (
-            <ChoicePanel
-              choices={currentNode.choices || []}
-              onChoice={onChoice}
-            />
+<ChoicePanel
+  choices={currentNode.choices || []}
+  onChoice={onChoice}
+  settings={settings}
+/>
           )}
         </div>
       </section>

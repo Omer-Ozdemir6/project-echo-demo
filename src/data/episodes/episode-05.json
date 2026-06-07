@@ -2,6 +2,65 @@
   "id": "episode_05",
   "title": "THE SIX",
   "startNodeId": "e05_n01",
+  "puzzles": {
+    "crew_manifest_correlation_05": {
+      "id": "crew_manifest_correlation_05",
+      "type": "matching",
+      "title": "CREW MANIFEST CORRELATION",
+      "description": "Match each recovered record with the correct anomaly.",
+      "submitLabel": "CONFIRM MANIFEST CONFLICT",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e05_n08",
+      "failureNodeId": "e05_n07_fail",
+      "leftItems": [
+        {
+          "id": "official_manifest",
+          "label": "OFFICIAL MANIFEST"
+        },
+        {
+          "id": "life_support_allocation",
+          "label": "LIFE SUPPORT ALLOCATION"
+        },
+        {
+          "id": "suit_registry",
+          "label": "SUIT REGISTRY"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "six_crew_listed",
+          "label": "ONLY SIX CREW LISTED"
+        },
+        {
+          "id": "seven_biometric_loads",
+          "label": "SEVEN BIOMETRIC LOADS RECORDED"
+        },
+        {
+          "id": "seventh_suit_slot",
+          "label": "ONE SUIT SLOT ERASED"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "official_manifest",
+          "rightId": "six_crew_listed"
+        },
+        {
+          "leftId": "life_support_allocation",
+          "rightId": "seven_biometric_loads"
+        },
+        {
+          "leftId": "suit_registry",
+          "rightId": "seventh_suit_slot"
+        }
+      ],
+      "titleKey": "episode_05.crew_manifest_correlation_05.puzzle0.title",
+      "descriptionKey": "episode_05.crew_manifest_correlation_05.puzzle0.description",
+      "submitLabelKey": "episode_05.crew_manifest_correlation_05.puzzle0.submitLabel"
+    }
+  },
   "nodes": {
     "e05_n01": {
       "id": "e05_n01",
@@ -14,7 +73,7 @@
         {
           "type": "message",
           "text": "If we're going to survive, you need to know who we were.",
-          "textKey": "episode_05.e05_n01.event1.text"
+          "textKey": "episode_05.e05_n01.event0.text"
         },
         {
           "type": "typing",
@@ -23,7 +82,7 @@
         {
           "type": "message",
           "text": "ECHO wasn't run by one person, no matter how much Hale liked that idea.",
-          "textKey": "episode_05.e05_n01.event2.text"
+          "textKey": "episode_05.e05_n01.event1.text"
         },
         {
           "type": "typing",
@@ -32,7 +91,7 @@
         {
           "type": "message",
           "text": "There were six of us.",
-          "textKey": "episode_05.e05_n01.event3.text"
+          "textKey": "episode_05.e05_n01.event2.text"
         },
         {
           "type": "typing",
@@ -41,7 +100,62 @@
         {
           "type": "message",
           "text": "At least, that's what the official manifest says.",
-          "textKey": "episode_05.e05_n01.event4.text"
+          "textKey": "episode_05.e05_n01.event3.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "pull_manifest",
+          "text": "PULL THE OFFICIAL MANIFEST.",
+          "effects": {
+            "mayaTrust": 2,
+            "signalStrength": 1
+          },
+          "nextNodeId": "e05_n02",
+          "textKey": "episode_05.e05_n01.choice0.text"
+        },
+        {
+          "id": "ask_maya_first",
+          "text": "TELL ME WHO THEY WERE.",
+          "effects": {
+            "mayaTrust": 3,
+            "morale": -1
+          },
+          "nextNodeId": "e05_n01_maya_memory",
+          "textKey": "episode_05.e05_n01.choice1.text"
+        }
+      ]
+    },
+    "e05_n01_maya_memory": {
+      "id": "e05_n01_maya_memory",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "Grant acted like everything was a security drill. Rivera solved problems before anyone finished explaining them.",
+          "textKey": "episode_05.e05_n01_maya_memory.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Park made jokes when he was scared. Owens pretended not to laugh. Hale pretended he didn't need anyone.",
+          "textKey": "episode_05.e05_n01_maya_memory.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "He was the worst liar of all of us.",
+          "textKey": "episode_05.e05_n01_maya_memory.event2.text"
         }
       ],
       "nextNodeId": "e05_n02"
@@ -58,7 +172,17 @@
           "title": "CREW MANIFEST",
           "content": "01 Ethan Hale\n02 Maya Chen\n03 Grant Walker\n04 Rivera Torres\n05 Owen Park\n06 Sarah Owens",
           "caption": "Recovered official ECHO crew manifest.",
+          "source": "PERSONNEL_ARCHIVE",
+          "tags": [
+            "crew",
+            "manifest",
+            "official"
+          ],
+          "correlationTags": [
+            "seventh_person"
+          ],
           "message": "[CREW MANIFEST ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
           "titleKey": "episode_05.e05_n02.event0.title",
           "contentKey": "episode_05.e05_n02.event0.content",
           "captionKey": "episode_05.e05_n02.event0.caption",
@@ -78,7 +202,7 @@
         {
           "type": "message",
           "text": "Grant handled security. Head of Not Dying, he called himself.",
-          "textKey": "episode_05.e05_n03.event1.text"
+          "textKey": "episode_05.e05_n03.event0.text"
         },
         {
           "type": "typing",
@@ -87,7 +211,7 @@
         {
           "type": "message",
           "text": "Rivera managed logistics. Park and Owens were stuck in the lower sectors.",
-          "textKey": "episode_05.e05_n03.event2.text"
+          "textKey": "episode_05.e05_n03.event1.text"
         },
         {
           "type": "typing",
@@ -96,7 +220,7 @@
         {
           "type": "message",
           "text": "Nobody liked the lower sectors. Park pretended he did. Owens called him a liar every morning.",
-          "textKey": "episode_05.e05_n03.event3.text"
+          "textKey": "episode_05.e05_n03.event2.text"
         }
       ],
       "choices": [
@@ -111,10 +235,11 @@
           "textKey": "episode_05.e05_n03.choice0.text"
         },
         {
-          "id": "ask_about_photo",
-          "text": "SHOW ME THE PHOTO.",
+          "id": "scan_manifest_systems",
+          "text": "SCAN SUPPORT SYSTEM RECORDS.",
           "effects": {
-            "mayaTrust": 1
+            "signalStrength": -1,
+            "danger": 1
           },
           "nextNodeId": "e05_n04",
           "textKey": "episode_05.e05_n03.choice1.text"
@@ -160,23 +285,60 @@
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "image",
-          "id": "crew_photo_01",
-          "fileId": "crew_photo_01",
-          "fileType": "image",
-          "title": "CREW PHOTO",
-          "caption": "Recovered ECHO crew photograph. Image analysis pending.",
-          "src": "/images/crew_photo_01.jpg",
-          "source": "PERSONNEL_ARCHIVE",
+          "type": "systemAlert",
+          "text": "[SUPPORT SYSTEM RECORDS RECOVERED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_05.e05_n04.event0.text"
+        },
+        {
+          "type": "log",
+          "id": "life_support_allocation_01",
+          "fileId": "life_support_allocation_01",
+          "fileType": "log",
+          "title": "LIFE SUPPORT ALLOCATION",
+          "content": "ECHO LIFE SUPPORT SNAPSHOT\n\nAssigned crew capacity: 6\nActive biometric loads before blackout: 7\nOxygen adjustment event: automatic\nUnauthorized load marker: removed from index",
+          "caption": "Recovered life support allocation record. Crew count mismatch detected.",
+          "source": "LIFE_SUPPORT_CORE",
           "tags": [
+            "life_support",
             "crew",
-            "photo",
-            "manifest"
+            "biometric",
+            "anomaly"
           ],
-          "message": "[CREW PHOTO ARCHIVED TO DATA BANK]",
-          "titleKey": "episode_05.e05_n04.event0.title",
-          "captionKey": "episode_05.e05_n04.event0.caption",
-          "messageKey": "episode_05.e05_n04.event0.message"
+          "correlationTags": [
+            "seventh_person"
+          ],
+          "message": "[LIFE SUPPORT ALLOCATION ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_05.e05_n04.event1.title",
+          "contentKey": "episode_05.e05_n04.event1.content",
+          "captionKey": "episode_05.e05_n04.event1.caption",
+          "messageKey": "episode_05.e05_n04.event1.message"
+        },
+        {
+          "type": "log",
+          "id": "suit_registry_01",
+          "fileId": "suit_registry_01",
+          "fileType": "log",
+          "title": "SUIT REGISTRY",
+          "content": "ECHO EVA SUIT REGISTRY\n\nSUIT-01: ETHAN HALE\nSUIT-02: MAYA CHEN\nSUIT-03: GRANT WALKER\nSUIT-04: RIVERA TORRES\nSUIT-05: OWEN PARK\nSUIT-06: SARAH OWENS\nSUIT-07: ENTRY ERASED\n\nRegistry repair failed.",
+          "caption": "Recovered EVA suit registry. Seventh suit slot exists but identity is erased.",
+          "source": "EVA_STORAGE",
+          "tags": [
+            "suit",
+            "registry",
+            "crew",
+            "erased"
+          ],
+          "correlationTags": [
+            "seventh_person"
+          ],
+          "message": "[SUIT REGISTRY ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_05.e05_n04.event2.title",
+          "contentKey": "episode_05.e05_n04.event2.content",
+          "captionKey": "episode_05.e05_n04.event2.caption",
+          "messageKey": "episode_05.e05_n04.event2.message"
         }
       ],
       "nextNodeId": "e05_n05"
@@ -187,11 +349,11 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "I used to hate this photo.",
+          "text": "No photo. No face. No neat little proof you can stare at until it makes sense.",
           "textKey": "episode_05.e05_n05.event0.text"
         },
         {
@@ -200,23 +362,23 @@
         },
         {
           "type": "message",
-          "text": "Grant blinked, Rivera refused to smile, and Hale looked ready to kill the photographer.",
+          "text": "Just systems disagreeing with each other. That's worse, honestly.",
           "textKey": "episode_05.e05_n05.event1.text"
         },
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "Count them. Look closely.",
+          "text": "Systems don't panic. They don't hallucinate. They just record the wrong truth.",
           "textKey": "episode_05.e05_n05.event2.text"
         }
       ],
       "choices": [
         {
-          "id": "run_image_analysis",
-          "text": "RUN IMAGE ANALYSIS.",
+          "id": "run_correlation",
+          "text": "RUN MANIFEST CORRELATION.",
           "effects": {
             "mayaTrust": 2,
             "signalStrength": -2
@@ -225,8 +387,8 @@
           "textKey": "episode_05.e05_n05.choice0.text"
         },
         {
-          "id": "ask_maya_first",
-          "text": "WHAT AM I LOOKING FOR?",
+          "id": "ask_maya_about_seven",
+          "text": "DID YOU KNOW ABOUT SEVEN?",
           "effects": {
             "mayaTrust": -2,
             "danger": 2
@@ -242,29 +404,29 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 4200
         },
         {
           "type": "message",
-          "text": "Don't make me say it first.",
+          "text": "No.",
           "textKey": "episode_05.e05_n05_ask.event0.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 4400
         },
         {
           "type": "message",
-          "text": "If I tell you what to see, you'll wonder if I planted the idea.",
+          "text": "And I know how convenient that sounds.",
           "textKey": "episode_05.e05_n05_ask.event1.text"
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 4800
         },
         {
           "type": "message",
-          "text": "Run the analysis.",
+          "text": "But if there was a seventh person on ECHO, someone worked very hard to make us forget them.",
           "textKey": "episode_05.e05_n05_ask.event2.text"
         }
       ],
@@ -276,121 +438,48 @@
       "events": [
         {
           "type": "systemAlert",
-          "text": "[IMAGE ANALYSIS STARTED]",
+          "text": "[MANIFEST CORRELATION REQUIRED]",
           "pauseAfterMs": 900,
           "textKey": "episode_05.e05_n06.event0.text"
         },
         {
-          "type": "progressTask",
-          "id": "crew_photo_analysis",
-          "title": "ANALYZING PERSONNEL IMAGE",
-          "subtitle": "Detecting visible biometric signatures",
-          "duration": 5000,
-          "completeText": "[IMAGE ANALYSIS COMPLETE]",
-          "titleKey": "episode_05.e05_n06.event1.title",
-          "subtitleKey": "episode_05.e05_n06.event1.subtitle",
-          "completeTextKey": "episode_05.e05_n06.event1.completeText"
-        },
+          "type": "puzzle",
+          "puzzleId": "crew_manifest_correlation_05",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e05_n07_fail": {
+      "id": "e05_n07_fail",
+      "speaker": "SYSTEM",
+      "events": [
         {
           "type": "systemAlert",
-          "text": "[IMAGE ANALYSIS: DETECTED PERSONNEL: 7]",
-          "textKey": "episode_05.e05_n06.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "speaker": "MAYA",
-          "text": "Exactly. That's impossible.",
-          "textKey": "episode_05.e05_n06.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4000
-        },
-        {
-          "type": "message",
-          "speaker": "MAYA",
-          "text": "Six bunks. Six suits. Six emergency tags.",
-          "textKey": "episode_05.e05_n06.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "speaker": "MAYA",
-          "text": "We don't bring extras.",
-          "textKey": "episode_05.e05_n06.event5.text"
+          "text": "[CORRELATION FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_05.e05_n07_fail.event0.text"
         },
         {
           "type": "statChange",
           "changes": {
             "danger": 4,
-            "morale": -2,
-            "signalStrength": -3
+            "signalStrength": -5
           }
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "No. That doesn't line up. Try again. Six names, seven loads, one erased suit.",
+          "textKey": "episode_05.e05_n07_fail.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "crew_manifest_correlation_05",
+          "pauseAfterMs": 700
         }
       ],
-      "choices": [
-        {
-          "id": "scan_manifest_layer",
-          "text": "SCAN MANIFEST LAYER.",
-          "effects": {
-            "danger": 2,
-            "signalStrength": -2
-          },
-          "nextNodeId": "e05_n08",
-          "textKey": "episode_05.e05_n06.choice0.text"
-        },
-        {
-          "id": "ask_if_maya_knows",
-          "text": "DO YOU KNOW WHO IT IS?",
-          "effects": {
-            "mayaTrust": -1,
-            "danger": 2
-          },
-          "nextNodeId": "e05_n07_maya",
-          "textKey": "episode_05.e05_n06.choice1.text"
-        }
-      ]
-    },
-    "e05_n07_maya": {
-      "id": "e05_n07_maya",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "textKey": "episode_05.e05_n07_maya.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4400
-        },
-        {
-          "type": "message",
-          "text": "And I know how convenient that sounds.",
-          "textKey": "episode_05.e05_n07_maya.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4600
-        },
-        {
-          "type": "message",
-          "text": "But if there was a seventh person on ECHO, someone worked very hard to make us forget them.",
-          "textKey": "episode_05.e05_n07_maya.event2.text"
-        }
-      ],
-      "nextNodeId": "e05_n08"
+      "choices": []
     },
     "e05_n08": {
       "id": "e05_n08",
@@ -398,8 +487,22 @@
       "events": [
         {
           "type": "systemAlert",
-          "text": "[CORRUPTED ARCHIVE LAYER DETECTED]",
+          "text": "[CORRELATION CONFIRMED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_05.e05_n08.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": -1
+          }
+        },
+        {
+          "type": "systemAlert",
+          "text": "[CORRUPTED ARCHIVE LAYER DETECTED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_05.e05_n08.event1.text"
         },
         {
           "type": "file",
@@ -407,22 +510,33 @@
           "fileId": "manifest_v2",
           "fileType": "file",
           "title": "MANIFEST_V2",
-          "content": "01 Ethan Hale\n02 Maya Chen\n03 Grant Walker\n04 Rivera Torres\n05 Owen Park\n06 Sarah Owens\n07 █████████",
-          "caption": "Recovered alternate manifest layer. Seventh entry redacted.",
+          "content": "01 Ethan Hale\n02 Maya Chen\n03 Grant Walker\n04 Rivera Torres\n05 Owen Park\n06 Sarah Owens\n07 █████████\n\nLayer status: identity erased, not redacted.",
+          "caption": "Recovered alternate manifest layer. Seventh entry erased.",
+          "source": "PERSONNEL_ARCHIVE",
+          "tags": [
+            "crew",
+            "manifest",
+            "seventh",
+            "erased"
+          ],
+          "correlationTags": [
+            "seventh_person"
+          ],
           "message": "[CORRUPTED MANIFEST ARCHIVED TO DATA BANK]",
-          "titleKey": "episode_05.e05_n08.event1.title",
-          "contentKey": "episode_05.e05_n08.event1.content",
-          "captionKey": "episode_05.e05_n08.event1.caption",
-          "messageKey": "episode_05.e05_n08.event1.message"
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_05.e05_n08.event2.title",
+          "contentKey": "episode_05.e05_n08.event2.content",
+          "captionKey": "episode_05.e05_n08.event2.caption",
+          "messageKey": "episode_05.e05_n08.event2.message"
         },
         {
           "type": "backgroundEvent",
-          "delay": 7000,
+          "delay": 5500,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "NOT REDACTED. ERASED.",
-            "textKey": "episode_05.e05_n08.backgroundEvent2.text"
+            "textKey": "episode_05.e05_n08.backgroundEvent0.text"
           }
         }
       ],
@@ -474,7 +588,7 @@
           "textKey": "episode_05.e05_n09.choice0.text"
         },
         {
-          "id": "ask_maya_what_she_did",
+          "id": "accuse_maya",
           "text": "MAYA, WHAT DID YOU DO?",
           "effects": {
             "mayaTrust": -6,
@@ -572,10 +686,24 @@
       ],
       "choices": [
         {
-          "id": "continue_story",
-          "text": "CONTINUE.",
+          "id": "search_first_contact",
+          "text": "SEARCH FIRST CONTACT RECORDS.",
+          "effects": {
+            "danger": 2,
+            "signalStrength": -2
+          },
           "nextEpisodeId": "episode_06",
           "textKey": "episode_05.e05_n10.choice0.text"
+        },
+        {
+          "id": "ask_maya_about_first_voice",
+          "text": "ASK MAYA ABOUT THE FIRST VOICE.",
+          "effects": {
+            "mayaTrust": 2,
+            "danger": 3
+          },
+          "nextEpisodeId": "episode_06",
+          "textKey": "episode_05.e05_n10.choice1.text"
         }
       ]
     }

@@ -2,6 +2,122 @@
   "id": "episode_07",
   "title": "GHOST CREW",
   "startNodeId": "e07_n01",
+  "puzzles": {
+    "evaluation_timestamp_correlation_07": {
+      "id": "evaluation_timestamp_correlation_07",
+      "type": "matching",
+      "title": "EVALUATION TIMESTAMP CORRELATION",
+      "description": "Match each recovered archive record with the correct contradiction.",
+      "submitLabel": "CONFIRM ARCHIVE CONFLICT",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e07_n08",
+      "failureNodeId": "e07_n07_fail",
+      "leftItems": [
+        {
+          "id": "hale_eval",
+          "label": "HALE PSYCH EVALUATION"
+        },
+        {
+          "id": "maya_eval",
+          "label": "MAYA PSYCH EVALUATION"
+        },
+        {
+          "id": "evaluation_index",
+          "label": "EVALUATION INDEX"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "clean_after_alpha",
+          "label": "MARKED STABLE AFTER INCIDENT ALPHA"
+        },
+        {
+          "id": "memory_resistance",
+          "label": "RESISTANCE TO MEMORY SUPPRESSION"
+        },
+        {
+          "id": "created_after_incident",
+          "label": "CREATED AFTER INCIDENT DATE"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "hale_eval",
+          "rightId": "clean_after_alpha"
+        },
+        {
+          "leftId": "maya_eval",
+          "rightId": "memory_resistance"
+        },
+        {
+          "leftId": "evaluation_index",
+          "rightId": "created_after_incident"
+        }
+      ],
+      "titleKey": "episode_07.evaluation_timestamp_correlation_07.puzzle0.title",
+      "descriptionKey": "episode_07.evaluation_timestamp_correlation_07.puzzle0.description",
+      "submitLabelKey": "episode_07.evaluation_timestamp_correlation_07.puzzle0.submitLabel"
+    },
+    "ghost_crew_correlation_07": {
+      "id": "ghost_crew_correlation_07",
+      "type": "matching",
+      "title": "GHOST CREW CORRELATION",
+      "description": "Match each personnel source with the correct crew count.",
+      "submitLabel": "CONFIRM CREW DISCREPANCY",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e07_n14",
+      "failureNodeId": "e07_n13_fail",
+      "leftItems": [
+        {
+          "id": "official_manifest",
+          "label": "OFFICIAL MANIFEST"
+        },
+        {
+          "id": "recovered_manifest",
+          "label": "RECOVERED MANIFEST LAYER"
+        },
+        {
+          "id": "original_assignment_index",
+          "label": "ORIGINAL ASSIGNMENT INDEX"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "six_personnel",
+          "label": "6 PERSONNEL"
+        },
+        {
+          "id": "seven_personnel",
+          "label": "7 PERSONNEL"
+        },
+        {
+          "id": "eight_personnel",
+          "label": "8 PERSONNEL"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "official_manifest",
+          "rightId": "six_personnel"
+        },
+        {
+          "leftId": "recovered_manifest",
+          "rightId": "seven_personnel"
+        },
+        {
+          "leftId": "original_assignment_index",
+          "rightId": "eight_personnel"
+        }
+      ],
+      "titleKey": "episode_07.ghost_crew_correlation_07.puzzle1.title",
+      "descriptionKey": "episode_07.ghost_crew_correlation_07.puzzle1.description",
+      "submitLabelKey": "episode_07.ghost_crew_correlation_07.puzzle1.submitLabel"
+    }
+  },
   "nodes": {
     "e07_n01": {
       "id": "e07_n01",
@@ -10,31 +126,79 @@
         {
           "type": "systemAlert",
           "text": "[NEW DATABASE DISCOVERED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_07.e07_n01.event0.text"
         },
         {
           "type": "typing",
-          "duration": 1400
+          "duration": 1600
         },
         {
           "type": "message",
           "text": "Crew Psychological Evaluation Archive recovered.",
-          "textKey": "episode_07.e07_n01.event2.text"
+          "textKey": "episode_07.e07_n01.event1.text"
         },
         {
           "type": "message",
           "text": "Integrity status: partial.",
-          "textKey": "episode_07.e07_n01.event3.text"
+          "textKey": "episode_07.e07_n01.event2.text"
         }
       ],
       "choices": [
         {
           "id": "open_database",
           "text": "OPEN DATABASE.",
+          "effects": {
+            "signalStrength": -1,
+            "danger": 1
+          },
           "nextNodeId": "e07_n02",
           "textKey": "episode_07.e07_n01.choice0.text"
+        },
+        {
+          "id": "scan_database_first",
+          "text": "SCAN DATABASE FIRST.",
+          "effects": {
+            "signalStrength": 2,
+            "danger": -1
+          },
+          "nextNodeId": "e07_n01_scan",
+          "textKey": "episode_07.e07_n01.choice1.text"
         }
       ]
+    },
+    "e07_n01_scan": {
+      "id": "e07_n01_scan",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "psych_archive_scan",
+          "title": "DATABASE SAFETY SCAN",
+          "subtitle": "Checking archive hooks before opening recovered files",
+          "duration": 45000,
+          "completeText": "[DATABASE SCAN COMPLETE]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_07.e07_n01_scan.event0.title",
+          "subtitleKey": "episode_07.e07_n01_scan.event0.subtitle",
+          "completeTextKey": "episode_07.e07_n01_scan.event0.completeText"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 4,
+            "danger": -2
+          }
+        },
+        {
+          "type": "systemAlert",
+          "text": "[NOTIFICATION QUEUED: DATABASE SCAN COMPLETE]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_07.e07_n01_scan.event1.text"
+        }
+      ],
+      "nextNodeId": "e07_n02"
     },
     "e07_n02": {
       "id": "e07_n02",
@@ -44,10 +208,82 @@
           "type": "file",
           "id": "psych_eval_hale",
           "fileId": "psych_eval_hale",
+          "fileType": "log",
           "title": "PSYCHOLOGICAL EVALUATION - ETHAN HALE",
-          "content": "Subject: Ethan Hale\nStatus: Stable\nRisk Level: Low\nRecommendation: Active Duty Approved\nEvaluator Note: Subject demonstrates strong command resilience under isolation pressure.",
+          "content": "Subject: Ethan Hale\nStatus: Stable\nRisk Level: Low\nRecommendation: Active Duty Approved\nEvaluator Note: Subject demonstrates strong command resilience under isolation pressure.\nCreated: 12 April\nLinked Incident: Alpha",
+          "caption": "Recovered psychological evaluation record. Timestamp appears inconsistent.",
+          "source": "PSYCH_EVAL_ARCHIVE",
+          "tags": [
+            "hale",
+            "psych_eval",
+            "incident_alpha"
+          ],
+          "correlationTags": [
+            "ghost_crew",
+            "evaluation_conflict"
+          ],
+          "message": "[HALE EVALUATION ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
           "titleKey": "episode_07.e07_n02.event0.title",
-          "contentKey": "episode_07.e07_n02.event0.content"
+          "contentKey": "episode_07.e07_n02.event0.content",
+          "captionKey": "episode_07.e07_n02.event0.caption",
+          "messageKey": "episode_07.e07_n02.event0.message"
+        }
+      ],
+      "choices": [
+        {
+          "id": "open_maya_eval",
+          "text": "OPEN MAYA'S EVALUATION.",
+          "effects": {
+            "mayaTrust": 1,
+            "danger": 1
+          },
+          "nextNodeId": "e07_n03",
+          "textKey": "episode_07.e07_n02.choice0.text"
+        },
+        {
+          "id": "ask_hale_about_eval",
+          "text": "HALE, DID YOU KNOW ABOUT THIS?",
+          "effects": {
+            "haleTrust": -2,
+            "danger": 2,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e07_n02_hale",
+          "textKey": "episode_07.e07_n02.choice1.text"
+        }
+      ]
+    },
+    "e07_n02_hale": {
+      "id": "e07_n02_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "Psych evaluations were routine.",
+          "textKey": "episode_07.e07_n02_hale.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "A station full of tired people orbiting a dead planet tends to make management nervous.",
+          "textKey": "episode_07.e07_n02_hale.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "But that timestamp is wrong. Or someone made it wrong on purpose.",
+          "textKey": "episode_07.e07_n02_hale.event2.text"
         }
       ],
       "nextNodeId": "e07_n03"
@@ -60,10 +296,92 @@
           "type": "file",
           "id": "psych_eval_maya",
           "fileId": "psych_eval_maya",
+          "fileType": "log",
           "title": "PSYCHOLOGICAL EVALUATION - MAYA CHEN",
-          "content": "Subject: Maya Chen\nStatus: Stable\nRisk Level: Low\nRecommendation: Active Duty Approved\nEvaluator Note: Subject shows high pattern-recognition ability and repeated resistance to memory suppression protocols.",
+          "content": "Subject: Maya Chen\nStatus: Stable\nRisk Level: Low\nRecommendation: Active Duty Approved\nEvaluator Note: Subject shows high pattern-recognition ability and repeated resistance to memory suppression protocols.\nCreated: 12 April\nLinked Incident: Alpha",
+          "caption": "Recovered psychological evaluation record. Note contains memory suppression reference.",
+          "source": "PSYCH_EVAL_ARCHIVE",
+          "tags": [
+            "maya",
+            "psych_eval",
+            "memory_suppression"
+          ],
+          "correlationTags": [
+            "ghost_crew",
+            "evaluation_conflict"
+          ],
+          "message": "[MAYA EVALUATION ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
           "titleKey": "episode_07.e07_n03.event0.title",
-          "contentKey": "episode_07.e07_n03.event0.content"
+          "contentKey": "episode_07.e07_n03.event0.content",
+          "captionKey": "episode_07.e07_n03.event0.caption",
+          "messageKey": "episode_07.e07_n03.event0.message"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "Memory suppression protocols?",
+          "textKey": "episode_07.e07_n03.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "No. Nobody told us there were memory protocols.",
+          "textKey": "episode_07.e07_n03.event2.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "open_voss_eval",
+          "text": "OPEN VOSS EVALUATION.",
+          "effects": {
+            "danger": 2,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e07_n04",
+          "textKey": "episode_07.e07_n03.choice0.text"
+        },
+        {
+          "id": "ask_maya_to_focus",
+          "text": "MAYA, STAY WITH ME.",
+          "effects": {
+            "mayaTrust": 3,
+            "morale": 2
+          },
+          "nextNodeId": "e07_n03_maya_focus",
+          "textKey": "episode_07.e07_n03.choice1.text"
+        }
+      ]
+    },
+    "e07_n03_maya_focus": {
+      "id": "e07_n03_maya_focus",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I'm here.",
+          "textKey": "episode_07.e07_n03_maya_focus.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Angry, oxygen-starved, and very close to screaming, but here.",
+          "textKey": "episode_07.e07_n03_maya_focus.event1.text"
         }
       ],
       "nextNodeId": "e07_n04"
@@ -73,69 +391,112 @@
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
           "type": "file",
           "id": "psych_eval_voss",
           "fileId": "psych_eval_voss",
+          "fileType": "log",
           "title": "PSYCHOLOGICAL EVALUATION - NOAH VOSS",
-          "content": "FILE NOT FOUND\n\nArchive slot exists.\nRecord body removed.\nDeletion authority: UNKNOWN",
-          "titleKey": "episode_07.e07_n04.event1.title",
-          "contentKey": "episode_07.e07_n04.event1.content"
+          "content": "FILE NOT FOUND\n\nArchive slot exists.\nRecord body removed.\nDeletion authority: UNKNOWN\nCreated: 12 April\nLinked Incident: Alpha",
+          "caption": "Recovered empty evaluation slot. Record body removed after creation.",
+          "source": "PSYCH_EVAL_ARCHIVE",
+          "tags": [
+            "noah_voss",
+            "psych_eval",
+            "deleted"
+          ],
+          "correlationTags": [
+            "ghost_crew",
+            "evaluation_conflict"
+          ],
+          "message": "[VOSS EVALUATION SLOT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_07.e07_n04.event0.title",
+          "contentKey": "episode_07.e07_n04.event0.content",
+          "captionKey": "episode_07.e07_n04.event0.caption",
+          "messageKey": "episode_07.e07_n04.event0.message"
         }
       ],
       "nextNodeId": "e07_n05"
     },
     "e07_n05": {
       "id": "e07_n05",
-      "speaker": "SYSTEM",
+      "speaker": "UNKNOWN",
       "events": [
         {
-          "type": "message",
-          "text": "Archive index recovered.",
+          "type": "glitch",
+          "duration": 1200,
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "DO NOT TRUST THE EVALUATIONS.",
+          "pauseAfterMs": 1400,
           "textKey": "episode_07.e07_n05.event0.text"
         },
         {
-          "type": "backgroundEvent",
-          "delay": 6000,
-          "event": {
-            "type": "message",
-            "speaker": "UNKNOWN",
-            "text": "Do not trust the evaluations.",
-            "textKey": "episode_07.e07_n05.backgroundEvent1.text"
-          }
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THEY ARE NOT MEDICAL RECORDS.",
+          "pauseAfterMs": 1400,
+          "textKey": "episode_07.e07_n05.event1.text"
         },
         {
-          "type": "backgroundEvent",
-          "delay": 12000,
-          "event": {
-            "type": "message",
-            "speaker": "UNKNOWN",
-            "text": "They are not medical records.",
-            "textKey": "episode_07.e07_n05.backgroundEvent2.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 18000,
-          "event": {
-            "type": "message",
-            "speaker": "UNKNOWN",
-            "text": "Look at the timestamps.",
-            "textKey": "episode_07.e07_n05.backgroundEvent3.text"
-          }
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "LOOK AT THE TIMESTAMPS.",
+          "pauseAfterMs": 1400,
+          "textKey": "episode_07.e07_n05.event2.text"
         }
       ],
       "choices": [
         {
           "id": "inspect_index",
           "text": "INSPECT INDEX.",
+          "effects": {
+            "danger": 2,
+            "signalStrength": -2
+          },
           "nextNodeId": "e07_n06",
           "textKey": "episode_07.e07_n05.choice0.text"
+        },
+        {
+          "id": "ask_hale_before_index",
+          "text": "ASK HALE BEFORE OPENING INDEX.",
+          "effects": {
+            "haleTrust": 2,
+            "mayaTrust": -1,
+            "danger": 1
+          },
+          "nextNodeId": "e07_n05_hale",
+          "textKey": "episode_07.e07_n05.choice1.text"
         }
       ]
+    },
+    "e07_n05_hale": {
+      "id": "e07_n05_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "I don't like taking advice from the thing haunting our radio.",
+          "textKey": "episode_07.e07_n05_hale.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "But if it wants you to look at timestamps, look carefully. Not obediently. Carefully.",
+          "textKey": "episode_07.e07_n05_hale.event1.text"
+        }
+      ],
+      "nextNodeId": "e07_n06"
     },
     "e07_n06": {
       "id": "e07_n06",
@@ -145,20 +506,99 @@
           "type": "file",
           "id": "evaluation_index",
           "fileId": "evaluation_index",
+          "fileType": "log",
           "title": "EVALUATION INDEX",
           "content": "Created: 12 April\nLast Modified: 14 April\nVerification Status: Valid\nLinked Incident: Alpha\nIncident Alpha Date: 11 April\nIndex Conflict: RECORD CREATED AFTER INCIDENT",
+          "caption": "Recovered archive index showing evaluations were created after Incident Alpha.",
+          "source": "PSYCH_EVAL_ARCHIVE",
+          "tags": [
+            "index",
+            "timestamp",
+            "incident_alpha"
+          ],
+          "correlationTags": [
+            "ghost_crew",
+            "evaluation_conflict"
+          ],
+          "message": "[EVALUATION INDEX ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
           "titleKey": "episode_07.e07_n06.event0.title",
-          "contentKey": "episode_07.e07_n06.event0.content"
+          "contentKey": "episode_07.e07_n06.event0.content",
+          "captionKey": "episode_07.e07_n06.event0.caption",
+          "messageKey": "episode_07.e07_n06.event0.message"
         },
         {
           "type": "glitch",
-          "duration": 900
+          "duration": 900,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "systemAlert",
+          "text": "[TIMESTAMP CORRELATION REQUIRED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_07.e07_n06.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "evaluation_timestamp_correlation_07",
+          "pauseAfterMs": 700
         }
       ],
-      "nextNodeId": "e07_n07"
+      "choices": []
     },
-    "e07_n07": {
-      "id": "e07_n07",
+    "e07_n07_fail": {
+      "id": "e07_n07_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[ARCHIVE CONFLICT CORRELATION FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_07.e07_n07_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5
+          }
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "No. Hale was marked clean after Alpha. I resisted suppression. The index was created after the incident. Try again.",
+          "textKey": "episode_07.e07_n07_fail.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "evaluation_timestamp_correlation_07",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e07_n08": {
+      "id": "e07_n08",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[ARCHIVE CONFLICT CONFIRMED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_07.e07_n08.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": -1
+          }
+        }
+      ],
+      "nextNodeId": "e07_n09"
+    },
+    "e07_n09": {
+      "id": "e07_n09",
       "speaker": "MAYA",
       "events": [
         {
@@ -168,202 +608,164 @@
         {
           "type": "message",
           "text": "No...",
-          "textKey": "episode_07.e07_n07.event1.text"
+          "textKey": "episode_07.e07_n09.event0.text"
         },
         {
           "type": "typing",
-          "duration": 1800
+          "duration": 2800
         },
         {
           "type": "message",
           "text": "No, that is not possible.",
-          "textKey": "episode_07.e07_n07.event3.text"
+          "textKey": "episode_07.e07_n09.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
         },
         {
           "type": "message",
           "text": "Incident Alpha happened on April 11. I remember the alarm. I remember Hale shouting over the channel.",
-          "textKey": "episode_07.e07_n07.event4.text"
+          "textKey": "episode_07.e07_n09.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
         },
         {
           "type": "message",
           "text": "Those evaluations did not exist before Alpha.",
-          "textKey": "episode_07.e07_n07.event5.text"
+          "textKey": "episode_07.e07_n09.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
         },
         {
           "type": "message",
           "text": "Someone wrote us clean after everything went wrong.",
-          "textKey": "episode_07.e07_n07.event6.text"
+          "textKey": "episode_07.e07_n09.event4.text"
         }
       ],
-      "nextNodeId": "e07_n08"
+      "nextNodeId": "e07_n10"
     },
-    "e07_n08": {
-      "id": "e07_n08",
+    "e07_n10": {
+      "id": "e07_n10",
       "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 1700
+          "duration": 2800
         },
         {
           "type": "message",
-          "text": "Maya, stop. You do not know what you are looking at.",
-          "textKey": "episode_07.e07_n08.event1.text"
+          "text": "Maya, stop.",
+          "textKey": "episode_07.e07_n10.event0.text"
         },
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 4600
         },
         {
           "type": "message",
-          "text": "Those records were buried for a reason. And before you make a joke about my leadership skills, this is not me being dramatic. This is me trying to keep us alive.",
-          "textKey": "episode_07.e07_n08.event3.text"
-        }
-      ],
-      "nextNodeId": "e07_n09"
-    },
-    "e07_n09": {
-      "id": "e07_n09",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "backgroundEvent",
-          "delay": 4000,
-          "event": {
-            "type": "message",
-            "speaker": "HALE",
-            "text": "Stop digging.",
-            "textKey": "episode_07.e07_n09.backgroundEvent0.text"
-          }
+          "text": "Those records were buried for a reason. And before anyone accuses me of being theatrical, this is not theater.",
+          "textKey": "episode_07.e07_n10.event1.text"
         },
         {
-          "type": "backgroundEvent",
-          "delay": 8500,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "Keep digging.",
-            "textKey": "episode_07.e07_n09.backgroundEvent1.text"
-          }
+          "type": "typing",
+          "duration": 3800
         },
         {
-          "type": "backgroundEvent",
-          "delay": 13000,
-          "event": {
-            "type": "message",
-            "speaker": "HALE",
-            "text": "You are making it worse.",
-            "textKey": "episode_07.e07_n09.backgroundEvent2.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 17500,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "No. He is afraid you will find out who is missing.",
-            "textKey": "episode_07.e07_n09.backgroundEvent3.text"
-          }
+          "type": "message",
+          "text": "This is me trying to keep us alive.",
+          "textKey": "episode_07.e07_n10.event2.text"
         }
       ],
       "choices": [
         {
-          "id": "trust_maya",
-          "text": "TRUST MAYA.",
+          "id": "side_with_maya",
+          "text": "KEEP DIGGING WITH MAYA.",
           "effects": {
-            "trust": -5,
-            "danger": 5
+            "mayaTrust": 6,
+            "haleTrust": -5,
+            "danger": 5,
+            "signalStrength": -4
           },
-          "nextNodeId": "e07_n10a",
-          "textKey": "episode_07.e07_n09.choice0.text"
+          "nextNodeId": "e07_n11_maya",
+          "textKey": "episode_07.e07_n10.choice0.text"
         },
         {
-          "id": "trust_hale",
-          "text": "TRUST HALE.",
+          "id": "pause_for_hale",
+          "text": "PAUSE AND HEAR HALE OUT.",
           "effects": {
-            "trust": 5,
-            "danger": -2
+            "haleTrust": 5,
+            "mayaTrust": -3,
+            "danger": 1,
+            "signalStrength": 2
           },
-          "nextNodeId": "e07_n10b",
-          "textKey": "episode_07.e07_n09.choice1.text"
+          "nextNodeId": "e07_n11_hale",
+          "textKey": "episode_07.e07_n10.choice1.text"
         }
       ]
     },
-    "e07_n10a": {
-      "id": "e07_n10a",
+    "e07_n11_maya": {
+      "id": "e07_n11_maya",
       "speaker": "MAYA",
       "events": [
         {
           "type": "typing",
-          "duration": 1800
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "Good. Then help me uncover the truth. And if Hale starts sounding calm again, remember this moment. Calm is his emergency voice.",
-          "textKey": "episode_07.e07_n10a.event1.text"
+          "text": "Good. Then help me uncover the truth.",
+          "textKey": "episode_07.e07_n11_maya.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "And if Hale starts sounding calm again, remember this moment. Calm is his emergency voice.",
+          "textKey": "episode_07.e07_n11_maya.event1.text"
         },
         {
           "type": "systemAlert",
-          "text": "[HALE TRUST DECREASED]",
-          "textKey": "episode_07.e07_n10a.event2.text"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[DANGER LEVEL INCREASED]",
-          "textKey": "episode_07.e07_n10a.event3.text"
+          "text": "[MAYA TRUST INCREASED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_07.e07_n11_maya.event2.text"
         }
       ],
-      "nextNodeId": "e07_n11"
+      "nextNodeId": "e07_n12"
     },
-    "e07_n10b": {
-      "id": "e07_n10b",
+    "e07_n11_hale": {
+      "id": "e07_n11_hale",
       "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 1800
+          "duration": 4200
         },
         {
           "type": "message",
-          "text": "You made the right decision. Some truths are dangerous. Not because they hurt to know. Because once you know them, something knows you know.",
-          "textKey": "episode_07.e07_n10b.event1.text"
+          "text": "Thank you.",
+          "textKey": "episode_07.e07_n11_hale.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "Some truths are dangerous. Not because they hurt to know. Because once you know them, something knows you know.",
+          "textKey": "episode_07.e07_n11_hale.event1.text"
         },
         {
           "type": "systemAlert",
           "text": "[HALE TRUST INCREASED]",
-          "textKey": "episode_07.e07_n10b.event2.text"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[DANGER LEVEL REDUCED]",
-          "textKey": "episode_07.e07_n10b.event3.text"
-        }
-      ],
-      "nextNodeId": "e07_n11"
-    },
-    "e07_n11": {
-      "id": "e07_n11",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Image archive cross-check completed.",
-          "textKey": "episode_07.e07_n11.event1.text"
-        },
-        {
-          "type": "image",
-          "id": "original_crew_photo",
-          "fileId": "original_crew_photo",
-          "title": "ORIGINAL CREW PHOTO",
-          "caption": "Recovered original station photograph.",
-          "src": "/images/original_crew_photo.jpg",
-          "titleKey": "episode_07.e07_n11.event2.title",
-          "captionKey": "episode_07.e07_n11.event2.caption"
+          "pauseAfterMs": 900,
+          "textKey": "episode_07.e07_n11_hale.event2.text"
         }
       ],
       "nextNodeId": "e07_n12"
@@ -373,87 +775,169 @@
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "typing",
-          "duration": 1200
+          "type": "progressTask",
+          "id": "personnel_archive_crosscheck",
+          "title": "PERSONNEL ARCHIVE CROSS-CHECK",
+          "subtitle": "Comparing manifest, recovery layer and original assignment index",
+          "duration": 60000,
+          "completeText": "[PERSONNEL CROSS-CHECK COMPLETE]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_07.e07_n12.event0.title",
+          "subtitleKey": "episode_07.e07_n12.event0.subtitle",
+          "completeTextKey": "episode_07.e07_n12.event0.completeText"
         },
         {
-          "type": "message",
-          "text": "Personnel detected: 8",
+          "type": "systemAlert",
+          "text": "[NOTIFICATION QUEUED: PERSONNEL CROSS-CHECK COMPLETE]",
+          "pauseAfterMs": 900,
           "textKey": "episode_07.e07_n12.event1.text"
         },
         {
-          "type": "typing",
-          "duration": 1000
+          "type": "file",
+          "id": "ghost_crew_count_report",
+          "fileId": "ghost_crew_count_report",
+          "fileType": "log",
+          "title": "GHOST CREW COUNT REPORT",
+          "content": "OFFICIAL MANIFEST COUNT: 6\nRECOVERED MANIFEST LAYER COUNT: 7\nORIGINAL ASSIGNMENT INDEX COUNT: 8\n\nDiscrepancy: one person removed from official manifest. One additional person removed from recovered manifest layer.\nVisual archive unavailable. Count derived from personnel hashes, suit registry keys and life support allocation records.",
+          "caption": "Personnel count reconstructed without image records.",
+          "source": "PERSONNEL_ARCHIVE_CROSSCHECK",
+          "tags": [
+            "crew",
+            "manifest",
+            "ghost_crew",
+            "count_conflict"
+          ],
+          "correlationTags": [
+            "ghost_crew"
+          ],
+          "message": "[GHOST CREW COUNT REPORT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_07.e07_n12.event2.title",
+          "contentKey": "episode_07.e07_n12.event2.content",
+          "captionKey": "episode_07.e07_n12.event2.caption",
+          "messageKey": "episode_07.e07_n12.event2.message"
         },
         {
-          "type": "message",
-          "text": "Manifest Count: 6",
+          "type": "systemAlert",
+          "text": "[CREW COUNT CORRELATION REQUIRED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_07.e07_n12.event3.text"
         },
         {
-          "type": "message",
-          "text": "Recovered Crew Photo: 7",
-          "textKey": "episode_07.e07_n12.event4.text"
-        },
-        {
-          "type": "glitch",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Original Crew Photo: 8",
-          "textKey": "episode_07.e07_n12.event6.text"
-        },
-        {
-          "type": "message",
-          "text": "Discrepancy detected: one person removed from manifest. One person removed from recovered photo.",
-          "textKey": "episode_07.e07_n12.event7.text"
+          "type": "puzzle",
+          "puzzleId": "ghost_crew_correlation_07",
+          "pauseAfterMs": 700
         }
       ],
-      "nextNodeId": "e07_n13"
+      "choices": []
     },
-    "e07_n13": {
-      "id": "e07_n13",
-      "speaker": "UNKNOWN",
+    "e07_n13_fail": {
+      "id": "e07_n13_fail",
+      "speaker": "SYSTEM",
       "events": [
         {
-          "type": "typing",
-          "duration": 3200
+          "type": "systemAlert",
+          "text": "[CREW DISCREPANCY CORRELATION FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_07.e07_n13_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5
+          }
         },
         {
           "type": "message",
-          "text": "Count again.",
-          "textKey": "episode_07.e07_n13.event1.text"
+          "speaker": "HALE",
+          "text": "No. Six official. Seven recovered. Eight original. That's the shape of it.",
+          "textKey": "episode_07.e07_n13_fail.event1.text"
         },
         {
-          "type": "typing",
-          "duration": 2600
+          "type": "puzzle",
+          "puzzleId": "ghost_crew_correlation_07",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e07_n14": {
+      "id": "e07_n14",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CREW DISCREPANCY CONFIRMED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_07.e07_n14.event0.text"
         },
         {
-          "type": "message",
-          "text": "Not the people.",
-          "textKey": "episode_07.e07_n13.event3.text"
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": 3
+          }
         },
         {
           "type": "glitch",
-          "duration": 1200
+          "duration": 1200,
+          "pauseAfterMs": 900
         },
         {
-          "type": "message",
-          "text": "The shadows behind them.",
-          "textKey": "episode_07.e07_n13.event5.text"
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "COUNT AGAIN.",
+          "pauseAfterMs": 1300,
+          "textKey": "episode_07.e07_n14.event1.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "NOT THE PEOPLE.",
+          "pauseAfterMs": 1300,
+          "textKey": "episode_07.e07_n14.event2.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE ABSENCES BEHIND THEM.",
+          "pauseAfterMs": 1300,
+          "textKey": "episode_07.e07_n14.event3.text"
         },
         {
           "type": "signalLost",
-          "duration": 1800
+          "duration": 2400,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 1200,
+          "messageKey": "episode_07.e07_n14.event4.message",
+          "restoreMessageKey": "episode_07.e07_n14.event4.restoreMessage"
         }
       ],
       "choices": [
         {
-          "id": "continue_to_episode_08",
+          "id": "keep_connection_open",
           "text": "KEEP CONNECTION OPEN.",
+          "effects": {
+            "danger": 3,
+            "signalStrength": -4,
+            "keptGhostCrewChannelOpen": true
+          },
           "nextEpisodeId": "episode_08",
-          "textKey": "episode_07.e07_n13.choice0.text"
+          "textKey": "episode_07.e07_n14.choice0.text"
+        },
+        {
+          "id": "archive_and_cut_channel",
+          "text": "ARCHIVE DATA AND CUT CHANNEL.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": 2,
+            "archivedGhostCrewData": true
+          },
+          "nextEpisodeId": "episode_08",
+          "textKey": "episode_07.e07_n14.choice1.text"
         }
       ]
     }

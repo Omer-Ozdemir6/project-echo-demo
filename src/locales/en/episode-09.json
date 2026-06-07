@@ -5,35 +5,66 @@
         "title": "THE RESCUE"
       }
     },
+    "pod_beacon_alignment_09": {
+      "puzzle0": {
+        "title": "POD BEACON ALIGNMENT",
+        "description": "Match each rescue system with the correct stabilization target.",
+        "submitLabel": "LOCK RESCUE BEACON"
+      }
+    },
+    "pod_access_correlation_09": {
+      "puzzle1": {
+        "title": "POD ACCESS CORRELATION",
+        "description": "Match each pod access record with the correct conclusion.",
+        "submitLabel": "CONFIRM ACCESS RISK"
+      }
+    },
     "e09_n01": {
       "event0": {
         "text": "[RESCUE TASK AVAILABLE]"
       },
-      "event2": {
+      "event1": {
         "text": "Target: Emergency Pod"
       },
-      "event3": {
+      "event2": {
         "text": "Beacon lock unstable. Pod trajectory is drifting."
       },
       "choice0": {
         "text": "BEGIN OPERATION."
+      },
+      "choice1": {
+        "text": "STABILIZE BEACON FIRST."
+      }
+    },
+    "e09_n01_stabilize": {
+      "event0": {
+        "title": "PRE-RESCUE BEACON STABILIZATION",
+        "completeText": "[BEACON STABILIZATION COMPLETE]"
+      },
+      "event1": {
+        "text": "[NOTIFICATION QUEUED: BEACON STABILIZATION COMPLETE]"
       }
     },
     "e09_n02": {
+      "event0": {
+        "text": "Life support is dropping."
+      },
       "event1": {
-        "text": "Life support is dropping. We do not have much time. And before anyone asks, no, I do not have a calm version of that sentence."
+        "text": "We do not have much time. And before anyone asks, no, I do not have a calm version of that sentence."
       }
     },
     "e09_n03": {
       "event0": {
         "title": "RESCUE ROUTE MAP",
-        "content": "ROUTE A\nShort Route\nHigh Radiation\nEstimated Arrival: Fast\nCrew Risk: Severe\n\nROUTE B\nLong Route\nLow Radiation\nEstimated Arrival: Delayed\nCrew Risk: Moderate\nLife Support Risk: Severe"
+        "content": "ROUTE A\nShort Route\nHigh Radiation\nEstimated Arrival: Fast\nCrew Risk: Severe\nPod Life Support Risk: Moderate\n\nROUTE B\nLong Route\nLow Radiation\nEstimated Arrival: Delayed\nCrew Risk: Moderate\nPod Life Support Risk: Severe",
+        "caption": "Recovered rescue route analysis. Both routes carry significant trade-offs.",
+        "message": "[RESCUE ROUTE MAP ARCHIVED TO DATA BANK]"
       },
       "choice0": {
-        "text": "ROUTE A - FAST / HIGH RISK"
+        "text": "ROUTE A - FAST / HIGH RISK."
       },
       "choice1": {
-        "text": "ROUTE B - SAFE / SLOW"
+        "text": "ROUTE B - SAFE / SLOW."
       }
     },
     "e09_route_a": {
@@ -43,10 +74,10 @@
       "event1": {
         "text": "[RADIATION EXPOSURE RISK INCREASED]"
       },
-      "backgroundEvent2": {
+      "backgroundEvent0": {
         "text": "Fast route. Terrible route. Very us."
       },
-      "backgroundEvent3": {
+      "backgroundEvent1": {
         "text": "Keep moving. Do not stop in the exposed corridor."
       }
     },
@@ -57,81 +88,137 @@
       "event1": {
         "text": "[TRAVEL TIME INCREASED]"
       },
-      "backgroundEvent2": {
+      "backgroundEvent0": {
         "text": "This is safer for us."
       },
-      "backgroundEvent3": {
+      "backgroundEvent1": {
         "text": "Not for whoever is in that pod."
       }
     },
     "e09_n04": {
       "event0": {
-        "text": "[LIFE SUPPORT UPDATE]"
+        "title": "RESCUE ROUTE TRAVERSAL",
+        "completeText": "[RESCUE TEAM APPROACHING POD]"
       },
       "event1": {
-        "text": "Current Capacity: 18%"
+        "text": "[NOTIFICATION QUEUED: RESCUE TEAM APPROACHING POD]"
       },
       "event2": {
+        "text": "[LIFE SUPPORT UPDATE]"
+      },
+      "event3": {
+        "text": "Current Capacity: 18%"
+      },
+      "event4": {
         "text": "Pod beacon pulse weakening."
       },
-      "backgroundEvent3": {
+      "backgroundEvent0": {
         "text": "Hurry."
       },
-      "backgroundEvent4": {
+      "backgroundEvent1": {
         "text": "I can hear you outside."
       },
-      "backgroundEvent5": {
+      "backgroundEvent2": {
         "text": "Do not let Hale open it first."
       }
     },
     "e09_n05": {
       "event0": {
-        "text": "Emergency pod interior scan received."
+        "text": "[POD BEACON ALIGNMENT REQUIRED]"
+      }
+    },
+    "e09_n05_fail": {
+      "event0": {
+        "text": "[BEACON ALIGNMENT FAILED]"
       },
       "event1": {
-        "title": "POD INTERNAL FRAME",
-        "caption": "Emergency pod interior scan."
-      },
-      "choice0": {
-        "text": "INSPECT POD."
+        "text": "No, the beacon is slipping. Relay to pod, guidance to trajectory, life support to biometrics. Try again."
       }
     },
     "e09_n06": {
+      "event0": {
+        "text": "[BEACON ALIGNMENT CONFIRMED]"
+      },
       "event1": {
-        "text": "I cannot identify the occupant. The scan keeps folding over itself, like the image is trying not to show us a face."
+        "title": "POD INTERNAL SCAN REPORT",
+        "content": "Visual Feed: unavailable\nInterior Motion: intermittent\nThermal Bloom: one occupant-sized mass\nSuit Seal Trace: present\nOccupant Identity: unresolved\nScan Distortion: recursive signal folding detected",
+        "caption": "Interior scan reconstructed without image data. Occupant cannot be visually identified.",
+        "message": "[POD INTERNAL SCAN REPORT ARCHIVED TO DATA BANK]"
       }
     },
     "e09_n07": {
+      "event0": {
+        "text": "I cannot identify the occupant."
+      },
       "event1": {
-        "text": "Do not open the pod. I am not asking."
+        "text": "The scan keeps folding over itself, like the system is trying not to show us a person."
       },
       "choice0": {
-        "text": "WHY?"
+        "text": "HALE, WHY NOT OPEN IT?"
+      },
+      "choice1": {
+        "text": "MAYA, PREPARE THE OVERRIDE."
+      }
+    },
+    "e09_n07_prepare": {
+      "event0": {
+        "text": "Already reaching for it."
+      },
+      "event1": {
+        "text": "Which is probably a bad sign about my decision-making, but a good sign for whoever is inside."
       }
     },
     "e09_n08": {
+      "event0": {
+        "text": "Do not open the pod."
+      },
       "event1": {
-        "text": "Because I already did."
+        "text": "I am not asking."
       },
       "choice0": {
-        "text": "WHAT?"
+        "text": "GIVE ME A REASON."
+      },
+      "choice1": {
+        "text": "PAUSE THE OVERRIDE."
+      }
+    },
+    "e09_n08_pause": {
+      "event0": {
+        "text": "Pausing."
+      },
+      "event1": {
+        "text": "For the record, I hate that this is the smart thing to do."
       }
     },
     "e09_n09": {
+      "event0": {
+        "text": "Because I already did."
+      },
       "event1": {
-        "text": "The pod was empty. No body. No blood. No suit. Just frost on the inside of the glass."
+        "text": "Before Alpha. The pod was empty."
       },
-      "backgroundEvent2": {
-        "text": "He's lying."
+      "event2": {
+        "text": "No body. No blood. No suit. Just frost on the inside of the glass."
       },
-      "backgroundEvent3": {
+      "backgroundEvent0": {
+        "text": "HE'S LYING."
+      },
+      "backgroundEvent1": {
         "text": "Hale... when?"
       },
-      "backgroundEvent4": {
+      "backgroundEvent2": {
         "text": "Before Alpha."
       }
     },
     "e09_n10": {
+      "event0": {
+        "title": "OLD POD ACCESS LOG",
+        "content": "Access Event: Emergency Pod Manual Inspection\nTimestamp: Before Incident Alpha\nOperator: Ethan Hale\nPod State: empty\nInterior Residue: frost / no biological matter detected\nSeal Reclosure: completed manually\nConflict: current pod telemetry reports active biometric motion",
+        "caption": "Recovered old pod access record. Hale previously opened the same pod before Alpha.",
+        "message": "[OLD POD ACCESS LOG ARCHIVED TO DATA BANK]"
+      }
+    },
+    "e09_n11": {
       "event0": {
         "text": "[POD ACCESS AVAILABLE]"
       },
@@ -141,8 +228,27 @@
       "event2": {
         "text": "Manual override required."
       },
+      "event3": {
+        "title": "POD ACCESS RISK REPORT",
+        "content": "Internal Motion: detected\nSeal Pressure: unstable\nManual Override: required\nAudio Channel Contamination: rising\nExternal Voice Traffic: unauthorized\nRecommendation: correlate access records before opening",
+        "caption": "Recovered pod access risk report.",
+        "message": "[POD ACCESS RISK REPORT ARCHIVED TO DATA BANK]"
+      },
       "event4": {
-        "text": "Internal motion detected."
+        "text": "[POD ACCESS CORRELATION REQUIRED]"
+      }
+    },
+    "e09_n12_fail": {
+      "event0": {
+        "text": "[POD ACCESS CORRELATION FAILED]"
+      },
+      "event1": {
+        "text": "No. Motion means something is inside now. The old log means I opened it before Alpha. Seal pressure means manual override. Separate the facts."
+      }
+    },
+    "e09_n13": {
+      "event0": {
+        "text": "[POD ACCESS CORRELATION CONFIRMED]"
       },
       "choice0": {
         "text": "OPEN POD."
@@ -153,25 +259,29 @@
     },
     "e09_open_branch": {
       "event0": {
-        "text": "Pod opening sequence authorized."
+        "title": "POD OPENING SEQUENCE",
+        "completeText": "[POD SEAL RELEASED]"
       },
       "event1": {
-        "text": "[SEAL PRESSURE RELEASED]"
+        "text": "[NOTIFICATION QUEUED: POD SEAL RELEASED]"
       },
-      "backgroundEvent2": {
-        "text": "I have visual."
+      "backgroundEvent0": {
+        "text": "I have telemetry."
       },
-      "backgroundEvent3": {
+      "backgroundEvent1": {
         "text": "There is someone inside."
       },
-      "backgroundEvent4": {
+      "backgroundEvent2": {
         "text": "Step away from it. Now."
       },
-      "event6": {
-        "text": "Audio channel contamination detected."
+      "event2": {
+        "text": "[AUDIO CHANNEL CONTAMINATION DETECTED]"
       },
       "choice0": {
         "text": "KEEP THE POD OPEN."
+      },
+      "choice1": {
+        "text": "STABILIZE OPEN POD FIRST."
       }
     },
     "e09_abort_branch": {
@@ -181,20 +291,23 @@
       "event1": {
         "text": "[POD ACCESS DENIED]"
       },
-      "backgroundEvent2": {
+      "backgroundEvent0": {
         "text": "Please..."
       },
-      "backgroundEvent3": {
+      "backgroundEvent1": {
         "text": "Maya, don't leave me again."
       },
-      "backgroundEvent4": {
+      "backgroundEvent2": {
         "text": "Again?"
       },
-      "event5": {
+      "event2": {
         "text": "Pod beacon remains active."
       },
       "choice0": {
         "text": "TRACK THE BEACON."
+      },
+      "choice1": {
+        "text": "REOPEN RESCUE CHANNEL."
       }
     }
   }

@@ -2,6 +2,65 @@
   "id": "episode_08",
   "title": "THE EIGHTH PASSENGER",
   "startNodeId": "e08_n01",
+  "puzzles": {
+    "pod_identity_correlation_08": {
+      "id": "pod_identity_correlation_08",
+      "type": "matching",
+      "title": "POD IDENTITY CORRELATION",
+      "description": "Match each pod record with the correct identity clue.",
+      "submitLabel": "CONFIRM POD IDENTITY",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e08_n11",
+      "failureNodeId": "e08_n10_fail",
+      "leftItems": [
+        {
+          "id": "pod_manifest",
+          "label": "POD MANIFEST"
+        },
+        {
+          "id": "suit_identifier",
+          "label": "SUIT IDENTIFIER"
+        },
+        {
+          "id": "life_support_trace",
+          "label": "LIFE SUPPORT TRACE"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "occupant_unknown",
+          "label": "OCCUPANT UNKNOWN"
+        },
+        {
+          "id": "nv_08",
+          "label": "NV-08"
+        },
+        {
+          "id": "biometric_active",
+          "label": "ACTIVE BIOMETRIC SIGNAL"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "pod_manifest",
+          "rightId": "occupant_unknown"
+        },
+        {
+          "leftId": "suit_identifier",
+          "rightId": "nv_08"
+        },
+        {
+          "leftId": "life_support_trace",
+          "rightId": "biometric_active"
+        }
+      ],
+      "titleKey": "episode_08.pod_identity_correlation_08.puzzle0.title",
+      "descriptionKey": "episode_08.pod_identity_correlation_08.puzzle0.description",
+      "submitLabelKey": "episode_08.pod_identity_correlation_08.puzzle0.submitLabel"
+    }
+  },
   "nodes": {
     "e08_n01": {
       "id": "e08_n01",
@@ -9,21 +68,87 @@
       "events": [
         {
           "type": "typing",
-          "duration": 1800
+          "duration": 2200
         },
         {
           "type": "message",
           "text": "I found something.",
+          "textKey": "episode_08.e08_n01.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "A life support module. External. Still transmitting.",
           "textKey": "episode_08.e08_n01.event1.text"
         },
         {
           "type": "typing",
-          "duration": 1400
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "A life support module. It's still transmitting. Please tell me the universe is done being weird for one minute.",
-          "textKey": "episode_08.e08_n01.event3.text"
+          "text": "Please tell me the universe is done being weird for one minute.",
+          "textKey": "episode_08.e08_n01.event2.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "remote_scan_pod",
+          "text": "REMOTE SCAN THE POD.",
+          "effects": {
+            "signalStrength": -1,
+            "danger": 1,
+            "mayaTrust": 2
+          },
+          "nextNodeId": "e08_n02",
+          "textKey": "episode_08.e08_n01.choice0.text"
+        },
+        {
+          "id": "ask_maya_distance",
+          "text": "MAYA, KEEP YOUR DISTANCE.",
+          "effects": {
+            "signalStrength": 1,
+            "danger": -1,
+            "mayaTrust": -1
+          },
+          "nextNodeId": "e08_n01_distance",
+          "textKey": "episode_08.e08_n01.choice1.text"
+        }
+      ]
+    },
+    "e08_n01_distance": {
+      "id": "e08_n01_distance",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "I am keeping my distance.",
+          "textKey": "episode_08.e08_n01_distance.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "I like breathing. I have grown attached to it.",
+          "textKey": "episode_08.e08_n01_distance.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "But if there's someone inside, distance won't save them.",
+          "textKey": "episode_08.e08_n01_distance.event2.text"
         }
       ],
       "nextNodeId": "e08_n02"
@@ -35,30 +160,89 @@
         {
           "type": "systemAlert",
           "text": "[EMERGENCY POD DETECTED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_08.e08_n02.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
         },
         {
           "type": "file",
           "id": "pod_manifest_01",
           "fileId": "pod_manifest_01",
+          "fileType": "log",
           "title": "POD MANIFEST",
-          "content": "Occupant: UNKNOWN\nStatus: CRITICAL\nLife Support: 23%\nSignal Origin: External emergency pod\nBeacon Integrity: unstable\nManifest Link: corrupted",
-          "titleKey": "episode_08.e08_n02.event2.title",
-          "contentKey": "episode_08.e08_n02.event2.content"
+          "content": "Occupant: UNKNOWN\nStatus: CRITICAL\nLife Support: 23%\nSignal Origin: External emergency pod\nBeacon Integrity: unstable\nManifest Link: corrupted\nVisual Feed: unavailable",
+          "caption": "Recovered emergency pod manifest. Occupant identity unavailable.",
+          "source": "EXTERNAL_POD_BEACON",
+          "tags": [
+            "pod",
+            "life_support",
+            "manifest",
+            "unknown_occupant"
+          ],
+          "correlationTags": [
+            "eighth_passenger"
+          ],
+          "message": "[POD MANIFEST ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_08.e08_n02.event1.title",
+          "contentKey": "episode_08.e08_n02.event1.content",
+          "captionKey": "episode_08.e08_n02.event1.caption",
+          "messageKey": "episode_08.e08_n02.event1.message"
         }
       ],
       "choices": [
         {
-          "id": "inspect_pod",
-          "text": "INSPECT POD.",
+          "id": "inspect_life_support",
+          "text": "INSPECT LIFE SUPPORT.",
+          "effects": {
+            "signalStrength": -1,
+            "danger": 1
+          },
           "nextNodeId": "e08_n03",
           "textKey": "episode_08.e08_n02.choice0.text"
+        },
+        {
+          "id": "check_beacon_origin",
+          "text": "CHECK BEACON ORIGIN.",
+          "effects": {
+            "signalStrength": -2,
+            "danger": 2
+          },
+          "nextNodeId": "e08_n02_beacon",
+          "textKey": "episode_08.e08_n02.choice1.text"
         }
       ]
+    },
+    "e08_n02_beacon": {
+      "id": "e08_n02_beacon",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "pod_beacon_origin_01",
+          "fileId": "pod_beacon_origin_01",
+          "fileType": "log",
+          "title": "POD BEACON ORIGIN",
+          "content": "Beacon Source: External emergency pod\nLaunch Vector: Unknown\nDocking History: no confirmed ECHO dock record\nCarrier Trace: 7.14 MHz harmonic residue detected\nMovement Pattern: inconsistent with passive drift",
+          "caption": "Recovered beacon origin report. Pod movement appears non-passive.",
+          "source": "RELAY_BEACON_ANALYSIS",
+          "tags": [
+            "pod",
+            "beacon",
+            "7.14",
+            "movement"
+          ],
+          "correlationTags": [
+            "eighth_passenger"
+          ],
+          "message": "[POD BEACON ORIGIN ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_08.e08_n02_beacon.event0.title",
+          "contentKey": "episode_08.e08_n02_beacon.event0.content",
+          "captionKey": "episode_08.e08_n02_beacon.event0.caption",
+          "messageKey": "episode_08.e08_n02_beacon.event0.message"
+        }
+      ],
+      "nextNodeId": "e08_n03"
     },
     "e08_n03": {
       "id": "e08_n03",
@@ -66,7 +250,8 @@
       "events": [
         {
           "type": "systemAlert",
-          "text": "[WAIT TASK CREATED]",
+          "text": "[LIFE SUPPORT TIMER CREATED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_08.e08_n03.event0.text"
         },
         {
@@ -81,11 +266,47 @@
         },
         {
           "type": "progressTask",
-          "taskId": "rescue_the_pod",
-          "title": "RESCUE THE POD",
-          "status": "active",
-          "timeLimitHours": 24,
-          "titleKey": "episode_08.e08_n03.event3.title"
+          "id": "pod_life_support_scan",
+          "title": "POD LIFE SUPPORT SCAN",
+          "subtitle": "Measuring oxygen, pressure and occupant telemetry",
+          "duration": 45000,
+          "completeText": "[POD LIFE SUPPORT SCAN COMPLETE]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_08.e08_n03.event3.title",
+          "subtitleKey": "episode_08.e08_n03.event3.subtitle",
+          "completeTextKey": "episode_08.e08_n03.event3.completeText"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[NOTIFICATION QUEUED: POD LIFE SUPPORT SCAN COMPLETE]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_08.e08_n03.event4.text"
+        },
+        {
+          "type": "file",
+          "id": "pod_life_support_trace",
+          "fileId": "pod_life_support_trace",
+          "fileType": "log",
+          "title": "POD LIFE SUPPORT TRACE",
+          "content": "Current Capacity: 23%\nPressure: unstable but contained\nThermal Control: failing\nOccupant Biometric Signal: active\nHeartbeat Pattern: irregular\nEstimated Failure Window: 24 hours\nExternal Access: possible with relay guidance",
+          "caption": "Life support telemetry recovered from emergency pod.",
+          "source": "EXTERNAL_POD_BEACON",
+          "tags": [
+            "pod",
+            "life_support",
+            "biometric",
+            "critical"
+          ],
+          "correlationTags": [
+            "eighth_passenger"
+          ],
+          "message": "[POD LIFE SUPPORT TRACE ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_08.e08_n03.event5.title",
+          "contentKey": "episode_08.e08_n03.event5.content",
+          "captionKey": "episode_08.e08_n03.event5.caption",
+          "messageKey": "episode_08.e08_n03.event5.message"
         }
       ],
       "nextNodeId": "e08_n04"
@@ -96,12 +317,30 @@
       "events": [
         {
           "type": "typing",
-          "duration": 1800
+          "duration": 4200
         },
         {
           "type": "message",
-          "text": "We can still reach it. Not easily. Not safely. Honestly, not in any way that makes my survival instincts happy. But there is someone inside.",
+          "text": "We can still reach it.",
+          "textKey": "episode_08.e08_n04.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "text": "Not easily. Not safely. Honestly, not in any way that makes my survival instincts happy.",
           "textKey": "episode_08.e08_n04.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "But there is someone inside.",
+          "textKey": "episode_08.e08_n04.event2.text"
         }
       ],
       "nextNodeId": "e08_n05"
@@ -112,21 +351,30 @@
       "events": [
         {
           "type": "typing",
-          "duration": 1600
+          "duration": 2400
         },
         {
           "type": "message",
           "text": "No. Leave it.",
+          "textKey": "episode_08.e08_n05.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "Whatever is inside that pod is not worth the risk.",
           "textKey": "episode_08.e08_n05.event1.text"
         },
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 5200
         },
         {
           "type": "message",
-          "text": "Whatever is inside that pod is not worth the risk. And before Maya says I sound heartless, I know exactly how I sound. That is why you should listen.",
-          "textKey": "episode_08.e08_n05.event3.text"
+          "text": "And before Maya says I sound heartless, I know exactly how I sound. That is why you should listen.",
+          "textKey": "episode_08.e08_n05.event2.text"
         }
       ],
       "choices": [
@@ -136,62 +384,90 @@
           "effects": {
             "danger": 10,
             "morale": 10,
-            "trust": -5
+            "trust": -5,
+            "mayaTrust": 8,
+            "haleTrust": -7,
+            "signalStrength": -4,
+            "choseToSavePod": true
           },
-          "nextNodeId": "e08_n06a",
+          "nextNodeId": "e08_n06_save",
           "textKey": "episode_08.e08_n05.choice0.text"
         },
         {
-          "id": "leave_pod",
-          "text": "LEAVE THE POD.",
+          "id": "delay_rescue",
+          "text": "DELAY RESCUE AND VERIFY IDENTITY.",
           "effects": {
-            "danger": -10,
-            "morale": -15,
-            "trust": 5
+            "danger": -2,
+            "morale": -5,
+            "trust": 5,
+            "mayaTrust": -5,
+            "haleTrust": 6,
+            "signalStrength": 2,
+            "delayedPodRescue": true
           },
-          "nextNodeId": "e08_n06b",
+          "nextNodeId": "e08_n06_verify",
           "textKey": "episode_08.e08_n05.choice1.text"
         }
       ]
     },
-    "e08_n06a": {
-      "id": "e08_n06a",
+    "e08_n06_save": {
+      "id": "e08_n06_save",
       "speaker": "MAYA",
       "events": [
         {
           "type": "typing",
-          "duration": 1700
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "Good. Thank you. If this gets us killed, I will write a very passive-aggressive apology note in the afterlife.",
-          "textKey": "episode_08.e08_n06a.event1.text"
+          "text": "Good. Thank you.",
+          "textKey": "episode_08.e08_n06_save.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4400
+        },
+        {
+          "type": "message",
+          "text": "If this gets us killed, I will write a very passive-aggressive apology note in the afterlife.",
+          "textKey": "episode_08.e08_n06_save.event1.text"
         },
         {
           "type": "systemAlert",
-          "text": "[MORALE INCREASED]",
-          "textKey": "episode_08.e08_n06a.event2.text"
+          "text": "[MAYA TRUST INCREASED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_08.e08_n06_save.event2.text"
         },
         {
           "type": "systemAlert",
           "text": "[DANGER LEVEL INCREASED]",
-          "textKey": "episode_08.e08_n06a.event3.text"
+          "pauseAfterMs": 900,
+          "textKey": "episode_08.e08_n06_save.event3.text"
         }
       ],
       "nextNodeId": "e08_n07"
     },
-    "e08_n06b": {
-      "id": "e08_n06b",
+    "e08_n06_verify": {
+      "id": "e08_n06_verify",
       "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 1800
+          "duration": 3800
         },
         {
           "type": "message",
-          "text": "A rational decision. Not a kind one. But rational.",
-          "textKey": "episode_08.e08_n06b.event1.text"
+          "text": "A rational decision.",
+          "textKey": "episode_08.e08_n06_verify.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Not a kind one. But rational.",
+          "textKey": "episode_08.e08_n06_verify.event1.text"
         },
         {
           "type": "backgroundEvent",
@@ -200,18 +476,14 @@
             "type": "message",
             "speaker": "MAYA",
             "text": "There is still someone breathing in there, Hale.",
-            "textKey": "episode_08.e08_n06b.backgroundEvent2.text"
+            "textKey": "episode_08.e08_n06_verify.backgroundEvent0.text"
           }
         },
         {
           "type": "systemAlert",
-          "text": "[MORALE DECREASED]",
-          "textKey": "episode_08.e08_n06b.event3.text"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[DANGER LEVEL REDUCED]",
-          "textKey": "episode_08.e08_n06b.event4.text"
+          "text": "[MAYA TRUST DEGRADED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_08.e08_n06_verify.event2.text"
         }
       ],
       "nextNodeId": "e08_n07"
@@ -221,19 +493,63 @@
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "message",
-          "text": "Emergency pod visual feed recovered.",
+          "type": "systemAlert",
+          "text": "[REMOTE POD DIAGNOSTIC AVAILABLE]",
+          "pauseAfterMs": 900,
           "textKey": "episode_08.e08_n07.event0.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "recover_suit_id",
+          "text": "RECOVER SUIT IDENTIFIER.",
+          "effects": {
+            "signalStrength": -2,
+            "danger": 2
+          },
+          "nextNodeId": "e08_n08",
+          "textKey": "episode_08.e08_n07.choice0.text"
         },
         {
-          "type": "image",
-          "id": "pod_camera_01",
-          "fileId": "pod_camera_01",
-          "title": "POD CAMERA FEED",
-          "caption": "Emergency pod visual feed recovered.",
-          "src": "/images/pod_camera_01.jpg",
-          "titleKey": "episode_08.e08_n07.event1.title",
-          "captionKey": "episode_08.e08_n07.event1.caption"
+          "id": "scan_pod_movement",
+          "text": "SCAN POD MOVEMENT.",
+          "effects": {
+            "signalStrength": -1,
+            "danger": 1
+          },
+          "nextNodeId": "e08_n07_movement",
+          "textKey": "episode_08.e08_n07.choice1.text"
+        }
+      ]
+    },
+    "e08_n07_movement": {
+      "id": "e08_n07_movement",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "pod_movement_analysis",
+          "fileId": "pod_movement_analysis",
+          "fileType": "log",
+          "title": "POD MOVEMENT ANALYSIS",
+          "content": "Movement Type: active correction bursts\nThruster Signature: minimal\nGuidance Source: unknown\nExternal Pull: not detected\nConclusion: pod is adjusting course without visible command authorization",
+          "caption": "Recovered pod movement analysis. Beacon movement is not passive drift.",
+          "source": "RELAY_BEACON_ANALYSIS",
+          "tags": [
+            "pod",
+            "movement",
+            "guidance",
+            "anomaly"
+          ],
+          "correlationTags": [
+            "eighth_passenger"
+          ],
+          "message": "[POD MOVEMENT ANALYSIS ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_08.e08_n07_movement.event0.title",
+          "contentKey": "episode_08.e08_n07_movement.event0.content",
+          "captionKey": "episode_08.e08_n07_movement.event0.caption",
+          "messageKey": "episode_08.e08_n07_movement.event0.message"
         }
       ],
       "nextNodeId": "e08_n08"
@@ -243,33 +559,116 @@
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "typing",
-          "duration": 1200
+          "type": "progressTask",
+          "id": "suit_id_recovery",
+          "title": "SUIT ID RECOVERY",
+          "subtitle": "Extracting identifier from pod telemetry and pressure seals",
+          "duration": 50000,
+          "completeText": "[SUIT ID RECOVERY COMPLETE]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_08.e08_n08.event0.title",
+          "subtitleKey": "episode_08.e08_n08.event0.subtitle",
+          "completeTextKey": "episode_08.e08_n08.event0.completeText"
         },
         {
-          "type": "message",
-          "text": "Image quality degraded. Partial suit identifier recovered.",
+          "type": "systemAlert",
+          "text": "[NOTIFICATION QUEUED: SUIT ID RECOVERY COMPLETE]",
+          "pauseAfterMs": 900,
           "textKey": "episode_08.e08_n08.event1.text"
         },
         {
-          "type": "glitch",
-          "duration": 900
+          "type": "file",
+          "id": "pod_suit_identifier_01",
+          "fileId": "pod_suit_identifier_01",
+          "fileType": "log",
+          "title": "POD SUIT IDENTIFIER",
+          "content": "Recovered Suit ID: NV-08\nVisual Feed: unavailable\nSuit Registry Match: partial\nArchive Match: Noah Voss\nIdentifier Integrity: 72%\nWarning: suit identity may not equal occupant identity",
+          "caption": "Suit identifier recovered from emergency pod telemetry.",
+          "source": "POD_TELEMETRY",
+          "tags": [
+            "pod",
+            "suit_id",
+            "noah_voss",
+            "nv_08"
+          ],
+          "correlationTags": [
+            "eighth_passenger"
+          ],
+          "message": "[POD SUIT IDENTIFIER ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_08.e08_n08.event2.title",
+          "contentKey": "episode_08.e08_n08.event2.content",
+          "captionKey": "episode_08.e08_n08.event2.caption",
+          "messageKey": "episode_08.e08_n08.event2.message"
         },
         {
-          "type": "message",
-          "text": "SUIT ID: NV-08",
+          "type": "systemAlert",
+          "text": "[POD IDENTITY CORRELATION REQUIRED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_08.e08_n08.event3.text"
         },
         {
-          "type": "message",
-          "text": "Archive match found: Noah Voss.",
-          "textKey": "episode_08.e08_n08.event4.text"
+          "type": "puzzle",
+          "puzzleId": "pod_identity_correlation_08",
+          "pauseAfterMs": 700
         }
       ],
-      "nextNodeId": "e08_n09"
+      "choices": []
     },
-    "e08_n09": {
-      "id": "e08_n09",
+    "e08_n10_fail": {
+      "id": "e08_n10_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[POD IDENTITY CORRELATION FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_08.e08_n10_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5
+          }
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "No. Manifest unknown, suit ID NV-08, life signs active. Keep the records separate or the pod wins.",
+          "textKey": "episode_08.e08_n10_fail.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "pod_identity_correlation_08",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e08_n11": {
+      "id": "e08_n11",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[POD IDENTITY CORRELATION CONFIRMED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_08.e08_n11.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": 2
+          }
+        }
+      ],
+      "nextNodeId": "e08_n12"
+    },
+    "e08_n12": {
+      "id": "e08_n12",
       "speaker": "MAYA",
       "events": [
         {
@@ -279,62 +678,154 @@
         {
           "type": "message",
           "text": "No...",
-          "textKey": "episode_08.e08_n09.event1.text"
+          "textKey": "episode_08.e08_n12.event0.text"
         },
         {
           "type": "typing",
-          "duration": 2400
+          "duration": 5000
         },
         {
           "type": "message",
-          "text": "That suit belonged to Noah Voss. His psych file was missing because there was not supposed to be a file anymore. Voss died before Alpha.",
-          "textKey": "episode_08.e08_n09.event3.text"
+          "text": "That suit belonged to Noah Voss.",
+          "textKey": "episode_08.e08_n12.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "His psych file was missing because there was not supposed to be a file anymore.",
+          "textKey": "episode_08.e08_n12.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Voss died before Alpha.",
+          "textKey": "episode_08.e08_n12.event3.text"
         }
       ],
-      "nextNodeId": "e08_n10"
+      "nextNodeId": "e08_n13"
     },
-    "e08_n10": {
-      "id": "e08_n10",
+    "e08_n13": {
+      "id": "e08_n13",
       "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 2300
+          "duration": 3600
         },
         {
           "type": "message",
           "text": "No. Voss is dead.",
-          "textKey": "episode_08.e08_n10.event1.text"
+          "textKey": "episode_08.e08_n13.event0.text"
         },
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 5200
         },
         {
           "type": "message",
-          "text": "I saw the body myself. And if that thing is using his suit ID, then it is not asking for help. It is baiting us.",
-          "textKey": "episode_08.e08_n10.event3.text"
+          "text": "I saw the body myself.",
+          "textKey": "episode_08.e08_n13.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "And if that thing is using his suit ID, then it is not asking for help. It is baiting us.",
+          "textKey": "episode_08.e08_n13.event2.text"
         }
       ],
-      "nextNodeId": "e08_n11"
+      "choices": [
+        {
+          "id": "ask_for_death_record",
+          "text": "PULL VOSS DEATH RECORD.",
+          "effects": {
+            "danger": 2,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e08_n14_death_record",
+          "textKey": "episode_08.e08_n13.choice0.text"
+        },
+        {
+          "id": "listen_to_pod_signal",
+          "text": "LISTEN TO POD SIGNAL.",
+          "effects": {
+            "danger": 5,
+            "signalStrength": -5,
+            "listenedToPodSignal": true
+          },
+          "nextNodeId": "e08_n15_signal",
+          "textKey": "episode_08.e08_n13.choice1.text"
+        }
+      ]
     },
-    "e08_n11": {
-      "id": "e08_n11",
+    "e08_n14_death_record": {
+      "id": "e08_n14_death_record",
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "message",
-          "text": "Life Support Status Updated.",
-          "textKey": "episode_08.e08_n11.event0.text"
+          "type": "file",
+          "id": "voss_death_record_01",
+          "fileId": "voss_death_record_01",
+          "fileType": "log",
+          "title": "DEATH RECORD: NOAH VOSS",
+          "content": "Subject: Noah Voss\nStatus: deceased\nReported Date: before Incident Alpha\nBody Recovery: confirmed by Engineering Lead\nWitness: Ethan Hale\nConflict: emergency pod currently transmits active biometric signal under suit ID NV-08",
+          "caption": "Recovered death record conflicts with active pod telemetry.",
+          "source": "MEDICAL_ARCHIVE",
+          "tags": [
+            "noah_voss",
+            "death_record",
+            "hale",
+            "pod_conflict"
+          ],
+          "correlationTags": [
+            "eighth_passenger"
+          ],
+          "message": "[VOSS DEATH RECORD ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_08.e08_n14_death_record.event0.title",
+          "contentKey": "episode_08.e08_n14_death_record.event0.content",
+          "captionKey": "episode_08.e08_n14_death_record.event0.caption",
+          "messageKey": "episode_08.e08_n14_death_record.event0.message"
+        }
+      ],
+      "nextNodeId": "e08_n15_signal"
+    },
+    "e08_n15_signal": {
+      "id": "e08_n15_signal",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[LIFE SUPPORT STATUS UPDATED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_08.e08_n15_signal.event0.text"
         },
         {
           "type": "backgroundEvent",
-          "delay": 6500,
+          "delay": 3500,
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
             "text": "Maya...",
-            "textKey": "episode_08.e08_n11.backgroundEvent1.text"
+            "textKey": "episode_08.e08_n15_signal.backgroundEvent0.text"
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 7500,
+          "event": {
+            "type": "message",
+            "speaker": "UNKNOWN",
+            "text": "You promised you'd come back.",
+            "textKey": "episode_08.e08_n15_signal.backgroundEvent1.text"
           }
         },
         {
@@ -343,67 +834,79 @@
           "event": {
             "type": "message",
             "speaker": "UNKNOWN",
-            "text": "You promised you'd come back.",
-            "textKey": "episode_08.e08_n11.backgroundEvent2.text"
+            "text": "Don't leave me in the dark again.",
+            "textKey": "episode_08.e08_n15_signal.backgroundEvent2.text"
           }
         },
         {
-          "type": "backgroundEvent",
-          "delay": 16500,
-          "event": {
-            "type": "message",
-            "speaker": "UNKNOWN",
-            "text": "Don't leave me in the dark again.",
-            "textKey": "episode_08.e08_n11.backgroundEvent3.text"
+          "type": "statChange",
+          "changes": {
+            "danger": 6,
+            "morale": -4,
+            "signalStrength": -8
           }
         }
       ],
-      "nextNodeId": "e08_n12"
+      "nextNodeId": "e08_n16"
     },
-    "e08_n12": {
-      "id": "e08_n12",
+    "e08_n16": {
+      "id": "e08_n16",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[LIFE SUPPORT STATUS]",
-          "textKey": "episode_08.e08_n12.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
+          "pauseAfterMs": 900,
+          "textKey": "episode_08.e08_n16.event0.text"
         },
         {
           "type": "message",
           "text": "Current Capacity: 22%",
-          "textKey": "episode_08.e08_n12.event2.text"
+          "textKey": "episode_08.e08_n16.event1.text"
         },
         {
           "type": "message",
-          "text": "Wait Task Active: RESCUE THE POD",
-          "textKey": "episode_08.e08_n12.event3.text"
+          "text": "Task Active: RESCUE THE POD",
+          "textKey": "episode_08.e08_n16.event2.text"
         },
         {
           "type": "message",
           "text": "Signal lock unstable.",
-          "textKey": "episode_08.e08_n12.event4.text"
+          "textKey": "episode_08.e08_n16.event3.text"
         },
         {
           "type": "glitch",
-          "duration": 1100
+          "duration": 1100,
+          "pauseAfterMs": 800
         },
         {
           "type": "message",
           "text": "Emergency pod beacon is moving.",
-          "textKey": "episode_08.e08_n12.event6.text"
+          "textKey": "episode_08.e08_n16.event4.text"
         }
       ],
       "choices": [
         {
-          "id": "continue_to_episode_09",
+          "id": "track_pod_signal",
           "text": "TRACK POD SIGNAL.",
+          "effects": {
+            "danger": 3,
+            "signalStrength": -3,
+            "trackedPodSignal": true
+          },
           "nextEpisodeId": "episode_09",
-          "textKey": "episode_08.e08_n12.choice0.text"
+          "textKey": "episode_08.e08_n16.choice0.text"
+        },
+        {
+          "id": "stabilize_before_tracking",
+          "text": "STABILIZE SIGNAL FIRST.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": 3,
+            "stabilizedBeforeTrackingPod": true
+          },
+          "nextEpisodeId": "episode_09",
+          "textKey": "episode_08.e08_n16.choice1.text"
         }
       ]
     }

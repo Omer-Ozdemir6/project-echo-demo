@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { getGameText } from "../i18n/gameText";
+import { playSound } from "../audio/soundManager";
 
 function resolveText(key, fallback = "", language = "en") {
   return getGameText(key, fallback, language);
@@ -7,13 +8,15 @@ function resolveText(key, fallback = "", language = "en") {
 
 export default function MessageFeed({
   speaker,
-  messages,
+  messages = [],
   isTyping,
   onOpenFile,
   language = "en",
-  hasBottomPanel = false
+  hasBottomPanel = false,
+  settings
 }) {
   const feedScrollRef = useRef(null);
+  const previousMessageCountRef = useRef(messages.length);
 
   useEffect(() => {
     if (feedScrollRef.current) {
@@ -22,7 +25,21 @@ export default function MessageFeed({
         behavior: "smooth"
       });
     }
-  }, [messages, isTyping, hasBottomPanel]);
+  }, [messages.length, isTyping, hasBottomPanel]);
+
+  useEffect(() => {
+    if (messages.length > previousMessageCountRef.current) {
+      const lastMessage = messages[messages.length - 1];
+
+      if (lastMessage?.sender === "system" || lastMessage?.type === "systemAlert") {
+        playSound("fileArchived", settings);
+      } else {
+        playSound("messageIn", settings);
+      }
+    }
+
+    previousMessageCountRef.current = messages.length;
+  }, [messages, settings]);
 
   function getSpeakerLabel(message) {
     if (message.sender === "player") {
@@ -48,13 +65,24 @@ export default function MessageFeed({
     return resolveText(
       message.titleKey,
       message.title ||
-        resolveText("messageFeed.incomingImage", "[INCOMING IMAGE]", language),
+        resolveText("messageFeed.incomingFile", "[INCOMING FILE]", language),
       language
     );
   }
 
   function getMessageCaption(message) {
     return resolveText(message.captionKey, message.caption || "", language);
+  }
+
+  function isFileMessage(message) {
+    return (
+      message.type === "image" ||
+      message.type === "file" ||
+      message.type === "log" ||
+      message.type === "map" ||
+      message.type === "crew" ||
+      Boolean(message.fileId)
+    );
   }
 
   return (
@@ -69,15 +97,15 @@ export default function MessageFeed({
         const messageSpeaker = getSpeakerLabel(message);
         const isPlayer = message.sender === "player";
         const isSystemAlert = message.type === "systemAlert";
+        const isCorrupt = message.type === "corruptMessage";
         const messageText = getMessageText(message);
+        const messageTitle = getMessageTitle(message);
+        const messageCaption = getMessageCaption(message);
 
-        if (message.type === "image") {
-          const imageTitle = getMessageTitle(message);
-          const imageCaption = getMessageCaption(message);
-
+        if (isFileMessage(message)) {
           return (
             <div
-              key={`${imageTitle || message.src}-${index}`}
+              key={`${message.fileId || message.id || messageTitle}-${index}`}
               className="max-w-[92%] animate-[messageIn_0.35s_ease-out_both] sm:max-w-[78%]"
             >
               <span className="mb-2 block text-[11px] tracking-[0.14em] text-cyan-300/80">
@@ -86,7 +114,7 @@ export default function MessageFeed({
 
               <div className="border border-cyan-300/25 bg-slate-950/75 p-3 shadow-[0_0_24px_rgba(34,211,238,0.08),inset_0_0_20px_rgba(34,211,238,0.04)]">
                 <div className="mb-3 flex justify-between gap-3 border-b border-cyan-300/15 pb-2 text-[11px] tracking-[0.12em] text-blue-300">
-                  <span className="truncate">{imageTitle}</span>
+                  <span className="truncate">{messageTitle}</span>
 
                   <span className="shrink-0">
                     {resolveText(
@@ -97,25 +125,20 @@ export default function MessageFeed({
                   </span>
                 </div>
 
-                <div className="overflow-hidden border border-cyan-300/20 bg-slate-900 p-1">
-                  <img
-                    src={message.src}
-                    alt={
-                      imageCaption ||
-                      imageTitle ||
-                      resolveText(
-                        "messageFeed.recoveredImage",
-                        "Recovered image",
-                        language
-                      )
-                    }
-                    className="block max-h-72 w-full object-cover contrast-125 saturate-75 brightness-90"
-                  />
-                </div>
+                {message.type === "image" && message.src && (
+                  <div className="overflow-hidden border border-cyan-300/20 bg-slate-900 p-1">
+                    <img
+                      src={message.src}
+                      alt={messageCaption || messageTitle}
+                      className="block max-h-72 w-full object-cover contrast-125 saturate-75 brightness-90"
+                      draggable={false}
+                    />
+                  </div>
+                )}
 
-                {imageCaption && (
+                {messageCaption && (
                   <p className="mt-3 text-xs leading-5 text-cyan-50/65">
-                    {imageCaption}
+                    {messageCaption}
                   </p>
                 )}
 
@@ -124,14 +147,14 @@ export default function MessageFeed({
                   className="mt-3 w-full border border-cyan-300/35 bg-cyan-950/40 px-3 py-2 text-[11px] tracking-[0.2em] text-cyan-50 transition hover:bg-cyan-400/10"
                   onClick={() => onOpenFile?.(message)}
                 >
-                  {resolveText("messageFeed.viewImage", "VIEW IMAGE", language)}
+                  {resolveText("messageFeed.openFile", "OPEN FILE", language)}
                 </button>
               </div>
             </div>
           );
         }
 
-        if (message.type === "corruptMessage") {
+        if (isCorrupt) {
           return (
             <div
               key={`${messageText}-${index}`}

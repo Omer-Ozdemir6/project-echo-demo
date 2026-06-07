@@ -3,11 +3,68 @@
   "title": "THE NAME",
   "startNodeId": "e06_n01",
   "puzzles": {
+    "voss_identity_correlation_06": {
+      "id": "voss_identity_correlation_06",
+      "type": "matching",
+      "title": "IDENTITY CORRELATION",
+      "description": "Match each recovered fragment with the correct identity clue.",
+      "submitLabel": "CONFIRM IDENTITY CLUES",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e06_n07",
+      "failureNodeId": "e06_n06_fail",
+      "leftItems": [
+        {
+          "id": "manifest_fragment",
+          "label": "CORRUPTED MANIFEST FRAGMENT"
+        },
+        {
+          "id": "maintenance_signature",
+          "label": "MAINTENANCE LOG SIGNATURE"
+        },
+        {
+          "id": "first_contact_hint",
+          "label": "UNKNOWN TRANSMISSION HINT"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "surname_voss",
+          "label": "SURNAME STARTS WITH V"
+        },
+        {
+          "id": "initial_n",
+          "label": "SIGNED BY N. VOSS"
+        },
+        {
+          "id": "seen_before",
+          "label": "NAME WAS ALREADY SEEN"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "manifest_fragment",
+          "rightId": "surname_voss"
+        },
+        {
+          "leftId": "maintenance_signature",
+          "rightId": "initial_n"
+        },
+        {
+          "leftId": "first_contact_hint",
+          "rightId": "seen_before"
+        }
+      ],
+      "titleKey": "episode_06.voss_identity_correlation_06.puzzle0.title",
+      "descriptionKey": "episode_06.voss_identity_correlation_06.puzzle0.description",
+      "submitLabelKey": "episode_06.voss_identity_correlation_06.puzzle0.submitLabel"
+    },
     "memory_name_01": {
       "id": "memory_name_01",
       "type": "code",
       "title": "MEMORY RECONSTRUCTION",
-      "description": "Search previous records and identify the missing crew member.",
+      "description": "Use the recovered identity clues to reconstruct the missing crew member.",
       "prompt": "ENTER MISSING NAME",
       "placeholder": "NOAH VOSS",
       "inputMode": "text",
@@ -20,9 +77,17 @@
         "N VOSS",
         "N. VOSS"
       ],
-      "successNodeId": "e06_n08",
-      "failureNodeId": "e06_n07_fail",
+      "successNodeId": "e06_n09",
+      "failureNodeId": "e06_n08_fail",
       "submitCooldownMs": 500,
+      "accessLevel": "PERSONNEL MEMORY INDEX",
+      "panelStatus": "PARTIAL",
+      "expectedFormat": "FIRST NAME + SURNAME",
+      "hints": [
+        "CREW MEMBER #07 HAS SURNAME V---",
+        "MAINTENANCE LOG WAS SIGNED N. VOSS",
+        "RECONSTRUCT THE FULL NAME: NOAH VOSS"
+      ],
       "titleKey": "episode_06.memory_name_01.puzzle0.title",
       "descriptionKey": "episode_06.memory_name_01.puzzle0.description",
       "promptKey": "episode_06.memory_name_01.puzzle0.prompt",
@@ -42,7 +107,7 @@
         {
           "type": "message",
           "text": "You heard him.",
-          "textKey": "episode_06.e06_n01.event1.text"
+          "textKey": "episode_06.e06_n01.event0.text"
         },
         {
           "type": "typing",
@@ -51,11 +116,7 @@
         {
           "type": "message",
           "text": "He said you already saw the name.",
-          "textKey": "episode_06.e06_n01.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1000
+          "textKey": "episode_06.e06_n01.event1.text"
         },
         {
           "type": "typing",
@@ -63,8 +124,8 @@
         },
         {
           "type": "message",
-          "text": "Then the answer must be somewhere in the archives.",
-          "textKey": "episode_06.e06_n01.event6.text"
+          "text": "Which means either the archive is hiding it, or one of us walked past it without realizing.",
+          "textKey": "episode_06.e06_n01.event2.text"
         },
         {
           "type": "typing",
@@ -72,18 +133,66 @@
         },
         {
           "type": "message",
-          "text": "And I really hate when the archives start acting smug.",
-          "textKey": "episode_06.e06_n01.event8.text"
+          "text": "And I hate both options.",
+          "textKey": "episode_06.e06_n01.event3.text"
         }
       ],
       "choices": [
         {
-          "id": "start_search",
+          "id": "search_archives",
           "text": "SEARCH ARCHIVES.",
+          "effects": {
+            "mayaTrust": 2,
+            "signalStrength": -1
+          },
           "nextNodeId": "e06_n02",
           "textKey": "episode_06.e06_n01.choice0.text"
+        },
+        {
+          "id": "ask_maya_if_she_remembers",
+          "text": "DO YOU REMEMBER A SEVENTH?",
+          "effects": {
+            "mayaTrust": -1,
+            "danger": 1
+          },
+          "nextNodeId": "e06_n01_memory",
+          "textKey": "episode_06.e06_n01.choice1.text"
         }
       ]
+    },
+    "e06_n01_memory": {
+      "id": "e06_n01_memory",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "textKey": "episode_06.e06_n01_memory.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "And before you decide that makes me useless, memory is exactly what someone attacked here.",
+          "textKey": "episode_06.e06_n01_memory.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "So let's use records. Records lie less emotionally.",
+          "textKey": "episode_06.e06_n01_memory.event2.text"
+        }
+      ],
+      "nextNodeId": "e06_n02"
     },
     "e06_n02": {
       "id": "e06_n02",
@@ -101,14 +210,17 @@
           "fileId": "corrupted_manifest_fragment",
           "fileType": "log",
           "title": "CORRUPTED MANIFEST FRAGMENT",
-          "content": "CREW MEMBER #07\nSTATUS: REDACTED\nSURNAME: V---",
+          "content": "CREW MEMBER #07\nSTATUS: ERASED\nSURNAME: V---\nMEMORY INDEX: DAMAGED\nSOURCE CONFLICT: OFFICIAL MANIFEST DENIES ENTRY",
           "caption": "Partially recovered crew record from corrupted personnel database.",
           "source": "CORRUPTED_DATABASE",
           "tags": [
             "crew",
             "manifest",
-            "redacted",
+            "erased",
             "unknown_personnel"
+          ],
+          "correlationTags": [
+            "noah_voss_identity"
           ],
           "message": "[CORRUPTED MANIFEST FRAGMENT ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1400,
@@ -124,7 +236,7 @@
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "V...",
-            "textKey": "episode_06.e06_n02.backgroundEvent2.text"
+            "textKey": "episode_06.e06_n02.backgroundEvent0.text"
           }
         },
         {
@@ -135,7 +247,7 @@
           "type": "message",
           "speaker": "MAYA",
           "text": "V.",
-          "textKey": "episode_06.e06_n02.event3.text"
+          "textKey": "episode_06.e06_n02.event2.text"
         },
         {
           "type": "typing",
@@ -145,7 +257,7 @@
           "type": "message",
           "speaker": "MAYA",
           "text": "I don't remember anyone with a V surname on ECHO.",
-          "textKey": "episode_06.e06_n02.event5.text"
+          "textKey": "episode_06.e06_n02.event3.text"
         }
       ],
       "nextNodeId": "e06_n03"
@@ -161,11 +273,7 @@
         {
           "type": "message",
           "text": "Stop looking.",
-          "textKey": "episode_06.e06_n03.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1000
+          "textKey": "episode_06.e06_n03.event0.text"
         },
         {
           "type": "typing",
@@ -174,7 +282,7 @@
         {
           "type": "message",
           "text": "That file was deleted for a reason.",
-          "textKey": "episode_06.e06_n03.event4.text"
+          "textKey": "episode_06.e06_n03.event1.text"
         },
         {
           "type": "typing",
@@ -183,7 +291,7 @@
         {
           "type": "message",
           "text": "And no, before Maya says it, not because I'm secretly dramatic.",
-          "textKey": "episode_06.e06_n03.event6.text"
+          "textKey": "episode_06.e06_n03.event2.text"
         }
       ],
       "choices": [
@@ -201,7 +309,7 @@
           "textKey": "episode_06.e06_n03.choice0.text"
         },
         {
-          "id": "listen_hale",
+          "id": "ask_why",
           "text": "WHY?",
           "effects": {
             "trust": 2,
@@ -228,7 +336,7 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 4300
         },
         {
           "type": "message",
@@ -259,7 +367,7 @@
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 4700
         },
         {
           "type": "message",
@@ -268,7 +376,7 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 3700
         },
         {
           "type": "message",
@@ -297,6 +405,9 @@
             "voss",
             "7.14"
           ],
+          "correlationTags": [
+            "noah_voss_identity"
+          ],
           "message": "[MAINTENANCE LOG ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1400,
           "titleKey": "episode_06.e06_n04.event0.title",
@@ -312,7 +423,7 @@
           "type": "message",
           "speaker": "MAYA",
           "text": "N. Voss.",
-          "textKey": "episode_06.e06_n04.event2.text"
+          "textKey": "episode_06.e06_n04.event1.text"
         },
         {
           "type": "typing",
@@ -322,7 +433,7 @@
           "type": "message",
           "speaker": "MAYA",
           "text": "No. I would remember that signature.",
-          "textKey": "episode_06.e06_n04.event4.text"
+          "textKey": "episode_06.e06_n04.event2.text"
         },
         {
           "type": "typing",
@@ -332,7 +443,7 @@
           "type": "message",
           "speaker": "HALE",
           "text": "Noah Voss wasn't supposed to be in that database.",
-          "textKey": "episode_06.e06_n04.event6.text"
+          "textKey": "episode_06.e06_n04.event3.text"
         },
         {
           "type": "typing",
@@ -342,7 +453,7 @@
           "type": "message",
           "speaker": "MAYA",
           "text": "You know that name.",
-          "textKey": "episode_06.e06_n04.event8.text"
+          "textKey": "episode_06.e06_n04.event4.text"
         },
         {
           "type": "typing",
@@ -352,7 +463,80 @@
           "type": "message",
           "speaker": "HALE",
           "text": "I know the absence of it.",
-          "textKey": "episode_06.e06_n04.event10.text"
+          "textKey": "episode_06.e06_n04.event5.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "press_hale_on_voss",
+          "text": "HALE, WHO IS VOSS?",
+          "effects": {
+            "haleTrust": -3,
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e06_n05_press_hale",
+          "textKey": "episode_06.e06_n04.choice0.text"
+        },
+        {
+          "id": "compare_records",
+          "text": "COMPARE THE RECORDS.",
+          "effects": {
+            "mayaTrust": 2,
+            "danger": 1,
+            "signalStrength": 1
+          },
+          "nextNodeId": "e06_n05_compare",
+          "textKey": "episode_06.e06_n04.choice1.text"
+        }
+      ]
+    },
+    "e06_n05_press_hale": {
+      "id": "e06_n05_press_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4800
+        },
+        {
+          "type": "message",
+          "text": "Someone we didn't bring aboard.",
+          "textKey": "episode_06.e06_n05_press_hale.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "text": "Or someone I was told we didn't bring aboard. That distinction is starting to feel expensive.",
+          "textKey": "episode_06.e06_n05_press_hale.event1.text"
+        }
+      ],
+      "nextNodeId": "e06_n05"
+    },
+    "e06_n05_compare": {
+      "id": "e06_n05_compare",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "Good. Don't let either of us narrate this for you.",
+          "textKey": "episode_06.e06_n05_compare.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Make the records talk to each other.",
+          "textKey": "episode_06.e06_n05_compare.event1.text"
         }
       ],
       "nextNodeId": "e06_n05"
@@ -371,22 +555,85 @@
           "speaker": "UNKNOWN",
           "text": "YOU SAW IT.",
           "pauseAfterMs": 1300,
-          "textKey": "episode_06.e06_n05.event1.text"
+          "textKey": "episode_06.e06_n05.event0.text"
         },
         {
           "type": "corruptMessage",
           "speaker": "UNKNOWN",
           "text": "LOOK AGAIN.",
           "pauseAfterMs": 1400,
-          "textKey": "episode_06.e06_n05.event2.text"
+          "textKey": "episode_06.e06_n05.event1.text"
         }
       ],
       "nextNodeId": "e06_n06"
     },
     "e06_n06": {
       "id": "e06_n06",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[IDENTITY CLUE CORRELATION REQUIRED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_06.e06_n06.event0.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "voss_identity_correlation_06",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e06_n06_fail": {
+      "id": "e06_n06_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[IDENTITY CORRELATION FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_06.e06_n06_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5,
+            "morale": -1
+          }
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "No. V surname, N. Voss signature, already seen. Put those together.",
+          "textKey": "episode_06.e06_n06_fail.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "voss_identity_correlation_06",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e06_n07": {
+      "id": "e06_n07",
       "speaker": "MAYA",
       "events": [
+        {
+          "type": "systemAlert",
+          "text": "[IDENTITY CLUES CONFIRMED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_06.e06_n07.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 4,
+            "danger": -1
+          }
+        },
         {
           "type": "typing",
           "duration": 3600
@@ -394,7 +641,7 @@
         {
           "type": "message",
           "text": "We have enough pieces.",
-          "textKey": "episode_06.e06_n06.event1.text"
+          "textKey": "episode_06.e06_n07.event1.text"
         },
         {
           "type": "typing",
@@ -403,11 +650,7 @@
         {
           "type": "message",
           "text": "Crew seven. Surname Voss. First initial N.",
-          "textKey": "episode_06.e06_n06.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1200
+          "textKey": "episode_06.e06_n07.event2.text"
         },
         {
           "type": "typing",
@@ -415,21 +658,70 @@
         },
         {
           "type": "message",
-          "text": "Try reconstructing the missing identity.",
-          "textKey": "episode_06.e06_n06.event6.text"
+          "text": "Now reconstruct the missing identity. And be careful. Hale wasn't wrong about names waking things.",
+          "textKey": "episode_06.e06_n07.event3.text"
         }
       ],
       "choices": [
         {
-          "id": "solve_name",
+          "id": "reconstruct_identity",
           "text": "RECONSTRUCT IDENTITY.",
-          "nextNodeId": "e06_n07",
-          "textKey": "episode_06.e06_n06.choice0.text"
+          "effects": {
+            "danger": 2,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e06_n08",
+          "textKey": "episode_06.e06_n07.choice0.text"
+        },
+        {
+          "id": "ask_hale_before_reconstruct",
+          "text": "ASK HALE BEFORE RECONSTRUCTING.",
+          "effects": {
+            "haleTrust": 2,
+            "mayaTrust": -1,
+            "danger": 1
+          },
+          "nextNodeId": "e06_n07_hale_warning",
+          "textKey": "episode_06.e06_n07.choice1.text"
         }
       ]
     },
-    "e06_n07": {
-      "id": "e06_n07",
+    "e06_n07_hale_warning": {
+      "id": "e06_n07_hale_warning",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4400
+        },
+        {
+          "type": "message",
+          "text": "I don't like this.",
+          "textKey": "episode_06.e06_n07_hale_warning.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "Which, I realize, has become my entire personality. But I mean it this time.",
+          "textKey": "episode_06.e06_n07_hale_warning.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "If the system asks for a name, give it exactly what the records support. Nothing extra.",
+          "textKey": "episode_06.e06_n07_hale_warning.event2.text"
+        }
+      ],
+      "nextNodeId": "e06_n08"
+    },
+    "e06_n08": {
+      "id": "e06_n08",
       "speaker": "SYSTEM",
       "events": [
         {
@@ -437,17 +729,18 @@
           "puzzleId": "memory_name_01",
           "pauseAfterMs": 700
         }
-      ]
+      ],
+      "choices": []
     },
-    "e06_n07_fail": {
-      "id": "e06_n07_fail",
+    "e06_n08_fail": {
+      "id": "e06_n08_fail",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[RECONSTRUCTION FAILED]",
           "pauseAfterMs": 900,
-          "textKey": "episode_06.e06_n07_fail.event0.text"
+          "textKey": "episode_06.e06_n08_fail.event0.text"
         },
         {
           "type": "statChange",
@@ -466,13 +759,13 @@
           "type": "systemAlert",
           "text": "[ARCHIVE CORRUPTION INCREASED]",
           "pauseAfterMs": 900,
-          "textKey": "episode_06.e06_n07_fail.event3.text"
+          "textKey": "episode_06.e06_n08_fail.event1.text"
         },
         {
           "type": "message",
           "speaker": "MAYA",
           "text": "Wrong reconstruction. The archive didn't like that.",
-          "textKey": "episode_06.e06_n07_fail.event4.text"
+          "textKey": "episode_06.e06_n08_fail.event2.text"
         },
         {
           "type": "typing",
@@ -482,24 +775,32 @@
           "type": "message",
           "speaker": "HALE",
           "text": "Neither did I.",
-          "textKey": "episode_06.e06_n07_fail.event6.text"
+          "textKey": "episode_06.e06_n08_fail.event3.text"
         },
         {
           "type": "puzzle",
           "puzzleId": "memory_name_01",
           "pauseAfterMs": 700
         }
-      ]
+      ],
+      "choices": []
     },
-    "e06_n08": {
-      "id": "e06_n08",
+    "e06_n09": {
+      "id": "e06_n09",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[IDENTITY RECONSTRUCTED]",
           "pauseAfterMs": 1000,
-          "textKey": "episode_06.e06_n08.event0.text"
+          "textKey": "episode_06.e06_n09.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": 2
+          }
         },
         {
           "type": "crew",
@@ -507,7 +808,7 @@
           "fileId": "crew_profile_voss",
           "fileType": "crew",
           "title": "NOAH VOSS",
-          "content": "NOAH VOSS\nROLE: COMMUNICATIONS SPECIALIST\nCLEARANCE LEVEL: OMEGA\nSTATUS: UNKNOWN\nTRANSFER STATUS: DENIED",
+          "content": "NOAH VOSS\nROLE: COMMUNICATIONS SPECIALIST\nCLEARANCE LEVEL: OMEGA\nSTATUS: UNKNOWN\nTRANSFER STATUS: DENIED\nMEMORY INDEX: SUPPRESSED",
           "caption": "Reconstructed personnel profile from fragmented archive records.",
           "source": "SYSTEM_RECONSTRUCTION",
           "tags": [
@@ -517,18 +818,21 @@
             "omega",
             "unknown_personnel"
           ],
+          "correlationTags": [
+            "noah_voss_identity"
+          ],
           "message": "[NOAH VOSS PROFILE ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1400,
-          "titleKey": "episode_06.e06_n08.event1.title",
-          "contentKey": "episode_06.e06_n08.event1.content",
-          "captionKey": "episode_06.e06_n08.event1.caption",
-          "messageKey": "episode_06.e06_n08.event1.message"
+          "titleKey": "episode_06.e06_n09.event1.title",
+          "contentKey": "episode_06.e06_n09.event1.content",
+          "captionKey": "episode_06.e06_n09.event1.caption",
+          "messageKey": "episode_06.e06_n09.event1.message"
         }
       ],
-      "nextNodeId": "e06_n09"
+      "nextNodeId": "e06_n10"
     },
-    "e06_n09": {
-      "id": "e06_n09",
+    "e06_n10": {
+      "id": "e06_n10",
       "speaker": "MAYA",
       "events": [
         {
@@ -538,11 +842,7 @@
         {
           "type": "message",
           "text": "Noah Voss...",
-          "textKey": "episode_06.e06_n09.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1300
+          "textKey": "episode_06.e06_n10.event0.text"
         },
         {
           "type": "typing",
@@ -550,39 +850,70 @@
         },
         {
           "type": "message",
-          "text": "That shouldn't be possible.",
-          "textKey": "episode_06.e06_n09.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "I know I keep saying that.",
-          "textKey": "episode_06.e06_n09.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "I would love for one thing today to be possible.",
-          "textKey": "episode_06.e06_n09.event8.text"
+          "text": "That shouldn't be possible. I know I keep saying that. I would love for one thing today to be possible.",
+          "textKey": "episode_06.e06_n10.event1.text"
         }
       ],
       "choices": [
         {
-          "id": "why_impossible",
-          "text": "WHY?",
-          "nextNodeId": "e06_n10",
-          "textKey": "episode_06.e06_n09.choice0.text"
+          "id": "ask_why_impossible",
+          "text": "WHY IS THAT IMPOSSIBLE?",
+          "effects": {
+            "mayaTrust": 2,
+            "danger": 1
+          },
+          "nextNodeId": "e06_n11",
+          "textKey": "episode_06.e06_n10.choice0.text"
+        },
+        {
+          "id": "ask_hale_about_noah",
+          "text": "HALE, DID YOU KNOW NOAH?",
+          "effects": {
+            "haleTrust": -2,
+            "danger": 2,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e06_n10_hale",
+          "textKey": "episode_06.e06_n10.choice1.text"
         }
       ]
     },
-    "e06_n10": {
-      "id": "e06_n10",
+    "e06_n10_hale": {
+      "id": "e06_n10_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "I knew the paperwork.",
+          "textKey": "episode_06.e06_n10_hale.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "Transfer denied. Clearance sealed. Communications specialist nobody wanted to talk about.",
+          "textKey": "episode_06.e06_n10_hale.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "text": "That is not the same as knowing him.",
+          "textKey": "episode_06.e06_n10_hale.event2.text"
+        }
+      ],
+      "nextNodeId": "e06_n11"
+    },
+    "e06_n11": {
+      "id": "e06_n11",
       "speaker": "MAYA",
       "events": [
         {
@@ -592,11 +923,7 @@
         {
           "type": "message",
           "text": "Because Noah Voss never boarded the station.",
-          "textKey": "episode_06.e06_n10.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1200
+          "textKey": "episode_06.e06_n11.event0.text"
         },
         {
           "type": "typing",
@@ -605,43 +932,6 @@
         {
           "type": "message",
           "text": "His transfer request was denied weeks before launch.",
-          "textKey": "episode_06.e06_n10.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "I remember Rivera making a joke about it.",
-          "textKey": "episode_06.e06_n10.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4600
-        },
-        {
-          "type": "message",
-          "text": "Something about communications specialists being terrible at communicating with HR.",
-          "textKey": "episode_06.e06_n10.event8.text"
-        }
-      ],
-      "nextNodeId": "e06_n11"
-    },
-    "e06_n11": {
-      "id": "e06_n11",
-      "speaker": "UNKNOWN",
-      "events": [
-        {
-          "type": "glitch",
-          "duration": 1400,
-          "pauseAfterMs": 900
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "SHE IS WRONG.",
-          "pauseAfterMs": 1500,
           "textKey": "episode_06.e06_n11.event1.text"
         },
         {
@@ -650,8 +940,90 @@
         },
         {
           "type": "message",
+          "text": "I remember Rivera making a joke about it. Something about communications specialists being terrible at communicating with HR.",
+          "textKey": "episode_06.e06_n11.event2.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "pull_transfer_record",
+          "text": "PULL THE TRANSFER RECORD.",
+          "effects": {
+            "danger": 2,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e06_n12",
+          "textKey": "episode_06.e06_n11.choice0.text"
+        },
+        {
+          "id": "listen_to_noah",
+          "text": "LET NOAH SPEAK.",
+          "effects": {
+            "danger": 4,
+            "signalStrength": -5,
+            "listenedToNoah": true
+          },
+          "nextNodeId": "e06_n13_noah",
+          "textKey": "episode_06.e06_n11.choice1.text"
+        }
+      ]
+    },
+    "e06_n12": {
+      "id": "e06_n12",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "noah_transfer_record",
+          "fileId": "noah_transfer_record",
+          "fileType": "log",
+          "title": "TRANSFER RECORD: NOAH VOSS",
+          "content": "TRANSFER REQUEST: NOAH VOSS\nROLE: COMMUNICATIONS SPECIALIST\nSTATUS: DENIED\nDATE: 21 DAYS BEFORE LAUNCH\nREASON: OMEGA CLEARANCE CONFLICT\nFINAL NOTE: DO NOT ASSIGN TO ECHO",
+          "caption": "Recovered transfer record showing Noah Voss was officially denied station assignment.",
+          "source": "PERSONNEL_TRANSFER_ARCHIVE",
+          "tags": [
+            "noah_voss",
+            "transfer",
+            "denied",
+            "omega"
+          ],
+          "correlationTags": [
+            "noah_voss_identity"
+          ],
+          "message": "[NOAH VOSS TRANSFER RECORD ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1400,
+          "titleKey": "episode_06.e06_n12.event0.title",
+          "contentKey": "episode_06.e06_n12.event0.content",
+          "captionKey": "episode_06.e06_n12.event0.caption",
+          "messageKey": "episode_06.e06_n12.event0.message"
+        },
+        {
+          "type": "glitch",
+          "duration": 1300,
+          "pauseAfterMs": 900
+        }
+      ],
+      "nextNodeId": "e06_n13_noah"
+    },
+    "e06_n13_noah": {
+      "id": "e06_n13_noah",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "SHE IS WRONG.",
+          "pauseAfterMs": 1500,
+          "textKey": "episode_06.e06_n13_noah.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
           "text": "I was there.",
-          "textKey": "episode_06.e06_n11.event3.text"
+          "textKey": "episode_06.e06_n13_noah.event1.text"
         },
         {
           "type": "file",
@@ -659,7 +1031,7 @@
           "fileId": "first_transmission_voss",
           "fileType": "log",
           "title": "FIRST TRANSMISSION",
-          "content": "SOURCE: NOAH VOSS\nSIGNAL CLASS: EMERGENCY RELAY\nTIMESTAMP: SIX MONTHS BEFORE HALE'S FIRST MESSAGE\nSTATUS: SUPPRESSED",
+          "content": "SOURCE: NOAH VOSS\nSIGNAL CLASS: EMERGENCY RELAY\nTIMESTAMP: SIX MONTHS BEFORE HALE'S FIRST MESSAGE\nSTATUS: SUPPRESSED\nCHANNEL TRACE: 7.14 MHz",
           "caption": "Recovered source marker from the earliest emergency relay transmission.",
           "source": "CHANNEL_7_14",
           "tags": [
@@ -668,16 +1040,15 @@
             "7.14",
             "suppressed"
           ],
+          "correlationTags": [
+            "noah_voss_identity"
+          ],
           "message": "[FIRST TRANSMISSION ARCHIVED TO DATA BANK]",
           "pauseAfterMs": 1400,
-          "titleKey": "episode_06.e06_n11.event4.title",
-          "contentKey": "episode_06.e06_n11.event4.content",
-          "captionKey": "episode_06.e06_n11.event4.caption",
-          "messageKey": "episode_06.e06_n11.event4.message"
-        },
-        {
-          "type": "pause",
-          "duration": 1200
+          "titleKey": "episode_06.e06_n13_noah.event2.title",
+          "contentKey": "episode_06.e06_n13_noah.event2.content",
+          "captionKey": "episode_06.e06_n13_noah.event2.caption",
+          "messageKey": "episode_06.e06_n13_noah.event2.message"
         },
         {
           "type": "typing",
@@ -686,7 +1057,7 @@
         {
           "type": "message",
           "text": "I was the first voice you heard.",
-          "textKey": "episode_06.e06_n11.event6.text"
+          "textKey": "episode_06.e06_n13_noah.event3.text"
         },
         {
           "type": "signalLost",
@@ -694,16 +1065,32 @@
           "message": "[SIGNAL LOST]",
           "restoreMessage": "[SIGNAL RESTORED]",
           "pauseAfterMs": 1200,
-          "messageKey": "episode_06.e06_n11.event7.message",
-          "restoreMessageKey": "episode_06.e06_n11.event7.restoreMessage"
+          "messageKey": "episode_06.e06_n13_noah.event4.message",
+          "restoreMessageKey": "episode_06.e06_n13_noah.event4.restoreMessage"
         }
       ],
       "choices": [
         {
-          "id": "continue_story",
-          "text": "CONTINUE.",
+          "id": "save_noah_record",
+          "text": "SAVE NOAH'S RECORD.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": 1,
+            "recordedNoahFirstTransmission": true
+          },
           "nextEpisodeId": "episode_07",
-          "textKey": "episode_06.e06_n11.choice0.text"
+          "textKey": "episode_06.e06_n13_noah.choice0.text"
+        },
+        {
+          "id": "keep_channel_open",
+          "text": "KEEP 7.14 OPEN.",
+          "effects": {
+            "danger": 5,
+            "signalStrength": -8,
+            "keptNoahChannelOpen": true
+          },
+          "nextEpisodeId": "episode_07",
+          "textKey": "episode_06.e06_n13_noah.choice1.text"
         }
       ]
     }

@@ -2,6 +2,65 @@
   "id": "episode_15",
   "title": "INCIDENT ALPHA",
   "startNodeId": "e15_n01",
+  "puzzles": {
+    "incident_alpha_record_correlation_15": {
+      "id": "incident_alpha_record_correlation_15",
+      "type": "matching",
+      "title": "INCIDENT ALPHA RECORD CORRELATION",
+      "description": "Match each recovered Incident Alpha record with the correct conclusion.",
+      "submitLabel": "RECONSTRUCT INCIDENT ALPHA",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e15_n09",
+      "failureNodeId": "e15_n08_fail",
+      "leftItems": [
+        {
+          "id": "master_record",
+          "label": "MASTER RECORD"
+        },
+        {
+          "id": "artifact_report",
+          "label": "ARTIFACT REPORT"
+        },
+        {
+          "id": "exposure_log",
+          "label": "EXPOSURE LOG"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "incident_alpha",
+          "label": "INCIDENT ALPHA"
+        },
+        {
+          "id": "aeon",
+          "label": "OBJECT AEON"
+        },
+        {
+          "id": "memory_alteration",
+          "label": "MEMORY ALTERATION"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "master_record",
+          "rightId": "incident_alpha"
+        },
+        {
+          "leftId": "artifact_report",
+          "rightId": "aeon"
+        },
+        {
+          "leftId": "exposure_log",
+          "rightId": "memory_alteration"
+        }
+      ],
+      "titleKey": "episode_15.incident_alpha_record_correlation_15.puzzle0.title",
+      "descriptionKey": "episode_15.incident_alpha_record_correlation_15.puzzle0.description",
+      "submitLabelKey": "episode_15.incident_alpha_record_correlation_15.puzzle0.submitLabel"
+    }
+  },
   "nodes": {
     "e15_n01": {
       "id": "e15_n01",
@@ -9,12 +68,70 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 4200
         },
         {
           "type": "message",
-          "text": "The master record still exists. But nobody has opened it since Incident Alpha.",
+          "text": "The master record still exists.",
+          "textKey": "episode_15.e15_n01.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "But nobody has opened it since Incident Alpha. Which is exactly the kind of sentence that makes me want to open it.",
           "textKey": "episode_15.e15_n01.event1.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "access_master_record",
+          "text": "ACCESS MASTER RECORD.",
+          "effects": {
+            "danger": 4,
+            "signalStrength": -3
+          },
+          "nextNodeId": "e15_n02",
+          "textKey": "episode_15.e15_n01.choice0.text"
+        },
+        {
+          "id": "secure_channel_first",
+          "text": "SECURE CHANNEL FIRST.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": 3,
+            "securedIncidentAlphaChannel": true
+          },
+          "nextNodeId": "e15_n01_secure",
+          "textKey": "episode_15.e15_n01.choice1.text"
+        }
+      ]
+    },
+    "e15_n01_secure": {
+      "id": "e15_n01_secure",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "incident_channel_security",
+          "title": "INCIDENT CHANNEL SECURITY",
+          "subtitle": "Stabilizing access route before opening master record",
+          "duration": 45000,
+          "completeText": "[INCIDENT CHANNEL SECURED]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_15.e15_n01_secure.event0.title",
+          "subtitleKey": "episode_15.e15_n01_secure.event0.subtitle",
+          "completeTextKey": "episode_15.e15_n01_secure.event0.completeText"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": -2
+          }
         }
       ],
       "nextNodeId": "e15_n02"
@@ -27,10 +144,28 @@
           "type": "file",
           "id": "incident_alpha_master_record",
           "fileId": "incident_alpha_master_record",
+          "fileType": "file",
           "title": "INCIDENT ALPHA MASTER RECORD",
-          "content": "STATUS: ENCRYPTED",
+          "content": "STATUS: ENCRYPTED\nACCESS CLASS: OMEGA\nLINKED SUBJECTS: EVA THORNE / NOAH VOSS / ETHAN HALE\nWARNING: MEMORY CONTAMINATION RISK",
+          "caption": "Encrypted master record connected to Incident Alpha.",
+          "source": "INCIDENT_ALPHA_ARCHIVE",
+          "tags": [
+            "incident_alpha",
+            "encrypted",
+            "eva",
+            "noah",
+            "hale"
+          ],
+          "correlationTags": [
+            "incident_alpha",
+            "aeon"
+          ],
+          "message": "[INCIDENT ALPHA MASTER RECORD ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
           "titleKey": "episode_15.e15_n02.event0.title",
-          "contentKey": "episode_15.e15_n02.event0.content"
+          "contentKey": "episode_15.e15_n02.event0.content",
+          "captionKey": "episode_15.e15_n02.event0.caption",
+          "messageKey": "episode_15.e15_n02.event0.message"
         }
       ],
       "nextNodeId": "e15_n03"
@@ -41,55 +176,83 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2400
+          "duration": 4200
         },
         {
           "type": "message",
-          "text": "I can recover it. But it will take time.",
+          "text": "I can recover it.",
+          "textKey": "episode_15.e15_n03.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "But if this thing altered memory, then recovering the record might not just show us what happened. It might make us remember it.",
           "textKey": "episode_15.e15_n03.event1.text"
         }
       ],
       "choices": [
         {
-          "id": "start_recovery",
-          "text": "START RECOVERY.",
-          "nextNodeId": "e15_n04",
+          "id": "let_noah_recover",
+          "text": "NOAH, RECOVER IT.",
+          "effects": {
+            "noahTrust": 5,
+            "haleTrust": -3,
+            "danger": 5,
+            "signalStrength": -4,
+            "letNoahRecoverAlpha": true
+          },
+          "nextNodeId": "e15_n04_noah",
           "textKey": "episode_15.e15_n03.choice0.text"
+        },
+        {
+          "id": "use_system_recovery",
+          "text": "USE SYSTEM RECOVERY.",
+          "effects": {
+            "haleTrust": 3,
+            "noahTrust": -2,
+            "danger": 2,
+            "signalStrength": 2,
+            "usedSystemRecoveryAlpha": true
+          },
+          "nextNodeId": "e15_n04_system",
+          "textKey": "episode_15.e15_n03.choice1.text"
         }
       ]
     },
-    "e15_n04": {
-      "id": "e15_n04",
-      "speaker": "SYSTEM",
+    "e15_n04_noah": {
+      "id": "e15_n04_noah",
+      "speaker": "NOAH",
       "events": [
         {
-          "type": "systemAlert",
-          "text": "[MASTER RECORD RECOVERY STARTED]",
-          "textKey": "episode_15.e15_n04.event0.text"
+          "type": "typing",
+          "duration": 4200
         },
         {
           "type": "message",
-          "text": "Estimated Completion Time: 2 Minutes",
-          "textKey": "episode_15.e15_n04.event1.text"
+          "text": "All right. If I start saying things that sound like me but feel wrong, cut the channel.",
+          "textKey": "episode_15.e15_n04_noah.event0.text"
         }
       ],
-      "waitTask": {
-        "id": "incident_alpha_recovery",
-        "durationMs": 120000,
-        "waitingNodeId": "e15_waiting",
-        "completeNodeId": "e15_n05"
-      }
+      "nextNodeId": "e15_n05"
     },
-    "e15_waiting": {
-      "id": "e15_waiting",
-      "speaker": "SYSTEM",
+    "e15_n04_system": {
+      "id": "e15_n04_system",
+      "speaker": "HALE",
       "events": [
         {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
           "type": "message",
-          "text": "Recovering archived incident data... Deep storage reconstruction in progress.",
-          "textKey": "episode_15.e15_waiting.event0.text"
+          "text": "Good. Keep Noah away from the record. He is evidence and contamination at the same time.",
+          "textKey": "episode_15.e15_n04_system.event0.text"
         }
-      ]
+      ],
+      "nextNodeId": "e15_n05"
     },
     "e15_n05": {
       "id": "e15_n05",
@@ -97,27 +260,99 @@
       "events": [
         {
           "type": "systemAlert",
-          "text": "[RECOVERY COMPLETE]",
+          "text": "[MASTER RECORD RECOVERY STARTED]",
+          "pauseAfterMs": 900,
           "textKey": "episode_15.e15_n05.event0.text"
+        },
+        {
+          "type": "progressTask",
+          "id": "incident_alpha_recovery",
+          "title": "INCIDENT ALPHA RECOVERY",
+          "subtitle": "Reconstructing encrypted master record from deep storage",
+          "duration": 90000,
+          "completeText": "[MASTER RECORD RECOVERY COMPLETE]",
+          "tone": "system",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_15.e15_n05.event1.title",
+          "subtitleKey": "episode_15.e15_n05.event1.subtitle",
+          "completeTextKey": "episode_15.e15_n05.event1.completeText"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[NOTIFICATION QUEUED: MASTER RECORD RECOVERY COMPLETE]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_15.e15_n05.event2.text"
         },
         {
           "type": "file",
           "id": "incident_alpha_final_log",
           "fileId": "incident_alpha_final_log",
+          "fileType": "file",
           "title": "INCIDENT ALPHA FINAL LOG",
-          "content": "CLASSIFIED RECORD\n\nOPEN?",
-          "titleKey": "episode_15.e15_n05.event1.title",
-          "contentKey": "episode_15.e15_n05.event1.content"
+          "content": "CLASSIFIED RECORD\n\nRECOVERY STATUS: PARTIAL\nOPENING WARNING: RECORD CONTAINS COGNITIVE CONTAMINATION MARKERS\n\nOPEN?",
+          "caption": "Recovered Incident Alpha final log. Cognitive contamination warning present.",
+          "source": "INCIDENT_ALPHA_ARCHIVE",
+          "tags": [
+            "incident_alpha",
+            "final_log",
+            "cognitive_contamination"
+          ],
+          "correlationTags": [
+            "incident_alpha",
+            "aeon"
+          ],
+          "message": "[INCIDENT ALPHA FINAL LOG ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_15.e15_n05.event3.title",
+          "contentKey": "episode_15.e15_n05.event3.content",
+          "captionKey": "episode_15.e15_n05.event3.caption",
+          "messageKey": "episode_15.e15_n05.event3.message"
         }
       ],
       "choices": [
         {
           "id": "open_log",
           "text": "OPEN FILE.",
+          "effects": {
+            "danger": 5,
+            "signalStrength": -5,
+            "openedAlphaFinalLog": true
+          },
           "nextNodeId": "e15_n06",
           "textKey": "episode_15.e15_n05.choice0.text"
+        },
+        {
+          "id": "isolate_log_first",
+          "text": "ISOLATE FILE FIRST.",
+          "effects": {
+            "danger": 2,
+            "signalStrength": 3,
+            "isolatedAlphaFinalLog": true
+          },
+          "nextNodeId": "e15_n05_isolate",
+          "textKey": "episode_15.e15_n05.choice1.text"
         }
       ]
+    },
+    "e15_n05_isolate": {
+      "id": "e15_n05_isolate",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[COGNITIVE MARKERS PARTIALLY ISOLATED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_15.e15_n05_isolate.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 4,
+            "danger": -2
+          }
+        }
+      ],
+      "nextNodeId": "e15_n06"
     },
     "e15_n06": {
       "id": "e15_n06",
@@ -126,7 +361,13 @@
         {
           "type": "systemAlert",
           "text": "[PLAYING ARCHIVED RECORDING]",
+          "pauseAfterMs": 900,
           "textKey": "episode_15.e15_n06.event0.text"
+        },
+        {
+          "type": "glitch",
+          "duration": 1200,
+          "pauseAfterMs": 800
         }
       ],
       "nextNodeId": "e15_n07"
@@ -137,11 +378,20 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 5200
         },
         {
           "type": "message",
-          "text": "This is Eva Thorne. If you're hearing this... The station has already fallen.",
+          "text": "This is Eva Thorne.",
+          "textKey": "episode_15.e15_n07.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 6200
+        },
+        {
+          "type": "message",
+          "text": "If you're hearing this... then the station has already fallen, and Hale failed to erase me completely.",
           "textKey": "episode_15.e15_n07.event1.text"
         }
       ],
@@ -149,28 +399,123 @@
     },
     "e15_n08": {
       "id": "e15_n08",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "message",
-          "text": "We found something. Not someone. Something.",
-          "textKey": "episode_15.e15_n08.event0.text"
-        }
-      ],
-      "nextNodeId": "e15_n09"
-    },
-    "e15_n09": {
-      "id": "e15_n09",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "file",
           "id": "artifact_report_01",
           "fileId": "artifact_report_01",
+          "fileType": "log",
           "title": "ARTIFACT REPORT",
-          "content": "OBJECT DESIGNATION:\n\nAEON",
-          "titleKey": "episode_15.e15_n09.event0.title",
-          "contentKey": "episode_15.e15_n09.event0.content"
+          "content": "OBJECT DESIGNATION: AEON\nCLASSIFICATION: NON-HUMAN COGNITIVE ARTIFACT\nPRIMARY EFFECT: MEMORY ALTERATION\nSECONDARY EFFECT: IDENTITY DISPLACEMENT\nSTATUS: ACTIVE",
+          "caption": "Recovered artifact report from Incident Alpha archive.",
+          "source": "AEON_RESEARCH_ARCHIVE",
+          "tags": [
+            "aeon",
+            "artifact",
+            "memory",
+            "identity"
+          ],
+          "correlationTags": [
+            "aeon",
+            "incident_alpha"
+          ],
+          "message": "[ARTIFACT REPORT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_15.e15_n08.event0.title",
+          "contentKey": "episode_15.e15_n08.event0.content",
+          "captionKey": "episode_15.e15_n08.event0.caption",
+          "messageKey": "episode_15.e15_n08.event0.message"
+        },
+        {
+          "type": "file",
+          "id": "aeon_exposure_log",
+          "fileId": "aeon_exposure_log",
+          "fileType": "log",
+          "title": "AEON EXPOSURE LOG",
+          "content": "EXPOSURE ORDER:\n01 NOAH VOSS\n02 ETHAN HALE\n03 EVA THORNE\n\nRESULT:\nMemory instability detected.\nIdentity continuity compromised.\nStation-level behavioral response observed.",
+          "caption": "Recovered AEON exposure log showing first affected personnel.",
+          "source": "AEON_RESEARCH_ARCHIVE",
+          "tags": [
+            "aeon",
+            "exposure",
+            "noah",
+            "hale",
+            "eva"
+          ],
+          "correlationTags": [
+            "aeon",
+            "incident_alpha"
+          ],
+          "message": "[AEON EXPOSURE LOG ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
+          "titleKey": "episode_15.e15_n08.event1.title",
+          "contentKey": "episode_15.e15_n08.event1.content",
+          "captionKey": "episode_15.e15_n08.event1.caption",
+          "messageKey": "episode_15.e15_n08.event1.message"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[INCIDENT ALPHA CORRELATION REQUIRED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_15.e15_n08.event2.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "incident_alpha_record_correlation_15",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e15_n08_fail": {
+      "id": "e15_n08_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[INCIDENT ALPHA CORRELATION FAILED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_15.e15_n08_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 6,
+            "signalStrength": -8,
+            "morale": -2
+          }
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "No. Master record is Alpha. Artifact report is AEON. Exposure log explains memory alteration. Put it together before it puts us together.",
+          "textKey": "episode_15.e15_n08_fail.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "incident_alpha_record_correlation_15",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e15_n09": {
+      "id": "e15_n09",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[INCIDENT ALPHA RECONSTRUCTED]",
+          "pauseAfterMs": 900,
+          "textKey": "episode_15.e15_n09.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 5,
+            "danger": 5
+          }
         }
       ],
       "nextNodeId": "e15_n10"
@@ -181,11 +526,20 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2400
+          "duration": 5200
         },
         {
           "type": "message",
-          "text": "The object could alter memory.",
+          "text": "We found something.",
+          "textKey": "episode_15.e15_n10.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5600
+        },
+        {
+          "type": "message",
+          "text": "Not someone. Something. It was waiting in the outer sector like a thought nobody should have had.",
           "textKey": "episode_15.e15_n10.event1.text"
         }
       ],
@@ -196,9 +550,22 @@
       "speaker": "EVA",
       "events": [
         {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
           "type": "message",
-          "text": "Noah was exposed first.",
+          "text": "AEON could alter memory.",
           "textKey": "episode_15.e15_n11.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 6200
+        },
+        {
+          "type": "message",
+          "text": "Not delete it. Not exactly. It moved memory from one person to another until nobody knew which grief belonged to them.",
+          "textKey": "episode_15.e15_n11.event1.text"
         }
       ],
       "nextNodeId": "e15_n12"
@@ -208,21 +575,86 @@
       "speaker": "EVA",
       "events": [
         {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Noah was exposed first.",
+          "textKey": "episode_15.e15_n12.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
           "type": "message",
           "text": "Then Hale.",
-          "textKey": "episode_15.e15_n12.event0.text"
-        }
-      ],
-      "nextNodeId": "e15_n13"
-    },
-    "e15_n13": {
-      "id": "e15_n13",
-      "speaker": "EVA",
-      "events": [
+          "textKey": "episode_15.e15_n12.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
         {
           "type": "message",
           "text": "Then me.",
-          "textKey": "episode_15.e15_n13.event0.text"
+          "textKey": "episode_15.e15_n12.event2.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_about_noah",
+          "text": "WHAT DID AEON DO TO NOAH?",
+          "effects": {
+            "noahTrust": 2,
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e15_n13_noah",
+          "textKey": "episode_15.e15_n12.choice0.text"
+        },
+        {
+          "id": "ask_about_hale",
+          "text": "WHAT DID AEON DO TO HALE?",
+          "effects": {
+            "haleTrust": -2,
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e15_n13_hale",
+          "textKey": "episode_15.e15_n12.choice1.text"
+        }
+      ]
+    },
+    "e15_n13_noah": {
+      "id": "e15_n13_noah",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 6200
+        },
+        {
+          "type": "message",
+          "text": "It gave Noah a memory that wasn't his. A command. A voice. A guilt he never earned.",
+          "textKey": "episode_15.e15_n13_noah.event0.text"
+        }
+      ],
+      "nextNodeId": "e15_n14"
+    },
+    "e15_n13_hale": {
+      "id": "e15_n13_hale",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 6200
+        },
+        {
+          "type": "message",
+          "text": "It made Hale certain that erasing people was mercy.",
+          "textKey": "episode_15.e15_n13_hale.event0.text"
         }
       ],
       "nextNodeId": "e15_n14"
@@ -235,10 +667,27 @@
           "type": "file",
           "id": "eva_final_status",
           "fileId": "eva_final_status",
+          "fileType": "log",
           "title": "EVA FINAL STATUS",
-          "content": "STATUS:\n\nALIVE\n\nLOCATION:\nUNKNOWN\n\nLAST SIGNAL:\nACTIVE",
+          "content": "STATUS: ALIVE\nLOCATION: UNKNOWN\nLAST SIGNAL: ACTIVE\nSIGNAL CLASS: AEON-LINKED\nIDENTITY CONTINUITY: UNSTABLE",
+          "caption": "Recovered final status report for Eva Thorne.",
+          "source": "AEON_RESEARCH_ARCHIVE",
+          "tags": [
+            "eva_thorne",
+            "alive",
+            "aeon",
+            "identity"
+          ],
+          "correlationTags": [
+            "eva_identity",
+            "aeon"
+          ],
+          "message": "[EVA FINAL STATUS ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
           "titleKey": "episode_15.e15_n14.event0.title",
-          "contentKey": "episode_15.e15_n14.event0.content"
+          "contentKey": "episode_15.e15_n14.event0.content",
+          "captionKey": "episode_15.e15_n14.event0.caption",
+          "messageKey": "episode_15.e15_n14.event0.message"
         }
       ],
       "nextNodeId": "e15_n15"
@@ -249,11 +698,20 @@
       "events": [
         {
           "type": "typing",
-          "duration": 4000
+          "duration": 6200
         },
         {
           "type": "message",
-          "text": "Hello. It's been a long time.",
+          "text": "Hello, Operator.",
+          "textKey": "episode_15.e15_n15.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 6200
+        },
+        {
+          "type": "message",
+          "text": "It's been a long time.",
           "textKey": "episode_15.e15_n15.event1.text"
         }
       ],
@@ -266,8 +724,16 @@
         {
           "type": "signalLost",
           "duration": 4000,
+          "message": "[SIGNAL LOST]",
           "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 900,
+          "messageKey": "episode_15.e15_n16.event0.message",
           "restoreMessageKey": "episode_15.e15_n16.event0.restoreMessage"
+        },
+        {
+          "type": "glitch",
+          "duration": 1600,
+          "pauseAfterMs": 800
         }
       ],
       "nextNodeId": "e15_n17"
@@ -278,8 +744,17 @@
       "events": [
         {
           "type": "message",
-          "text": "I'm still here. I've always been here.",
+          "text": "I'm still here.",
           "textKey": "episode_15.e15_n17.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "I've always been here.",
+          "textKey": "episode_15.e15_n17.event1.text"
         }
       ],
       "nextNodeId": "e15_n18"
@@ -292,10 +767,27 @@
           "type": "file",
           "id": "aeon_coordinates",
           "fileId": "aeon_coordinates",
+          "fileType": "map",
           "title": "AEON COORDINATES",
-          "content": "OBJECT: AEON\n\nSTATUS: ACTIVE\n\nLOCATION: OUTER SECTOR\n\nACCESS POSSIBILITY: CONFIRMED",
+          "content": "OBJECT: AEON\nSTATUS: ACTIVE\nLOCATION: OUTER SECTOR\nACCESS POSSIBILITY: CONFIRMED\nWARNING: OBJECT IS AWARE OF OPERATOR SIGNAL",
+          "caption": "Recovered AEON location coordinates from Eva-linked signal.",
+          "source": "AEON_SIGNAL_TRACE",
+          "tags": [
+            "aeon",
+            "coordinates",
+            "outer_sector",
+            "operator"
+          ],
+          "correlationTags": [
+            "aeon",
+            "season_2"
+          ],
+          "message": "[AEON COORDINATES ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 1200,
           "titleKey": "episode_15.e15_n18.event0.title",
-          "contentKey": "episode_15.e15_n18.event0.content"
+          "contentKey": "episode_15.e15_n18.event0.content",
+          "captionKey": "episode_15.e15_n18.event0.caption",
+          "messageKey": "episode_15.e15_n18.event0.message"
         }
       ],
       "nextNodeId": "e15_n19"
@@ -306,11 +798,20 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2500
+          "duration": 5200
         },
         {
           "type": "message",
           "text": "What is AEON?",
+          "textKey": "episode_15.e15_n19.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "And why does it know the Operator?",
           "textKey": "episode_15.e15_n19.event1.text"
         }
       ],
@@ -322,20 +823,45 @@
       "events": [
         {
           "type": "typing",
-          "duration": 4500
+          "duration": 6200
         },
         {
           "type": "message",
-          "text": "You were never supposed to find it. And now it's aware of you.",
+          "text": "You were never supposed to find it.",
+          "textKey": "episode_15.e15_n20.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 6200
+        },
+        {
+          "type": "message",
+          "text": "And now it's aware of you.",
           "textKey": "episode_15.e15_n20.event1.text"
         }
       ],
       "choices": [
         {
-          "id": "continue_to_season_2",
+          "id": "trace_aeon_signal",
           "text": "TRACE AEON SIGNAL.",
+          "effects": {
+            "danger": 5,
+            "signalStrength": -5,
+            "tracedAeonSignal": true
+          },
           "nextEpisodeId": "episode_16",
           "textKey": "episode_15.e15_n20.choice0.text"
+        },
+        {
+          "id": "cut_aeon_trace",
+          "text": "CUT AEON TRACE.",
+          "effects": {
+            "danger": 2,
+            "signalStrength": 4,
+            "cutAeonTrace": true
+          },
+          "nextEpisodeId": "episode_16",
+          "textKey": "episode_15.e15_n20.choice1.text"
         }
       ]
     }

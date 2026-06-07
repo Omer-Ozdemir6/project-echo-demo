@@ -1,7 +1,13 @@
 import { useTranslation } from "react-i18next";
+import { playSound } from "../audio/soundManager";
 
-export default function ChoicePanel({ choices, onChoice }) {
+export default function ChoicePanel({ choices = [], onChoice, settings }) {
   const { t } = useTranslation();
+
+  function handleChoice(choice) {
+  playSound("choiceSelect", settings);
+  onChoice?.(choice);
+}
 
   function resolveChoiceText(choice) {
     if (choice.textKey) {
@@ -22,6 +28,7 @@ export default function ChoicePanel({ choices, onChoice }) {
           key={choice.id}
           type="button"
           onClick={() => onChoice(choice.id)}
+          onClick={() => handleChoice(choice)}
           className={[
             "group relative w-full overflow-hidden",
             "border border-cyan-300/15 bg-slate-950/70",
