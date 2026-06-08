@@ -1,134 +1,162 @@
 {
   "id": "episode_10",
-  "title": "THE POD",
+  "title": "THE POD — DIRECTOR'S CUT V5 UPGRADED",
   "startNodeId": "e10_n01",
-  "puzzles": {
-    "occupant_identity_correlation_10": {
-      "id": "occupant_identity_correlation_10",
-      "type": "matching",
-      "title": "OCCUPANT IDENTITY CORRELATION",
-      "description": "Match each recovered pod record with the correct identity conclusion.",
-      "submitLabel": "CONFIRM OCCUPANT IDENTITY",
-      "acceptedAnswers": [
-        "MATCH_CONFIRMED"
-      ],
-      "successNodeId": "e10_n05",
-      "failureNodeId": "e10_n04_fail",
-      "leftItems": [
-        {
-          "id": "suit_id",
-          "label": "SUIT ID TRACE"
-        },
-        {
-          "id": "medical_scan",
-          "label": "MEDICAL SCAN"
-        },
-        {
-          "id": "cryostasis_log",
-          "label": "CRYOSTASIS LOG"
-        }
-      ],
-      "rightItems": [
-        {
-          "id": "nv_08",
-          "label": "NV-08"
-        },
-        {
-          "id": "alive",
-          "label": "ALIVE / UNSTABLE"
-        },
-        {
-          "id": "do_not_wake",
-          "label": "DO NOT WAKE"
-        }
-      ],
-      "pairs": [
-        {
-          "leftId": "suit_id",
-          "rightId": "nv_08"
-        },
-        {
-          "leftId": "medical_scan",
-          "rightId": "alive"
-        },
-        {
-          "leftId": "cryostasis_log",
-          "rightId": "do_not_wake"
-        }
-      ],
-      "titleKey": "episode_10.occupant_identity_correlation_10.puzzle0.title",
-      "descriptionKey": "episode_10.occupant_identity_correlation_10.puzzle0.description",
-      "submitLabelKey": "episode_10.occupant_identity_correlation_10.puzzle0.submitLabel"
-    }
-  },
+  "puzzles": {},
   "nodes": {
     "e10_n01": {
       "id": "e10_n01",
-      "speaker": "SYSTEM",
+      "speaker": "MAYA",
       "events": [
         {
-          "type": "systemAlert",
-          "text": "[POD OPENING SEQUENCE AUTHORIZED]",
-          "pauseAfterMs": 900,
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "The seal is open.",
           "textKey": "episode_10.e10_n01.event0.text"
         },
         {
-          "type": "progressTask",
-          "id": "pod_opening_sequence",
-          "title": "POD OPENING",
-          "subtitle": "Seal pressure release in progress...",
-          "duration": 50000,
-          "completeText": "[POD SEAL RELEASED]",
-          "tone": "system",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_10.e10_n01.event1.title",
-          "subtitleKey": "episode_10.e10_n01.event1.subtitle",
-          "completeTextKey": "episode_10.e10_n01.event1.completeText"
+          "type": "typing",
+          "duration": 3400
         },
         {
-          "type": "systemAlert",
-          "text": "[NOTIFICATION QUEUED: POD SEAL RELEASED]",
-          "pauseAfterMs": 900,
+          "type": "message",
+          "text": "I'm standing close enough to see frost crawling off the glass.",
+          "textKey": "episode_10.e10_n01.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "There is a body shape inside. Not a shadow. Not a reflection.",
           "textKey": "episode_10.e10_n01.event2.text"
         },
         {
-          "type": "message",
-          "text": "Internal atmosphere exposed.",
-          "textKey": "episode_10.e10_n01.event3.text"
+          "type": "typing",
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "Cryostasis chamber responding.",
+          "text": "I want to move closer. I also want to run until the station runs out of floor.",
+          "textKey": "episode_10.e10_n01.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "Operator, pick one before I do something stupid with confidence.",
           "textKey": "episode_10.e10_n01.event4.text"
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 5200,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "DON'T WAKE HIM.",
+            "textKey": "episode_10.e10_n01.background0.text"
+          }
         }
       ],
       "choices": [
         {
-          "id": "inspect_pod_systems",
-          "text": "INSPECT POD SYSTEMS.",
+          "id": "approach_pod",
+          "text": "MAYA, APPROACH THE POD.",
           "effects": {
-            "signalStrength": -1,
-            "danger": 1
+            "danger": 4,
+            "signalStrength": -2,
+            "mayaResolved": true
           },
-          "nextNodeId": "e10_n02",
+          "nextNodeId": "e10_n02_approach",
           "textKey": "episode_10.e10_n01.choice0.text"
         },
         {
-          "id": "stabilize_pod_channel",
-          "text": "STABILIZE POD CHANNEL FIRST.",
+          "id": "hold_position",
+          "text": "HOLD POSITION AND STABILIZE.",
           "effects": {
+            "danger": -1,
             "signalStrength": 3,
-            "danger": -1
+            "mayaContained": true
           },
-          "nextNodeId": "e10_n01_stabilize",
+          "nextNodeId": "e10_n02_hold",
           "textKey": "episode_10.e10_n01.choice1.text"
         }
       ]
     },
-    "e10_n01_stabilize": {
-      "id": "e10_n01_stabilize",
-      "speaker": "SYSTEM",
+    "e10_n02_approach": {
+      "id": "e10_n02_approach",
+      "speaker": "MAYA",
       "events": [
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "Approaching.",
+          "textKey": "episode_10.e10_n02_approach.event0.text"
+        },
+        {
+          "type": "progressTask",
+          "id": "maya_approaches_open_pod",
+          "title": "MAYA APPROACHING OPEN POD",
+          "subtitle": "Crossing exposed platform toward cryostasis chamber",
+          "duration": 42000,
+          "completeText": "[MAYA AT POD GLASS]",
+          "tone": "danger",
+          "titleKey": "episode_10.e10_n02_approach.event1.title",
+          "subtitleKey": "episode_10.e10_n02_approach.event1.subtitle",
+          "completeTextKey": "episode_10.e10_n02_approach.event1.completeText"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "My boots are sticking to the deck. Condensation froze in patches.",
+          "textKey": "episode_10.e10_n02_approach.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "If I fall in front of the most important corpse-or-not-corpse in history, delete the footage.",
+          "textKey": "episode_10.e10_n02_approach.event3.text"
+        }
+      ],
+      "nextNodeId": "e10_n03"
+    },
+    "e10_n02_hold": {
+      "id": "e10_n02_hold",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "Holding.",
+          "textKey": "episode_10.e10_n02_hold.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "I hate it. Which probably means it's the correct call.",
+          "textKey": "episode_10.e10_n02_hold.event1.text"
+        },
         {
           "type": "progressTask",
           "id": "pod_channel_stabilization",
@@ -137,136 +165,72 @@
           "duration": 35000,
           "completeText": "[POD CHANNEL STABLE]",
           "tone": "system",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_10.e10_n01_stabilize.event0.title",
-          "subtitleKey": "episode_10.e10_n01_stabilize.event0.subtitle",
-          "completeTextKey": "episode_10.e10_n01_stabilize.event0.completeText"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "signalStrength": 5,
-            "danger": -2
-          }
-        }
-      ],
-      "nextNodeId": "e10_n02"
-    },
-    "e10_n02": {
-      "id": "e10_n02",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[LIFE SIGN DETECTED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_10.e10_n02.event0.text"
-        },
-        {
-          "type": "message",
-          "speaker": "HALE",
-          "text": "That's impossible.",
-          "textKey": "episode_10.e10_n02.event1.text"
-        },
-        {
-          "type": "message",
-          "speaker": "MAYA",
-          "text": "No...",
-          "textKey": "episode_10.e10_n02.event2.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "run_internal_scan",
-          "text": "RUN INTERNAL SCAN.",
-          "effects": {
-            "signalStrength": -2,
-            "danger": 2
-          },
-          "nextNodeId": "e10_n03",
-          "textKey": "episode_10.e10_n02.choice0.text"
-        },
-        {
-          "id": "ask_hale_impossible",
-          "text": "HALE, WHY IMPOSSIBLE?",
-          "effects": {
-            "haleTrust": -1,
-            "danger": 1
-          },
-          "nextNodeId": "e10_n02_hale",
-          "textKey": "episode_10.e10_n02.choice1.text"
-        }
-      ]
-    },
-    "e10_n02_hale": {
-      "id": "e10_n02_hale",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "Because dead men don't develop a pulse just because we open a door.",
-          "textKey": "episode_10.e10_n02_hale.event0.text"
+          "titleKey": "episode_10.e10_n02_hold.event2.title",
+          "subtitleKey": "episode_10.e10_n02_hold.event2.subtitle",
+          "completeTextKey": "episode_10.e10_n02_hold.event2.completeText"
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 3800
         },
         {
           "type": "message",
-          "text": "And before Maya says it, yes, I hear how that sounds coming from me.",
-          "textKey": "episode_10.e10_n02_hale.event1.text"
+          "text": "Channel is cleaner. The pod sounds like someone breathing through a wall.",
+          "textKey": "episode_10.e10_n02_hold.event3.text"
         }
       ],
       "nextNodeId": "e10_n03"
     },
     "e10_n03": {
       "id": "e10_n03",
-      "speaker": "SYSTEM",
+      "speaker": "HALE",
       "events": [
         {
-          "type": "file",
-          "id": "pod_occupant_scan_01",
-          "fileId": "pod_occupant_scan_01",
-          "fileType": "log",
-          "title": "POD OCCUPANT SCAN",
-          "content": "Visual Feed: unavailable\nCryostasis Interior: occupied\nFace Recognition: failed\nSuit Identifier: NV-08\nArchive Match: Noah Voss\nBiometric State: active\nSignal Distortion: severe",
-          "caption": "Pod occupant scan reconstructed without image feed.",
-          "source": "POD_INTERNAL_SCAN",
-          "tags": [
-            "pod",
-            "occupant",
-            "noah",
-            "voss",
-            "nv_08"
-          ],
-          "correlationTags": [
-            "pod_occupant"
-          ],
-          "message": "[POD OCCUPANT SCAN ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_10.e10_n03.event0.title",
-          "contentKey": "episode_10.e10_n03.event0.content",
-          "captionKey": "episode_10.e10_n03.event0.caption",
-          "messageKey": "episode_10.e10_n03.event0.message"
+          "type": "typing",
+          "duration": 3200
         },
         {
           "type": "message",
-          "text": "Partial suit identifier recovered.",
+          "text": "Before anyone touches the chamber: scan first.",
+          "textKey": "episode_10.e10_n03.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Cryostasis is not sleep. It is a machine convincing a body not to leave.",
           "textKey": "episode_10.e10_n03.event1.text"
         },
         {
-          "type": "message",
-          "text": "SUIT ID: NV-08",
-          "textKey": "episode_10.e10_n03.event2.text"
+          "type": "typing",
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "Archive match found: Noah Voss.",
+          "text": "Wake it wrong and you can save the lungs while losing the person.",
+          "textKey": "episode_10.e10_n03.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "You said 'it.'",
+          "speaker": "MAYA",
           "textKey": "episode_10.e10_n03.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "I said what my fear said before my manners caught up.",
+          "speaker": "HALE",
+          "textKey": "episode_10.e10_n03.event4.text"
         }
       ],
       "choices": [
@@ -274,78 +238,49 @@
           "id": "run_medical_scan",
           "text": "RUN MEDICAL SCAN.",
           "effects": {
-            "danger": 2,
-            "signalStrength": -2
-          },
-          "nextNodeId": "e10_n04",
-          "textKey": "episode_10.e10_n03.choice0.text"
-        },
-        {
-          "id": "check_cryostasis_lock",
-          "text": "CHECK CRYOSTASIS LOCK.",
-          "effects": {
             "danger": 1,
             "signalStrength": -1
           },
-          "nextNodeId": "e10_n03_lock",
+          "nextNodeId": "e10_n04_medical",
+          "textKey": "episode_10.e10_n03.choice0.text"
+        },
+        {
+          "id": "check_lock_first",
+          "text": "CHECK CRYOSTASIS LOCK FIRST.",
+          "effects": {
+            "danger": -1,
+            "signalStrength": 1,
+            "checkedCryoLock": true
+          },
+          "nextNodeId": "e10_n04_lock",
           "textKey": "episode_10.e10_n03.choice1.text"
         }
       ]
     },
-    "e10_n03_lock": {
-      "id": "e10_n03_lock",
-      "speaker": "SYSTEM",
+    "e10_n04_medical": {
+      "id": "e10_n04_medical",
+      "speaker": "MAYA",
       "events": [
         {
-          "type": "file",
-          "id": "cryostasis_lock_warning",
-          "fileId": "cryostasis_lock_warning",
-          "fileType": "log",
-          "title": "CRYOSTASIS LOCK WARNING",
-          "content": "LOCK STATE: active\nSubject: NOAH VOSS\nInstruction: DO NOT WAKE\nRequested By: Ethan Hale\nOverride Status: available\nWarning: manual override may trigger neural shock",
-          "caption": "Cryostasis warning recovered from pod control layer.",
-          "source": "POD_CRYOSTASIS_CONTROL",
-          "tags": [
-            "cryostasis",
-            "lock",
-            "hale",
-            "noah"
-          ],
-          "correlationTags": [
-            "pod_occupant"
-          ],
-          "message": "[CRYOSTASIS LOCK WARNING ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_10.e10_n03_lock.event0.title",
-          "contentKey": "episode_10.e10_n03_lock.event0.content",
-          "captionKey": "episode_10.e10_n03_lock.event0.caption",
-          "messageKey": "episode_10.e10_n03_lock.event0.message"
-        }
-      ],
-      "nextNodeId": "e10_n04"
-    },
-    "e10_n04": {
-      "id": "e10_n04",
-      "speaker": "SYSTEM",
-      "events": [
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "Running medical.",
+          "textKey": "episode_10.e10_n04_medical.event0.text"
+        },
         {
           "type": "progressTask",
           "id": "occupant_medical_scan",
-          "title": "MEDICAL SCAN",
-          "subtitle": "Reading heartbeat, neural activity and cryostasis stability...",
-          "duration": 40000,
+          "title": "OCCUPANT MEDICAL SCAN",
+          "subtitle": "Reading heartbeat, neural activity and chamber stability",
+          "duration": 42000,
           "completeText": "[MEDICAL SCAN COMPLETE]",
           "tone": "system",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_10.e10_n04.event0.title",
-          "subtitleKey": "episode_10.e10_n04.event0.subtitle",
-          "completeTextKey": "episode_10.e10_n04.event0.completeText"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[NOTIFICATION QUEUED: MEDICAL SCAN COMPLETE]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_10.e10_n04.event1.text"
+          "titleKey": "episode_10.e10_n04_medical.event1.title",
+          "subtitleKey": "episode_10.e10_n04_medical.event1.subtitle",
+          "completeTextKey": "episode_10.e10_n04_medical.event1.completeText"
         },
         {
           "type": "file",
@@ -367,73 +302,19 @@
             "pod_occupant"
           ],
           "message": "[OCCUPANT MEDICAL SCAN ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_10.e10_n04.event2.title",
-          "contentKey": "episode_10.e10_n04.event2.content",
-          "captionKey": "episode_10.e10_n04.event2.caption",
-          "messageKey": "episode_10.e10_n04.event2.message"
+          "titleKey": "episode_10.e10_n04_medical.event2.title",
+          "contentKey": "episode_10.e10_n04_medical.event2.content",
+          "captionKey": "episode_10.e10_n04_medical.event2.caption",
+          "messageKey": "episode_10.e10_n04_medical.event2.message"
         },
         {
-          "type": "systemAlert",
-          "text": "[OCCUPANT IDENTITY CORRELATION REQUIRED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_10.e10_n04.event3.text"
-        },
-        {
-          "type": "puzzle",
-          "puzzleId": "occupant_identity_correlation_10",
-          "pauseAfterMs": 700
-        }
-      ],
-      "choices": []
-    },
-    "e10_n04_fail": {
-      "id": "e10_n04_fail",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[OCCUPANT IDENTITY CORRELATION FAILED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_10.e10_n04_fail.event0.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "danger": 4,
-            "signalStrength": -5
-          }
+          "type": "typing",
+          "duration": 3600
         },
         {
           "type": "message",
-          "speaker": "MAYA",
-          "text": "No. Suit says NV-08. Medical says alive. Lock says do not wake. Keep them separate.",
-          "textKey": "episode_10.e10_n04_fail.event1.text"
-        },
-        {
-          "type": "puzzle",
-          "puzzleId": "occupant_identity_correlation_10",
-          "pauseAfterMs": 700
-        }
-      ],
-      "choices": []
-    },
-    "e10_n05": {
-      "id": "e10_n05",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[OCCUPANT IDENTITY CONFIRMED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_10.e10_n05.event0.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "signalStrength": 5,
-            "danger": 2
-          }
+          "text": "Alive.",
+          "textKey": "episode_10.e10_n04_medical.event3.text"
         },
         {
           "type": "typing",
@@ -441,7 +322,111 @@
         },
         {
           "type": "message",
+          "text": "I need everyone to understand that I am holding onto that word with both hands.",
+          "textKey": "episode_10.e10_n04_medical.event4.text"
+        }
+      ],
+      "nextNodeId": "e10_n05"
+    },
+    "e10_n04_lock": {
+      "id": "e10_n04_lock",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Checking the lock layer first.",
+          "textKey": "episode_10.e10_n04_lock.event0.text"
+        },
+        {
+          "type": "file",
+          "id": "cryostasis_lock_warning",
+          "fileId": "cryostasis_lock_warning",
+          "fileType": "log",
+          "title": "CRYOSTASIS LOCK WARNING",
+          "content": "LOCK STATE: ACTIVE\nSUBJECT: NOAH VOSS\nINSTRUCTION: DO NOT WAKE\nREQUESTED BY: ETHAN HALE\nOVERRIDE STATUS: AVAILABLE\nWARNING: MANUAL OVERRIDE MAY TRIGGER NEURAL SHOCK",
+          "caption": "Cryostasis warning recovered from pod control layer.",
+          "source": "POD_CRYOSTASIS_CONTROL",
+          "tags": [
+            "cryostasis",
+            "lock",
+            "hale",
+            "noah"
+          ],
+          "correlationTags": [
+            "pod_occupant"
+          ],
+          "message": "[CRYOSTASIS LOCK WARNING ARCHIVED TO DATA BANK]",
+          "titleKey": "episode_10.e10_n04_lock.event1.title",
+          "contentKey": "episode_10.e10_n04_lock.event1.content",
+          "captionKey": "episode_10.e10_n04_lock.event1.caption",
+          "messageKey": "episode_10.e10_n04_lock.event1.message"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Requested by Ethan Hale.",
+          "textKey": "episode_10.e10_n04_lock.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "Of course it was.",
+          "speaker": "MAYA",
+          "textKey": "episode_10.e10_n04_lock.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "I had reasons.",
+          "speaker": "HALE",
+          "textKey": "episode_10.e10_n04_lock.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "You keep saying that like reasons don't leave bodies behind.",
+          "speaker": "MAYA",
+          "textKey": "episode_10.e10_n04_lock.event5.text"
+        }
+      ],
+      "nextNodeId": "e10_n04_medical"
+    },
+    "e10_n05": {
+      "id": "e10_n05",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
           "text": "Noah Voss.",
+          "textKey": "episode_10.e10_n05.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Missing file. Eighth slot. Alive in a pod that Hale ordered locked.",
           "textKey": "episode_10.e10_n05.event1.text"
         },
         {
@@ -450,100 +435,52 @@
         },
         {
           "type": "message",
-          "text": "No. Noah Voss was not on the manifest. He was not even supposed to exist.",
+          "text": "I don't know whether to laugh, scream, or punch the glass until my hand stops being useful.",
           "textKey": "episode_10.e10_n05.event2.text"
         },
         {
           "type": "backgroundEvent",
-          "delay": 7000,
+          "delay": 6500,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
-            "sender": "character",
-            "text": "DON'T WAKE HIM.",
-            "textKey": "episode_10.e10_n05.backgroundEvent0.text"
+            "text": "PLEASE.",
+            "textKey": "episode_10.e10_n05.background0.text"
           }
         },
         {
           "type": "backgroundEvent",
-          "delay": 14000,
+          "delay": 12000,
           "event": {
             "type": "message",
-            "speaker": "UNKNOWN",
-            "sender": "character",
-            "text": "Please.",
-            "textKey": "episode_10.e10_n05.backgroundEvent1.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 19000,
-          "event": {
-            "type": "message",
+            "text": "Do not answer that voice.",
             "speaker": "HALE",
-            "sender": "character",
-            "text": "Do not touch the cryostasis controls.",
-            "textKey": "episode_10.e10_n05.backgroundEvent2.text"
+            "textKey": "episode_10.e10_n05.background1.text"
           }
         }
       ],
       "choices": [
         {
-          "id": "ask_maya_explain",
-          "text": "MAYA, EXPLAIN THIS.",
+          "id": "question_hale_lock",
+          "text": "HALE, EXPLAIN THE LOCK.",
           "effects": {
-            "mayaTrust": 2,
-            "danger": 1
+            "halePressure": 3,
+            "mayaStress": 1
           },
-          "nextNodeId": "e10_n06_maya",
+          "nextNodeId": "e10_n06_hale",
           "textKey": "episode_10.e10_n05.choice0.text"
         },
         {
-          "id": "ask_hale_controls",
-          "text": "HALE, WHY NOT TOUCH CONTROLS?",
+          "id": "ground_maya",
+          "text": "MAYA, STAY WITH ME.",
           "effects": {
-            "haleTrust": 2,
-            "mayaTrust": -1,
-            "danger": 1
+            "mayaStabilized": true,
+            "mayaStress": -3
           },
-          "nextNodeId": "e10_n06_hale",
+          "nextNodeId": "e10_n06_maya",
           "textKey": "episode_10.e10_n05.choice1.text"
         }
       ]
-    },
-    "e10_n06_maya": {
-      "id": "e10_n06_maya",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "I can't explain it. That's the problem.",
-          "textKey": "episode_10.e10_n06_maya.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "A missing man. A forbidden file. A pod that shouldn't have anyone inside.",
-          "textKey": "episode_10.e10_n06_maya.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "If this is a rescue, it feels like someone arranged it years ago.",
-          "textKey": "episode_10.e10_n06_maya.event2.text"
-        }
-      ],
-      "nextNodeId": "e10_n07"
     },
     "e10_n06_hale": {
       "id": "e10_n06_hale",
@@ -555,17 +492,8 @@
         },
         {
           "type": "message",
-          "text": "Because cryostasis is not sleep.",
+          "text": "I locked him because he asked me to.",
           "textKey": "episode_10.e10_n06_hale.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "You wake someone too fast, you can save their body and destroy everything that makes them a person.",
-          "textKey": "episode_10.e10_n06_hale.event1.text"
         },
         {
           "type": "typing",
@@ -573,116 +501,297 @@
         },
         {
           "type": "message",
-          "text": "And that is the generous version of what could happen.",
+          "text": "Noah was awake for maybe thirty seconds before we sealed him.",
+          "textKey": "episode_10.e10_n06_hale.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "He looked at me and said, 'If I start making sense, don't trust me.'",
           "textKey": "episode_10.e10_n06_hale.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "That is a very Noah sentence.",
+          "speaker": "MAYA",
+          "textKey": "episode_10.e10_n06_hale.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "It was. That's why I believed it.",
+          "speaker": "HALE",
+          "textKey": "episode_10.e10_n06_hale.event4.text"
+        }
+      ],
+      "nextNodeId": "e10_n07"
+    },
+    "e10_n06_maya": {
+      "id": "e10_n06_maya",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I'm here.",
+          "textKey": "episode_10.e10_n06_maya.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "I'm angry enough to shake and scared enough to pretend it is only anger.",
+          "textKey": "episode_10.e10_n06_maya.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Noah used to sing during reboots. Badly. Like the song owed him money.",
+          "textKey": "episode_10.e10_n06_maya.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "If he's in there, I don't get to leave him as a memory because memories are easier to handle.",
+          "textKey": "episode_10.e10_n06_maya.event3.text"
         }
       ],
       "nextNodeId": "e10_n07"
     },
     "e10_n07": {
       "id": "e10_n07",
-      "speaker": "SYSTEM",
+      "speaker": "MAYA",
       "events": [
         {
-          "type": "systemAlert",
-          "text": "[CRYOSTASIS DECISION REQUIRED]",
-          "pauseAfterMs": 900,
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "The pod is giving us two workable options.",
           "textKey": "episode_10.e10_n07.event0.text"
         },
         {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
           "type": "message",
-          "text": "Subject: NOAH VOSS",
+          "text": "Slow wake: safer for his mind, rougher on the failing chamber.",
           "textKey": "episode_10.e10_n07.event1.text"
         },
         {
-          "type": "message",
-          "text": "Cryostasis unstable.",
-          "textKey": "episode_10.e10_n07.event2.text"
+          "type": "typing",
+          "duration": 4200
         },
         {
           "type": "message",
-          "text": "Wake Risk: high. Preservation Risk: rising.",
+          "text": "Hard wake: faster, but Hale looks like he might reach through the channel and strangle the command line.",
+          "textKey": "episode_10.e10_n07.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Because the command line deserves it.",
+          "speaker": "HALE",
           "textKey": "episode_10.e10_n07.event3.text"
         }
       ],
       "choices": [
         {
-          "id": "wake_noah",
-          "text": "WAKE HIM.",
+          "id": "slow_wake_protocol",
+          "text": "START SLOW WAKE PROTOCOL.",
           "effects": {
-            "danger": 15,
-            "trust": -10,
-            "morale": -3,
-            "mayaTrust": 3,
-            "haleTrust": -8,
-            "signalStrength": -8,
-            "wokeNoah": true
+            "danger": 5,
+            "signalStrength": 1,
+            "slowWakeNoah": true
           },
-          "nextNodeId": "e10_wake_01",
+          "nextNodeId": "e10_slow_01",
           "textKey": "episode_10.e10_n07.choice0.text"
         },
         {
-          "id": "keep_asleep",
-          "text": "KEEP HIM ASLEEP.",
+          "id": "hard_wake_protocol",
+          "text": "FORCE HARD WAKE.",
           "effects": {
-            "danger": -5,
-            "morale": -5,
-            "trust": 5,
-            "mayaTrust": -4,
-            "haleTrust": 6,
-            "signalStrength": 3,
-            "keptNoahAsleep": true
+            "danger": 15,
+            "signalStrength": -8,
+            "hardWakeNoah": true,
+            "irreversibleWakeDamageRisk": true
           },
-          "nextNodeId": "e10_sleep_01",
+          "nextNodeId": "e10_hard_01",
           "textKey": "episode_10.e10_n07.choice1.text"
         }
       ]
     },
-    "e10_wake_01": {
-      "id": "e10_wake_01",
-      "speaker": "SYSTEM",
+    "e10_slow_01": {
+      "id": "e10_slow_01",
+      "speaker": "MAYA",
       "events": [
         {
-          "type": "systemAlert",
-          "text": "[CRYOSTASIS TERMINATION AUTHORIZED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_10.e10_wake_01.event0.text"
-        },
-        {
-          "type": "progressTask",
-          "id": "cryostasis_termination",
-          "title": "CRYOSTASIS TERMINATION",
-          "subtitle": "Restoring neural activity and chamber pressure...",
-          "duration": 60000,
-          "completeText": "[CRYOSTASIS TERMINATED]",
-          "tone": "system",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_10.e10_wake_01.event1.title",
-          "subtitleKey": "episode_10.e10_wake_01.event1.subtitle",
-          "completeTextKey": "episode_10.e10_wake_01.event1.completeText"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[NOTIFICATION QUEUED: CRYOSTASIS TERMINATED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_10.e10_wake_01.event2.text"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[CRYOSTASIS TERMINATED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_10.e10_wake_01.event3.text"
+          "type": "typing",
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "Neural activity rising. Heartbeat stabilizing.",
-          "textKey": "episode_10.e10_wake_01.event4.text"
+          "text": "Slow wake. Thank you.",
+          "textKey": "episode_10.e10_slow_01.event0.text"
+        },
+        {
+          "type": "progressTask",
+          "id": "slow_wake_protocol",
+          "title": "SLOW WAKE PROTOCOL",
+          "subtitle": "Gradual neural recovery and pressure normalization",
+          "duration": 70000,
+          "completeText": "[SLOW WAKE COMPLETE]",
+          "tone": "system",
+          "titleKey": "episode_10.e10_slow_01.event1.title",
+          "subtitleKey": "episode_10.e10_slow_01.event1.subtitle",
+          "completeTextKey": "episode_10.e10_slow_01.event1.completeText"
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 6000,
+          "event": {
+            "type": "message",
+            "text": "Vitals rising slowly.",
+            "speaker": "MAYA",
+            "textKey": "episode_10.e10_slow_01.background0.text"
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 12000,
+          "event": {
+            "type": "message",
+            "text": "Good. Slow is not cowardice here. Slow is precision.",
+            "speaker": "HALE",
+            "textKey": "episode_10.e10_slow_01.background1.text"
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 18500,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "HE REMEMBERS.",
+            "textKey": "episode_10.e10_slow_01.background2.text"
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "He's moving. Not much. Fingers first.",
+          "textKey": "episode_10.e10_slow_01.event2.text"
         }
       ],
-      "nextNodeId": "e10_wake_02"
+      "nextNodeId": "e10_noah_01"
     },
-    "e10_wake_02": {
-      "id": "e10_wake_02",
+    "e10_hard_01": {
+      "id": "e10_hard_01",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "Hard wake.",
+          "textKey": "episode_10.e10_hard_01.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I hate this choice. I'm doing it anyway.",
+          "textKey": "episode_10.e10_hard_01.event1.text"
+        },
+        {
+          "type": "progressTask",
+          "id": "hard_wake_protocol",
+          "title": "HARD WAKE PROTOCOL",
+          "subtitle": "Emergency neural activation and rapid chamber vent",
+          "duration": 45000,
+          "completeText": "[HARD WAKE COMPLETE]",
+          "tone": "danger",
+          "titleKey": "episode_10.e10_hard_01.event2.title",
+          "subtitleKey": "episode_10.e10_hard_01.event2.subtitle",
+          "completeTextKey": "episode_10.e10_hard_01.event2.completeText"
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 5200,
+          "event": {
+            "type": "message",
+            "text": "Neural activity spiking.",
+            "speaker": "HALE",
+            "textKey": "episode_10.e10_hard_01.background0.text"
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 9200,
+          "event": {
+            "type": "message",
+            "text": "Noah, if you can hear me, I'm sorry.",
+            "speaker": "MAYA",
+            "textKey": "episode_10.e10_hard_01.background1.text"
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 13800,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "TOO FAST.",
+            "textKey": "episode_10.e10_hard_01.background2.text"
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "He's convulsing. No, no, stay with me—",
+          "textKey": "episode_10.e10_hard_01.event3.text"
+        }
+      ],
+      "nextNodeId": "e10_noah_01_hard"
+    },
+    "e10_noah_01": {
+      "id": "e10_noah_01",
       "speaker": "NOAH",
       "events": [
         {
@@ -692,16 +801,94 @@
         {
           "type": "message",
           "text": "What day is it?",
-          "textKey": "episode_10.e10_wake_02.event0.text"
+          "textKey": "episode_10.e10_noah_01.event0.text"
         },
         {
           "type": "typing",
-          "duration": 4800
+          "duration": 5000
         },
         {
           "type": "message",
           "text": "How many are left?",
-          "textKey": "episode_10.e10_wake_02.event1.text"
+          "textKey": "episode_10.e10_noah_01.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5400
+        },
+        {
+          "type": "message",
+          "text": "Did Hale survive?",
+          "textKey": "episode_10.e10_noah_01.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Noah.",
+          "speaker": "MAYA",
+          "textKey": "episode_10.e10_noah_01.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Maya?",
+          "speaker": "NOAH",
+          "textKey": "episode_10.e10_noah_01.event4.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "tell_noah_truth",
+          "text": "TELL NOAH HALE IS HERE.",
+          "effects": {
+            "danger": 5,
+            "signalStrength": -3,
+            "toldNoahHaleHere": true
+          },
+          "nextNodeId": "e10_noah_truth",
+          "textKey": "episode_10.e10_noah_01.choice0.text"
+        },
+        {
+          "id": "shield_noah",
+          "text": "KEEP HIM CALM FIRST.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": 2,
+            "shieldedNoahFromHale": true
+          },
+          "nextNodeId": "e10_noah_calm",
+          "textKey": "episode_10.e10_noah_01.choice1.text"
+        }
+      ]
+    },
+    "e10_noah_01_hard": {
+      "id": "e10_noah_01_hard",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 6200
+        },
+        {
+          "type": "message",
+          "text": "Don't let him near the black box.",
+          "textKey": "episode_10.e10_noah_01_hard.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Noah, breathe. Just breathe.",
+          "speaker": "MAYA",
+          "textKey": "episode_10.e10_noah_01_hard.event1.text"
         },
         {
           "type": "typing",
@@ -709,168 +896,393 @@
         },
         {
           "type": "message",
-          "text": "Did Hale survive?",
-          "textKey": "episode_10.e10_wake_02.event2.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "ask_noah_what",
-          "text": "WHAT DO YOU MEAN?",
-          "effects": {
-            "danger": 2,
-            "signalStrength": -2
-          },
-          "nextNodeId": "e10_wake_03",
-          "textKey": "episode_10.e10_wake_02.choice0.text"
+          "text": "I remember screaming. I remember Hale's hand on the lock.",
+          "speaker": "NOAH",
+          "textKey": "episode_10.e10_noah_01_hard.event2.text"
         },
-        {
-          "id": "tell_noah_hale_is_here",
-          "text": "HALE IS HERE.",
-          "effects": {
-            "danger": 5,
-            "signalStrength": -5,
-            "toldNoahHaleHere": true
-          },
-          "nextNodeId": "e10_wake_03_hale",
-          "textKey": "episode_10.e10_wake_02.choice1.text"
-        }
-      ]
-    },
-    "e10_wake_03_hale": {
-      "id": "e10_wake_03_hale",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "Then don't let him near the black box.",
-          "textKey": "episode_10.e10_wake_03_hale.event0.text"
-        },
-        {
-          "type": "glitch",
-          "duration": 1100,
-          "pauseAfterMs": 700
-        }
-      ],
-      "nextNodeId": "e10_n11"
-    },
-    "e10_wake_03": {
-      "id": "e10_wake_03",
-      "speaker": "NOAH",
-      "events": [
         {
           "type": "typing",
           "duration": 4200
         },
         {
           "type": "message",
-          "text": "Then we are already too late.",
-          "textKey": "episode_10.e10_wake_03.event0.text"
+          "text": "And now I remember waking wrong.",
+          "speaker": "NOAH",
+          "textKey": "episode_10.e10_noah_01_hard.event3.text"
         }
       ],
-      "nextNodeId": "e10_n11"
+      "choices": [
+        {
+          "id": "apologize_to_noah",
+          "text": "NOAH, WE HAD TO RISK IT.",
+          "effects": {
+            "noahStrained": true,
+            "danger": 2
+          },
+          "nextNodeId": "e10_noah_hard_response",
+          "textKey": "episode_10.e10_noah_01_hard.choice0.text"
+        },
+        {
+          "id": "focus_blackbox",
+          "text": "ASK ABOUT THE BLACK BOX.",
+          "effects": {
+            "danger": 4,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e10_blackbox_reveal",
+          "textKey": "episode_10.e10_noah_01_hard.choice1.text"
+        }
+      ]
     },
-    "e10_sleep_01": {
-      "id": "e10_sleep_01",
-      "speaker": "SYSTEM",
+    "e10_noah_truth": {
+      "id": "e10_noah_truth",
+      "speaker": "NOAH",
       "events": [
         {
-          "type": "systemAlert",
-          "text": "[CRYOSTASIS MAINTAINED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_10.e10_sleep_01.event0.text"
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "Then do not let him near the black box.",
+          "textKey": "episode_10.e10_noah_truth.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "You always were dramatic after naps.",
+          "speaker": "HALE",
+          "textKey": "episode_10.e10_noah_truth.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "That's him.",
+          "speaker": "NOAH",
+          "textKey": "episode_10.e10_noah_truth.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "Or something wearing enough of him to be dangerous.",
+          "speaker": "NOAH",
+          "textKey": "episode_10.e10_noah_truth.event3.text"
+        }
+      ],
+      "nextNodeId": "e10_blackbox_reveal"
+    },
+    "e10_noah_calm": {
+      "id": "e10_noah_calm",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "We're keeping him calm.",
+          "textKey": "episode_10.e10_noah_calm.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Noah, listen to me. You're in an emergency pod. You're alive.",
+          "textKey": "episode_10.e10_noah_calm.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "Alive is a suspiciously strong word for how I feel.",
+          "speaker": "NOAH",
+          "textKey": "episode_10.e10_noah_calm.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Good. Sarcasm survived. Medical miracle.",
+          "speaker": "MAYA",
+          "textKey": "episode_10.e10_noah_calm.event3.text"
+        }
+      ],
+      "nextNodeId": "e10_blackbox_reveal"
+    },
+    "e10_noah_hard_response": {
+      "id": "e10_noah_hard_response",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "You sound like every person who ever made a bad call and survived long enough to name it necessity.",
+          "textKey": "episode_10.e10_noah_hard_response.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Fair.",
+          "speaker": "MAYA",
+          "textKey": "episode_10.e10_noah_hard_response.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "But I'm alive. So I will be angry later.",
+          "speaker": "NOAH",
+          "textKey": "episode_10.e10_noah_hard_response.event2.text"
+        }
+      ],
+      "nextNodeId": "e10_blackbox_reveal"
+    },
+    "e10_blackbox_reveal": {
+      "id": "e10_blackbox_reveal",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 4400
+        },
+        {
+          "type": "message",
+          "text": "The black box isn't just a recorder.",
+          "textKey": "episode_10.e10_blackbox_reveal.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "It heard the command that started Alpha. It stored the voice before the station learned to lie.",
+          "textKey": "episode_10.e10_blackbox_reveal.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "Where is it?",
+          "speaker": "MAYA",
+          "textKey": "episode_10.e10_blackbox_reveal.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 5200
+        },
+        {
+          "type": "message",
+          "text": "Under the pod cradle. Behind the emergency battery housing.",
+          "speaker": "NOAH",
+          "textKey": "episode_10.e10_blackbox_reveal.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Of course it is under the thing trying to kill us.",
+          "speaker": "HALE",
+          "textKey": "episode_10.e10_blackbox_reveal.event4.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "send_maya_under_cradle",
+          "text": "MAYA, PULL THE BLACK BOX.",
+          "effects": {
+            "danger": 8,
+            "signalStrength": -4,
+            "mayaPulledBlackBox": true
+          },
+          "nextNodeId": "e10_blackbox_pull",
+          "textKey": "episode_10.e10_blackbox_reveal.choice0.text"
+        },
+        {
+          "id": "use_remote_arm",
+          "text": "USE REMOTE ARM FIRST.",
+          "effects": {
+            "danger": 3,
+            "signalStrength": -2,
+            "remoteArmUsed": true
+          },
+          "nextNodeId": "e10_blackbox_remote",
+          "textKey": "episode_10.e10_blackbox_reveal.choice1.text"
+        }
+      ]
+    },
+    "e10_blackbox_pull": {
+      "id": "e10_blackbox_pull",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "Going under the cradle.",
+          "textKey": "episode_10.e10_blackbox_pull.event0.text"
         },
         {
           "type": "progressTask",
-          "id": "cryostasis_lock",
-          "title": "CRYOSTASIS LOCK",
-          "subtitle": "Stabilizing pod pressure and preserving subject...",
-          "duration": 45000,
-          "completeText": "[CRYOSTASIS LOCK STABLE]",
-          "tone": "system",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_10.e10_sleep_01.event1.title",
-          "subtitleKey": "episode_10.e10_sleep_01.event1.subtitle",
-          "completeTextKey": "episode_10.e10_sleep_01.event1.completeText"
-        },
-        {
-          "type": "file",
-          "id": "cryostasis_log",
-          "fileId": "cryostasis_log",
-          "fileType": "log",
-          "title": "CRYOSTASIS LOG",
-          "content": "EMERGENCY LOCK ENABLED\nREQUESTED BY: ETHAN HALE\nSUBJECT: NOAH VOSS\nSTATUS: DO NOT WAKE\nSECONDARY NOTE: BLACK BOX RECORDER LINKED TO SUBJECT POD",
-          "caption": "Cryostasis lock record recovered from emergency pod.",
-          "source": "POD_SYSTEM",
-          "tags": [
-            "cryostasis",
-            "hale",
-            "noah",
-            "lock",
-            "blackbox"
-          ],
-          "correlationTags": [
-            "pod_occupant",
-            "black_box"
-          ],
-          "message": "[CRYOSTASIS LOG ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_10.e10_sleep_01.event2.title",
-          "contentKey": "episode_10.e10_sleep_01.event2.content",
-          "captionKey": "episode_10.e10_sleep_01.event2.caption",
-          "messageKey": "episode_10.e10_sleep_01.event2.message"
+          "id": "maya_blackbox_manual_pull",
+          "title": "MAYA RETRIEVING BLACK BOX",
+          "subtitle": "Manual extraction beneath unstable pod cradle",
+          "duration": 55000,
+          "completeText": "[BLACK BOX EXTRACTED]",
+          "tone": "danger",
+          "titleKey": "episode_10.e10_blackbox_pull.event1.title",
+          "subtitleKey": "episode_10.e10_blackbox_pull.event1.subtitle",
+          "completeTextKey": "episode_10.e10_blackbox_pull.event1.completeText"
         },
         {
           "type": "backgroundEvent",
-          "delay": 4500,
+          "delay": 5200,
           "event": {
             "type": "message",
-            "speaker": "UNKNOWN",
-            "text": "Thank you.",
-            "textKey": "episode_10.e10_sleep_01.backgroundEvent0.text"
+            "text": "The cradle shifted.",
+            "speaker": "MAYA",
+            "textKey": "episode_10.e10_blackbox_pull.background0.text"
           }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 9400,
+          "event": {
+            "type": "message",
+            "text": "Back out if it moves again.",
+            "speaker": "HALE",
+            "textKey": "episode_10.e10_blackbox_pull.background1.text"
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 13600,
+          "event": {
+            "type": "message",
+            "text": "Noted. Ignored until useful.",
+            "speaker": "MAYA",
+            "textKey": "episode_10.e10_blackbox_pull.background2.text"
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Got it. Also lost a glove seam. If I start leaking atmosphere, complain loudly.",
+          "textKey": "episode_10.e10_blackbox_pull.event2.text"
         }
       ],
-      "nextNodeId": "e10_n11"
+      "nextNodeId": "e10_final"
     },
-    "e10_n11": {
-      "id": "e10_n11",
-      "speaker": "SYSTEM",
+    "e10_blackbox_remote": {
+      "id": "e10_blackbox_remote",
+      "speaker": "HALE",
       "events": [
         {
-          "type": "systemAlert",
-          "text": "[BLACK BOX RECORDER DETECTED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_10.e10_n11.event0.text"
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Remote arm first. Good.",
+          "textKey": "episode_10.e10_blackbox_remote.event0.text"
         },
         {
           "type": "progressTask",
-          "id": "black_box_recovery",
-          "title": "BLACK BOX RECOVERY",
-          "subtitle": "Recovering corrupted Incident Alpha recorder...",
-          "duration": 50000,
-          "completeText": "[BLACK BOX RECOVERY COMPLETE]",
+          "id": "remote_arm_blackbox_attempt",
+          "title": "REMOTE ARM EXTRACTION",
+          "subtitle": "Guiding damaged manipulator beneath pod cradle",
+          "duration": 60000,
+          "completeText": "[REMOTE ARM EXTRACTION COMPLETE]",
           "tone": "system",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_10.e10_n11.event1.title",
-          "subtitleKey": "episode_10.e10_n11.event1.subtitle",
-          "completeTextKey": "episode_10.e10_n11.event1.completeText"
+          "titleKey": "episode_10.e10_blackbox_remote.event1.title",
+          "subtitleKey": "episode_10.e10_blackbox_remote.event1.subtitle",
+          "completeTextKey": "episode_10.e10_blackbox_remote.event1.completeText"
         },
         {
-          "type": "systemAlert",
-          "text": "[NOTIFICATION QUEUED: BLACK BOX RECOVERY COMPLETE]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_10.e10_n11.event2.text"
+          "type": "backgroundEvent",
+          "delay": 6400,
+          "event": {
+            "type": "message",
+            "text": "Arm response is delayed.",
+            "speaker": "HALE",
+            "textKey": "episode_10.e10_blackbox_remote.background0.text"
+          }
         },
+        {
+          "type": "backgroundEvent",
+          "delay": 11800,
+          "event": {
+            "type": "message",
+            "text": "Noah, can you see the cradle from inside?",
+            "speaker": "MAYA",
+            "textKey": "episode_10.e10_blackbox_remote.background1.text"
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 17000,
+          "event": {
+            "type": "message",
+            "text": "I can see frost. I can see my hands. I would rather see neither.",
+            "speaker": "NOAH",
+            "textKey": "episode_10.e10_blackbox_remote.background2.text"
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Arm has it. Slow, but clean. For once, a machine behaved like it had parents.",
+          "speaker": "HALE",
+          "textKey": "episode_10.e10_blackbox_remote.event2.text"
+        }
+      ],
+      "nextNodeId": "e10_final"
+    },
+    "e10_final": {
+      "id": "e10_final",
+      "speaker": "SYSTEM",
+      "events": [
         {
           "type": "file",
           "id": "incident_alpha_blackbox",
           "fileId": "incident_alpha_blackbox",
-          "fileType": "file",
+          "fileType": "log",
           "title": "BLACK BOX RECORDER",
           "content": "CORRUPTED\n\nRECOVERY POSSIBLE\n\nDECRYPTION MODULE REQUIRED.\n\nLinked Subject: NOAH VOSS\nLinked Event: INCIDENT ALPHA\nWarning: access may expose suppressed command audio.",
           "caption": "Recovered black box recorder connected to Incident Alpha.",
@@ -886,38 +1298,48 @@
             "incident_alpha"
           ],
           "message": "[BLACK BOX RECORDER ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_10.e10_n11.event3.title",
-          "contentKey": "episode_10.e10_n11.event3.content",
-          "captionKey": "episode_10.e10_n11.event3.caption",
-          "messageKey": "episode_10.e10_n11.event3.message"
+          "titleKey": "episode_10.e10_final.event0.title",
+          "contentKey": "episode_10.e10_final.event0.content",
+          "captionKey": "episode_10.e10_final.event0.caption",
+          "messageKey": "episode_10.e10_final.event0.message"
         },
         {
           "type": "glitch",
-          "duration": 1200,
-          "pauseAfterMs": 700
+          "duration": 1200
         },
         {
           "type": "corruptMessage",
           "speaker": "UNKNOWN",
           "text": "YOU WERE NEVER SUPPOSED TO FIND NOAH",
-          "pauseAfterMs": 1200,
-          "textKey": "episode_10.e10_n11.event4.text"
+          "textKey": "episode_10.e10_final.event1.text"
         },
         {
           "type": "signalLost",
           "duration": 2500,
           "message": "[SIGNAL LOST]",
           "restoreMessage": "[SIGNAL RESTORED]",
-          "pauseAfterMs": 900,
-          "messageKey": "episode_10.e10_n11.event5.message",
-          "restoreMessageKey": "episode_10.e10_n11.event5.restoreMessage"
+          "messageKey": "episode_10.e10_final.event2.message",
+          "restoreMessageKey": "episode_10.e10_final.event2.restoreMessage"
+        },
+        {
+          "type": "typing",
+          "duration": 4400
         },
         {
           "type": "message",
+          "text": "Find the black box recording.",
           "speaker": "NOAH",
-          "text": "Find the black box.",
-          "textKey": "episode_10.e10_n11.event6.text"
+          "textKey": "episode_10.e10_final.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "And whatever Hale says next... make him prove it.",
+          "speaker": "NOAH",
+          "textKey": "episode_10.e10_final.event4.text"
         }
       ],
       "choices": [
@@ -925,12 +1347,12 @@
           "id": "track_black_box_signal",
           "text": "TRACK BLACK BOX SIGNAL.",
           "effects": {
-            "danger": 2,
-            "signalStrength": -2,
+            "danger": 3,
+            "signalStrength": -3,
             "trackedBlackBox": true
           },
           "nextEpisodeId": "episode_11",
-          "textKey": "episode_10.e10_n11.choice0.text"
+          "textKey": "episode_10.e10_final.choice0.text"
         },
         {
           "id": "secure_black_box_first",
@@ -941,10 +1363,30 @@
             "securedBlackBox": true
           },
           "nextEpisodeId": "episode_11",
-          "textKey": "episode_10.e10_n11.choice1.text"
+          "textKey": "episode_10.e10_final.choice1.text"
         }
       ]
     }
   },
-  "titleKey": "episode_10.meta.episode0.title"
+  "titleKey": "episode_10.meta.episode0.title",
+  "directorCut": {
+    "version": "V5_UPGRADED",
+    "sourceEpisode": "episode_10",
+    "designRulesApplied": [
+      "Somut hedef: açılan podu güvenli şekilde yönet, Noah Voss'u değerlendir ve black box'u çıkar",
+      "Matching puzzle tamamen kaldırıldı; korelasyon dosya/diyalog/karar akışıyla çözüldü",
+      "Karakterler hareket halinde: Maya pod camına yaklaşıyor, cryostasis kontrol ediyor, black box'u fiziksel/uzaktan çıkarıyor",
+      "Oyuncu karakterleri yönlendiriyor: yaklaş/bekle, scan/lock, yavaş/sert uyandırma, black box çıkarma yöntemi",
+      "Her seçim iki seçenek ve farklı sahne üretir",
+      "Sistem mesajları minimuma indirildi; güven değişimleri görünür mesaj olarak gösterilmedi",
+      "Karakterler önceki olayları hatırlar ve psikolojik tepkiler verir",
+      "Noah'ın uyanışı kalıcı yol ayrımı olarak kuruldu; hard wake kalıcı gerginlik/hasar riski taşır",
+      "Real-time progressTask ve backgroundEvent akışı güçlendirildi",
+      "Episode 11 için black box hedefi net cliffhanger olarak kuruldu"
+    ],
+    "removedPuzzles": [
+      "occupant_identity_correlation_10"
+    ],
+    "nextEpisode": "episode_11"
+  }
 }

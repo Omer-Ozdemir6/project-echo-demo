@@ -1,13 +1,35 @@
 {
   "id": "episode_04",
-  "title": "THE SURVIVOR — DIRECTOR'S CUT V2",
+  "title": "THE SURVIVOR — OPERATION CUT V3",
   "startNodeId": "e04_n01",
+  "designVersion": "operation_v3",
+  "episodeObjective": "Lock channel 7.14, establish contact with Maya Chen, guide her out of the damaged relay console toward the lower access spine, and decide how to manage the Hale/Maya conflict without losing the survivor.",
+  "directionRules": [
+    "Every episode has a concrete objective.",
+    "Characters stay physically active and move through real spaces.",
+    "The player directs character actions.",
+    "Every decision has a visible consequence.",
+    "Matching puzzles are minimized or removed.",
+    "System messages are minimized and used only for terminal-critical feedback.",
+    "Trust is never displayed directly; it is expressed through dialogue.",
+    "Characters behave like real people.",
+    "Real-time event pacing is used.",
+    "The player always receives exactly two choices when choices appear.",
+    "Choices create real branch consequences.",
+    "Characters can psychologically change.",
+    "Characters can react negatively to each other and to the player.",
+    "Some consequences are irreversible.",
+    "Characters remember previous decisions.",
+    "Every character has a distinct voice.",
+    "Characters can grow or break.",
+    "The story feels like a live rescue operation, not a static chat."
+  ],
   "puzzles": {
     "frequency_714": {
       "id": "frequency_714",
       "type": "frequency",
       "title": "SIGNAL TUNING",
-      "description": "Tune the emergency frequency until the hidden transmission locks.",
+      "description": "Tune the emergency frequency until the hidden survivor transmission locks.",
       "prompt": "SET FREQUENCY",
       "targetFrequency": 7.14,
       "initialFrequency": 6.5,
@@ -24,11 +46,11 @@
       "acceptedAnswers": [
         "7.14"
       ],
-      "successNodeId": "e04_n05",
+      "successNodeId": "e04_n05_signal_locked",
       "failureNodeId": "e04_n04_fail",
       "lockedMessage": "MAYA: Can anyone hear me?",
       "nearMessage": "M...a...y...a...",
-      "traceMessage": "...anyone...",
+      "traceMessage": "...lower spine... oxygen...",
       "submitCooldownMs": 500,
       "titleKey": "episode_04.frequency_714.puzzle0.title",
       "descriptionKey": "episode_04.frequency_714.puzzle0.description",
@@ -44,56 +66,48 @@
         {
           "type": "systemAlert",
           "text": "[OPENING CHANNEL 7.14]",
-          "pauseAfterMs": 1000,
+          "pauseAfterMs": 800,
           "textKey": "episode_04.e04_n01.event0.text"
         },
         {
           "type": "glitch",
           "duration": 1200,
-          "pauseAfterMs": 800
+          "pauseAfterMs": 600
         },
         {
           "type": "signalLost",
           "duration": 2500,
           "message": "[SIGNAL INTERFERENCE]",
           "restoreMessage": "[CHANNEL PARTIALLY ESTABLISHED]",
-          "pauseAfterMs": 1000,
-          "messageKey": "episode_04.e04_n01.event1.message",
-          "restoreMessageKey": "episode_04.e04_n01.event1.restoreMessage"
+          "pauseAfterMs": 800,
+          "messageKey": "episode_04.e04_n01.event2.message",
+          "restoreMessageKey": "episode_04.e04_n01.event2.restoreMessage"
         }
       ],
-      "nextNodeId": "e04_n02"
+      "objective": "Open channel 7.14 and catch the first unstable survivor transmission.",
+      "nextNodeId": "e04_n02_first_voice"
     },
-    "e04_n02": {
-      "id": "e04_n02",
+    "e04_n02_first_voice": {
+      "id": "e04_n02_first_voice",
       "speaker": "UNKNOWN",
       "events": [
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 2600
         },
         {
           "type": "message",
           "text": "...",
-          "textKey": "episode_04.e04_n02.event1.text"
+          "textKey": "episode_04.e04_n02_first_voice.event1.text"
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3400
         },
         {
           "type": "message",
-          "text": "No.",
-          "textKey": "episode_04.e04_n02.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "No, wait.",
-          "textKey": "episode_04.e04_n02.event5.text"
+          "text": "No. Wait.",
+          "textKey": "episode_04.e04_n02_first_voice.event3.text"
         },
         {
           "type": "typing",
@@ -102,11 +116,11 @@
         {
           "type": "message",
           "text": "Someone actually answered.",
-          "textKey": "episode_04.e04_n02.event7.text"
+          "textKey": "episode_04.e04_n02_first_voice.event5.text"
         },
         {
           "type": "pause",
-          "duration": 900
+          "duration": 800
         },
         {
           "type": "typing",
@@ -115,7 +129,7 @@
         {
           "type": "message",
           "text": "Please don't be a recording.",
-          "textKey": "episode_04.e04_n02.event10.text"
+          "textKey": "episode_04.e04_n02_first_voice.event8.text"
         },
         {
           "type": "typing",
@@ -124,7 +138,7 @@
         {
           "type": "message",
           "text": "If you are a recording, lie to me.",
-          "textKey": "episode_04.e04_n02.event12.text"
+          "textKey": "episode_04.e04_n02_first_voice.event10.text"
         },
         {
           "type": "typing",
@@ -133,7 +147,7 @@
         {
           "type": "message",
           "text": "Actually don't. I am very tired of being lied to by electrical equipment.",
-          "textKey": "episode_04.e04_n02.event14.text"
+          "textKey": "episode_04.e04_n02_first_voice.event12.text"
         },
         {
           "type": "typing",
@@ -141,10 +155,11 @@
         },
         {
           "type": "message",
-          "text": "Just send something back. Anything.",
-          "textKey": "episode_04.e04_n02.event16.text"
+          "text": "Just send something back. Anything. My relay is drifting and I can't keep shouting into static.",
+          "textKey": "episode_04.e04_n02_first_voice.event14.text"
         }
       ],
+      "objective": "The player chooses whether to connect emotionally first or treat Maya as an unknown signal.",
       "choices": [
         {
           "id": "identify_yourself",
@@ -154,7 +169,7 @@
             "signalStrength": 1
           },
           "nextNodeId": "e04_n03_identify",
-          "textKey": "episode_04.e04_n02.choice0.text"
+          "textKey": "episode_04.e04_n02_first_voice.choice0.text"
         },
         {
           "id": "verify_transmission",
@@ -165,7 +180,7 @@
             "signalStrength": 2
           },
           "nextNodeId": "e04_n03_verify",
-          "textKey": "episode_04.e04_n02.choice1.text"
+          "textKey": "episode_04.e04_n02_first_voice.choice1.text"
         }
       ]
     },
@@ -179,7 +194,7 @@
         },
         {
           "type": "message",
-          "text": "I will, but your signal is tearing apart.",
+          "text": "I will. But your signal is tearing apart.",
           "textKey": "episode_04.e04_n03_identify.event1.text"
         },
         {
@@ -197,7 +212,7 @@
         },
         {
           "type": "message",
-          "text": "And if this is some kind of automated rescue protocol, congratulations. You have terrible timing.",
+          "text": "And if this is some rescue protocol, congratulations. You have terrible timing.",
           "textKey": "episode_04.e04_n03_identify.event5.text"
         },
         {
@@ -210,7 +225,8 @@
           "textKey": "episode_04.e04_n03_identify.event7.text"
         }
       ],
-      "nextNodeId": "e04_n03"
+      "objective": "Maya reacts better to direct human contact but still needs technical help.",
+      "nextNodeId": "e04_n03_trace"
     },
     "e04_n03_verify": {
       "id": "e04_n03_verify",
@@ -249,23 +265,24 @@
         },
         {
           "type": "message",
-          "text": "I have been alone long enough to stop trusting my own echo.",
+          "text": "I've been alone long enough to stop trusting my own echo.",
           "textKey": "episode_04.e04_n03_verify.event7.text"
         }
       ],
-      "nextNodeId": "e04_n03"
+      "objective": "Maya is irritated by verification, but respects the discipline.",
+      "nextNodeId": "e04_n03_trace"
     },
-    "e04_n03": {
-      "id": "e04_n03",
-      "speaker": "SYSTEM",
+    "e04_n03_trace": {
+      "id": "e04_n03_trace",
+      "speaker": "UNKNOWN",
       "events": [
         {
-          "type": "file",
+          "type": "log",
           "id": "audio_transcript_714",
           "fileId": "audio_transcript_714",
           "fileType": "log",
           "title": "EMERGENCY AUDIO TRANSCRIPT",
-          "content": "CHANNEL: 7.14 MHz\nSIGNAL STATE: DISTORTED\nVOICEPRINT: UNKNOWN FEMALE\nRECOVERED FRAGMENTS:\n\n\"...anyone...\"\n\"...relay is drifting...\"\n\"...not Hale...\"\n\nRecommended action: manual signal tuning required.",
+          "content": "CHANNEL: 7.14 MHz\nSIGNAL STATE: DISTORTED\nVOICEPRINT: UNKNOWN FEMALE\nRECOVERED FRAGMENTS:\n\n\"...anyone...\"\n\"...relay is drifting...\"\n\"...not Hale...\"\n\"...lower access spine...\"\n\nRecommended action: manual signal tuning required.",
           "caption": "Text reconstruction of distorted emergency audio from channel 7.14.",
           "source": "CHANNEL_7_14",
           "tags": [
@@ -274,12 +291,12 @@
             "7.14",
             "maya"
           ],
-          "message": "[EMERGENCY AUDIO TRANSCRIPT ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1300,
-          "titleKey": "episode_04.e04_n03.event0.title",
-          "contentKey": "episode_04.e04_n03.event0.content",
-          "captionKey": "episode_04.e04_n03.event0.caption",
-          "messageKey": "episode_04.e04_n03.event0.message"
+          "message": "[ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_04.e04_n03_trace.event0.title",
+          "contentKey": "episode_04.e04_n03_trace.event0.content",
+          "captionKey": "episode_04.e04_n03_trace.event0.caption",
+          "messageKey": "episode_04.e04_n03_trace.event0.message"
         },
         {
           "type": "typing",
@@ -288,8 +305,7 @@
         {
           "type": "message",
           "text": "Signal is slipping.",
-          "speaker": "UNKNOWN",
-          "textKey": "episode_04.e04_n03.event2.text"
+          "textKey": "episode_04.e04_n03_trace.event2.text"
         },
         {
           "type": "typing",
@@ -298,8 +314,7 @@
         {
           "type": "message",
           "text": "The carrier keeps drifting like the relay has a death wish.",
-          "speaker": "UNKNOWN",
-          "textKey": "episode_04.e04_n03.event4.text"
+          "textKey": "episode_04.e04_n03_trace.event4.text"
         },
         {
           "type": "typing",
@@ -308,8 +323,7 @@
         {
           "type": "message",
           "text": "Which, honestly, would fit the general personality of this station.",
-          "speaker": "UNKNOWN",
-          "textKey": "episode_04.e04_n03.event6.text"
+          "textKey": "episode_04.e04_n03_trace.event6.text"
         },
         {
           "type": "typing",
@@ -317,11 +331,11 @@
         },
         {
           "type": "message",
-          "text": "If you can tune it, do it now.",
-          "speaker": "UNKNOWN",
-          "textKey": "episode_04.e04_n03.event8.text"
+          "text": "If you can tune it, do it now. If you wait too long, I go back to being a rumor in the static.",
+          "textKey": "episode_04.e04_n03_trace.event8.text"
         }
       ],
+      "objective": "Player decides whether to trust the new signal or consult Hale first.",
       "choices": [
         {
           "id": "manual_tune",
@@ -330,8 +344,8 @@
             "signalStrength": 1,
             "mayaTrust": 1
           },
-          "nextNodeId": "e04_n04",
-          "textKey": "episode_04.e04_n03.choice0.text"
+          "nextNodeId": "e04_n04_tune",
+          "textKey": "episode_04.e04_n03_trace.choice0.text"
         },
         {
           "id": "ask_hale_before_tuning",
@@ -343,7 +357,7 @@
             "signalStrength": -2
           },
           "nextNodeId": "e04_n04_hale_warning",
-          "textKey": "episode_04.e04_n03.choice1.text"
+          "textKey": "episode_04.e04_n03_trace.choice1.text"
         }
       ]
     },
@@ -388,16 +402,29 @@
           "textKey": "episode_04.e04_n04_hale_warning.event7.text"
         },
         {
-          "type": "systemAlert",
-          "text": "[MAYA SIGNAL DEGRADING]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_04.e04_n04_hale_warning.event8.text"
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "Also... if she gives you a name, don't assume a name means safety.",
+          "textKey": "episode_04.e04_n04_hale_warning.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Names are easy. Survival is harder.",
+          "textKey": "episode_04.e04_n04_hale_warning.event11.text"
         }
       ],
-      "nextNodeId": "e04_n04"
+      "objective": "Hale warns the operator without fully stopping the rescue.",
+      "nextNodeId": "e04_n04_tune"
     },
-    "e04_n04": {
-      "id": "e04_n04",
+    "e04_n04_tune": {
+      "id": "e04_n04_tune",
       "speaker": "SYSTEM",
       "events": [
         {
@@ -406,35 +433,31 @@
           "pauseAfterMs": 700
         }
       ],
+      "objective": "Tune 7.14 without letting the carrier drift out of reach.",
       "choices": []
     },
     "e04_n04_fail": {
       "id": "e04_n04_fail",
-      "speaker": "SYSTEM",
+      "speaker": "UNKNOWN",
       "events": [
         {
           "type": "systemAlert",
           "text": "[SIGNAL LOCK FAILED]",
-          "pauseAfterMs": 900,
+          "pauseAfterMs": 800,
           "textKey": "episode_04.e04_n04_fail.event0.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "danger": 4,
-            "signalStrength": -7,
-            "mayaTrust": -1
-          }
         },
         {
           "type": "glitch",
           "duration": 1000,
-          "pauseAfterMs": 700
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "duration": 2500
         },
         {
           "type": "message",
           "text": "No— don't let it drift.",
-          "speaker": "UNKNOWN",
           "textKey": "episode_04.e04_n04_fail.event3.text"
         },
         {
@@ -444,16 +467,25 @@
         {
           "type": "message",
           "text": "I had you for a second. Don't make me go back to static.",
-          "speaker": "UNKNOWN",
           "textKey": "episode_04.e04_n04_fail.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "Hold it steady when it bites. The drift gets worse right before the lock.",
+          "textKey": "episode_04.e04_n04_fail.event7.text"
         },
         {
           "type": "systemAlert",
           "text": "[MANUAL RETUNE REQUIRED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_04.e04_n04_fail.event6.text"
+          "pauseAfterMs": 800,
+          "textKey": "episode_04.e04_n04_fail.event8.text"
         }
       ],
+      "objective": "Failure no longer stalls; the player can retry or review a clue.",
       "choices": [
         {
           "id": "retry_frequency_714",
@@ -462,8 +494,8 @@
             "signalStrength": -1,
             "danger": 1
           },
-          "nextNodeId": "e04_n04",
-          "textKey": "episode_04.e04_n04_fail.dc.choice0.text"
+          "nextNodeId": "e04_n04_tune",
+          "textKey": "episode_04.e04_n04_fail.choice0.text"
         },
         {
           "id": "review_signal_trace_714",
@@ -473,26 +505,158 @@
             "mayaTrust": 1
           },
           "nextNodeId": "e04_n04_hint",
-          "textKey": "episode_04.e04_n04_fail.dc.choice1.text"
+          "textKey": "episode_04.e04_n04_fail.choice1.text"
         }
       ]
     },
-    "e04_n05": {
-      "id": "e04_n05",
+    "e04_n04_hint": {
+      "id": "e04_n04_hint",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "Listen. Not to the words. To the pull.",
+          "textKey": "episode_04.e04_n04_hint.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "It drifts below seven, then snaps back. It wants you to overcorrect.",
+          "textKey": "episode_04.e04_n04_hint.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Don't chase it. Let it come to 7.14 and hold there.",
+          "textKey": "episode_04.e04_n04_hint.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "I hate that I sound like Hale right now.",
+          "textKey": "episode_04.e04_n04_hint.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "Just... lock the signal.",
+          "textKey": "episode_04.e04_n04_hint.event9.text"
+        }
+      ],
+      "objective": "Offer a clue while preserving the two-choice rule.",
+      "choices": [
+        {
+          "id": "retry_after_signal_trace",
+          "text": "LOCK THE SIGNAL AGAIN.",
+          "effects": {
+            "signalStrength": 1,
+            "mayaTrust": 1
+          },
+          "nextNodeId": "e04_n04_tune",
+          "textKey": "episode_04.e04_n04_hint.choice0.text"
+        },
+        {
+          "id": "ask_hale_for_tuning_help",
+          "text": "ASK HALE FOR A STABILIZATION TIP.",
+          "effects": {
+            "haleTrust": 1,
+            "mayaTrust": -1
+          },
+          "nextNodeId": "e04_n04_hale_tip",
+          "textKey": "episode_04.e04_n04_hint.choice1.text"
+        }
+      ]
+    },
+    "e04_n04_hale_tip": {
+      "id": "e04_n04_hale_tip",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Fine. Technical answer.",
+          "textKey": "episode_04.e04_n04_hale_tip.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "Don't chase the carrier. Predict the drift. If the frequency is fighting you, it is probably trying to make you move too much.",
+          "textKey": "episode_04.e04_n04_hale_tip.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Small corrections. Hold on the target. Let the lock build.",
+          "textKey": "episode_04.e04_n04_hale_tip.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "And don't tell her I helped. She will be insufferable about it.",
+          "textKey": "episode_04.e04_n04_hale_tip.event7.text"
+        }
+      ],
+      "objective": "Hale contributes operationally, but involving him affects Maya.",
+      "choices": [
+        {
+          "id": "retry_with_hale_tip",
+          "text": "LOCK THE SIGNAL AGAIN.",
+          "effects": {
+            "signalStrength": 2,
+            "haleTrust": 1
+          },
+          "nextNodeId": "e04_n04_tune",
+          "textKey": "episode_04.e04_n04_hale_tip.choice0.text"
+        },
+        {
+          "id": "ignore_hale_tip_retry",
+          "text": "RETRY WITHOUT USING HALE'S METHOD.",
+          "effects": {
+            "mayaTrust": 1,
+            "danger": 1
+          },
+          "nextNodeId": "e04_n04_tune",
+          "textKey": "episode_04.e04_n04_hale_tip.choice1.text"
+        }
+      ]
+    },
+    "e04_n05_signal_locked": {
+      "id": "e04_n05_signal_locked",
       "speaker": "MAYA",
       "events": [
         {
           "type": "systemAlert",
           "text": "[SIGNAL LOCKED]",
-          "pauseAfterMs": 1000,
-          "textKey": "episode_04.e04_n05.event0.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "signalStrength": 8,
-            "mayaTrust": 2
-          }
+          "pauseAfterMs": 800,
+          "textKey": "episode_04.e04_n05_signal_locked.event0.text"
         },
         {
           "type": "typing",
@@ -501,7 +665,7 @@
         {
           "type": "message",
           "text": "Finally...",
-          "textKey": "episode_04.e04_n05.event3.text"
+          "textKey": "episode_04.e04_n05_signal_locked.event2.text"
         },
         {
           "type": "pause",
@@ -513,17 +677,8 @@
         },
         {
           "type": "message",
-          "text": "Sorry.",
-          "textKey": "episode_04.e04_n05.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "Give me a second.",
-          "textKey": "episode_04.e04_n05.event8.text"
+          "text": "Sorry. Give me a second.",
+          "textKey": "episode_04.e04_n05_signal_locked.event5.text"
         },
         {
           "type": "typing",
@@ -532,7 +687,7 @@
         {
           "type": "message",
           "text": "I forgot how to talk to people without wondering if they were already dead.",
-          "textKey": "episode_04.e04_n05.event10.text"
+          "textKey": "episode_04.e04_n05_signal_locked.event7.text"
         },
         {
           "type": "pause",
@@ -545,7 +700,7 @@
         {
           "type": "message",
           "text": "My name is Maya.",
-          "textKey": "episode_04.e04_n05.event13.text"
+          "textKey": "episode_04.e04_n05_signal_locked.event10.text"
         },
         {
           "type": "typing",
@@ -554,7 +709,7 @@
         {
           "type": "message",
           "text": "Maya Chen.",
-          "textKey": "episode_04.e04_n05.event15.text"
+          "textKey": "episode_04.e04_n05_signal_locked.event12.text"
         },
         {
           "type": "typing",
@@ -563,7 +718,7 @@
         {
           "type": "message",
           "text": "I was starting to think I'd die talking to static.",
-          "textKey": "episode_04.e04_n05.event17.text"
+          "textKey": "episode_04.e04_n05_signal_locked.event14.text"
         },
         {
           "type": "typing",
@@ -572,7 +727,7 @@
         {
           "type": "message",
           "text": "I spent three days talking to a maintenance drone once.",
-          "textKey": "episode_04.e04_n05.event19.text"
+          "textKey": "episode_04.e04_n05_signal_locked.event16.text"
         },
         {
           "type": "typing",
@@ -581,7 +736,7 @@
         {
           "type": "message",
           "text": "It never answered.",
-          "textKey": "episode_04.e04_n05.event21.text"
+          "textKey": "episode_04.e04_n05_signal_locked.event18.text"
         },
         {
           "type": "typing",
@@ -590,7 +745,7 @@
         {
           "type": "message",
           "text": "Still a better listener than Patel.",
-          "textKey": "episode_04.e04_n05.event23.text"
+          "textKey": "episode_04.e04_n05_signal_locked.event20.text"
         },
         {
           "type": "pause",
@@ -603,7 +758,7 @@
         {
           "type": "message",
           "text": "That was a joke. I think.",
-          "textKey": "episode_04.e04_n05.event26.text"
+          "textKey": "episode_04.e04_n05_signal_locked.event23.text"
         },
         {
           "type": "typing",
@@ -612,737 +767,33 @@
         {
           "type": "message",
           "text": "I am out of practice.",
-          "textKey": "episode_04.e04_n05.event28.text"
+          "textKey": "episode_04.e04_n05_signal_locked.event25.text"
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 3800
         },
         {
           "type": "message",
-          "text": "And if Ethan Hale is on your other channel, you need to stop listening to him.",
-          "textKey": "episode_04.e04_n05.event30.text"
+          "text": "I'm pinned near a damaged relay console in the lower access spine. Oxygen is low. I need to move before this place becomes my coffin.",
+          "textKey": "episode_04.e04_n05_signal_locked.event27.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "And if Ethan Hale is on your other channel, you need to stop letting him steer you.",
+          "textKey": "episode_04.e04_n05_signal_locked.event29.text"
         }
       ],
-      "nextNodeId": "e04_n06"
+      "objective": "Maya becomes a living person with a physical location and urgent survival objective.",
+      "nextNodeId": "e04_n06_maya_position"
     },
-    "e04_n06": {
-      "id": "e04_n06",
+    "e04_n06_maya_position": {
+      "id": "e04_n06_maya_position",
       "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "You are speaking with Ethan Hale, aren't you?",
-          "textKey": "episode_04.e04_n06.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "Of course you are.",
-          "textKey": "episode_04.e04_n06.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "text": "He always finds someone.",
-          "textKey": "episode_04.e04_n06.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "That sounds cruel. I know.",
-          "textKey": "episode_04.e04_n06.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4400
-        },
-        {
-          "type": "message",
-          "text": "The problem with Ethan was never that he sounded dangerous.",
-          "textKey": "episode_04.e04_n06.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "text": "He sounded reasonable.",
-          "textKey": "episode_04.e04_n06.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "He sounded like the only adult in the room.",
-          "textKey": "episode_04.e04_n06.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "text": "And on ECHO, that was usually true.",
-          "textKey": "episode_04.e04_n06.event15.text"
-        },
-        {
-          "type": "pause",
-          "duration": 900
-        },
-        {
-          "type": "typing",
-          "duration": 4400
-        },
-        {
-          "type": "message",
-          "text": "That is what made it worse.",
-          "textKey": "episode_04.e04_n06.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Listen carefully.",
-          "textKey": "episode_04.e04_n06.event20.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "Hale is dead.",
-          "textKey": "episode_04.e04_n06.event22.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1200
-        },
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "text": "I am not saying that because I heard a rumor.",
-          "textKey": "episode_04.e04_n06.event25.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "I am saying it because I saw what was left of the corridor.",
-          "textKey": "episode_04.e04_n06.event27.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "believe_maya",
-          "text": "I BELIEVE YOU.",
-          "effects": {
-            "trust": -5,
-            "danger": 2,
-            "morale": -1,
-            "mayaTrust": 10,
-            "haleTrust": -8
-          },
-          "nextNodeId": "e04_n06_believe_maya",
-          "textKey": "episode_04.e04_n06.choice0.text"
-        },
-        {
-          "id": "defend_hale",
-          "text": "YOU'RE LYING.",
-          "effects": {
-            "trust": 5,
-            "danger": 5,
-            "morale": -4,
-            "mayaTrust": -12,
-            "haleTrust": 8,
-            "signalStrength": -5
-          },
-          "nextNodeId": "e04_n06_defend_hale",
-          "textKey": "episode_04.e04_n06.choice1.text"
-        }
-      ]
-    },
-    "e04_n06_believe_maya": {
-      "id": "e04_n06_believe_maya",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "Good.",
-          "textKey": "episode_04.e04_n06_believe_maya.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "No. Sorry. Not good.",
-          "textKey": "episode_04.e04_n06_believe_maya.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "I don't want you to believe me just because I sound scared.",
-          "textKey": "episode_04.e04_n06_believe_maya.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4300
-        },
-        {
-          "type": "message",
-          "text": "Scared people can still be wrong.",
-          "textKey": "episode_04.e04_n06_believe_maya.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "I know how insane I sound. I know he's probably been calm, helpful, maybe even funny.",
-          "textKey": "episode_04.e04_n06_believe_maya.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "That's how it starts.",
-          "textKey": "episode_04.e04_n06_believe_maya.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "text": "He explains the danger until you forget he might be part of it.",
-          "textKey": "episode_04.e04_n06_believe_maya.event13.text"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[MAYA TRUST INCREASED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_04.e04_n06_believe_maya.event14.text"
-        }
-      ],
-      "nextNodeId": "e04_n07"
-    },
-    "e04_n06_defend_hale": {
-      "id": "e04_n06_defend_hale",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "Of course.",
-          "textKey": "episode_04.e04_n06_defend_hale.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4600
-        },
-        {
-          "type": "message",
-          "text": "He got to you first. That's the whole point.",
-          "textKey": "episode_04.e04_n06_defend_hale.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "I would've defended him too.",
-          "textKey": "episode_04.e04_n06_defend_hale.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "text": "I did defend him.",
-          "textKey": "episode_04.e04_n06_defend_hale.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "More than once. Loudly. Stupidly.",
-          "textKey": "episode_04.e04_n06_defend_hale.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "I am not asking you to like me. I am asking you to survive long enough to doubt him.",
-          "textKey": "episode_04.e04_n06_defend_hale.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "Doubt is annoying. Doubt keeps you alive.",
-          "textKey": "episode_04.e04_n06_defend_hale.event14.text"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[MAYA TRUST DEGRADED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_04.e04_n06_defend_hale.event15.text"
-        }
-      ],
-      "nextNodeId": "e04_n07"
-    },
-    "e04_n07": {
-      "id": "e04_n07",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[DUAL TRANSMISSION DETECTED]",
-          "pauseAfterMs": 1000,
-          "textKey": "episode_04.e04_n07.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2400
-        },
-        {
-          "type": "message",
-          "text": "Don't trust her.",
-          "speaker": "HALE",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Of course that's the first thing he says.",
-          "speaker": "MAYA",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Maya—",
-          "speaker": "HALE",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "No. Be quiet for once.",
-          "speaker": "MAYA",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "Operator, she once bypassed an alarm because it annoyed her.",
-          "speaker": "HALE",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "It was wrong.",
-          "speaker": "MAYA",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2800
-        },
-        {
-          "type": "message",
-          "text": "It was detecting decompression.",
-          "speaker": "HALE",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "And it was still wrong.",
-          "speaker": "MAYA",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event16.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "See? This is what he does.",
-          "speaker": "MAYA",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event19.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3400
-        },
-        {
-          "type": "message",
-          "text": "He makes you argue about the small thing so you stop looking at the blood on the floor.",
-          "speaker": "MAYA",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event21.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "That is wildly unfair.",
-          "speaker": "HALE",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event23.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "Is it inaccurate?",
-          "speaker": "MAYA",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event25.text"
-        },
-        {
-          "type": "pause",
-          "duration": 900
-        },
-        {
-          "type": "typing",
-          "duration": 3400
-        },
-        {
-          "type": "message",
-          "text": "...",
-          "speaker": "HALE",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event28.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "That's what I thought.",
-          "speaker": "MAYA",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event30.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "Tell him he's an idiot.",
-          "speaker": "MAYA",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event32.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "I can hear her.",
-          "speaker": "HALE",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event34.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Good. Tell him twice.",
-          "speaker": "MAYA",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event36.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "Operator, this is not a conversation. This is a structural failure with opinions.",
-          "speaker": "HALE",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event38.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "text": "You don't know what you're doing.",
-          "speaker": "HALE",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event40.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "I know exactly what happens when everyone lets you speak first.",
-          "speaker": "MAYA",
-          "sender": "character",
-          "textKey": "episode_04.e04_n07.event42.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "mute_hale",
-          "text": "TEMPORARILY MUTE HALE.",
-          "effects": {
-            "mayaTrust": 5,
-            "haleTrust": -6,
-            "danger": 2
-          },
-          "nextNodeId": "e04_n08_mute_hale",
-          "textKey": "episode_04.e04_n07.choice0.text"
-        },
-        {
-          "id": "keep_both_channels",
-          "text": "KEEP BOTH CHANNELS OPEN.",
-          "effects": {
-            "mayaTrust": -2,
-            "haleTrust": 2,
-            "signalStrength": -4,
-            "danger": 3
-          },
-          "nextNodeId": "e04_n08_both",
-          "textKey": "episode_04.e04_n07.choice1.text"
-        }
-      ]
-    },
-    "e04_n08_mute_hale": {
-      "id": "e04_n08_mute_hale",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[HALE CHANNEL TEMPORARILY MUTED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_04.e04_n08_mute_hale.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "Thank you.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_mute_hale.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "I know that probably felt wrong.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_mute_hale.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "He makes silence feel like betrayal.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_mute_hale.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "text": "I don't have much time, so I'm going to be blunt.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_mute_hale.event8.text"
-        }
-      ],
-      "nextNodeId": "e04_n09"
-    },
-    "e04_n08_both": {
-      "id": "e04_n08_both",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[DUAL CHANNEL LOAD INCREASED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_04.e04_n08_both.event0.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "signalStrength": -5,
-            "danger": 2
-          }
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "Fine. Let him listen.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_both.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "But if he starts steering this conversation, I cut the channel myself.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_both.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3400
-        },
-        {
-          "type": "message",
-          "text": "And Ethan, before you correct my terminology, yes, I know it is technically a carrier interruption.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_both.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "I am calling it cutting the channel because it sounds better.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_both.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "I was not going to correct that.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n08_both.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "You absolutely were.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_both.event13.text"
-        }
-      ],
-      "nextNodeId": "e04_n09"
-    },
-    "e04_n09": {
-      "id": "e04_n09",
-      "speaker": "SYSTEM",
       "events": [
         {
           "type": "log",
@@ -1359,12 +810,12 @@
             "biometric",
             "relay"
           ],
-          "message": "[SURVIVOR BIOMETRIC SCAN ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1300,
-          "titleKey": "episode_04.e04_n09.event0.title",
-          "contentKey": "episode_04.e04_n09.event0.content",
-          "captionKey": "episode_04.e04_n09.event0.caption",
-          "messageKey": "episode_04.e04_n09.event0.message"
+          "message": "[ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_04.e04_n06_maya_position.event0.title",
+          "contentKey": "episode_04.e04_n06_maya_position.event0.content",
+          "captionKey": "episode_04.e04_n06_maya_position.event0.caption",
+          "messageKey": "episode_04.e04_n06_maya_position.event0.message"
         },
         {
           "type": "typing",
@@ -1373,8 +824,7 @@
         {
           "type": "message",
           "text": "That's me.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09.event2.text"
+          "textKey": "episode_04.e04_n06_maya_position.event2.text"
         },
         {
           "type": "typing",
@@ -1383,8 +833,7 @@
         {
           "type": "message",
           "text": "Alive.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09.event4.text"
+          "textKey": "episode_04.e04_n06_maya_position.event4.text"
         },
         {
           "type": "pause",
@@ -1397,8 +846,7 @@
         {
           "type": "message",
           "text": "Technically.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09.event7.text"
+          "textKey": "episode_04.e04_n06_maya_position.event7.text"
         },
         {
           "type": "typing",
@@ -1406,9 +854,8 @@
         },
         {
           "type": "message",
-          "text": "I've had better weeks.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09.event9.text"
+          "text": "Oxygen is at eighteen percent, which sounds better than it feels.",
+          "textKey": "episode_04.e04_n06_maya_position.event9.text"
         },
         {
           "type": "typing",
@@ -1416,9 +863,8 @@
         },
         {
           "type": "message",
-          "text": "Oxygen is at eighteen percent, which sounds better than it feels.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09.event11.text"
+          "text": "The relay console is cracked open. I can use it as an anchor point, or I can leave now and try the access spine.",
+          "textKey": "episode_04.e04_n06_maya_position.event11.text"
         },
         {
           "type": "typing",
@@ -1426,43 +872,57 @@
         },
         {
           "type": "message",
-          "text": "I started naming equipment yesterday. That's usually a bad sign.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09.event13.text"
+          "text": "If I stay, I might pull more data. If I move, I might keep breathing. I hate that those are different options.",
+          "textKey": "episode_04.e04_n06_maya_position.event13.text"
+        }
+      ],
+      "objective": "First true operation decision: data vs survival pace.",
+      "choices": [
+        {
+          "id": "stabilize_maya_console",
+          "text": "STABILIZE THE RELAY CONSOLE FIRST.",
+          "effects": {
+            "recordedMayaTelemetry": true,
+            "mayaTrust": 2,
+            "oxygen": -3
+          },
+          "nextNodeId": "e04_n07_console_route",
+          "textKey": "episode_04.e04_n06_maya_position.choice0.text"
         },
         {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "The cracked relay console is Malcolm.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09.event15.text"
-        },
+          "id": "move_maya_now",
+          "text": "MOVE MAYA TOWARD THE ACCESS SPINE.",
+          "effects": {
+            "mayaTrust": 1,
+            "danger": 2,
+            "oxygen": -1
+          },
+          "nextNodeId": "e04_n07_move_route",
+          "textKey": "episode_04.e04_n06_maya_position.choice1.text"
+        }
+      ]
+    },
+    "e04_n07_console_route": {
+      "id": "e04_n07_console_route",
+      "speaker": "MAYA",
+      "events": [
         {
           "type": "typing",
           "duration": 3000
         },
         {
           "type": "message",
-          "text": "Malcolm and I are not friends.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09.event17.text"
+          "text": "Stabilizing Malcolm.",
+          "textKey": "episode_04.e04_n07_console_route.event1.text"
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 2600
         },
         {
           "type": "message",
-          "text": "But Malcolm is keeping me alive, so we're being professional.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09.event19.text"
-        },
-        {
-          "type": "pause",
-          "duration": 900
+          "text": "The cracked relay console. I named it Malcolm.",
+          "textKey": "episode_04.e04_n07_console_route.event3.text"
         },
         {
           "type": "typing",
@@ -1470,88 +930,250 @@
         },
         {
           "type": "message",
-          "text": "Which is more than I can say for Hale.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09.event22.text"
+          "text": "Malcolm and I are not friends, but Malcolm is keeping me alive, so we're being professional.",
+          "textKey": "episode_04.e04_n07_console_route.event5.text"
+        },
+        {
+          "type": "progressTask",
+          "id": "maya_stabilizes_console",
+          "title": "CONSOLE STABILIZATION",
+          "subtitle": "Maya braces the damaged relay and extracts telemetry",
+          "duration": 9000,
+          "completeText": "[MAYA EXTRACTED RELAY TELEMETRY]",
+          "tone": "character",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_04.e04_n07_console_route.event6.title",
+          "completeTextKey": "episode_04.e04_n07_console_route.event6.completeText"
+        },
+        {
+          "type": "log",
+          "id": "maya_relay_telemetry_01",
+          "fileId": "maya_relay_telemetry_01",
+          "fileType": "log",
+          "title": "MAYA RELAY TELEMETRY",
+          "content": "LOWER ACCESS SPINE\nOXYGEN BLEED: ACTIVE\nAIRFLOW SOURCE: SERVICE LOCK C\nSECONDARY MOVEMENT TRACE: DETECTED NEAR DOOR 12 RETURN LINE\nNOTE: trace does not match Maya's current position.",
+          "caption": "Maya extracted this while stabilizing the damaged relay console.",
+          "source": "MAYA_LOCAL_RELAY",
+          "tags": [
+            "maya",
+            "movement_trace",
+            "door_12",
+            "operation"
+          ],
+          "message": "[ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_04.e04_n07_console_route.event7.title",
+          "contentKey": "episode_04.e04_n07_console_route.event7.content",
+          "captionKey": "episode_04.e04_n07_console_route.event7.caption",
+          "messageKey": "episode_04.e04_n07_console_route.event7.message"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I got something. Movement trace near the Door 12 return line.",
+          "textKey": "episode_04.e04_n07_console_route.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "That is not me.",
+          "textKey": "episode_04.e04_n07_console_route.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Good news: more data.",
+          "textKey": "episode_04.e04_n07_console_route.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Bad news: something else is moving.",
+          "textKey": "episode_04.e04_n07_console_route.event15.text"
         }
       ],
-      "choices": [
-        {
-          "id": "ask_for_proof",
-          "text": "PROVE HALE IS DEAD.",
-          "effects": {
-            "mayaTrust": -2,
-            "danger": 2,
-            "signalStrength": -2
-          },
-          "nextNodeId": "e04_n10_proof",
-          "textKey": "episode_04.e04_n09.choice0.text"
-        },
-        {
-          "id": "ask_what_happened",
-          "text": "WHAT HAPPENED TO THE CREW?",
-          "effects": {
-            "mayaTrust": 3,
-            "morale": -1
-          },
-          "nextNodeId": "e04_n10_crew",
-          "textKey": "episode_04.e04_n09.choice1.text"
-        },
-        {
-          "id": "ask_about_hale_past",
-          "text": "HOW DID YOU KNOW HALE?",
-          "effects": {
-            "mayaTrust": 2,
-            "haleTrust": -1
-          },
-          "nextNodeId": "e04_n10_hale_past",
-          "textKey": "episode_04.e04_n09.dc.choice0.text"
-        }
-      ]
+      "objective": "Staying gives a reward but reveals danger.",
+      "nextNodeId": "e04_n08_hale_interrupt"
     },
-    "e04_n10_proof": {
-      "id": "e04_n10_proof",
+    "e04_n07_move_route": {
+      "id": "e04_n07_move_route",
       "speaker": "MAYA",
       "events": [
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "You want proof. Good. Keep wanting proof.",
-          "textKey": "episode_04.e04_n10_proof.event1.text"
+          "text": "Moving now.",
+          "textKey": "episode_04.e04_n07_move_route.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 3200
         },
         {
           "type": "message",
-          "text": "But understand this: the station is very good at giving you records after everyone who could explain them is gone.",
-          "textKey": "episode_04.e04_n10_proof.event3.text"
+          "text": "Good. I was one bad thought away from arguing with Malcolm again.",
+          "textKey": "episode_04.e04_n07_move_route.event3.text"
+        },
+        {
+          "type": "progressTask",
+          "id": "maya_leaves_console",
+          "title": "MAYA MOVING",
+          "subtitle": "Maya leaves damaged relay console and enters lower access spine",
+          "duration": 8000,
+          "completeText": "[MAYA ENTERED LOWER ACCESS SPINE]",
+          "tone": "danger",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_04.e04_n07_move_route.event4.title",
+          "completeTextKey": "episode_04.e04_n07_move_route.event4.completeText"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3200
         },
         {
           "type": "message",
-          "text": "You will find logs. You will find timestamps. You will find clean little labels for ugly things.",
-          "textKey": "episode_04.e04_n10_proof.event5.text"
+          "text": "I'm in the access spine.",
+          "textKey": "episode_04.e04_n07_move_route.event6.text"
         },
         {
           "type": "typing",
-          "duration": 3900
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "What you will not find is the sound Hale made when the corridor decompressed.",
-          "textKey": "episode_04.e04_n10_proof.event7.text"
+          "text": "Narrow. Cold. Smells like hot plastic and old blood.",
+          "textKey": "episode_04.e04_n07_move_route.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "I don't have the telemetry from the console, but I'm further from the oxygen leak.",
+          "textKey": "episode_04.e04_n07_move_route.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "That's a trade I can live with. Literally.",
+          "textKey": "episode_04.e04_n07_move_route.event12.text"
+        }
+      ],
+      "objective": "Moving preserves oxygen but loses early telemetry.",
+      "nextNodeId": "e04_n08_hale_interrupt"
+    },
+    "e04_n08_hale_interrupt": {
+      "id": "e04_n08_hale_interrupt",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[DUAL TRANSMISSION DETECTED]",
+          "pauseAfterMs": 800,
+          "textKey": "episode_04.e04_n08_hale_interrupt.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "Don't trust her.",
+          "speaker": "HALE",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "Of course that's the first thing he says.",
+          "speaker": "MAYA",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Maya—",
+          "speaker": "HALE",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "No. Be quiet for once.",
+          "speaker": "MAYA",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Operator, she once bypassed an alarm because it annoyed her.",
+          "speaker": "HALE",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "It was wrong.",
+          "speaker": "MAYA",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "It was detecting decompression.",
+          "speaker": "HALE",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event14.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "And it was still wrong.",
+          "speaker": "MAYA",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event16.text"
         },
         {
           "type": "pause",
-          "duration": 800
+          "duration": 700
         },
         {
           "type": "typing",
@@ -1559,14 +1181,489 @@
         },
         {
           "type": "message",
-          "text": "I still hear it anyway.",
-          "textKey": "episode_04.e04_n10_proof.event10.text"
+          "text": "See? This is what he does.",
+          "speaker": "MAYA",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event19.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "He makes you argue about the small thing so you stop looking at the blood on the floor.",
+          "speaker": "MAYA",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event21.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "That is wildly unfair.",
+          "speaker": "HALE",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event23.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Is it inaccurate?",
+          "speaker": "MAYA",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event25.text"
+        },
+        {
+          "type": "pause",
+          "duration": 900
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "...",
+          "speaker": "HALE",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event28.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "That's what I thought.",
+          "speaker": "MAYA",
+          "textKey": "episode_04.e04_n08_hale_interrupt.event30.text"
         }
       ],
-      "nextNodeId": "e04_n11"
+      "objective": "Player manages interpersonal conflict while Maya is physically vulnerable.",
+      "choices": [
+        {
+          "id": "mute_hale",
+          "text": "TEMPORARILY MUTE HALE.",
+          "effects": {
+            "mayaTrust": 5,
+            "haleTrust": -6,
+            "danger": 2,
+            "route": "maya_priority"
+          },
+          "nextNodeId": "e04_n09_mute_hale",
+          "textKey": "episode_04.e04_n08_hale_interrupt.choice0.text"
+        },
+        {
+          "id": "keep_both_channels",
+          "text": "KEEP BOTH CHANNELS OPEN.",
+          "effects": {
+            "mayaTrust": -2,
+            "haleTrust": 2,
+            "signalStrength": -4,
+            "danger": 3,
+            "route": "dual_channel"
+          },
+          "nextNodeId": "e04_n09_both_channels",
+          "textKey": "episode_04.e04_n08_hale_interrupt.choice1.text"
+        }
+      ]
     },
-    "e04_n10_crew": {
-      "id": "e04_n10_crew",
+    "e04_n09_mute_hale": {
+      "id": "e04_n09_mute_hale",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Thank you.",
+          "textKey": "episode_04.e04_n09_mute_hale.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I know that probably felt wrong.",
+          "textKey": "episode_04.e04_n09_mute_hale.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "He makes silence feel like betrayal.",
+          "textKey": "episode_04.e04_n09_mute_hale.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "I don't have much time, so I'm going to be blunt.",
+          "textKey": "episode_04.e04_n09_mute_hale.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Hale is dead. I am not saying that because I heard a rumor.",
+          "textKey": "episode_04.e04_n09_mute_hale.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "I saw what was left of the corridor.",
+          "textKey": "episode_04.e04_n09_mute_hale.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "And now I need to get through the service spine before whatever is using his signal notices I'm moving.",
+          "textKey": "episode_04.e04_n09_mute_hale.event13.text"
+        }
+      ],
+      "objective": "Maya opens up more if Hale is muted, but Hale may remember this later.",
+      "nextNodeId": "e04_n10_route_choice"
+    },
+    "e04_n09_both_channels": {
+      "id": "e04_n09_both_channels",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Fine. Let him listen.",
+          "textKey": "episode_04.e04_n09_both_channels.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "But if he starts steering this conversation, I cut the channel myself.",
+          "textKey": "episode_04.e04_n09_both_channels.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "And Ethan, before you correct my terminology, yes, I know it is technically a carrier interruption.",
+          "textKey": "episode_04.e04_n09_both_channels.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "I am calling it cutting the channel because it sounds better.",
+          "textKey": "episode_04.e04_n09_both_channels.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "I was not going to correct that.",
+          "speaker": "HALE",
+          "textKey": "episode_04.e04_n09_both_channels.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "You absolutely were.",
+          "speaker": "MAYA",
+          "textKey": "episode_04.e04_n09_both_channels.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Operator, the longer both channels stay open, the uglier the carrier gets.",
+          "speaker": "HALE",
+          "textKey": "episode_04.e04_n09_both_channels.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Then help instead of narrating the problem.",
+          "speaker": "MAYA",
+          "textKey": "episode_04.e04_n09_both_channels.event15.text"
+        }
+      ],
+      "objective": "Keeping both channels preserves Hale but increases signal stress.",
+      "nextNodeId": "e04_n10_route_choice"
+    },
+    "e04_n10_route_choice": {
+      "id": "e04_n10_route_choice",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "I'm at a split.",
+          "textKey": "episode_04.e04_n10_route_choice.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Left is the maintenance crawlway. Tight, probably safer, slower.",
+          "textKey": "episode_04.e04_n10_route_choice.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Right is the main access spine. Faster, exposed, and I can see something moving in the reflection on the panel glass.",
+          "textKey": "episode_04.e04_n10_route_choice.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "I hate reflections. They always know things before I do.",
+          "textKey": "episode_04.e04_n10_route_choice.event7.text"
+        }
+      ],
+      "objective": "Second operation decision: safe/slow vs fast/dangerous.",
+      "choices": [
+        {
+          "id": "crawlway_route",
+          "text": "TAKE THE MAINTENANCE CRAWLWAY.",
+          "effects": {
+            "oxygen": -4,
+            "danger": -1,
+            "mayaStress": 1
+          },
+          "nextNodeId": "e04_n11_crawlway",
+          "textKey": "episode_04.e04_n10_route_choice.choice0.text"
+        },
+        {
+          "id": "main_spine_route",
+          "text": "TAKE THE MAIN ACCESS SPINE.",
+          "effects": {
+            "oxygen": -1,
+            "danger": 5,
+            "mayaStress": 4
+          },
+          "nextNodeId": "e04_n11_main_spine",
+          "textKey": "episode_04.e04_n10_route_choice.choice1.text"
+        }
+      ]
+    },
+    "e04_n11_crawlway": {
+      "id": "e04_n11_crawlway",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Crawlway.",
+          "textKey": "episode_04.e04_n11_crawlway.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "Great. I love survival choices that involve becoming luggage.",
+          "textKey": "episode_04.e04_n11_crawlway.event3.text"
+        },
+        {
+          "type": "progressTask",
+          "id": "maya_crawlway_route",
+          "title": "CRAWLWAY ROUTE",
+          "subtitle": "Maya crawls through the maintenance bypass toward Service Lock C",
+          "duration": 12000,
+          "completeText": "[MAYA CLEARED MAINTENANCE CRAWLWAY]",
+          "tone": "character",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_04.e04_n11_crawlway.event4.title",
+          "completeTextKey": "episode_04.e04_n11_crawlway.event4.completeText"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I'm through.",
+          "textKey": "episode_04.e04_n11_crawlway.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Slow, but quiet.",
+          "textKey": "episode_04.e04_n11_crawlway.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "There are scratch marks inside the paneling.",
+          "textKey": "episode_04.e04_n11_crawlway.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "Not tool marks. Fingernails.",
+          "textKey": "episode_04.e04_n11_crawlway.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "I'm going to pretend I didn't see that until my body has time to schedule a reaction.",
+          "textKey": "episode_04.e04_n11_crawlway.event14.text"
+        }
+      ],
+      "objective": "Safer path preserves stealth but plants horror.",
+      "nextNodeId": "e04_n12_crew_memory"
+    },
+    "e04_n11_main_spine": {
+      "id": "e04_n11_main_spine",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "Main spine.",
+          "textKey": "episode_04.e04_n11_main_spine.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "Fast and stupid. Sometimes that works.",
+          "textKey": "episode_04.e04_n11_main_spine.event3.text"
+        },
+        {
+          "type": "progressTask",
+          "id": "maya_main_spine_run",
+          "title": "MAIN ACCESS SPINE",
+          "subtitle": "Maya crosses the exposed access spine",
+          "duration": 8000,
+          "completeText": "[MAYA REACHED SERVICE LOCK C]",
+          "tone": "danger",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_04.e04_n11_main_spine.event4.title",
+          "completeTextKey": "episode_04.e04_n11_main_spine.event4.completeText"
+        },
+        {
+          "type": "glitch",
+          "duration": 900,
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Something moved behind me.",
+          "textKey": "episode_04.e04_n11_main_spine.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "I ran.",
+          "textKey": "episode_04.e04_n11_main_spine.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Not gracefully.",
+          "textKey": "episode_04.e04_n11_main_spine.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "I hit my shoulder on a hatch frame and said a word that would get me banned from two mission briefings.",
+          "textKey": "episode_04.e04_n11_main_spine.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "But I'm at Service Lock C.",
+          "textKey": "episode_04.e04_n11_main_spine.event15.text"
+        }
+      ],
+      "objective": "Faster path saves oxygen but raises Maya's stress and unknown attention.",
+      "nextNodeId": "e04_n12_crew_memory"
+    },
+    "e04_n12_crew_memory": {
+      "id": "e04_n12_crew_memory",
       "speaker": "MAYA",
       "events": [
         {
@@ -1575,8 +1672,26 @@
         },
         {
           "type": "message",
-          "text": "There were six of us.",
-          "textKey": "episode_04.e04_n10_crew.event1.text"
+          "text": "Service Lock C still has pressure.",
+          "textKey": "episode_04.e04_n12_crew_memory.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Barely. It keeps cycling like it can't decide whether to save me or make a point.",
+          "textKey": "episode_04.e04_n12_crew_memory.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "There were six of us assigned to ECHO.",
+          "textKey": "episode_04.e04_n12_crew_memory.event5.text"
         },
         {
           "type": "typing",
@@ -1585,7 +1700,7 @@
         {
           "type": "message",
           "text": "Hale, Rourke, Lin, Patel, Arman... and me.",
-          "textKey": "episode_04.e04_n10_crew.event3.text"
+          "textKey": "episode_04.e04_n12_crew_memory.event7.text"
         },
         {
           "type": "typing",
@@ -1594,7 +1709,7 @@
         {
           "type": "message",
           "text": "Rourke snored through pressure drills.",
-          "textKey": "episode_04.e04_n10_crew.event5.text"
+          "textKey": "episode_04.e04_n12_crew_memory.event9.text"
         },
         {
           "type": "typing",
@@ -1603,7 +1718,7 @@
         {
           "type": "message",
           "text": "Lin labeled everything, including things that were already labels.",
-          "textKey": "episode_04.e04_n10_crew.event7.text"
+          "textKey": "episode_04.e04_n12_crew_memory.event11.text"
         },
         {
           "type": "typing",
@@ -1612,7 +1727,7 @@
         {
           "type": "message",
           "text": "Patel pretended he hated everyone and fixed their coffee ratios when they weren't looking.",
-          "textKey": "episode_04.e04_n10_crew.event9.text"
+          "textKey": "episode_04.e04_n12_crew_memory.event13.text"
         },
         {
           "type": "typing",
@@ -1621,7 +1736,7 @@
         {
           "type": "message",
           "text": "Arman sang when he was nervous.",
-          "textKey": "episode_04.e04_n10_crew.event11.text"
+          "textKey": "episode_04.e04_n12_crew_memory.event15.text"
         },
         {
           "type": "pause",
@@ -1634,16 +1749,16 @@
         {
           "type": "message",
           "text": "He sang a lot near the end.",
-          "textKey": "episode_04.e04_n10_crew.event14.text"
+          "textKey": "episode_04.e04_n12_crew_memory.event18.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3600
         },
         {
           "type": "message",
           "text": "See? That's the part records don't keep.",
-          "textKey": "episode_04.e04_n10_crew.event16.text"
+          "textKey": "episode_04.e04_n12_crew_memory.event20.text"
         },
         {
           "type": "typing",
@@ -1652,17 +1767,198 @@
         {
           "type": "message",
           "text": "They keep death times. Not people.",
-          "textKey": "episode_04.e04_n10_crew.event18.text"
+          "textKey": "episode_04.e04_n12_crew_memory.event22.text"
         }
       ],
-      "nextNodeId": "e04_n11"
+      "objective": "Conversation happens during movement, not instead of movement.",
+      "choices": [
+        {
+          "id": "ask_for_proof",
+          "text": "PROVE HALE IS DEAD.",
+          "effects": {
+            "mayaTrust": -2,
+            "danger": 2,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e04_n13_proof",
+          "textKey": "episode_04.e04_n12_crew_memory.choice0.text"
+        },
+        {
+          "id": "ask_what_maya_needs",
+          "text": "WHAT DO YOU NEED RIGHT NOW?",
+          "effects": {
+            "mayaTrust": 3,
+            "morale": 1
+          },
+          "nextNodeId": "e04_n13_need",
+          "textKey": "episode_04.e04_n12_crew_memory.choice1.text"
+        }
+      ]
     },
-    "e04_n11": {
-      "id": "e04_n11",
+    "e04_n13_proof": {
+      "id": "e04_n13_proof",
       "speaker": "MAYA",
       "events": [
         {
-          "type": "file",
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "You want proof. Good. Keep wanting proof.",
+          "textKey": "episode_04.e04_n13_proof.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4600
+        },
+        {
+          "type": "message",
+          "text": "But understand this: the station is very good at giving you records after everyone who could explain them is gone.",
+          "textKey": "episode_04.e04_n13_proof.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "You will find logs. Timestamps. Clean little labels for ugly things.",
+          "textKey": "episode_04.e04_n13_proof.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3900
+        },
+        {
+          "type": "message",
+          "text": "What you won't find is the sound Hale made when the corridor decompressed.",
+          "textKey": "episode_04.e04_n13_proof.event7.text"
+        },
+        {
+          "type": "pause",
+          "duration": 800
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I still hear it anyway.",
+          "textKey": "episode_04.e04_n13_proof.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "If you need proof, get me to the service lock terminal. I can pull the survivor statement from my side.",
+          "textKey": "episode_04.e04_n13_proof.event12.text"
+        }
+      ],
+      "objective": "Proof path increases tension but gives a concrete next action.",
+      "nextNodeId": "e04_n14_terminal"
+    },
+    "e04_n13_need": {
+      "id": "e04_n13_need",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "Right now?",
+          "textKey": "episode_04.e04_n13_need.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Air.",
+          "textKey": "episode_04.e04_n13_need.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "After that, water. After that, a room where nothing knows my name.",
+          "textKey": "episode_04.e04_n13_need.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Operationally: I need Service Lock C open without cycling the outer seal.",
+          "textKey": "episode_04.e04_n13_need.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "Emotionally: ask me later. Preferably when my lungs stop voting against me.",
+          "textKey": "episode_04.e04_n13_need.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Get me to the terminal. I can send a statement and maybe keep myself alive.",
+          "textKey": "episode_04.e04_n13_need.event11.text"
+        }
+      ],
+      "objective": "Survival-focused path strengthens Maya as a person and a rescue target.",
+      "nextNodeId": "e04_n14_terminal"
+    },
+    "e04_n14_terminal": {
+      "id": "e04_n14_terminal",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "maya_reaches_service_terminal",
+          "title": "SERVICE LOCK TERMINAL",
+          "subtitle": "Maya reaches the Service Lock C control terminal",
+          "duration": 7000,
+          "completeText": "[MAYA AT SERVICE LOCK C TERMINAL]",
+          "tone": "character",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_04.e04_n14_terminal.event0.title",
+          "completeTextKey": "episode_04.e04_n14_terminal.event0.completeText"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "I'm at the terminal.",
+          "textKey": "episode_04.e04_n14_terminal.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Screen is cracked. Buttons are sticky. I am choosing not to identify the substance.",
+          "textKey": "episode_04.e04_n14_terminal.event4.text"
+        },
+        {
+          "type": "log",
           "id": "survivor_statement_maya_01",
           "fileId": "survivor_statement_maya_01",
           "fileType": "log",
@@ -1676,30 +1972,21 @@
             "hale",
             "survivor"
           ],
-          "message": "[SURVIVOR STATEMENT ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_04.e04_n11.event0.title",
-          "contentKey": "episode_04.e04_n11.event0.content",
-          "captionKey": "episode_04.e04_n11.event0.caption",
-          "messageKey": "episode_04.e04_n11.event0.message"
+          "message": "[ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_04.e04_n14_terminal.event5.title",
+          "contentKey": "episode_04.e04_n14_terminal.event5.content",
+          "captionKey": "episode_04.e04_n14_terminal.event5.caption",
+          "messageKey": "episode_04.e04_n14_terminal.event5.message"
         },
         {
           "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "Me.",
-          "textKey": "episode_04.e04_n11.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
+          "duration": 3600
         },
         {
           "type": "message",
           "text": "One confirmed biological survivor.",
-          "textKey": "episode_04.e04_n11.event4.text"
+          "textKey": "episode_04.e04_n14_terminal.event7.text"
         },
         {
           "type": "typing",
@@ -1708,7 +1995,7 @@
         {
           "type": "message",
           "text": "That is such a clean phrase, isn't it?",
-          "textKey": "episode_04.e04_n11.event6.text"
+          "textKey": "episode_04.e04_n14_terminal.event9.text"
         },
         {
           "type": "typing",
@@ -1716,134 +2003,20 @@
         },
         {
           "type": "message",
-          "text": "Biological survivor.",
-          "textKey": "episode_04.e04_n11.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
           "text": "Like the station is politely avoiding the word alone.",
-          "textKey": "episode_04.e04_n11.event10.text"
-        },
-        {
-          "type": "pause",
-          "duration": 800
-        },
-        {
-          "type": "typing",
-          "duration": 4800
-        },
-        {
-          "type": "message",
-          "text": "And whatever is pretending to be Hale.",
-          "textKey": "episode_04.e04_n11.event13.text"
+          "textKey": "episode_04.e04_n14_terminal.event11.text"
         },
         {
           "type": "glitch",
           "duration": 1200,
-          "pauseAfterMs": 900
+          "pauseAfterMs": 600
         },
         {
           "type": "corruptMessage",
           "speaker": "UNKNOWN",
           "text": "NOT THE VICTIM",
-          "pauseAfterMs": 1400,
-          "textKey": "episode_04.e04_n11.event15.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11.event17.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "No, don't listen to that.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11.event19.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 7000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "SHE REMEMBERS",
-            "pauseAfterMs": 1400,
-            "textKey": "episode_04.e04_n11.backgroundEvent20.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 11000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "THE DOOR OPENED TWICE",
-            "pauseAfterMs": 1400,
-            "textKey": "episode_04.e04_n11.backgroundEvent21.text"
-          }
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "danger": 6,
-            "morale": -4,
-            "signalStrength": -6
-          }
-        }
-      ],
-      "choices": [
-        {
-          "id": "ask_maya_what_she_did",
-          "text": "MAYA, WHAT DO YOU REMEMBER?",
-          "effects": {
-            "mayaTrust": -4,
-            "danger": 3,
-            "signalStrength": -3
-          },
-          "nextEpisodeId": "episode_05",
-          "textKey": "episode_04.e04_n11.dc.choice0.text"
-        },
-        {
-          "id": "save_maya_statement",
-          "text": "SAVE HER STATEMENT AND CONTINUE.",
-          "effects": {
-            "mayaTrust": 3,
-            "danger": 1,
-            "signalStrength": 1
-          },
-          "nextEpisodeId": "episode_05",
-          "textKey": "episode_04.e04_n11.choice1.text"
-        }
-      ]
-    },
-    "e04_n04_hint": {
-      "id": "e04_n04_hint",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[SIGNAL TRACE REVIEW]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_04.e04_n04_hint.event0.text"
-        },
-        {
-          "type": "message",
-          "text": "TRACE: 7.14 MHz / DRIFTING CARRIER / FEMALE VOICEPRINT PARTIAL",
-          "speaker": "SYSTEM",
-          "textKey": "episode_04.e04_n04_hint.event1.text"
+          "pauseAfterMs": 1300,
+          "textKey": "episode_04.e04_n14_terminal.event13.text"
         },
         {
           "type": "typing",
@@ -1851,165 +2024,83 @@
         },
         {
           "type": "message",
-          "text": "You were close.",
-          "speaker": "UNKNOWN",
-          "textKey": "episode_04.e04_n04_hint.event3.text"
+          "text": "No.",
+          "textKey": "episode_04.e04_n14_terminal.event15.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 3800
         },
         {
           "type": "message",
-          "text": "Hold it steady when it bites. The drift gets worse right before the lock.",
-          "textKey": "episode_04.e04_n04_hint.event5.text"
+          "text": "No, don't listen to that.",
+          "textKey": "episode_04.e04_n14_terminal.event17.text"
         },
         {
-          "type": "typing",
-          "duration": 3000
+          "type": "backgroundEvent",
+          "delay": 5000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "SHE REMEMBERS",
+            "pauseAfterMs": 1200,
+            "textKey": "episode_04.e04_n14_terminal.backgroundEvent18.text"
+          }
         },
         {
-          "type": "message",
-          "text": "I hate that sentence. It sounds like something Hale would say.",
-          "textKey": "episode_04.e04_n04_hint.event7.text"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[FREQUENCY TARGET CONFIRMED: 7.14]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_04.e04_n04_hint.event8.text"
+          "type": "backgroundEvent",
+          "delay": 9000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "THE DOOR OPENED TWICE",
+            "pauseAfterMs": 1200,
+            "textKey": "episode_04.e04_n14_terminal.backgroundEvent19.text"
+          }
         }
       ],
+      "objective": "End on a rescue decision that affects Maya's emotional state going into Episode 05.",
       "choices": [
         {
-          "id": "retry_after_signal_trace",
-          "text": "LOCK THE SIGNAL AGAIN.",
+          "id": "ask_maya_memory",
+          "text": "MAYA, WHAT DO YOU REMEMBER?",
           "effects": {
-            "signalStrength": 1,
-            "mayaTrust": 1
+            "mayaTrust": -3,
+            "danger": 3,
+            "signalStrength": -3,
+            "route": "pressed_maya_memory"
           },
-          "nextNodeId": "e04_n04",
-          "textKey": "episode_04.e04_n04_hint.choice0.text"
+          "nextEpisodeId": "episode_05",
+          "textKey": "episode_04.e04_n14_terminal.choice0.text"
+        },
+        {
+          "id": "seal_statement_continue",
+          "text": "SEAL HER STATEMENT AND MOVE.",
+          "effects": {
+            "mayaTrust": 3,
+            "danger": 1,
+            "signalStrength": 1,
+            "route": "maya_statement_sealed"
+          },
+          "nextEpisodeId": "episode_05",
+          "textKey": "episode_04.e04_n14_terminal.choice1.text"
         }
       ]
-    },
-    "e04_n10_hale_past": {
-      "id": "e04_n10_hale_past",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "How did I know Hale?",
-          "textKey": "episode_04.e04_n10_hale_past.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "Unfortunately, thoroughly.",
-          "textKey": "episode_04.e04_n10_hale_past.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4000
-        },
-        {
-          "type": "message",
-          "text": "He corrected everybody. Reports. Logs. Messages. Grammar.",
-          "textKey": "episode_04.e04_n10_hale_past.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "We almost spaced him for punctuation violations.",
-          "textKey": "episode_04.e04_n10_hale_past.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 800
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "The annoying part is that he was right most of the time.",
-          "textKey": "episode_04.e04_n10_hale_past.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4300
-        },
-        {
-          "type": "message",
-          "text": "He could walk into a room, look at a failing system, and make you feel stupid for not hearing the problem breathing.",
-          "textKey": "episode_04.e04_n10_hale_past.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "I hated that.",
-          "textKey": "episode_04.e04_n10_hale_past.event14.text"
-        },
-        {
-          "type": "pause",
-          "duration": 800
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "I miss that.",
-          "textKey": "episode_04.e04_n10_hale_past.event17.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "So when I tell you the thing on your channel is not Ethan Hale...",
-          "textKey": "episode_04.e04_n10_hale_past.event19.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "I am not saying it because I wanted him gone.",
-          "textKey": "episode_04.e04_n10_hale_past.event21.text"
-        }
-      ],
-      "nextNodeId": "e04_n11"
     }
   },
-  "titleKey": "episode_04.meta.episode0.title",
   "directorCut": {
-    "version": "V2",
-    "focus": [
-      "Maya first impression strengthened",
-      "more natural survivor dialogue",
-      "expanded Hale/Maya shared history",
-      "larger dual-transmission argument",
-      "safer frequency puzzle failure flow",
-      "more cryptic UNKNOWN cliffhanger"
-    ],
-    "sourceEpisode": "episode_04"
-  }
+    "version": "V3_OPERATION_UPGRADE",
+    "sourceEpisode": "episode_04",
+    "upgradeFocus": [
+      "Maya becomes a moving survivor, not only a voice in chat",
+      "frequency puzzle retained as the only core puzzle",
+      "all choice groups reduced to exactly two choices",
+      "visible trust system messages removed from narrative moments",
+      "player directs Maya through console stabilization, route choice, and service lock access",
+      "Hale/Maya conflict affects channel management and future relationship state",
+      "real-time progress tasks create live rescue pacing",
+      "ending branches carry route flags into Episode 05"
+    ]
+  },
+  "titleKey": "episode_04.meta.episode0.title"
 }
