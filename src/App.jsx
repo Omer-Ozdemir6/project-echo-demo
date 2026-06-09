@@ -11,6 +11,7 @@ import {
   setActivePuzzle,
   markFileAsRead,
   resolveActiveWaitTask,
+  resolveBusyState,
   clearPendingNotifications,
   getCurrentEpisode
 } from "./engine/gameEngine";
@@ -74,6 +75,69 @@ function App() {
 
   const activeStep = currentBoot?.[bootStepIndex];
 
+  function showCharacterReturnNotification(busyState) {
+    if (!busyState) return;
+
+    if (typeof window === "undefined" || !("Notification" in window)) {
+      return;
+    }
+
+    const title = busyState.notificationTitle || "Incoming Transmission";
+    const body =
+      busyState.notificationBody ||
+      `${busyState.character || "Someone"} has returned.`;
+
+    if (Notification.permission === "granted") {
+      new Notification(title, { body });
+      return;
+    }
+
+    if (Notification.permission === "default") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          new Notification(title, { body });
+        }
+      });
+    }
+  }
+
+  function buildResolvedBusyState(prevState) {
+    const busy = prevState.busyState;
+
+    if (!busy?.busyUntil || Date.now() < busy.busyUntil) {
+      return prevState;
+    }
+
+    const nextEpisodeId = busy.returnEpisodeId || prevState.episodeId;
+    const nextEpisode = getCurrentEpisode({
+      ...prevState,
+      episodeId: nextEpisodeId
+    });
+
+    const nextNodeId = busy.returnNodeId || nextEpisode?.startNodeId;
+
+    return {
+      ...prevState,
+      episodeId: nextEpisodeId,
+      currentNodeId: nextNodeId,
+      busyState: null,
+      activePuzzleId: null,
+      activeWaitTask: null,
+      history: [
+        ...(prevState.history || []),
+        {
+          type: "characterBusyComplete",
+          busyId: busy.id,
+          character: busy.character,
+          status: busy.status,
+          episodeId: nextEpisodeId,
+          nextNodeId,
+          completedAt: new Date().toISOString()
+        }
+      ]
+    };
+  }
+
   function startGame() {
     runIntroTimeline({
       timeline: gameConfig.introTimeline,
@@ -121,6 +185,25 @@ function App() {
   }, [phase, gameState.pendingNotifications?.length]);
 
   useEffect(() => {
+    if (phase !== "game") return;
+
+    setGameState((prevState) => {
+      const nextState = resolveBusyState(prevState);
+
+      if (
+        nextState.episodeId === prevState.episodeId &&
+        nextState.currentNodeId === prevState.currentNodeId &&
+        Boolean(nextState.busyState) === Boolean(prevState.busyState)
+      ) {
+        return prevState;
+      }
+
+      saveGameState(nextState);
+      return nextState;
+    });
+  }, [phase]);
+
+  useEffect(() => {
     const resolvedState = resolveActiveWaitTask(gameState);
 
     if (
@@ -132,6 +215,41 @@ function App() {
       saveGameState(resolvedState);
     }
   }, [gameState]);
+
+  useEffect(() => {
+    if (phase !== "game" || !gameState.busyState) return;
+
+    const busy = gameState.busyState;
+    const remainingMs = Math.max(0, busy.busyUntil - Date.now());
+
+    function resolveBusyAndContinue(shouldNotify = false) {
+      setGameState((prev) => {
+        if (!prev.busyState) return prev;
+
+        const nextState = buildResolvedBusyState(prev);
+
+        if (nextState === prev) return prev;
+
+        if (shouldNotify) {
+          showCharacterReturnNotification(prev.busyState);
+        }
+
+        saveGameState(nextState);
+        return nextState;
+      });
+    }
+
+    if (remainingMs <= 0) {
+      resolveBusyAndContinue(false);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      resolveBusyAndContinue(true);
+    }, remainingMs);
+
+    return () => clearTimeout(timer);
+  }, [phase, gameState.busyState?.busyUntil]);
 
   useEffect(() => {
     if (phase !== "booting" || !activeStep) return;
@@ -180,6 +298,47 @@ function App() {
     translate: (key, fallback = "") => {
       return getGameText(key, fallback, settings.language);
     },
+
+    onCharacterBusyStart: (busy) => {
+        setIsTyping(false);
+        setIsGlitching(false);
+        setSignalStatus(null);
+        setProgressTask(null);
+        setNodeFinished(false);
+
+        setGameState((prev) => {
+          const nextState = {
+            ...prev,
+            activePuzzleId: null,
+            activeWaitTask: null,
+            busyState: {
+              id: busy.id,
+              character: busy.character,
+              status: busy.status,
+              busyUntil: Date.now() + busy.durationMs,
+              returnNodeId: busy.returnNodeId,
+              returnEpisodeId: busy.returnEpisodeId,
+              notificationTitle: busy.notificationTitle,
+              notificationBody: busy.notificationBody
+            },
+            history: [
+              ...(prev.history || []),
+              {
+                type: "characterBusyStart",
+                busyId: busy.id,
+                character: busy.character,
+                status: busy.status,
+                returnNodeId: busy.returnNodeId,
+                returnEpisodeId: busy.returnEpisodeId || prev.episodeId,
+                startedAt: new Date().toISOString()
+              }
+            ]
+          };
+
+          saveGameState(nextState);
+          return nextState;
+        });
+      },
 
       onTypingStart: () => setIsTyping(true),
       onTypingStop: () => setIsTyping(false),
@@ -257,6 +416,8 @@ onStatChange: (changes) => {
 },
 
 onComplete: () => {
+  if (gameState.busyState) return;
+
   setNodeFinished(true);
 
   if (currentNode?.nextNodeId) {
@@ -299,6 +460,8 @@ onComplete: () => {
   }, [phase, currentNode?.id]);
 
 function handleChoice(choiceId) {
+  if (gameState.busyState) return;
+
   const selectedChoice = currentNode?.choices?.find(
     (choice) => choice.id === choiceId
   );
@@ -437,14 +600,15 @@ function handleChoice(choiceId) {
   const hasChoices =
     Array.isArray(currentNode?.choices) && currentNode.choices.length > 0;
 
-  const canShowChoices =
-    nodeFinished &&
-    hasChoices &&
-    !activePuzzle &&
-    !isTyping &&
-    !isGlitching &&
-    !signalStatus &&
-    !progressTask;
+const canShowChoices =
+  !gameState.busyState &&
+  nodeFinished &&
+  hasChoices &&
+  !activePuzzle &&
+  !isTyping &&
+  !isGlitching &&
+  !signalStatus &&
+  !progressTask;
 
   return (
     <TerminalScreen

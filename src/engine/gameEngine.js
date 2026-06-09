@@ -28,7 +28,8 @@ function createFreshGameState() {
     activeWaitTask: null,
     unlockedCorrelations: {},
     pendingNotifications: [],
-    collectedFiles: []
+    collectedFiles: [],
+    busyState: null,
   };
 }
 
@@ -617,6 +618,36 @@ export function clearPendingNotifications(gameState) {
   });
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+
+  return nextState;
+}
+
+export function getRemainingBusyMs(gameState) {
+  const busyState = gameState.busyState;
+
+  if (!busyState?.busyUntil) return 0;
+
+  return Math.max(
+    0,
+    busyState.busyUntil - Date.now()
+  );
+}
+
+export function resolveBusyState(gameState) {
+  const busy = gameState.busyState;
+
+  if (!busy) return gameState;
+
+  if (Date.now() < busy.busyUntil)
+    return gameState;
+
+  const nextState = normalizeGameState({
+    ...gameState,
+    currentNodeId: busy.returnNodeId,
+    busyState: null
+  });
+
+  saveGameState(nextState);
 
   return nextState;
 }

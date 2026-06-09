@@ -12,10 +12,6 @@ import ProgressTaskModal from "./ProgressTaskModal";
 import DecodeFileModal from "./DecodeFileModal";
 import { playSound } from "../audio/soundManager";
 
-
-
-
-
 export default function TerminalScreen({
   config,
   gameState,
@@ -37,8 +33,21 @@ export default function TerminalScreen({
   const [activeFile, setActiveFile] = useState(null);
   const [isDataBankOpen, setIsDataBankOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [decodeFile, setDecodeFile] = useState(null);
 
   const language = settings?.language || "en";
+
+  const busyState = gameState?.busyState || null;
+  const isBusyActive =
+    Boolean(busyState?.busyUntil) && Date.now() < busyState.busyUntil;
+
+  const busyCharacter = busyState?.character || "UNKNOWN";
+  const busyStatus = busyState?.status || "UNAVAILABLE";
+
+  const busyTitle =
+    busyState?.displayText ||
+    busyState?.message ||
+    `[${busyCharacter} ${busyStatus}]`;
 
   const terminalTitle = getGameText(
     config?.terminalTitleKey,
@@ -52,126 +61,139 @@ export default function TerminalScreen({
     language
   );
 
-
-
   const collectedFiles = gameState.collectedFiles || [];
   const unreadFileCount = collectedFiles.filter((file) => file.isNew).length;
+
   const connectionLabel = getGameText(
-  "status.connection",
-  language === "tr" ? "BAĞLANTI" : "LINK",
-  language
-);
+    "status.connection",
+    language === "tr" ? "BAĞLANTI" : "LINK",
+    language
+  );
 
-const signalLabel = getGameText(
-  "status.signal",
-  language === "tr" ? "SİNYAL" : "SIGNAL",
-  language
-);
+  const signalLabel = getGameText(
+    "status.signal",
+    language === "tr" ? "SİNYAL" : "SIGNAL",
+    language
+  );
 
-const connectionValue =
-  signalStatus?.type === "lost"
-    ? getGameText("status.lost", language === "tr" ? "KOPTU" : "LOST", language)
-    : getGameText("status.active", language === "tr" ? "AKTİF" : "ACTIVE", language);
+  const connectionValue =
+    signalStatus?.type === "lost"
+      ? getGameText("status.lost", language === "tr" ? "KOPTU" : "LOST", language)
+      : isBusyActive
+        ? getGameText("status.waiting", language === "tr" ? "BEKLEMEDE" : "WAITING", language)
+        : getGameText("status.active", language === "tr" ? "AKTİF" : "ACTIVE", language);
 
-const baseSignal = Number(gameState.signalStrength ?? 96);
+  const baseSignal = Number(gameState.signalStrength ?? 96);
 
-const signalValue =
-  signalStatus?.type === "lost"
-    ? 5
-    : isGlitching
-      ? Math.max(5, Math.min(baseSignal, 18))
-      : progressTask
-        ? Math.max(20, Math.min(baseSignal, 62))
-        : clampSignal(baseSignal);
+  const signalValue =
+    signalStatus?.type === "lost"
+      ? 5
+      : isGlitching
+        ? Math.max(5, Math.min(baseSignal, 18))
+        : progressTask || isBusyActive
+          ? Math.max(20, Math.min(baseSignal, 62))
+          : clampSignal(baseSignal);
 
-const signalMeta = getSignalMeta(signalValue);
-const signalBar = getSignalBar(signalValue);
-  const canInteract = !isTyping && !isGlitching && !signalStatus && !progressTask;
+  const signalMeta = getSignalMeta(signalValue);
+  const signalBar = getSignalBar(signalValue);
 
-  const [decodeFile, setDecodeFile] = useState(null);
+  const canInteract =
+    !isBusyActive &&
+    !isTyping &&
+    !isGlitching &&
+    !signalStatus &&
+    !progressTask;
 
-function clampSignal(value) {
-  const number = Number(value);
+  function clampSignal(value) {
+    const number = Number(value);
 
-  if (Number.isNaN(number)) return 96;
+    if (Number.isNaN(number)) return 96;
 
-  return Math.max(5, Math.min(100, number));
-}
-function handlePuzzleSubmit(value) {
-  playSound("puzzleSubmit", settings);
-  onPuzzleSubmit?.(value);
-}
+    return Math.max(5, Math.min(100, number));
+  }
 
-function getSignalMeta(value) {
-  const safeValue = clampSignal(value);
+  function handlePuzzleSubmit(value) {
+    playSound("puzzleSubmit", settings);
+    onPuzzleSubmit?.(value);
+  }
 
-  if (safeValue >= 80) {
+  function getSignalMeta(value) {
+    const safeValue = clampSignal(value);
+
+    if (safeValue >= 80) {
+      return {
+        icon: "🟢",
+        label: "STABLE",
+        className: "text-emerald-200"
+      };
+    }
+
+    if (safeValue >= 50) {
+      return {
+        icon: "🟡",
+        label: "DEGRADED",
+        className: "text-amber-200"
+      };
+    }
+
+    if (safeValue >= 20) {
+      return {
+        icon: "🟠",
+        label: "CRITICAL",
+        className: "text-orange-300"
+      };
+    }
+
     return {
-      icon: "🟢",
-      label: "STABLE",
-      className: "text-emerald-200"
+      icon: "🔴",
+      label: "COLLAPSE",
+      className: "text-rose-300"
     };
   }
 
-  if (safeValue >= 50) {
-    return {
-      icon: "🟡",
-      label: "DEGRADED",
-      className: "text-amber-200"
+  function getSignalBar(value) {
+    const safeValue = clampSignal(value);
+    const filled = Math.max(1, Math.round(safeValue / 10));
+
+    return "█".repeat(filled) + "░".repeat(10 - filled);
+  }
+
+  function getBusyDescription() {
+    if (language === "tr") {
+      return "İletim şu anda kapalı. Karakter geri dönene kadar yeni mesaj veya seçim görünmeyecek.";
+    }
+
+    return "Transmission is unavailable. No new messages or choices will appear until the character returns.";
+  }
+
+  useEffect(() => {
+    if (signalStatus?.type === "lost") {
+      playSound("signalLost", settings);
+    }
+
+    if (signalStatus?.type === "restored") {
+      playSound("signalRestored", settings);
+    }
+  }, [signalStatus, settings]);
+
+  function handleOpenDataBankFile(file) {
+    const shouldDecode = file.isNew;
+
+    onFileRead?.(file.id);
+
+    const openedFile = {
+      ...file,
+      isNew: false
     };
+
+    if (shouldDecode) {
+      setDecodeFile(openedFile);
+      return;
+    }
+
+    setActiveFile(openedFile);
   }
 
-  if (safeValue >= 20) {
-    return {
-      icon: "🟠",
-      label: "CRITICAL",
-      className: "text-orange-300"
-    };
-  }
-
-  return {
-    icon: "🔴",
-    label: "COLLAPSE",
-    className: "text-rose-300"
-  };
-}
-
-function getSignalBar(value) {
-  const safeValue = clampSignal(value);
-  const filled = Math.max(1, Math.round(safeValue / 10));
-
-  return "█".repeat(filled) + "░".repeat(10 - filled);
-}
-
-useEffect(() => {
-  if (signalStatus?.type === "lost") {
-    playSound("signalLost", settings);
-  }
-
-  if (signalStatus?.type === "restored") {
-    playSound("signalRestored", settings);
-  }
-}, [signalStatus, settings]);
-
-function handleOpenDataBankFile(file) {
-  const shouldDecode = file.isNew;
-
-  onFileRead?.(file.id);
-
-  const openedFile = {
-    ...file,
-    isNew: false
-  };
-
-  if (shouldDecode) {
-    setDecodeFile(openedFile);
-    return;
-  }
-
-  setActiveFile(openedFile);
-
-
-}
   return (
     <main
       className={[
@@ -186,8 +208,8 @@ function handleOpenDataBankFile(file) {
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.12),transparent_35%)]" />
 
       {(isGlitching || signalStatus?.type === "lost") && (
-  <div className="noise-overlay" />
-)}
+        <div className="noise-overlay" />
+      )}
 
       <section
         className={[
@@ -202,17 +224,17 @@ function handleOpenDataBankFile(file) {
             <div className="grid grid-cols-[auto_1fr_auto] items-start gap-3">
               <button
                 type="button"
-className={[
-  "relative border border-cyan-300/35 bg-cyan-950/30 px-2.5 py-2",
-  "text-[10px] tracking-[0.2em] text-cyan-100",
-  "transition hover:bg-cyan-400/10",
-  "sm:px-3 sm:text-xs",
-  unreadFileCount > 0 ? "animate-pulse border-emerald-300/70" : ""
-].join(" ")}
-onClick={() => {
-  playSound("uiClick", settings);
-  setIsDataBankOpen(true);
-}}
+                className={[
+                  "relative border border-cyan-300/35 bg-cyan-950/30 px-2.5 py-2",
+                  "text-[10px] tracking-[0.2em] text-cyan-100",
+                  "transition hover:bg-cyan-400/10",
+                  "sm:px-3 sm:text-xs",
+                  unreadFileCount > 0 ? "animate-pulse border-emerald-300/70" : ""
+                ].join(" ")}
+                onClick={() => {
+                  playSound("uiClick", settings);
+                  setIsDataBankOpen(true);
+                }}
               >
                 DATA {unreadFileCount > 0 ? `(${unreadFileCount})` : ""}
 
@@ -234,10 +256,10 @@ onClick={() => {
               <div className="flex items-center gap-2">
                 <button
                   type="button"
-onClick={() => {
-  playSound("uiClick", settings);
-  setIsSettingsOpen(true);
-}}
+                  onClick={() => {
+                    playSound("uiClick", settings);
+                    setIsSettingsOpen(true);
+                  }}
                   className="grid h-9 w-9 place-items-center border border-cyan-300/25 bg-slate-900/60 text-cyan-100 transition hover:bg-cyan-400/10"
                   aria-label="Open settings"
                 >
@@ -260,47 +282,69 @@ onClick={() => {
             </div>
           </header>
 
-<div className="mb-4 grid grid-cols-2 gap-2">
-  <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-    {connectionLabel}:{" "}
-    <strong
-      className={
-        signalStatus?.type === "lost" ? "text-rose-300" : "text-emerald-200"
-      }
-    >
-      {connectionValue}
-    </strong>
-  </span>
+          <div className="mb-4 grid grid-cols-2 gap-2">
+            <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
+              {connectionLabel}:{" "}
+              <strong
+                className={
+                  signalStatus?.type === "lost"
+                    ? "text-rose-300"
+                    : isBusyActive
+                      ? "text-rose-300"
+                      : "text-emerald-200"
+                }
+              >
+                {connectionValue}
+              </strong>
+            </span>
 
-  <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
-  {signalLabel}:{" "}
-  <strong className={signalMeta.className}>
-    {signalMeta.icon} %{signalValue} {signalMeta.label} [{signalBar}]
-  </strong>
-</span>
-</div>
+            <span className="border border-cyan-300/20 bg-slate-900/60 p-2 text-[11px] text-cyan-50/70">
+              {signalLabel}:{" "}
+              <strong className={signalMeta.className}>
+                {signalMeta.icon} %{signalValue} {signalMeta.label} [{signalBar}]
+              </strong>
+            </span>
+          </div>
         </div>
 
         <div className="min-h-0 flex-1 overflow-hidden">
-          <MessageFeed
-            speaker={currentNode.speaker}
-            messages={visibleMessages}
-            isTyping={isTyping}
-            onOpenFile={setActiveFile}
-            language={language}
-            settings={settings}
-            hasBottomPanel={canShowChoices || Boolean(activePuzzle)}
-          />
+          {isBusyActive ? (
+            <div className="flex h-full flex-col items-center justify-center px-5 text-center">
+              <div className="mb-5 h-3 w-3 animate-pulse rounded-full bg-rose-400 shadow-[0_0_22px_rgba(251,113,133,0.95)]" />
+
+              <p className="text-sm tracking-[0.35em] text-rose-300 sm:text-base">
+                {busyTitle}
+              </p>
+
+              <p className="mt-4 max-w-md text-xs leading-6 text-cyan-50/45 sm:text-sm">
+                {getBusyDescription()}
+              </p>
+
+              <div className="mt-6 border border-rose-400/20 bg-rose-950/10 px-4 py-3 text-[10px] tracking-[0.25em] text-rose-200/70">
+                {language === "tr" ? "BEKLEME SÜRESİ GİZLİ" : "WAIT TIME HIDDEN"}
+              </div>
+            </div>
+          ) : (
+            <MessageFeed
+              speaker={currentNode.speaker}
+              messages={visibleMessages}
+              isTyping={isTyping}
+              onOpenFile={setActiveFile}
+              language={language}
+              settings={settings}
+              hasBottomPanel={canShowChoices || Boolean(activePuzzle)}
+            />
+          )}
         </div>
 
         {activePuzzle && canInteract && (
           <div className="shrink-0 max-h-[42dvh] overflow-y-auto border-t border-cyan-300/20 bg-slate-950/95 pt-3">
-<PuzzleRenderer
-  puzzle={activePuzzle}
-  attempts={gameState.puzzleAttempts?.[activePuzzle.id] || 0}
-  onSubmit={handlePuzzleSubmit}
-  language={language}
-/>
+            <PuzzleRenderer
+              puzzle={activePuzzle}
+              attempts={gameState.puzzleAttempts?.[activePuzzle.id] || 0}
+              onSubmit={handlePuzzleSubmit}
+              language={language}
+            />
           </div>
         )}
 
@@ -316,7 +360,7 @@ onClick={() => {
         )}
       </section>
 
-      {progressTask && <ProgressTaskModal task={progressTask} />}
+      {progressTask && !isBusyActive && <ProgressTaskModal task={progressTask} />}
 
       {isDataBankOpen && (
         <DataBankModal
@@ -328,15 +372,15 @@ onClick={() => {
       )}
 
       <DecodeFileModal
-  file={decodeFile}
-  onComplete={(file) => {
-    setDecodeFile(null);
-    setActiveFile(file);
-  }}
-  onClose={() => setDecodeFile(null)}
-/>
+        file={decodeFile}
+        onComplete={(file) => {
+          setDecodeFile(null);
+          setActiveFile(file);
+        }}
+        onClose={() => setDecodeFile(null)}
+      />
 
-<FileViewerModal file={activeFile} onClose={() => setActiveFile(null)} />
+      <FileViewerModal file={activeFile} onClose={() => setActiveFile(null)} />
       <SignalOverlay status={signalStatus} />
 
       {isSettingsOpen && (

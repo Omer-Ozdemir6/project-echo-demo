@@ -85,7 +85,8 @@ function playSingleEvent({
   onPuzzleStart,
   onProgressTaskStart,
   onProgressTaskEnd,
-   signalStrength = 100
+  onCharacterBusyStart,
+  signalStrength = 100
 }) {
   if (!event || typeof event !== "object") return 0;
 
@@ -275,6 +276,43 @@ if (event.type === "systemAlert") {
     return duration + (event.pauseAfterMs ?? 800);
   }
 
+  if (event.type === "characterBusy") {
+
+  const busyTimer = setTimeout(() => {
+    onTypingStop?.();
+    onGlitchStop?.();
+
+    onMessage?.({
+      type: "systemAlert",
+      speaker: "SYSTEM",
+      sender: "system",
+      text:
+        event.message ||
+        `[${event.character || "CHARACTER"} ${event.status || "UNAVAILABLE"}]`,
+      tone: event.tone || "danger"
+    });
+
+    onCharacterBusyStart?.({
+      id: event.id || `busy_${Date.now()}`,
+      character: event.character || "UNKNOWN",
+      status: event.status || "UNAVAILABLE",
+      durationMs: event.durationMs || 60000,
+      returnNodeId: event.returnNodeId,
+      returnEpisodeId: event.returnEpisodeId || null,
+      notificationTitle:
+        event.notificationTitle ||
+        "Incoming Transmission",
+      notificationBody:
+        event.notificationBody ||
+        `${event.character || "Someone"} has returned.`
+    });
+  }, delay);
+
+  timers.push(busyTimer);
+
+  return event.pauseAfterMs ?? 500;
+}
+
   if (event.type === "progressTask") {
     const duration = event.duration || 6000;
 
@@ -351,6 +389,7 @@ export function playNodeEvents({
   onPuzzleStart,
   onProgressTaskStart,
   onProgressTaskEnd,
+  onCharacterBusyStart,
   onComplete,
   signalStrength = 100
 }) {
@@ -368,6 +407,7 @@ export function playNodeEvents({
     onGlitchStop,
     onSignalLost,
     onSignalRestored,
+    onCharacterBusyStart,
     onStatChange,
     onCollectFile,
     onPuzzleStart,

@@ -1,12 +1,29 @@
 {
   "id": "episode_09",
-  "title": "THE RESCUE — DIRECTOR'S CUT V5 UPGRADED",
+  "title": "THE RESCUE — LIFELINE CUT V6 FINAL",
+  "titleKey": "episode_09.meta.title",
   "startNodeId": "e09_n01",
   "puzzles": {},
+  "episodeObjective": "Reach the unstable emergency pod, control the rescue route, expose Hale's old access log, and commit to opening or aborting the pod rescue.",
+  "designVersion": "lifeline_cut_v6_final_realtime_rescue",
+  "lifelineRulesApplied": {
+    "ruleset": "ECHO_DIRECTORS_CUT_RULESET_V1",
+    "summary": [
+      "Scenario spine preserved: rescue junction, beacon stabilization, route selection, pod exterior, Hale's old access, access protocol, open/abort branch.",
+      "All long physical or technical tasks use characterBusy + returnNodeId.",
+      "No progress bars or visible wait timers are used.",
+      "Maya returns from each absence with concrete physical and emotional reports.",
+      "Every visible choice set has exactly two choices.",
+      "Hale/Maya conflict is character-driven and escalates naturally.",
+      "Logs are short evidence beats, not the main gameplay.",
+      "Open/abort decision creates irreversible Episode 10 flags."
+    ]
+  },
   "nodes": {
     "e09_n01": {
       "id": "e09_n01",
       "speaker": "MAYA",
+      "objective": "Set the rescue target and immediate conflict.",
       "events": [
         {
           "type": "typing",
@@ -19,16 +36,16 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 4000
         },
         {
           "type": "message",
-          "text": "The pod beacon is ahead of me, but it keeps sliding in and out of the relay map like it doesn't want to be found.",
+          "text": "The pod beacon is ahead, but it keeps sliding in and out of the relay map like it doesn't want to be found.",
           "textKey": "episode_09.e09_n01.event3.text"
         },
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 3600
         },
         {
           "type": "message",
@@ -41,7 +58,7 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 4200
         },
         {
           "type": "message",
@@ -55,12 +72,13 @@
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "OPEN THE POD",
+            "pauseAfterMs": 900,
             "textKey": "episode_09.e09_n01.backgroundEvent9.text"
           }
         },
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 3000
         },
         {
           "type": "message",
@@ -70,7 +88,7 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3400
         },
         {
           "type": "message",
@@ -110,52 +128,104 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "Stabilizing first. Good. Technical work. Cables, relays, math. Things that don't pretend to be dead friends.",
+          "text": "Stabilizing first.",
           "textKey": "episode_09.e09_n02_stabilize.event1.text"
         },
         {
-          "type": "progressTask",
-          "id": "pre_rescue_beacon_stabilization",
-          "title": "PRE-RESCUE BEACON STABILIZATION",
-          "subtitle": "Maya is holding position while Hale filters the drifting pod signal",
-          "duration": 42000,
-          "completeText": "[BEACON HOLD ESTABLISHED]",
-          "tone": "system",
-          "titleKey": "episode_09.e09_n02_stabilize.event2.title",
-          "completeTextKey": "episode_09.e09_n02_stabilize.event2.completeText"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 5000,
-          "event": {
-            "type": "message",
-            "text": "Signal is cleaner. Not safe. Cleaner.",
-            "speaker": "HALE",
-            "textKey": "episode_09.e09_n02_stabilize.backgroundEvent3.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 9000,
-          "event": {
-            "type": "message",
-            "text": "I hate that I can hear it better now.",
-            "speaker": "MAYA",
-            "textKey": "episode_09.e09_n02_stabilize.backgroundEvent4.text"
-          }
-        },
-        {
           "type": "typing",
-          "duration": 3400
+          "duration": 4200
         },
         {
           "type": "message",
-          "text": "Beacon hold is set. The pod is still moving, but at least now it's lying in a straight line.",
-          "textKey": "episode_09.e09_n02_stabilize.event6.text"
+          "text": "Good. Technical work. Cables, relays, math. Things that don't pretend to be dead friends.",
+          "textKey": "episode_09.e09_n02_stabilize.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "I'm holding position while Hale filters the drifting pod signal.",
+          "textKey": "episode_09.e09_n02_stabilize.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "I need to keep the relay aligned. If I move, the beacon starts lying again.",
+          "textKey": "episode_09.e09_n02_stabilize.event7.text"
+        },
+        {
+          "type": "characterBusy",
+          "id": "maya_holds_beacon_stabilization_v6",
+          "character": "MAYA",
+          "status": "IS STABILIZING BEACON",
+          "durationMs": 2520000,
+          "returnNodeId": "e09_r02_stabilize_return",
+          "message": "[MAYA IS STABILIZING BEACON]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Maya sent a message.",
+          "tone": "character",
+          "pauseAfterMs": 500,
+          "messageKey": "episode_09.e09_n02_stabilize.event8.message"
+        }
+      ]
+    },
+    "e09_r02_stabilize_return": {
+      "id": "e09_r02_stabilize_return",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Beacon hold is set.",
+          "textKey": "episode_09.e09_r02_stabilize_return.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "The pod is still moving, but at least now it's lying in a straight line.",
+          "textKey": "episode_09.e09_r02_stabilize_return.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Signal is cleaner. Not safe. Cleaner.",
+          "speaker": "HALE",
+          "textKey": "episode_09.e09_r02_stabilize_return.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "I hate that I can hear it better now.",
+          "speaker": "MAYA",
+          "textKey": "episode_09.e09_r02_stabilize_return.event7.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalStrength": 3,
+            "danger": -1
+          }
         }
       ],
       "nextNodeId": "e09_n03_route"
@@ -166,53 +236,86 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "Moving now. Fast route to visual range.",
+          "text": "Moving now.",
           "textKey": "episode_09.e09_n02_move.event1.text"
         },
         {
-          "type": "progressTask",
-          "id": "maya_pushes_to_pod_visual",
-          "title": "MAYA PUSHING TO POD VISUAL RANGE",
-          "subtitle": "Maya moves before the beacon is fully stabilized",
-          "duration": 38000,
-          "completeText": "[MAYA HAS VISUAL ON POD]",
-          "tone": "danger",
-          "titleKey": "episode_09.e09_n02_move.event2.title",
-          "completeTextKey": "episode_09.e09_n02_move.event2.completeText"
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "Fast route to visual range. I know you're going to hate this, Hale.",
+          "textKey": "episode_09.e09_n02_move.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "You're rushing.",
+          "speaker": "HALE",
+          "textKey": "episode_09.e09_n02_move.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Someone might be dying.",
+          "speaker": "MAYA",
+          "textKey": "episode_09.e09_n02_move.event7.text"
         },
         {
           "type": "backgroundEvent",
-          "delay": 4000,
-          "event": {
-            "type": "message",
-            "text": "You're rushing.",
-            "speaker": "HALE",
-            "textKey": "episode_09.e09_n02_move.backgroundEvent3.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 7800,
-          "event": {
-            "type": "message",
-            "text": "Someone might be dying.",
-            "speaker": "MAYA",
-            "textKey": "episode_09.e09_n02_move.backgroundEvent4.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 11200,
+          "delay": 5000,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "closer",
-            "textKey": "episode_09.e09_n02_move.backgroundEvent5.text"
+            "pauseAfterMs": 900,
+            "textKey": "episode_09.e09_n02_move.backgroundEvent8.text"
           }
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "I'm clipping to the rail and pushing through before the map shifts again.",
+          "textKey": "episode_09.e09_n02_move.event10.text"
+        },
+        {
+          "type": "characterBusy",
+          "id": "maya_pushes_to_pod_visual_v6",
+          "character": "MAYA",
+          "status": "IS MOVING",
+          "durationMs": 2280000,
+          "returnNodeId": "e09_r02_move_return",
+          "message": "[MAYA IS MOVING]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Maya sent a message.",
+          "tone": "danger",
+          "pauseAfterMs": 500,
+          "messageKey": "episode_09.e09_n02_move.event11.message"
+        }
+      ]
+    },
+    "e09_r02_move_return": {
+      "id": "e09_r02_move_return",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "glitch",
+          "duration": 900,
+          "pauseAfterMs": 600
         },
         {
           "type": "typing",
@@ -220,8 +323,42 @@
         },
         {
           "type": "message",
-          "text": "I have the pod on partial visual. It is closer than the map said. That should not be possible.",
-          "textKey": "episode_09.e09_n02_move.event7.text"
+          "text": "I have partial visual on the pod.",
+          "textKey": "episode_09.e09_r02_move_return.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "It is closer than the map said. That should not be possible.",
+          "textKey": "episode_09.e09_r02_move_return.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "The beacon dragged across my display while I moved, like the pod was correcting where I thought it was.",
+          "textKey": "episode_09.e09_r02_move_return.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "So either the map is wrong, or the pod moved toward me.",
+          "textKey": "episode_09.e09_r02_move_return.event8.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 3,
+            "signalStrength": -2
+          }
         }
       ],
       "nextNodeId": "e09_n03_route"
@@ -231,9 +368,9 @@
       "speaker": "MAYA",
       "events": [
         {
-          "type": "file",
-          "id": "rescue_route_map",
-          "fileId": "rescue_route_map",
+          "type": "log",
+          "id": "rescue_route_map_v6",
+          "fileId": "rescue_route_map_v6",
           "fileType": "log",
           "title": "RESCUE ROUTE MAP",
           "content": "ROUTE A: Short route through exposed radiation corridor. Arrival fast. Crew risk severe. Pod risk moderate.\n\nROUTE B: Long route through maintenance spine. Arrival delayed. Crew risk moderate. Pod risk severe.",
@@ -248,6 +385,7 @@
             "pod_rescue"
           ],
           "message": "[RESCUE ROUTE MAP ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
           "titleKey": "episode_09.e09_n03_route.event0.title",
           "contentKey": "episode_09.e09_n03_route.event0.content",
           "captionKey": "episode_09.e09_n03_route.event0.caption",
@@ -264,7 +402,7 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3600
         },
         {
           "type": "message",
@@ -273,7 +411,7 @@
         },
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 3800
         },
         {
           "type": "message",
@@ -282,7 +420,7 @@
         },
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 3400
         },
         {
           "type": "message",
@@ -323,7 +461,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 3000
         },
         {
           "type": "message",
@@ -331,54 +469,13 @@
           "textKey": "episode_09.e09_n04_route_a.event1.text"
         },
         {
-          "type": "progressTask",
-          "id": "route_a_radiation_crossing",
-          "title": "ROUTE A RADIATION CROSSING",
-          "subtitle": "Maya crosses the exposed corridor toward the emergency pod",
-          "duration": 60000,
-          "completeText": "[MAYA CLEARED RADIATION CORRIDOR]",
-          "tone": "danger",
-          "titleKey": "episode_09.e09_n04_route_a.event2.title",
-          "completeTextKey": "episode_09.e09_n04_route_a.event2.completeText"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 3800,
-          "event": {
-            "type": "message",
-            "text": "Do not stop in the exposed section.",
-            "speaker": "HALE",
-            "textKey": "episode_09.e09_n04_route_a.backgroundEvent3.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 7600,
-          "event": {
-            "type": "message",
-            "text": "I was not planning a picnic, Ethan.",
-            "speaker": "MAYA",
-            "textKey": "episode_09.e09_n04_route_a.backgroundEvent4.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 12400,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "hurry",
-            "textKey": "episode_09.e09_n04_route_a.backgroundEvent5.text"
-          }
-        },
-        {
           "type": "typing",
           "duration": 3600
         },
         {
           "type": "message",
-          "text": "My suit alarm is being very rude about my life choices. But I'm closer.",
-          "textKey": "episode_09.e09_n04_route_a.event7.text"
+          "text": "Radiation corridor ahead. The warning lights are dead, which feels rude.",
+          "textKey": "episode_09.e09_n04_route_a.event3.text"
         },
         {
           "type": "typing",
@@ -386,8 +483,108 @@
         },
         {
           "type": "message",
-          "text": "If my hair falls out, I'm blaming you. Emotionally. Not legally.",
-          "textKey": "episode_09.e09_n04_route_a.event9.text"
+          "text": "Do not stop in the exposed section.",
+          "speaker": "HALE",
+          "textKey": "episode_09.e09_n04_route_a.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "I was not planning a picnic, Ethan.",
+          "speaker": "MAYA",
+          "textKey": "episode_09.e09_n04_route_a.event7.text"
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 5200,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "hurry",
+            "pauseAfterMs": 900,
+            "textKey": "episode_09.e09_n04_route_a.backgroundEvent8.text"
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "Going quiet. I need to run this clean.",
+          "textKey": "episode_09.e09_n04_route_a.event10.text"
+        },
+        {
+          "type": "characterBusy",
+          "id": "maya_crosses_radiation_corridor_v6",
+          "character": "MAYA",
+          "status": "IS CROSSING ROUTE A",
+          "durationMs": 3600000,
+          "returnNodeId": "e09_r04_route_a_return",
+          "message": "[MAYA IS CROSSING ROUTE A]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Maya sent a message.",
+          "tone": "danger",
+          "pauseAfterMs": 500,
+          "messageKey": "episode_09.e09_n04_route_a.event11.message"
+        }
+      ]
+    },
+    "e09_r04_route_a_return": {
+      "id": "e09_r04_route_a_return",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "glitch",
+          "duration": 1000,
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I cleared the radiation corridor.",
+          "textKey": "episode_09.e09_r04_route_a_return.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "My suit alarm is being very rude about my life choices.",
+          "textKey": "episode_09.e09_r04_route_a_return.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "The corridor hummed through my teeth. I didn't know that was a thing a place could do.",
+          "textKey": "episode_09.e09_r04_route_a_return.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "But I'm closer. If my hair falls out, I'm blaming you. Emotionally. Not legally.",
+          "textKey": "episode_09.e09_r04_route_a_return.event8.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 7,
+            "signalStrength": -3,
+            "mayaExposure": true
+          }
         }
       ],
       "nextNodeId": "e09_n05_pod_exterior"
@@ -398,71 +595,125 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 3200
         },
         {
           "type": "message",
-          "text": "Taking the maintenance spine. Safer for me. Worse for the clock.",
+          "text": "Taking the maintenance spine.",
           "textKey": "episode_09.e09_n04_route_b.event1.text"
         },
         {
-          "type": "progressTask",
-          "id": "route_b_maintenance_spine",
-          "title": "ROUTE B MAINTENANCE SPINE",
-          "subtitle": "Maya takes the longer low-radiation route while pod life support drops",
-          "duration": 72000,
-          "completeText": "[MAYA REACHED POD EXTERIOR]",
-          "tone": "system",
-          "titleKey": "episode_09.e09_n04_route_b.event2.title",
-          "completeTextKey": "episode_09.e09_n04_route_b.event2.completeText"
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "Safer for me. Worse for the clock.",
+          "textKey": "episode_09.e09_n04_route_b.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "This is the sensible path.",
+          "speaker": "HALE",
+          "textKey": "episode_09.e09_n04_route_b.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "Sensible is a nice word for slow when someone is suffocating.",
+          "speaker": "MAYA",
+          "textKey": "episode_09.e09_n04_route_b.event7.text"
         },
         {
           "type": "backgroundEvent",
-          "delay": 4000,
-          "event": {
-            "type": "message",
-            "text": "This is the sensible path.",
-            "speaker": "HALE",
-            "textKey": "episode_09.e09_n04_route_b.backgroundEvent3.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 7800,
-          "event": {
-            "type": "message",
-            "text": "Sensible is a nice word for slow when someone is suffocating.",
-            "speaker": "MAYA",
-            "textKey": "episode_09.e09_n04_route_b.backgroundEvent4.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 12800,
+          "delay": 5600,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "too slow",
-            "textKey": "episode_09.e09_n04_route_b.backgroundEvent5.text"
+            "pauseAfterMs": 900,
+            "textKey": "episode_09.e09_n04_route_b.backgroundEvent8.text"
           }
         },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "I need to crawl most of this. Don't expect charm from me when I get back.",
+          "textKey": "episode_09.e09_n04_route_b.event10.text"
+        },
+        {
+          "type": "characterBusy",
+          "id": "maya_crosses_maintenance_spine_v6",
+          "character": "MAYA",
+          "status": "IS MOVING THROUGH SPINE",
+          "durationMs": 4320000,
+          "returnNodeId": "e09_r04_route_b_return",
+          "message": "[MAYA IS MOVING THROUGH SPINE]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Maya sent a message.",
+          "tone": "character",
+          "pauseAfterMs": 500,
+          "messageKey": "episode_09.e09_n04_route_b.event11.message"
+        }
+      ]
+    },
+    "e09_r04_route_b_return": {
+      "id": "e09_r04_route_b_return",
+      "speaker": "MAYA",
+      "events": [
         {
           "type": "typing",
           "duration": 3600
         },
         {
           "type": "message",
-          "text": "I found older boot marks in the dust. Someone used this route before us.",
-          "textKey": "episode_09.e09_n04_route_b.event7.text"
+          "text": "I'm at the pod exterior.",
+          "textKey": "episode_09.e09_r04_route_b_return.event1.text"
         },
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "I found older boot marks in the dust. Someone used this route before us.",
+          "textKey": "episode_09.e09_r04_route_b_return.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
         },
         {
           "type": "message",
           "text": "One set stops halfway and turns back. That's comforting in exactly no way.",
-          "textKey": "episode_09.e09_n04_route_b.event9.text"
+          "textKey": "episode_09.e09_r04_route_b_return.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "I got here safer. The pod lost time. Both facts are sitting in my chest.",
+          "textKey": "episode_09.e09_r04_route_b_return.event7.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 1,
+            "signalStrength": 2,
+            "podTimeLost": true
+          }
         }
       ],
       "nextNodeId": "e09_n05_pod_exterior"
@@ -473,7 +724,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 2800
         },
         {
           "type": "message",
@@ -482,7 +733,7 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 3800
         },
         {
           "type": "message",
@@ -491,7 +742,7 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 4400
         },
         {
           "type": "message",
@@ -504,7 +755,7 @@
         },
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 3200
         },
         {
           "type": "message",
@@ -512,9 +763,9 @@
           "textKey": "episode_09.e09_n05_pod_exterior.event8.text"
         },
         {
-          "type": "file",
-          "id": "pod_exterior_scan",
-          "fileId": "pod_exterior_scan",
+          "type": "log",
+          "id": "pod_exterior_scan_v6",
+          "fileId": "pod_exterior_scan_v6",
           "fileType": "log",
           "title": "POD EXTERIOR SCAN",
           "content": "Hull Temperature: below operational range\nSeal Pressure: unstable\nInterior Motion: intermittent\nAudio Contamination: rising\nManual Override: possible\nWarning: signal distortion resembles recursive voice fold",
@@ -530,6 +781,7 @@
             "pod_rescue"
           ],
           "message": "[POD EXTERIOR SCAN ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
           "titleKey": "episode_09.e09_n05_pod_exterior.event9.title",
           "contentKey": "episode_09.e09_n05_pod_exterior.event9.content",
           "captionKey": "episode_09.e09_n05_pod_exterior.event9.caption",
@@ -552,6 +804,7 @@
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "Maya",
+            "pauseAfterMs": 900,
             "textKey": "episode_09.e09_n05_pod_exterior.backgroundEvent11.text"
           }
         }
@@ -587,61 +840,95 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 3200
         },
         {
           "type": "message",
-          "text": "Securing the pod first. Anchoring line is out.",
+          "text": "Securing the pod first.",
           "textKey": "episode_09.e09_n06_secure.event1.text"
         },
         {
-          "type": "progressTask",
-          "id": "pod_anchor_sequence",
-          "title": "POD ANCHOR SEQUENCE",
-          "subtitle": "Maya secures the drifting emergency pod to the rescue line",
-          "duration": 46000,
-          "completeText": "[POD ANCHOR SECURED]",
-          "tone": "system",
-          "titleKey": "episode_09.e09_n06_secure.event2.title",
-          "completeTextKey": "episode_09.e09_n06_secure.event2.completeText"
+          "type": "typing",
+          "duration": 3800
         },
         {
-          "type": "backgroundEvent",
-          "delay": 4200,
-          "event": {
-            "type": "message",
-            "text": "Good. If it moves, you move with it now instead of under it.",
-            "speaker": "HALE",
-            "textKey": "episode_09.e09_n06_secure.backgroundEvent3.text"
-          }
+          "type": "message",
+          "text": "Anchoring line is out. If it moves, I move with it instead of under it.",
+          "textKey": "episode_09.e09_n06_secure.event3.text"
         },
         {
-          "type": "backgroundEvent",
-          "delay": 8200,
-          "event": {
-            "type": "message",
-            "text": "That is somehow both reassuring and horrifying.",
-            "speaker": "MAYA",
-            "textKey": "episode_09.e09_n06_secure.backgroundEvent4.text"
-          }
+          "type": "typing",
+          "duration": 3600
         },
+        {
+          "type": "message",
+          "text": "That is somehow both reassuring and horrifying.",
+          "speaker": "MAYA",
+          "textKey": "episode_09.e09_n06_secure.event5.text"
+        },
+        {
+          "type": "characterBusy",
+          "id": "maya_anchors_rescue_pod_v6",
+          "character": "MAYA",
+          "status": "IS ANCHORING POD",
+          "durationMs": 2760000,
+          "returnNodeId": "e09_r06_secure_return",
+          "message": "[MAYA IS ANCHORING POD]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Maya sent a message.",
+          "tone": "character",
+          "pauseAfterMs": 500,
+          "messageKey": "episode_09.e09_n06_secure.event6.message"
+        }
+      ]
+    },
+    "e09_r06_secure_return": {
+      "id": "e09_r06_secure_return",
+      "speaker": "MAYA",
+      "events": [
         {
           "type": "typing",
           "duration": 3400
         },
         {
           "type": "message",
-          "text": "Anchor holds. The pod stopped fighting the drift.",
-          "textKey": "episode_09.e09_n06_secure.event6.text"
+          "text": "Anchor holds.",
+          "textKey": "episode_09.e09_r06_secure_return.event1.text"
         },
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "The pod stopped fighting the drift.",
+          "textKey": "episode_09.e09_r06_secure_return.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
         },
         {
           "type": "message",
           "text": "I wish that sentence felt less alive.",
-          "textKey": "episode_09.e09_n06_secure.event8.text"
+          "textKey": "episode_09.e09_r06_secure_return.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "The line vibrates every few seconds, like something inside is answering the beacon.",
+          "textKey": "episode_09.e09_r06_secure_return.event7.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": -1,
+            "signalStrength": 2,
+            "podSecured": true
+          }
         }
       ],
       "nextNodeId": "e09_n07_hale_reveal"
@@ -652,7 +939,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 2800
         },
         {
           "type": "message",
@@ -660,44 +947,33 @@
           "textKey": "episode_09.e09_n06_hatch.event1.text"
         },
         {
-          "type": "progressTask",
-          "id": "maya_checks_hatch_under_drift",
-          "title": "MAYA CHECKING HATCH UNDER DRIFT",
-          "subtitle": "Maya approaches the hatch before anchoring the pod",
-          "duration": 38000,
-          "completeText": "[MAYA REACHED HATCH]",
-          "tone": "danger",
-          "titleKey": "episode_09.e09_n06_hatch.event2.title",
-          "completeTextKey": "episode_09.e09_n06_hatch.event2.completeText"
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "The pod is still drifting. I see it.",
+          "textKey": "episode_09.e09_n06_hatch.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "Maya, back off. The pod is still moving.",
+          "speaker": "HALE",
+          "textKey": "episode_09.e09_n06_hatch.event5.text"
         },
         {
           "type": "backgroundEvent",
-          "delay": 3600,
-          "event": {
-            "type": "message",
-            "text": "Maya, back off. The pod is still moving.",
-            "speaker": "HALE",
-            "textKey": "episode_09.e09_n06_hatch.backgroundEvent3.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 7000,
-          "event": {
-            "type": "message",
-            "text": "I see it.",
-            "speaker": "MAYA",
-            "textKey": "episode_09.e09_n06_hatch.backgroundEvent4.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 10200,
+          "delay": 5200,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "closer",
-            "textKey": "episode_09.e09_n06_hatch.backgroundEvent5.text"
+            "pauseAfterMs": 900,
+            "textKey": "episode_09.e09_n06_hatch.backgroundEvent6.text"
           }
         },
         {
@@ -706,17 +982,77 @@
         },
         {
           "type": "message",
-          "text": "The pod shifted. I hit the rail. I'm fine.",
-          "textKey": "episode_09.e09_n06_hatch.event7.text"
+          "text": "I need one hand on the rail and one on the hatch frame.",
+          "textKey": "episode_09.e09_n06_hatch.event8.text"
+        },
+        {
+          "type": "characterBusy",
+          "id": "maya_checks_hatch_under_drift_v6",
+          "character": "MAYA",
+          "status": "IS CHECKING HATCH",
+          "durationMs": 2280000,
+          "returnNodeId": "e09_r06_hatch_return",
+          "message": "[MAYA IS CHECKING HATCH]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Maya sent a message.",
+          "tone": "danger",
+          "pauseAfterMs": 500,
+          "messageKey": "episode_09.e09_n06_hatch.event9.message"
+        }
+      ]
+    },
+    "e09_r06_hatch_return": {
+      "id": "e09_r06_hatch_return",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "glitch",
+          "duration": 800,
+          "pauseAfterMs": 600
         },
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "The pod shifted.",
+          "textKey": "episode_09.e09_r06_hatch_return.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "I hit the rail. I'm fine.",
+          "textKey": "episode_09.e09_r06_hatch_return.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
         },
         {
           "type": "message",
           "text": "That was a lie. My shoulder disagrees, but it's still attached.",
-          "textKey": "episode_09.e09_n06_hatch.event9.text"
+          "textKey": "episode_09.e09_r06_hatch_return.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "The hatch is reachable, but the whole frame is carrying motion through it.",
+          "textKey": "episode_09.e09_r06_hatch_return.event8.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 3,
+            "signalStrength": -2,
+            "mayaShoulderHit": true
+          }
         }
       ],
       "nextNodeId": "e09_n07_hale_reveal"
@@ -732,6 +1068,7 @@
         {
           "type": "message",
           "text": "I need to tell you something before you touch the override.",
+          "speaker": "HALE",
           "textKey": "episode_09.e09_n07_hale_reveal.event1.text"
         },
         {
@@ -741,6 +1078,7 @@
         {
           "type": "message",
           "text": "I have seen this pod before.",
+          "speaker": "HALE",
           "textKey": "episode_09.e09_n07_hale_reveal.event3.text"
         },
         {
@@ -750,15 +1088,17 @@
         {
           "type": "message",
           "text": "Before Alpha. It was empty.",
+          "speaker": "HALE",
           "textKey": "episode_09.e09_n07_hale_reveal.event5.text"
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 4600
         },
         {
           "type": "message",
           "text": "No body. No suit. No blood. Just frost on the inside of the glass.",
+          "speaker": "HALE",
           "textKey": "episode_09.e09_n07_hale_reveal.event7.text"
         },
         {
@@ -783,7 +1123,7 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3400
         },
         {
           "type": "message",
@@ -798,6 +1138,7 @@
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "HE'S LYING",
+            "pauseAfterMs": 900,
             "textKey": "episode_09.e09_n07_hale_reveal.backgroundEvent14.text"
           }
         },
@@ -841,9 +1182,9 @@
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "file",
-          "id": "old_pod_access_log",
-          "fileId": "old_pod_access_log",
+          "type": "log",
+          "id": "old_pod_access_log_v6",
+          "fileId": "old_pod_access_log_v6",
           "fileType": "log",
           "title": "OLD POD ACCESS LOG",
           "content": "Access Event: Emergency Pod Manual Inspection\nTimestamp: Before Incident Alpha\nOperator: Ethan Hale\nPod State: empty\nInterior Residue: frost / no biological matter detected\nSeal Reclosure: completed manually\nCurrent Conflict: active motion and biometrics now detected inside same pod",
@@ -856,9 +1197,11 @@
             "access"
           ],
           "correlationTags": [
-            "pod_rescue"
+            "pod_rescue",
+            "hale_memory"
           ],
           "message": "[OLD POD ACCESS LOG ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
           "titleKey": "episode_09.e09_n08_old_log.event0.title",
           "contentKey": "episode_09.e09_n08_old_log.event0.content",
           "captionKey": "episode_09.e09_n08_old_log.event0.caption",
@@ -876,7 +1219,7 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 3800
         },
         {
           "type": "message",
@@ -894,7 +1237,7 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 3800
         },
         {
           "type": "message",
@@ -904,7 +1247,7 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 4200
         },
         {
           "type": "message",
@@ -921,7 +1264,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 3200
         },
         {
           "type": "message",
@@ -930,7 +1273,7 @@
         },
         {
           "type": "typing",
-          "duration": 4000
+          "duration": 4200
         },
         {
           "type": "message",
@@ -939,7 +1282,7 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 4200
         },
         {
           "type": "message",
@@ -967,24 +1310,67 @@
           }
         },
         {
-          "type": "progressTask",
-          "id": "maya_prepares_manual_override",
-          "title": "MAYA PREPARING MANUAL OVERRIDE",
-          "subtitle": "Maya starts physical prep without confirming Hale's old pod log",
-          "duration": 42000,
-          "completeText": "[MANUAL OVERRIDE READY]",
-          "tone": "danger",
-          "titleKey": "episode_09.e09_n08_focus_hatch.event8.title",
-          "completeTextKey": "episode_09.e09_n08_focus_hatch.event8.completeText"
-        },
-        {
           "type": "typing",
-          "duration": 3200
+          "duration": 3800
         },
         {
           "type": "message",
-          "text": "Override handle is exposed. It looks old enough to hate me personally.",
-          "textKey": "episode_09.e09_n08_focus_hatch.event10.text"
+          "text": "I am exposing the manual override now.",
+          "textKey": "episode_09.e09_n08_focus_hatch.event9.text"
+        },
+        {
+          "type": "characterBusy",
+          "id": "maya_prepares_manual_override_v6",
+          "character": "MAYA",
+          "status": "IS PREPARING OVERRIDE",
+          "durationMs": 2520000,
+          "returnNodeId": "e09_r08_focus_return",
+          "message": "[MAYA IS PREPARING OVERRIDE]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Maya sent a message.",
+          "tone": "danger",
+          "pauseAfterMs": 500,
+          "messageKey": "episode_09.e09_n08_focus_hatch.event10.message"
+        }
+      ]
+    },
+    "e09_r08_focus_return": {
+      "id": "e09_r08_focus_return",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "Override handle is exposed.",
+          "textKey": "episode_09.e09_r08_focus_return.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "It looks old enough to hate me personally.",
+          "textKey": "episode_09.e09_r08_focus_return.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "The hatch clicked twice while I was working. Not metal settling. A deliberate sound.",
+          "textKey": "episode_09.e09_r08_focus_return.event5.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 3,
+            "mayaCommitted": true
+          }
         }
       ],
       "nextNodeId": "e09_n09_access_choice"
@@ -994,9 +1380,9 @@
       "speaker": "MAYA",
       "events": [
         {
-          "type": "file",
-          "id": "pod_access_risk_report",
-          "fileId": "pod_access_risk_report",
+          "type": "log",
+          "id": "pod_access_risk_report_v6",
+          "fileId": "pod_access_risk_report_v6",
           "fileType": "log",
           "title": "POD ACCESS RISK REPORT",
           "content": "Interior Motion: detected\nSeal Pressure: unstable\nManual Override: required\nAudio Channel Contamination: rising\nExternal Voice Traffic: unauthorized\nRecommendation: choose access protocol before opening",
@@ -1011,6 +1397,7 @@
             "pod_rescue"
           ],
           "message": "[POD ACCESS RISK REPORT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
           "titleKey": "episode_09.e09_n09_access_choice.event0.title",
           "contentKey": "episode_09.e09_n09_access_choice.event0.content",
           "captionKey": "episode_09.e09_n09_access_choice.event0.caption",
@@ -1027,7 +1414,7 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 4400
         },
         {
           "type": "message",
@@ -1041,12 +1428,13 @@
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "open",
+            "pauseAfterMs": 900,
             "textKey": "episode_09.e09_n09_access_choice.backgroundEvent5.text"
           }
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 3800
         },
         {
           "type": "message",
@@ -1055,7 +1443,7 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 4000
         },
         {
           "type": "message",
@@ -1094,7 +1482,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 3200
         },
         {
           "type": "message",
@@ -1102,63 +1490,108 @@
           "textKey": "episode_09.e09_n10_vent.event1.text"
         },
         {
-          "type": "progressTask",
-          "id": "pod_pressure_venting",
-          "title": "POD PRESSURE VENTING",
-          "subtitle": "Maya bleeds pressure from the pod seal before opening",
-          "duration": 52000,
-          "completeText": "[POD PRESSURE STABILIZED]",
-          "tone": "system",
-          "titleKey": "episode_09.e09_n10_vent.event2.title",
-          "completeTextKey": "episode_09.e09_n10_vent.event2.completeText"
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "That buys control.",
+          "speaker": "HALE",
+          "textKey": "episode_09.e09_n10_vent.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "And costs time.",
+          "speaker": "MAYA",
+          "textKey": "episode_09.e09_n10_vent.event5.text"
         },
         {
           "type": "backgroundEvent",
-          "delay": 4600,
-          "event": {
-            "type": "message",
-            "text": "That buys control.",
-            "speaker": "HALE",
-            "textKey": "episode_09.e09_n10_vent.backgroundEvent3.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 8200,
-          "event": {
-            "type": "message",
-            "text": "And costs time.",
-            "speaker": "MAYA",
-            "textKey": "episode_09.e09_n10_vent.backgroundEvent4.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 12200,
+          "delay": 5200,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "cold",
-            "textKey": "episode_09.e09_n10_vent.backgroundEvent5.text"
+            "pauseAfterMs": 900,
+            "textKey": "episode_09.e09_n10_vent.backgroundEvent6.text"
           }
         },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "I'm bleeding pressure from the pod seal. I need to keep the valve steady.",
+          "textKey": "episode_09.e09_n10_vent.event8.text"
+        },
+        {
+          "type": "characterBusy",
+          "id": "maya_vents_pod_pressure_v6",
+          "character": "MAYA",
+          "status": "IS VENTING POD",
+          "durationMs": 3120000,
+          "returnNodeId": "e09_r10_vent_return",
+          "message": "[MAYA IS VENTING POD]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Maya sent a message.",
+          "tone": "character",
+          "pauseAfterMs": 500,
+          "messageKey": "episode_09.e09_n10_vent.event9.message"
+        }
+      ]
+    },
+    "e09_r10_vent_return": {
+      "id": "e09_r10_vent_return",
+      "speaker": "MAYA",
+      "events": [
         {
           "type": "typing",
           "duration": 3600
         },
         {
           "type": "message",
-          "text": "Pressure is stable. The voice got weaker during venting.",
-          "textKey": "episode_09.e09_n10_vent.event7.text"
+          "text": "Pressure is stable.",
+          "textKey": "episode_09.e09_r10_vent_return.event1.text"
         },
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "The voice got weaker during venting.",
+          "textKey": "episode_09.e09_r10_vent_return.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
         },
         {
           "type": "message",
           "text": "I don't know if that is good or monstrous.",
-          "textKey": "episode_09.e09_n10_vent.event9.text"
+          "textKey": "episode_09.e09_r10_vent_return.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "The hatch is safer now. The thing inside sounds less human.",
+          "textKey": "episode_09.e09_r10_vent_return.event7.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 2,
+            "signalStrength": 2,
+            "ventedPod": true
+          }
         }
       ],
       "nextNodeId": "e09_n11_final_decision"
@@ -1169,7 +1602,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 2800
         },
         {
           "type": "message",
@@ -1177,53 +1610,35 @@
           "textKey": "episode_09.e09_n10_force.event1.text"
         },
         {
-          "type": "progressTask",
-          "id": "pod_forced_override",
-          "title": "POD FORCED OVERRIDE",
-          "subtitle": "Maya bypasses pressure sequencing and forces the manual release",
-          "duration": 36000,
-          "completeText": "[POD OVERRIDE FORCED]",
-          "tone": "danger",
-          "titleKey": "episode_09.e09_n10_force.event2.title",
-          "completeTextKey": "episode_09.e09_n10_force.event2.completeText"
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "Maya, no—",
+          "speaker": "HALE",
+          "textKey": "episode_09.e09_n10_force.event3.text"
         },
         {
           "type": "backgroundEvent",
-          "delay": 3000,
-          "event": {
-            "type": "message",
-            "text": "Maya, no—",
-            "speaker": "HALE",
-            "textKey": "episode_09.e09_n10_force.backgroundEvent3.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 6200,
+          "delay": 3600,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "thank you",
+            "pauseAfterMs": 900,
             "textKey": "episode_09.e09_n10_force.backgroundEvent4.text"
           }
         },
         {
-          "type": "backgroundEvent",
-          "delay": 9200,
-          "event": {
-            "type": "message",
-            "text": "Do not thank me yet.",
-            "speaker": "MAYA",
-            "textKey": "episode_09.e09_n10_force.backgroundEvent5.text"
-          }
+          "type": "typing",
+          "duration": 3200
         },
         {
-          "type": "signalLost",
-          "duration": 2600,
-          "message": "[SIGNAL DROP]",
-          "restoreMessage": "[SIGNAL RESTORED]",
-          "messageKey": "episode_09.e09_n10_force.event6.message",
-          "restoreMessageKey": "episode_09.e09_n10_force.event6.restoreMessage"
+          "type": "message",
+          "text": "Do not thank me yet.",
+          "speaker": "MAYA",
+          "textKey": "episode_09.e09_n10_force.event6.text"
         },
         {
           "type": "typing",
@@ -1231,8 +1646,55 @@
         },
         {
           "type": "message",
-          "text": "Seal released hard. Something hit the inside of the hatch.",
+          "text": "I'm bypassing pressure sequencing and pulling the release.",
           "textKey": "episode_09.e09_n10_force.event8.text"
+        },
+        {
+          "type": "characterBusy",
+          "id": "maya_forces_pod_override_v6",
+          "character": "MAYA",
+          "status": "IS FORCING OVERRIDE",
+          "durationMs": 2160000,
+          "returnNodeId": "e09_r10_force_return",
+          "message": "[MAYA IS FORCING OVERRIDE]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Maya sent a message.",
+          "tone": "danger",
+          "pauseAfterMs": 500,
+          "messageKey": "episode_09.e09_n10_force.event9.message"
+        }
+      ]
+    },
+    "e09_r10_force_return": {
+      "id": "e09_r10_force_return",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "signalLost",
+          "duration": 2600,
+          "message": "[SIGNAL DROP]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 900,
+          "messageKey": "episode_09.e09_r10_force_return.event0.message",
+          "restoreMessageKey": "episode_09.e09_r10_force_return.event0.restoreMessage"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Seal released hard.",
+          "textKey": "episode_09.e09_r10_force_return.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "Something hit the inside of the hatch.",
+          "textKey": "episode_09.e09_r10_force_return.event4.text"
         },
         {
           "type": "typing",
@@ -1241,7 +1703,24 @@
         {
           "type": "message",
           "text": "I heard it through my gloves.",
-          "textKey": "episode_09.e09_n10_force.event10.text"
+          "textKey": "episode_09.e09_r10_force_return.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "The pod wants open now. I can feel it fighting the latch.",
+          "textKey": "episode_09.e09_r10_force_return.event8.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 7,
+            "signalStrength": -4,
+            "forcedPodOpen": true
+          }
         }
       ],
       "nextNodeId": "e09_n11_final_decision"
@@ -1257,29 +1736,32 @@
         {
           "type": "message",
           "text": "Last chance.",
+          "speaker": "HALE",
           "textKey": "episode_09.e09_n11_final_decision.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 4600
         },
         {
           "type": "message",
           "text": "If you open it, you commit to whatever is inside.",
+          "speaker": "HALE",
           "textKey": "episode_09.e09_n11_final_decision.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4000
+          "duration": 4200
         },
         {
           "type": "message",
           "text": "If you abort, you may leave a person to die.",
+          "speaker": "HALE",
           "textKey": "episode_09.e09_n11_final_decision.event5.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 3800
         },
         {
           "type": "message",
@@ -1289,7 +1771,7 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 3800
         },
         {
           "type": "message",
@@ -1304,6 +1786,7 @@
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "Maya... please",
+            "pauseAfterMs": 1100,
             "textKey": "episode_09.e09_n11_final_decision.backgroundEvent10.text"
           }
         }
@@ -1341,7 +1824,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 2800
         },
         {
           "type": "message",
@@ -1349,59 +1832,78 @@
           "textKey": "episode_09.e09_open_branch.event1.text"
         },
         {
-          "type": "progressTask",
-          "id": "pod_opening_sequence",
-          "title": "POD OPENING SEQUENCE",
-          "subtitle": "Maya releases the final hatch lock and keeps the rescue channel open",
-          "duration": 56000,
-          "completeText": "[POD SEAL RELEASED]",
-          "tone": "danger",
-          "titleKey": "episode_09.e09_open_branch.event2.title",
-          "completeTextKey": "episode_09.e09_open_branch.event2.completeText"
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "I have internal air mixing.",
+          "textKey": "episode_09.e09_open_branch.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "Keep your face away from the seam.",
+          "speaker": "HALE",
+          "textKey": "episode_09.e09_open_branch.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "There is someone inside.",
+          "speaker": "MAYA",
+          "textKey": "episode_09.e09_open_branch.event7.text"
         },
         {
           "type": "backgroundEvent",
-          "delay": 3200,
-          "event": {
-            "type": "message",
-            "text": "I have internal air mixing.",
-            "speaker": "MAYA",
-            "textKey": "episode_09.e09_open_branch.backgroundEvent3.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 6800,
-          "event": {
-            "type": "message",
-            "text": "Keep your face away from the seam.",
-            "speaker": "HALE",
-            "textKey": "episode_09.e09_open_branch.backgroundEvent4.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 10400,
-          "event": {
-            "type": "message",
-            "text": "There is someone inside.",
-            "speaker": "MAYA",
-            "textKey": "episode_09.e09_open_branch.backgroundEvent5.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 14200,
+          "delay": 5400,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "thank you",
-            "textKey": "episode_09.e09_open_branch.backgroundEvent6.text"
+            "pauseAfterMs": 900,
+            "textKey": "episode_09.e09_open_branch.backgroundEvent8.text"
           }
         },
         {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "I'm releasing the final hatch lock.",
+          "textKey": "episode_09.e09_open_branch.event10.text"
+        },
+        {
+          "type": "characterBusy",
+          "id": "maya_opens_rescue_pod_v6",
+          "character": "MAYA",
+          "status": "IS OPENING POD",
+          "durationMs": 3360000,
+          "returnNodeId": "e09_r_open_branch_return",
+          "message": "[MAYA IS OPENING POD]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Maya sent a message.",
+          "tone": "danger",
+          "pauseAfterMs": 500,
+          "messageKey": "episode_09.e09_open_branch.event11.message"
+        }
+      ]
+    },
+    "e09_r_open_branch_return": {
+      "id": "e09_r_open_branch_return",
+      "speaker": "MAYA",
+      "events": [
+        {
           "type": "glitch",
-          "duration": 1600
+          "duration": 1600,
+          "pauseAfterMs": 700
         },
         {
           "type": "typing",
@@ -1410,7 +1912,7 @@
         {
           "type": "message",
           "text": "The hatch is open enough to see a glove.",
-          "textKey": "episode_09.e09_open_branch.event9.text"
+          "textKey": "episode_09.e09_r_open_branch_return.event2.text"
         },
         {
           "type": "typing",
@@ -1419,7 +1921,16 @@
         {
           "type": "message",
           "text": "NV on the wrist.",
-          "textKey": "episode_09.e09_open_branch.event11.text"
+          "textKey": "episode_09.e09_r_open_branch_return.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4400
+        },
+        {
+          "type": "message",
+          "text": "If this is a trap, it knows exactly which dead man to wear.",
+          "textKey": "episode_09.e09_r_open_branch_return.event6.text"
         },
         {
           "type": "typing",
@@ -1427,8 +1938,16 @@
         },
         {
           "type": "message",
-          "text": "If this is a trap, it knows exactly which dead man to wear.",
-          "textKey": "episode_09.e09_open_branch.event13.text"
+          "text": "He's breathing. Or the pod is making him look like he is.",
+          "textKey": "episode_09.e09_r_open_branch_return.event8.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 8,
+            "signalStrength": -4,
+            "openedPod": true
+          }
         }
       ],
       "choices": [
@@ -1441,7 +1960,7 @@
             "signalStrength": -4
           },
           "nextEpisodeId": "episode_10",
-          "textKey": "episode_09.e09_open_branch.choice0.text"
+          "textKey": "episode_09.e09_r_open_branch_return.choice0.text"
         },
         {
           "id": "stabilize_open_pod",
@@ -1452,7 +1971,7 @@
             "signalStrength": 3
           },
           "nextEpisodeId": "episode_10",
-          "textKey": "episode_09.e09_open_branch.choice1.text"
+          "textKey": "episode_09.e09_r_open_branch_return.choice1.text"
         }
       ]
     },
@@ -1462,7 +1981,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3400
         },
         {
           "type": "message",
@@ -1475,7 +1994,7 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 4400
         },
         {
           "type": "message",
@@ -1484,7 +2003,7 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 4400
         },
         {
           "type": "message",
@@ -1498,6 +2017,7 @@
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
             "text": "you promised",
+            "pauseAfterMs": 900,
             "textKey": "episode_09.e09_abort_branch.backgroundEvent7.text"
           }
         },
@@ -1512,26 +2032,43 @@
           }
         },
         {
-          "type": "backgroundEvent",
-          "delay": 11200,
-          "event": {
-            "type": "message",
-            "text": "I'm trying.",
-            "speaker": "MAYA",
-            "textKey": "episode_09.e09_abort_branch.backgroundEvent9.text"
-          }
+          "type": "typing",
+          "duration": 3800
         },
         {
-          "type": "progressTask",
-          "id": "maya_withdraws_from_pod",
-          "title": "MAYA WITHDRAWING FROM POD",
-          "subtitle": "Maya pulls away from the hatch while the beacon remains active",
-          "duration": 48000,
-          "completeText": "[MAYA CLEAR OF POD HATCH]",
-          "tone": "danger",
-          "titleKey": "episode_09.e09_abort_branch.event10.title",
-          "completeTextKey": "episode_09.e09_abort_branch.event10.completeText"
+          "type": "message",
+          "text": "I'm trying.",
+          "textKey": "episode_09.e09_abort_branch.event10.text"
         },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "I need to pull away before the beacon talks me back into this.",
+          "textKey": "episode_09.e09_abort_branch.event12.text"
+        },
+        {
+          "type": "characterBusy",
+          "id": "maya_withdraws_from_pod_v6",
+          "character": "MAYA",
+          "status": "IS WITHDRAWING",
+          "durationMs": 2880000,
+          "returnNodeId": "e09_r_abort_branch_return",
+          "message": "[MAYA IS WITHDRAWING]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Maya sent a message.",
+          "tone": "danger",
+          "pauseAfterMs": 500,
+          "messageKey": "episode_09.e09_abort_branch.event13.message"
+        }
+      ]
+    },
+    "e09_r_abort_branch_return": {
+      "id": "e09_r_abort_branch_return",
+      "speaker": "MAYA",
+      "events": [
         {
           "type": "typing",
           "duration": 3600
@@ -1539,7 +2076,25 @@
         {
           "type": "message",
           "text": "I'm clear.",
-          "textKey": "episode_09.e09_abort_branch.event12.text"
+          "textKey": "episode_09.e09_r_abort_branch_return.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4400
+        },
+        {
+          "type": "message",
+          "text": "The beacon is still following us.",
+          "textKey": "episode_09.e09_r_abort_branch_return.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "That feels like an answer we didn't ask for.",
+          "textKey": "episode_09.e09_r_abort_branch_return.event5.text"
         },
         {
           "type": "typing",
@@ -1547,17 +2102,16 @@
         },
         {
           "type": "message",
-          "text": "The beacon is still following us.",
-          "textKey": "episode_09.e09_abort_branch.event14.text"
+          "text": "I can still hear it clicking through the line. One tap. Two taps. Like Noah used to do.",
+          "textKey": "episode_09.e09_r_abort_branch_return.event7.text"
         },
         {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "That feels like an answer we didn't ask for.",
-          "textKey": "episode_09.e09_abort_branch.event16.text"
+          "type": "statChange",
+          "changes": {
+            "danger": 1,
+            "abortedPodMission": true,
+            "mayaWounded": true
+          }
         }
       ],
       "choices": [
@@ -1570,7 +2124,7 @@
             "signalStrength": -3
           },
           "nextEpisodeId": "episode_10",
-          "textKey": "episode_09.e09_abort_branch.choice0.text"
+          "textKey": "episode_09.e09_r_abort_branch_return.choice0.text"
         },
         {
           "id": "reopen_rescue_channel",
@@ -1581,30 +2135,35 @@
             "signalStrength": -6
           },
           "nextEpisodeId": "episode_10",
-          "textKey": "episode_09.e09_abort_branch.choice1.text"
+          "textKey": "episode_09.e09_r_abort_branch_return.choice1.text"
         }
       ]
     }
   },
-  "titleKey": "episode_09.meta.episode0.title",
   "directorCut": {
-    "version": "V5_UPGRADED",
+    "version": "V6_FINAL_LIFELINE_CUT",
     "sourceEpisode": "episode_09",
-    "designRulesApplied": [
-      "Somut hedef: Maya acil durum poduna ulaşır ve kurtarma/abort kararını uygular",
-      "Matching puzzle tamamen kaldırıldı; korelasyonlar dosya + diyalog + iki seçenekli kararlarla çözüldü",
-      "Her seçim iki seçenekten oluşur",
-      "Her seçim farklı sahne üretir ve bayrak/effect bırakır",
-      "Sistem mesajları azaltıldı; güven değişimi görünmez, diyalog davranışıyla hissedilir",
-      "Maya rota boyunca fiziksel olarak hareket eder: beacon hold, rota geçişi, pod exterior, hatch, override",
-      "Hale ve Maya çatışması büyür; Hale daha kontrollü/korkmuş, Maya daha duygusal/eylem odaklıdır",
-      "Real-time progressTask ve backgroundEvent akışı eklendi",
-      "Aç / abort kararı geri döndürülemez Episode 10 bayrakları üretir",
-      "Noah Voss sesi ve pod şüphesi Episode 10'a güçlü taşınır"
+    "sourceTitle": "THE RESCUE — DIRECTOR'S CUT V5 UPGRADED",
+    "coreObjective": "Guide Maya through the rescue route and commit to opening or aborting the emergency pod.",
+    "majorChanges": [
+      "All progressTask sections replaced with characterBusy events and return nodes.",
+      "Every long physical operation now pauses chat and resumes with a report.",
+      "Maya's route choices have concrete physical consequences.",
+      "Hale's old pod access log remains a major reveal.",
+      "Open/abort remains the irreversible branch into Episode 10.",
+      "Noah/pod ambiguity is strengthened without adding a matching puzzle.",
+      "All visible choices are exactly two options."
     ],
     "removedPuzzles": [
       "pod_beacon_alignment_09",
       "pod_access_correlation_09"
+    ],
+    "requiredEngineFeatures": [
+      "characterBusy event",
+      "busyState persistence",
+      "returnNodeId resume",
+      "Terminal busy screen",
+      "optional browser notification"
     ],
     "nextEpisode": "episode_10"
   }
