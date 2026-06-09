@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   chooseOption,
   getCurrentNode,
@@ -75,6 +75,43 @@ function App() {
 
   const activeStep = currentBoot?.[bootStepIndex];
 
+  const introAudioRef = useRef(null);
+
+function startIntroAudio() {
+  if (!settings.soundEnabled || introAudioRef.current) return;
+
+  const audio = new Audio();
+  audio.src = "/audio/link-start.mp3";
+  audio.loop = true;
+  audio.volume = 0.85;
+  audio.preload = "auto";
+
+  console.log("AUDIO SRC:", audio.src);
+  console.log("CAN PLAY MP3:", audio.canPlayType("audio/mpeg"));
+
+  audio.addEventListener("loadedmetadata", () => {
+    console.log("AUDIO LOADED:", audio.duration);
+  });
+
+  audio.addEventListener("error", () => {
+    console.error("AUDIO ERROR:", audio.error);
+  });
+
+  introAudioRef.current = audio;
+
+  audio.play().catch((error) => {
+    console.warn("INTRO AUDIO PLAY FAILED:", error);
+  });
+}
+
+  function stopIntroAudio() {
+    if (!introAudioRef.current) return;
+
+    introAudioRef.current.pause();
+    introAudioRef.current.currentTime = 0;
+    introAudioRef.current = null;
+  }
+
   function showCharacterReturnNotification(busyState) {
     if (!busyState) return;
 
@@ -138,12 +175,14 @@ function App() {
     };
   }
 
-  function startGame() {
-    runIntroTimeline({
-      timeline: gameConfig.introTimeline,
-      onPhaseChange: setPhase
-    });
-  }
+function startGame() {
+  startIntroAudio();
+
+  runIntroTimeline({
+    timeline: gameConfig.introTimeline,
+    onPhaseChange: setPhase
+  });
+}
 
   function startRecoveryBoot() {
     setShowError(false);
@@ -157,6 +196,34 @@ function App() {
   useEffect(() => {
     localStorage.setItem("echo_settings", JSON.stringify(settings));
   }, [settings]);
+
+  useEffect(() => {
+    let logoAudioStopTimer;
+
+    if (!settings.soundEnabled) {
+      stopIntroAudio();
+      return undefined;
+    }
+
+    if (phase === "logo") {
+      logoAudioStopTimer = setTimeout(() => {
+        stopIntroAudio();
+      }, 2200);
+    }
+
+    if (
+      phase === "start" ||
+      phase === "game" ||
+      phase === "booting" ||
+      phase === "rebootConfirm"
+    ) {
+      stopIntroAudio();
+    }
+
+    return () => {
+      clearTimeout(logoAudioStopTimer);
+    };
+  }, [phase, settings.soundEnabled]);
 
   useEffect(() => {
     if (phase !== "game") return;
@@ -546,11 +613,24 @@ function handleChoice(choiceId) {
   }
 
   if (phase === "quote") {
-    return <QuoteScreen quote={gameConfig.introQuote}  language={settings.language} />;
+    return (
+      <QuoteScreen
+        quote={gameConfig.introQuote}
+        language={settings.language}
+      />
+    );
   }
 
   if (phase === "logo") {
-    return <LogoScreen gameTitle={gameConfig.gameTitle} />;
+    return (
+      <LogoScreen
+        gameTitle={gameConfig.gameTitle}
+        onComplete={() => {
+          stopIntroAudio();
+          setPhase("booting");
+        }}
+      />
+    );
   }
 
   if (phase === "booting") {

@@ -20,16 +20,16 @@ export default function StartScreen({
     let leaveTimer;
     let nextTimer;
 
-    if (introStep === "producerLogo") {
-      leaveTimer = setTimeout(() => {
-        setIsLeaving(true);
-      }, 2200);
+if (introStep === "producerLogo") {
+  leaveTimer = setTimeout(() => {
+    setIsLeaving(true);
+  }, 2200);
 
-      nextTimer = setTimeout(() => {
-        setIntroStep("disclaimer");
-        setIsLeaving(false);
-      }, 3200);
-    }
+  nextTimer = setTimeout(() => {
+    setIntroStep("disclaimer");
+    setIsLeaving(false);
+  }, 3200);
+}
 
     if (introStep === "disclaimer") {
       leaveTimer = setTimeout(() => {
@@ -59,12 +59,12 @@ export default function StartScreen({
               : "animate-[producerLogoFadeIn_1.2s_ease-out_forwards]"
           ].join(" ")}
         >
-          <img
-            src="/red-door-logo.jpg"
-            alt="Red Door"
-            className="w-56 max-w-[70vw] object-contain sm:w-72"
-            draggable={false}
-          />
+<img
+  src="/red-door-logo.jpg"
+  alt="Red Door"
+  className="w-56 max-w-[70vw] object-contain sm:w-72"
+  draggable={false}
+/>
         </div>
       </main>
     );

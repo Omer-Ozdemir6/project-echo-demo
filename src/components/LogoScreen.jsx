@@ -1,25 +1,36 @@
 import { useEffect, useMemo, useState } from "react";
 
-export default function LogoScreen({ gameTitle }) {
+export default function LogoScreen({ gameTitle, onComplete }) {
   const [progress, setProgress] = useState(0);
+  const [blackout, setBlackout] = useState(false);
 
   useEffect(() => {
     const steps = [
       { value: 10, delay: 300 },
-      { value: 30, delay: 700 },
-      { value: 60, delay: 1200 },
-      { value: 84, delay: 1700 },
-      { value: 100, delay: 2200 }
+      { value: 30, delay: 1000 },
+      { value: 60, delay: 1600 },
+      { value: 84, delay: 2200 },
+      { value: 100, delay: 3300 }
     ];
 
     const timers = steps.map((step) =>
-      setTimeout(() => {
-        setProgress(step.value);
-      }, step.delay)
+      setTimeout(() => setProgress(step.value), step.delay)
     );
 
     return () => timers.forEach(clearTimeout);
   }, []);
+
+  useEffect(() => {
+    if (progress < 100) return;
+
+    setBlackout(true);
+
+    const timer = setTimeout(() => {
+      onComplete?.();
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [progress, onComplete]);
 
   const bar = useMemo(() => {
     const filled = Math.round(progress / 10);
@@ -27,6 +38,10 @@ export default function LogoScreen({ gameTitle }) {
   }, [progress]);
 
   const isComplete = progress >= 100;
+
+  if (blackout) {
+    return <main className="min-h-dvh bg-black" />;
+  }
 
   return (
     <main className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-black">
@@ -37,19 +52,7 @@ export default function LogoScreen({ gameTitle }) {
       <div className="pointer-events-none absolute inset-0 animate-pulse bg-cyan-300/5" />
 
       <div className="relative z-10 flex flex-col items-center">
-        <div
-          className={[
-            "grid place-items-center",
-            "h-44 w-44 rounded-full",
-            "border border-cyan-300/40",
-            "text-center",
-            "text-sm tracking-[0.45em]",
-            "text-cyan-300",
-            "shadow-[0_0_40px_rgba(34,211,238,0.35)]",
-            "animate-[pulse_3s_ease-in-out_infinite]",
-            "sm:h-56 sm:w-56 sm:text-base"
-          ].join(" ")}
-        >
+        <div className="grid h-44 w-44 place-items-center rounded-full border border-cyan-300/40 text-center text-sm tracking-[0.45em] text-cyan-300 shadow-[0_0_40px_rgba(34,211,238,0.35)] animate-[pulse_3s_ease-in-out_infinite] sm:h-56 sm:w-56 sm:text-base">
           {gameTitle}
         </div>
 

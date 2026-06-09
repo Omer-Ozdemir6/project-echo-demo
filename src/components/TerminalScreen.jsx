@@ -79,9 +79,7 @@ export default function TerminalScreen({
   const connectionValue =
     signalStatus?.type === "lost"
       ? getGameText("status.lost", language === "tr" ? "KOPTU" : "LOST", language)
-      : isBusyActive
-        ? getGameText("status.waiting", language === "tr" ? "BEKLEMEDE" : "WAITING", language)
-        : getGameText("status.active", language === "tr" ? "AKTİF" : "ACTIVE", language);
+      : getGameText("status.active", language === "tr" ? "AKTİF" : "ACTIVE", language);
 
   const baseSignal = Number(gameState.signalStrength ?? 96);
 
@@ -158,13 +156,6 @@ export default function TerminalScreen({
     return "█".repeat(filled) + "░".repeat(10 - filled);
   }
 
-  function getBusyDescription() {
-    if (language === "tr") {
-      return "İletim şu anda kapalı. Karakter geri dönene kadar yeni mesaj veya seçim görünmeyecek.";
-    }
-
-    return "Transmission is unavailable. No new messages or choices will appear until the character returns.";
-  }
 
   useEffect(() => {
     if (signalStatus?.type === "lost") {
@@ -289,9 +280,7 @@ export default function TerminalScreen({
                 className={
                   signalStatus?.type === "lost"
                     ? "text-rose-300"
-                    : isBusyActive
-                      ? "text-rose-300"
-                      : "text-emerald-200"
+                    : "text-emerald-200"
                 }
               >
                 {connectionValue}
@@ -308,34 +297,37 @@ export default function TerminalScreen({
         </div>
 
         <div className="min-h-0 flex-1 overflow-hidden">
-          {isBusyActive ? (
-            <div className="flex h-full flex-col items-center justify-center px-5 text-center">
-              <div className="mb-5 h-3 w-3 animate-pulse rounded-full bg-rose-400 shadow-[0_0_22px_rgba(251,113,133,0.95)]" />
-
-              <p className="text-sm tracking-[0.35em] text-rose-300 sm:text-base">
-                {busyTitle}
-              </p>
-
-              <p className="mt-4 max-w-md text-xs leading-6 text-cyan-50/45 sm:text-sm">
-                {getBusyDescription()}
-              </p>
-
-              <div className="mt-6 border border-rose-400/20 bg-rose-950/10 px-4 py-3 text-[10px] tracking-[0.25em] text-rose-200/70">
-                {language === "tr" ? "*****" : "*****"}
-              </div>
-            </div>
-          ) : (
-            <MessageFeed
-              speaker={currentNode.speaker}
-              messages={visibleMessages}
-              isTyping={isTyping}
-              onOpenFile={setActiveFile}
-              language={language}
-              settings={settings}
-              hasBottomPanel={canShowChoices || Boolean(activePuzzle)}
-            />
-          )}
+          <MessageFeed
+            speaker={currentNode.speaker}
+            messages={visibleMessages}
+            isTyping={isTyping}
+            onOpenFile={setActiveFile}
+            language={language}
+            settings={settings}
+            hasBottomPanel={
+              canShowChoices ||
+              Boolean(activePuzzle) ||
+              isBusyActive
+            }
+          />
         </div>
+
+        {isBusyActive && (
+          <div className="shrink-0 border-t border-amber-300/20 bg-slate-950/95 pt-3">
+            <div className="border border-amber-300/25 bg-amber-950/10 px-4 py-3 shadow-[0_0_18px_rgba(251,191,36,0.06)]">
+              <div className="flex items-center gap-2 text-[11px] tracking-[0.2em] text-amber-200">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-amber-300 shadow-[0_0_10px_rgba(252,211,77,0.8)]" />
+                <span>{busyTitle}</span>
+              </div>
+
+              <p className="mt-2 text-xs leading-5 text-cyan-50/50">
+                {language === "tr"
+                  ? "Karakter görev üzerinde. Eski iletileri inceleyebilir veya veri bankasını açabilirsiniz."
+                  : "The character is working. You can review previous transmissions or open the Data Bank."}
+              </p>
+            </div>
+          </div>
+        )}
 
         {activePuzzle && canInteract && (
           <div className="shrink-0 max-h-[42dvh] overflow-y-auto border-t border-cyan-300/20 bg-slate-950/95 pt-3">
@@ -380,7 +372,7 @@ export default function TerminalScreen({
         onClose={() => setDecodeFile(null)}
       />
 
-      <FileViewerModal file={activeFile} onClose={() => setActiveFile(null)} />
+      <FileViewerModal file={activeFile} settings={settings} onClose={() => setActiveFile(null)} />
       <SignalOverlay status={signalStatus} />
 
       {isSettingsOpen && (
