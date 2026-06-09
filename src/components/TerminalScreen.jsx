@@ -321,7 +321,7 @@ export default function TerminalScreen({
               </p>
 
               <div className="mt-6 border border-rose-400/20 bg-rose-950/10 px-4 py-3 text-[10px] tracking-[0.25em] text-rose-200/70">
-                {language === "tr" ? "BEKLEME SÜRESİ GİZLİ" : "WAIT TIME HIDDEN"}
+                {language === "tr" ? "*****" : "*****"}
               </div>
             </div>
           ) : (
