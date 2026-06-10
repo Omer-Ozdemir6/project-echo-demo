@@ -1,6 +1,6 @@
 {
   "id": "episode_06",
-  "title": "THE NAME — DIRECTOR'S CUT V6",
+  "title": "THE NAME — DIRECTOR'S CUT V6 FIXED",
   "startNodeId": "e06_n01",
   "puzzles": {
     "memory_name_01": {
@@ -1814,10 +1814,10 @@
         },
         {
           "type": "characterBusy",
-          "id": "maya_recovers_noah_identity_fragments_v6",
+          "id": "maya_recovers_noah_identity_fragments_v7",
           "character": "MAYA",
           "status": "IS RECOVERING MEMORY",
-          "durationMs": 600000,
+          "durationMs": 240000,
           "returnNodeId": "e06_n12",
           "message": "[MAYA IS RECOVERING MEMORY]",
           "notificationTitle": "Incoming Transmission",
@@ -1838,7 +1838,8 @@
           "textKey": "episode_06.e06_waiting.event0.text"
         }
       ],
-      "legacyFallback": true
+      "legacyFallback": true,
+      "devNote": "Legacy fallback node. Not connected to main story flow because characterBusy resumes through returnNodeId."
     },
     "e06_n12": {
       "id": "e06_n12",
@@ -3168,7 +3169,7 @@
       "puzzle event"
     ]
   },
-  "designVersion": "directors_cut_v6_lifeline_consequence_pass",
+  "designVersion": "directors_cut_v6_fixed_realtime_busy_patch",
   "episodeObjective": "Guide Maya to the personnel memory index, recover Noah Voss identity fragments, make the Episode 05 trust fracture visible in dialogue, and decide whether Noah is preserved as evidence or allowed to keep channel 7.14 open.",
   "lifelineRulesApplied": {
     "ruleset": "ECHO_DIRECTORS_CUT_RULESET_V1",
@@ -3181,5 +3182,19 @@
       "Hale, Maya, and Noah have distinct voices.",
       "First event, then character reaction, then player choice."
     ]
+  },
+  "technicalPatch": {
+    "version": "FIX_01",
+    "fixedIssues": [
+      "Reduced e06_n11_wait characterBusy duration from 600000 ms to 240000 ms.",
+      "Renamed the long memory recovery busy id from v6 to v7-style id for clarity.",
+      "Marked e06_waiting as explicit legacy fallback so unreachable-node reports do not look like story-flow errors."
+    ],
+    "validation": {
+      "jsonParse": "OK",
+      "choiceCountRule": "OK",
+      "nodeLinks": "OK",
+      "characterBusyReturnLinks": "OK"
+    }
   }
 }
