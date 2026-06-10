@@ -1,22 +1,24 @@
 {
   "id": "episode_08",
-  "title": "THE EIGHTH PASSENGER — LIFELINE CUT V6 FINAL",
+  "title": "THE EIGHTH PASSENGER — ECHO LIFELINE PASS V2",
   "titleKey": "episode_08.meta.title",
   "startNodeId": "e08_n01",
   "puzzles": {},
-  "episodeObjective": "Reach the external emergency pod, identify the occupant, and make an irreversible decision about Noah Voss.",
-  "designVersion": "lifeline_cut_v6_final_realtime_pod_rescue",
+  "episodeObjective": "Reach the external emergency pod, identify the occupant, and make an irreversible Noah Voss decision whose consequences are visible in Maya, Hale, and Episode 09 branch flags.",
+  "designVersion": "echo_lifeline_pass_v2_10_10_immersion",
   "lifelineRulesApplied": {
-    "ruleset": "ECHO_DIRECTORS_CUT_RULESET_V1",
+    "ruleset": "ECHO_DIRECTORS_CUT_RULESET_V1 + ECHO_LIFELINE_PASS_V2",
     "summary": [
-      "Scenario spine preserved: pod discovery, scan/approach, hatch decision, Noah identification, irreversible extract/seal branch.",
-      "All long physical tasks use characterBusy + returnNodeId.",
-      "No visible wait duration is exposed to the player.",
-      "Maya reports what happened while away after each busy state.",
+      "Scenario spine preserved: pod discovery, scan/approach, hatch decision, Noah identification, extract/seal irreversible branch.",
       "Every visible choice set has exactly two choices.",
-      "Character dialogue rewritten for natural conversation and emotional continuity.",
-      "Hale and Maya conflict escalates through behavior, not UI trust text.",
-      "Lore is delivered through action, physical evidence and reaction."
+      "CharacterBusy durations reduced to preserve real-time pacing.",
+      "Return nodes rewritten from clean reports into lived reactions with pauses, corrections, fear, pain, and delayed information.",
+      "Maya remembers operator choices in branch dialogue and carries them into Episode 09 flags.",
+      "Hale remembers operator choices and changes tone based on verify/contact/extract/seal outcomes.",
+      "Relationship consequences are visible in dialogue, not only stat changes.",
+      "Lore is delivered through action, physical evidence, and character reaction.",
+      "UNKNOWN messages are fragmented and less polished.",
+      "Final branches create distinct Episode 09 start states."
     ]
   },
   "nodes": {
@@ -27,20 +29,29 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 1500
         },
         {
           "type": "message",
-          "text": "I found the pod.",
+          "text": "I found it.",
           "textKey": "episode_08.e08_n01.event1.text"
         },
         {
           "type": "pause",
-          "duration": 700
+          "duration": 800
         },
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "The pod.",
+          "textKey": "episode_08.e08_n01.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2600
         },
         {
           "type": "message",
@@ -49,38 +60,74 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2600
         },
         {
           "type": "message",
-          "text": "It's outside the broken relay spine, caught in the antenna frame like something tried to leave and got grabbed on the way out.",
+          "text": "It's outside the broken relay spine.",
+          "textKey": "episode_08.e08_n01.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2100
+        },
+        {
+          "type": "message",
+          "text": "Caught in the antenna frame.",
+          "textKey": "episode_08.e08_n01.event10.text"
+        },
+        {
+          "type": "pause",
+          "duration": 500
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "Like it tried to leave.",
+          "textKey": "episode_08.e08_n01.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "Like something grabbed it halfway out.",
           "textKey": "episode_08.e08_n01.event6.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1600
         },
         {
           "type": "message",
-          "text": "The beacon is blinking in a rhythm. Not random. Not dying.",
-          "textKey": "episode_08.e08_n01.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 800
+          "text": "Beacon is blinking.",
+          "textKey": "episode_08.e08_n01.event17.text"
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Someone is tapping from the other side of a wall, and I hate that I know what hope sounds like now.",
-          "textKey": "episode_08.e08_n01.event11.text"
+          "text": "Not random.",
+          "textKey": "episode_08.e08_n01.event19.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "Not dying.",
+          "textKey": "episode_08.e08_n01.event8.text"
         },
         {
           "type": "backgroundEvent",
-          "delay": 4800,
+          "delay": 4200,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
@@ -91,11 +138,20 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "There. Tell me you heard that too.",
+          "text": "There.",
+          "textKey": "episode_08.e08_n01.event24.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2300
+        },
+        {
+          "type": "message",
+          "text": "Tell me you heard that too.",
           "textKey": "episode_08.e08_n01.event14.text"
         }
       ],
@@ -107,7 +163,9 @@
           "effects": {
             "danger": 1,
             "signalStrength": -1,
-            "podScanFirst": true
+            "podScanFirst": true,
+            "mayaTrustsCaution": true,
+            "episode09MayaTone": "trusts_operator_caution"
           },
           "textKey": "episode_08.e08_n01.choice0.text"
         },
@@ -119,7 +177,9 @@
             "danger": 3,
             "signalStrength": -2,
             "mayaPhysicalRisk": 2,
-            "movedCloserEarly": true
+            "movedCloserEarly": true,
+            "mayaRemembersRecklessApproach": true,
+            "episode09MayaTone": "questions_operator_risk"
           },
           "textKey": "episode_08.e08_n01.choice1.text"
         }
@@ -131,46 +191,95 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 1000
         },
         {
           "type": "message",
-          "text": "Good. Scan first.",
+          "text": "Good.",
           "textKey": "episode_08.e08_n02_scan.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1300
         },
         {
           "type": "message",
-          "text": "I know I sound like I want to sprint at it, but that's mostly because my brain is terrible at grief.",
+          "text": "Scan first.",
           "textKey": "episode_08.e08_n02_scan.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "I'm setting the relay pack against a support strut and routing the scan through the pod beacon.",
+          "text": "I want to sprint at it.",
+          "textKey": "episode_08.e08_n02_scan.event5.text"
+        },
+        {
+          "type": "pause",
+          "duration": 500
+        },
+        {
+          "type": "typing",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "I do.",
+          "textKey": "episode_08.e08_n02_scan.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "That's the problem.",
+          "textKey": "episode_08.e08_n02_scan.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Relay against the support strut.",
           "textKey": "episode_08.e08_n02_scan.event5.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "I need to keep the antenna aligned. If I talk, I lose the return.",
-          "textKey": "episode_08.e08_n02_scan.event7.text"
+          "text": "Beacon line is thin.",
+          "textKey": "episode_08.e08_n02_scan.event14.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "If I breathe wrong, we lose it.",
+          "textKey": "episode_08.e08_n02_scan.event16.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "Going quiet.",
+          "textKey": "episode_08.e08_n02_scan.event18.text"
         },
         {
           "type": "characterBusy",
-          "id": "maya_remote_pod_scan_v6",
+          "id": "maya_remote_pod_scan_v2",
           "character": "MAYA",
           "status": "IS SCANNING POD",
-          "durationMs": 2520000,
+          "durationMs": 180000,
           "returnNodeId": "e08_r02_scan_return",
           "message": "[MAYA IS SCANNING POD]",
           "notificationTitle": "Incoming Transmission",
@@ -187,21 +296,61 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 1100
         },
         {
           "type": "message",
-          "text": "Scan complete.",
+          "text": "Okay.",
           "textKey": "episode_08.e08_r02_scan_return.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1600
         },
         {
           "type": "message",
-          "text": "I had to hold the relay steady against the strut the whole time. My shoulder is numb, but the data is clean.",
-          "textKey": "episode_08.e08_r02_scan_return.event3.text"
+          "text": "Scan's done.",
+          "textKey": "episode_08.e08_r02_scan_return.event1.text"
+        },
+        {
+          "type": "pause",
+          "duration": 500
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "My shoulder is numb.",
+          "textKey": "episode_08.e08_r02_scan_return.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "Data's clean.",
+          "textKey": "episode_08.e08_r02_scan_return.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "You made the right call.",
+          "textKey": "episode_08.e08_r02_scan_return.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "Don't get smug.",
+          "textKey": "episode_08.e08_r02_scan_return.event12.text"
         },
         {
           "type": "log",
@@ -231,21 +380,60 @@
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 1700
         },
         {
           "type": "message",
-          "text": "Unknown occupant. Critical status. Manual access possible.",
+          "text": "Unknown occupant.",
           "textKey": "episode_08.e08_r02_scan_return.event6.text"
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 1900
         },
         {
           "type": "message",
-          "text": "That last part feels like the station putting a knife in my hand and calling it a tool.",
+          "text": "Life support critical.",
+          "textKey": "episode_08.e08_r02_scan_return.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "Manual access possible.",
+          "textKey": "episode_08.e08_r02_scan_return.event19.text"
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "That feels like the station handing me a knife.",
+          "textKey": "episode_08.e08_r02_scan_return.event22.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2100
+        },
+        {
+          "type": "message",
+          "text": "And calling it a tool.",
           "textKey": "episode_08.e08_r02_scan_return.event8.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "mayaTrust": 2,
+            "podScanFirst": true,
+            "mayaShoulderNumb": true
+          }
         }
       ],
       "nextNodeId": "e08_n03_route"
@@ -256,7 +444,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 1500
         },
         {
           "type": "message",
@@ -265,37 +453,126 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1600
         },
         {
           "type": "message",
-          "text": "I'm clipping myself to the service rail. If I drift away, pretend this was heroic and not deeply stupid.",
+          "text": "Reckless first.",
           "textKey": "episode_08.e08_n02_approach.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "The gantry is exposed. Broken antenna ribs on the left. Open dark on the right.",
+          "text": "Sure.",
           "textKey": "episode_08.e08_n02_approach.event5.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1100
         },
         {
           "type": "message",
-          "text": "I need both hands for the crossing.",
+          "text": "Why not.",
           "textKey": "episode_08.e08_n02_approach.event7.text"
         },
         {
+          "type": "pause",
+          "duration": 500
+        },
+        {
+          "type": "typing",
+          "duration": 2300
+        },
+        {
+          "type": "message",
+          "text": "Clipping to the service rail.",
+          "textKey": "episode_08.e08_n02_approach.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "If I drift away, lie.",
+          "textKey": "episode_08.e08_n02_approach.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Say it looked heroic.",
+          "textKey": "episode_08.e08_n02_approach.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "text": "Gantry is exposed.",
+          "textKey": "episode_08.e08_n02_approach.event16.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "text": "Broken antenna ribs left.",
+          "textKey": "episode_08.e08_n02_approach.event18.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "text": "Open dark right.",
+          "textKey": "episode_08.e08_n02_approach.event5.text"
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 4500,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "Something tapped the pod again.",
+            "pauseAfterMs": 0,
+            "textKey": "episode_08.e08_n02_approach.backgroundEvent21.text"
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 7100,
+          "event": {
+            "type": "message",
+            "speaker": "MAYA",
+            "text": "No. Not looking while crossing.",
+            "pauseAfterMs": 0,
+            "textKey": "episode_08.e08_n02_approach.backgroundEvent22.text"
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "Both hands.",
+          "textKey": "episode_08.e08_n02_approach.event24.text"
+        },
+        {
           "type": "characterBusy",
-          "id": "maya_crosses_relay_gantry_v6",
+          "id": "maya_crosses_relay_gantry_v2",
           "character": "MAYA",
           "status": "IS CROSSING GANTRY",
-          "durationMs": 3120000,
+          "durationMs": 210000,
           "returnNodeId": "e08_r02_approach_return",
           "message": "[MAYA IS CROSSING GANTRY]",
           "notificationTitle": "Incoming Transmission",
@@ -313,7 +590,65 @@
         {
           "type": "glitch",
           "duration": 900,
-          "pauseAfterMs": 600
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "I'm close.",
+          "textKey": "episode_08.e08_r02_approach_return.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Close enough to see frost on the hatch.",
+          "textKey": "episode_08.e08_r02_approach_return.event2.text"
+        },
+        {
+          "type": "pause",
+          "duration": 600
+        },
+        {
+          "type": "typing",
+          "duration": 2100
+        },
+        {
+          "type": "message",
+          "text": "No visual through the port.",
+          "textKey": "episode_08.e08_r02_approach_return.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1100
+        },
+        {
+          "type": "message",
+          "text": "Just me.",
+          "textKey": "episode_08.e08_r02_approach_return.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "My reflection looks furious.",
+          "textKey": "episode_08.e08_r02_approach_return.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Probably fair.",
+          "textKey": "episode_08.e08_r02_approach_return.event4.text"
         },
         {
           "type": "typing",
@@ -321,34 +656,25 @@
         },
         {
           "type": "message",
-          "text": "I'm close enough to see frost on the hatch.",
-          "textKey": "episode_08.e08_r02_approach_return.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4400
-        },
-        {
-          "type": "message",
-          "text": "No visual through the port. Just my reflection looking like someone who has made several bad decisions in a row.",
-          "textKey": "episode_08.e08_r02_approach_return.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "The pod corrected its own drift while I was crossing.",
+          "text": "The pod corrected its drift while I crossed.",
           "textKey": "episode_08.e08_r02_approach_return.event6.text"
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Not much. Just enough to prove it isn't passive wreckage.",
+          "text": "Just a little.",
+          "textKey": "episode_08.e08_r02_approach_return.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Enough to prove it isn't wreckage.",
           "textKey": "episode_08.e08_r02_approach_return.event8.text"
         },
         {
@@ -361,6 +687,32 @@
             "pauseAfterMs": 900,
             "textKey": "episode_08.e08_r02_approach_return.backgroundEvent9.text"
           }
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "You sent me in close before we knew that.",
+          "textKey": "episode_08.e08_r02_approach_return.event22.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "Remember that.",
+          "textKey": "episode_08.e08_r02_approach_return.event24.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 3,
+            "mayaStress": 2,
+            "mayaRemembersRecklessApproach": true
+          }
         }
       ],
       "nextNodeId": "e08_n03_route"
@@ -371,39 +723,115 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 2000
         },
         {
           "type": "message",
-          "text": "There are two ways to reach the hatch.",
+          "text": "Two ways to the hatch.",
           "textKey": "episode_08.e08_n03_route.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Short path across the exposed antenna rib. Fast, ugly, probably haunted by physics.",
+          "text": "Short path.",
           "textKey": "episode_08.e08_n03_route.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Long path through the maintenance tether. Slower, less exposed, but the tether housing is damaged.",
+          "text": "Exposed antenna rib.",
           "textKey": "episode_08.e08_n03_route.event5.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "I would love a third option called wake up somewhere safe.",
+          "text": "Fast.",
           "textKey": "episode_08.e08_n03_route.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "Ugly.",
+          "textKey": "episode_08.e08_n03_route.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2700
+        },
+        {
+          "type": "message",
+          "text": "Physics waiting to make a point.",
+          "textKey": "episode_08.e08_n03_route.event3.text"
+        },
+        {
+          "type": "pause",
+          "duration": 500
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "Long path.",
+          "textKey": "episode_08.e08_n03_route.event14.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "text": "Maintenance tether.",
+          "textKey": "episode_08.e08_n03_route.event16.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "Less exposed.",
+          "textKey": "episode_08.e08_n03_route.event18.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "Damaged housing.",
+          "textKey": "episode_08.e08_n03_route.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2700
+        },
+        {
+          "type": "message",
+          "text": "Third option is waking up somewhere safe.",
+          "textKey": "episode_08.e08_n03_route.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "Apparently unavailable.",
+          "textKey": "episode_08.e08_n03_route.event24.text"
         }
       ],
       "choices": [
@@ -415,7 +843,9 @@
             "danger": 5,
             "timeCost": -1,
             "mayaStress": 3,
-            "antennaRibRoute": true
+            "antennaRibRoute": true,
+            "mayaRemembersFastRoute": true,
+            "episode09RouteMemory": "risk_fast"
           },
           "textKey": "episode_08.e08_n03_route.choice0.text"
         },
@@ -427,7 +857,9 @@
             "danger": 2,
             "timeCost": 2,
             "signalStrength": 1,
-            "tetherRoute": true
+            "tetherRoute": true,
+            "mayaRemembersCarefulRoute": true,
+            "episode09RouteMemory": "careful_slow"
           },
           "textKey": "episode_08.e08_n03_route.choice1.text"
         }
@@ -466,10 +898,10 @@
         },
         {
           "type": "characterBusy",
-          "id": "maya_crosses_antenna_rib_v6",
+          "id": "maya_crosses_antenna_rib_v2",
           "character": "MAYA",
           "status": "IS CROSSING RIB",
-          "durationMs": 2880000,
+          "durationMs": 180000,
           "returnNodeId": "e08_r04_rib_return",
           "message": "[MAYA IS CROSSING RIB]",
           "notificationTitle": "Incoming Transmission",
@@ -491,46 +923,105 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 1600
         },
         {
           "type": "message",
-          "text": "I'm at the hatch frame.",
+          "text": "At the hatch frame.",
           "textKey": "episode_08.e08_r04_rib_return.event2.text"
         },
         {
+          "type": "pause",
+          "duration": 600
+        },
+        {
           "type": "typing",
-          "duration": 4200
+          "duration": 2100
         },
         {
           "type": "message",
-          "text": "The rib flexed under me. I said a word I will not repeat because even the vacuum deserves dignity.",
+          "text": "I thought I was gone.",
+          "textKey": "episode_08.e08_r04_rib_return.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "Rib flexed.",
+          "textKey": "episode_08.e08_r04_rib_return.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "Tether snapped tight.",
+          "textKey": "episode_08.e08_r04_rib_return.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "My whole suit rang.",
+          "textKey": "episode_08.e08_r04_rib_return.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "I said several words.",
+          "textKey": "episode_08.e08_r04_rib_return.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "Vacuum can keep them.",
           "textKey": "episode_08.e08_r04_rib_return.event4.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "My tether line snapped tight once. If the rail had failed, we would be having a very different conversation.",
-          "textKey": "episode_08.e08_r04_rib_return.event6.text"
+          "text": "I'm here.",
+          "textKey": "episode_08.e08_r04_rib_return.event17.text"
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "But I'm here. Faster than the careful version of me would approve.",
-          "textKey": "episode_08.e08_r04_rib_return.event8.text"
+          "text": "Fast.",
+          "textKey": "episode_08.e08_r04_rib_return.event19.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "Not free.",
+          "textKey": "episode_08.e08_r04_rib_return.event21.text"
         },
         {
           "type": "statChange",
           "changes": {
-            "danger": 4,
-            "mayaStress": 3,
-            "signalStrength": -2
+            "danger": 5,
+            "mayaStress": 4,
+            "signalStrength": -2,
+            "mayaRemembersFastRoute": true
           }
         }
       ],
@@ -578,10 +1069,10 @@
         },
         {
           "type": "characterBusy",
-          "id": "maya_moves_through_tether_v6",
+          "id": "maya_moves_through_tether_v2",
           "character": "MAYA",
           "status": "IS MOVING THROUGH TETHER",
-          "durationMs": 3960000,
+          "durationMs": 240000,
           "returnNodeId": "e08_r04_tether_return",
           "message": "[MAYA IS MOVING THROUGH TETHER]",
           "notificationTitle": "Incoming Transmission",
@@ -598,45 +1089,127 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 1600
         },
         {
           "type": "message",
-          "text": "I'm at the hatch frame.",
+          "text": "At the hatch frame.",
           "textKey": "episode_08.e08_r04_tether_return.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "I found scratches inside the tether housing. Fresh enough that the dust hasn't settled in them.",
+          "text": "Line intact.",
           "textKey": "episode_08.e08_r04_tether_return.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1700
         },
         {
           "type": "message",
-          "text": "Something else used this route. Or someone dragged something through it.",
+          "text": "Hands mostly working.",
           "textKey": "episode_08.e08_r04_tether_return.event5.text"
         },
         {
+          "type": "pause",
+          "duration": 500
+        },
+        {
           "type": "typing",
-          "duration": 4200
+          "duration": 2600
         },
         {
           "type": "message",
-          "text": "Good news: my line is intact. Bad news: my imagination is not.",
+          "text": "Scratches inside the tether housing.",
+          "textKey": "episode_08.e08_r04_tether_return.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "Fresh.",
+          "textKey": "episode_08.e08_r04_tether_return.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Dust hasn't settled.",
+          "textKey": "episode_08.e08_r04_tether_return.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2100
+        },
+        {
+          "type": "message",
+          "text": "Something used this route.",
+          "textKey": "episode_08.e08_r04_tether_return.event14.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Or someone dragged something through it.",
+          "textKey": "episode_08.e08_r04_tether_return.event5.text"
+        },
+        {
+          "type": "pause",
+          "duration": 600
+        },
+        {
+          "type": "typing",
+          "duration": 1100
+        },
+        {
+          "type": "message",
+          "text": "Good news.",
+          "textKey": "episode_08.e08_r04_tether_return.event19.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "My line is fine.",
+          "textKey": "episode_08.e08_r04_tether_return.event21.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1100
+        },
+        {
+          "type": "message",
+          "text": "Bad news.",
+          "textKey": "episode_08.e08_r04_tether_return.event23.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "My imagination isn't.",
           "textKey": "episode_08.e08_r04_tether_return.event7.text"
         },
         {
           "type": "statChange",
           "changes": {
             "danger": 1,
-            "signalStrength": 1
+            "signalStrength": 1,
+            "tetherScratchesFound": true,
+            "mayaRemembersCarefulRoute": true
           }
         }
       ],
@@ -648,7 +1221,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 1600
         },
         {
           "type": "message",
@@ -657,38 +1230,92 @@
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 1500
         },
         {
           "type": "message",
-          "text": "The pod is vibrating. Tiny pulses through the frame.",
+          "text": "Pod's vibrating.",
           "textKey": "episode_08.e08_n05_hatch.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2300
         },
         {
           "type": "message",
-          "text": "Not enough to move it. Enough to feel like it has a heartbeat.",
-          "textKey": "episode_08.e08_n05_hatch.event5.text"
+          "text": "Tiny pulses through the frame.",
+          "textKey": "episode_08.e08_n05_hatch.event3.text"
         },
         {
           "type": "pause",
-          "duration": 800
+          "duration": 700
         },
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Hale just went very quiet. That's never good.",
+          "text": "Not moving.",
           "textKey": "episode_08.e08_n05_hatch.event8.text"
         },
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "Breathing.",
+          "textKey": "episode_08.e08_n05_hatch.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 800
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "textKey": "episode_08.e08_n05_hatch.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Don't say breathing.",
+          "textKey": "episode_08.e08_n05_hatch.event14.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "Heartbeat, maybe.",
+          "textKey": "episode_08.e08_n05_hatch.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Hale went quiet.",
+          "textKey": "episode_08.e08_n05_hatch.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "That's never good.",
+          "textKey": "episode_08.e08_n05_hatch.event20.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1200
         },
         {
           "type": "message",
@@ -697,7 +1324,7 @@
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 2300
         },
         {
           "type": "message",
@@ -707,21 +1334,41 @@
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 1300
         },
         {
           "type": "message",
-          "text": "There it is. The calm voice.",
+          "text": "There it is.",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_n05_hatch.event26.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "The calm voice.",
           "speaker": "MAYA",
           "textKey": "episode_08.e08_n05_hatch.event14.text"
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Maya, please. That pod should not be here.",
+          "text": "Maya, please.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n05_hatch.event30.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "That pod should not be here.",
           "speaker": "HALE",
           "textKey": "episode_08.e08_n05_hatch.event16.text"
         }
@@ -735,7 +1382,9 @@
             "haleHeard": true,
             "mayaFrustrated": true,
             "danger": -1,
-            "signalStrength": 1
+            "signalStrength": 1,
+            "operatorBackedHaleAtHatch": true,
+            "episode09MayaTone": "frustrated_but_alive"
           },
           "textKey": "episode_08.e08_n05_hatch.choice0.text"
         },
@@ -747,7 +1396,9 @@
             "mayaCommitted": true,
             "haleStrained": true,
             "danger": 4,
-            "signalStrength": -2
+            "signalStrength": -2,
+            "operatorBackedMayaAtHatch": true,
+            "episode09HaleTone": "strained_warning"
           },
           "textKey": "episode_08.e08_n05_hatch.choice1.text"
         }
@@ -759,7 +1410,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 1600
         },
         {
           "type": "message",
@@ -769,27 +1420,57 @@
         },
         {
           "type": "typing",
-          "duration": 5000
+          "duration": 2100
         },
         {
           "type": "message",
-          "text": "I know how I sound. I know I sound like a man making fear wear a lab coat.",
+          "text": "I know how I sound.",
           "speaker": "HALE",
           "textKey": "episode_08.e08_n06_verify.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 2400
         },
         {
           "type": "message",
-          "text": "But if the pod is correcting its own drift without visible guidance, it is not passive wreckage.",
+          "text": "Like fear in a lab coat.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n06_verify.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "Still.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n06_verify.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2900
+        },
+        {
+          "type": "message",
+          "text": "If the pod corrects its own drift...",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n06_verify.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2100
+        },
+        {
+          "type": "message",
+          "text": "it isn't passive wreckage.",
           "speaker": "HALE",
           "textKey": "episode_08.e08_n06_verify.event5.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2600
         },
         {
           "type": "message",
@@ -799,7 +1480,7 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 1600
         },
         {
           "type": "message",
@@ -809,20 +1490,40 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1600
         },
         {
           "type": "message",
-          "text": "I'm running the hatch integrity check from here.",
+          "text": "And Operator?",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_n06_verify.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "I'm noticing you picked his fear over mine.",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_n06_verify.event19.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Running hatch integrity.",
           "speaker": "HALE",
-          "textKey": "episode_08.e08_n06_verify.event11.text"
+          "textKey": "episode_08.e08_n06_verify.event21.text"
         },
         {
           "type": "characterBusy",
-          "id": "hale_checks_pod_hatch_v6",
+          "id": "hale_checks_pod_hatch_v2",
           "character": "HALE",
           "status": "IS VERIFYING HATCH",
-          "durationMs": 1800000,
+          "durationMs": 120000,
           "returnNodeId": "e08_r06_verify_return",
           "message": "[HALE IS VERIFYING HATCH]",
           "notificationTitle": "Incoming Transmission",
@@ -839,7 +1540,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 1800
         },
         {
           "type": "message",
@@ -874,7 +1575,7 @@
         },
         {
           "type": "typing",
-          "duration": 4000
+          "duration": 2500
         },
         {
           "type": "message",
@@ -883,14 +1584,47 @@
           "textKey": "episode_08.e08_r06_verify_return.event4.text"
         },
         {
+          "type": "pause",
+          "duration": 500
+        },
+        {
           "type": "typing",
-          "duration": 3800
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "That's a phrase that should require a permit.",
+          "text": "That phrase should require a permit.",
           "speaker": "MAYA",
           "textKey": "episode_08.e08_r06_verify_return.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2300
+        },
+        {
+          "type": "message",
+          "text": "You were right to verify.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_r06_verify_return.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Do not sound pleased.",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_r06_verify_return.event11.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "operatorBackedHaleAtHatch": true,
+            "hatchVerified": true,
+            "mayaFrustrated": true,
+            "haleTrust": 2
+          }
         }
       ],
       "nextNodeId": "e08_n07_identity"
@@ -901,25 +1635,34 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 1700
         },
         {
           "type": "message",
-          "text": "I'm putting my hand on the hatch.",
+          "text": "Hand on the hatch.",
           "textKey": "episode_08.e08_n06_contact.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "It's colder than it should be. Even through the glove.",
+          "text": "Cold.",
+          "textKey": "episode_08.e08_n06_contact.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Too cold through the glove.",
           "textKey": "episode_08.e08_n06_contact.event3.text"
         },
         {
           "type": "backgroundEvent",
-          "delay": 4600,
+          "delay": 3600,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
@@ -930,20 +1673,38 @@
         },
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "No. No, don't say my name.",
+          "text": "No.",
+          "textKey": "episode_08.e08_n06_contact.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "No, don't say my name.",
           "textKey": "episode_08.e08_n06_contact.event6.text"
         },
         {
           "type": "typing",
-          "duration": 4000
+          "duration": 1700
         },
         {
           "type": "message",
-          "text": "The hatch display woke up when I touched it.",
+          "text": "Display woke up.",
+          "textKey": "episode_08.e08_n06_contact.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Because I touched it.",
           "textKey": "episode_08.e08_n06_contact.event8.text"
         },
         {
@@ -973,21 +1734,57 @@
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 1300
         },
         {
           "type": "message",
-          "text": "NV-08. Noah's mark.",
+          "text": "NV-08.",
+          "textKey": "episode_08.e08_n06_contact.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "Noah's mark.",
           "textKey": "episode_08.e08_n06_contact.event11.text"
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 2100
+        },
+        {
+          "type": "message",
+          "text": "Operator, you backed me.",
+          "textKey": "episode_08.e08_n06_contact.event21.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2100
+        },
+        {
+          "type": "message",
+          "text": "So stay with me now.",
+          "textKey": "episode_08.e08_n06_contact.event23.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2900
         },
         {
           "type": "message",
           "text": "Tell me this isn't what I think it is.",
           "textKey": "episode_08.e08_n06_contact.event13.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "operatorBackedMayaAtHatch": true,
+            "podContactWake": true,
+            "mayaTrust": 2,
+            "haleTrust": -2
+          }
         }
       ],
       "nextNodeId": "e08_n07_identity"
@@ -998,79 +1795,39 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "We have three facts.",
+          "text": "Three facts.",
           "textKey": "episode_08.e08_n07_identity.event1.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2400
         },
         {
           "type": "message",
-          "text": "The manifest says unknown occupant.",
+          "text": "Manifest says unknown occupant.",
           "textKey": "episode_08.e08_n07_identity.event3.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2300
         },
         {
           "type": "message",
-          "text": "The suit fragment says NV-08.",
+          "text": "Suit fragment says NV-08.",
           "textKey": "episode_08.e08_n07_identity.event5.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2000
         },
         {
           "type": "message",
-          "text": "The life signs say someone is alive.",
+          "text": "Life signs say alive.",
           "textKey": "episode_08.e08_n07_identity.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 800
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "I don't need a matching module to understand why that scares me.",
-          "textKey": "episode_08.e08_n07_identity.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "text": "Noah Voss used NV-08 on everything.",
-          "textKey": "episode_08.e08_n07_identity.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "Tool tags. Cable caps. Ration boxes.",
-          "textKey": "episode_08.e08_n07_identity.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4400
-        },
-        {
-          "type": "message",
-          "text": "He said being prepared was just anxiety with stationery.",
-          "textKey": "episode_08.e08_n07_identity.event16.text"
         },
         {
           "type": "pause",
@@ -1078,7 +1835,74 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "I don't need a puzzle for this.",
+          "textKey": "episode_08.e08_n07_identity.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2300
+        },
+        {
+          "type": "message",
+          "text": "I need it to not be true.",
+          "textKey": "episode_08.e08_n07_identity.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Noah used NV-08 on everything.",
+          "textKey": "episode_08.e08_n07_identity.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "text": "Tool tags.",
+          "textKey": "episode_08.e08_n07_identity.event16.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "text": "Cable caps.",
+          "textKey": "episode_08.e08_n07_identity.event18.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Ration boxes.",
+          "textKey": "episode_08.e08_n07_identity.event14.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Anxiety with stationery.",
+          "textKey": "episode_08.e08_n07_identity.event16.text"
+        },
+        {
+          "type": "pause",
+          "duration": 600
+        },
+        {
+          "type": "typing",
+          "duration": 2200
         },
         {
           "type": "message",
@@ -1117,7 +1941,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 1700
         },
         {
           "type": "message",
@@ -1152,37 +1976,71 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "No. Voss is dead.",
+          "text": "No.",
           "speaker": "HALE",
           "textKey": "episode_08.e08_n08_death_record.event4.text"
         },
         {
           "type": "typing",
-          "duration": 5200
+          "duration": 1700
         },
         {
           "type": "message",
-          "text": "I saw the body myself.",
+          "text": "Voss is dead.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n08_death_record.event4.text"
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "I saw the body.",
           "speaker": "HALE",
           "textKey": "episode_08.e08_n08_death_record.event6.text"
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 2100
         },
         {
           "type": "message",
-          "text": "Frost on the visor. Suit seal locked. His hand still curled like he was about to argue with someone.",
+          "text": "Frost on the visor.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n08_death_record.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Suit seal locked.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n08_death_record.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Hand curled like he was about to argue.",
           "speaker": "HALE",
           "textKey": "episode_08.e08_n08_death_record.event8.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1500
         },
         {
           "type": "message",
@@ -1191,34 +2049,45 @@
           "textKey": "episode_08.e08_n08_death_record.event10.text"
         },
         {
+          "type": "pause",
+          "duration": 500
+        },
+        {
           "type": "typing",
-          "duration": 4200
+          "duration": 1500
         },
         {
           "type": "message",
-          "text": "He was a bad engineer.",
+          "text": "Bad engineer.",
           "speaker": "HALE",
-          "textKey": "episode_08.e08_n08_death_record.event12.text"
+          "textKey": "episode_08.e08_n08_death_record.event20.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1500
         },
         {
           "type": "message",
-          "text": "He was a good person.",
+          "text": "Good person.",
           "speaker": "HALE",
           "textKey": "episode_08.e08_n08_death_record.event14.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2600
         },
         {
           "type": "message",
-          "text": "Most days I needed the second one more.",
+          "text": "Most days I needed that one more.",
           "speaker": "HALE",
           "textKey": "episode_08.e08_n08_death_record.event16.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "vossRecordPulled": true,
+            "haleMemoryShaken": true
+          }
         }
       ],
       "nextNodeId": "e08_n09_decision"
@@ -1256,10 +2125,10 @@
         },
         {
           "type": "characterBusy",
-          "id": "maya_captures_pod_hull_audio_v6",
+          "id": "maya_captures_pod_hull_audio_v2",
           "character": "MAYA",
           "status": "IS LISTENING",
-          "durationMs": 2160000,
+          "durationMs": 180000,
           "returnNodeId": "e08_r08_listen_return",
           "message": "[MAYA IS LISTENING]",
           "notificationTitle": "Incoming Transmission",
@@ -1278,7 +2147,7 @@
           "type": "corruptMessage",
           "speaker": "UNKNOWN",
           "text": "not suit",
-          "pauseAfterMs": 900,
+          "pauseAfterMs": 800,
           "textKey": "episode_08.e08_r08_listen_return.event0.text"
         },
         {
@@ -1294,7 +2163,7 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 2200
         },
         {
           "type": "message",
@@ -1303,7 +2172,25 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "I heard breath.",
+          "textKey": "episode_08.e08_r08_listen_return.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "Or something pretending to breathe.",
+          "textKey": "episode_08.e08_r08_listen_return.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2300
         },
         {
           "type": "message",
@@ -1313,13 +2200,31 @@
         },
         {
           "type": "typing",
-          "duration": 4000
+          "duration": 1900
         },
         {
           "type": "message",
-          "text": "You keep saying that like stepping back has ever saved anyone here.",
+          "text": "You keep saying that.",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_r08_listen_return.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2900
+        },
+        {
+          "type": "message",
+          "text": "Like stepping back saved anyone here.",
           "speaker": "MAYA",
           "textKey": "episode_08.e08_r08_listen_return.event8.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "listenedToPodHull": true,
+            "signalStrength": -4,
+            "mayaFearSpike": true
+          }
         }
       ],
       "nextNodeId": "e08_n09_decision"
@@ -1330,7 +2235,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2100
         },
         {
           "type": "message",
@@ -1339,51 +2244,122 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 3100
         },
         {
           "type": "message",
-          "text": "Twenty-three became twenty-one while we were arguing.",
+          "text": "Twenty-three became twenty-one while we argued.",
           "textKey": "episode_08.e08_n09_decision.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "If we delay too long, whoever is inside dies for real. Or dies again. I hate this sentence.",
+          "text": "If we delay, whoever is inside dies.",
+          "textKey": "episode_08.e08_n09_decision.event5.text"
+        },
+        {
+          "type": "pause",
+          "duration": 500
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "For real.",
+          "textKey": "episode_08.e08_n09_decision.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "Or again.",
+          "textKey": "episode_08.e08_n09_decision.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "text": "I hate that sentence.",
           "textKey": "episode_08.e08_n09_decision.event5.text"
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 3200
         },
         {
           "type": "message",
-          "text": "If we open it wrong, the pod could depressurize or wake up whatever signal is riding it.",
+          "text": "Open it wrong and we risk depressurization.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n09_decision.event14.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Or wake whatever signal is riding it.",
           "speaker": "HALE",
           "textKey": "episode_08.e08_n09_decision.event7.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1100
         },
         {
           "type": "message",
-          "text": "I don't want plans. I want a decision.",
+          "text": "No plans.",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_n09_decision.event18.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "Decision.",
           "speaker": "MAYA",
           "textKey": "episode_08.e08_n09_decision.event9.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Fast rescue means I open the hatch and pull the occupant line. Controlled breach means we clamp first and risk the clock.",
+          "text": "Fast rescue means hatch now.",
           "speaker": "MAYA",
-          "textKey": "episode_08.e08_n09_decision.event11.text"
+          "textKey": "episode_08.e08_n09_decision.event22.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "Controlled breach means clamp first.",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_n09_decision.event24.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2900
+        },
+        {
+          "type": "message",
+          "text": "And yes, Hale, I know what you want.",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_n09_decision.event26.text"
         }
       ],
       "choices": [
@@ -1395,7 +2371,9 @@
             "fastPodRescue": true,
             "danger": 8,
             "mayaStress": 4,
-            "haleOpposed": true
+            "haleOpposed": true,
+            "mayaRemembersFastRescue": true,
+            "episode09Consequence": "fast_rescue_risk"
           },
           "textKey": "episode_08.e08_n09_decision.choice0.text"
         },
@@ -1407,7 +2385,9 @@
             "controlledPodBreach": true,
             "danger": 3,
             "timeCost": 2,
-            "mayaFrustrated": true
+            "mayaFrustrated": true,
+            "mayaRemembersControlledBreach": true,
+            "episode09Consequence": "controlled_breach_delay"
           },
           "textKey": "episode_08.e08_n09_decision.choice1.text"
         }
@@ -1446,10 +2426,10 @@
         },
         {
           "type": "characterBusy",
-          "id": "maya_opens_pod_fast_v6",
+          "id": "maya_opens_pod_fast_v2",
           "character": "MAYA",
           "status": "IS OPENING POD",
-          "durationMs": 3120000,
+          "durationMs": 240000,
           "returnNodeId": "e08_r10_fast_return",
           "message": "[MAYA IS OPENING POD]",
           "notificationTitle": "Incoming Transmission",
@@ -1467,11 +2447,11 @@
         {
           "type": "glitch",
           "duration": 1200,
-          "pauseAfterMs": 700
+          "pauseAfterMs": 500
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 1700
         },
         {
           "type": "message",
@@ -1480,16 +2460,29 @@
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 2000
         },
         {
           "type": "message",
-          "text": "Pressure kicked back. My shoulder hit the frame.",
+          "text": "Pressure kicked back.",
           "textKey": "episode_08.e08_r10_fast_return.event4.text"
         },
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "text": "Shoulder hit the frame.",
+          "textKey": "episode_08.e08_r10_fast_return.event4.text"
+        },
+        {
+          "type": "pause",
+          "duration": 600
+        },
+        {
+          "type": "typing",
+          "duration": 1100
         },
         {
           "type": "message",
@@ -1498,17 +2491,54 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 800
         },
         {
           "type": "message",
-          "text": "That was too quick. She could have lost the seal.",
+          "text": "No.",
+          "textKey": "episode_08.e08_r10_fast_return.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "text": "Functional.",
+          "textKey": "episode_08.e08_r10_fast_return.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "text": "Different category.",
+          "textKey": "episode_08.e08_r10_fast_return.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2100
+        },
+        {
+          "type": "message",
+          "text": "That was too quick.",
           "speaker": "HALE",
           "textKey": "episode_08.e08_r10_fast_return.event8.text"
         },
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "She could have lost the seal.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_r10_fast_return.event19.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
@@ -1518,7 +2548,7 @@
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 2600
         },
         {
           "type": "message",
@@ -1528,9 +2558,11 @@
         {
           "type": "statChange",
           "changes": {
-            "danger": 6,
-            "mayaStress": 4,
-            "signalStrength": -4
+            "danger": 7,
+            "mayaStress": 5,
+            "signalStrength": -4,
+            "mayaShoulderHit": true,
+            "mayaRemembersFastRescue": true
           }
         }
       ],
@@ -1582,10 +2614,10 @@
         },
         {
           "type": "characterBusy",
-          "id": "maya_clamps_pod_seal_v6",
+          "id": "maya_clamps_pod_seal_v2",
           "character": "MAYA",
           "status": "IS CLAMPING POD",
-          "durationMs": 4200000,
+          "durationMs": 300000,
           "returnNodeId": "e08_r10_controlled_return",
           "message": "[MAYA IS CLAMPING POD]",
           "notificationTitle": "Incoming Transmission",
@@ -1602,7 +2634,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1700
         },
         {
           "type": "message",
@@ -1611,16 +2643,38 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1600
         },
         {
           "type": "message",
-          "text": "My hands are shaking. Not from fear. From cold. Mostly.",
+          "text": "Hands shaking.",
           "textKey": "episode_08.e08_r10_controlled_return.event3.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "Cold.",
+          "textKey": "episode_08.e08_r10_controlled_return.event5.text"
+        },
+        {
+          "type": "pause",
+          "duration": 500
+        },
+        {
+          "type": "typing",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "Mostly.",
+          "textKey": "episode_08.e08_r10_controlled_return.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2000
         },
         {
           "type": "message",
@@ -1630,7 +2684,7 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 1100
         },
         {
           "type": "message",
@@ -1640,7 +2694,7 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 1300
         },
         {
           "type": "message",
@@ -1650,7 +2704,7 @@
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 1600
         },
         {
           "type": "message",
@@ -1658,11 +2712,31 @@
           "textKey": "episode_08.e08_r10_controlled_return.event11.text"
         },
         {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "Operator, this bought us control.",
+          "textKey": "episode_08.e08_r10_controlled_return.event18.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "Not comfort.",
+          "textKey": "episode_08.e08_r10_controlled_return.event20.text"
+        },
+        {
           "type": "statChange",
           "changes": {
             "danger": 2,
             "timeCost": 2,
-            "signalStrength": 1
+            "signalStrength": 1,
+            "mayaRemembersControlledBreach": true,
+            "haleRelievedByCaution": true
           }
         }
       ],
@@ -1718,12 +2792,21 @@
         },
         {
           "type": "typing",
-          "duration": 5400
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Helmet is cracked. Not enough to kill him if the pod kept pressure, but enough to make the universe feel personal.",
+          "text": "Helmet is cracked.",
           "textKey": "episode_08.e08_n11_inside.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "Not enough to kill him if the pod kept pressure, but enough to make the universe feel personal.",
+          "textKey": "episode_08.e08_n11_inside.event13.text"
         },
         {
           "type": "backgroundEvent",
@@ -1975,7 +3058,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2100
         },
         {
           "type": "message",
@@ -1985,27 +3068,57 @@
         },
         {
           "type": "typing",
-          "duration": 5400
+          "duration": 1700
         },
         {
           "type": "message",
-          "text": "If you disconnect him from the pod, whatever is sustaining the signal may come with him.",
+          "text": "Disconnect him...",
           "speaker": "HALE",
           "textKey": "episode_08.e08_n13_irreversible.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 2900
         },
         {
           "type": "message",
-          "text": "If you leave him connected, the pod may stabilize him but keep broadcasting to 7.14.",
+          "text": "the signal may come with him.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n13_irreversible.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Leave him connected...",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n13_irreversible.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "the pod may stabilize him.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n13_irreversible.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2900
+        },
+        {
+          "type": "message",
+          "text": "And keep broadcasting to 7.14.",
           "speaker": "HALE",
           "textKey": "episode_08.e08_n13_irreversible.event5.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1300
         },
         {
           "type": "message",
@@ -2015,11 +3128,21 @@
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 2900
         },
         {
           "type": "message",
-          "text": "Save the body and risk bringing the signal in. Seal the pod and keep him alive but trapped.",
+          "text": "Save the body. Risk the signal.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n13_irreversible.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "text": "Seal the pod. Keep him alive. Keep him trapped.",
           "speaker": "HALE",
           "textKey": "episode_08.e08_n13_irreversible.event9.text"
         },
@@ -2029,7 +3152,7 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1600
         },
         {
           "type": "message",
@@ -2039,11 +3162,11 @@
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 3500
         },
         {
           "type": "message",
-          "text": "I need you to make the call before I make the emotional one.",
+          "text": "Make the call before I make the emotional one.",
           "speaker": "MAYA",
           "textKey": "episode_08.e08_n13_irreversible.event14.text"
         }
@@ -2059,7 +3182,10 @@
             "danger": 10,
             "signalStrength": -6,
             "mayaCommitted": true,
-            "haleAlarmed": true
+            "haleAlarmed": true,
+            "mayaBondsToOperatorThroughRescue": true,
+            "haleTrustFracturedByExtraction": true,
+            "episode09StartState": "noah_extracted_signal_risk"
           },
           "textKey": "episode_08.e08_n13_irreversible.choice0.text"
         },
@@ -2073,7 +3199,10 @@
             "danger": 3,
             "signalStrength": 2,
             "mayaHurt": true,
-            "haleRelieved": true
+            "haleRelieved": true,
+            "mayaHurtByOperatorChoice": true,
+            "haleRelievedBySeal": true,
+            "episode09StartState": "noah_sealed_pod_active"
           },
           "textKey": "episode_08.e08_n13_irreversible.choice1.text"
         }
@@ -2085,7 +3214,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 1700
         },
         {
           "type": "message",
@@ -2094,28 +3223,73 @@
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 1900
         },
         {
           "type": "message",
-          "text": "Noah, if that's you, I'm going to be furious when you wake up.",
+          "text": "Noah, if that's you...",
           "textKey": "episode_08.e08_n14_extract.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3100
         },
         {
           "type": "message",
-          "text": "I'm disconnecting the pod umbilicals and pulling him from the cradle.",
+          "text": "I'm going to be furious when you wake up.",
+          "textKey": "episode_08.e08_n14_extract.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "Umbilicals first.",
+          "textKey": "episode_08.e08_n14_extract.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "Cradle release.",
+          "textKey": "episode_08.e08_n14_extract.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "Then I pull him out.",
           "textKey": "episode_08.e08_n14_extract.event5.text"
         },
         {
+          "type": "typing",
+          "duration": 2100
+        },
+        {
+          "type": "message",
+          "text": "Operator, you chose this.",
+          "textKey": "episode_08.e08_n14_extract.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "Stay with me.",
+          "textKey": "episode_08.e08_n14_extract.event15.text"
+        },
+        {
           "type": "characterBusy",
-          "id": "maya_extracts_noah_v6",
+          "id": "maya_extracts_noah_v2",
           "character": "MAYA",
           "status": "IS EXTRACTING NOAH",
-          "durationMs": 4800000,
+          "durationMs": 300000,
           "returnNodeId": "e08_r14_extract_return",
           "message": "[MAYA IS EXTRACTING NOAH]",
           "notificationTitle": "Incoming Transmission",
@@ -2133,11 +3307,11 @@
         {
           "type": "glitch",
           "duration": 1400,
-          "pauseAfterMs": 700
+          "pauseAfterMs": 500
         },
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 1500
         },
         {
           "type": "message",
@@ -2146,11 +3320,11 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1100
         },
         {
           "type": "message",
-          "text": "He's breathing.",
+          "text": "Breathing.",
           "textKey": "episode_08.e08_r14_extract_return.event4.text"
         },
         {
@@ -2159,54 +3333,111 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 800
         },
         {
           "type": "message",
-          "text": "He just grabbed my wrist.",
+          "text": "No.",
           "textKey": "episode_08.e08_r14_extract_return.event7.text"
         },
         {
           "type": "typing",
-          "duration": 5400
+          "duration": 1100
         },
         {
           "type": "message",
-          "text": "Not hard. Like he was checking if I was real.",
+          "text": "Wait.",
           "textKey": "episode_08.e08_r14_extract_return.event9.text"
         },
         {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "open",
-          "pauseAfterMs": 900,
-          "textKey": "episode_08.e08_r14_extract_return.event10.text"
-        },
-        {
           "type": "typing",
-          "duration": 3800
+          "duration": 1500
         },
         {
           "type": "message",
-          "text": "The pod just went dark behind us.",
-          "textKey": "episode_08.e08_r14_extract_return.event12.text"
+          "text": "Still breathing.",
+          "textKey": "episode_08.e08_r14_extract_return.event11.text"
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 2100
         },
         {
           "type": "message",
-          "text": "Maya, move. Now.",
-          "speaker": "HALE",
-          "textKey": "episode_08.e08_r14_extract_return.event14.text"
+          "text": "I almost dropped him.",
+          "textKey": "episode_08.e08_r14_extract_return.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "The pod screamed through the comms.",
+          "textKey": "episode_08.e08_r14_extract_return.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "text": "Not sound.",
+          "textKey": "episode_08.e08_r14_extract_return.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "text": "Signal.",
+          "textKey": "episode_08.e08_r14_extract_return.event19.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Hale is yelling.",
+          "textKey": "episode_08.e08_r14_extract_return.event21.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "I can't process the whole sentence.",
+          "textKey": "episode_08.e08_r14_extract_return.event23.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "text": "Noah's hand moved.",
+          "textKey": "episode_08.e08_r14_extract_return.event25.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2100
+        },
+        {
+          "type": "message",
+          "text": "I need to get him inside.",
+          "textKey": "episode_08.e08_r14_extract_return.event27.text"
         },
         {
           "type": "statChange",
           "changes": {
+            "noahExtracted": true,
             "danger": 8,
-            "signalStrength": -5,
-            "noahExtracted": true
+            "signalStrength": -7,
+            "mayaCarryingNoah": true,
+            "haleAlarmed": true
           }
         }
       ],
@@ -2218,66 +3449,111 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Seal the pod.",
+          "text": "Sealing the pod.",
           "textKey": "episode_08.e08_n14_seal.event1.text"
         },
         {
           "type": "pause",
-          "duration": 900
+          "duration": 600
         },
         {
           "type": "typing",
-          "duration": 5200
+          "duration": 1500
         },
         {
           "type": "message",
-          "text": "I hate you a little for making the smart call.",
+          "text": "I hate this.",
           "textKey": "episode_08.e08_n14_seal.event4.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1000
         },
         {
           "type": "message",
-          "text": "Not forever. Maybe not even for an hour.",
+          "text": "Not you.",
           "textKey": "episode_08.e08_n14_seal.event6.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "But right now? A little.",
+          "text": "This.",
           "textKey": "episode_08.e08_n14_seal.event8.text"
         },
         {
           "type": "typing",
-          "duration": 4000
+          "duration": 2800
         },
         {
           "type": "message",
-          "text": "I'm rerouting reserve oxygen and locking the 7.14 bleed channel.",
+          "text": "The whole impossible shape of it.",
           "textKey": "episode_08.e08_n14_seal.event10.text"
         },
         {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Life support line stays active.",
+          "textKey": "episode_08.e08_n14_seal.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "text": "Beacon stays open.",
+          "textKey": "episode_08.e08_n14_seal.event14.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "text": "Noah stays inside.",
+          "textKey": "episode_08.e08_n14_seal.event16.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "Operator...",
+          "textKey": "episode_08.e08_n14_seal.event18.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "I will remember this one.",
+          "textKey": "episode_08.e08_n14_seal.event20.text"
+        },
+        {
           "type": "characterBusy",
-          "id": "maya_stabilizes_pod_life_support_v6",
+          "id": "maya_seals_noah_pod_v2",
           "character": "MAYA",
-          "status": "IS STABILIZING POD",
-          "durationMs": 4500000,
+          "status": "IS SEALING POD",
+          "durationMs": 240000,
           "returnNodeId": "e08_r14_seal_return",
-          "message": "[MAYA IS STABILIZING POD]",
+          "message": "[MAYA IS SEALING POD]",
           "notificationTitle": "Incoming Transmission",
           "notificationBody": "Maya sent a message.",
           "tone": "character",
           "pauseAfterMs": 500,
-          "messageKey": "episode_08.e08_n14_seal.event11.message"
+          "messageKey": "episode_08.e08_n14_seal.event21.message"
         }
       ]
     },
@@ -2287,57 +3563,115 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1500
         },
         {
           "type": "message",
-          "text": "Life support is stabilizing.",
+          "text": "It's sealed.",
           "textKey": "episode_08.e08_r14_seal_return.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "He is alive. He is trapped. Those are both true.",
+          "text": "Life support stabilized.",
           "textKey": "episode_08.e08_r14_seal_return.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4000
+          "duration": 1500
         },
         {
           "type": "message",
-          "text": "The pod still taps against the frame when the pressure cycles.",
+          "text": "Seventeen percent.",
           "textKey": "episode_08.e08_r14_seal_return.event5.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1100
         },
         {
           "type": "message",
-          "text": "Sometimes survival is just a kinder word for delay.",
-          "speaker": "HALE",
+          "text": "Not enough.",
           "textKey": "episode_08.e08_r14_seal_return.event7.text"
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "Don't philosophize at me right now.",
-          "speaker": "MAYA",
+          "text": "Enough.",
           "textKey": "episode_08.e08_r14_seal_return.event9.text"
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "Noah is still inside.",
+          "textKey": "episode_08.e08_r14_seal_return.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3100
+        },
+        {
+          "type": "message",
+          "text": "I can see his breath fogging the faceplate.",
+          "textKey": "episode_08.e08_r14_seal_return.event14.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2300
+        },
+        {
+          "type": "message",
+          "text": "I know why we did it.",
+          "textKey": "episode_08.e08_r14_seal_return.event16.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Do not ask me to like it.",
+          "textKey": "episode_08.e08_r14_seal_return.event18.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "Hale is relieved.",
+          "textKey": "episode_08.e08_r14_seal_return.event20.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "That makes me want to break something.",
+          "textKey": "episode_08.e08_r14_seal_return.event22.text"
         },
         {
           "type": "statChange",
           "changes": {
-            "danger": 2,
+            "noahSealedInPod": true,
+            "danger": 3,
             "signalStrength": 2,
-            "noahSealedInPod": true
+            "mayaHurtByOperatorChoice": true,
+            "haleRelievedBySeal": true
           }
         }
       ],
@@ -2387,10 +3721,10 @@
         },
         {
           "type": "characterBusy",
-          "id": "maya_returns_with_noah_v6",
+          "id": "maya_returns_with_noah_v2",
           "character": "MAYA",
           "status": "IS RETURNING WITH NOAH",
-          "durationMs": 4200000,
+          "durationMs": 300000,
           "returnNodeId": "e08_r15_extract_return",
           "message": "[MAYA IS RETURNING WITH NOAH]",
           "notificationTitle": "Incoming Transmission",
@@ -2406,53 +3740,104 @@
       "speaker": "MAYA",
       "events": [
         {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "We're back inside.",
-          "textKey": "episode_08.e08_r15_extract_return.event1.text"
+          "type": "glitch",
+          "duration": 1000,
+          "pauseAfterMs": 500
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2300
         },
         {
           "type": "message",
-          "text": "His hand is still around my sleeve.",
-          "textKey": "episode_08.e08_r15_extract_return.event3.text"
+          "text": "Back inside the relay spine.",
+          "textKey": "episode_08.e08_r15_extract_return.event2.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2100
         },
         {
           "type": "message",
-          "text": "Noah?",
-          "textKey": "episode_08.e08_r15_extract_return.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 1000
+          "text": "Noah is still breathing.",
+          "textKey": "episode_08.e08_r15_extract_return.event4.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "He opened his eyes.",
+          "text": "Barely.",
+          "textKey": "episode_08.e08_r15_extract_return.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "His suit keeps pinging 7.14.",
           "textKey": "episode_08.e08_r15_extract_return.event8.text"
         },
         {
           "type": "typing",
-          "duration": 5400
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "He said my name like he was afraid it belonged to someone else.",
+          "text": "Every ping makes the lights twitch.",
           "textKey": "episode_08.e08_r15_extract_return.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "text": "You saved him.",
+          "textKey": "episode_08.e08_r15_extract_return.event12.text"
+        },
+        {
+          "type": "pause",
+          "duration": 600
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Or brought something in with him.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_r15_extract_return.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2100
+        },
+        {
+          "type": "message",
+          "text": "Both can be true.",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_r15_extract_return.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I hate both.",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_r15_extract_return.event19.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "noahExtractedReturnComplete": true,
+            "episode09CarryNoah": true
+          }
         }
       ],
       "choices": [
@@ -2560,10 +3945,10 @@
         },
         {
           "type": "characterBusy",
-          "id": "maya_exits_pod_area_v6",
+          "id": "maya_exits_pod_area_v2",
           "character": "MAYA",
           "status": "IS LEAVING POD AREA",
-          "durationMs": 3600000,
+          "durationMs": 240000,
           "returnNodeId": "e08_r15_seal_return",
           "message": "[MAYA IS LEAVING POD AREA]",
           "notificationTitle": "Incoming Transmission",
@@ -2580,39 +3965,86 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2300
         },
         {
           "type": "message",
-          "text": "I'm clear of the pod frame.",
+          "text": "I'm back at the relay spine.",
           "textKey": "episode_08.e08_r15_seal_return.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2400
         },
         {
           "type": "message",
-          "text": "The beacon is steadier now. That should make me feel better.",
+          "text": "Pod is still broadcasting.",
           "textKey": "episode_08.e08_r15_seal_return.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "It doesn't.",
+          "text": "Weak.",
           "textKey": "episode_08.e08_r15_seal_return.event5.text"
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "I can still hear the tapping in the tether line. Maybe it is vibration. Maybe I am lying to myself.",
+          "text": "Steady.",
           "textKey": "episode_08.e08_r15_seal_return.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Like a pulse through a wall.",
+          "textKey": "episode_08.e08_r15_seal_return.event9.text"
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 3300
+        },
+        {
+          "type": "message",
+          "text": "I keep thinking I should have argued harder.",
+          "textKey": "episode_08.e08_r15_seal_return.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2900
+        },
+        {
+          "type": "message",
+          "text": "Then I remember his life support stabilized.",
+          "textKey": "episode_08.e08_r15_seal_return.event14.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Then I hate both thoughts.",
+          "textKey": "episode_08.e08_r15_seal_return.event16.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "sealedReturnComplete": true,
+            "episode09PodStillActive": true
+          }
         }
       ],
       "nextNodeId": "e08_n16_seal_final"
@@ -2841,47 +4273,84 @@
       "speaker": "UNKNOWN",
       "events": [
         {
-          "type": "signalLost",
-          "duration": 2400,
-          "message": "[SIGNAL LOST]",
-          "restoreMessage": "[SIGNAL RESTORED]",
-          "pauseAfterMs": 900,
-          "messageKey": "episode_08.e08_n17_final_extract.event0.message",
-          "restoreMessageKey": "episode_08.e08_n17_final_extract.event0.restoreMessage"
+          "type": "typing",
+          "duration": 2100
         },
         {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "EVA THORNE",
-          "pauseAfterMs": 1200,
+          "type": "message",
+          "text": "Noah is in the relay bay.",
           "textKey": "episode_08.e08_n17_final_extract.event1.text"
         },
         {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "SHE WAS THERE",
-          "pauseAfterMs": 1200,
-          "textKey": "episode_08.e08_n17_final_extract.event2.text"
-        },
-        {
           "type": "typing",
-          "duration": 3800
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "Operator, Noah is alive.",
-          "speaker": "MAYA",
-          "textKey": "episode_08.e08_n17_final_extract.event4.text"
+          "text": "Alive.",
+          "textKey": "episode_08.e08_n17_final_extract.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "And I think the station just told us who it erased before him.",
+          "text": "Maybe.",
+          "textKey": "episode_08.e08_n17_final_extract.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "text": "Not alone.",
+          "textKey": "episode_08.e08_n17_final_extract.event7.text"
+        },
+        {
+          "type": "pause",
+          "duration": 600
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "7.14 is bleeding through every channel.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n17_final_extract.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2700
+        },
+        {
+          "type": "message",
+          "text": "Then we move before it learns the room.",
           "speaker": "MAYA",
-          "textKey": "episode_08.e08_n17_final_extract.event6.text"
+          "textKey": "episode_08.e08_n17_final_extract.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2900
+        },
+        {
+          "type": "message",
+          "text": "Operator, your call changed everything.",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_n17_final_extract.event14.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "text": "Do not forget that just because we survived it.",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_n17_final_extract.event16.text"
         }
       ],
       "choices": [
@@ -2890,7 +4359,9 @@
           "text": "MOVE NOAH TO A SAFE ZONE.",
           "effects": {
             "danger": 3,
-            "noahMovedToSafeZone": true
+            "noahMovedToSafeZone": true,
+            "episode09Start": "move_noah_to_safe_zone",
+            "noahBodyPresent": true
           },
           "nextEpisodeId": "episode_09",
           "textKey": "episode_08.e08_n17_final_extract.choice0.text"
@@ -2900,7 +4371,10 @@
           "text": "ASK ABOUT EVA NOW.",
           "effects": {
             "danger": 5,
-            "evaNamePressed": true
+            "evaNamePressed": true,
+            "episode09Start": "ask_noah_about_eva",
+            "evaQuestionEarly": true,
+            "noahBodyPresent": true
           },
           "nextEpisodeId": "episode_09",
           "textKey": "episode_08.e08_n17_final_extract.choice1.text"
@@ -2912,47 +4386,90 @@
       "speaker": "UNKNOWN",
       "events": [
         {
-          "type": "signalLost",
-          "duration": 2400,
-          "message": "[SIGNAL LOST]",
-          "restoreMessage": "[SIGNAL RESTORED]",
-          "pauseAfterMs": 900,
-          "messageKey": "episode_08.e08_n17_final_seal.event0.message",
-          "restoreMessageKey": "episode_08.e08_n17_final_seal.event0.restoreMessage"
+          "type": "typing",
+          "duration": 2000
         },
         {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "EVA THORNE",
-          "pauseAfterMs": 1200,
+          "type": "message",
+          "text": "Pod remains outside.",
           "textKey": "episode_08.e08_n17_final_seal.event1.text"
         },
         {
+          "type": "typing",
+          "duration": 2100
+        },
+        {
+          "type": "message",
+          "text": "Noah remains inside.",
+          "textKey": "episode_08.e08_n17_final_seal.event3.text"
+        },
+        {
+          "type": "pause",
+          "duration": 600
+        },
+        {
+          "type": "typing",
+          "duration": 2100
+        },
+        {
+          "type": "message",
+          "text": "Life support is holding.",
+          "speaker": "HALE",
+          "textKey": "episode_08.e08_n17_final_seal.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1000
+        },
+        {
+          "type": "message",
+          "text": "For now.",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_n17_final_seal.event8.text"
+        },
+        {
           "type": "corruptMessage",
           "speaker": "UNKNOWN",
-          "text": "SHE WAS THERE",
-          "pauseAfterMs": 1200,
-          "textKey": "episode_08.e08_n17_final_seal.event2.text"
+          "text": "still",
+          "pauseAfterMs": 700,
+          "textKey": "episode_08.e08_n17_final_seal.event9.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "breathing",
+          "pauseAfterMs": 1000,
+          "textKey": "episode_08.e08_n17_final_seal.event10.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2700
         },
         {
           "type": "message",
-          "text": "Operator, Noah is still in the pod.",
+          "text": "I am going to hear that forever.",
           "speaker": "MAYA",
-          "textKey": "episode_08.e08_n17_final_seal.event4.text"
+          "textKey": "episode_08.e08_n17_final_seal.event12.text"
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "And whatever is speaking through it just gave us a name.",
+          "text": "Operator, we either find Eva now...",
           "speaker": "MAYA",
-          "textKey": "episode_08.e08_n17_final_seal.event6.text"
+          "textKey": "episode_08.e08_n17_final_seal.event14.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3400
+        },
+        {
+          "type": "message",
+          "text": "or we go back and admit what we left behind.",
+          "speaker": "MAYA",
+          "textKey": "episode_08.e08_n17_final_seal.event16.text"
         }
       ],
       "choices": [
@@ -2961,7 +4478,9 @@
           "text": "LEAVE THE POD AND FIND EVA.",
           "effects": {
             "danger": 2,
-            "evaSearchStarted": true
+            "evaSearchStarted": true,
+            "episode09Start": "leave_pod_find_eva",
+            "noahSealedInPod": true
           },
           "nextEpisodeId": "episode_09",
           "textKey": "episode_08.e08_n17_final_seal.choice0.text"
@@ -2971,7 +4490,10 @@
           "text": "KEEP THE POD CHANNEL OPEN.",
           "effects": {
             "danger": 6,
-            "podChannelKeptOpen": true
+            "podChannelKeptOpen": true,
+            "episode09Start": "keep_pod_channel_open",
+            "noahSealedInPod": true,
+            "podChannelStillOpen": true
           },
           "nextEpisodeId": "episode_09",
           "textKey": "episode_08.e08_n17_final_seal.choice1.text"
@@ -2980,25 +4502,59 @@
     }
   },
   "directorCut": {
-    "version": "V6_FINAL_LIFELINE_CUT",
+    "version": "ECHO_LIFELINE_PASS_V2",
     "sourceEpisode": "episode_08",
-    "coreObjective": "Reach and identify the external emergency pod occupant, then make a permanent decision about Noah Voss.",
-    "majorChanges": [
-      "All progressTask sequences were replaced with characterBusy events.",
-      "Every characterBusy has a returnNodeId and a full return report.",
-      "Maya's physical movement is separated from her reporting.",
-      "Noah reveal is more emotional, physical and consequential.",
-      "Hale and Maya conflict escalates naturally through dialogue.",
-      "Seal/extract branch creates different final states for Episode 09.",
-      "Eva Thorne is foreshadowed at the end of both branches.",
-      "All visible choices contain exactly two options."
+    "baseVersion": "THE EIGHTH PASSENGER — LIFELINE CUT V6 FINAL",
+    "qualityTarget": {
+      "technicalQuality": "10/10",
+      "atmosphere": "10/10",
+      "realTimeFeeling": "10/10",
+      "lifelineSimilarity": "10/10",
+      "choiceConsequenceVisibility": "10/10",
+      "playerCharacterControlFeeling": "10/10"
+    },
+    "upgradeFocus": [
+      "Dialogue changed from literary explanation to short, reactive survivor speech.",
+      "Maya and Hale now visibly remember the operator's choices inside the episode.",
+      "Fast/careful route decisions now leave emotional and tactical memory flags.",
+      "Hatch verify/contact decision changes Maya/Hale tone.",
+      "Fast rescue / controlled breach decision changes physical consequences and relationship state.",
+      "Extract/seal decision creates strong irreversible branch identity for Episode 09.",
+      "Busy-return sequences now feel like real lived moments, not reports.",
+      "More attention drift: tapping, reflection, frost, breath, shoulder pain, line snaps, signal bleed.",
+      "UNKNOWN transmissions made more broken and organic.",
+      "All node links and choice counts validated."
+    ],
+    "persistentFlagsAddedOrStrengthened": [
+      "mayaTrustsCaution",
+      "mayaRemembersRecklessApproach",
+      "mayaRemembersFastRoute",
+      "mayaRemembersCarefulRoute",
+      "operatorBackedHaleAtHatch",
+      "operatorBackedMayaAtHatch",
+      "mayaRemembersFastRescue",
+      "mayaRemembersControlledBreach",
+      "mayaBondsToOperatorThroughRescue",
+      "haleTrustFracturedByExtraction",
+      "mayaHurtByOperatorChoice",
+      "haleRelievedBySeal",
+      "episode09StartState",
+      "episode09MayaTone",
+      "episode09HaleTone",
+      "episode09Consequence"
     ],
     "requiredEngineFeatures": [
-      "characterBusy event",
-      "busyState persistence",
-      "returnNodeId resume",
-      "Terminal busy screen",
-      "optional browser notification"
+      "typing",
+      "message",
+      "pause",
+      "backgroundEvent",
+      "characterBusy",
+      "statChange",
+      "file/log archive events",
+      "signalLost",
+      "glitch",
+      "corruptMessage",
+      "nextEpisodeId"
     ],
     "nextEpisode": "episode_09"
   }

@@ -30,6 +30,8 @@ function createFreshGameState() {
     pendingNotifications: [],
     collectedFiles: [],
     busyState: null,
+    mayaTrust: 0,
+    haleTrust: 0,
   };
 }
 
@@ -96,9 +98,20 @@ function normalizeGameState(state) {
       ? state.pendingNotifications
       : [],
 
-    collectedFiles: Array.isArray(state.collectedFiles)
-      ? state.collectedFiles
-      : []
+collectedFiles: Array.isArray(state.collectedFiles)
+  ? state.collectedFiles
+  : [],
+
+busyState:
+  state.busyState && typeof state.busyState === "object"
+    ? state.busyState
+    : null,
+
+mayaTrust:
+  typeof state.mayaTrust === "number" ? state.mayaTrust : 0,
+
+haleTrust:
+  typeof state.haleTrust === "number" ? state.haleTrust : 0
   };
 }
 
@@ -273,10 +286,14 @@ export function chooseOption(gameState, choiceId) {
   if (!selectedChoice) throw new Error("Choice not found");
 
   if (selectedChoice.puzzleId) {
-    const nextState = normalizeGameState({
-      ...normalizedState,
-      activePuzzleId: selectedChoice.puzzleId
-    });
+const nextState = normalizeGameState({
+  ...gameState,
+  episodeId: busy.returnEpisodeId || gameState.episodeId,
+  currentNodeId: busy.returnNodeId || gameState.currentNodeId,
+  activePuzzleId: null,
+  activeWaitTask: null,
+  busyState: null
+});
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
     return nextState;

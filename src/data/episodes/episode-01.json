@@ -1,21 +1,22 @@
 {
   "id": "episode_01",
-  "title": "FIRST CONTACT — LIFELINE CUT V5",
+  "title": "FIRST CONTACT — LIFELINE CINEMATIC PASS V2",
   "startNodeId": "e01_n01_first_signal",
   "titleKey": "episode_01.meta.episode0.title",
-  "designVersion": "directors_cut_v5_lifeline_realtime",
-  "episodeObjective": "Establish first contact with Ethan Hale, guide him to the relay room, stabilize the connection, recover Door 12 evidence, and end with the first coherent contradiction around Hale's memory.",
+  "designVersion": "lifeline_cinematic_pass_v2",
+  "episodeObjective": "Establish first contact with Ethan Hale through lived, real-time movement; guide him to the relay room; make a hard relay/life-support decision; recover Door 12 evidence; end with Hale's memory contradiction and the first intrusive signal.",
   "rulesApplied": [
-    "Concrete objective per episode",
-    "Characters report lived events, not game systems",
+    "Dialogue is written as lived real-time survival, not mission briefing",
+    "Hale reacts before he explains",
+    "Choices are short operator commands, never exposition labels",
+    "Characters do not say 'I can do A or B' unless the moment naturally forces it",
     "Every visible choice has exactly two options",
-    "Physical movement uses characterBusy with hidden wait time",
-    "Return nodes describe what happened while the character was gone",
-    "No open-ended 'ask me anything' dialogue",
-    "No meaningless fragments or awkward translation-style metaphors",
-    "Route choices are not labelled safe/dangerous directly",
-    "Lore is delivered through lived experience and recovered evidence",
-    "Hale can be uncertain, defensive, tired, sarcastic, and wrong"
+    "System messages are kept functional and sparse",
+    "Physical movement uses characterBusy and return nodes",
+    "Return nodes describe what happened while Hale was gone",
+    "Hale is tired, frightened, sarcastic, defensive, and sometimes wrong",
+    "Evidence is discovered physically before it becomes lore",
+    "Tone target: Lifeline-style interruption, hesitation, motion, and human rhythm"
   ],
   "puzzles": {
     "relay_password": {
@@ -104,7 +105,8 @@
       "titleKey": "episode_01.power_routing_01.puzzle1.title",
       "descriptionKey": "episode_01.power_routing_01.puzzle1.description",
       "submitLabelKey": "episode_01.power_routing_01.puzzle1.submitLabel",
-      "deprecatedInV5": true
+      "deprecatedInV5": true,
+      "removedInCinematicPassV2": true
     }
   },
   "nodes": {
@@ -120,7 +122,7 @@
         },
         {
           "type": "typing",
-          "duration": 1800
+          "duration": 1600
         },
         {
           "type": "message",
@@ -129,7 +131,7 @@
         },
         {
           "type": "pause",
-          "duration": 1000
+          "duration": 900
         },
         {
           "type": "typing",
@@ -137,16 +139,16 @@
         },
         {
           "type": "message",
-          "text": "If someone is there, answer me.",
+          "text": "Please tell me that went somewhere.",
           "textKey": "episode_01.e01_n01_first_signal.event5.text"
         },
         {
           "type": "typing",
-          "duration": 2500
+          "duration": 2400
         },
         {
           "type": "message",
-          "text": "One letter is enough.",
+          "text": "One letter. One number. Anything.",
           "textKey": "episode_01.e01_n01_first_signal.event7.text"
         },
         {
@@ -155,7 +157,7 @@
         },
         {
           "type": "typing",
-          "duration": 1800
+          "duration": 1600
         },
         {
           "type": "message",
@@ -177,12 +179,21 @@
         },
         {
           "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Okay.",
+          "textKey": "episode_01.e01_n01_first_signal.event15.text"
+        },
+        {
+          "type": "typing",
           "duration": 2600
         },
         {
           "type": "message",
-          "text": "Okay. Okay, that's real.",
-          "textKey": "episode_01.e01_n01_first_signal.event15.text"
+          "text": "Okay, that's real.",
+          "textKey": "episode_01.e01_n01_first_signal.event17.text"
         },
         {
           "type": "typing",
@@ -190,16 +201,7 @@
         },
         {
           "type": "message",
-          "text": "My name is Ethan Hale. I'm on ECHO Station.",
-          "textKey": "episode_01.e01_n01_first_signal.event17.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "I'm wedged in a service alcove beside a relay corridor. Emergency strip on the floor. No ceiling lights.",
+          "text": "My name is Ethan Hale. ECHO Station. Chief engineer.",
           "textKey": "episode_01.e01_n01_first_signal.event19.text"
         },
         {
@@ -208,8 +210,26 @@
         },
         {
           "type": "message",
-          "text": "Something behind the wall keeps ticking every few seconds.",
+          "text": "I'm jammed into a service alcove beside a relay corridor.",
           "textKey": "episode_01.e01_n01_first_signal.event21.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3300
+        },
+        {
+          "type": "message",
+          "text": "Emergency strip on the floor. No ceiling lights.",
+          "textKey": "episode_01.e01_n01_first_signal.event23.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Something behind the wall keeps ticking.",
+          "textKey": "episode_01.e01_n01_first_signal.event25.text"
         },
         {
           "type": "pause",
@@ -217,12 +237,12 @@
         },
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 2400
         },
         {
           "type": "message",
-          "text": "It did not do that before.",
-          "textKey": "episode_01.e01_n01_first_signal.event24.text"
+          "text": "It stopped when I typed that.",
+          "textKey": "episode_01.e01_n01_first_signal.event28.text"
         }
       ],
       "choices": [
@@ -257,30 +277,39 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2400
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Dr. Ethan Hale. Chief engineer.",
+          "text": "Dr. Ethan Hale.",
           "textKey": "episode_01.e01_n02_who.event1.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2800
         },
         {
           "type": "message",
-          "text": "I used to keep the relay spine, power buses, and life-support routing from killing each other.",
+          "text": "Chief engineer.",
           "textKey": "episode_01.e01_n02_who.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3800
         },
         {
           "type": "message",
-          "text": "It was a boring job when the station behaved.",
+          "text": "Which currently means 'nearest idiot to a broken panel.'",
           "textKey": "episode_01.e01_n02_who.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3900
+        },
+        {
+          "type": "message",
+          "text": "I used to keep the relay spine and life-support buses from eating each other.",
+          "textKey": "episode_01.e01_n02_who.event7.text"
         },
         {
           "type": "pause",
@@ -288,12 +317,21 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 2400
         },
         {
           "type": "message",
-          "text": "I miss boring.",
-          "textKey": "episode_01.e01_n02_who.event8.text"
+          "text": "That was boring.",
+          "textKey": "episode_01.e01_n02_who.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "God, I miss boring.",
+          "textKey": "episode_01.e01_n02_who.event12.text"
         }
       ],
       "nextNodeId": "e01_n03_status"
@@ -304,7 +342,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 1800
         },
         {
           "type": "message",
@@ -313,11 +351,11 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 2400
         },
         {
           "type": "message",
-          "text": "Annoying, but fair.",
+          "text": "Rude, but fair.",
           "textKey": "episode_01.e01_n02_prove.event3.text"
         },
         {
@@ -326,14 +364,23 @@
         },
         {
           "type": "message",
-          "text": "I'm sending suit telemetry. If this is fake, it is a very committed fake with bad oxygen numbers.",
+          "text": "I'm sending suit telemetry.",
           "textKey": "episode_01.e01_n02_prove.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4300
+        },
+        {
+          "type": "message",
+          "text": "If I'm fake, I'm a fake with extremely committed lung problems.",
+          "textKey": "episode_01.e01_n02_prove.event7.text"
         },
         {
           "type": "systemAlert",
           "text": "[BIOMETRIC FRAGMENT ATTACHED]",
           "pauseAfterMs": 900,
-          "textKey": "episode_01.e01_n02_prove.event6.text"
+          "textKey": "episode_01.e01_n02_prove.event8.text"
         },
         {
           "type": "log",
@@ -361,12 +408,12 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 3100
         },
         {
           "type": "message",
           "text": "Oxygen is at thirty-two percent.",
-          "textKey": "episode_01.e01_n02_prove.event9.text"
+          "textKey": "episode_01.e01_n02_prove.event11.text"
         },
         {
           "type": "typing",
@@ -374,8 +421,17 @@
         },
         {
           "type": "message",
-          "text": "The suit says battery is forty. I don't trust it enough to feel comforted.",
-          "textKey": "episode_01.e01_n02_prove.event11.text"
+          "text": "Battery says forty.",
+          "textKey": "episode_01.e01_n02_prove.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "The suit sounds way too proud of that number.",
+          "textKey": "episode_01.e01_n02_prove.event15.text"
         }
       ],
       "nextNodeId": "e01_n03_status"
@@ -386,39 +442,70 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2900
         },
         {
           "type": "message",
-          "text": "Something hit the station hard.",
+          "text": "Something hit the station.",
           "textKey": "episode_01.e01_n03_status.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1700
         },
         {
           "type": "message",
-          "text": "Lights went first. Then internal comms. Then the relay started throwing old voices back at me.",
+          "text": "Hard.",
           "textKey": "episode_01.e01_n03_status.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4800
+          "duration": 3700
         },
         {
           "type": "message",
-          "text": "Recordings. Loops. Distress calls that ended months ago.",
+          "text": "Lights went first.",
           "textKey": "episode_01.e01_n03_status.event5.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Then internal comms.",
+          "textKey": "episode_01.e01_n03_status.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4300
+        },
+        {
+          "type": "message",
+          "text": "Then the relay started throwing old voices back at me.",
+          "textKey": "episode_01.e01_n03_status.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Loops. Distress calls. People who stopped needing help months ago.",
+          "textKey": "episode_01.e01_n03_status.event11.text"
+        },
+        {
+          "type": "pause",
+          "duration": 900
+        },
+        {
+          "type": "typing",
+          "duration": 3600
         },
         {
           "type": "message",
           "text": "You are the first response that feels like a person.",
-          "textKey": "episode_01.e01_n03_status.event7.text"
+          "textKey": "episode_01.e01_n03_status.event14.text"
         },
         {
           "type": "backgroundEvent",
@@ -427,7 +514,7 @@
             "type": "systemAlert",
             "text": "[UNAUTHORIZED OBSERVER DETECTED]",
             "pauseAfterMs": 800,
-            "textKey": "episode_01.e01_n03_status.backgroundEvent8.text"
+            "textKey": "episode_01.e01_n03_status.backgroundEvent15.text"
           }
         }
       ],
@@ -446,7 +533,7 @@
         },
         {
           "id": "need_info",
-          "text": "TELL ME WHAT YOU CAN SEE.",
+          "text": "TELL ME WHAT YOU SEE.",
           "effects": {
             "trust": 2,
             "danger": -1,
@@ -463,7 +550,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 2300
         },
         {
           "type": "message",
@@ -476,21 +563,30 @@
         },
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 3100
         },
         {
           "type": "message",
-          "text": "I needed that more than I wanted to.",
+          "text": "I needed to hear that more than I want to admit.",
           "textKey": "episode_01.e01_n04_help.event4.text"
         },
         {
           "type": "typing",
-          "duration": 4000
+          "duration": 3100
         },
         {
           "type": "message",
-          "text": "But don't trust me blindly. I'm tired, low on air, and there are gaps in my memory.",
+          "text": "But don't follow me blindly.",
           "textKey": "episode_01.e01_n04_help.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4200
+        },
+        {
+          "type": "message",
+          "text": "I'm tired, low on air, and my memory has holes in it.",
+          "textKey": "episode_01.e01_n04_help.event8.text"
         },
         {
           "type": "typing",
@@ -498,8 +594,8 @@
         },
         {
           "type": "message",
-          "text": "If I sound too sure about something, make me prove it.",
-          "textKey": "episode_01.e01_n04_help.event8.text"
+          "text": "If I sound too certain, make me prove it.",
+          "textKey": "episode_01.e01_n04_help.event10.text"
         }
       ],
       "nextNodeId": "e01_n05_crew_log"
@@ -510,25 +606,12 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 2600
         },
         {
           "type": "message",
-          "text": "Narrow corridor. Cable trays on the left wall. Some of them melted through their brackets.",
+          "text": "Narrow corridor.",
           "textKey": "episode_01.e01_n04_look.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "Floor is covered in gray dust. My boots leave clean marks in it.",
-          "textKey": "episode_01.e01_n04_look.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
         },
         {
           "type": "typing",
@@ -536,17 +619,35 @@
         },
         {
           "type": "message",
-          "text": "There are older footprints too.",
-          "textKey": "episode_01.e01_n04_look.event6.text"
+          "text": "Cable trays on the left wall.",
+          "textKey": "episode_01.e01_n04_look.event3.text"
         },
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "Same direction I'm going.",
-          "textKey": "episode_01.e01_n04_look.event8.text"
+          "text": "Some melted clean through their brackets.",
+          "textKey": "episode_01.e01_n04_look.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3300
+        },
+        {
+          "type": "message",
+          "text": "Gray dust on the floor.",
+          "textKey": "episode_01.e01_n04_look.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3300
+        },
+        {
+          "type": "message",
+          "text": "My boots are cutting fresh tracks through it.",
+          "textKey": "episode_01.e01_n04_look.event9.text"
         },
         {
           "type": "pause",
@@ -558,8 +659,30 @@
         },
         {
           "type": "message",
-          "text": "I don't love that.",
-          "textKey": "episode_01.e01_n04_look.event11.text"
+          "text": "There are older tracks too.",
+          "textKey": "episode_01.e01_n04_look.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "Same direction I'm going.",
+          "textKey": "episode_01.e01_n04_look.event14.text"
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "That's not my favorite discovery today.",
+          "textKey": "episode_01.e01_n04_look.event17.text"
         }
       ],
       "nextNodeId": "e01_n05_crew_log"
@@ -570,21 +693,30 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3100
         },
         {
           "type": "message",
-          "text": "Relay room is past the dark stretch of corridor.",
+          "text": "Relay room should be past the dark stretch.",
           "textKey": "episode_01.e01_n05_crew_log.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "The door needs my maintenance authorization. I can still pull one damaged crew record from the cache.",
+          "text": "Door needs maintenance authorization.",
           "textKey": "episode_01.e01_n05_crew_log.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "I can pull one damaged crew record from the cache.",
+          "textKey": "episode_01.e01_n05_crew_log.event5.text"
         },
         {
           "type": "log",
@@ -614,21 +746,39 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3400
         },
         {
           "type": "message",
-          "text": "The active line is damaged. The old fragment is still visible.",
-          "textKey": "episode_01.e01_n05_crew_log.event6.text"
+          "text": "Active line is torn up.",
+          "textKey": "episode_01.e01_n05_crew_log.event8.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3200
         },
         {
           "type": "message",
-          "text": "Don't copy the old fragment whole. It is marked deprecated for a reason.",
-          "textKey": "episode_01.e01_n05_crew_log.event8.text"
+          "text": "Old fragment is still visible.",
+          "textKey": "episode_01.e01_n05_crew_log.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4400
+        },
+        {
+          "type": "message",
+          "text": "Do not copy the old fragment whole. It is marked deprecated, and stations usually mean that in the least friendly way.",
+          "textKey": "episode_01.e01_n05_crew_log.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "I'm going to the relay door.",
+          "textKey": "episode_01.e01_n05_crew_log.event14.text"
         },
         {
           "type": "typing",
@@ -636,17 +786,8 @@
         },
         {
           "type": "message",
-          "text": "I'm going to the relay door now.",
-          "textKey": "episode_01.e01_n05_crew_log.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "I need both hands free for the corridor. If I keep talking, I'll stop listening.",
-          "textKey": "episode_01.e01_n05_crew_log.event12.text"
+          "text": "Both hands for the corridor. If I keep talking, I'll stop listening.",
+          "textKey": "episode_01.e01_n05_crew_log.event16.text"
         },
         {
           "type": "characterBusy",
@@ -658,7 +799,7 @@
           "notificationTitle": "Incoming Transmission",
           "notificationBody": "Hale sent a message.",
           "message": "[HALE IS IN TRANSIT]",
-          "messageKey": "episode_01.e01_n05_crew_log.event13.message"
+          "messageKey": "episode_01.e01_n05_crew_log.event17.message"
         }
       ]
     },
@@ -668,7 +809,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 2100
         },
         {
           "type": "message",
@@ -677,25 +818,21 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3400
         },
         {
           "type": "message",
-          "text": "Took longer than it should have. Half the corridor is blocked by fallen insulation panels.",
+          "text": "Took longer than it should have.",
           "textKey": "episode_01.e01_n06_relay_door_return.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3900
         },
         {
           "type": "message",
-          "text": "The ticking stopped when I passed the third service hatch.",
+          "text": "Half the corridor is blocked by insulation panels.",
           "textKey": "episode_01.e01_n06_relay_door_return.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
         },
         {
           "type": "typing",
@@ -703,8 +840,21 @@
         },
         {
           "type": "message",
-          "text": "I don't know if that is better.",
-          "textKey": "episode_01.e01_n06_relay_door_return.event8.text"
+          "text": "The ticking stopped when I passed the third service hatch.",
+          "textKey": "episode_01.e01_n06_relay_door_return.event7.text"
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "No idea if that's better.",
+          "textKey": "episode_01.e01_n06_relay_door_return.event10.text"
         },
         {
           "type": "typing",
@@ -712,14 +862,14 @@
         },
         {
           "type": "message",
-          "text": "Access panel is alive. Keypad cracked, but the first four digits still respond.",
-          "textKey": "episode_01.e01_n06_relay_door_return.event10.text"
+          "text": "Panel is alive. Keypad is cracked, but the first four digits still respond.",
+          "textKey": "episode_01.e01_n06_relay_door_return.event12.text"
         },
         {
           "type": "systemAlert",
           "text": "[LOCKED DEVICE DETECTED: RELAY ACCESS]",
           "pauseAfterMs": 900,
-          "textKey": "episode_01.e01_n06_relay_door_return.event11.text"
+          "textKey": "episode_01.e01_n06_relay_door_return.event13.text"
         },
         {
           "type": "puzzle",
@@ -754,46 +904,94 @@
           "pauseAfterMs": 600
         },
         {
-          "type": "message",
-          "text": "Stop. Don't try another random number.",
-          "speaker": "HALE",
-          "textKey": "episode_01.e01_n05_access_denied.event3.text"
-        },
-        {
           "type": "typing",
-          "duration": 3600
+          "duration": 1300
         },
         {
           "type": "message",
-          "text": "The panel noticed the failed attempt. I can hear the lock cycling inside the frame.",
+          "text": "Stop.",
           "speaker": "HALE",
-          "textKey": "episode_01.e01_n05_access_denied.event5.text"
+          "textKey": "episode_01.e01_n05_access_denied.event4.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2600
         },
         {
           "type": "message",
-          "text": "Look at the record again. Active authorization: seventy-three, blank, one. Deprecated fragment: three-one-nine.",
+          "text": "Do not try another random number.",
           "speaker": "HALE",
-          "textKey": "episode_01.e01_n05_access_denied.event7.text"
+          "textKey": "episode_01.e01_n05_access_denied.event6.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 3300
+        },
+        {
+          "type": "message",
+          "text": "The panel noticed that one.",
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n05_access_denied.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3900
+        },
+        {
+          "type": "message",
+          "text": "I can hear the lock cycling inside the frame.",
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n05_access_denied.event10.text"
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Look at the record again.",
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n05_access_denied.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Active authorization: seventy-three, blank, one.",
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n05_access_denied.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Deprecated fragment: three-one-nine.",
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n05_access_denied.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
         },
         {
           "type": "message",
           "text": "Only one digit fits the damaged spot.",
           "speaker": "HALE",
-          "textKey": "episode_01.e01_n05_access_denied.event9.text"
+          "textKey": "episode_01.e01_n05_access_denied.event19.text"
         }
       ],
       "choices": [
         {
           "id": "retry_relay_password",
-          "text": "TRY THE RELAY CODE AGAIN.",
+          "text": "TRY THE CODE AGAIN.",
           "effects": {
             "danger": 1,
             "signalStrength": -1
@@ -819,39 +1017,75 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "All right. Slowly.",
+          "text": "Okay.",
           "textKey": "episode_01.e01_n05_hint.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "The current code is not hidden like a riddle. It is damaged like a bad transmission.",
+          "text": "Slowly.",
           "textKey": "episode_01.e01_n05_hint.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3900
         },
         {
           "type": "message",
-          "text": "Seventy-three. Missing digit. One.",
+          "text": "The current code isn't a riddle. It's just damaged.",
           "textKey": "episode_01.e01_n05_hint.event5.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2300
         },
         {
           "type": "message",
-          "text": "The old record shows three-one-nine. The system says not to use the whole old record.",
+          "text": "Seventy-three.",
           "textKey": "episode_01.e01_n05_hint.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Missing digit.",
+          "textKey": "episode_01.e01_n05_hint.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "One.",
+          "textKey": "episode_01.e01_n05_hint.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3300
+        },
+        {
+          "type": "message",
+          "text": "Old record shows three-one-nine.",
+          "textKey": "episode_01.e01_n05_hint.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "System says not to use the whole old record.",
+          "textKey": "episode_01.e01_n05_hint.event15.text"
         },
         {
           "type": "pause",
@@ -859,18 +1093,18 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 2700
         },
         {
           "type": "message",
-          "text": "So we borrow the part that fits.",
-          "textKey": "episode_01.e01_n05_hint.event10.text"
+          "text": "So we steal the part that fits.",
+          "textKey": "episode_01.e01_n05_hint.event18.text"
         },
         {
           "type": "systemAlert",
           "text": "[RELAY PANEL AWAITING INPUT]",
           "pauseAfterMs": 900,
-          "textKey": "episode_01.e01_n05_hint.event11.text"
+          "textKey": "episode_01.e01_n05_hint.event19.text"
         }
       ],
       "choices": [
@@ -886,7 +1120,7 @@
         },
         {
           "id": "force_hale_guess",
-          "text": "ASK HALE TO GUESS IT HIMSELF.",
+          "text": "ASK HALE TO GUESS IT.",
           "effects": {
             "danger": 2,
             "haleTrust": -1
@@ -902,7 +1136,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 2200
         },
         {
           "type": "message",
@@ -911,21 +1145,30 @@
         },
         {
           "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "text": "I could also put my hand in a live junction box and hope it appreciates confidence.",
-          "textKey": "episode_01.e01_n05_hale_guess.event3.text"
-        },
-        {
-          "type": "typing",
           "duration": 4200
         },
         {
           "type": "message",
-          "text": "Use the record. My memory is not better than the evidence right now.",
+          "text": "I could also lick the panel and hope it respects confidence.",
+          "textKey": "episode_01.e01_n05_hale_guess.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3300
+        },
+        {
+          "type": "message",
+          "text": "Use the record.",
           "textKey": "episode_01.e01_n05_hale_guess.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3300
+        },
+        {
+          "type": "message",
+          "text": "My memory is not better than evidence right now.",
+          "textKey": "episode_01.e01_n05_hale_guess.event7.text"
         }
       ],
       "nextNodeId": "e01_n06_relay_door_return"
@@ -950,7 +1193,7 @@
         },
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 2200
         },
         {
           "type": "message",
@@ -959,48 +1202,75 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "The room is colder than the corridor.",
+          "text": "Oh.",
           "textKey": "episode_01.e01_n06_relay_access_granted.event5.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3300
         },
         {
           "type": "message",
-          "text": "Three relay columns. One dark. One humming low. One pulsing like a heartbeat with bad timing.",
+          "text": "The room is colder than the corridor.",
           "textKey": "episode_01.e01_n06_relay_access_granted.event7.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3200
         },
         {
           "type": "message",
-          "text": "I need to stabilize the link from inside.",
+          "text": "Three relay columns.",
           "textKey": "episode_01.e01_n06_relay_access_granted.event9.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2100
         },
         {
           "type": "message",
-          "text": "I can keep reserve power on life support and push the relay through a dirty line.",
+          "text": "One dark.",
           "textKey": "episode_01.e01_n06_relay_access_granted.event11.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2500
         },
         {
           "type": "message",
-          "text": "Or I can clean up our signal by borrowing from reserve power.",
+          "text": "One humming low.",
           "textKey": "episode_01.e01_n06_relay_access_granted.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4300
+        },
+        {
+          "type": "message",
+          "text": "One pulsing like it borrowed a heartbeat and installed it wrong.",
+          "textKey": "episode_01.e01_n06_relay_access_granted.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3300
+        },
+        {
+          "type": "message",
+          "text": "Reserve power is still tied to life support.",
+          "textKey": "episode_01.e01_n06_relay_access_granted.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "Relay carrier is dirty.",
+          "textKey": "episode_01.e01_n06_relay_access_granted.event19.text"
         },
         {
           "type": "pause",
@@ -1008,18 +1278,36 @@
         },
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 2800
         },
         {
           "type": "message",
-          "text": "One keeps me safer. One keeps you closer.",
-          "textKey": "episode_01.e01_n06_relay_access_granted.event16.text"
+          "text": "If I clean the carrier, I have to pull from reserve.",
+          "textKey": "episode_01.e01_n06_relay_access_granted.event22.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "If I leave reserve alone, the signal stays ugly.",
+          "textKey": "episode_01.e01_n06_relay_access_granted.event24.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "I don't like either hand.",
+          "textKey": "episode_01.e01_n06_relay_access_granted.event26.text"
         }
       ],
       "choices": [
         {
           "id": "protect_life_support",
-          "text": "KEEP RESERVE POWER ON LIFE SUPPORT.",
+          "text": "KEEP RESERVE ON LIFE SUPPORT.",
           "effects": {
             "oxygenPreserved": true,
             "haleTrust": 2,
@@ -1030,7 +1318,7 @@
         },
         {
           "id": "boost_relay",
-          "text": "BOOST THE RELAY SIGNAL.",
+          "text": "PULL RESERVE INTO THE RELAY.",
           "effects": {
             "signalStrength": 6,
             "danger": 3,
@@ -1047,30 +1335,57 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 2500
         },
         {
           "type": "message",
-          "text": "Good. Reserve stays with life support.",
+          "text": "Keeping reserve with life support.",
           "textKey": "episode_01.e01_n07_life_support_priority.event1.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1600
         },
         {
           "type": "message",
-          "text": "I am annoyingly attached to breathing.",
+          "text": "Good.",
           "textKey": "episode_01.e01_n07_life_support_priority.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2800
         },
         {
           "type": "message",
-          "text": "I'll force the relay through the dirtier line. It will sound ugly, but ugly is acceptable.",
+          "text": "Breathing remains fashionable.",
           "textKey": "episode_01.e01_n07_life_support_priority.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3900
+        },
+        {
+          "type": "message",
+          "text": "I'll force the relay through the dirty line.",
+          "textKey": "episode_01.e01_n07_life_support_priority.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3100
+        },
+        {
+          "type": "message",
+          "text": "It'll sound awful.",
+          "textKey": "episode_01.e01_n07_life_support_priority.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "Awful is still better than dead.",
+          "textKey": "episode_01.e01_n07_life_support_priority.event11.text"
         },
         {
           "type": "characterBusy",
@@ -1082,7 +1397,7 @@
           "notificationTitle": "Incoming Transmission",
           "notificationBody": "Hale sent a message.",
           "message": "[HALE IS WORKING]",
-          "messageKey": "episode_01.e01_n07_life_support_priority.event6.message"
+          "messageKey": "episode_01.e01_n07_life_support_priority.event12.message"
         }
       ]
     },
@@ -1092,30 +1407,61 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 2600
         },
         {
           "type": "message",
-          "text": "Borrowing reserve for the relay.",
+          "text": "Pulling reserve into the relay.",
           "textKey": "episode_01.e01_n07_relay_priority.event1.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2500
         },
         {
           "type": "message",
-          "text": "That gives us a cleaner carrier. It also makes my oxygen margin worse.",
+          "text": "Carrier is cleaning up.",
           "textKey": "episode_01.e01_n07_relay_priority.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "I understand why you chose it. I just want the cost said out loud.",
+          "text": "My suit immediately hated that.",
           "textKey": "episode_01.e01_n07_relay_priority.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "text": "Oxygen margin just got thinner.",
+          "textKey": "episode_01.e01_n07_relay_priority.event7.text"
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Not blaming you.",
+          "textKey": "episode_01.e01_n07_relay_priority.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Just saying the quiet part out loud before the alarms do.",
+          "textKey": "episode_01.e01_n07_relay_priority.event12.text"
         },
         {
           "type": "characterBusy",
@@ -1127,7 +1473,7 @@
           "notificationTitle": "Incoming Transmission",
           "notificationBody": "Hale sent a message.",
           "message": "[HALE IS WORKING]",
-          "messageKey": "episode_01.e01_n07_relay_priority.event6.message"
+          "messageKey": "episode_01.e01_n07_relay_priority.event13.message"
         }
       ]
     },
@@ -1152,7 +1498,7 @@
         },
         {
           "type": "typing",
-          "duration": 2400
+          "duration": 2000
         },
         {
           "type": "message",
@@ -1161,29 +1507,29 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2500
         },
         {
           "type": "message",
-          "text": "The relay is holding. Rough, but holding.",
+          "text": "Relay is holding.",
           "textKey": "episode_01.e01_n08_relay_return_life.event5.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2300
         },
         {
           "type": "message",
-          "text": "Floor vibrates when the dirty line surges. Feels like standing on a sleeping animal.",
+          "text": "Rough, but holding.",
           "textKey": "episode_01.e01_n08_relay_return_life.event7.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3900
         },
         {
           "type": "message",
-          "text": "Life support stayed clean. My suit alarm finally stopped scolding me.",
+          "text": "Floor kicks every time the dirty line surges.",
           "textKey": "episode_01.e01_n08_relay_return_life.event9.text"
         },
         {
@@ -1192,21 +1538,17 @@
         },
         {
           "type": "message",
-          "text": "There is a security cache behind the second relay column.",
+          "text": "Feels like standing on a sleeping animal.",
           "textKey": "episode_01.e01_n08_relay_return_life.event11.text"
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3300
         },
         {
           "type": "message",
-          "text": "I remember installing it.",
+          "text": "Life support stayed clean.",
           "textKey": "episode_01.e01_n08_relay_return_life.event13.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
         },
         {
           "type": "typing",
@@ -1214,8 +1556,39 @@
         },
         {
           "type": "message",
-          "text": "I don't remember why I suddenly hate looking at it.",
-          "textKey": "episode_01.e01_n08_relay_return_life.event16.text"
+          "text": "My suit alarm finally stopped scolding me.",
+          "textKey": "episode_01.e01_n08_relay_return_life.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "There's a security cache behind the second relay column.",
+          "textKey": "episode_01.e01_n08_relay_return_life.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "text": "I remember installing it.",
+          "textKey": "episode_01.e01_n08_relay_return_life.event19.text"
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "I do not remember why looking at it makes my stomach drop.",
+          "textKey": "episode_01.e01_n08_relay_return_life.event22.text"
         }
       ],
       "nextNodeId": "e01_n09_security_cache_choice"
@@ -1241,7 +1614,7 @@
         },
         {
           "type": "typing",
-          "duration": 2400
+          "duration": 2000
         },
         {
           "type": "message",
@@ -1250,39 +1623,66 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "Your signal is clearer now. I can actually hear the silence between words.",
+          "text": "Signal is clearer now.",
           "textKey": "episode_01.e01_n08_relay_return_signal.event5.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3900
         },
         {
           "type": "message",
-          "text": "My suit alarm hated the power dip. It made a sound I would describe as personally disappointed.",
+          "text": "I can hear the silence between your responses.",
           "textKey": "episode_01.e01_n08_relay_return_signal.event7.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3900
         },
         {
           "type": "message",
-          "text": "There is a security cache behind the second relay column.",
+          "text": "That should not feel comforting, but here we are.",
           "textKey": "episode_01.e01_n08_relay_return_signal.event9.text"
         },
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "text": "Suit alarm hated the power dip.",
+          "textKey": "episode_01.e01_n08_relay_return_signal.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4100
+        },
+        {
+          "type": "message",
+          "text": "It made a sound I can only describe as disappointed in me personally.",
+          "textKey": "episode_01.e01_n08_relay_return_signal.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "There's a security cache behind the second relay column.",
+          "textKey": "episode_01.e01_n08_relay_return_signal.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2600
         },
         {
           "type": "message",
           "text": "I remember putting it there.",
-          "textKey": "episode_01.e01_n08_relay_return_signal.event11.text"
+          "textKey": "episode_01.e01_n08_relay_return_signal.event17.text"
         },
         {
           "type": "pause",
@@ -1294,8 +1694,8 @@
         },
         {
           "type": "message",
-          "text": "That memory comes with a bad feeling.",
-          "textKey": "episode_01.e01_n08_relay_return_signal.event14.text"
+          "text": "That memory comes with a bad taste.",
+          "textKey": "episode_01.e01_n08_relay_return_signal.event20.text"
         }
       ],
       "nextNodeId": "e01_n09_security_cache_choice"
@@ -1306,45 +1706,89 @@
       "events": [
         {
           "type": "typing",
-          "duration": 4000
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "Cache is behind the second relay stack.",
+          "textKey": "episode_01.e01_n09_security_cache_choice.event1.text"
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "Of course it is.",
+          "textKey": "episode_01.e01_n09_security_cache_choice.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "text": "Relay console is on the other side of the room.",
+          "textKey": "episode_01.e01_n09_security_cache_choice.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3900
+        },
+        {
+          "type": "message",
+          "text": "If I leave it alone, the carrier may drift.",
+          "textKey": "episode_01.e01_n09_security_cache_choice.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
         },
         {
           "type": "message",
           "text": "The cache panel is under a burned insulation flap.",
-          "textKey": "episode_01.e01_n09_security_cache_choice.event1.text"
+          "textKey": "episode_01.e01_n09_security_cache_choice.event10.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2700
         },
         {
           "type": "message",
-          "text": "I need to step away from the console and open it manually.",
-          "textKey": "episode_01.e01_n09_security_cache_choice.event3.text"
+          "text": "I can see the edge from here.",
+          "textKey": "episode_01.e01_n09_security_cache_choice.event12.text"
+        },
+        {
+          "type": "pause",
+          "duration": 700
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3100
         },
         {
           "type": "message",
-          "text": "If I leave the relay console alone, the carrier may drift.",
-          "textKey": "episode_01.e01_n09_security_cache_choice.event5.text"
+          "text": "Door Twelve is written on the label.",
+          "textKey": "episode_01.e01_n09_security_cache_choice.event15.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3600
         },
         {
           "type": "message",
-          "text": "If I ignore the cache, we lose the first real clue we've found.",
-          "textKey": "episode_01.e01_n09_security_cache_choice.event7.text"
+          "text": "I hate that I recognize my own handwriting.",
+          "textKey": "episode_01.e01_n09_security_cache_choice.event17.text"
         }
       ],
       "choices": [
         {
           "id": "open_cache_now",
-          "text": "OPEN THE SECURITY CACHE.",
+          "text": "OPEN THE CACHE.",
           "effects": {
             "danger": 2,
             "haleTrust": 2
@@ -1354,7 +1798,7 @@
         },
         {
           "id": "check_observer_first",
-          "text": "CHECK THE OBSERVER WARNING FIRST.",
+          "text": "CHECK THE OBSERVER WARNING.",
           "effects": {
             "danger": 3,
             "signalStrength": -2,
@@ -1371,7 +1815,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 2500
         },
         {
           "type": "message",
@@ -1380,12 +1824,30 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2400
         },
         {
           "type": "message",
-          "text": "I'm stepping away from the relay console. If the line warbles, don't panic.",
+          "text": "I'm leaving the console.",
           "textKey": "episode_01.e01_n10_open_cache.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3600
+        },
+        {
+          "type": "message",
+          "text": "If the line warbles, don't panic.",
+          "textKey": "episode_01.e01_n10_open_cache.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "Actually, panic quietly. I need both hands.",
+          "textKey": "episode_01.e01_n10_open_cache.event7.text"
         },
         {
           "type": "characterBusy",
@@ -1397,7 +1859,7 @@
           "notificationTitle": "Incoming Transmission",
           "notificationBody": "Hale sent a message.",
           "message": "[HALE IS INVESTIGATING]",
-          "messageKey": "episode_01.e01_n10_open_cache.event4.message"
+          "messageKey": "episode_01.e01_n10_open_cache.event8.message"
         }
       ]
     },
@@ -1407,7 +1869,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2600
         },
         {
           "type": "message",
@@ -1416,43 +1878,57 @@
         },
         {
           "type": "pause",
-          "duration": 700
+          "duration": 600
+        },
+        {
+          "type": "message",
+          "text": "Yeah.",
+          "textKey": "episode_01.e01_n10_observer.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3300
         },
         {
           "type": "message",
           "text": "I was hoping you missed that.",
-          "textKey": "episode_01.e01_n10_observer.event4.text"
+          "textKey": "episode_01.e01_n10_observer.event5.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3900
         },
         {
           "type": "message",
           "text": "Something is sitting on the edge of the carrier.",
-          "textKey": "episode_01.e01_n10_observer.event6.text"
+          "textKey": "episode_01.e01_n10_observer.event7.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2400
         },
         {
           "type": "message",
-          "text": "Not talking yet. Just listening.",
-          "textKey": "episode_01.e01_n10_observer.event8.text"
+          "text": "Not speaking.",
+          "textKey": "episode_01.e01_n10_observer.event9.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Like a person standing behind you and not breathing.",
-          "textKey": "episode_01.e01_n10_observer.event10.text"
+          "text": "Just listening.",
+          "textKey": "episode_01.e01_n10_observer.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4100
+        },
+        {
+          "type": "message",
+          "text": "Like someone behind you trying not to breathe.",
+          "textKey": "episode_01.e01_n10_observer.event13.text"
         },
         {
           "type": "glitch",
@@ -1464,7 +1940,37 @@
           "speaker": "UNKNOWN",
           "text": "ASK HIM ABOUT DOOR 12",
           "pauseAfterMs": 1200,
-          "textKey": "episode_01.e01_n10_observer.event12.text"
+          "textKey": "episode_01.e01_n10_observer.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "text": "There.",
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n10_observer.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3100
+        },
+        {
+          "type": "message",
+          "text": "It heard us notice it.",
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n10_observer.event19.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "text": "Opening the cache now.",
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n10_observer.event21.text"
         },
         {
           "type": "typing",
@@ -1472,19 +1978,9 @@
         },
         {
           "type": "message",
-          "text": "There. It heard us notice it.",
+          "text": "Before it decides what we're allowed to know.",
           "speaker": "HALE",
-          "textKey": "episode_01.e01_n10_observer.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3400
-        },
-        {
-          "type": "message",
-          "text": "I'm opening the cache now. Before it decides what we get to know.",
-          "speaker": "HALE",
-          "textKey": "episode_01.e01_n10_observer.event16.text"
+          "textKey": "episode_01.e01_n10_observer.event23.text"
         },
         {
           "type": "characterBusy",
@@ -1496,7 +1992,7 @@
           "notificationTitle": "Incoming Transmission",
           "notificationBody": "Hale sent a message.",
           "message": "[HALE IS INVESTIGATING]",
-          "messageKey": "episode_01.e01_n10_observer.event17.message"
+          "messageKey": "episode_01.e01_n10_observer.event24.message"
         }
       ]
     },
@@ -1506,7 +2002,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 2000
         },
         {
           "type": "message",
@@ -1515,30 +2011,48 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2800
         },
         {
           "type": "message",
-          "text": "Cache was stuck. I had to pry the panel with a broken bracket.",
+          "text": "Cache was stuck.",
           "textKey": "episode_01.e01_n11_cache_return.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3900
         },
         {
           "type": "message",
-          "text": "There is a sealed evidence packet inside.",
+          "text": "Had to pry the panel with a broken bracket.",
           "textKey": "episode_01.e01_n11_cache_return.event5.text"
         },
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 2800
         },
         {
           "type": "message",
-          "text": "Label says Door 12.",
+          "text": "Very professional. Very dignified.",
           "textKey": "episode_01.e01_n11_cache_return.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3300
+        },
+        {
+          "type": "message",
+          "text": "There's a sealed evidence packet inside.",
+          "textKey": "episode_01.e01_n11_cache_return.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "Label says Door Twelve.",
+          "textKey": "episode_01.e01_n11_cache_return.event11.text"
         },
         {
           "type": "pause",
@@ -1546,21 +2060,21 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3000
         },
         {
           "type": "message",
           "text": "My hand went cold when I read it.",
-          "textKey": "episode_01.e01_n11_cache_return.event10.text"
+          "textKey": "episode_01.e01_n11_cache_return.event14.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2400
         },
         {
           "type": "message",
-          "text": "I'm opening it.",
-          "textKey": "episode_01.e01_n11_cache_return.event12.text"
+          "text": "Opening it.",
+          "textKey": "episode_01.e01_n11_cache_return.event16.text"
         }
       ],
       "nextNodeId": "e01_n12_records"
@@ -1571,7 +2085,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 2000
         },
         {
           "type": "message",
@@ -1580,39 +2094,61 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2600
         },
         {
           "type": "message",
-          "text": "The cache panel was warm. It should not be warm.",
+          "text": "Panel was warm.",
           "textKey": "episode_01.e01_n11_cache_return_observer.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2300
         },
         {
           "type": "message",
-          "text": "Something scratched the inside of the insulation flap.",
+          "text": "Should not be warm.",
           "textKey": "episode_01.e01_n11_cache_return_observer.event5.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "Something scratched the inside of the insulation flap.",
+          "textKey": "episode_01.e01_n11_cache_return_observer.event7.text"
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Inside.",
+          "textKey": "episode_01.e01_n11_cache_return_observer.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 4300
         },
         {
           "type": "message",
           "text": "I don't know how something scratches from inside a wall panel.",
-          "textKey": "episode_01.e01_n11_cache_return_observer.event7.text"
+          "textKey": "episode_01.e01_n11_cache_return_observer.event12.text"
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3100
         },
         {
           "type": "message",
-          "text": "The packet is labelled Door 12.",
-          "textKey": "episode_01.e01_n11_cache_return_observer.event9.text"
+          "text": "Packet is labelled Door Twelve.",
+          "textKey": "episode_01.e01_n11_cache_return_observer.event14.text"
         },
         {
           "type": "pause",
@@ -1620,21 +2156,21 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 3000
         },
         {
           "type": "message",
           "text": "The carrier just got quieter.",
-          "textKey": "episode_01.e01_n11_cache_return_observer.event12.text"
+          "textKey": "episode_01.e01_n11_cache_return_observer.event17.text"
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2500
         },
         {
           "type": "message",
-          "text": "I am opening it anyway.",
-          "textKey": "episode_01.e01_n11_cache_return_observer.event14.text"
+          "text": "Opening it anyway.",
+          "textKey": "episode_01.e01_n11_cache_return_observer.event19.text"
         }
       ],
       "nextNodeId": "e01_n12_records"
@@ -1731,7 +2267,7 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3000
         },
         {
           "type": "message",
@@ -1741,17 +2277,17 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2500
         },
         {
           "type": "message",
-          "text": "Outside Door 12.",
+          "text": "Outside Door Twelve.",
           "speaker": "HALE",
           "textKey": "episode_01.e01_n12_records.event8.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3100
         },
         {
           "type": "message",
@@ -1765,13 +2301,23 @@
         },
         {
           "type": "typing",
-          "duration": 3200
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n12_records.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2800
         },
         {
           "type": "message",
           "text": "I don't remember this.",
           "speaker": "HALE",
-          "textKey": "episode_01.e01_n12_records.event13.text"
+          "textKey": "episode_01.e01_n12_records.event15.text"
         }
       ],
       "choices": [
@@ -1806,7 +2352,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3500
         },
         {
           "type": "message",
@@ -1815,7 +2361,7 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3000
         },
         {
           "type": "message",
@@ -1824,7 +2370,7 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3200
         },
         {
           "type": "message",
@@ -1832,19 +2378,32 @@
           "textKey": "episode_01.e01_n13_press.event5.text"
         },
         {
+          "type": "pause",
+          "duration": 700
+        },
+        {
           "type": "typing",
-          "duration": 4600
+          "duration": 4000
         },
         {
           "type": "message",
-          "text": "But if I invent a cleaner answer, we both get a nicer lie and a worse chance of surviving.",
-          "textKey": "episode_01.e01_n13_press.event7.text"
+          "text": "But if I make up a cleaner answer, we get a nicer lie.",
+          "textKey": "episode_01.e01_n13_press.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "text": "And a worse chance of living through it.",
+          "textKey": "episode_01.e01_n13_press.event10.text"
         },
         {
           "type": "systemAlert",
           "text": "[HALE COOPERATION DEGRADED]",
           "pauseAfterMs": 900,
-          "textKey": "episode_01.e01_n13_press.event8.text"
+          "textKey": "episode_01.e01_n13_press.event11.text"
         },
         {
           "type": "statChange",
@@ -1863,7 +2422,7 @@
       "events": [
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2500
         },
         {
           "type": "message",
@@ -1872,20 +2431,20 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3300
         },
         {
           "type": "message",
-          "text": "I remember red light over a door.",
+          "text": "Red light over a door.",
           "textKey": "episode_01.e01_n13_soft.event3.text"
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 4100
         },
         {
           "type": "message",
-          "text": "I remember someone shouting my name from behind me.",
+          "text": "Someone behind me shouting my name.",
           "textKey": "episode_01.e01_n13_soft.event5.text"
         },
         {
@@ -1894,39 +2453,61 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1900
         },
         {
           "type": "message",
-          "text": "Not angry. Terrified.",
+          "text": "Not angry.",
           "textKey": "episode_01.e01_n13_soft.event8.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1900
         },
         {
           "type": "message",
-          "text": "My hand was near the override handle.",
+          "text": "Terrified.",
           "textKey": "episode_01.e01_n13_soft.event10.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3300
         },
         {
           "type": "message",
-          "text": "Then the memory cuts off.",
+          "text": "My hand was near the override.",
           "textKey": "episode_01.e01_n13_soft.event12.text"
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 2900
         },
         {
           "type": "message",
-          "text": "Not fades. Cuts.",
+          "text": "Then it cuts off.",
           "textKey": "episode_01.e01_n13_soft.event14.text"
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "Not fades.",
+          "textKey": "episode_01.e01_n13_soft.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Cuts.",
+          "textKey": "episode_01.e01_n13_soft.event19.text"
         },
         {
           "type": "statChange",
@@ -1984,21 +2565,21 @@
         },
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 2800
         },
         {
           "type": "message",
-          "text": "The channel pulled away from me.",
+          "text": "The channel just pulled away from me.",
           "speaker": "HALE",
           "textKey": "episode_01.e01_n14_signal_intrusion.event5.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "That was not random interference.",
+          "text": "That wasn't random.",
           "speaker": "HALE",
           "textKey": "episode_01.e01_n14_signal_intrusion.event7.text"
         },
@@ -2008,19 +2589,29 @@
         },
         {
           "type": "message",
-          "text": "Something pressed into the carrier while we were reading the files.",
+          "text": "Something pushed into the carrier while we were reading.",
           "speaker": "HALE",
           "textKey": "episode_01.e01_n14_signal_intrusion.event9.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3000
         },
         {
           "type": "message",
-          "text": "I need to seal the evidence packet before the cache corrupts it.",
+          "text": "The evidence packet is still open.",
           "speaker": "HALE",
           "textKey": "episode_01.e01_n14_signal_intrusion.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "text": "I need to seal it before the cache corrupts.",
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n14_signal_intrusion.event13.text"
         }
       ],
       "choices": [
@@ -2060,65 +2651,101 @@
         },
         {
           "type": "typing",
-          "duration": 3400
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Good. Evidence is sealed.",
+          "text": "Good.",
           "textKey": "episode_01.e01_n15_seal_records.event2.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2400
         },
         {
           "type": "message",
-          "text": "Security log. Medical report. Camera analysis.",
+          "text": "Evidence is sealed.",
           "textKey": "episode_01.e01_n15_seal_records.event4.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Security log.",
+          "textKey": "episode_01.e01_n15_seal_records.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Medical report.",
+          "textKey": "episode_01.e01_n15_seal_records.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2400
+        },
+        {
+          "type": "message",
+          "text": "Camera analysis.",
+          "textKey": "episode_01.e01_n15_seal_records.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2000
         },
         {
           "type": "message",
           "text": "All preserved.",
-          "textKey": "episode_01.e01_n15_seal_records.event6.text"
+          "textKey": "episode_01.e01_n15_seal_records.event12.text"
         },
         {
           "type": "pause",
-          "duration": 700
+          "duration": 900
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3300
         },
         {
           "type": "message",
-          "text": "Operator, if Door 12 comes up again, don't let me step around it.",
-          "textKey": "episode_01.e01_n15_seal_records.event9.text"
+          "text": "Operator, if Door Twelve comes up again...",
+          "textKey": "episode_01.e01_n15_seal_records.event15.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3300
         },
         {
           "type": "message",
-          "text": "I don't trust my memory enough to protect either of us from it.",
-          "textKey": "episode_01.e01_n15_seal_records.event11.text"
+          "text": "Do not let me step around it.",
+          "textKey": "episode_01.e01_n15_seal_records.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3900
+        },
+        {
+          "type": "message",
+          "text": "I don't trust my memory enough to protect either of us.",
+          "textKey": "episode_01.e01_n15_seal_records.event19.text"
         },
         {
           "type": "corruptMessage",
           "speaker": "UNKNOWN",
           "text": "HE OPENED IT",
           "pauseAfterMs": 1200,
-          "textKey": "episode_01.e01_n15_seal_records.event12.text"
+          "textKey": "episode_01.e01_n15_seal_records.event20.text"
         }
       ],
       "choices": [
         {
           "id": "continue_episode_02_saved",
-          "text": "CONTINUE TO ARCHIVE SEARCH.",
+          "text": "CONTINUE THE ARCHIVE SEARCH.",
           "nextEpisodeId": "episode_02",
           "effects": {
             "haleTrust": 1,
@@ -2128,7 +2755,7 @@
         },
         {
           "id": "hold_position_before_ep2",
-          "text": "TELL HALE TO HOLD POSITION FIRST.",
+          "text": "TELL HALE TO HOLD POSITION.",
           "nextEpisodeId": "episode_02",
           "effects": {
             "haleTrust": 2,
@@ -2163,7 +2790,7 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 2600
         },
         {
           "type": "message",
@@ -2173,12 +2800,23 @@
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "Yeah.",
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n15_hold_channel.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 2800
         },
         {
           "type": "message",
           "text": "I understand why.",
-          "textKey": "episode_01.e01_n15_hold_channel.event6.text"
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n15_hold_channel.event8.text"
         },
         {
           "type": "typing",
@@ -2187,39 +2825,41 @@
         {
           "type": "message",
           "text": "Curiosity feels like courage until something answers back.",
-          "textKey": "episode_01.e01_n15_hold_channel.event8.text"
-        },
-        {
-          "type": "signalLost",
-          "duration": 3000,
-          "message": "[SIGNAL COLLAPSE]",
-          "restoreMessage": "[WEAK CARRIER RESTORED]",
-          "pauseAfterMs": 900,
-          "messageKey": "episode_01.e01_n15_hold_channel.event9.message",
-          "restoreMessageKey": "episode_01.e01_n15_hold_channel.event9.restoreMessage"
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n15_hold_channel.event10.text"
         },
         {
           "type": "corruptMessage",
           "speaker": "UNKNOWN",
           "text": "ASK WHO WAS OUTSIDE DOOR 12",
           "pauseAfterMs": 1200,
-          "textKey": "episode_01.e01_n15_hold_channel.event10.text"
+          "textKey": "episode_01.e01_n15_hold_channel.event11.text"
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 3200
         },
         {
           "type": "message",
-          "text": "We're leaving the relay room before it learns anything else from us.",
+          "text": "We're leaving the relay room.",
           "speaker": "HALE",
-          "textKey": "episode_01.e01_n15_hold_channel.event12.text"
+          "textKey": "episode_01.e01_n15_hold_channel.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "text": "Before it learns anything else from us.",
+          "speaker": "HALE",
+          "textKey": "episode_01.e01_n15_hold_channel.event15.text"
         }
       ],
       "choices": [
         {
           "id": "continue_episode_02_open",
-          "text": "CONTINUE TO ARCHIVE SEARCH.",
+          "text": "CONTINUE THE ARCHIVE SEARCH.",
           "nextEpisodeId": "episode_02",
           "effects": {
             "danger": 1,
