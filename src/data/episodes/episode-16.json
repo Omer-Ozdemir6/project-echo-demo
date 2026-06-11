@@ -2,8 +2,81 @@
   "id": "episode_16",
   "season": 2,
   "episode": 1,
-  "title": "THE AEON SIGNAL",
+  "title": "THE DOOR — FINAL DIRECTOR'S CUT V8",
   "startNodeId": "e16_n01",
+  "designVersion": "episode_16_final_directors_cut_v8_rebuilt",
+  "episodeObjective": "Locate the Door, decide whether to follow Omega's signal or Eva's memory, and reveal that Eva was born inside Omega.",
+  "rulesApplied": [
+    "Director's Cut 30-rule pass.",
+    "Humanization Pass V4: Eva, Noah, and Hale react as people before delivering information.",
+    "ECHO V5 consequence pass: every major branch creates persistent flags.",
+    "Episode 15 V8 continuity preserved: the chamber was a door and the station is inside Omega.",
+    "AEON is not the central mystery; the Door is.",
+    "UNKNOWN pushes story with concrete clues.",
+    "Every visible choice group has exactly two choices.",
+    "No three-choice route selection.",
+    "No single-choice continue nodes.",
+    "Episode 17 chain flags are explicit."
+  ],
+  "puzzles": {
+    "door_memory_correlation_16": {
+      "id": "door_memory_correlation_16",
+      "type": "matching",
+      "title": "DOOR MEMORY CORRELATION",
+      "description": "Match each Door trace with the correct conclusion.",
+      "submitLabel": "CONFIRM DOOR TRACE",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e16_n15_door_confirmed",
+      "failureNodeId": "e16_n14_fail",
+      "leftItems": [
+        {
+          "id": "surface_structure",
+          "label": "SURFACE STRUCTURE"
+        },
+        {
+          "id": "eva_memory",
+          "label": "EVA MEMORY"
+        },
+        {
+          "id": "omega_signal",
+          "label": "OMEGA SIGNAL"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "older_than_chamber",
+          "label": "OLDER THAN CHAMBER"
+        },
+        {
+          "id": "opened_before",
+          "label": "EVA OPENED IT ONCE"
+        },
+        {
+          "id": "station_inside_omega",
+          "label": "STATION IS INSIDE OMEGA"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "surface_structure",
+          "rightId": "older_than_chamber"
+        },
+        {
+          "leftId": "eva_memory",
+          "rightId": "opened_before"
+        },
+        {
+          "leftId": "omega_signal",
+          "rightId": "station_inside_omega"
+        }
+      ],
+      "titleKey": "episode_16.door_memory_correlation_16.puzzle0.title",
+      "descriptionKey": "episode_16.door_memory_correlation_16.puzzle0.description",
+      "submitLabelKey": "episode_16.door_memory_correlation_16.puzzle0.submitLabel"
+    }
+  },
   "nodes": {
     "e16_n01": {
       "id": "e16_n01",
@@ -11,50 +84,226 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2500
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "If you're hearing this... Then I wasn't too late.",
+          "text": "I remember this place.",
           "textKey": "episode_16.e16_n01.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "textKey": "episode_16.e16_n01.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's wrong.",
+          "textKey": "episode_16.e16_n01.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I've never been here.",
+          "textKey": "episode_16.e16_n01.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "So why do I remember it?",
+          "textKey": "episode_16.e16_n01.event9.text"
+        },
+        {
+          "type": "glitch",
+          "duration": 900,
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE DOOR WAS NEVER LOCKED.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_n01.event11.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "ONLY FORGOTTEN.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_n01.event12.text"
         }
       ],
-      "nextNodeId": "e16_n02"
+      "choices": [
+        {
+          "id": "ground_eva",
+          "text": "EVA, STAY WITH ME.",
+          "effects": {
+            "evaTrust": 4,
+            "evaStable": true,
+            "danger": 1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e16_n02_ground",
+          "textKey": "episode_16.e16_n01.choice0.text"
+        },
+        {
+          "id": "ask_memory",
+          "text": "DESCRIBE THE MEMORY.",
+          "effects": {
+            "evaMemoryPulled": true,
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e16_n02_memory",
+          "textKey": "episode_16.e16_n01.choice1.text"
+        }
+      ]
     },
-    "e16_n02": {
-      "id": "e16_n02",
+    "e16_n02_ground": {
+      "id": "e16_n02_ground",
       "speaker": "EVA",
       "events": [
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "I know who you are. You've been with them from the beginning. You just didn't know it.",
-          "textKey": "episode_16.e16_n02.event1.text"
+          "text": "I'm here.",
+          "textKey": "episode_16.e16_n02_ground.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I think.",
+          "textKey": "episode_16.e16_n02_ground.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Suit pressure normal.",
+          "textKey": "episode_16.e16_n02_ground.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Hands shaking, but normal.",
+          "textKey": "episode_16.e16_n02_ground.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Thank you.",
+          "textKey": "episode_16.e16_n02_ground.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Don't let me drift if I start sounding like her.",
+          "textKey": "episode_16.e16_n02_ground.event11.text"
         }
       ],
-      "nextNodeId": "e16_n03"
+      "nextNodeId": "e16_n03_surface"
     },
-    "e16_n03": {
-      "id": "e16_n03",
+    "e16_n02_memory": {
+      "id": "e16_n02_memory",
       "speaker": "EVA",
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Now I need your help.",
-          "textKey": "episode_16.e16_n03.event1.text"
+          "text": "White light.",
+          "textKey": "episode_16.e16_n02_memory.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not station light.",
+          "textKey": "episode_16.e16_n02_memory.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Warmer.",
+          "textKey": "episode_16.e16_n02_memory.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Like it was under my skin.",
+          "textKey": "episode_16.e16_n02_memory.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "A door without a frame.",
+          "textKey": "episode_16.e16_n02_memory.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "And someone on the other side breathing my name.",
+          "textKey": "episode_16.e16_n02_memory.event11.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "evaStress": 2,
+            "danger": 2
+          }
         }
       ],
-      "nextNodeId": "e16_n04"
+      "nextNodeId": "e16_n03_surface"
     },
-    "e16_n04": {
-      "id": "e16_n04",
+    "e16_n03_surface": {
+      "id": "e16_n03_surface",
       "speaker": "SYSTEM",
       "events": [
         {
@@ -62,217 +311,1421 @@
           "id": "helmet_cam_01",
           "fileId": "helmet_cam_01",
           "title": "EXTERNAL SURFACE FEED",
-          "caption": "Live helmet camera transmission.",
+          "caption": "Live helmet camera transmission beyond the station shell.",
           "src": "/images/helmet_cam_01.jpg",
-          "titleKey": "episode_16.e16_n04.event0.title",
-          "captionKey": "episode_16.e16_n04.event0.caption"
-        }
-      ],
-      "nextNodeId": "e16_n05"
-    },
-    "e16_n05": {
-      "id": "e16_n05",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "message",
-          "text": "The coordinates from the AEON file point outside the station. I'm going there.",
-          "textKey": "episode_16.e16_n05.event0.text"
-        }
-      ],
-      "nextNodeId": "e16_n06"
-    },
-    "e16_n06": {
-      "id": "e16_n06",
-      "speaker": "SYSTEM",
-      "events": [
+          "pauseAfterMs": 700,
+          "titleKey": "episode_16.e16_n03_surface.event0.title",
+          "captionKey": "episode_16.e16_n03_surface.event0.caption"
+        },
         {
           "type": "file",
-          "id": "surface_map_01",
-          "fileId": "surface_map_01",
-          "title": "SURFACE MAP",
-          "content": "[STATION]\n\n    |\n    |\n WEST --- EAST\n    |\n    |\n SOUTH RIDGE",
-          "titleKey": "episode_16.e16_n06.event0.title",
-          "contentKey": "episode_16.e16_n06.event0.content"
-        }
-      ],
-      "nextNodeId": "e16_n07"
-    },
-    "e16_n07": {
-      "id": "e16_n07",
-      "speaker": "EVA",
-      "events": [
+          "id": "door_surface_map_01",
+          "fileId": "door_surface_map_01",
+          "fileType": "map",
+          "title": "OMEGA SURFACE MAP",
+          "content": "[STATION SHELL]\n\n        MEMORY RIDGE\n             |\n             |\n     SIGNAL SCAR ---- DARK FIELD\n             |\n             |\n        DOOR TRACE",
+          "caption": "Surface trace map reconstructed from Omega signal distortion.",
+          "source": "OMEGA_SURFACE_TRACE",
+          "tags": [
+            "omega",
+            "door",
+            "surface",
+            "signal",
+            "memory"
+          ],
+          "correlationTags": [
+            "door_trace",
+            "omega_surface",
+            "episode_16"
+          ],
+          "message": "[OMEGA SURFACE MAP ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_16.e16_n03_surface.event1.title",
+          "contentKey": "episode_16.e16_n03_surface.event1.content",
+          "captionKey": "episode_16.e16_n03_surface.event1.caption",
+          "messageKey": "episode_16.e16_n03_surface.event1.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
         {
           "type": "message",
-          "text": "Three possible routes: West Ridge, East Crater, South Descent. Which one?",
-          "textKey": "episode_16.e16_n07.event0.text"
+          "text": "Two routes.",
+          "speaker": "EVA",
+          "textKey": "episode_16.e16_n03_surface.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Signal scar is clearer.",
+          "textKey": "episode_16.e16_n03_surface.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Memory ridge feels wrong.",
+          "textKey": "episode_16.e16_n03_surface.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Which one?",
+          "textKey": "episode_16.e16_n03_surface.event9.text"
         }
       ],
       "choices": [
         {
-          "id": "west_ridge",
-          "text": "WEST RIDGE",
+          "id": "follow_signal",
+          "text": "FOLLOW THE SIGNAL.",
           "effects": {
-            "trust": 2
+            "signalTrailFound": true,
+            "evaMemoryDamage": true,
+            "danger": 5,
+            "signalStrength": -3,
+            "irreversibleConsequence": "eva_memory_damage",
+            "episode17EvaState": "memory_damaged"
           },
-          "flags": {
-            "selectedRoute": "west"
-          },
-          "nextNodeId": "e16_n08",
-          "textKey": "episode_16.e16_n07.choice0.text"
+          "nextNodeId": "e16_n04_signal",
+          "textKey": "episode_16.e16_n03_surface.choice0.text"
         },
         {
-          "id": "east_crater",
-          "text": "EAST CRATER",
+          "id": "follow_memory",
+          "text": "FOLLOW EVA'S MEMORY.",
           "effects": {
+            "signalTrailLost": true,
+            "evaStable": true,
+            "danger": 2,
+            "signalStrength": 2,
+            "irreversibleConsequence": "signal_trail_lost",
+            "episode17TraceState": "signal_trail_lost"
+          },
+          "nextNodeId": "e16_n04_memory",
+          "textKey": "episode_16.e16_n03_surface.choice1.text"
+        }
+      ]
+    },
+    "e16_n04_signal": {
+      "id": "e16_n04_signal",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Signal route.",
+          "textKey": "episode_16.e16_n04_signal.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Going.",
+          "textKey": "episode_16.e16_n04_signal.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The ground isn't ground.",
+          "textKey": "episode_16.e16_n04_signal.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It flexes under my boots.",
+          "textKey": "episode_16.e16_n04_signal.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No footprints.",
+          "textKey": "episode_16.e16_n04_signal.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not even mine.",
+          "textKey": "episode_16.e16_n04_signal.event11.text"
+        },
+        {
+          "type": "characterBusy",
+          "id": "eva_signal_traverse_16",
+          "character": "EVA",
+          "status": "IS TRAVERSING",
+          "durationMs": 65000,
+          "returnNodeId": "e16_r04_signal",
+          "message": "[EVA IS TRAVERSING]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Eva sent a message.",
+          "tone": "danger",
+          "pauseAfterMs": 500,
+          "messageKey": "episode_16.e16_n04_signal.event12.message"
+        }
+      ]
+    },
+    "e16_r04_signal": {
+      "id": "e16_r04_signal",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I'm back.",
+          "textKey": "episode_16.e16_r04_signal.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Had to stop.",
+          "textKey": "episode_16.e16_r04_signal.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I forgot my own voice for a second.",
+          "textKey": "episode_16.e16_r04_signal.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I knew what I wanted to say.",
+          "textKey": "episode_16.e16_r04_signal.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "But it came out as someone else's breath.",
+          "textKey": "episode_16.e16_r04_signal.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Signal trail is intact.",
+          "textKey": "episode_16.e16_r04_signal.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I don't think I am.",
+          "textKey": "episode_16.e16_r04_signal.event13.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "evaMemoryDamage": true,
+            "danger": 3,
+            "signalStrength": -2
+          }
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "EVA OPENED IT ONCE.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_r04_signal.event15.text"
+        }
+      ],
+      "nextNodeId": "e16_n05_noah"
+    },
+    "e16_n04_memory": {
+      "id": "e16_n04_memory",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Memory route.",
+          "textKey": "episode_16.e16_n04_memory.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That sounds stupid.",
+          "textKey": "episode_16.e16_n04_memory.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Still doing it.",
+          "textKey": "episode_16.e16_n04_memory.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The ridge is warm.",
+          "textKey": "episode_16.e16_n04_memory.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not sun-warm.",
+          "textKey": "episode_16.e16_n04_memory.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Body-warm.",
+          "textKey": "episode_16.e16_n04_memory.event11.text"
+        },
+        {
+          "type": "characterBusy",
+          "id": "eva_memory_traverse_16",
+          "character": "EVA",
+          "status": "IS TRAVERSING",
+          "durationMs": 60000,
+          "returnNodeId": "e16_r04_memory",
+          "message": "[EVA IS TRAVERSING]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Eva sent a message.",
+          "tone": "character",
+          "pauseAfterMs": 500,
+          "messageKey": "episode_16.e16_n04_memory.event12.message"
+        }
+      ]
+    },
+    "e16_r04_memory": {
+      "id": "e16_r04_memory",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Still here.",
+          "textKey": "episode_16.e16_r04_memory.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I kept the memory stable.",
+          "textKey": "episode_16.e16_r04_memory.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Barely.",
+          "textKey": "episode_16.e16_r04_memory.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "But the signal trail collapsed behind me.",
+          "textKey": "episode_16.e16_r04_memory.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I watched the line fold into itself.",
+          "textKey": "episode_16.e16_r04_memory.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Like it was never there.",
+          "textKey": "episode_16.e16_r04_memory.event11.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "signalTrailLost": true,
+            "evaStable": true,
+            "signalStrength": 2
+          }
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE DOOR REMEMBERS WITHOUT SIGNAL.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_r04_memory.event13.text"
+        }
+      ],
+      "nextNodeId": "e16_n05_noah"
+    },
+    "e16_n05_noah": {
+      "id": "e16_n05_noah",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I know that structure.",
+          "textKey": "episode_16.e16_n05_noah.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "...",
+          "textKey": "episode_16.e16_n05_noah.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I shouldn't.",
+          "textKey": "episode_16.e16_n05_noah.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It's not in my memories.",
+          "textKey": "episode_16.e16_n05_noah.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It's under them.",
+          "textKey": "episode_16.e16_n05_noah.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Like a basement beneath a dream.",
+          "textKey": "episode_16.e16_n05_noah.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Please tell me that sounded less insane in your head.",
+          "speaker": "MAYA",
+          "textKey": "episode_16.e16_n05_noah.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It did not.",
+          "speaker": "NOAH",
+          "textKey": "episode_16.e16_n05_noah.event15.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_noah_more",
+          "text": "NOAH, KEEP GOING.",
+          "effects": {
+            "noahTrust": 3,
+            "noahStrain": 2,
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e16_n06_noah_more",
+          "textKey": "episode_16.e16_n05_noah.choice0.text"
+        },
+        {
+          "id": "ask_hale_warning",
+          "text": "HALE, WHY ARE YOU QUIET?",
+          "effects": {
+            "haleTrust": -3,
+            "halePressure": 3,
             "danger": 2
           },
-          "flags": {
-            "selectedRoute": "east"
-          },
-          "nextNodeId": "e16_n08",
-          "textKey": "episode_16.e16_n07.choice1.text"
-        },
-        {
-          "id": "south_descent",
-          "text": "SOUTH DESCENT",
-          "effects": {
-            "trust": 1
-          },
-          "flags": {
-            "selectedRoute": "south"
-          },
-          "nextNodeId": "e16_n08",
-          "textKey": "episode_16.e16_n07.choice2.text"
+          "nextNodeId": "e16_n06_hale",
+          "textKey": "episode_16.e16_n05_noah.choice1.text"
         }
       ]
     },
-    "e16_n08": {
-      "id": "e16_n08",
+    "e16_n06_noah_more": {
+      "id": "e16_n06_noah_more",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "There's a threshold.",
+          "textKey": "episode_16.e16_n06_noah_more.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not a door yet.",
+          "textKey": "episode_16.e16_n06_noah_more.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "A place where the world decides whether it wants to be one room or another.",
+          "textKey": "episode_16.e16_n06_noah_more.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I remember touching it.",
+          "textKey": "episode_16.e16_n06_noah_more.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "textKey": "episode_16.e16_n06_noah_more.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Someone remembers through me.",
+          "textKey": "episode_16.e16_n06_noah_more.event11.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "noahStrain": 2,
+            "danger": 2
+          }
+        }
+      ],
+      "nextNodeId": "e16_n07_hale_warning"
+    },
+    "e16_n06_hale": {
+      "id": "e16_n06_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Because I know what comes next.",
+          "textKey": "episode_16.e16_n06_hale.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not enough to stop it.",
+          "textKey": "episode_16.e16_n06_hale.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Enough to hate watching it happen again.",
+          "textKey": "episode_16.e16_n06_hale.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Eva.",
+          "textKey": "episode_16.e16_n06_hale.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Turn around.",
+          "textKey": "episode_16.e16_n06_hale.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Now.",
+          "textKey": "episode_16.e16_n06_hale.event11.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "halePressure": 4,
+            "haleTrust": -1
+          }
+        }
+      ],
+      "nextNodeId": "e16_n07_hale_warning"
+    },
+    "e16_n07_hale_warning": {
+      "id": "e16_n07_hale_warning",
       "speaker": "EVA",
       "events": [
         {
-          "type": "message",
-          "text": "Starting traversal. Stay online.",
-          "textKey": "episode_16.e16_n08.event0.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "start_travel",
-          "text": "ACKNOWLEDGED.",
-          "nextNodeId": "e16_n09",
-          "textKey": "episode_16.e16_n08.choice0.text"
-        }
-      ]
-    },
-    "e16_n09": {
-      "id": "e16_n09",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[TRAVEL IN PROGRESS]",
-          "textKey": "episode_16.e16_n09.event0.text"
-        }
-      ],
-      "waitTask": {
-        "id": "surface_traversal",
-        "durationMs": 120000,
-        "waitingNodeId": "e16_waiting",
-        "completeNodeId": "e16_n10"
-      }
-    },
-    "e16_waiting": {
-      "id": "e16_waiting",
-      "speaker": "SYSTEM",
-      "events": [
+          "type": "typing",
+          "duration": 1400
+        },
         {
           "type": "message",
-          "text": "Traversal in progress... Signal quality fluctuating.",
-          "textKey": "episode_16.e16_waiting.event0.text"
-        }
-      ]
-    },
-    "e16_n10": {
-      "id": "e16_n10",
-      "speaker": "SYSTEM",
-      "events": [
+          "text": "I'm not turning around.",
+          "textKey": "episode_16.e16_n07_hale_warning.event1.text"
+        },
         {
-          "type": "systemAlert",
-          "text": "[TRAVEL COMPLETE]",
-          "textKey": "episode_16.e16_n10.event0.text"
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I know that's what the smart person says right before something terrible happens.",
+          "textKey": "episode_16.e16_n07_hale_warning.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "But I'm tired of being the thing everyone protects by lying to.",
+          "textKey": "episode_16.e16_n07_hale_warning.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Send me the next scan.",
+          "textKey": "episode_16.e16_n07_hale_warning.event7.text"
         },
         {
           "type": "image",
           "id": "helmet_cam_02",
           "fileId": "helmet_cam_02",
-          "title": "UNKNOWN STRUCTURE DETECTED",
-          "caption": "Structure detected beyond the station perimeter.",
+          "title": "DOOR STRUCTURE DETECTED",
+          "caption": "A structure beyond the station perimeter. Geometry unstable.",
           "src": "/images/helmet_cam_02.jpg",
-          "titleKey": "episode_16.e16_n10.event1.title",
-          "captionKey": "episode_16.e16_n10.event1.caption"
+          "pauseAfterMs": 700,
+          "titleKey": "episode_16.e16_n07_hale_warning.event8.title",
+          "captionKey": "episode_16.e16_n07_hale_warning.event8.caption"
         }
       ],
-      "nextNodeId": "e16_n11"
+      "nextNodeId": "e16_n08_scan"
     },
-    "e16_n11": {
-      "id": "e16_n11",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "message",
-          "text": "This wasn't built by the station. I've never seen this before. But somehow... It feels familiar.",
-          "textKey": "episode_16.e16_n11.event0.text"
-        }
-      ],
-      "nextNodeId": "e16_n12"
-    },
-    "e16_n12": {
-      "id": "e16_n12",
+    "e16_n08_scan": {
+      "id": "e16_n08_scan",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "file",
-          "id": "structure_scan_01",
-          "fileId": "structure_scan_01",
-          "title": "STRUCTURE SCAN",
-          "content": "MATERIAL ANALYSIS\n\nUNKNOWN",
-          "titleKey": "episode_16.e16_n12.event0.title",
-          "contentKey": "episode_16.e16_n12.event0.content"
+          "id": "door_structure_scan_01",
+          "fileId": "door_structure_scan_01",
+          "fileType": "log",
+          "title": "DOOR STRUCTURE SCAN",
+          "content": "MATERIAL ANALYSIS: NONLOCAL\nAGE ESTIMATE:\n- OLDER THAN STATION\n- OLDER THAN FOUNDATION\n- OLDER THAN CHAMBER\nGEOMETRY: shifts according to observer memory\nCLASSIFICATION: THRESHOLD / DOOR",
+          "caption": "Structure scan marks the object as older than station, foundation, and chamber.",
+          "source": "OMEGA_SURFACE_SCAN",
+          "tags": [
+            "door",
+            "omega",
+            "structure",
+            "nonlocal",
+            "threshold"
+          ],
+          "correlationTags": [
+            "door_trace",
+            "omega_surface",
+            "older_than_chamber"
+          ],
+          "message": "[DOOR STRUCTURE SCAN ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_16.e16_n08_scan.event0.title",
+          "contentKey": "episode_16.e16_n08_scan.event0.content",
+          "captionKey": "episode_16.e16_n08_scan.event0.caption",
+          "messageKey": "episode_16.e16_n08_scan.event0.message"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU CALL IT A STRUCTURE.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_n08_scan.event1.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "IT CALLS ITSELF A MEMORY.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_n08_scan.event2.text"
         }
       ],
-      "nextNodeId": "e16_n13"
+      "choices": [
+        {
+          "id": "scan_threshold",
+          "text": "SCAN THE THRESHOLD.",
+          "effects": {
+            "thresholdScanned": true,
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e16_n09_threshold",
+          "textKey": "episode_16.e16_n08_scan.choice0.text"
+        },
+        {
+          "id": "anchor_eva_before_scan",
+          "text": "ANCHOR EVA FIRST.",
+          "effects": {
+            "evaAnchoredBeforeDoor": true,
+            "evaTrust": 3,
+            "danger": 1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e16_n09_anchor",
+          "textKey": "episode_16.e16_n08_scan.choice1.text"
+        }
+      ]
     },
-    "e16_n13": {
-      "id": "e16_n13",
+    "e16_n09_anchor": {
+      "id": "e16_n09_anchor",
       "speaker": "EVA",
       "events": [
         {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
           "type": "message",
-          "text": "I'm going inside. Whatever this place is... It was waiting for someone.",
-          "textKey": "episode_16.e16_n13.event0.text"
+          "text": "Anchor me.",
+          "textKey": "episode_16.e16_n09_anchor.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Tell me something real.",
+          "textKey": "episode_16.e16_n09_anchor.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Anything.",
+          "textKey": "episode_16.e16_n09_anchor.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Maya hates the word 'artifact.'",
+          "speaker": "MAYA",
+          "textKey": "episode_16.e16_n09_anchor.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I do. It's lazy science.",
+          "speaker": "MAYA",
+          "textKey": "episode_16.e16_n09_anchor.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That helped more than it should have.",
+          "speaker": "EVA",
+          "textKey": "episode_16.e16_n09_anchor.event11.text"
+        }
+      ],
+      "nextNodeId": "e16_n09_threshold"
+    },
+    "e16_n09_threshold": {
+      "id": "e16_n09_threshold",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "threshold_response_01",
+          "fileId": "threshold_response_01",
+          "fileType": "log",
+          "title": "THRESHOLD RESPONSE",
+          "content": "SCAN RESULT:\nThreshold reacts to Eva Thorne biometric pattern.\nResponse phrase reconstructed:\nRETURN EVENT DETECTED.\n\nHistorical note: Eva Thorne opened the threshold once before.",
+          "caption": "Threshold scan confirms Eva opened the Door once before.",
+          "source": "OMEGA_THRESHOLD_SCAN",
+          "tags": [
+            "door",
+            "eva_thorne",
+            "threshold",
+            "return_event"
+          ],
+          "correlationTags": [
+            "eva_opened_door",
+            "door_trace",
+            "return_event"
+          ],
+          "message": "[THRESHOLD RESPONSE ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_16.e16_n09_threshold.event0.title",
+          "contentKey": "episode_16.e16_n09_threshold.event0.content",
+          "captionKey": "episode_16.e16_n09_threshold.event0.caption",
+          "messageKey": "episode_16.e16_n09_threshold.event0.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Return event.",
+          "speaker": "NOAH",
+          "textKey": "episode_16.e16_n09_threshold.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It thinks I'm coming back.",
+          "speaker": "EVA",
+          "textKey": "episode_16.e16_n09_threshold.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Or it thinks you left.",
+          "speaker": "HALE",
+          "textKey": "episode_16.e16_n09_threshold.event6.text"
+        }
+      ],
+      "nextNodeId": "e16_n10_puzzle"
+    },
+    "e16_n10_puzzle": {
+      "id": "e16_n10_puzzle",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[DOOR MEMORY CORRELATION REQUIRED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_n10_puzzle.event0.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "door_memory_correlation_16",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e16_n14_fail": {
+      "id": "e16_n14_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[DOOR MEMORY CORRELATION FAILED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_n14_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "MAYA",
+          "textKey": "episode_16.e16_n14_fail.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Structure is older than chamber.",
+          "textKey": "episode_16.e16_n14_fail.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Eva opened it once.",
+          "textKey": "episode_16.e16_n14_fail.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Omega signal means the station is inside it.",
+          "textKey": "episode_16.e16_n14_fail.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Put the nightmare in order.",
+          "textKey": "episode_16.e16_n14_fail.event11.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "door_memory_correlation_16",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e16_n15_door_confirmed": {
+      "id": "e16_n15_door_confirmed",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[DOOR TRACE CONFIRMED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_n15_door_confirmed.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": 3
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The Door isn't outside the station.",
+          "speaker": "NOAH",
+          "textKey": "episode_16.e16_n15_door_confirmed.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The station is the part of it we understand.",
+          "speaker": "NOAH",
+          "textKey": "episode_16.e16_n15_door_confirmed.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That is the worst correction I've ever heard.",
+          "speaker": "MAYA",
+          "textKey": "episode_16.e16_n15_door_confirmed.event7.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE DOOR WAS NEVER OUTSIDE.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_n15_door_confirmed.event8.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "approach_door",
+          "text": "EVA, APPROACH THE DOOR.",
+          "effects": {
+            "evaApproachedDoor": true,
+            "danger": 5,
+            "signalStrength": -3
+          },
+          "nextNodeId": "e16_n16_approach",
+          "textKey": "episode_16.e16_n15_door_confirmed.choice0.text"
+        },
+        {
+          "id": "hold_at_threshold",
+          "text": "HOLD AT THE THRESHOLD.",
+          "effects": {
+            "heldAtThreshold": true,
+            "evaTrust": 2,
+            "danger": 2,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e16_n16_hold",
+          "textKey": "episode_16.e16_n15_door_confirmed.choice1.text"
+        }
+      ]
+    },
+    "e16_n16_hold": {
+      "id": "e16_n16_hold",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Holding.",
+          "textKey": "episode_16.e16_n16_hold.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I hate that I want to go closer.",
+          "textKey": "episode_16.e16_n16_hold.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's not bravery.",
+          "textKey": "episode_16.e16_n16_hold.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's pull.",
+          "textKey": "episode_16.e16_n16_hold.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Good call, Operator.",
+          "textKey": "episode_16.e16_n16_hold.event9.text"
         },
         {
           "type": "backgroundEvent",
-          "delay": 5000,
+          "delay": 3000,
           "event": {
             "type": "corruptMessage",
             "speaker": "UNKNOWN",
-            "text": "Welcome back, Eva.",
-            "textKey": "episode_16.e16_n13.backgroundEvent1.text"
+            "text": "HOLDING IS ALSO A CHOICE.",
+            "pauseAfterMs": 700,
+            "textKey": "episode_16.e16_n16_hold.backgroundEvent10.text"
+          }
+        }
+      ],
+      "nextNodeId": "e16_n17_question"
+    },
+    "e16_n16_approach": {
+      "id": "e16_n16_approach",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Approaching.",
+          "textKey": "episode_16.e16_n16_approach.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The suit radio just went quiet.",
+          "textKey": "episode_16.e16_n16_approach.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not dead.",
+          "textKey": "episode_16.e16_n16_approach.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Listening.",
+          "textKey": "episode_16.e16_n16_approach.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's worse.",
+          "textKey": "episode_16.e16_n16_approach.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Door surface is moving.",
+          "textKey": "episode_16.e16_n16_approach.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "textKey": "episode_16.e16_n16_approach.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It's remembering movement.",
+          "textKey": "episode_16.e16_n16_approach.event15.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 3,
+            "signalStrength": -3
+          }
+        }
+      ],
+      "nextNodeId": "e16_n17_question"
+    },
+    "e16_n17_question": {
+      "id": "e16_n17_question",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Who are you?",
+          "textKey": "episode_16.e16_n17_question.event1.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "WRONG QUESTION.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_n17_question.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then what should I ask?",
+          "textKey": "episode_16.e16_n17_question.event4.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "WHY DID YOU LEAVE?",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_n17_question.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Why do you know my name?",
+          "textKey": "episode_16.e16_n17_question.event7.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "BECAUSE IT WAS MINE FIRST.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_n17_question.event8.text"
+        }
+      ],
+      "nextNodeId": "e16_n18_final"
+    },
+    "e16_n18_final": {
+      "id": "e16_n18_final",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "What?",
+          "textKey": "episode_16.e16_n18_final.event1.text"
+        },
+        {
+          "type": "glitch",
+          "duration": 1200,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU WERE NEVER SENT HERE.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_n18_final.event3.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU WERE BORN HERE.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_16.e16_n18_final.event4.text"
+        },
+        {
+          "type": "signalLost",
+          "duration": 3000,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 700,
+          "messageKey": "episode_16.e16_n18_final.event5.message",
+          "restoreMessageKey": "episode_16.e16_n18_final.event5.restoreMessage"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "evaBornHereRevealed": true,
+            "danger": 7,
+            "signalStrength": -6
           }
         }
       ],
       "choices": [
         {
-          "id": "continue_to_episode_17",
-          "text": "ENTER THE STRUCTURE.",
+          "id": "enter_door",
+          "text": "ENTER THE DOOR.",
+          "effects": {
+            "enterDoorEpisode17": true,
+            "evaBornHereRevealed": true,
+            "danger": 5,
+            "signalStrength": -5,
+            "episode17StartMode": "enter_door"
+          },
           "nextEpisodeId": "episode_17",
-          "textKey": "episode_16.e16_n13.choice0.text"
+          "textKey": "episode_16.e16_n18_final.choice0.text"
+        },
+        {
+          "id": "pull_eva_back",
+          "text": "PULL EVA BACK.",
+          "effects": {
+            "pullEvaBackEpisode17": true,
+            "evaBornHereRevealed": true,
+            "evaTrust": 3,
+            "danger": 2,
+            "signalStrength": 2,
+            "episode17StartMode": "pull_eva_back"
+          },
+          "nextEpisodeId": "episode_17",
+          "textKey": "episode_16.e16_n18_final.choice1.text"
         }
       ]
     }
+  },
+  "relationshipConsequenceSystem": {
+    "episode16PersistentFlags": [
+      "evaMemoryPulled",
+      "evaStable",
+      "signalTrailFound",
+      "evaMemoryDamage",
+      "signalTrailLost",
+      "noahStrain",
+      "thresholdScanned",
+      "evaAnchoredBeforeDoor",
+      "evaApproachedDoor",
+      "heldAtThreshold",
+      "evaBornHereRevealed",
+      "enterDoorEpisode17",
+      "pullEvaBackEpisode17"
+    ],
+    "episode17UsageNotes": {
+      "evaMemoryDamage": "Eva begins Episode 17 with missing/borrowed memories and may confuse her own voice.",
+      "signalTrailLost": "The signal route is gone; Episode 17 must rely on memory route and weaker data.",
+      "evaStable": "Eva is more emotionally stable if protected, but less evidence is available.",
+      "evaApproachedDoor": "Door contact begins stronger and more invasive.",
+      "heldAtThreshold": "Eva trusts the operator more, but the Door may resist delayed entry.",
+      "evaBornHereRevealed": "Episode 17 must treat Eva's origin as connected to Omega, not crew transport.",
+      "enterDoorEpisode17": "Episode 17 opens inside or crossing the Door.",
+      "pullEvaBackEpisode17": "Episode 17 opens outside the Door with Eva resisting or being pulled."
+    }
+  },
+  "directorCut": {
+    "version": "FINAL_DIRECTORS_CUT_V8",
+    "sourceEpisode": "episode_16",
+    "coreRewrite": "Rebuilt from the provided Episode 16 JSON. AEON Signal route walk was replaced with a Door-centered Omega continuation.",
+    "majorChanges": [
+      "Episode objective changed from tracking AEON coordinates to locating the Door.",
+      "Removed three-choice route selection and replaced it with two meaningful paths.",
+      "Added irreversible branch: following the signal damages Eva's memory.",
+      "Added irreversible branch: following memory loses the signal trail.",
+      "Noah and Hale are active in the scene.",
+      "UNKNOWN now advances the Door mystery throughout the episode.",
+      "Structure scan now reveals the Door is older than station, foundation, and chamber.",
+      "Final reveal: Eva was born here.",
+      "Episode 17 hook branches between entering the Door and pulling Eva back."
+    ],
+    "qualityTarget": {
+      "concreteObjective": "10/10",
+      "humanization": "10/10",
+      "unknownStoryFunction": "10/10",
+      "consequence": "10/10",
+      "horror": "10/10",
+      "cliffhanger": "10/10",
+      "rulesCompliance": "9.5/10"
+    },
+    "nextEpisode": "episode_17"
   },
   "titleKey": "episode_16.meta.episode0.title"
 }

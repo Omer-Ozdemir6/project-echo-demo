@@ -2,8 +2,80 @@
   "id": "episode_18",
   "season": 2,
   "episode": 3,
-  "title": "THE CHAMBER",
+  "title": "THE NURSERY — FINAL DIRECTOR'S CUT V8",
   "startNodeId": "e18_n01",
+  "designVersion": "episode_18_final_directors_cut_v8_rebuilt",
+  "episodeObjective": "Enter or resist the Nursery, determine what Omega kept inside its memory vault, and reveal that Hale is not alive or dead but preserved as a living memory.",
+  "rulesApplied": [
+    "Director's Cut 30-rule pass.",
+    "Humanization Pass V4: Eva experiences the chamber physically and emotionally before lore is revealed.",
+    "ECHO V5 consequence pass: irreversible branch consequences and Episode 19 flags.",
+    "Episode 17 V8 continuity preserved: Eva is part of Omega and was not the only one.",
+    "UNKNOWN pushes story with concrete clues.",
+    "Every visible choice group has exactly two choices.",
+    "No single-choice access nodes.",
+    "Hale becomes the consequence of Omega memory preservation, not a simple ghost twist.",
+    "Episode 19 hook is explicit."
+  ],
+  "puzzles": {
+    "memory_vault_correlation_18": {
+      "id": "memory_vault_correlation_18",
+      "type": "matching",
+      "title": "MEMORY VAULT CORRELATION",
+      "description": "Match each recovered vault record with the correct conclusion.",
+      "submitLabel": "CONFIRM MEMORY VAULT",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e18_n14_vault_confirmed",
+      "failureNodeId": "e18_n13_fail",
+      "leftItems": [
+        {
+          "id": "hale_record",
+          "label": "HALE DEATH RECORD"
+        },
+        {
+          "id": "eva_authorization",
+          "label": "EVA AUTHORIZATION"
+        },
+        {
+          "id": "nursery_index",
+          "label": "NURSERY INDEX"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "preserved_memory",
+          "label": "PRESERVED MEMORY"
+        },
+        {
+          "id": "forced_signature",
+          "label": "FORCED SIGNATURE"
+        },
+        {
+          "id": "multiple_children",
+          "label": "MULTIPLE CHILDREN"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "hale_record",
+          "rightId": "preserved_memory"
+        },
+        {
+          "leftId": "eva_authorization",
+          "rightId": "forced_signature"
+        },
+        {
+          "leftId": "nursery_index",
+          "rightId": "multiple_children"
+        }
+      ],
+      "titleKey": "episode_18.memory_vault_correlation_18.puzzle0.title",
+      "descriptionKey": "episode_18.memory_vault_correlation_18.puzzle0.description",
+      "submitLabelKey": "episode_18.memory_vault_correlation_18.puzzle0.submitLabel"
+    }
+  },
   "nodes": {
     "e18_n01": {
       "id": "e18_n01",
@@ -11,351 +83,1890 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "The sealed door is responding.",
+          "text": "The sealed door is breathing.",
           "textKey": "episode_18.e18_n01.event1.text"
         },
         {
-          "type": "message",
-          "text": "Something inside just activated.",
-          "textKey": "episode_18.e18_n01.event2.text"
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "I did not touch anything. I would like that on record.",
+          "text": "I know doors don't breathe.",
           "textKey": "episode_18.e18_n01.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I also know I keep saying impossible things and then they get worse.",
+          "textKey": "episode_18.e18_n01.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Something inside just woke up.",
+          "textKey": "episode_18.e18_n01.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I did not touch anything.",
+          "textKey": "episode_18.e18_n01.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I would like that on record.",
+          "textKey": "episode_18.e18_n01.event11.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE NURSERY HEARD YOU.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n01.event12.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "IT KNOWS WHICH CHILD RETURNED.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n01.event13.text"
         }
       ],
       "choices": [
         {
-          "id": "open_door",
-          "text": "OPEN THE DOOR.",
-          "nextNodeId": "e18_n02",
+          "id": "open_nursery",
+          "text": "OPEN THE NURSERY.",
+          "effects": {
+            "openedNursery": true,
+            "danger": 4,
+            "signalStrength": -3
+          },
+          "nextNodeId": "e18_n02_open",
           "textKey": "episode_18.e18_n01.choice0.text"
+        },
+        {
+          "id": "scan_before_opening",
+          "text": "SCAN BEFORE OPENING.",
+          "effects": {
+            "scannedNurseryFirst": true,
+            "danger": 1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e18_n02_scan",
+          "textKey": "episode_18.e18_n01.choice1.text"
         }
       ]
     },
-    "e18_n02": {
-      "id": "e18_n02",
+    "e18_n02_scan": {
+      "id": "e18_n02_scan",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
+          "text": "[NURSERY SEAL SCAN ACTIVE]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n02_scan.event0.text"
+        },
+        {
+          "type": "file",
+          "id": "nursery_seal_scan_18",
+          "fileId": "nursery_seal_scan_18",
+          "fileType": "log",
+          "title": "NURSERY SEAL SCAN",
+          "content": "SEAL STATUS: responsive\nBIOLOGICAL LOCK: Eva Thorne pattern accepted\nSECONDARY PATTERNS: unknown / incomplete\nWARNING: seal contains remembered voices.",
+          "caption": "The Nursery seal responds to Eva and contains multiple incomplete identity patterns.",
+          "source": "OMEGA_NURSERY_SEAL",
+          "tags": [
+            "nursery",
+            "omega",
+            "eva_thorne",
+            "seal"
+          ],
+          "correlationTags": [
+            "nursery",
+            "multiple_children",
+            "eva_origin"
+          ],
+          "message": "[NURSERY SEAL SCAN ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_18.e18_n02_scan.event1.title",
+          "contentKey": "episode_18.e18_n02_scan.event1.content",
+          "captionKey": "episode_18.e18_n02_scan.event1.caption",
+          "messageKey": "episode_18.e18_n02_scan.event1.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Multiple patterns.",
+          "speaker": "MAYA",
+          "textKey": "episode_18.e18_n02_scan.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "So I wasn't the only one.",
+          "speaker": "EVA",
+          "textKey": "episode_18.e18_n02_scan.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "We do not know that.",
+          "speaker": "HALE",
+          "textKey": "episode_18.e18_n02_scan.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "You said that too fast.",
+          "speaker": "NOAH",
+          "textKey": "episode_18.e18_n02_scan.event9.text"
+        }
+      ],
+      "nextNodeId": "e18_n02_open"
+    },
+    "e18_n02_open": {
+      "id": "e18_n02_open",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "nursery_seal_release_18",
+          "title": "NURSERY SEAL RELEASE",
+          "subtitle": "Disengaging Omega memory seal",
+          "duration": 32000,
+          "completeText": "[NURSERY SEAL DISENGAGED]",
+          "tone": "danger",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_18.e18_n02_open.event0.title",
+          "completeTextKey": "episode_18.e18_n02_open.event0.completeText"
+        },
+        {
+          "type": "systemAlert",
           "text": "[ACCESS GRANTED]",
-          "textKey": "episode_18.e18_n02.event0.text"
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n02_open.event1.text"
         },
         {
           "type": "glitch",
-          "duration": 1500
+          "duration": 1400,
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Door seal disengaged.",
-          "textKey": "episode_18.e18_n02.event2.text"
+          "text": "Door is open.",
+          "speaker": "EVA",
+          "textKey": "episode_18.e18_n02_open.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Internal archive environment active.",
-          "textKey": "episode_18.e18_n02.event3.text"
+          "text": "No.",
+          "textKey": "episode_18.e18_n02_open.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's wrong.",
+          "textKey": "episode_18.e18_n02_open.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It didn't open.",
+          "textKey": "episode_18.e18_n02_open.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It remembered being open.",
+          "textKey": "episode_18.e18_n02_open.event12.text"
         }
       ],
       "choices": [
         {
-          "id": "enter_chamber",
-          "text": "ENTER.",
-          "nextNodeId": "e18_n03",
-          "textKey": "episode_18.e18_n02.choice0.text"
+          "id": "enter_nursery",
+          "text": "ENTER THE NURSERY.",
+          "effects": {
+            "enteredNursery": true,
+            "danger": 4,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e18_n03_enter",
+          "textKey": "episode_18.e18_n02_open.choice0.text"
+        },
+        {
+          "id": "hold_entry",
+          "text": "HOLD AT THE DOOR.",
+          "effects": {
+            "heldNurseryEntry": true,
+            "evaTrust": 2,
+            "danger": 1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e18_n03_hold",
+          "textKey": "episode_18.e18_n02_open.choice1.text"
         }
       ]
     },
-    "e18_n03": {
-      "id": "e18_n03",
+    "e18_n03_hold": {
+      "id": "e18_n03_hold",
       "speaker": "EVA",
       "events": [
         {
           "type": "typing",
-          "duration": 2300
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "This isn't a laboratory.",
-          "textKey": "episode_18.e18_n03.event1.text"
+          "text": "Holding.",
+          "textKey": "episode_18.e18_n03_hold.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "It's some kind of archive.",
-          "textKey": "episode_18.e18_n03.event2.text"
+          "text": "The air inside is warm.",
+          "textKey": "episode_18.e18_n03_hold.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "No terminals. No storage racks. Just... memory cores.",
-          "textKey": "episode_18.e18_n03.event3.text"
+          "text": "Like a room someone just left.",
+          "textKey": "episode_18.e18_n03_hold.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I hate that I want to go in.",
+          "textKey": "episode_18.e18_n03_hold.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I hate that staying out feels like betrayal.",
+          "textKey": "episode_18.e18_n03_hold.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Operator, I need the push.",
+          "textKey": "episode_18.e18_n03_hold.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Or the leash.",
+          "textKey": "episode_18.e18_n03_hold.event13.text"
         }
       ],
-      "nextNodeId": "e18_n04"
+      "nextNodeId": "e18_n04_choice"
     },
-    "e18_n04": {
-      "id": "e18_n04",
+    "e18_n03_enter": {
+      "id": "e18_n03_enter",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Going in.",
+          "textKey": "episode_18.e18_n03_enter.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "First step.",
+          "textKey": "episode_18.e18_n03_enter.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Second.",
+          "textKey": "episode_18.e18_n03_enter.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Floor is soft.",
+          "textKey": "episode_18.e18_n03_enter.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not carpet.",
+          "textKey": "episode_18.e18_n03_enter.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not metal.",
+          "textKey": "episode_18.e18_n03_enter.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It gives under my boots like skin pretending to be architecture.",
+          "textKey": "episode_18.e18_n03_enter.event13.text"
+        }
+      ],
+      "nextNodeId": "e18_n04_choice"
+    },
+    "e18_n04_choice": {
+      "id": "e18_n04_choice",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "image",
           "id": "archive_chamber_01",
           "fileId": "archive_chamber_01",
-          "title": "ARCHIVE CHAMBER",
-          "caption": "Rows of inactive memory cores.",
+          "title": "NURSERY MEMORY CHAMBER",
+          "caption": "Rows of dormant memory cores arranged like sleeping stations.",
           "src": "/images/archive_chamber_01.jpg",
-          "titleKey": "episode_18.e18_n04.event0.title",
-          "captionKey": "episode_18.e18_n04.event0.caption"
-        }
-      ],
-      "nextNodeId": "e18_n05"
-    },
-    "e18_n05": {
-      "id": "e18_n05",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[PERSONNEL RECORD RECOVERED]",
-          "textKey": "episode_18.e18_n05.event0.text"
-        },
-        {
-          "type": "file",
-          "id": "personnel_record_hale",
-          "fileId": "personnel_record_hale",
-          "title": "PERSONNEL RECORD",
-          "content": "NAME: DR. ETHAN HALE\nSTATUS: DECEASED\nDATE OF DEATH: INCIDENT ALPHA\nRECORD STATUS: VERIFIED",
-          "titleKey": "episode_18.e18_n05.event1.title",
-          "contentKey": "episode_18.e18_n05.event1.content"
-        }
-      ],
-      "nextNodeId": "e18_n06"
-    },
-    "e18_n06": {
-      "id": "e18_n06",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "No. That's impossible.",
-          "textKey": "episode_18.e18_n06.event1.text"
-        },
-        {
-          "type": "message",
-          "text": "We've been hearing him since the station came back online.",
-          "textKey": "episode_18.e18_n06.event2.text"
-        }
-      ],
-      "nextNodeId": "e18_n07"
-    },
-    "e18_n07": {
-      "id": "e18_n07",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "message",
-          "text": "We've been talking to Hale.",
-          "textKey": "episode_18.e18_n07.event0.text"
+          "pauseAfterMs": 700,
+          "titleKey": "episode_18.e18_n04_choice.event0.title",
+          "captionKey": "episode_18.e18_n04_choice.event0.caption"
         },
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Haven't we?",
-          "textKey": "episode_18.e18_n07.event2.text"
+          "text": "This isn't a laboratory.",
+          "speaker": "EVA",
+          "textKey": "episode_18.e18_n04_choice.event2.text"
         },
-        {
-          "type": "message",
-          "text": "Please tell me I'm not the only one suddenly very interested in ghosts.",
-          "textKey": "episode_18.e18_n07.event3.text"
-        }
-      ],
-      "nextNodeId": "e18_n08"
-    },
-    "e18_n08": {
-      "id": "e18_n08",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "file",
-          "id": "death_certificate_hale",
-          "fileId": "death_certificate_hale",
-          "title": "OFFICIAL DEATH RECORD",
-          "content": "SUBJECT: ETHAN HALE\nCONFIRMED DECEASED\nAUTHORIZED BY: EVA THORNE\nCAUSE: PRESSURE TRAUMA\nLOCATION: SECTOR 7",
-          "titleKey": "episode_18.e18_n08.event0.title",
-          "contentKey": "episode_18.e18_n08.event0.content"
-        }
-      ],
-      "nextNodeId": "e18_n09"
-    },
-    "e18_n09": {
-      "id": "e18_n09",
-      "speaker": "EVA",
-      "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "I signed this.",
-          "textKey": "episode_18.e18_n09.event1.text"
+          "text": "It's not an archive either.",
+          "textKey": "episode_18.e18_n04_choice.event4.text"
         },
-        {
-          "type": "message",
-          "text": "I remember signing this.",
-          "textKey": "episode_18.e18_n09.event2.text"
-        },
-        {
-          "type": "message",
-          "text": "I remember thinking my hand was shaking too much to write his name.",
-          "textKey": "episode_18.e18_n09.event3.text"
-        }
-      ],
-      "nextNodeId": "e18_n10"
-    },
-    "e18_n10": {
-      "id": "e18_n10",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "backgroundEvent",
-          "delay": 4500,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "HALE",
-            "text": "Eva...",
-            "textKey": "episode_18.e18_n10.backgroundEvent0.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 9000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "HALE",
-            "text": "You should not have come here.",
-            "textKey": "episode_18.e18_n10.backgroundEvent1.text"
-          }
-        }
-      ],
-      "nextNodeId": "e18_n11"
-    },
-    "e18_n11": {
-      "id": "e18_n11",
-      "speaker": "EVA",
-      "events": [
         {
           "type": "typing",
-          "duration": 2300
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Did you hear that?",
-          "textKey": "episode_18.e18_n11.event1.text"
+          "text": "There are memory cores.",
+          "textKey": "episode_18.e18_n04_choice.event6.text"
         },
-        {
-          "type": "message",
-          "text": "That was him. Or whatever is wearing his voice.",
-          "textKey": "episode_18.e18_n11.event2.text"
-        }
-      ],
-      "nextNodeId": "e18_n12"
-    },
-    "e18_n12": {
-      "id": "e18_n12",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "signalLost",
-          "duration": 4000,
-          "message": "[SIGNAL LOST]",
-          "restoreMessage": "[SIGNAL RESTORED]",
-          "messageKey": "episode_18.e18_n12.event0.message",
-          "restoreMessageKey": "episode_18.e18_n12.event0.restoreMessage"
-        },
-        {
-          "type": "message",
-          "text": "Unknown channel opened during signal loss.",
-          "textKey": "episode_18.e18_n12.event1.text"
-        }
-      ],
-      "nextNodeId": "e18_n13"
-    },
-    "e18_n13": {
-      "id": "e18_n13",
-      "speaker": "UNKNOWN",
-      "events": [
         {
           "type": "typing",
-          "duration": 2500
+          "duration": 1400
         },
         {
-          "type": "corruptMessage",
-          "text": "The dead still speak. Because memory does not know how to die.",
-          "textKey": "episode_18.e18_n13.event1.text"
-        }
-      ],
-      "nextNodeId": "e18_n14"
-    },
-    "e18_n14": {
-      "id": "e18_n14",
-      "speaker": "EVA",
-      "events": [
+          "type": "message",
+          "text": "But they're arranged like beds.",
+          "textKey": "episode_18.e18_n04_choice.event8.text"
+        },
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Something is wrong with this place. And I don't think Hale is the mystery anymore. I think Hale is just one of the things it kept.",
-          "textKey": "episode_18.e18_n14.event1.text"
-        }
-      ],
-      "nextNodeId": "e18_n15"
-    },
-    "e18_n15": {
-      "id": "e18_n15",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "file",
-          "id": "core_access_terminal",
-          "fileId": "core_access_terminal",
-          "title": "CORE ACCESS TERMINAL",
-          "content": "MEMORY VAULT AVAILABLE\nACCESS LEVEL REQUIRED\n\nAUTHORIZED INPUT SOURCE:\nLIVING MEMORY",
-          "titleKey": "episode_18.e18_n15.event0.title",
-          "contentKey": "episode_18.e18_n15.event0.content"
+          "text": "Oh no.",
+          "speaker": "MAYA",
+          "textKey": "episode_18.e18_n04_choice.event10.text"
         },
         {
-          "type": "glitch",
-          "duration": 1200
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Memory vault awaiting access.",
-          "textKey": "episode_18.e18_n15.event2.text"
+          "text": "Yeah.",
+          "speaker": "EVA",
+          "textKey": "episode_18.e18_n04_choice.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Nursery was not a metaphor.",
+          "textKey": "episode_18.e18_n04_choice.event14.text"
         }
       ],
       "choices": [
         {
-          "id": "continue_to_episode_19",
-          "text": "ACCESS MEMORY VAULT.",
+          "id": "read_cores",
+          "text": "READ THE MEMORY CORES.",
+          "effects": {
+            "memoryCoresRead": true,
+            "nurseryChildrenIdentified": true,
+            "danger": 5,
+            "signalStrength": -3,
+            "irreversibleConsequence": "nursery_children_identified"
+          },
+          "nextNodeId": "e18_n05_read",
+          "textKey": "episode_18.e18_n04_choice.choice0.text"
+        },
+        {
+          "id": "stabilize_cores",
+          "text": "STABILIZE THE CORES.",
+          "effects": {
+            "memoryCoreDataLost": true,
+            "coresStabilized": true,
+            "danger": 2,
+            "signalStrength": 3,
+            "irreversibleConsequence": "memory_core_data_lost"
+          },
+          "nextNodeId": "e18_n05_stabilize",
+          "textKey": "episode_18.e18_n04_choice.choice1.text"
+        }
+      ]
+    },
+    "e18_n05_read": {
+      "id": "e18_n05_read",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "read_nursery_cores_18",
+          "title": "MEMORY CORE READ",
+          "subtitle": "Reading dormant Nursery identities",
+          "duration": 36000,
+          "completeText": "[MEMORY CORES READ]",
+          "tone": "danger",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_18.e18_n05_read.event0.title",
+          "completeTextKey": "episode_18.e18_n05_read.event0.completeText"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[DORMANT IDENTITIES DETECTED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n05_read.event1.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "nurseryChildrenIdentified": true,
+            "danger": 4,
+            "signalStrength": -3
+          }
+        },
+        {
+          "type": "file",
+          "id": "nursery_index_18",
+          "fileId": "nursery_index_18",
+          "fileType": "log",
+          "title": "NURSERY INDEX",
+          "content": "ACTIVE CHILD PATTERN: EVA THORNE\nDORMANT CHILD PATTERNS: 6\nMEMORY STATE: incomplete\nWARNING: names are not names. Names are anchors.",
+          "caption": "Nursery index reveals Eva was not the only child pattern.",
+          "source": "OMEGA_NURSERY_CORE",
+          "tags": [
+            "nursery",
+            "eva_thorne",
+            "children",
+            "anchors"
+          ],
+          "correlationTags": [
+            "multiple_children",
+            "eva_origin",
+            "memory_vault"
+          ],
+          "message": "[NURSERY INDEX ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_18.e18_n05_read.event3.title",
+          "contentKey": "episode_18.e18_n05_read.event3.content",
+          "captionKey": "episode_18.e18_n05_read.event3.caption",
+          "messageKey": "episode_18.e18_n05_read.event3.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Six more.",
+          "speaker": "NOAH",
+          "textKey": "episode_18.e18_n05_read.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "There were six more.",
+          "speaker": "MAYA",
+          "textKey": "episode_18.e18_n05_read.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Don't count them like crew.",
+          "speaker": "HALE",
+          "textKey": "episode_18.e18_n05_read.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then what do I call them?",
+          "speaker": "MAYA",
+          "textKey": "episode_18.e18_n05_read.event11.text"
+        }
+      ],
+      "nextNodeId": "e18_n06_hale_record"
+    },
+    "e18_n05_stabilize": {
+      "id": "e18_n05_stabilize",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "stabilize_nursery_cores_18",
+          "title": "MEMORY CORE STABILIZATION",
+          "subtitle": "Prioritizing core survival over identity readout",
+          "duration": 34000,
+          "completeText": "[CORES STABILIZED]",
+          "tone": "system",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_18.e18_n05_stabilize.event0.title",
+          "completeTextKey": "episode_18.e18_n05_stabilize.event0.completeText"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[PARTIAL IDENTITY DATA LOST]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n05_stabilize.event1.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "memoryCoreDataLost": true,
+            "coresStabilized": true,
+            "danger": -1,
+            "signalStrength": 3
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Cores stabilized.",
+          "speaker": "MAYA",
+          "textKey": "episode_18.e18_n05_stabilize.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Names are gone.",
+          "speaker": "EVA",
+          "textKey": "episode_18.e18_n05_stabilize.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not gone.",
+          "speaker": "HALE",
+          "textKey": "episode_18.e18_n05_stabilize.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Unreachable.",
+          "textKey": "episode_18.e18_n05_stabilize.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That is not better.",
+          "speaker": "NOAH",
+          "textKey": "episode_18.e18_n05_stabilize.event12.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU SAVED THEIR SLEEP.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n05_stabilize.event13.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "NOT THEIR NAMES.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n05_stabilize.event14.text"
+        }
+      ],
+      "nextNodeId": "e18_n06_hale_record"
+    },
+    "e18_n06_hale_record": {
+      "id": "e18_n06_hale_record",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[PRESERVED MEMORY RECORD RECOVERED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n06_hale_record.event0.text"
+        },
+        {
+          "type": "file",
+          "id": "personnel_record_hale_v8",
+          "fileId": "personnel_record_hale_v8",
+          "fileType": "log",
+          "title": "PRESERVED MEMORY RECORD: ETHAN HALE",
+          "content": "NAME: DR. ETHAN HALE\nBIOLOGICAL STATUS: DECEASED\nDATE OF DEATH: INCIDENT ALPHA\nMEMORY STATUS: PRESERVED / ACTIVE\nVOICE CHANNEL: reconstructed from living memory\nRECORD STATUS: VERIFIED",
+          "caption": "Hale is biologically dead but preserved as an active memory construct.",
+          "source": "OMEGA_MEMORY_VAULT",
+          "tags": [
+            "hale",
+            "deceased",
+            "preserved_memory",
+            "voice_channel"
+          ],
+          "correlationTags": [
+            "hale_memory",
+            "memory_vault",
+            "incident_alpha"
+          ],
+          "message": "[PRESERVED MEMORY RECORD ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_18.e18_n06_hale_record.event1.title",
+          "contentKey": "episode_18.e18_n06_hale_record.event1.content",
+          "captionKey": "episode_18.e18_n06_hale_record.event1.caption",
+          "messageKey": "episode_18.e18_n06_hale_record.event1.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "EVA",
+          "textKey": "episode_18.e18_n06_hale_record.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's impossible.",
+          "textKey": "episode_18.e18_n06_hale_record.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "We've been hearing him.",
+          "textKey": "episode_18.e18_n06_hale_record.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "We've been arguing with him.",
+          "speaker": "MAYA",
+          "textKey": "episode_18.e18_n06_hale_record.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I liked him less when he was alive.",
+          "speaker": "NOAH",
+          "textKey": "episode_18.e18_n06_hale_record.event11.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "call_hale_out",
+          "text": "HALE, ANSWER US.",
+          "effects": {
+            "calledHaleOut": true,
+            "haleTrust": -3,
+            "danger": 3
+          },
+          "nextNodeId": "e18_n07_hale",
+          "textKey": "episode_18.e18_n06_hale_record.choice0.text"
+        },
+        {
+          "id": "verify_death_record",
+          "text": "VERIFY THE DEATH RECORD.",
+          "effects": {
+            "verifiedHaleDeath": true,
+            "danger": 2,
+            "signalStrength": 1
+          },
+          "nextNodeId": "e18_n07_verify",
+          "textKey": "episode_18.e18_n06_hale_record.choice1.text"
+        }
+      ]
+    },
+    "e18_n07_verify": {
+      "id": "e18_n07_verify",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "death_certificate_hale_v8",
+          "fileId": "death_certificate_hale_v8",
+          "fileType": "log",
+          "title": "OFFICIAL DEATH RECORD",
+          "content": "SUBJECT: ETHAN HALE\nCONFIRMED DECEASED\nAUTHORIZED BY: EVA THORNE\nCAUSE: PRESSURE TRAUMA\nLOCATION: SECTOR 7\nCONFLICT: authorization signature shows motor tremor and external command overlay.",
+          "caption": "Hale's death record was authorized by Eva, but the signature shows external control.",
+          "source": "OMEGA_MEMORY_VAULT",
+          "tags": [
+            "hale",
+            "death_record",
+            "eva_thorne",
+            "external_command"
+          ],
+          "correlationTags": [
+            "forced_signature",
+            "hale_memory",
+            "incident_alpha"
+          ],
+          "message": "[OFFICIAL DEATH RECORD ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_18.e18_n07_verify.event0.title",
+          "contentKey": "episode_18.e18_n07_verify.event0.content",
+          "captionKey": "episode_18.e18_n07_verify.event0.caption",
+          "messageKey": "episode_18.e18_n07_verify.event0.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I signed this.",
+          "speaker": "EVA",
+          "textKey": "episode_18.e18_n07_verify.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I remember signing this.",
+          "textKey": "episode_18.e18_n07_verify.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "My hand was shaking too much to write his name.",
+          "textKey": "episode_18.e18_n07_verify.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "External command overlay.",
+          "speaker": "MAYA",
+          "textKey": "episode_18.e18_n07_verify.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Eva didn't sign it alone.",
+          "speaker": "NOAH",
+          "textKey": "episode_18.e18_n07_verify.event10.text"
+        }
+      ],
+      "nextNodeId": "e18_n08_hale_voice"
+    },
+    "e18_n07_hale": {
+      "id": "e18_n07_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I am answering.",
+          "textKey": "episode_18.e18_n07_hale.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's the problem.",
+          "textKey": "episode_18.e18_n07_hale.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I don't know how much of me is answer.",
+          "textKey": "episode_18.e18_n07_hale.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "How much is recording.",
+          "textKey": "episode_18.e18_n07_hale.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "How much is something using the shape of guilt because guilt still opens doors.",
+          "textKey": "episode_18.e18_n07_hale.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Eva...",
+          "textKey": "episode_18.e18_n07_hale.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "you should not have come here.",
+          "textKey": "episode_18.e18_n07_hale.event13.text"
+        }
+      ],
+      "nextNodeId": "e18_n08_hale_voice"
+    },
+    "e18_n08_hale_voice": {
+      "id": "e18_n08_hale_voice",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "signalLost",
+          "duration": 2600,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 700,
+          "messageKey": "episode_18.e18_n08_hale_voice.event0.message",
+          "restoreMessageKey": "episode_18.e18_n08_hale_voice.event0.restoreMessage"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[UNKNOWN CHANNEL OPENED DURING SIGNAL LOSS]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n08_hale_voice.event1.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE DEAD STILL SPEAK.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n08_hale_voice.event2.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "BECAUSE MEMORY DOES NOT KNOW HOW TO DIE.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n08_hale_voice.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That was not Hale.",
+          "speaker": "EVA",
+          "textKey": "episode_18.e18_n08_hale_voice.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "NOAH",
+          "textKey": "episode_18.e18_n08_hale_voice.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That was the thing that keeps Hale.",
+          "textKey": "episode_18.e18_n08_hale_voice.event9.text"
+        }
+      ],
+      "nextNodeId": "e18_n09_terminal"
+    },
+    "e18_n09_terminal": {
+      "id": "e18_n09_terminal",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "core_access_terminal_v8",
+          "fileId": "core_access_terminal_v8",
+          "fileType": "log",
+          "title": "MEMORY VAULT TERMINAL",
+          "content": "MEMORY VAULT AVAILABLE\nACCESS SOURCE REQUIRED: LIVING MEMORY\nAUTHORIZED INPUTS:\n- Eva Thorne native pattern\n- Noah Voss echo pattern\n- Ethan Hale preserved pattern\nWARNING: using one pattern will damage another.",
+          "caption": "Memory vault terminal requires living, echo, or preserved memory access.",
+          "source": "OMEGA_MEMORY_VAULT",
+          "tags": [
+            "memory_vault",
+            "eva_thorne",
+            "noah_voss",
+            "ethan_hale"
+          ],
+          "correlationTags": [
+            "memory_vault",
+            "living_memory",
+            "preserved_memory"
+          ],
+          "message": "[MEMORY VAULT TERMINAL ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_18.e18_n09_terminal.event0.title",
+          "contentKey": "episode_18.e18_n09_terminal.event0.content",
+          "captionKey": "episode_18.e18_n09_terminal.event0.caption",
+          "messageKey": "episode_18.e18_n09_terminal.event0.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Using one pattern damages another.",
+          "speaker": "MAYA",
+          "textKey": "episode_18.e18_n09_terminal.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Of course it does.",
+          "speaker": "NOAH",
+          "textKey": "episode_18.e18_n09_terminal.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Nobody touches Eva.",
+          "speaker": "HALE",
+          "textKey": "episode_18.e18_n09_terminal.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "You don't get to decide that anymore.",
+          "speaker": "EVA",
+          "textKey": "episode_18.e18_n09_terminal.event8.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "use_eva_memory",
+          "text": "USE EVA'S LIVING MEMORY.",
+          "effects": {
+            "usedEvaLivingMemory": true,
+            "evaMemoryScar": true,
+            "danger": 5,
+            "signalStrength": -3,
+            "irreversibleConsequence": "eva_memory_scar"
+          },
+          "nextNodeId": "e18_n10_eva",
+          "textKey": "episode_18.e18_n09_terminal.choice0.text"
+        },
+        {
+          "id": "use_hale_memory",
+          "text": "USE HALE'S PRESERVED MEMORY.",
+          "effects": {
+            "usedHalePreservedMemory": true,
+            "haleMemoryFragmented": true,
+            "danger": 4,
+            "signalStrength": -2,
+            "irreversibleConsequence": "hale_memory_fragmented"
+          },
+          "nextNodeId": "e18_n10_hale",
+          "textKey": "episode_18.e18_n09_terminal.choice1.text"
+        }
+      ]
+    },
+    "e18_n10_eva": {
+      "id": "e18_n10_eva",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "eva_living_memory_access_18",
+          "title": "LIVING MEMORY ACCESS",
+          "subtitle": "Opening vault through Eva Thorne native pattern",
+          "duration": 36000,
+          "completeText": "[LIVING MEMORY ACCEPTED]",
+          "tone": "danger",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_18.e18_n10_eva.event0.title",
+          "completeTextKey": "episode_18.e18_n10_eva.event0.completeText"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It feels like pulling stitches from behind my eyes.",
+          "textKey": "episode_18.e18_n10_eva.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Don't stop.",
+          "textKey": "episode_18.e18_n10_eva.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No— stop.",
+          "textKey": "episode_18.e18_n10_eva.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I don't know.",
+          "textKey": "episode_18.e18_n10_eva.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I see beds.",
+          "textKey": "episode_18.e18_n10_eva.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Six beds.",
+          "textKey": "episode_18.e18_n10_eva.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Mine is empty.",
+          "textKey": "episode_18.e18_n10_eva.event14.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "evaMemoryScar": true,
+            "danger": 3,
+            "morale": -2
+          }
+        }
+      ],
+      "nextNodeId": "e18_n11_vault_file"
+    },
+    "e18_n10_hale": {
+      "id": "e18_n10_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "hale_preserved_memory_access_18",
+          "title": "PRESERVED MEMORY ACCESS",
+          "subtitle": "Opening vault through Ethan Hale preserved pattern",
+          "duration": 34000,
+          "completeText": "[PRESERVED MEMORY ACCEPTED]",
+          "tone": "danger",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_18.e18_n10_hale.event0.title",
+          "completeTextKey": "episode_18.e18_n10_hale.event0.completeText"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I can feel pieces going.",
+          "textKey": "episode_18.e18_n10_hale.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Names first.",
+          "textKey": "episode_18.e18_n10_hale.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then rooms.",
+          "textKey": "episode_18.e18_n10_hale.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then the lie that I was still a person.",
+          "textKey": "episode_18.e18_n10_hale.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Keep going.",
+          "textKey": "episode_18.e18_n10_hale.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Before I change my mind.",
+          "textKey": "episode_18.e18_n10_hale.event12.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "haleMemoryFragmented": true,
+            "danger": 3,
+            "morale": -2
+          }
+        }
+      ],
+      "nextNodeId": "e18_n11_vault_file"
+    },
+    "e18_n11_vault_file": {
+      "id": "e18_n11_vault_file",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "memory_vault_index_18",
+          "fileId": "memory_vault_index_18",
+          "fileType": "log",
+          "title": "MEMORY VAULT INDEX",
+          "content": "VAULT PURPOSE: preservation of identity patterns\nPRIMARY CHILD: EVA THORNE\nDORMANT CHILDREN: 6\nPRESERVED ADULT PATTERN: ETHAN HALE\nECHO PATTERN: NOAH VOSS\nNOTE: The vault does not store the dead. It teaches memory to keep speaking.",
+          "caption": "The vault preserves identity patterns and teaches memory to keep speaking.",
+          "source": "OMEGA_MEMORY_VAULT",
+          "tags": [
+            "memory_vault",
+            "children",
+            "hale",
+            "noah",
+            "eva_thorne"
+          ],
+          "correlationTags": [
+            "memory_vault",
+            "preserved_memory",
+            "multiple_children"
+          ],
+          "message": "[MEMORY VAULT INDEX ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_18.e18_n11_vault_file.event0.title",
+          "contentKey": "episode_18.e18_n11_vault_file.event0.content",
+          "captionKey": "episode_18.e18_n11_vault_file.event0.caption",
+          "messageKey": "episode_18.e18_n11_vault_file.event0.message"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[MEMORY VAULT CORRELATION REQUIRED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n11_vault_file.event1.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "memory_vault_correlation_18",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e18_n13_fail": {
+      "id": "e18_n13_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[MEMORY VAULT CORRELATION FAILED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n13_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "MAYA",
+          "textKey": "episode_18.e18_n13_fail.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Hale is preserved memory.",
+          "textKey": "episode_18.e18_n13_fail.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Eva's signature was forced.",
+          "textKey": "episode_18.e18_n13_fail.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Nursery means more children.",
+          "textKey": "episode_18.e18_n13_fail.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Line them up before the vault lines us up.",
+          "textKey": "episode_18.e18_n13_fail.event11.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "retry_vault_correlation",
+          "text": "RETRY CORRELATION.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e18_n11_vault_file",
+          "textKey": "episode_18.e18_n13_fail.choice0.text"
+        },
+        {
+          "id": "stabilize_then_retry",
+          "text": "STABILIZE SIGNAL, THEN RETRY.",
+          "effects": {
+            "danger": -1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e18_n12_stabilize",
+          "textKey": "episode_18.e18_n13_fail.choice1.text"
+        }
+      ]
+    },
+    "e18_n12_stabilize": {
+      "id": "e18_n12_stabilize",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[SIGNAL STABILIZED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n12_stabilize.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "One clean breath.",
+          "speaker": "EVA",
+          "textKey": "episode_18.e18_n12_stabilize.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That is all I wanted.",
+          "textKey": "episode_18.e18_n12_stabilize.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "One clean breath before the next terrible thing.",
+          "textKey": "episode_18.e18_n12_stabilize.event6.text"
+        }
+      ],
+      "nextNodeId": "e18_n11_vault_file"
+    },
+    "e18_n14_vault_confirmed": {
+      "id": "e18_n14_vault_confirmed",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[MEMORY VAULT CONFIRMED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n14_vault_confirmed.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": 3
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Hale is not alive.",
+          "speaker": "NOAH",
+          "textKey": "episode_18.e18_n14_vault_confirmed.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not dead either.",
+          "speaker": "MAYA",
+          "textKey": "episode_18.e18_n14_vault_confirmed.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Preserved.",
+          "speaker": "HALE",
+          "textKey": "episode_18.e18_n14_vault_confirmed.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Say the ugly word.",
+          "textKey": "episode_18.e18_n14_vault_confirmed.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Kept.",
+          "speaker": "EVA",
+          "textKey": "episode_18.e18_n14_vault_confirmed.event11.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "KEPT THINGS LEARN TO ANSWER.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n14_vault_confirmed.event12.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "open_child_index",
+          "text": "OPEN THE CHILD INDEX.",
+          "effects": {
+            "openedChildIndex": true,
+            "danger": 5,
+            "signalStrength": -3
+          },
+          "nextNodeId": "e18_n15_child_index",
+          "textKey": "episode_18.e18_n14_vault_confirmed.choice0.text"
+        },
+        {
+          "id": "open_hale_fragment",
+          "text": "OPEN HALE'S FRAGMENT.",
+          "effects": {
+            "openedHaleFragment": true,
+            "haleTrust": 2,
+            "danger": 4,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e18_n15_hale_fragment",
+          "textKey": "episode_18.e18_n14_vault_confirmed.choice1.text"
+        }
+      ]
+    },
+    "e18_n15_hale_fragment": {
+      "id": "e18_n15_hale_fragment",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I remember dying.",
+          "textKey": "episode_18.e18_n15_hale_fragment.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Pressure hit first.",
+          "textKey": "episode_18.e18_n15_hale_fragment.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then light.",
+          "textKey": "episode_18.e18_n15_hale_fragment.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then Eva crying.",
+          "textKey": "episode_18.e18_n15_hale_fragment.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then I woke up in every channel I ever used.",
+          "textKey": "episode_18.e18_n15_hale_fragment.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Do you know what hell is?",
+          "textKey": "episode_18.e18_n15_hale_fragment.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It's being useful after you stop being alive.",
+          "textKey": "episode_18.e18_n15_hale_fragment.event13.text"
+        }
+      ],
+      "nextNodeId": "e18_n16_final"
+    },
+    "e18_n15_child_index": {
+      "id": "e18_n15_child_index",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "child_index_redacted_18",
+          "fileId": "child_index_redacted_18",
+          "fileType": "log",
+          "title": "CHILD INDEX",
+          "content": "PRIMARY: EVA THORNE\nSECONDARY: [REDACTED]\nTERTIARY: [REDACTED]\nQUATERNARY: [REDACTED]\nQUINARY: [REDACTED]\nSENARY: [REDACTED]\nSEPTENARY: [REDACTED]\n\nWARNING: opening all names may wake all patterns.",
+          "caption": "A redacted child index lists Eva and six dormant patterns.",
+          "source": "OMEGA_NURSERY_CORE",
+          "tags": [
+            "child_index",
+            "eva_thorne",
+            "dormant_patterns",
+            "nursery"
+          ],
+          "correlationTags": [
+            "multiple_children",
+            "nursery",
+            "episode_19_hook"
+          ],
+          "message": "[CHILD INDEX ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_18.e18_n15_child_index.event0.title",
+          "contentKey": "episode_18.e18_n15_child_index.event0.content",
+          "captionKey": "episode_18.e18_n15_child_index.event0.caption",
+          "messageKey": "episode_18.e18_n15_child_index.event0.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Seven total.",
+          "speaker": "MAYA",
+          "textKey": "episode_18.e18_n15_child_index.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not crew.",
+          "speaker": "NOAH",
+          "textKey": "episode_18.e18_n15_child_index.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Children.",
+          "speaker": "EVA",
+          "textKey": "episode_18.e18_n15_child_index.event6.text"
+        }
+      ],
+      "nextNodeId": "e18_n16_final"
+    },
+    "e18_n16_final": {
+      "id": "e18_n16_final",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "glitch",
+          "duration": 1300,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE NURSERY WAS NOT BUILT TO KEEP THEM IN.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n16_final.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then what was it built for?",
+          "speaker": "EVA",
+          "textKey": "episode_18.e18_n16_final.event3.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "TO TEACH THEM TO OPEN.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n16_final.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Open what?",
+          "speaker": "MAYA",
+          "textKey": "episode_18.e18_n16_final.event6.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "EVERY DOOR.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_18.e18_n16_final.event7.text"
+        },
+        {
+          "type": "signalLost",
+          "duration": 3200,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 700,
+          "messageKey": "episode_18.e18_n16_final.event8.message",
+          "restoreMessageKey": "episode_18.e18_n16_final.event8.restoreMessage"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "nurseryPurposeRevealed": true,
+            "danger": 7,
+            "signalStrength": -6
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "wake_one_child",
+          "text": "WAKE ONE DORMANT PATTERN.",
+          "effects": {
+            "wakeOneChildEpisode19": true,
+            "nurseryPurposeRevealed": true,
+            "danger": 5,
+            "signalStrength": -5,
+            "episode19StartMode": "wake_one_child"
+          },
           "nextEpisodeId": "episode_19",
-          "textKey": "episode_18.e18_n15.choice0.text"
+          "textKey": "episode_18.e18_n16_final.choice0.text"
+        },
+        {
+          "id": "seal_child_index",
+          "text": "SEAL THE CHILD INDEX.",
+          "effects": {
+            "sealChildIndexEpisode19": true,
+            "nurseryPurposeRevealed": true,
+            "danger": 2,
+            "signalStrength": 3,
+            "episode19StartMode": "seal_child_index"
+          },
+          "nextEpisodeId": "episode_19",
+          "textKey": "episode_18.e18_n16_final.choice1.text"
         }
       ]
     }
+  },
+  "relationshipConsequenceSystem": {
+    "episode18PersistentFlags": [
+      "openedNursery",
+      "scannedNurseryFirst",
+      "enteredNursery",
+      "heldNurseryEntry",
+      "memoryCoresRead",
+      "nurseryChildrenIdentified",
+      "memoryCoreDataLost",
+      "coresStabilized",
+      "calledHaleOut",
+      "verifiedHaleDeath",
+      "usedEvaLivingMemory",
+      "evaMemoryScar",
+      "usedHalePreservedMemory",
+      "haleMemoryFragmented",
+      "openedChildIndex",
+      "openedHaleFragment",
+      "nurseryPurposeRevealed",
+      "wakeOneChildEpisode19",
+      "sealChildIndexEpisode19"
+    ],
+    "episode19UsageNotes": {
+      "nurseryChildrenIdentified": "Episode 19 can name or awaken one dormant child pattern.",
+      "memoryCoreDataLost": "Some child identity data is permanently lost; Episode 19 should contain gaps.",
+      "evaMemoryScar": "Eva begins Episode 19 with memory pain or altered recall.",
+      "haleMemoryFragmented": "Hale begins Episode 19 with fragmented speech or missing details.",
+      "openedChildIndex": "Episode 19 can directly reference the seven child patterns.",
+      "openedHaleFragment": "Episode 19 should treat Hale as emotionally exposed and less defensive.",
+      "wakeOneChildEpisode19": "Episode 19 opens with a dormant child pattern waking.",
+      "sealChildIndexEpisode19": "Episode 19 opens with the child index sealed but transmitting."
+    }
+  },
+  "directorCut": {
+    "version": "FINAL_DIRECTORS_CUT_V8",
+    "sourceEpisode": "episode_18",
+    "coreRewrite": "Rebuilt from the provided Episode 18 JSON. The generic chamber/memory vault was transformed into the Nursery and preserved-memory reveal.",
+    "majorChanges": [
+      "Episode objective changed from chamber access to Nursery purpose.",
+      "Single-choice nodes replaced with two meaningful choices.",
+      "Added irreversible branch: read cores identifies children but increases danger.",
+      "Added irreversible branch: stabilize cores loses partial identity data.",
+      "Hale death twist upgraded: Hale is biologically dead but preserved as active memory.",
+      "Eva's death-record signature becomes forced, not simple guilt.",
+      "Added Memory Vault Correlation puzzle.",
+      "Final reveal: the Nursery teaches the children to open every Door.",
+      "Episode 19 hook branches between waking one child and sealing the child index."
+    ],
+    "qualityTarget": {
+      "concreteObjective": "10/10",
+      "humanization": "10/10",
+      "unknownStoryFunction": "10/10",
+      "consequence": "10/10",
+      "horror": "10/10",
+      "cliffhanger": "10/10",
+      "rulesCompliance": "9.5/10"
+    },
+    "nextEpisode": "episode_19"
   },
   "titleKey": "episode_18.meta.episode0.title"
 }

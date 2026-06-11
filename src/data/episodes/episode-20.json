@@ -2,424 +2,1080 @@
   "id": "episode_20",
   "season": 2,
   "episode": 5,
-  "title": "INSIDE AEON",
+  "title": "THE DOORKEEPER — FINAL DIRECTOR'S CUT V8",
   "startNodeId": "e20_n01",
-  "puzzles": {},
+  "designVersion": "episode_20_final_directors_cut_v8_rebuilt",
+  "episodeObjective": "Discover why Omega recognizes the Operator, determine whether Hale's warning should be trusted, and reveal that the Operator is the Doorkeeper.",
+  "rulesApplied": [
+    "Director's Cut 30-rule pass.",
+    "Humanization Pass V4: Eva, Noah, and Hale react emotionally before lore is delivered.",
+    "ECHO V5 consequence pass: major decisions create persistent Episode 21 flags.",
+    "Episode 19 V8 continuity preserved: child patterns, more houses/stations, and Door language remain central.",
+    "AEON is treated as a tool layer, not the source.",
+    "Omega and the Doorkeeper reveal are the central mystery.",
+    "UNKNOWN pushes concrete story information instead of generic fear lines.",
+    "Every visible choice group has exactly two choices.",
+    "No single-choice continue nodes.",
+    "Episode 21 hook is explicit."
+  ],
+  "puzzles": {
+    "doorkeeper_memory_correlation_20": {
+      "id": "doorkeeper_memory_correlation_20",
+      "type": "matching",
+      "title": "DOORKEEPER MEMORY CORRELATION",
+      "description": "Match each recovered core trace with the correct conclusion.",
+      "submitLabel": "CONFIRM DOORKEEPER TRACE",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e20_n14_doorkeeper_confirmed",
+      "failureNodeId": "e20_n13_fail",
+      "leftItems": [
+        {
+          "id": "operator_memory",
+          "label": "OPERATOR MEMORY"
+        },
+        {
+          "id": "child_doors",
+          "label": "CHILD DOORS"
+        },
+        {
+          "id": "omega_core",
+          "label": "OMEGA CORE"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "first_door",
+          "label": "OPENED FIRST DOOR"
+        },
+        {
+          "id": "second_door",
+          "label": "OPENED SECOND DOOR"
+        },
+        {
+          "id": "third_door",
+          "label": "OPENED THIRD DOOR"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "operator_memory",
+          "rightId": "first_door"
+        },
+        {
+          "leftId": "child_doors",
+          "rightId": "second_door"
+        },
+        {
+          "leftId": "omega_core",
+          "rightId": "third_door"
+        }
+      ],
+      "titleKey": "episode_20.doorkeeper_memory_correlation_20.puzzle0.title",
+      "descriptionKey": "episode_20.doorkeeper_memory_correlation_20.puzzle0.description",
+      "submitLabelKey": "episode_20.doorkeeper_memory_correlation_20.puzzle0.submitLabel"
+    }
+  },
   "nodes": {
     "e20_n01": {
       "id": "e20_n01",
       "speaker": "UNKNOWN",
       "events": [
         {
-          "type": "typing",
-          "duration": 2600
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU KEEP ASKING WHO OPENED THE DOOR.",
+          "pauseAfterMs": 800,
+          "textKey": "episode_20.e20_n01.event0.text"
         },
         {
-          "type": "message",
-          "text": "You want answers.",
-          "textKey": "episode_20.e20_n01.event1.text"
+          "type": "glitch",
+          "duration": 900,
+          "pauseAfterMs": 500
         },
         {
-          "type": "message",
-          "text": "Then come inside.",
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU DID.",
+          "pauseAfterMs": 900,
           "textKey": "episode_20.e20_n01.event2.text"
         },
         {
           "type": "corruptMessage",
           "speaker": "UNKNOWN",
-          "text": "Bring your memories with you.",
+          "text": "YOU JUST DON'T REMEMBER IT.",
+          "pauseAfterMs": 900,
           "textKey": "episode_20.e20_n01.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's not funny.",
+          "speaker": "EVA",
+          "textKey": "episode_20.e20_n01.event5.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "IT WAS NOT A JOKE.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n01.event6.text"
         }
       ],
       "choices": [
         {
-          "id": "continue_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n02",
+          "id": "demand_operator_proof",
+          "text": "DEMAND PROOF.",
+          "effects": {
+            "operatorProofDemanded": true,
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e20_n02_proof",
           "textKey": "episode_20.e20_n01.choice0.text"
+        },
+        {
+          "id": "ground_team_first",
+          "text": "GROUND THE TEAM FIRST.",
+          "effects": {
+            "teamGroundedBeforeCore": true,
+            "morale": 2,
+            "danger": 1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e20_n02_ground",
+          "textKey": "episode_20.e20_n01.choice1.text"
         }
       ]
     },
-    "e20_n02": {
-      "id": "e20_n02",
-      "speaker": "EVA",
+    "e20_n02_ground": {
+      "id": "e20_n02_ground",
+      "speaker": "MAYA",
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "That voice again.",
-          "textKey": "episode_20.e20_n02.event1.text"
+          "text": "Everybody breathe.",
+          "textKey": "episode_20.e20_n02_ground.event1.text"
         },
-        {
-          "type": "message",
-          "text": "It's coming from deeper inside the structure.",
-          "textKey": "episode_20.e20_n02.event2.text"
-        },
-        {
-          "type": "message",
-          "text": "I know walking toward the haunted alien memory tunnel sounds bad. I am doing it anyway.",
-          "textKey": "episode_20.e20_n02.event3.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n03",
-          "textKey": "episode_20.e20_n02.choice0.text"
-        }
-      ]
-    },
-    "e20_n03": {
-      "id": "e20_n03",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "image",
-          "fileId": "aeon_core_corridor",
-          "title": "CORE ACCESS TUNNEL",
-          "caption": "Deep corridor leading toward the inner core.",
-          "src": "/images/aeon_core_corridor.jpg",
-          "titleKey": "episode_20.e20_n03.event0.title",
-          "captionKey": "episode_20.e20_n03.event0.caption"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_03",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n04",
-          "textKey": "episode_20.e20_n03.choice0.text"
-        }
-      ]
-    },
-    "e20_n04": {
-      "id": "e20_n04",
-      "speaker": "EVA",
-      "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "The walls are moving.",
-          "textKey": "episode_20.e20_n04.event1.text"
+          "text": "I know that's useless advice inside a haunted memory machine.",
+          "textKey": "episode_20.e20_n02_ground.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "No...",
-          "textKey": "episode_20.e20_n04.event2.text"
+          "text": "Still.",
+          "textKey": "episode_20.e20_n02_ground.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "The walls are remembering.",
-          "textKey": "episode_20.e20_n04.event3.text"
+          "text": "Breathe.",
+          "textKey": "episode_20.e20_n02_ground.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "I can see pieces of the station in them.",
-          "textKey": "episode_20.e20_n04.event4.text"
+          "text": "Noah?",
+          "speaker": "MAYA",
+          "textKey": "episode_20.e20_n02_ground.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Here.",
+          "speaker": "NOAH",
+          "textKey": "episode_20.e20_n02_ground.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Hale?",
+          "speaker": "MAYA",
+          "textKey": "episode_20.e20_n02_ground.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "More or less.",
+          "speaker": "HALE",
+          "textKey": "episode_20.e20_n02_ground.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Eva?",
+          "speaker": "MAYA",
+          "textKey": "episode_20.e20_n02_ground.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I hate that 'more or less' is the best answer in the room.",
+          "speaker": "EVA",
+          "textKey": "episode_20.e20_n02_ground.event19.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_04",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n05",
-          "textKey": "episode_20.e20_n04.choice0.text"
-        }
-      ]
+      "nextNodeId": "e20_n03_corridor"
     },
-    "e20_n05": {
-      "id": "e20_n05",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "file",
-          "fileId": "memory_echo_report",
-          "title": "MEMORY ECHO REPORT",
-          "content": "AEON MEMORY RESPONSE DETECTED\nSOURCE: INNER CORRIDOR\nECHO TYPE: ACTIVE RECONSTRUCTION",
-          "titleKey": "episode_20.e20_n05.event0.title",
-          "contentKey": "episode_20.e20_n05.event0.content"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_05",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n06",
-          "textKey": "episode_20.e20_n05.choice0.text"
-        }
-      ]
-    },
-    "e20_n06": {
-      "id": "e20_n06",
+    "e20_n02_proof": {
+      "id": "e20_n02_proof",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
-          "text": "[MEMORY ECHO ACTIVE]",
-          "textKey": "episode_20.e20_n06.event0.text"
+          "text": "[OPERATOR TRACE REQUEST ACCEPTED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n02_proof.event0.text"
+        },
+        {
+          "type": "glitch",
+          "duration": 1000,
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "PROOF IS A DOOR.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n02_proof.event2.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "OPEN IT AND IT OPENS YOU.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n02_proof.event3.text"
+        }
+      ],
+      "nextNodeId": "e20_n03_corridor"
+    },
+    "e20_n03_corridor": {
+      "id": "e20_n03_corridor",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "image",
+          "id": "aeon_core_corridor_v8",
+          "fileId": "aeon_core_corridor",
+          "title": "DOORKEEPER ACCESS TUNNEL",
+          "caption": "Deep corridor leading toward the remembered core. Geometry responds to operator signal.",
+          "src": "/images/aeon_core_corridor.jpg",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_20.e20_n03_corridor.event0.title",
+          "captionKey": "episode_20.e20_n03_corridor.event0.caption"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Archived event reconstruction detected.",
-          "textKey": "episode_20.e20_n06.event1.text"
+          "text": "That voice again.",
+          "speaker": "EVA",
+          "textKey": "episode_20.e20_n03_corridor.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It's not just deeper inside the structure.",
+          "textKey": "episode_20.e20_n03_corridor.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It's ahead of me.",
+          "textKey": "episode_20.e20_n03_corridor.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "And behind you.",
+          "textKey": "episode_20.e20_n03_corridor.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Operator...",
+          "textKey": "episode_20.e20_n03_corridor.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I think the corridor is using your signal as a map.",
+          "textKey": "episode_20.e20_n03_corridor.event12.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "trace_operator_signal",
+          "text": "TRACE OPERATOR SIGNAL.",
+          "effects": {
+            "operatorSignalTraced": true,
+            "danger": 5,
+            "signalStrength": -3,
+            "episode21SignalState": "operator_signal_exposed"
+          },
+          "nextNodeId": "e20_n04_signal",
+          "textKey": "episode_20.e20_n03_corridor.choice0.text"
+        },
+        {
+          "id": "mask_operator_signal",
+          "text": "MASK OPERATOR SIGNAL.",
+          "effects": {
+            "operatorSignalMasked": true,
+            "memoryIntegrity": 5,
+            "danger": 2,
+            "signalStrength": 3,
+            "episode21SignalState": "operator_signal_masked"
+          },
+          "nextNodeId": "e20_n04_mask",
+          "textKey": "episode_20.e20_n03_corridor.choice1.text"
+        }
+      ]
+    },
+    "e20_n04_signal": {
+      "id": "e20_n04_signal",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Tracing your signal.",
+          "textKey": "episode_20.e20_n04_signal.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The walls just changed direction.",
+          "textKey": "episode_20.e20_n04_signal.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "textKey": "episode_20.e20_n04_signal.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not walls.",
+          "textKey": "episode_20.e20_n04_signal.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Memories pretending to be walls.",
+          "textKey": "episode_20.e20_n04_signal.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Wait.",
+          "textKey": "episode_20.e20_n04_signal.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's my voice.",
+          "textKey": "episode_20.e20_n04_signal.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No, that's impossible.",
+          "textKey": "episode_20.e20_n04_signal.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I'm hearing myself from somewhere ahead.",
+          "textKey": "episode_20.e20_n04_signal.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "And I'm saying things I don't remember saying.",
+          "textKey": "episode_20.e20_n04_signal.event19.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 3,
+            "signalStrength": -2
+          }
+        }
+      ],
+      "nextNodeId": "e20_n05_echo_report"
+    },
+    "e20_n04_mask": {
+      "id": "e20_n04_mask",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[OPERATOR SIGNAL MASK ACTIVE]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n04_mask.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Mask is up.",
+          "speaker": "EVA",
+          "textKey": "episode_20.e20_n04_mask.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The corridor slowed down.",
+          "textKey": "episode_20.e20_n04_mask.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I don't like that sentence.",
+          "textKey": "episode_20.e20_n04_mask.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Things that slow down can speed up again.",
+          "textKey": "episode_20.e20_n04_mask.event8.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "HIDING IS STILL A WAY OF ANSWERING.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n04_mask.event9.text"
+        }
+      ],
+      "nextNodeId": "e20_n05_echo_report"
+    },
+    "e20_n05_echo_report": {
+      "id": "e20_n05_echo_report",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "memory_echo_report_v8",
+          "fileId": "memory_echo_report_v8",
+          "fileType": "log",
+          "title": "MEMORY ECHO REPORT",
+          "content": "OMEGA MEMORY RESPONSE DETECTED\nSOURCE: DOORKEEPER ACCESS TUNNEL\nECHO TYPE: ACTIVE RECONSTRUCTION\nSUBJECTS INCLUDED: EVA / NOAH / HALE / OPERATOR\nWARNING: reconstruction is not replaying the past. It is testing a future response.",
+          "caption": "Memory echo report confirms the corridor is reconstructing the team and the Operator.",
+          "source": "OMEGA_CORE_TUNNEL",
+          "tags": [
+            "omega",
+            "operator",
+            "memory_echo",
+            "doorkeeper"
+          ],
+          "correlationTags": [
+            "operator_trace",
+            "doorkeeper",
+            "memory_reconstruction"
+          ],
+          "message": "[MEMORY ECHO REPORT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_20.e20_n05_echo_report.event0.title",
+          "contentKey": "episode_20.e20_n05_echo_report.event0.content",
+          "captionKey": "episode_20.e20_n05_echo_report.event0.caption",
+          "messageKey": "episode_20.e20_n05_echo_report.event0.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Testing a future response.",
+          "speaker": "MAYA",
+          "textKey": "episode_20.e20_n05_echo_report.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I liked this more when it was only rewriting the past.",
+          "speaker": "NOAH",
+          "textKey": "episode_20.e20_n05_echo_report.event4.text"
         }
       ],
       "choices": [
         {
           "id": "observe_echo",
-          "text": "OBSERVE.",
-          "nextNodeId": "e20_n07",
-          "textKey": "episode_20.e20_n06.choice0.text"
+          "text": "OBSERVE THE ECHO.",
+          "effects": {
+            "echoObserved": true,
+            "danger": 3,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e20_n06_echo",
+          "textKey": "episode_20.e20_n05_echo_report.choice0.text"
+        },
+        {
+          "id": "interrupt_echo",
+          "text": "INTERRUPT THE ECHO.",
+          "effects": {
+            "echoInterrupted": true,
+            "danger": 5,
+            "signalStrength": -3
+          },
+          "nextNodeId": "e20_n06_interrupt",
+          "textKey": "episode_20.e20_n05_echo_report.choice1.text"
         }
       ]
     },
-    "e20_n07": {
-      "id": "e20_n07",
-      "speaker": "HALE",
+    "e20_n06_interrupt": {
+      "id": "e20_n06_interrupt",
+      "speaker": "SYSTEM",
       "events": [
         {
+          "type": "systemAlert",
+          "text": "[ECHO INTERRUPT ATTEMPTED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n06_interrupt.event0.text"
+        },
+        {
+          "type": "glitch",
+          "duration": 1200,
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "systemAlert",
+          "text": "[ECHO RESISTED INTERRUPT]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n06_interrupt.event2.text"
+        },
+        {
           "type": "typing",
-          "duration": 2300
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It pushed back.",
+          "speaker": "EVA",
+          "textKey": "episode_20.e20_n06_interrupt.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not like software.",
+          "textKey": "episode_20.e20_n06_interrupt.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Like a hand on the other side of glass.",
+          "textKey": "episode_20.e20_n06_interrupt.event8.text"
+        }
+      ],
+      "nextNodeId": "e20_n07_noah"
+    },
+    "e20_n06_echo": {
+      "id": "e20_n06_echo",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[MEMORY ECHO ACTIVE]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n06_echo.event0.text"
+        },
+        {
+          "type": "image",
+          "id": "memory_echo_01_v8",
+          "fileId": "memory_echo_01",
+          "title": "ARCHIVED MEMORY",
+          "caption": "Recovered memory reconstruction. The scene reacts to live speech.",
+          "src": "/images/memory_echo_01.jpg",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_20.e20_n06_echo.event1.title",
+          "captionKey": "episode_20.e20_n06_echo.event1.caption"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
           "text": "The artifact reacted.",
-          "textKey": "episode_20.e20_n07.event1.text"
+          "speaker": "HALE",
+          "textKey": "episode_20.e20_n06_echo.event3.text"
         },
-        {
-          "type": "message",
-          "speaker": "NOAH",
-          "text": "That's impossible.",
-          "textKey": "episode_20.e20_n07.event2.text"
-        },
-        {
-          "type": "message",
-          "speaker": "EVA",
-          "text": "Nothing about today has been especially loyal to possible.",
-          "textKey": "episode_20.e20_n07.event3.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_06",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n08",
-          "textKey": "episode_20.e20_n07.choice0.text"
-        }
-      ]
-    },
-    "e20_n08": {
-      "id": "e20_n08",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "image",
-          "fileId": "memory_echo_01",
-          "title": "ARCHIVED MEMORY",
-          "caption": "Recovered memory reconstruction.",
-          "src": "/images/memory_echo_01.jpg",
-          "titleKey": "episode_20.e20_n08.event0.title",
-          "captionKey": "episode_20.e20_n08.event0.caption"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_07",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n09",
-          "textKey": "episode_20.e20_n08.choice0.text"
-        }
-      ]
-    },
-    "e20_n09": {
-      "id": "e20_n09",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "message",
-          "text": "Everyone leave the chamber.",
-          "textKey": "episode_20.e20_n09.event0.text"
-        },
-        {
-          "type": "message",
-          "text": "Do not let it finish copying the room.",
-          "textKey": "episode_20.e20_n09.event1.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_08",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n10",
-          "textKey": "episode_20.e20_n09.choice0.text"
-        }
-      ]
-    },
-    "e20_n10": {
-      "id": "e20_n10",
-      "speaker": "EVA",
-      "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "What are we seeing?",
-          "textKey": "episode_20.e20_n10.event1.text"
+          "text": "No.",
+          "speaker": "NOAH",
+          "textKey": "episode_20.e20_n06_echo.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "This is not a recording. It's reacting to us.",
-          "textKey": "episode_20.e20_n10.event2.text"
+          "text": "Hale, don't call it artifact.",
+          "textKey": "episode_20.e20_n06_echo.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's too small for something that knows when we're scared.",
+          "textKey": "episode_20.e20_n06_echo.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "He's right.",
+          "speaker": "EVA",
+          "textKey": "episode_20.e20_n06_echo.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The room is copying our breathing.",
+          "textKey": "episode_20.e20_n06_echo.event13.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_09",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n11",
-          "textKey": "episode_20.e20_n10.choice0.text"
-        }
-      ]
+      "nextNodeId": "e20_n07_noah"
     },
-    "e20_n11": {
-      "id": "e20_n11",
-      "speaker": "UNKNOWN",
-      "events": [
-        {
-          "type": "message",
-          "text": "A memory.",
-          "textKey": "episode_20.e20_n11.event0.text"
-        },
-        {
-          "type": "message",
-          "text": "Not a recording.",
-          "textKey": "episode_20.e20_n11.event1.text"
-        },
-        {
-          "type": "message",
-          "text": "A living event.",
-          "textKey": "episode_20.e20_n11.event2.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_10",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n12",
-          "textKey": "episode_20.e20_n11.choice0.text"
-        }
-      ]
-    },
-    "e20_n12": {
-      "id": "e20_n12",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "file",
-          "fileId": "aeon_definition",
-          "title": "AEON DEFINITION",
-          "content": "AEON\n\nStores memories.\nNot data.\n\nReconstructs emotional, sensory, and identity-linked patterns.",
-          "titleKey": "episode_20.e20_n12.event0.title",
-          "contentKey": "episode_20.e20_n12.event0.content"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_11",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n13",
-          "textKey": "episode_20.e20_n12.choice0.text"
-        }
-      ]
-    },
-    "e20_n13": {
-      "id": "e20_n13",
+    "e20_n07_noah": {
+      "id": "e20_n07_noah",
       "speaker": "NOAH",
       "events": [
         {
           "type": "typing",
-          "duration": 2300
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "That's not possible.",
-          "textKey": "episode_20.e20_n13.event1.text"
+          "text": "My head hurts.",
+          "textKey": "episode_20.e20_n07_noah.event1.text"
         },
-        {
-          "type": "message",
-          "text": "Memory is not a material.",
-          "textKey": "episode_20.e20_n13.event2.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_12",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n14",
-          "textKey": "episode_20.e20_n13.choice0.text"
-        }
-      ]
-    },
-    "e20_n14": {
-      "id": "e20_n14",
-      "speaker": "UNKNOWN",
-      "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Your species thought the same thing.",
-          "textKey": "episode_20.e20_n14.event1.text"
+          "text": "Not a headache.",
+          "textKey": "episode_20.e20_n07_noah.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Until it started cutting pieces out of itself and calling them archives.",
-          "textKey": "episode_20.e20_n14.event2.text"
+          "text": "A missing piece ache.",
+          "textKey": "episode_20.e20_n07_noah.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Every memory we recover takes something with it.",
+          "textKey": "episode_20.e20_n07_noah.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I can't remember my mother's face.",
+          "textKey": "episode_20.e20_n07_noah.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I know I had one.",
+          "textKey": "episode_20.e20_n07_noah.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I just can't see her anymore.",
+          "textKey": "episode_20.e20_n07_noah.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Noah...",
+          "speaker": "MAYA",
+          "textKey": "episode_20.e20_n07_noah.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Don't make that sound.",
+          "textKey": "episode_20.e20_n07_noah.event17.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "If you sound sorry, I get scared faster.",
+          "textKey": "episode_20.e20_n07_noah.event19.text"
         }
       ],
       "choices": [
         {
-          "id": "continue_13",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n15",
-          "textKey": "episode_20.e20_n14.choice0.text"
+          "id": "protect_noah_memory",
+          "text": "PROTECT NOAH'S MEMORY.",
+          "effects": {
+            "noahMemoryProtected": true,
+            "noahTrust": 3,
+            "memoryIntegrity": 8,
+            "danger": 2,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e20_n08_protect_noah",
+          "textKey": "episode_20.e20_n07_noah.choice0.text"
+        },
+        {
+          "id": "use_noah_as_anchor",
+          "text": "USE NOAH AS ANCHOR.",
+          "effects": {
+            "noahUsedAsAnchor": true,
+            "noahMemoryCost": true,
+            "memoryIntegrity": -10,
+            "danger": 5,
+            "signalStrength": -3
+          },
+          "nextNodeId": "e20_n08_use_noah",
+          "textKey": "episode_20.e20_n07_noah.choice1.text"
         }
       ]
     },
-    "e20_n15": {
-      "id": "e20_n15",
+    "e20_n08_protect_noah": {
+      "id": "e20_n08_protect_noah",
       "speaker": "SYSTEM",
       "events": [
         {
-          "type": "backgroundEvent",
-          "delay": 5000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "HALE",
-            "text": "Run.",
-            "textKey": "episode_20.e20_n15.backgroundEvent0.text"
-          }
+          "type": "systemAlert",
+          "text": "[NOAH MEMORY SHIELD ACTIVE]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n08_protect_noah.event0.text"
         },
         {
-          "type": "backgroundEvent",
-          "delay": 9000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "HALE",
-            "text": "It is building you.",
-            "textKey": "episode_20.e20_n15.backgroundEvent1.text"
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Thank you.",
+          "speaker": "NOAH",
+          "textKey": "episode_20.e20_n08_protect_noah.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I know we need answers.",
+          "textKey": "episode_20.e20_n08_protect_noah.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I also know I'm running out of places to keep them.",
+          "textKey": "episode_20.e20_n08_protect_noah.event6.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "noahMemoryProtected": true,
+            "memoryIntegrity": 5
           }
+        }
+      ],
+      "nextNodeId": "e20_n09_hale_warning"
+    },
+    "e20_n08_use_noah": {
+      "id": "e20_n08_use_noah",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[NOAH ECHO ANCHOR ACCEPTED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n08_use_noah.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Okay.",
+          "textKey": "episode_20.e20_n08_use_noah.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I can hold it.",
+          "textKey": "episode_20.e20_n08_use_noah.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "textKey": "episode_20.e20_n08_use_noah.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's a lie.",
+          "textKey": "episode_20.e20_n08_use_noah.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I'm holding it anyway.",
+          "textKey": "episode_20.e20_n08_use_noah.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Someone write down my mother's face if I find it again.",
+          "textKey": "episode_20.e20_n08_use_noah.event12.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "noahMemoryCost": true,
+            "memoryIntegrity": -8,
+            "danger": 3
+          }
+        }
+      ],
+      "nextNodeId": "e20_n09_hale_warning"
+    },
+    "e20_n09_hale_warning": {
+      "id": "e20_n09_hale_warning",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Stop listening to it.",
+          "textKey": "episode_20.e20_n09_hale_warning.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's exactly what it wants.",
+          "textKey": "episode_20.e20_n09_hale_warning.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "You think you're investigating Omega.",
+          "textKey": "episode_20.e20_n09_hale_warning.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "You're feeding it.",
+          "textKey": "episode_20.e20_n09_hale_warning.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Every answer costs something.",
+          "textKey": "episode_20.e20_n09_hale_warning.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's how Omega works.",
+          "textKey": "episode_20.e20_n09_hale_warning.event11.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "HE REMEMBERS THE PRICE.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n09_hale_warning.event12.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "HE PAID IT ONCE.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n09_hale_warning.event13.text"
         }
       ],
       "choices": [
@@ -427,92 +1083,177 @@
           "id": "listen_to_hale",
           "text": "LISTEN TO HALE.",
           "effects": {
-            "danger": -5,
-            "trust": 5
+            "listenedToHaleEpisode20": true,
+            "haleTrust": 5,
+            "memoryIntegrity": 10,
+            "coreDistance": 1,
+            "danger": -2,
+            "signalStrength": 3,
+            "episode21Approach": "cautious"
           },
-          "nextNodeId": "e20_n16a",
-          "textKey": "episode_20.e20_n15.choice0.text"
+          "nextNodeId": "e20_n10_listen",
+          "textKey": "episode_20.e20_n09_hale_warning.choice0.text"
         },
         {
-          "id": "ignore_hale",
+          "id": "keep_going",
           "text": "KEEP GOING.",
           "effects": {
-            "danger": 8,
-            "trust": -5
+            "ignoredHaleEpisode20": true,
+            "aeonInfluence": 10,
+            "memoryIntegrity": -15,
+            "coreDistance": -1,
+            "danger": 6,
+            "signalStrength": -4,
+            "episode21Approach": "deep_core"
           },
-          "nextNodeId": "e20_n16b",
-          "textKey": "episode_20.e20_n15.choice1.text"
+          "nextNodeId": "e20_n10_continue",
+          "textKey": "episode_20.e20_n09_hale_warning.choice1.text"
         }
       ]
     },
-    "e20_n16a": {
-      "id": "e20_n16a",
+    "e20_n10_listen": {
+      "id": "e20_n10_listen",
       "speaker": "EVA",
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 1400
         },
         {
           "type": "message",
           "text": "I'm backing up.",
-          "textKey": "episode_20.e20_n16a.event1.text"
+          "textKey": "episode_20.e20_n10_listen.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "I hate that Hale might be right. I hate it professionally.",
-          "textKey": "episode_20.e20_n16a.event2.text"
+          "text": "I hate that Hale might be right.",
+          "textKey": "episode_20.e20_n10_listen.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I hate it professionally.",
+          "textKey": "episode_20.e20_n10_listen.event5.text"
         },
         {
           "type": "systemAlert",
           "text": "[DISTANCE FROM CORE INCREASED]",
-          "textKey": "episode_20.e20_n16a.event3.text"
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n10_listen.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The corridor doesn't like that.",
+          "textKey": "episode_20.e20_n10_listen.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It just got colder.",
+          "textKey": "episode_20.e20_n10_listen.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Good.",
+          "speaker": "HALE",
+          "textKey": "episode_20.e20_n10_listen.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Cold means it's not getting what it wants.",
+          "textKey": "episode_20.e20_n10_listen.event14.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_from_listen",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n17",
-          "textKey": "episode_20.e20_n16a.choice0.text"
-        }
-      ]
+      "nextNodeId": "e20_n11_signal_loss"
     },
-    "e20_n16b": {
-      "id": "e20_n16b",
+    "e20_n10_continue": {
+      "id": "e20_n10_continue",
       "speaker": "EVA",
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "No. We came this far.",
-          "textKey": "episode_20.e20_n16b.event1.text"
+          "text": "No.",
+          "textKey": "episode_20.e20_n10_continue.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "If AEON wanted us gone, it would not keep inviting us deeper.",
-          "textKey": "episode_20.e20_n16b.event2.text"
+          "text": "We came this far.",
+          "textKey": "episode_20.e20_n10_continue.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "If Omega wanted us gone, it would not keep inviting us deeper.",
+          "textKey": "episode_20.e20_n10_continue.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That is exactly how traps work.",
+          "speaker": "HALE",
+          "textKey": "episode_20.e20_n10_continue.event7.text"
         },
         {
           "type": "systemAlert",
           "text": "[CORE PROXIMITY INCREASED]",
-          "textKey": "episode_20.e20_n16b.event3.text"
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n10_continue.event8.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "CLOSER.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n10_continue.event9.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "GOOD.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n10_continue.event10.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_from_ignore",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n17",
-          "textKey": "episode_20.e20_n16b.choice0.text"
-        }
-      ]
+      "nextNodeId": "e20_n11_signal_loss"
     },
-    "e20_n17": {
-      "id": "e20_n17",
+    "e20_n11_signal_loss": {
+      "id": "e20_n11_signal_loss",
       "speaker": "SYSTEM",
       "events": [
         {
@@ -520,117 +1261,655 @@
           "duration": 5000,
           "message": "[SIGNAL LOST]",
           "restoreMessage": "[SIGNAL RESTORED]",
-          "messageKey": "episode_20.e20_n17.event0.message",
-          "restoreMessageKey": "episode_20.e20_n17.event0.restoreMessage"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_15",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n18",
-          "textKey": "episode_20.e20_n17.choice0.text"
-        }
-      ]
-    },
-    "e20_n18": {
-      "id": "e20_n18",
-      "speaker": "EVA",
-      "events": [
+          "pauseAfterMs": 700,
+          "messageKey": "episode_20.e20_n11_signal_loss.event0.message",
+          "restoreMessageKey": "episode_20.e20_n11_signal_loss.event0.restoreMessage"
+        },
         {
           "type": "typing",
-          "duration": 2300
+          "duration": 1400
         },
         {
           "type": "message",
           "text": "Did Hale just save us?",
-          "textKey": "episode_20.e20_n18.event1.text"
+          "speaker": "EVA",
+          "textKey": "episode_20.e20_n11_signal_loss.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Or did AEON want us to hear him?",
-          "textKey": "episode_20.e20_n18.event2.text"
+          "text": "Or did Omega want us to hear him?",
+          "textKey": "episode_20.e20_n11_signal_loss.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Both can be true.",
+          "speaker": "NOAH",
+          "textKey": "episode_20.e20_n11_signal_loss.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Please stop finding the worst third option.",
+          "speaker": "MAYA",
+          "textKey": "episode_20.e20_n11_signal_loss.event8.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_16",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n19",
-          "textKey": "episode_20.e20_n18.choice0.text"
-        }
-      ]
+      "nextNodeId": "e20_n12_definition"
     },
-    "e20_n19": {
-      "id": "e20_n19",
+    "e20_n12_definition": {
+      "id": "e20_n12_definition",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "file",
-          "fileId": "core_gate_01",
-          "title": "CORE GATE",
-          "content": "INNER CORE\nLOCKED\n\nACCESS CONDITION:\nRECOGNIZED MEMORY REQUIRED",
-          "titleKey": "episode_20.e20_n19.event0.title",
-          "contentKey": "episode_20.e20_n19.event0.content"
+          "id": "aeon_definition_v8",
+          "fileId": "aeon_definition_v8",
+          "fileType": "log",
+          "title": "AEON DEFINITION",
+          "content": "AEON TOOL LAYER\nFUNCTION: memory translation / emotional pattern reconstruction\nLIMITATION: cannot create Omega\nSOURCE: learned from Omega, Nursery, and Operator response traces\nWARNING: AEON does not store memories. It teaches Omega how to speak them back.",
+          "caption": "AEON is a translation layer, not the source.",
+          "source": "AEON_TOOL_LAYER",
+          "tags": [
+            "aeon",
+            "omega",
+            "operator",
+            "memory_translation"
+          ],
+          "correlationTags": [
+            "aeon_tool",
+            "operator_trace",
+            "doorkeeper"
+          ],
+          "message": "[AEON DEFINITION ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_20.e20_n12_definition.event0.title",
+          "contentKey": "episode_20.e20_n12_definition.event0.content",
+          "captionKey": "episode_20.e20_n12_definition.event0.caption",
+          "messageKey": "episode_20.e20_n12_definition.event0.message"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "AEON LEARNED THE LANGUAGE.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n12_definition.event1.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU TAUGHT THE GRAMMAR.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n12_definition.event2.text"
         }
       ],
-      "choices": [
-        {
-          "id": "continue_17",
-          "text": "CONTINUE.",
-          "nextNodeId": "e20_n20",
-          "textKey": "episode_20.e20_n19.choice0.text"
-        }
-      ]
+      "nextNodeId": "e20_n13_puzzle"
     },
-    "e20_n20": {
-      "id": "e20_n20",
-      "speaker": "UNKNOWN",
+    "e20_n13_puzzle": {
+      "id": "e20_n13_puzzle",
+      "speaker": "SYSTEM",
       "events": [
         {
-          "type": "message",
-          "text": "The core remembers everything.",
-          "textKey": "episode_20.e20_n20.event0.text"
+          "type": "systemAlert",
+          "text": "[DOORKEEPER MEMORY CORRELATION REQUIRED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n13_puzzle.event0.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "doorkeeper_memory_correlation_20",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e20_n13_fail": {
+      "id": "e20_n13_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[DOORKEEPER TRACE FAILED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n13_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5
+          }
         },
         {
           "type": "typing",
-          "duration": 2800
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "INCLUDING YOU.",
-          "textKey": "episode_20.e20_n20.event2.text"
+          "text": "No.",
+          "speaker": "MAYA",
+          "textKey": "episode_20.e20_n13_fail.event3.text"
         },
         {
-          "type": "backgroundEvent",
-          "delay": 5000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "We've met before.",
-            "textKey": "episode_20.e20_n20.backgroundEvent3.text"
-          }
+          "type": "typing",
+          "duration": 1400
         },
         {
-          "type": "backgroundEvent",
-          "delay": 10000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "You just don't remember yet.",
-            "textKey": "episode_20.e20_n20.backgroundEvent4.text"
+          "type": "message",
+          "text": "Operator opened the first door.",
+          "textKey": "episode_20.e20_n13_fail.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Children opened the second.",
+          "textKey": "episode_20.e20_n13_fail.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Omega opened the third.",
+          "textKey": "episode_20.e20_n13_fail.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Get that order wrong and it gets to write the fourth.",
+          "textKey": "episode_20.e20_n13_fail.event11.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "retry_doorkeeper_trace",
+          "text": "RETRY CORRELATION.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e20_n13_puzzle",
+          "textKey": "episode_20.e20_n13_fail.choice0.text"
+        },
+        {
+          "id": "stabilize_then_retry",
+          "text": "STABILIZE, THEN RETRY.",
+          "effects": {
+            "danger": -1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e20_n12b_stabilize",
+          "textKey": "episode_20.e20_n13_fail.choice1.text"
+        }
+      ]
+    },
+    "e20_n12b_stabilize": {
+      "id": "e20_n12b_stabilize",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[SIGNAL STABILIZED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n12b_stabilize.event0.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The corridor stopped whispering for half a second.",
+          "speaker": "EVA",
+          "textKey": "episode_20.e20_n12b_stabilize.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That might be the nicest thing that's happened today.",
+          "speaker": "NOAH",
+          "textKey": "episode_20.e20_n12b_stabilize.event4.text"
+        }
+      ],
+      "nextNodeId": "e20_n13_puzzle"
+    },
+    "e20_n14_doorkeeper_confirmed": {
+      "id": "e20_n14_doorkeeper_confirmed",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[DOORKEEPER TRACE CONFIRMED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n14_doorkeeper_confirmed.event0.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU OPENED THE FIRST DOOR.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n14_doorkeeper_confirmed.event1.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE CHILDREN OPENED THE SECOND.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n14_doorkeeper_confirmed.event2.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "OMEGA OPENED THE THIRD.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_20.e20_n14_doorkeeper_confirmed.event3.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "WE ARE STILL WAITING FOR THE LAST ONE.",
+          "pauseAfterMs": 900,
+          "textKey": "episode_20.e20_n14_doorkeeper_confirmed.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Last one?",
+          "speaker": "EVA",
+          "textKey": "episode_20.e20_n14_doorkeeper_confirmed.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "HALE",
+          "textKey": "episode_20.e20_n14_doorkeeper_confirmed.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Do not ask it to count.",
+          "textKey": "episode_20.e20_n14_doorkeeper_confirmed.event10.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "request_recognized_memory",
+          "text": "REQUEST RECOGNIZED MEMORY.",
+          "effects": {
+            "recognizedMemoryRequested": true,
+            "danger": 4,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e20_n15_core_gate",
+          "textKey": "episode_20.e20_n14_doorkeeper_confirmed.choice0.text"
+        },
+        {
+          "id": "secure_team_before_core",
+          "text": "SECURE TEAM BEFORE CORE.",
+          "effects": {
+            "teamSecuredBeforeCore": true,
+            "morale": 2,
+            "danger": 1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e20_n14b_secure",
+          "textKey": "episode_20.e20_n14_doorkeeper_confirmed.choice1.text"
+        }
+      ]
+    },
+    "e20_n14b_secure": {
+      "id": "e20_n14b_secure",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Everyone check in.",
+          "textKey": "episode_20.e20_n14b_secure.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Short answers.",
+          "textKey": "episode_20.e20_n14b_secure.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Eva?",
+          "speaker": "MAYA",
+          "textKey": "episode_20.e20_n14b_secure.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Scared.",
+          "speaker": "EVA",
+          "textKey": "episode_20.e20_n14b_secure.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Noah?",
+          "speaker": "MAYA",
+          "textKey": "episode_20.e20_n14b_secure.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Missing pieces.",
+          "speaker": "NOAH",
+          "textKey": "episode_20.e20_n14b_secure.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Hale?",
+          "speaker": "MAYA",
+          "textKey": "episode_20.e20_n14b_secure.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Still expensive.",
+          "speaker": "HALE",
+          "textKey": "episode_20.e20_n14b_secure.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Good enough.",
+          "speaker": "MAYA",
+          "textKey": "episode_20.e20_n14b_secure.event17.text"
+        }
+      ],
+      "nextNodeId": "e20_n15_core_gate"
+    },
+    "e20_n15_core_gate": {
+      "id": "e20_n15_core_gate",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "core_gate_01_v8",
+          "fileId": "core_gate_01_v8",
+          "fileType": "log",
+          "title": "CORE GATE",
+          "content": "INNER CORE: LOCKED\nACCESS CONDITION: RECOGNIZED MEMORY REQUIRED\nRECOGNIZED MEMORY FOUND\nSOURCE: OPERATOR\nSTATUS: VERIFIED\nDATE: UNKNOWN\nACCESS LEVEL: FOUNDER",
+          "caption": "Core gate identifies the Operator as a verified Founder-level memory source.",
+          "source": "OMEGA_CORE_GATE",
+          "tags": [
+            "operator",
+            "doorkeeper",
+            "founder",
+            "core_gate"
+          ],
+          "correlationTags": [
+            "operator_trace",
+            "doorkeeper",
+            "episode_21_hook"
+          ],
+          "message": "[CORE GATE ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_20.e20_n15_core_gate.event0.title",
+          "contentKey": "episode_20.e20_n15_core_gate.event0.content",
+          "captionKey": "episode_20.e20_n15_core_gate.event0.caption",
+          "messageKey": "episode_20.e20_n15_core_gate.event0.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Operator...",
+          "speaker": "EVA",
+          "textKey": "episode_20.e20_n15_core_gate.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's you.",
+          "textKey": "episode_20.e20_n15_core_gate.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "NOAH",
+          "textKey": "episode_20.e20_n15_core_gate.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No way.",
+          "textKey": "episode_20.e20_n15_core_gate.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I told you.",
+          "speaker": "HALE",
+          "textKey": "episode_20.e20_n15_core_gate.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The station didn't find the Operator.",
+          "textKey": "episode_20.e20_n15_core_gate.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It was built around them.",
+          "textKey": "episode_20.e20_n15_core_gate.event14.text"
+        }
+      ],
+      "nextNodeId": "e20_n16_final"
+    },
+    "e20_n16_final": {
+      "id": "e20_n16_final",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "glitch",
+          "duration": 1400,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "WELCOME BACK.",
+          "pauseAfterMs": 900,
+          "textKey": "episode_20.e20_n16_final.event1.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "DOORKEEPER.",
+          "pauseAfterMs": 1000,
+          "textKey": "episode_20.e20_n16_final.event2.text"
+        },
+        {
+          "type": "signalLost",
+          "duration": 3200,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 700,
+          "messageKey": "episode_20.e20_n16_final.event3.message",
+          "restoreMessageKey": "episode_20.e20_n16_final.event3.restoreMessage"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "doorkeeperRevealed": true,
+            "danger": 8,
+            "signalStrength": -6
           }
         }
       ],
       "choices": [
         {
-          "id": "continue_to_episode_21",
-          "text": "REQUEST RECOGNIZED MEMORY.",
+          "id": "open_founder_memory",
+          "text": "OPEN FOUNDER MEMORY.",
+          "effects": {
+            "openFounderMemoryEpisode21": true,
+            "doorkeeperRevealed": true,
+            "danger": 5,
+            "signalStrength": -5,
+            "episode21StartMode": "founder_memory"
+          },
           "nextEpisodeId": "episode_21",
-          "textKey": "episode_20.e20_n20.choice0.text"
+          "textKey": "episode_20.e20_n16_final.choice0.text"
+        },
+        {
+          "id": "deny_doorkeeper_access",
+          "text": "DENY DOORKEEPER ACCESS.",
+          "effects": {
+            "denyDoorkeeperAccessEpisode21": true,
+            "doorkeeperRevealed": true,
+            "danger": 2,
+            "signalStrength": 3,
+            "episode21StartMode": "deny_doorkeeper"
+          },
+          "nextEpisodeId": "episode_21",
+          "textKey": "episode_20.e20_n16_final.choice1.text"
         }
       ]
     }
+  },
+  "relationshipConsequenceSystem": {
+    "episode20PersistentFlags": [
+      "operatorProofDemanded",
+      "teamGroundedBeforeCore",
+      "operatorSignalTraced",
+      "operatorSignalMasked",
+      "echoObserved",
+      "echoInterrupted",
+      "noahMemoryProtected",
+      "noahUsedAsAnchor",
+      "noahMemoryCost",
+      "listenedToHaleEpisode20",
+      "ignoredHaleEpisode20",
+      "recognizedMemoryRequested",
+      "teamSecuredBeforeCore",
+      "doorkeeperRevealed",
+      "openFounderMemoryEpisode21",
+      "denyDoorkeeperAccessEpisode21"
+    ],
+    "episode21UsageNotes": {
+      "operatorSignalTraced": "Episode 21 can start with stronger Founder-memory access but more danger.",
+      "operatorSignalMasked": "Episode 21 starts safer, but Doorkeeper access may be partial or distorted.",
+      "noahMemoryProtected": "Noah begins Episode 21 more stable and grateful.",
+      "noahUsedAsAnchor": "Noah begins Episode 21 with memory loss or emotional fragmentation.",
+      "listenedToHaleEpisode20": "Hale begins Episode 21 more trusting and the team has higher memory integrity.",
+      "ignoredHaleEpisode20": "Omega/AEON influence is stronger and memory integrity is lower.",
+      "doorkeeperRevealed": "Episode 21 must focus on Operator identity and Founder memory.",
+      "openFounderMemoryEpisode21": "Episode 21 opens by entering Founder memory.",
+      "denyDoorkeeperAccessEpisode21": "Episode 21 opens with the team trying to refuse Founder access while Omega pushes back."
+    }
+  },
+  "directorCut": {
+    "version": "FINAL_DIRECTORS_CUT_V8",
+    "sourceEpisode": "episode_20",
+    "coreRewrite": "Rebuilt from the provided Episode 20 JSON. The AEON explanation chapter was transformed into the Doorkeeper reveal.",
+    "majorChanges": [
+      "Episode objective changed from understanding AEON to discovering why Omega recognizes the Operator.",
+      "UNKNOWN now opens with the Operator/First Door accusation.",
+      "Eva hears her own voice from ahead, increasing mystery and horror.",
+      "Noah receives a Humanization V4 pass and suffers memory loss.",
+      "Hale warning now carries real consequence.",
+      "LISTEN TO HALE and KEEP GOING create Episode 21 flags.",
+      "AEON is clarified as a tool layer that teaches Omega to speak memories back.",
+      "Added Doorkeeper Memory Correlation puzzle.",
+      "Final reveal: Operator is a Founder-level recognized memory source.",
+      "Episode 21 hook: Welcome back, Doorkeeper."
+    ],
+    "qualityTarget": {
+      "concreteObjective": "10/10",
+      "humanization": "10/10",
+      "unknownStoryFunction": "10/10",
+      "consequence": "10/10",
+      "horror": "10/10",
+      "cliffhanger": "10/10",
+      "rulesCompliance": "9.5/10"
+    },
+    "nextEpisode": "episode_21"
   },
   "titleKey": "episode_20.meta.episode0.title"
 }

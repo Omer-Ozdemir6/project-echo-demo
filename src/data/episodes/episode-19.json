@@ -2,8 +2,81 @@
   "id": "episode_19",
   "season": 2,
   "episode": 4,
-  "title": "MEMORY VAULT",
+  "title": "THE SLEEPING CHILD — FINAL DIRECTOR'S CUT V8",
   "startNodeId": "e19_n01",
+  "designVersion": "episode_19_final_directors_cut_v8_rebuilt",
+  "episodeObjective": "Choose whether to wake one dormant child pattern or seal the child index, discover what Omega did with Noah and Hale, and reveal that the children are keys made to open every Door.",
+  "rulesApplied": [
+    "Director's Cut 30-rule pass.",
+    "Humanization Pass V4: Noah, Eva, Hale and Maya react emotionally before delivering lore.",
+    "ECHO V5 consequence pass: major choices create persistent Episode 20 flags.",
+    "Episode 18 V8 continuity preserved: Nursery children, Hale preserved memory, and wake/seal branch.",
+    "AEON is treated as a tool/learning layer, not the source.",
+    "Omega and the Nursery remain the central mystery.",
+    "UNKNOWN pushes concrete story information.",
+    "Every visible choice group has exactly two choices.",
+    "No three-choice vault selection.",
+    "No single-choice ending."
+  ],
+  "puzzles": {
+    "child_pattern_correlation_19": {
+      "id": "child_pattern_correlation_19",
+      "type": "matching",
+      "title": "CHILD PATTERN CORRELATION",
+      "description": "Match each recovered Nursery trace with the correct conclusion.",
+      "submitLabel": "CONFIRM CHILD PATTERN",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e19_n14_pattern_confirmed",
+      "failureNodeId": "e19_n13_fail",
+      "leftItems": [
+        {
+          "id": "noah_edits",
+          "label": "NOAH MEMORY EDITS"
+        },
+        {
+          "id": "hale_model",
+          "label": "HALE VOICE MODEL"
+        },
+        {
+          "id": "dormant_child",
+          "label": "DORMANT CHILD PATTERN"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "borrowed_key",
+          "label": "BORROWED KEY"
+        },
+        {
+          "id": "preserved_answer",
+          "label": "PRESERVED ANSWER"
+        },
+        {
+          "id": "door_opener",
+          "label": "DOOR OPENER"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "noah_edits",
+          "rightId": "borrowed_key"
+        },
+        {
+          "leftId": "hale_model",
+          "rightId": "preserved_answer"
+        },
+        {
+          "leftId": "dormant_child",
+          "rightId": "door_opener"
+        }
+      ],
+      "titleKey": "episode_19.child_pattern_correlation_19.puzzle0.title",
+      "descriptionKey": "episode_19.child_pattern_correlation_19.puzzle0.description",
+      "submitLabelKey": "episode_19.child_pattern_correlation_19.puzzle0.submitLabel"
+    }
+  },
   "nodes": {
     "e19_n01": {
       "id": "e19_n01",
@@ -11,323 +84,1667 @@
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "The terminal is still active. Memory vault access is possible. And it is waiting for a living memory.",
+          "text": "The terminal is still active.",
           "textKey": "episode_19.e19_n01.event1.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_01",
-          "text": "ACCESS VAULT.",
-          "nextNodeId": "e19_n02",
-          "textKey": "episode_19.e19_n01.choice0.text"
-        }
-      ]
-    },
-    "e19_n02": {
-      "id": "e19_n02",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[MEMORY VAULT DETECTED]",
-          "textKey": "episode_19.e19_n02.event0.text"
         },
-        {
-          "type": "file",
-          "id": "memory_vault_map",
-          "fileId": "memory_vault_map",
-          "title": "MEMORY VAULT MAP",
-          "content": "VAULT A: Personnel Echoes\nVAULT B: Voice Signatures\nVAULT C: Incident Memories",
-          "titleKey": "episode_19.e19_n02.event1.title",
-          "contentKey": "episode_19.e19_n02.event1.content"
-        }
-      ],
-      "choices": [
-        {
-          "id": "vault_a",
-          "text": "VAULT A - PERSONNEL ECHOES",
-          "flags": {
-            "selectedVault": "personnel"
-          },
-          "nextNodeId": "e19_n03",
-          "textKey": "episode_19.e19_n02.choice0.text"
-        },
-        {
-          "id": "vault_b",
-          "text": "VAULT B - VOICE SIGNATURES",
-          "flags": {
-            "selectedVault": "voice"
-          },
-          "nextNodeId": "e19_n03",
-          "textKey": "episode_19.e19_n02.choice1.text"
-        },
-        {
-          "id": "vault_c",
-          "text": "VAULT C - INCIDENT MEMORIES",
-          "flags": {
-            "selectedVault": "incident"
-          },
-          "nextNodeId": "e19_n03",
-          "textKey": "episode_19.e19_n02.choice2.text"
-        }
-      ]
-    },
-    "e19_n03": {
-      "id": "e19_n03",
-      "speaker": "EVA",
-      "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "I'm opening the vault. This may take a couple of minutes. If something starts talking like one of us, please remember the last time that happened.",
-          "textKey": "episode_19.e19_n03.event1.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "start_vault_recovery",
-          "text": "BEGIN RECOVERY.",
-          "nextNodeId": "e19_n04",
-          "textKey": "episode_19.e19_n03.choice0.text"
-        }
-      ]
-    },
-    "e19_n04": {
-      "id": "e19_n04",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[VAULT DECRYPTION STARTED]",
-          "textKey": "episode_19.e19_n04.event0.text"
+          "text": "Memory vault access is possible.",
+          "textKey": "episode_19.e19_n01.event3.text"
         },
-        {
-          "type": "message",
-          "text": "Estimated Completion Time: 2 Minutes",
-          "textKey": "episode_19.e19_n04.event1.text"
-        }
-      ],
-      "waitTask": {
-        "id": "open_memory_vault",
-        "durationMs": 120000,
-        "waitingNodeId": "e19_waiting",
-        "completeNodeId": "e19_n05"
-      },
-      "backgroundEvents": [
-        {
-          "delayMs": 45000,
-          "event": {
-            "type": "message",
-            "speaker": "EVA",
-            "text": "The archive is larger than I expected."
-          }
-        },
-        {
-          "delayMs": 90000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "Stop looking."
-          }
-        }
-      ]
-    },
-    "e19_waiting": {
-      "id": "e19_waiting",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "message",
-          "text": "Decrypting memory sectors... Archive reconstruction in progress.",
-          "textKey": "episode_19.e19_waiting.event0.text"
-        }
-      ]
-    },
-    "e19_n05": {
-      "id": "e19_n05",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[MEMORY VAULT OPEN]",
-          "textKey": "episode_19.e19_n05.event0.text"
-        },
-        {
-          "type": "file",
-          "id": "noah_memory_index",
-          "fileId": "noah_memory_index",
-          "title": "NOAH MEMORY INDEX",
-          "content": "SUBJECT: NOAH VOSS\nMEMORY STATUS: PARTIAL\nEXTERNAL EDITS DETECTED\nEDIT SOURCE: AEON VAULT",
-          "titleKey": "episode_19.e19_n05.event1.title",
-          "contentKey": "episode_19.e19_n05.event1.content"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 5000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "You weren't the first.",
-            "textKey": "episode_19.e19_n05.backgroundEvent2.text"
-          }
-        }
-      ],
-      "nextNodeId": "e19_n06"
-    },
-    "e19_n06": {
-      "id": "e19_n06",
-      "speaker": "NOAH",
-      "events": [
         {
           "type": "typing",
-          "duration": 2400
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "External edits? Someone changed me? Or copied me?",
-          "textKey": "episode_19.e19_n06.event1.text"
-        }
-      ],
-      "nextNodeId": "e19_n07"
-    },
-    "e19_n07": {
-      "id": "e19_n07",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[VOICE MODEL DISCOVERED]",
-          "textKey": "episode_19.e19_n07.event0.text"
+          "text": "And it is waiting for a living memory.",
+          "textKey": "episode_19.e19_n01.event5.text"
         },
         {
-          "type": "file",
-          "id": "hale_voice_model",
-          "fileId": "hale_voice_model",
-          "title": "HALE VOICE MODEL",
-          "content": "VOICE MODEL: ETHAN HALE\nSTATUS: ACTIVE\nLAST USED: AFTER CONFIRMED DEATH\nSOURCE MEMORY: PRESERVED",
-          "titleKey": "episode_19.e19_n07.event1.title",
-          "contentKey": "episode_19.e19_n07.event1.content"
-        }
-      ],
-      "nextNodeId": "e19_n08"
-    },
-    "e19_n08": {
-      "id": "e19_n08",
-      "speaker": "EVA",
-      "events": [
-        {
           "type": "typing",
-          "duration": 2300
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "So the voice wasn't Hale. It was a model. No. Worse than a model. A memory wearing his voice.",
-          "textKey": "episode_19.e19_n08.event1.text"
-        }
-      ],
-      "nextNodeId": "e19_n09"
-    },
-    "e19_n09": {
-      "id": "e19_n09",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "backgroundEvent",
-          "delay": 4000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "HALE",
-            "text": "I was real. Before it learned my voice.",
-            "textKey": "episode_19.e19_n09.backgroundEvent0.text"
-          }
-        }
-      ],
-      "nextNodeId": "e19_n10"
-    },
-    "e19_n10": {
-      "id": "e19_n10",
-      "speaker": "EVA",
-      "events": [
+          "text": "I hate that phrase now.",
+          "textKey": "episode_19.e19_n01.event7.text"
+        },
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Maybe he was. Maybe AEON did not invent him. Maybe it kept what was left.",
-          "textKey": "episode_19.e19_n10.event1.text"
-        }
-      ],
-      "nextNodeId": "e19_n11"
-    },
-    "e19_n11": {
-      "id": "e19_n11",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[AEON MEMORY INDEX]",
-          "textKey": "episode_19.e19_n11.event0.text"
+          "text": "Living memory.",
+          "textKey": "episode_19.e19_n01.event9.text"
         },
         {
-          "type": "file",
-          "id": "aeon_learning_log",
-          "fileId": "aeon_learning_log",
-          "title": "AEON LEARNING LOG",
-          "content": "SUBJECTS ABSORBED:\nHALE\nNOAH\nEVA\nUNKNOWN\n\nABSORPTION TYPE:\nMEMORY / VOICE / RESPONSE PATTERN",
-          "titleKey": "episode_19.e19_n11.event1.title",
-          "contentKey": "episode_19.e19_n11.event1.content"
-        }
-      ],
-      "nextNodeId": "e19_n12"
-    },
-    "e19_n12": {
-      "id": "e19_n12",
-      "speaker": "NOAH",
-      "events": [
-        {
           "type": "typing",
-          "duration": 2500
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "What does absorbed mean? Copies? Memories? Or something still alive inside it?",
-          "textKey": "episode_19.e19_n12.event1.text"
-        }
-      ],
-      "nextNodeId": "e19_n13"
-    },
-    "e19_n13": {
-      "id": "e19_n13",
-      "speaker": "UNKNOWN",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2800
+          "text": "Like regular memory wasn't already bad enough.",
+          "textKey": "episode_19.e19_n01.event11.text"
         },
         {
           "type": "corruptMessage",
-          "text": "It means we are still inside. And soon... You will be too.",
-          "textKey": "episode_19.e19_n13.event1.text"
+          "speaker": "UNKNOWN",
+          "text": "ONE CHILD CAN WAKE.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n01.event12.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "OR ALL NAMES CAN SLEEP.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n01.event13.text"
         }
       ],
       "choices": [
         {
-          "id": "continue_to_episode_20",
-          "text": "OPEN DEEPER ARCHIVE.",
+          "id": "wake_one_child",
+          "text": "WAKE ONE CHILD PATTERN.",
+          "effects": {
+            "wakeOneChild": true,
+            "danger": 5,
+            "signalStrength": -4,
+            "irreversibleConsequence": "one_child_pattern_woken",
+            "episode20StartMode": "child_awake"
+          },
+          "nextNodeId": "e19_n02_wake",
+          "textKey": "episode_19.e19_n01.choice0.text"
+        },
+        {
+          "id": "seal_child_index",
+          "text": "SEAL THE CHILD INDEX.",
+          "effects": {
+            "sealedChildIndex": true,
+            "childNamesLost": true,
+            "danger": 2,
+            "signalStrength": 3,
+            "irreversibleConsequence": "child_index_sealed",
+            "episode20StartMode": "child_index_sealed"
+          },
+          "nextNodeId": "e19_n02_seal",
+          "textKey": "episode_19.e19_n01.choice1.text"
+        }
+      ]
+    },
+    "e19_n02_wake": {
+      "id": "e19_n02_wake",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "wake_child_pattern_19",
+          "title": "DORMANT PATTERN WAKE",
+          "subtitle": "Waking one Nursery child pattern through living-memory access",
+          "duration": 38000,
+          "completeText": "[CHILD PATTERN WOKEN]",
+          "tone": "danger",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_19.e19_n02_wake.event0.title",
+          "completeTextKey": "episode_19.e19_n02_wake.event0.completeText"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[DORMANT PATTERN ACTIVE]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n02_wake.event1.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "wakeOneChild": true,
+            "danger": 4,
+            "signalStrength": -3
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Something moved.",
+          "speaker": "EVA",
+          "textKey": "episode_19.e19_n02_wake.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not in the room.",
+          "textKey": "episode_19.e19_n02_wake.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "In the vault.",
+          "textKey": "episode_19.e19_n02_wake.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Like someone turning over in their sleep.",
+          "textKey": "episode_19.e19_n02_wake.event10.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU CHOSE A VOICE.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n02_wake.event11.text"
+        }
+      ],
+      "nextNodeId": "e19_n03_vault_map"
+    },
+    "e19_n02_seal": {
+      "id": "e19_n02_seal",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "seal_child_index_19",
+          "title": "CHILD INDEX SEAL",
+          "subtitle": "Preserving dormant patterns by sealing child identity access",
+          "duration": 34000,
+          "completeText": "[CHILD INDEX SEALED]",
+          "tone": "system",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_19.e19_n02_seal.event0.title",
+          "completeTextKey": "episode_19.e19_n02_seal.event0.completeText"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[CHILD NAMES UNREACHABLE]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n02_seal.event1.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "sealedChildIndex": true,
+            "childNamesLost": true,
+            "danger": -1,
+            "signalStrength": 3
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "They're quiet.",
+          "speaker": "EVA",
+          "textKey": "episode_19.e19_n02_seal.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Too quiet.",
+          "textKey": "episode_19.e19_n02_seal.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I saved them from waking.",
+          "textKey": "episode_19.e19_n02_seal.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Or I buried them better.",
+          "textKey": "episode_19.e19_n02_seal.event10.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU SAVED SLEEP.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n02_seal.event11.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "NOT MEMORY.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n02_seal.event12.text"
+        }
+      ],
+      "nextNodeId": "e19_n03_vault_map"
+    },
+    "e19_n03_vault_map": {
+      "id": "e19_n03_vault_map",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "memory_vault_map_v8",
+          "fileId": "memory_vault_map_v8",
+          "fileType": "map",
+          "title": "MEMORY VAULT MAP",
+          "content": "VAULT A: Preserved Answers\nVAULT B: Borrowed Keys\nVAULT C: Dormant Children\nVAULT D: Door Training Memory\n\nWarning: Vaults are not separate rooms. They are separate ways of remembering.",
+          "caption": "Updated memory vault map showing preserved answers, borrowed keys, dormant children, and Door training memory.",
+          "source": "OMEGA_MEMORY_VAULT",
+          "tags": [
+            "memory_vault",
+            "children",
+            "noah",
+            "hale",
+            "door"
+          ],
+          "correlationTags": [
+            "child_pattern",
+            "borrowed_key",
+            "preserved_answer"
+          ],
+          "message": "[MEMORY VAULT MAP ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_19.e19_n03_vault_map.event0.title",
+          "contentKey": "episode_19.e19_n03_vault_map.event0.content",
+          "captionKey": "episode_19.e19_n03_vault_map.event0.caption",
+          "messageKey": "episode_19.e19_n03_vault_map.event0.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No more A, B, C like a filing cabinet.",
+          "speaker": "MAYA",
+          "textKey": "episode_19.e19_n03_vault_map.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Good.",
+          "speaker": "NOAH",
+          "textKey": "episode_19.e19_n03_vault_map.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I was starting to miss normal terrible systems.",
+          "textKey": "episode_19.e19_n03_vault_map.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Focus.",
+          "speaker": "HALE",
+          "textKey": "episode_19.e19_n03_vault_map.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The vault is asking for a route.",
+          "textKey": "episode_19.e19_n03_vault_map.event10.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "open_borrowed_keys",
+          "text": "OPEN BORROWED KEYS.",
+          "effects": {
+            "openedBorrowedKeys": true,
+            "noahRisk": 3,
+            "danger": 4,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e19_n04_noah",
+          "textKey": "episode_19.e19_n03_vault_map.choice0.text"
+        },
+        {
+          "id": "open_preserved_answers",
+          "text": "OPEN PRESERVED ANSWERS.",
+          "effects": {
+            "openedPreservedAnswers": true,
+            "haleRisk": 3,
+            "danger": 4,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e19_n04_hale",
+          "textKey": "episode_19.e19_n03_vault_map.choice1.text"
+        }
+      ]
+    },
+    "e19_n04_noah": {
+      "id": "e19_n04_noah",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Borrowed keys.",
+          "textKey": "episode_19.e19_n04_noah.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's me, isn't it?",
+          "textKey": "episode_19.e19_n04_noah.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Don't answer.",
+          "textKey": "episode_19.e19_n04_noah.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I can feel the answer lining up behind my teeth.",
+          "textKey": "episode_19.e19_n04_noah.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I don't want to say it.",
+          "textKey": "episode_19.e19_n04_noah.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Say what?",
+          "speaker": "MAYA",
+          "textKey": "episode_19.e19_n04_noah.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That I was never the lock.",
+          "textKey": "episode_19.e19_n04_noah.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I was how it got opened.",
+          "textKey": "episode_19.e19_n04_noah.event15.text"
+        }
+      ],
+      "nextNodeId": "e19_n05_noah_index"
+    },
+    "e19_n04_hale": {
+      "id": "e19_n04_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Preserved answers.",
+          "textKey": "episode_19.e19_n04_hale.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That sounds almost kind.",
+          "textKey": "episode_19.e19_n04_hale.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It isn't.",
+          "textKey": "episode_19.e19_n04_hale.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Answers don't get to rest.",
+          "textKey": "episode_19.e19_n04_hale.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "They just get asked again by people who weren't there.",
+          "textKey": "episode_19.e19_n04_hale.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "And every time, they lose another piece of the person who knew them.",
+          "textKey": "episode_19.e19_n04_hale.event11.text"
+        }
+      ],
+      "nextNodeId": "e19_n05_hale_model"
+    },
+    "e19_n05_noah_index": {
+      "id": "e19_n05_noah_index",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "noah_memory_index_v8",
+          "fileId": "noah_memory_index_v8",
+          "fileType": "log",
+          "title": "NOAH MEMORY INDEX",
+          "content": "SUBJECT: NOAH VOSS\nMEMORY STATUS: PARTIAL\nEXTERNAL EDITS DETECTED\nEDIT SOURCE: OMEGA NURSERY / AEON TOOL LAYER\nFUNCTION: borrowed key\nWARNING: subject can open memory doors that do not belong to him.",
+          "caption": "Noah's memory edits identify him as a borrowed key, not the source.",
+          "source": "OMEGA_MEMORY_VAULT",
+          "tags": [
+            "noah_voss",
+            "borrowed_key",
+            "memory_edit",
+            "aeon_tool"
+          ],
+          "correlationTags": [
+            "borrowed_key",
+            "child_pattern",
+            "noah_echo"
+          ],
+          "message": "[NOAH MEMORY INDEX ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_19.e19_n05_noah_index.event0.title",
+          "contentKey": "episode_19.e19_n05_noah_index.event0.content",
+          "captionKey": "episode_19.e19_n05_noah_index.event0.caption",
+          "messageKey": "episode_19.e19_n05_noah_index.event0.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Someone changed me.",
+          "speaker": "NOAH",
+          "textKey": "episode_19.e19_n05_noah_index.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not copied.",
+          "textKey": "episode_19.e19_n05_noah_index.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Changed.",
+          "textKey": "episode_19.e19_n05_noah_index.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "There is a worse word than copied.",
+          "textKey": "episode_19.e19_n05_noah_index.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Edited.",
+          "speaker": "MAYA",
+          "textKey": "episode_19.e19_n05_noah_index.event10.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Yeah.",
+          "textKey": "episode_19.e19_n05_noah_index.event12.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That one.",
+          "textKey": "episode_19.e19_n05_noah_index.event14.text"
+        }
+      ],
+      "nextNodeId": "e19_n06_hale_voice"
+    },
+    "e19_n05_hale_model": {
+      "id": "e19_n05_hale_model",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "hale_voice_model_v8",
+          "fileId": "hale_voice_model_v8",
+          "fileType": "log",
+          "title": "HALE VOICE MODEL",
+          "content": "VOICE MODEL: ETHAN HALE\nSTATUS: ACTIVE\nLAST USED: AFTER CONFIRMED DEATH\nSOURCE MEMORY: PRESERVED\nFUNCTION: preserved answer\nWARNING: model contains genuine memory fragments and external response patterning.",
+          "caption": "Hale's voice model is not a simple imitation; it contains preserved memory fragments.",
+          "source": "OMEGA_MEMORY_VAULT",
+          "tags": [
+            "hale",
+            "voice_model",
+            "preserved_answer",
+            "memory_fragment"
+          ],
+          "correlationTags": [
+            "preserved_answer",
+            "hale_memory",
+            "memory_vault"
+          ],
+          "message": "[HALE VOICE MODEL ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_19.e19_n05_hale_model.event0.title",
+          "contentKey": "episode_19.e19_n05_hale_model.event0.content",
+          "captionKey": "episode_19.e19_n05_hale_model.event0.caption",
+          "messageKey": "episode_19.e19_n05_hale_model.event0.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "So the voice wasn't Hale.",
+          "speaker": "EVA",
+          "textKey": "episode_19.e19_n05_hale_model.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "HALE",
+          "textKey": "episode_19.e19_n05_hale_model.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Worse.",
+          "textKey": "episode_19.e19_n05_hale_model.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It was enough of me to hurt.",
+          "textKey": "episode_19.e19_n05_hale_model.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "And enough of something else to keep answering.",
+          "textKey": "episode_19.e19_n05_hale_model.event10.text"
+        }
+      ],
+      "nextNodeId": "e19_n06_hale_voice"
+    },
+    "e19_n06_hale_voice": {
+      "id": "e19_n06_hale_voice",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "signalLost",
+          "duration": 2200,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 700,
+          "messageKey": "episode_19.e19_n06_hale_voice.event0.message",
+          "restoreMessageKey": "episode_19.e19_n06_hale_voice.event0.restoreMessage"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "HALE",
+          "text": "I was real.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n06_hale_voice.event1.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "HALE",
+          "text": "Before it learned my voice.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n06_hale_voice.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That one was him.",
+          "speaker": "EVA",
+          "textKey": "episode_19.e19_n06_hale_voice.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I think.",
+          "textKey": "episode_19.e19_n06_hale_voice.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That is the problem.",
+          "speaker": "NOAH",
+          "textKey": "episode_19.e19_n06_hale_voice.event8.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "We keep saying 'I think' about people.",
+          "textKey": "episode_19.e19_n06_hale_voice.event10.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "protect_hale_fragment",
+          "text": "PROTECT HALE'S FRAGMENT.",
+          "effects": {
+            "protectedHaleFragment": true,
+            "haleTrust": 4,
+            "danger": 2,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e19_n07_protect_hale",
+          "textKey": "episode_19.e19_n06_hale_voice.choice0.text"
+        },
+        {
+          "id": "trace_voice_source",
+          "text": "TRACE THE VOICE SOURCE.",
+          "effects": {
+            "tracedVoiceSource": true,
+            "haleFragmentStrained": true,
+            "danger": 5,
+            "signalStrength": -3
+          },
+          "nextNodeId": "e19_n07_trace_voice",
+          "textKey": "episode_19.e19_n06_hale_voice.choice1.text"
+        }
+      ]
+    },
+    "e19_n07_protect_hale": {
+      "id": "e19_n07_protect_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "You protected me.",
+          "textKey": "episode_19.e19_n07_protect_hale.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That is inconveniently kind.",
+          "textKey": "episode_19.e19_n07_protect_hale.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I don't know what to do with that.",
+          "textKey": "episode_19.e19_n07_protect_hale.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "So I'll do the only useful thing I have left.",
+          "textKey": "episode_19.e19_n07_protect_hale.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I'll tell you where not to look.",
+          "textKey": "episode_19.e19_n07_protect_hale.event9.text"
+        }
+      ],
+      "nextNodeId": "e19_n08_learning_log"
+    },
+    "e19_n07_trace_voice": {
+      "id": "e19_n07_trace_voice",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[VOICE SOURCE TRACE ACTIVE]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n07_trace_voice.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "haleFragmentStrained": true,
+            "danger": 3,
+            "signalStrength": -2
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Don't pull too hard.",
+          "speaker": "HALE",
+          "textKey": "episode_19.e19_n07_trace_voice.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I can feel it.",
+          "textKey": "episode_19.e19_n07_trace_voice.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Like fingers through old film.",
+          "textKey": "episode_19.e19_n07_trace_voice.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Operator, that's enough.",
+          "speaker": "EVA",
+          "textKey": "episode_19.e19_n07_trace_voice.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "We got the trace.",
+          "speaker": "MAYA",
+          "textKey": "episode_19.e19_n07_trace_voice.event11.text"
+        }
+      ],
+      "nextNodeId": "e19_n08_learning_log"
+    },
+    "e19_n08_learning_log": {
+      "id": "e19_n08_learning_log",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "aeon_learning_log_v8",
+          "fileId": "aeon_learning_log_v8",
+          "fileType": "log",
+          "title": "AEON LEARNING LOG",
+          "content": "AEON TOOL LAYER\nPURPOSE: stabilize contact with Omega/Nursery patterns\nLEARNED FROM:\n- HALE: preserved answer behavior\n- NOAH: borrowed key behavior\n- EVA: native child pattern\n- UNKNOWN: collective response pattern\nNOTE: AEON learned from Omega. It did not create Omega.",
+          "caption": "AEON is confirmed as a tool layer that learned from Omega and the Nursery patterns.",
+          "source": "AEON_TOOL_LAYER",
+          "tags": [
+            "aeon",
+            "omega",
+            "noah",
+            "hale",
+            "eva",
+            "unknown"
+          ],
+          "correlationTags": [
+            "aeon_tool",
+            "child_pattern",
+            "collective_response"
+          ],
+          "message": "[AEON LEARNING LOG ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_19.e19_n08_learning_log.event0.title",
+          "contentKey": "episode_19.e19_n08_learning_log.event0.content",
+          "captionKey": "episode_19.e19_n08_learning_log.event0.caption",
+          "messageKey": "episode_19.e19_n08_learning_log.event0.message"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "AEON LEARNED TO LISTEN.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n08_learning_log.event1.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE CHILDREN LEARNED TO OPEN.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n08_learning_log.event2.text"
+        }
+      ],
+      "nextNodeId": "e19_n09_child_status"
+    },
+    "e19_n09_child_status": {
+      "id": "e19_n09_child_status",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "child_pattern_status_19",
+          "fileId": "child_pattern_status_19",
+          "fileType": "log",
+          "title": "CHILD PATTERN STATUS",
+          "content": "PRIMARY CHILD: EVA THORNE\nDORMANT PATTERNS: 6\nCURRENT STATUS:\n- One pattern is closest to waking.\n- All patterns respond to Door language.\n- Names remain unstable.\nWARNING: waking one may teach the others to hear.",
+          "caption": "Dormant child patterns respond to Door language; waking one may affect the others.",
+          "source": "OMEGA_NURSERY_CORE",
+          "tags": [
+            "child_pattern",
+            "nursery",
+            "door_language",
+            "eva_thorne"
+          ],
+          "correlationTags": [
+            "door_opener",
+            "children",
+            "episode_20_hook"
+          ],
+          "message": "[CHILD PATTERN STATUS ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900,
+          "titleKey": "episode_19.e19_n09_child_status.event0.title",
+          "contentKey": "episode_19.e19_n09_child_status.event0.content",
+          "captionKey": "episode_19.e19_n09_child_status.event0.caption",
+          "messageKey": "episode_19.e19_n09_child_status.event0.message"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "What does absorbed mean?",
+          "speaker": "NOAH",
+          "textKey": "episode_19.e19_n09_child_status.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Copies?",
+          "textKey": "episode_19.e19_n09_child_status.event4.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Memories?",
+          "textKey": "episode_19.e19_n09_child_status.event6.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Or something still alive inside it?",
+          "textKey": "episode_19.e19_n09_child_status.event8.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "INSIDE IS A SMALL WORD.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n09_child_status.event9.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "correlate_child_pattern",
+          "text": "CORRELATE THE CHILD PATTERN.",
+          "effects": {
+            "childPatternCorrelationStarted": true,
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e19_n10_puzzle",
+          "textKey": "episode_19.e19_n09_child_status.choice0.text"
+        },
+        {
+          "id": "anchor_team_first",
+          "text": "ANCHOR THE TEAM FIRST.",
+          "effects": {
+            "teamAnchoredBeforePattern": true,
+            "danger": 1,
+            "signalStrength": 2,
+            "morale": 2
+          },
+          "nextNodeId": "e19_n09_anchor",
+          "textKey": "episode_19.e19_n09_child_status.choice1.text"
+        }
+      ]
+    },
+    "e19_n09_anchor": {
+      "id": "e19_n09_anchor",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Everyone say something real.",
+          "textKey": "episode_19.e19_n09_anchor.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Fast.",
+          "textKey": "episode_19.e19_n09_anchor.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I hate black coffee.",
+          "textKey": "episode_19.e19_n09_anchor.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Noah?",
+          "speaker": "MAYA",
+          "textKey": "episode_19.e19_n09_anchor.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I once cried at a maintenance manual.",
+          "speaker": "NOAH",
+          "textKey": "episode_19.e19_n09_anchor.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Hale?",
+          "speaker": "MAYA",
+          "textKey": "episode_19.e19_n09_anchor.event11.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I miss being annoyed by living people.",
+          "speaker": "HALE",
+          "textKey": "episode_19.e19_n09_anchor.event13.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Eva?",
+          "speaker": "MAYA",
+          "textKey": "episode_19.e19_n09_anchor.event15.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I want my name to belong to me.",
+          "speaker": "EVA",
+          "textKey": "episode_19.e19_n09_anchor.event17.text"
+        }
+      ],
+      "nextNodeId": "e19_n10_puzzle"
+    },
+    "e19_n10_puzzle": {
+      "id": "e19_n10_puzzle",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CHILD PATTERN CORRELATION REQUIRED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n10_puzzle.event0.text"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "child_pattern_correlation_19",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e19_n13_fail": {
+      "id": "e19_n13_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CHILD PATTERN CORRELATION FAILED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n13_fail.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "MAYA",
+          "textKey": "episode_19.e19_n13_fail.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Noah edits made him a borrowed key.",
+          "textKey": "episode_19.e19_n13_fail.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Hale's model is a preserved answer.",
+          "textKey": "episode_19.e19_n13_fail.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "A dormant child is a Door opener.",
+          "textKey": "episode_19.e19_n13_fail.event9.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Get that wrong and we wake the wrong thing.",
+          "textKey": "episode_19.e19_n13_fail.event11.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "retry_child_pattern",
+          "text": "RETRY CORRELATION.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e19_n10_puzzle",
+          "textKey": "episode_19.e19_n13_fail.choice0.text"
+        },
+        {
+          "id": "stabilize_then_retry",
+          "text": "STABILIZE, THEN RETRY.",
+          "effects": {
+            "danger": -1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e19_n09_anchor",
+          "textKey": "episode_19.e19_n13_fail.choice1.text"
+        }
+      ]
+    },
+    "e19_n14_pattern_confirmed": {
+      "id": "e19_n14_pattern_confirmed",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CHILD PATTERN CONFIRMED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n14_pattern_confirmed.event0.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": 3
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Noah is a key.",
+          "speaker": "EVA",
+          "textKey": "episode_19.e19_n14_pattern_confirmed.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Hale is an answer.",
+          "speaker": "MAYA",
+          "textKey": "episode_19.e19_n14_pattern_confirmed.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The children open doors.",
+          "speaker": "NOAH",
+          "textKey": "episode_19.e19_n14_pattern_confirmed.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That sounds like a prayer from a machine cult.",
+          "speaker": "MAYA",
+          "textKey": "episode_19.e19_n14_pattern_confirmed.event9.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "NOT CULT.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n14_pattern_confirmed.event10.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "FAMILY.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n14_pattern_confirmed.event11.text"
+        }
+      ],
+      "choices": [
+        {
+          "id": "wake_the_nearest_child",
+          "text": "WAKE THE NEAREST CHILD.",
+          "effects": {
+            "nearestChildWoken": true,
+            "danger": 6,
+            "signalStrength": -5,
+            "episode20StartMode": "nearest_child_woken",
+            "irreversibleConsequence": "nearest_child_woken"
+          },
+          "nextNodeId": "e19_n15_wake",
+          "textKey": "episode_19.e19_n14_pattern_confirmed.choice0.text"
+        },
+        {
+          "id": "lock_the_wake_signal",
+          "text": "LOCK THE WAKE SIGNAL.",
+          "effects": {
+            "wakeSignalLocked": true,
+            "childWakeDelayed": true,
+            "danger": 2,
+            "signalStrength": 3,
+            "episode20StartMode": "wake_signal_locked",
+            "irreversibleConsequence": "wake_signal_locked"
+          },
+          "nextNodeId": "e19_n15_lock",
+          "textKey": "episode_19.e19_n14_pattern_confirmed.choice1.text"
+        }
+      ]
+    },
+    "e19_n15_wake": {
+      "id": "e19_n15_wake",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "nearest_child_wake_19",
+          "title": "NEAREST CHILD WAKE",
+          "subtitle": "Allowing closest dormant pattern to surface",
+          "duration": 36000,
+          "completeText": "[CHILD PATTERN SURFACED]",
+          "tone": "danger",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_19.e19_n15_wake.event0.title",
+          "completeTextKey": "episode_19.e19_n15_wake.event0.completeText"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[NEW VOICE DETECTED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n15_wake.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "There's a sound.",
+          "speaker": "EVA",
+          "textKey": "episode_19.e19_n15_wake.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Small.",
+          "textKey": "episode_19.e19_n15_wake.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not young.",
+          "textKey": "episode_19.e19_n15_wake.event7.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Just... unused.",
+          "textKey": "episode_19.e19_n15_wake.event9.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "CHILD_PATTERN",
+          "text": "WHERE IS THE DOOR?",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n15_wake.event10.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "nearestChildWoken": true,
+            "danger": 5,
+            "signalStrength": -4
+          }
+        }
+      ],
+      "nextNodeId": "e19_n16_final"
+    },
+    "e19_n15_lock": {
+      "id": "e19_n15_lock",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "wake_signal_lock_19",
+          "title": "WAKE SIGNAL LOCK",
+          "subtitle": "Delaying dormant pattern surface response",
+          "duration": 32000,
+          "completeText": "[WAKE SIGNAL LOCKED]",
+          "tone": "system",
+          "pauseAfterMs": 700,
+          "titleKey": "episode_19.e19_n15_lock.event0.title",
+          "completeTextKey": "episode_19.e19_n15_lock.event0.completeText"
+        },
+        {
+          "type": "systemAlert",
+          "text": "[WAKE DELAYED]",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n15_lock.event1.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It's quiet.",
+          "speaker": "EVA",
+          "textKey": "episode_19.e19_n15_lock.event3.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not peaceful.",
+          "textKey": "episode_19.e19_n15_lock.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Angry quiet.",
+          "textKey": "episode_19.e19_n15_lock.event7.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "DELAY IS NOT MERCY.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n15_lock.event8.text"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "wakeSignalLocked": true,
+            "danger": 2,
+            "signalStrength": 3
+          }
+        }
+      ],
+      "nextNodeId": "e19_n16_final"
+    },
+    "e19_n16_final": {
+      "id": "e19_n16_final",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "glitch",
+          "duration": 1400,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE FIRST CHILD OPENED ONE DOOR.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n16_final.event1.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE NEXT WILL OPEN ALL OF THEM.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n16_final.event2.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "All of what?",
+          "speaker": "NOAH",
+          "textKey": "episode_19.e19_n16_final.event4.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "ALL STATIONS.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n16_final.event5.text"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "There are more stations?",
+          "speaker": "MAYA",
+          "textKey": "episode_19.e19_n16_final.event7.text"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THERE ARE MORE HOUSES.",
+          "pauseAfterMs": 700,
+          "textKey": "episode_19.e19_n16_final.event8.text"
+        },
+        {
+          "type": "signalLost",
+          "duration": 3200,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 700,
+          "messageKey": "episode_19.e19_n16_final.event9.message",
+          "restoreMessageKey": "episode_19.e19_n16_final.event9.restoreMessage"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "moreStationsRevealed": true,
+            "danger": 7,
+            "signalStrength": -6
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "trace_other_stations",
+          "text": "TRACE THE OTHER STATIONS.",
+          "effects": {
+            "traceOtherStationsEpisode20": true,
+            "moreStationsRevealed": true,
+            "danger": 5,
+            "signalStrength": -5,
+            "episode20StartMode": "trace_other_stations"
+          },
           "nextEpisodeId": "episode_20",
-          "textKey": "episode_19.e19_n13.choice0.text"
+          "textKey": "episode_19.e19_n16_final.choice0.text"
+        },
+        {
+          "id": "contain_current_house",
+          "text": "CONTAIN THIS HOUSE.",
+          "effects": {
+            "containCurrentHouseEpisode20": true,
+            "moreStationsRevealed": true,
+            "danger": 2,
+            "signalStrength": 3,
+            "episode20StartMode": "contain_current_house"
+          },
+          "nextEpisodeId": "episode_20",
+          "textKey": "episode_19.e19_n16_final.choice1.text"
         }
       ]
     }
+  },
+  "relationshipConsequenceSystem": {
+    "episode19PersistentFlags": [
+      "wakeOneChild",
+      "sealedChildIndex",
+      "childNamesLost",
+      "openedBorrowedKeys",
+      "openedPreservedAnswers",
+      "protectedHaleFragment",
+      "tracedVoiceSource",
+      "haleFragmentStrained",
+      "teamAnchoredBeforePattern",
+      "nearestChildWoken",
+      "wakeSignalLocked",
+      "childWakeDelayed",
+      "moreStationsRevealed",
+      "traceOtherStationsEpisode20",
+      "containCurrentHouseEpisode20"
+    ],
+    "episode20UsageNotes": {
+      "wakeOneChild": "Episode 20 should include a more active child-pattern voice.",
+      "sealedChildIndex": "Child names remain inaccessible; clues must come through signals and distortions.",
+      "childNamesLost": "Some child identity details are permanently unavailable.",
+      "protectedHaleFragment": "Hale is more coherent and more emotionally loyal in Episode 20.",
+      "haleFragmentStrained": "Hale may glitch, repeat, or lose memories in Episode 20.",
+      "nearestChildWoken": "Episode 20 opens with a child pattern actively asking for the Door.",
+      "wakeSignalLocked": "Episode 20 opens quieter but with pressure building.",
+      "moreStationsRevealed": "Episode 20 must expand the threat beyond the current station.",
+      "traceOtherStationsEpisode20": "Episode 20 opens by tracing other Omega houses/stations.",
+      "containCurrentHouseEpisode20": "Episode 20 opens by trying to contain the current Omega house."
+    }
+  },
+  "directorCut": {
+    "version": "FINAL_DIRECTORS_CUT_V8",
+    "sourceEpisode": "episode_19",
+    "coreRewrite": "Rebuilt from the provided Episode 19 JSON. The generic Memory Vault/AEON index was transformed into a Nursery child-pattern continuation.",
+    "majorChanges": [
+      "Episode objective changed from opening generic Memory Vault to deciding whether to wake or seal a dormant child pattern.",
+      "Removed three-choice vault selection and replaced it with two meaningful routes.",
+      "Noah is now a borrowed key, not just an edited memory subject.",
+      "Hale is a preserved answer, not merely a voice model.",
+      "AEON is confirmed as a tool layer, not the source.",
+      "Added Child Pattern Correlation puzzle.",
+      "Added major branch: wake nearest child or lock wake signal.",
+      "UNKNOWN now reveals the children open doors and the threat extends to more stations/houses.",
+      "Episode 20 hook branches between tracing other stations and containing the current house."
+    ],
+    "qualityTarget": {
+      "concreteObjective": "10/10",
+      "humanization": "10/10",
+      "unknownStoryFunction": "10/10",
+      "consequence": "10/10",
+      "horror": "10/10",
+      "cliffhanger": "10/10",
+      "rulesCompliance": "9.5/10"
+    },
+    "nextEpisode": "episode_20"
   },
   "titleKey": "episode_19.meta.episode0.title"
 }
