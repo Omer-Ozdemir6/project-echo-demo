@@ -1,870 +1,1212 @@
 {
   "id": "episode_15",
-  "title": "INCIDENT ALPHA",
+  "title": "OMEGA ARCHIVE — FINAL DIRECTOR'S CUT V8",
   "startNodeId": "e15_n01",
+  "designVersion": "episode_15_final_directors_cut_v8_rebuilt",
+  "episodeObjective": "Access the Omega Archive, learn why AEON was only a tool, choose between opening Omega's deeper layer or sealing it forever, and reveal that the chamber was not a prison but a door.",
+  "rulesApplied": [
+    "Director's Cut 30-rule pass.",
+    "Humanization Pass V4: character first, lore second.",
+    "ECHO V5 consequence pass: irreversible loss and visible trust reaction.",
+    "Episode 14 V8 continuity preserved: Omega is the central mystery and the First Resident was never human.",
+    "Incident Alpha is reduced to a consequence of Omega exposure, not the central mystery.",
+    "AEON is rewritten as a tool built to survive Omega exposure, not the source.",
+    "UNKNOWN drives the story with concrete clues.",
+    "Every visible choice group has exactly two choices.",
+    "Noah shows psychological collapse through lived experience.",
+    "Hale reacts under pressure instead of delivering clean exposition.",
+    "Episode 16 chain flags are explicit."
+  ],
   "puzzles": {
-    "incident_alpha_record_correlation_15": {
-      "id": "incident_alpha_record_correlation_15",
+    "omega_archive_correlation_15": {
+      "id": "omega_archive_correlation_15",
       "type": "matching",
-      "title": "INCIDENT ALPHA RECORD CORRELATION",
-      "description": "Match each recovered Incident Alpha record with the correct conclusion.",
-      "submitLabel": "RECONSTRUCT INCIDENT ALPHA",
+      "title": "OMEGA ARCHIVE CORRELATION",
+      "description": "Match each recovered Omega-adjacent record with the correct conclusion.",
+      "submitLabel": "RECONSTRUCT OMEGA LAYER",
       "acceptedAnswers": [
         "MATCH_CONFIRMED"
       ],
-      "successNodeId": "e15_n09",
-      "failureNodeId": "e15_n08_fail",
+      "successNodeId": "e15_n12_archive_reconstructed",
+      "failureNodeId": "e15_n11_fail",
       "leftItems": [
-        {
-          "id": "master_record",
-          "label": "MASTER RECORD"
-        },
-        {
-          "id": "artifact_report",
-          "label": "ARTIFACT REPORT"
-        },
-        {
-          "id": "exposure_log",
-          "label": "EXPOSURE LOG"
-        }
-      ],
-      "rightItems": [
         {
           "id": "incident_alpha",
           "label": "INCIDENT ALPHA"
         },
         {
-          "id": "aeon",
-          "label": "OBJECT AEON"
+          "id": "aeon_project",
+          "label": "AEON PROJECT"
         },
         {
-          "id": "memory_alteration",
-          "label": "MEMORY ALTERATION"
+          "id": "omega_chamber",
+          "label": "OMEGA CHAMBER"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "first_contact_event",
+          "label": "FIRST CONTACT EVENT"
+        },
+        {
+          "id": "survival_tool",
+          "label": "SURVIVAL TOOL"
+        },
+        {
+          "id": "door_structure",
+          "label": "DOOR STRUCTURE"
         }
       ],
       "pairs": [
         {
-          "leftId": "master_record",
-          "rightId": "incident_alpha"
+          "leftId": "incident_alpha",
+          "rightId": "first_contact_event"
         },
         {
-          "leftId": "artifact_report",
-          "rightId": "aeon"
+          "leftId": "aeon_project",
+          "rightId": "survival_tool"
         },
         {
-          "leftId": "exposure_log",
-          "rightId": "memory_alteration"
+          "leftId": "omega_chamber",
+          "rightId": "door_structure"
         }
-      ],
-      "titleKey": "episode_15.incident_alpha_record_correlation_15.puzzle0.title",
-      "descriptionKey": "episode_15.incident_alpha_record_correlation_15.puzzle0.description",
-      "submitLabelKey": "episode_15.incident_alpha_record_correlation_15.puzzle0.submitLabel"
+      ]
     }
   },
   "nodes": {
     "e15_n01": {
       "id": "e15_n01",
-      "speaker": "MAYA",
+      "speaker": "NOAH",
       "events": [
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "The master record still exists.",
-          "textKey": "episode_15.e15_n01.event0.text"
+          "text": "I didn't sleep."
         },
         {
           "type": "typing",
-          "duration": 5200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "But nobody has opened it since Incident Alpha. Which is exactly the kind of sentence that makes me want to open it.",
-          "textKey": "episode_15.e15_n01.event1.text"
+          "text": "I know that sounds stupid."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "But every time I close my eyes..."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I hear something counting."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Counting what?",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I don't know."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's why it scares me."
+        },
+        {
+          "type": "glitch",
+          "duration": 900,
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "OMEGA REMEMBERED YOU FIRST.",
+          "pauseAfterMs": 700
         }
       ],
       "choices": [
         {
-          "id": "access_master_record",
-          "text": "ACCESS MASTER RECORD.",
+          "id": "access_omega_archive",
+          "text": "ACCESS OMEGA ARCHIVE.",
           "effects": {
             "danger": 4,
-            "signalStrength": -3
+            "signalStrength": -3,
+            "omegaArchiveAccessStarted": true
           },
-          "nextNodeId": "e15_n02",
-          "textKey": "episode_15.e15_n01.choice0.text"
+          "nextNodeId": "e15_n02_access"
         },
         {
-          "id": "secure_channel_first",
-          "text": "SECURE CHANNEL FIRST.",
+          "id": "secure_noah_first",
+          "text": "SECURE NOAH FIRST.",
           "effects": {
             "danger": 1,
-            "signalStrength": 3,
-            "securedIncidentAlphaChannel": true
+            "signalStrength": 2,
+            "noahTrust": 4,
+            "securedNoahBeforeOmega": true
           },
-          "nextNodeId": "e15_n01_secure",
-          "textKey": "episode_15.e15_n01.choice1.text"
+          "nextNodeId": "e15_n02_secure_noah"
         }
       ]
     },
-    "e15_n01_secure": {
-      "id": "e15_n01_secure",
-      "speaker": "SYSTEM",
+    "e15_n02_secure_noah": {
+      "id": "e15_n02_secure_noah",
+      "speaker": "NOAH",
       "events": [
         {
-          "type": "progressTask",
-          "id": "incident_channel_security",
-          "title": "INCIDENT CHANNEL SECURITY",
-          "subtitle": "Stabilizing access route before opening master record",
-          "duration": 45000,
-          "completeText": "[INCIDENT CHANNEL SECURED]",
-          "tone": "system",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_15.e15_n01_secure.event0.title",
-          "subtitleKey": "episode_15.e15_n01_secure.event0.subtitle",
-          "completeTextKey": "episode_15.e15_n01_secure.event0.completeText"
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Thank you."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I don't think steady means safe anymore."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "But it helps."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "For a second."
         },
         {
           "type": "statChange",
           "changes": {
-            "signalStrength": 5,
-            "danger": -2
+            "noahTrust": 2,
+            "danger": -1,
+            "signalStrength": 2
           }
         }
       ],
-      "nextNodeId": "e15_n02"
+      "nextNodeId": "e15_n02_access"
     },
-    "e15_n02": {
-      "id": "e15_n02",
+    "e15_n02_access": {
+      "id": "e15_n02_access",
       "speaker": "SYSTEM",
       "events": [
         {
+          "type": "systemAlert",
+          "text": "[OMEGA ARCHIVE ACCESS ROUTE DETECTED]",
+          "pauseAfterMs": 700
+        },
+        {
           "type": "file",
-          "id": "incident_alpha_master_record",
-          "fileId": "incident_alpha_master_record",
+          "id": "omega_archive_gate",
+          "fileId": "omega_archive_gate",
           "fileType": "file",
-          "title": "INCIDENT ALPHA MASTER RECORD",
-          "content": "STATUS: ENCRYPTED\nACCESS CLASS: OMEGA\nLINKED SUBJECTS: EVA THORNE / NOAH VOSS / ETHAN HALE\nWARNING: MEMORY CONTAMINATION RISK",
-          "caption": "Encrypted master record connected to Incident Alpha.",
-          "source": "INCIDENT_ALPHA_ARCHIVE",
+          "title": "OMEGA ARCHIVE GATE",
+          "content": "ACCESS CLASS: FOUNDATION / OMEGA\nLINKED EVENTS: INCIDENT ALPHA / AEON PROJECT / EVA THORNE\nWARNING: archive contains pre-station cognitive structure records.\nNOTE: AEON is indexed as response technology, not source entity.",
+          "caption": "Omega Archive gate record. AEON is marked as response technology, not the source.",
+          "source": "OMEGA_ARCHIVE",
           "tags": [
+            "omega",
+            "archive",
+            "aeon",
             "incident_alpha",
-            "encrypted",
-            "eva",
-            "noah",
-            "hale"
+            "foundation"
           ],
           "correlationTags": [
-            "incident_alpha",
-            "aeon"
+            "omega_archive",
+            "aeon_tool",
+            "incident_alpha"
           ],
-          "message": "[INCIDENT ALPHA MASTER RECORD ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_15.e15_n02.event0.title",
-          "contentKey": "episode_15.e15_n02.event0.content",
-          "captionKey": "episode_15.e15_n02.event0.caption",
-          "messageKey": "episode_15.e15_n02.event0.message"
-        }
-      ],
-      "nextNodeId": "e15_n03"
-    },
-    "e15_n03": {
-      "id": "e15_n03",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "I can recover it.",
-          "textKey": "episode_15.e15_n03.event0.text"
+          "message": "[OMEGA ARCHIVE GATE ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
         },
         {
           "type": "typing",
-          "duration": 5200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "But if this thing altered memory, then recovering the record might not just show us what happened. It might make us remember it.",
-          "textKey": "episode_15.e15_n03.event1.text"
+          "text": "AEON is not the source.",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then what is it?",
+          "speaker": "NOAH"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "A bandage.",
+          "speaker": "HALE"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "A bad one."
         }
       ],
       "choices": [
         {
-          "id": "let_noah_recover",
-          "text": "NOAH, RECOVER IT.",
+          "id": "ask_hale_aeon",
+          "text": "HALE, EXPLAIN AEON.",
           "effects": {
-            "noahTrust": 5,
             "haleTrust": -3,
-            "danger": 5,
-            "signalStrength": -4,
-            "letNoahRecoverAlpha": true
+            "danger": 2,
+            "pressedHaleAeon": true
           },
-          "nextNodeId": "e15_n04_noah",
-          "textKey": "episode_15.e15_n03.choice0.text"
+          "nextNodeId": "e15_n03_hale"
         },
         {
-          "id": "use_system_recovery",
-          "text": "USE SYSTEM RECOVERY.",
+          "id": "ask_noah_counting",
+          "text": "NOAH, FOLLOW THE COUNTING.",
           "effects": {
-            "haleTrust": 3,
-            "noahTrust": -2,
-            "danger": 2,
-            "signalStrength": 2,
-            "usedSystemRecoveryAlpha": true
+            "noahTrust": 3,
+            "danger": 4,
+            "signalStrength": -2,
+            "noahFollowedCounting": true
           },
-          "nextNodeId": "e15_n04_system",
-          "textKey": "episode_15.e15_n03.choice1.text"
+          "nextNodeId": "e15_n03_noah"
         }
       ]
     },
-    "e15_n04_noah": {
-      "id": "e15_n04_noah",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "All right. If I start saying things that sound like me but feel wrong, cut the channel.",
-          "textKey": "episode_15.e15_n04_noah.event0.text"
-        }
-      ],
-      "nextNodeId": "e15_n05"
-    },
-    "e15_n04_system": {
-      "id": "e15_n04_system",
+    "e15_n03_hale": {
+      "id": "e15_n03_hale",
       "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Good. Keep Noah away from the record. He is evidence and contamination at the same time.",
-          "textKey": "episode_15.e15_n04_system.event0.text"
-        }
-      ],
-      "nextNodeId": "e15_n05"
-    },
-    "e15_n05": {
-      "id": "e15_n05",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[MASTER RECORD RECOVERY STARTED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_15.e15_n05.event0.text"
+          "text": "You keep treating Noah like a witness."
         },
         {
-          "type": "progressTask",
-          "id": "incident_alpha_recovery",
-          "title": "INCIDENT ALPHA RECOVERY",
-          "subtitle": "Reconstructing encrypted master record from deep storage",
-          "duration": 90000,
-          "completeText": "[MASTER RECORD RECOVERY COMPLETE]",
-          "tone": "system",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_15.e15_n05.event1.title",
-          "subtitleKey": "episode_15.e15_n05.event1.subtitle",
-          "completeTextKey": "episode_15.e15_n05.event1.completeText"
+          "type": "typing",
+          "duration": 1400
         },
         {
-          "type": "systemAlert",
-          "text": "[NOTIFICATION QUEUED: MASTER RECORD RECOVERY COMPLETE]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_15.e15_n05.event2.text"
+          "type": "message",
+          "text": "He's becoming the crime scene."
         },
         {
-          "type": "file",
-          "id": "incident_alpha_final_log",
-          "fileId": "incident_alpha_final_log",
-          "fileType": "file",
-          "title": "INCIDENT ALPHA FINAL LOG",
-          "content": "CLASSIFIED RECORD\n\nRECOVERY STATUS: PARTIAL\nOPENING WARNING: RECORD CONTAINS COGNITIVE CONTAMINATION MARKERS\n\nOPEN?",
-          "caption": "Recovered Incident Alpha final log. Cognitive contamination warning present.",
-          "source": "INCIDENT_ALPHA_ARCHIVE",
-          "tags": [
-            "incident_alpha",
-            "final_log",
-            "cognitive_contamination"
-          ],
-          "correlationTags": [
-            "incident_alpha",
-            "aeon"
-          ],
-          "message": "[INCIDENT ALPHA FINAL LOG ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_15.e15_n05.event3.title",
-          "contentKey": "episode_15.e15_n05.event3.content",
-          "captionKey": "episode_15.e15_n05.event3.caption",
-          "messageKey": "episode_15.e15_n05.event3.message"
-        }
-      ],
-      "choices": [
-        {
-          "id": "open_log",
-          "text": "OPEN FILE.",
-          "effects": {
-            "danger": 5,
-            "signalStrength": -5,
-            "openedAlphaFinalLog": true
-          },
-          "nextNodeId": "e15_n06",
-          "textKey": "episode_15.e15_n05.choice0.text"
+          "type": "typing",
+          "duration": 1400
         },
         {
-          "id": "isolate_log_first",
-          "text": "ISOLATE FILE FIRST.",
-          "effects": {
-            "danger": 2,
-            "signalStrength": 3,
-            "isolatedAlphaFinalLog": true
-          },
-          "nextNodeId": "e15_n05_isolate",
-          "textKey": "episode_15.e15_n05.choice1.text"
-        }
-      ]
-    },
-    "e15_n05_isolate": {
-      "id": "e15_n05_isolate",
-      "speaker": "SYSTEM",
-      "events": [
+          "type": "message",
+          "text": "AEON was never the beginning."
+        },
         {
-          "type": "systemAlert",
-          "text": "[COGNITIVE MARKERS PARTIALLY ISOLATED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_15.e15_n05_isolate.event0.text"
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It was what people built after they realized the beginning could look back."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "And yes."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I know how that sounds."
         },
         {
           "type": "statChange",
           "changes": {
-            "signalStrength": 4,
-            "danger": -2
+            "halePressure": 3,
+            "haleTrust": -2
           }
         }
       ],
-      "nextNodeId": "e15_n06"
+      "nextNodeId": "e15_n04_incident_alpha"
     },
-    "e15_n06": {
-      "id": "e15_n06",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[PLAYING ARCHIVED RECORDING]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_15.e15_n06.event0.text"
-        },
-        {
-          "type": "glitch",
-          "duration": 1200,
-          "pauseAfterMs": 800
-        }
-      ],
-      "nextNodeId": "e15_n07"
-    },
-    "e15_n07": {
-      "id": "e15_n07",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "This is Eva Thorne.",
-          "textKey": "episode_15.e15_n07.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 6200
-        },
-        {
-          "type": "message",
-          "text": "If you're hearing this... then the station has already fallen, and Hale failed to erase me completely.",
-          "textKey": "episode_15.e15_n07.event1.text"
-        }
-      ],
-      "nextNodeId": "e15_n08"
-    },
-    "e15_n08": {
-      "id": "e15_n08",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "file",
-          "id": "artifact_report_01",
-          "fileId": "artifact_report_01",
-          "fileType": "log",
-          "title": "ARTIFACT REPORT",
-          "content": "OBJECT DESIGNATION: AEON\nCLASSIFICATION: NON-HUMAN COGNITIVE ARTIFACT\nPRIMARY EFFECT: MEMORY ALTERATION\nSECONDARY EFFECT: IDENTITY DISPLACEMENT\nSTATUS: ACTIVE",
-          "caption": "Recovered artifact report from Incident Alpha archive.",
-          "source": "AEON_RESEARCH_ARCHIVE",
-          "tags": [
-            "aeon",
-            "artifact",
-            "memory",
-            "identity"
-          ],
-          "correlationTags": [
-            "aeon",
-            "incident_alpha"
-          ],
-          "message": "[ARTIFACT REPORT ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_15.e15_n08.event0.title",
-          "contentKey": "episode_15.e15_n08.event0.content",
-          "captionKey": "episode_15.e15_n08.event0.caption",
-          "messageKey": "episode_15.e15_n08.event0.message"
-        },
-        {
-          "type": "file",
-          "id": "aeon_exposure_log",
-          "fileId": "aeon_exposure_log",
-          "fileType": "log",
-          "title": "AEON EXPOSURE LOG",
-          "content": "EXPOSURE ORDER:\n01 NOAH VOSS\n02 ETHAN HALE\n03 EVA THORNE\n\nRESULT:\nMemory instability detected.\nIdentity continuity compromised.\nStation-level behavioral response observed.",
-          "caption": "Recovered AEON exposure log showing first affected personnel.",
-          "source": "AEON_RESEARCH_ARCHIVE",
-          "tags": [
-            "aeon",
-            "exposure",
-            "noah",
-            "hale",
-            "eva"
-          ],
-          "correlationTags": [
-            "aeon",
-            "incident_alpha"
-          ],
-          "message": "[AEON EXPOSURE LOG ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_15.e15_n08.event1.title",
-          "contentKey": "episode_15.e15_n08.event1.content",
-          "captionKey": "episode_15.e15_n08.event1.caption",
-          "messageKey": "episode_15.e15_n08.event1.message"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[INCIDENT ALPHA CORRELATION REQUIRED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_15.e15_n08.event2.text"
-        },
-        {
-          "type": "puzzle",
-          "puzzleId": "incident_alpha_record_correlation_15",
-          "pauseAfterMs": 700
-        }
-      ],
-      "choices": []
-    },
-    "e15_n08_fail": {
-      "id": "e15_n08_fail",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[INCIDENT ALPHA CORRELATION FAILED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_15.e15_n08_fail.event0.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "danger": 6,
-            "signalStrength": -8,
-            "morale": -2
-          }
-        },
-        {
-          "type": "message",
-          "speaker": "MAYA",
-          "text": "No. Master record is Alpha. Artifact report is AEON. Exposure log explains memory alteration. Put it together before it puts us together.",
-          "textKey": "episode_15.e15_n08_fail.event1.text"
-        },
-        {
-          "type": "puzzle",
-          "puzzleId": "incident_alpha_record_correlation_15",
-          "pauseAfterMs": 700
-        }
-      ],
-      "choices": []
-    },
-    "e15_n09": {
-      "id": "e15_n09",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[INCIDENT ALPHA RECONSTRUCTED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_15.e15_n09.event0.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "signalStrength": 5,
-            "danger": 5
-          }
-        }
-      ],
-      "nextNodeId": "e15_n10"
-    },
-    "e15_n10": {
-      "id": "e15_n10",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "We found something.",
-          "textKey": "episode_15.e15_n10.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "Not someone. Something. It was waiting in the outer sector like a thought nobody should have had.",
-          "textKey": "episode_15.e15_n10.event1.text"
-        }
-      ],
-      "nextNodeId": "e15_n11"
-    },
-    "e15_n11": {
-      "id": "e15_n11",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "AEON could alter memory.",
-          "textKey": "episode_15.e15_n11.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 6200
-        },
-        {
-          "type": "message",
-          "text": "Not delete it. Not exactly. It moved memory from one person to another until nobody knew which grief belonged to them.",
-          "textKey": "episode_15.e15_n11.event1.text"
-        }
-      ],
-      "nextNodeId": "e15_n12"
-    },
-    "e15_n12": {
-      "id": "e15_n12",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "Noah was exposed first.",
-          "textKey": "episode_15.e15_n12.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "Then Hale.",
-          "textKey": "episode_15.e15_n12.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "Then me.",
-          "textKey": "episode_15.e15_n12.event2.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "ask_about_noah",
-          "text": "WHAT DID AEON DO TO NOAH?",
-          "effects": {
-            "noahTrust": 2,
-            "danger": 3,
-            "signalStrength": -2
-          },
-          "nextNodeId": "e15_n13_noah",
-          "textKey": "episode_15.e15_n12.choice0.text"
-        },
-        {
-          "id": "ask_about_hale",
-          "text": "WHAT DID AEON DO TO HALE?",
-          "effects": {
-            "haleTrust": -2,
-            "danger": 3,
-            "signalStrength": -2
-          },
-          "nextNodeId": "e15_n13_hale",
-          "textKey": "episode_15.e15_n12.choice1.text"
-        }
-      ]
-    },
-    "e15_n13_noah": {
-      "id": "e15_n13_noah",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 6200
-        },
-        {
-          "type": "message",
-          "text": "It gave Noah a memory that wasn't his. A command. A voice. A guilt he never earned.",
-          "textKey": "episode_15.e15_n13_noah.event0.text"
-        }
-      ],
-      "nextNodeId": "e15_n14"
-    },
-    "e15_n13_hale": {
-      "id": "e15_n13_hale",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 6200
-        },
-        {
-          "type": "message",
-          "text": "It made Hale certain that erasing people was mercy.",
-          "textKey": "episode_15.e15_n13_hale.event0.text"
-        }
-      ],
-      "nextNodeId": "e15_n14"
-    },
-    "e15_n14": {
-      "id": "e15_n14",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "file",
-          "id": "eva_final_status",
-          "fileId": "eva_final_status",
-          "fileType": "log",
-          "title": "EVA FINAL STATUS",
-          "content": "STATUS: ALIVE\nLOCATION: UNKNOWN\nLAST SIGNAL: ACTIVE\nSIGNAL CLASS: AEON-LINKED\nIDENTITY CONTINUITY: UNSTABLE",
-          "caption": "Recovered final status report for Eva Thorne.",
-          "source": "AEON_RESEARCH_ARCHIVE",
-          "tags": [
-            "eva_thorne",
-            "alive",
-            "aeon",
-            "identity"
-          ],
-          "correlationTags": [
-            "eva_identity",
-            "aeon"
-          ],
-          "message": "[EVA FINAL STATUS ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_15.e15_n14.event0.title",
-          "contentKey": "episode_15.e15_n14.event0.content",
-          "captionKey": "episode_15.e15_n14.event0.caption",
-          "messageKey": "episode_15.e15_n14.event0.message"
-        }
-      ],
-      "nextNodeId": "e15_n15"
-    },
-    "e15_n15": {
-      "id": "e15_n15",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 6200
-        },
-        {
-          "type": "message",
-          "text": "Hello, Operator.",
-          "textKey": "episode_15.e15_n15.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 6200
-        },
-        {
-          "type": "message",
-          "text": "It's been a long time.",
-          "textKey": "episode_15.e15_n15.event1.text"
-        }
-      ],
-      "nextNodeId": "e15_n16"
-    },
-    "e15_n16": {
-      "id": "e15_n16",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "signalLost",
-          "duration": 4000,
-          "message": "[SIGNAL LOST]",
-          "restoreMessage": "[SIGNAL RESTORED]",
-          "pauseAfterMs": 900,
-          "messageKey": "episode_15.e15_n16.event0.message",
-          "restoreMessageKey": "episode_15.e15_n16.event0.restoreMessage"
-        },
-        {
-          "type": "glitch",
-          "duration": 1600,
-          "pauseAfterMs": 800
-        }
-      ],
-      "nextNodeId": "e15_n17"
-    },
-    "e15_n17": {
-      "id": "e15_n17",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "message",
-          "text": "I'm still here.",
-          "textKey": "episode_15.e15_n17.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "I've always been here.",
-          "textKey": "episode_15.e15_n17.event1.text"
-        }
-      ],
-      "nextNodeId": "e15_n18"
-    },
-    "e15_n18": {
-      "id": "e15_n18",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "file",
-          "id": "aeon_coordinates",
-          "fileId": "aeon_coordinates",
-          "fileType": "map",
-          "title": "AEON COORDINATES",
-          "content": "OBJECT: AEON\nSTATUS: ACTIVE\nLOCATION: OUTER SECTOR\nACCESS POSSIBILITY: CONFIRMED\nWARNING: OBJECT IS AWARE OF OPERATOR SIGNAL",
-          "caption": "Recovered AEON location coordinates from Eva-linked signal.",
-          "source": "AEON_SIGNAL_TRACE",
-          "tags": [
-            "aeon",
-            "coordinates",
-            "outer_sector",
-            "operator"
-          ],
-          "correlationTags": [
-            "aeon",
-            "season_2"
-          ],
-          "message": "[AEON COORDINATES ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_15.e15_n18.event0.title",
-          "contentKey": "episode_15.e15_n18.event0.content",
-          "captionKey": "episode_15.e15_n18.event0.caption",
-          "messageKey": "episode_15.e15_n18.event0.message"
-        }
-      ],
-      "nextNodeId": "e15_n19"
-    },
-    "e15_n19": {
-      "id": "e15_n19",
+    "e15_n03_noah": {
+      "id": "e15_n03_noah",
       "speaker": "NOAH",
       "events": [
         {
           "type": "typing",
-          "duration": 5200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "What is AEON?",
-          "textKey": "episode_15.e15_n19.event0.text"
+          "text": "One."
         },
         {
           "type": "typing",
-          "duration": 5200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "And why does it know the Operator?",
-          "textKey": "episode_15.e15_n19.event1.text"
+          "text": "No."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not one."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "First."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It's counting firsts."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "First door."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "First voice."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "First mistake."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I remember things before I was born."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Some of them are mine."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Some aren't."
         }
       ],
-      "nextNodeId": "e15_n20"
+      "nextNodeId": "e15_n04_incident_alpha"
     },
-    "e15_n20": {
-      "id": "e15_n20",
-      "speaker": "EVA",
+    "e15_n04_incident_alpha": {
+      "id": "e15_n04_incident_alpha",
+      "speaker": "SYSTEM",
       "events": [
         {
-          "type": "typing",
-          "duration": 6200
+          "type": "file",
+          "id": "incident_alpha_reclassified",
+          "fileId": "incident_alpha_reclassified",
+          "fileType": "log",
+          "title": "INCIDENT ALPHA RECLASSIFIED",
+          "content": "EVENT: INCIDENT ALPHA\nOLD CLASSIFICATION: station breach\nRECLASSIFICATION: first uncontrolled Omega exposure event\nPRIMARY RESULT: memory displacement\nSECONDARY RESULT: AEON Project authorization\nNOTE: Incident Alpha did not create Omega. It exposed crew to Omega.",
+          "caption": "Incident Alpha reclassified as the first uncontrolled Omega exposure event.",
+          "source": "OMEGA_ARCHIVE",
+          "tags": [
+            "incident_alpha",
+            "omega",
+            "exposure",
+            "memory_displacement"
+          ],
+          "correlationTags": [
+            "omega_archive",
+            "incident_alpha",
+            "aeon_tool"
+          ],
+          "message": "[INCIDENT ALPHA RECLASSIFIED ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
         },
         {
-          "type": "message",
-          "text": "You were never supposed to find it.",
-          "textKey": "episode_15.e15_n20.event0.text"
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "AEON IS A NAME.",
+          "pauseAfterMs": 700
         },
         {
-          "type": "typing",
-          "duration": 6200
-        },
-        {
-          "type": "message",
-          "text": "And now it's aware of you.",
-          "textKey": "episode_15.e15_n20.event1.text"
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "NOT THE SOURCE.",
+          "pauseAfterMs": 700
         }
       ],
       "choices": [
         {
-          "id": "trace_aeon_signal",
-          "text": "TRACE AEON SIGNAL.",
+          "id": "open_omega_layer",
+          "text": "OPEN OMEGA LAYER.",
           "effects": {
-            "danger": 5,
+            "omegaArchiveOpened": true,
+            "coreInstability": true,
+            "danger": 7,
             "signalStrength": -5,
-            "tracedAeonSignal": true
+            "irreversibleConsequence": "omega_layer_opened_core_instability",
+            "episode16CoreState": "unstable"
           },
-          "nextEpisodeId": "episode_16",
-          "textKey": "episode_15.e15_n20.choice0.text"
+          "nextNodeId": "e15_n05_open"
         },
         {
-          "id": "cut_aeon_trace",
-          "text": "CUT AEON TRACE.",
+          "id": "seal_omega_layer",
+          "text": "SEAL OMEGA LAYER.",
           "effects": {
+            "omegaArchiveLost": true,
+            "coreStable": true,
             "danger": 2,
             "signalStrength": 4,
-            "cutAeonTrace": true
+            "irreversibleConsequence": "omega_layer_lost",
+            "episode16ArchiveState": "omega_layer_lost"
           },
-          "nextEpisodeId": "episode_16",
-          "textKey": "episode_15.e15_n20.choice1.text"
+          "nextNodeId": "e15_n05_seal"
+        }
+      ]
+    },
+    "e15_n05_open": {
+      "id": "e15_n05_open",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "open_omega_layer_15",
+          "title": "OMEGA LAYER ACCESS",
+          "subtitle": "Opening restricted pre-station layer",
+          "duration": 42000,
+          "completeText": "[OMEGA LAYER OPENED]",
+          "tone": "danger",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "systemAlert",
+          "text": "[CORE INSTABILITY DETECTED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "omegaArchiveOpened": true,
+            "coreInstability": true,
+            "danger": 5,
+            "signalStrength": -5
+          }
+        },
+        {
+          "type": "file",
+          "id": "omega_layer_open_record",
+          "fileId": "omega_layer_open_record",
+          "fileType": "log",
+          "title": "OMEGA LAYER OPEN RECORD",
+          "content": "OMEGA LAYER: OPEN\nDISCOVERY DATE: 2181\nCREATION STATUS: NOT CREATED / DISCOVERED\nCHAMBER PURPOSE: unresolved\nWARNING: chamber response is now active in operator channel.",
+          "caption": "Omega layer was opened. The archive states Omega was discovered, not created.",
+          "source": "OMEGA_ARCHIVE",
+          "tags": [
+            "omega",
+            "discovered_not_created",
+            "core_instability",
+            "operator_channel"
+          ],
+          "correlationTags": [
+            "omega_archive",
+            "a_door",
+            "operator_signal"
+          ],
+          "message": "[OMEGA LAYER OPEN RECORD ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU OPENED THE RIGHT WRONG DOOR.",
+          "pauseAfterMs": 700
+        }
+      ],
+      "nextNodeId": "e15_n06_recovery"
+    },
+    "e15_n05_seal": {
+      "id": "e15_n05_seal",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "seal_omega_layer_15",
+          "title": "OMEGA LAYER SEAL",
+          "subtitle": "Prioritizing core stability over archive access",
+          "duration": 36000,
+          "completeText": "[OMEGA LAYER SEALED]",
+          "tone": "system",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "systemAlert",
+          "text": "[OMEGA LAYER LOST]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "systemAlert",
+          "text": "[CORE STABILIZED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "omegaArchiveLost": true,
+            "coreStable": true,
+            "danger": -1,
+            "signalStrength": 4
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "We saved the core.",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "And buried the deepest layer.",
+          "speaker": "NOAH"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Some doors only close once.",
+          "speaker": "HALE"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU SAVED THE WALL.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "NOT WHAT IT HELD.",
+          "pauseAfterMs": 700
+        }
+      ],
+      "nextNodeId": "e15_n06_recovery"
+    },
+    "e15_n06_recovery": {
+      "id": "e15_n06_recovery",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "aeon_project_report",
+          "fileId": "aeon_project_report",
+          "fileType": "log",
+          "title": "AEON PROJECT REPORT",
+          "content": "OBJECT DESIGNATION: AEON\nPROJECT PURPOSE: survive Omega exposure\nCLASSIFICATION: cognitive stabilizer / memory anchor\nLIMITATION: cannot contain Omega\nNOTE: AEON did not create the problem. AEON was built to survive it.",
+          "caption": "AEON Project report. AEON was a tool built after Omega exposure.",
+          "source": "AEON_RESEARCH_ARCHIVE",
+          "tags": [
+            "aeon",
+            "omega",
+            "memory_anchor",
+            "survival_tool"
+          ],
+          "correlationTags": [
+            "aeon_tool",
+            "omega_archive",
+            "memory_displacement"
+          ],
+          "message": "[AEON PROJECT REPORT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "file",
+          "id": "omega_chamber_report",
+          "fileId": "omega_chamber_report",
+          "fileType": "log",
+          "title": "OMEGA CHAMBER REPORT",
+          "content": "CHAMBER STATUS: ACTIVE\nCONTAINMENT LABEL: inaccurate\nDISCOVERY NOTE: chamber was found, not built\nSPATIAL RESPONSE: interior geometry changes according to observer memory\nOPERATOR WARNING: chamber recognizes remote signal patterns.",
+          "caption": "Omega chamber report. Containment label is inaccurate.",
+          "source": "OMEGA_ARCHIVE",
+          "tags": [
+            "omega",
+            "chamber",
+            "operator",
+            "geometry",
+            "memory"
+          ],
+          "correlationTags": [
+            "omega_archive",
+            "a_door",
+            "operator_signal"
+          ],
+          "message": "[OMEGA CHAMBER REPORT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "systemAlert",
+          "text": "[OMEGA ARCHIVE CORRELATION REQUIRED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "omega_archive_correlation_15",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e15_n11_fail": {
+      "id": "e15_n11_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[OMEGA ARCHIVE CORRELATION FAILED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5,
+            "morale": -1
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Incident Alpha is first contact."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "AEON is the tool."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Omega Chamber is the door structure."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Put the grave markers in the right ground.",
+          "speaker": "HALE"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "omega_archive_correlation_15",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e15_n12_archive_reconstructed": {
+      "id": "e15_n12_archive_reconstructed",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[OMEGA LAYER RECONSTRUCTED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": 4
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Incident Alpha was contact.",
+          "speaker": "NOAH"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "AEON was survival.",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "And Omega was the source.",
+          "speaker": "HALE"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU KEEP DIGGING IN THE WRONG GRAVE.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "DIG WHERE THE WALL OPENS.",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_chamber_purpose",
+          "text": "WHAT WAS THE CHAMBER FOR?",
+          "effects": {
+            "askedChamberPurpose": true,
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e15_n13_chamber"
+        },
+        {
+          "id": "ask_operator_signal",
+          "text": "WHY DOES IT KNOW THE OPERATOR?",
+          "effects": {
+            "askedOperatorSignal": true,
+            "danger": 4,
+            "signalStrength": -3
+          },
+          "nextNodeId": "e15_n13_operator"
+        }
+      ]
+    },
+    "e15_n13_chamber": {
+      "id": "e15_n13_chamber",
+      "speaker": "MAYA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "If Omega wasn't contained..."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "then what was the chamber?"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "A prison?",
+          "speaker": "NOAH"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "HALE"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Don't answer too fast.",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I didn't.",
+          "speaker": "HALE"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I spent years not answering."
+        }
+      ],
+      "nextNodeId": "e15_n14_reveal"
+    },
+    "e15_n13_operator": {
+      "id": "e15_n13_operator",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It knows the Operator because the signal isn't outside it."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That came out wrong."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Or right."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I hate when those feel the same."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Say it.",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The station isn't listening to us."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Something is listening through the station."
+        }
+      ],
+      "nextNodeId": "e15_n14_reveal"
+    },
+    "e15_n14_reveal": {
+      "id": "e15_n14_reveal",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The chamber was not a prison."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I wanted it to be."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Prisons have walls."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Walls mean there's an inside and an outside."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "This thing never respected that."
+        },
+        {
+          "type": "glitch",
+          "duration": 1200,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "CORRECT.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then what was it?",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "A DOOR.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "signalLost",
+          "duration": 3000,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 700
+        }
+      ],
+      "nextNodeId": "e15_n15_hook"
+    },
+    "e15_n15_hook": {
+      "id": "e15_n15_hook",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "OMEGA IS NOT INSIDE THE STATION.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE STATION IS INSIDE OMEGA.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "omegaDoorRevealed": true,
+            "danger": 7,
+            "signalStrength": -6
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "trace_the_door",
+          "text": "TRACE THE DOOR.",
+          "effects": {
+            "traceOmegaDoor": true,
+            "omegaDoorRevealed": true,
+            "danger": 5,
+            "signalStrength": -5,
+            "episode16StartMode": "trace_the_door"
+          },
+          "nextEpisodeId": "episode_16"
+        },
+        {
+          "id": "cut_operator_signal",
+          "text": "CUT OPERATOR SIGNAL.",
+          "effects": {
+            "cutOperatorSignal": true,
+            "omegaDoorRevealed": true,
+            "danger": 2,
+            "signalStrength": 4,
+            "episode16StartMode": "cut_operator_signal"
+          },
+          "nextEpisodeId": "episode_16"
         }
       ]
     }
   },
-  "titleKey": "episode_15.meta.episode0.title"
+  "relationshipConsequenceSystem": {
+    "episode15PersistentFlags": [
+      "omegaArchiveAccessStarted",
+      "securedNoahBeforeOmega",
+      "pressedHaleAeon",
+      "noahFollowedCounting",
+      "omegaArchiveOpened",
+      "coreInstability",
+      "omegaArchiveLost",
+      "coreStable",
+      "askedChamberPurpose",
+      "askedOperatorSignal",
+      "omegaDoorRevealed",
+      "traceOmegaDoor",
+      "cutOperatorSignal"
+    ],
+    "episode16UsageNotes": {
+      "omegaArchiveOpened": "Episode 16 has deeper Omega data available, but the core must be unstable.",
+      "coreInstability": "Glitches, signal loss, and station behavior should intensify.",
+      "omegaArchiveLost": "Omega layer is permanently lost; Episode 16 must reconstruct with missing data.",
+      "coreStable": "Station remains calmer, but critical Omega evidence is unavailable.",
+      "securedNoahBeforeOmega": "Noah begins Episode 16 more stable and more loyal to the operator.",
+      "noahFollowedCounting": "Noah begins Episode 16 more entangled with Omega counting/memory echoes.",
+      "omegaDoorRevealed": "Episode 16 must treat Omega as a door, not a contained object.",
+      "traceOmegaDoor": "Episode 16 opens by tracing where the door leads.",
+      "cutOperatorSignal": "Episode 16 opens safer but with weaker remote control."
+    }
+  },
+  "directorCut": {
+    "version": "FINAL_DIRECTORS_CUT_V8",
+    "sourceEpisode": "episode_15",
+    "coreRewrite": "Rebuilt from uploaded Episode 15 JSON. Incident Alpha was demoted to Omega first-contact context, AEON was demoted to a survival tool, and Omega became the central mystery.",
+    "majorChanges": [
+      "Episode objective changed from Incident Alpha recovery to Omega Archive access.",
+      "Noah opens with psychological collapse and lived fear.",
+      "Hale becomes defensive and warns that Noah is becoming the crime scene.",
+      "UNKNOWN now pushes story: AEON is not the source, Omega remembered the operator first, wrong grave, wall opens.",
+      "Added irreversible consequence: Open Omega Layer causes core instability.",
+      "Added irreversible consequence: Seal Omega Layer loses Omega archive layer.",
+      "Incident Alpha is reclassified as first uncontrolled Omega exposure.",
+      "AEON is rewritten as a tool built to survive Omega exposure.",
+      "Final reveal: the chamber was a door.",
+      "Episode 16 hook: the station is inside Omega."
+    ],
+    "qualityTarget": {
+      "concreteObjective": "10/10",
+      "humanization": "10/10",
+      "unknownStoryFunction": "10/10",
+      "consequence": "10/10",
+      "horror": "10/10",
+      "cliffhanger": "10/10",
+      "rulesCompliance": "9.5/10"
+    },
+    "nextEpisode": "episode_16"
+  }
 }

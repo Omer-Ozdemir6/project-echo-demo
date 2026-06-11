@@ -1,7 +1,20 @@
 {
   "id": "episode_11",
-  "title": "THE BLACK BOX",
+  "title": "THE BLACK BOX — FINAL DIRECTOR'S CUT V8",
   "startNodeId": "e11_n01",
+  "designVersion": "episode_11_final_directors_cut_v8_rebuilt_compact",
+  "episodeObjective": "Recover the Black Box sequence, identify the impossible voice, force a real cost between Noah's mind and the recorder data, and reveal the ninth crew contradiction.",
+  "rulesApplied": [
+    "Director's Cut 30-rule pass.",
+    "Humanization Pass V4: character first, lore second.",
+    "ECHO V5 consequence pass: trust changes appear in dialogue and episode flags.",
+    "UNKNOWN pushes story instead of generic glitch noise.",
+    "Every visible choice group has exactly two choices.",
+    "Noah is written as physically damaged and unreliable, not as a lore narrator.",
+    "Hale reacts defensively when accused.",
+    "One irreversible loss is required: Black Box data loss or Noah memory damage.",
+    "Episode 12 chain flags are explicit."
+  ],
   "puzzles": {
     "blackbox_sector_correlation_11": {
       "id": "blackbox_sector_correlation_11",
@@ -12,8 +25,8 @@
       "acceptedAnswers": [
         "MATCH_CONFIRMED"
       ],
-      "successNodeId": "e11_n07",
-      "failureNodeId": "e11_n06_fail",
+      "successNodeId": "e11_n07_sequence_ok",
+      "failureNodeId": "e11_n06_sequence_fail",
       "leftItems": [
         {
           "id": "sector_01",
@@ -77,8 +90,8 @@
         "N VOSS",
         "N. VOSS"
       ],
-      "successNodeId": "e11_n16",
-      "failureNodeId": "e11_n15_fail",
+      "successNodeId": "e11_n14_voice_match",
+      "failureNodeId": "e11_n13_voice_fail",
       "submitCooldownMs": 500,
       "titleKey": "episode_11.decrypt_voice_fragment.puzzle0.title",
       "descriptionKey": "episode_11.decrypt_voice_fragment.puzzle0.description",
@@ -94,121 +107,206 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Okay...",
-          "textKey": "episode_11.e11_n01.event0.text"
+          "text": "..."
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 1600
         },
         {
           "type": "message",
-          "text": "Either somebody rewrote history, or I am remembering the wrong history.",
-          "textKey": "episode_11.e11_n01.event1.text"
+          "text": "My chest still hurts."
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1500
         },
         {
           "type": "message",
-          "text": "Honestly? I am not sure which one scares me more.",
-          "textKey": "episode_11.e11_n01.event2.text"
+          "text": "Everything smells burned."
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "text": "Maya?"
+        },
+        {
+          "type": "typing",
+          "duration": 1100
+        },
+        {
+          "type": "message",
+          "text": "I'm here.",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "Good."
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "For a second I thought I was still in the glass."
         }
       ],
       "choices": [
         {
-          "id": "trust_noah_initially",
-          "text": "I BELIEVE YOU FOR NOW.",
+          "id": "tell_truth",
+          "text": "TELL HIM WHAT HAPPENED.",
           "effects": {
-            "noahTrust": 6,
-            "haleTrust": -2,
-            "mayaTrust": 1,
+            "noahTrust": 3,
             "danger": 2,
-            "signalStrength": -1,
-            "believedNoahBlackBox": true
+            "toldNoahTruthEarly": true,
+            "episode12NoahTone": "aware_and_shaken"
           },
-          "nextNodeId": "e11_n02_noah",
-          "textKey": "episode_11.e11_n01.choice0.text"
+          "nextNodeId": "e11_n02_truth"
         },
         {
-          "id": "demand_proof",
-          "text": "PROVE IT WITH THE BLACK BOX.",
+          "id": "keep_focused",
+          "text": "KEEP HIM FOCUSED.",
           "effects": {
-            "noahTrust": -2,
-            "haleTrust": 2,
+            "noahTrust": 1,
+            "mayaTrust": 2,
             "danger": 1,
-            "signalStrength": 1,
-            "demandedBlackBoxProof": true
+            "keptNoahFocused": true,
+            "episode12NoahTone": "controlled_but_fragile"
           },
-          "nextNodeId": "e11_n02_proof",
-          "textKey": "episode_11.e11_n01.choice1.text"
+          "nextNodeId": "e11_n02_focus"
         }
       ]
     },
-    "e11_n02_noah": {
-      "id": "e11_n02_noah",
+    "e11_n02_truth": {
+      "id": "e11_n02_truth",
       "speaker": "NOAH",
       "events": [
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Do not believe me too easily.",
-          "textKey": "episode_11.e11_n02_noah.event0.text"
+          "text": "That long?"
+        },
+        {
+          "type": "pause",
+          "duration": 600
         },
         {
           "type": "typing",
-          "duration": 4600
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "That is how this place gets inside your head. It gives you the version of truth you already wanted.",
-          "textKey": "episode_11.e11_n02_noah.event1.text"
+          "text": "No."
+        },
+        {
+          "type": "typing",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "No, that's wrong."
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "I remember the alarm like it was minutes ago."
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "Either my head is broken..."
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "or the record is."
         }
       ],
-      "nextNodeId": "e11_n03"
+      "nextNodeId": "e11_n03_blackbox_online"
     },
-    "e11_n02_proof": {
-      "id": "e11_n02_proof",
+    "e11_n02_focus": {
+      "id": "e11_n02_focus",
       "speaker": "NOAH",
       "events": [
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1300
         },
         {
           "type": "message",
-          "text": "Good.",
-          "textKey": "episode_11.e11_n02_proof.event0.text"
+          "text": "Right."
         },
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 1300
         },
         {
           "type": "message",
-          "text": "Do not trust a man who just woke up in a coffin and immediately starts explaining reality.",
-          "textKey": "episode_11.e11_n02_proof.event1.text"
+          "text": "One problem at a time."
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "text": "Good."
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "text": "Keep talking."
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "If I start making too much sense, stop me."
         }
       ],
-      "nextNodeId": "e11_n03"
+      "nextNodeId": "e11_n03_blackbox_online"
     },
-    "e11_n03": {
-      "id": "e11_n03",
+    "e11_n03_blackbox_online": {
+      "id": "e11_n03_blackbox_online",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[BLACK BOX RECORDER ONLINE]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_11.e11_n03.event0.text"
+          "pauseAfterMs": 700
         },
         {
           "type": "file",
@@ -216,23 +314,39 @@
           "fileId": "blackbox_fragment_01",
           "fileType": "log",
           "title": "BLACK BOX FRAGMENT 01",
-          "content": "21:09 — Crew Assembly\n21:11 — Unauthorized Access Request\n21:12 — Internal Channel Opened\n\nSector Integrity: 61%\nAudio Layer: damaged",
-          "caption": "Recovered black box recorder sector 01.",
+          "content": "21:09 — Crew Assembly\n21:11 — Unauthorized Access Request\n21:12 — Internal Channel Opened\n\nSector Integrity: 61%\nAudio Layer: damaged\nConflict Note: Crew count checksum does not match current manifest.",
+          "caption": "Recovered black box recorder sector 01. Crew count checksum is inconsistent.",
           "source": "BLACK_BOX_RECORDER",
           "tags": [
             "blackbox",
             "incident_alpha",
-            "sector_01"
+            "sector_01",
+            "crew_count"
           ],
           "correlationTags": [
-            "blackbox_reconstruction"
+            "blackbox_reconstruction",
+            "crew_nine"
           ],
           "message": "[BLACK BOX FRAGMENT 01 ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_11.e11_n03.event1.title",
-          "contentKey": "episode_11.e11_n03.event1.content",
-          "captionKey": "episode_11.e11_n03.event1.caption",
-          "messageKey": "episode_11.e11_n03.event1.message"
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "Crew count checksum?"
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "I hate new math."
         }
       ],
       "choices": [
@@ -240,117 +354,174 @@
           "id": "ask_hale_access_request",
           "text": "HALE, WHAT WAS THE ACCESS REQUEST?",
           "effects": {
-            "haleTrust": -2,
+            "haleTrust": -3,
             "noahTrust": 1,
             "danger": 2,
-            "signalStrength": -1
+            "pressedHaleEarly": true,
+            "episode12HaleTone": "defensive"
           },
-          "nextNodeId": "e11_n04_hale",
-          "textKey": "episode_11.e11_n03.choice0.text"
+          "nextNodeId": "e11_n04_hale_pressure"
         },
         {
           "id": "ask_noah_channel",
-          "text": "NOAH, WHO OPENED THE CHANNEL?",
+          "text": "NOAH, WHAT DO YOU REMEMBER?",
           "effects": {
             "noahTrust": 3,
             "haleTrust": -1,
-            "danger": 1
+            "danger": 1,
+            "askedNoahMemoryFirst": true
           },
-          "nextNodeId": "e11_n04_noah",
-          "textKey": "episode_11.e11_n03.choice1.text"
+          "nextNodeId": "e11_n04_noah_memory"
         }
       ]
     },
-    "e11_n04_hale": {
-      "id": "e11_n04_hale",
+    "e11_n04_hale_pressure": {
+      "id": "e11_n04_hale_pressure",
       "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 4400
+          "duration": 1500
         },
         {
           "type": "message",
-          "text": "Interesting.",
-          "textKey": "episode_11.e11_n04_hale.event0.text"
+          "text": "Convenient."
         },
         {
           "type": "typing",
-          "duration": 5200
+          "duration": 1700
         },
         {
           "type": "message",
-          "text": "Every corrupted file somehow agrees with Noah.",
-          "textKey": "episode_11.e11_n04_hale.event1.text"
+          "text": "Every broken file suddenly points at my hands."
+        },
+        {
+          "type": "pause",
+          "duration": 600
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1700
         },
         {
           "type": "message",
-          "text": "That is either evidence... or a very committed liar.",
-          "textKey": "episode_11.e11_n04_hale.event2.text"
+          "text": "You keep asking like you already decided."
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "Just say it."
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "Say you think I did it."
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "Nobody said that."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The room did."
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "haleTrust": -2,
+            "halePressure": 3
+          }
         }
       ],
-      "nextNodeId": "e11_n05"
+      "nextNodeId": "e11_n05_sector_two"
     },
-    "e11_n04_noah": {
-      "id": "e11_n04_noah",
+    "e11_n04_noah_memory": {
+      "id": "e11_n04_noah_memory",
       "speaker": "NOAH",
       "events": [
         {
           "type": "typing",
-          "duration": 5000
+          "duration": 1700
         },
         {
           "type": "message",
-          "text": "I do not know.",
-          "textKey": "episode_11.e11_n04_noah.event0.text"
+          "text": "I remember the sound first."
         },
         {
           "type": "typing",
-          "duration": 5400
+          "duration": 1000
         },
         {
           "type": "message",
-          "text": "I remember the channel opening. I remember the pressure change. I remember thinking someone had made a mistake.",
-          "textKey": "episode_11.e11_n04_noah.event1.text"
+          "text": "Metal."
         },
         {
           "type": "typing",
-          "duration": 3800
+          "duration": 1300
         },
         {
           "type": "message",
-          "text": "Then I remember nothing kind.",
-          "textKey": "episode_11.e11_n04_noah.event2.text"
+          "text": "Then air moved wrong."
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "Doors opened."
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "Nobody was supposed to be opening anything."
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "Then someone screamed my name."
         }
       ],
-      "nextNodeId": "e11_n05"
+      "nextNodeId": "e11_n05_sector_two"
     },
-    "e11_n05": {
-      "id": "e11_n05",
+    "e11_n05_sector_two": {
+      "id": "e11_n05_sector_two",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "progressTask",
-          "id": "blackbox_sector_scan_02",
+          "id": "blackbox_sector_scan_02_v8",
           "title": "BLACK BOX SECTOR SCAN",
-          "subtitle": "Recovering damaged recorder sector 02",
-          "duration": 45000,
-          "completeText": "[BLACK BOX SECTOR 02 RECOVERED]",
+          "subtitle": "Recovering damaged sector 02",
+          "duration": 32000,
+          "completeText": "[SECTOR 02 RECOVERED]",
           "tone": "system",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_11.e11_n05.event0.title",
-          "subtitleKey": "episode_11.e11_n05.event0.subtitle",
-          "completeTextKey": "episode_11.e11_n05.event0.completeText"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[NOTIFICATION QUEUED: BLACK BOX SECTOR 02 RECOVERED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_11.e11_n05.event1.text"
+          "pauseAfterMs": 700
         },
         {
           "type": "file",
@@ -358,48 +529,69 @@
           "fileId": "blackbox_fragment_02",
           "fileType": "log",
           "title": "BLACK BOX FRAGMENT 02",
-          "content": "21:13 — Emergency Lockdown\n21:14 — Manual Override Requested\n21:14 — Override Source: INTERNAL\n\nSector Integrity: 54%\nCommand Chain: partially suppressed",
-          "caption": "Recovered black box recorder sector 02.",
+          "content": "21:13 — Emergency Lockdown\n21:14 — Manual Override Requested\n21:14 — Override Source: INTERNAL\n\nSector Integrity: 54%\nCommand Chain: partially suppressed\nTimestamp Conflict: override request appears twice. First record deleted.",
+          "caption": "Recovered sector 02. A deleted first override record is referenced by the recorder index.",
           "source": "BLACK_BOX_RECORDER",
           "tags": [
             "blackbox",
             "incident_alpha",
             "sector_02",
-            "override"
+            "override",
+            "deleted_record"
           ],
           "correlationTags": [
-            "blackbox_reconstruction"
+            "blackbox_reconstruction",
+            "hale_lock",
+            "deleted_override"
           ],
           "message": "[BLACK BOX FRAGMENT 02 ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_11.e11_n05.event2.title",
-          "contentKey": "episode_11.e11_n05.event2.content",
-          "captionKey": "episode_11.e11_n05.event2.caption",
-          "messageKey": "episode_11.e11_n05.event2.message"
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 3500,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "HALE LOCKED HIM TWICE.",
+            "pauseAfterMs": 700
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 6200,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "THE FIRST LOCK IS MISSING.",
+            "pauseAfterMs": 700
+          }
         }
       ],
       "choices": [
         {
-          "id": "trace_override_source",
-          "text": "TRACE OVERRIDE SOURCE.",
+          "id": "trace_deleted_override",
+          "text": "TRACE THE DELETED OVERRIDE.",
           "effects": {
-            "signalStrength": -2,
+            "tracedDeletedOverride": true,
+            "overrideIdentityFragmentRecovered": true,
             "danger": 2,
-            "tracedOverrideSource": true
+            "signalStrength": -1,
+            "episode12Evidence": "deleted_override_traced"
           },
-          "nextNodeId": "e11_n06_trace",
-          "textKey": "episode_11.e11_n05.choice0.text"
+          "nextNodeId": "e11_n06_trace"
         },
         {
-          "id": "continue_recovery_fast",
-          "text": "CONTINUE RECOVERY FAST.",
+          "id": "recover_fast",
+          "text": "RECOVER SECTOR 03 FAST.",
           "effects": {
-            "signalStrength": -5,
+            "fastBlackBoxRecovery": true,
+            "blackBoxHeatDamage": true,
             "danger": 5,
-            "fastBlackBoxRecovery": true
+            "signalStrength": -4,
+            "episode12Evidence": "sector03_fast_recovered_damaged"
           },
-          "nextNodeId": "e11_n06_fast",
-          "textKey": "episode_11.e11_n05.choice1.text"
+          "nextNodeId": "e11_n06_fast"
         }
       ]
     },
@@ -409,24 +601,68 @@
       "events": [
         {
           "type": "systemAlert",
-          "text": "[OVERRIDE TRACE ACTIVE]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_11.e11_n06_trace.event0.text"
+          "text": "[DELETED OVERRIDE TRACE ACTIVE]",
+          "pauseAfterMs": 700
         },
         {
           "type": "statChange",
           "changes": {
-            "signalStrength": 3,
-            "danger": -1
+            "danger": 1,
+            "signalStrength": -1
           }
         },
         {
+          "type": "file",
+          "id": "deleted_override_shadow",
+          "fileId": "deleted_override_shadow",
+          "fileType": "log",
+          "title": "DELETED OVERRIDE SHADOW",
+          "content": "Recovered index shadow:\n21:14 — Manual Override Requested\nSource: INTERNAL\nIdentity Layer: REMOVED\nOperator Class: CREW\nSecondary marker: N.V.\n\nWarning: identity layer removed after incident report was generated.",
+          "caption": "Partial deleted override record. It points toward N.V. but shows later tampering.",
+          "source": "BLACK_BOX_INDEX_SHADOW",
+          "tags": [
+            "override",
+            "deleted_record",
+            "noah_voss",
+            "tampering"
+          ],
+          "correlationTags": [
+            "voice_identity",
+            "deleted_override",
+            "crew_nine"
+          ],
+          "message": "[DELETED OVERRIDE SHADOW ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
           "type": "message",
-          "text": "Trace result: internal source confirmed. Identity layer still suppressed.",
-          "textKey": "episode_11.e11_n06_trace.event1.text"
+          "speaker": "NOAH",
+          "text": "N.V."
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "That's me."
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "Or someone wanted it to be."
         }
       ],
-      "nextNodeId": "e11_n06"
+      "nextNodeId": "e11_n06_sector_three"
     },
     "e11_n06_fast": {
       "id": "e11_n06_fast",
@@ -434,27 +670,58 @@
       "events": [
         {
           "type": "typing",
-          "duration": 3600
+          "duration": 1300
         },
         {
           "type": "message",
-          "text": "Fast is not the same as smart.",
-          "textKey": "episode_11.e11_n06_fast.event0.text"
+          "text": "Fast recovery."
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1100
         },
         {
           "type": "message",
-          "text": "I say that as someone who has made several fast and stupid decisions today.",
-          "textKey": "episode_11.e11_n06_fast.event1.text"
+          "text": "Bad smell."
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "text": "Like hot plastic."
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "That's not a metaphor. I mean actual hot plastic."
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 3,
+            "blackBoxHeatDamage": true
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 3000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "ASK WHY THE TIMESTAMPS DISAGREE.",
+            "pauseAfterMs": 700
+          }
         }
       ],
-      "nextNodeId": "e11_n06"
+      "nextNodeId": "e11_n06_sector_three"
     },
-    "e11_n06": {
-      "id": "e11_n06",
+    "e11_n06_sector_three": {
+      "id": "e11_n06_sector_three",
       "speaker": "SYSTEM",
       "events": [
         {
@@ -463,30 +730,28 @@
           "fileId": "blackbox_fragment_03",
           "fileType": "log",
           "title": "BLACK BOX FRAGMENT 03",
-          "content": "21:15 — Voice Authorization Accepted\nIdentity: HIDDEN\nAuthorization Phrase: OPEN THE STATION\n\nSector Integrity: 43%\nVoice sample recoverable",
-          "caption": "Recovered black box recorder sector 03.",
+          "content": "21:15 — Voice Authorization Accepted\nIdentity: HIDDEN\nAuthorization Phrase: OPEN THE STATION\n\nSector Integrity: 43%\nVoice sample recoverable\nConflict: Subject marker appears inside emergency pod record at 21:08.",
+          "caption": "Recovered sector 03. Voice authorization conflicts with pod occupancy timestamp.",
           "source": "BLACK_BOX_RECORDER",
           "tags": [
             "blackbox",
             "incident_alpha",
             "sector_03",
-            "voice_authorization"
+            "voice_authorization",
+            "timestamp_conflict"
           ],
           "correlationTags": [
-            "blackbox_reconstruction"
+            "blackbox_reconstruction",
+            "voice_identity",
+            "pod_conflict"
           ],
           "message": "[BLACK BOX FRAGMENT 03 ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_11.e11_n06.event0.title",
-          "contentKey": "episode_11.e11_n06.event0.content",
-          "captionKey": "episode_11.e11_n06.event0.caption",
-          "messageKey": "episode_11.e11_n06.event0.message"
+          "pauseAfterMs": 900
         },
         {
           "type": "systemAlert",
           "text": "[BLACK BOX SECTOR CORRELATION REQUIRED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_11.e11_n06.event1.text"
+          "pauseAfterMs": 700
         },
         {
           "type": "puzzle",
@@ -496,15 +761,14 @@
       ],
       "choices": []
     },
-    "e11_n06_fail": {
-      "id": "e11_n06_fail",
+    "e11_n06_sequence_fail": {
+      "id": "e11_n06_sequence_fail",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[BLACK BOX RECONSTRUCTION FAILED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_11.e11_n06_fail.event0.text"
+          "pauseAfterMs": 700
         },
         {
           "type": "statChange",
@@ -517,8 +781,43 @@
         {
           "type": "message",
           "speaker": "HALE",
-          "text": "No. Sector one opened the channel. Sector two carried the override. Sector three accepted the voice. Rebuild the sequence, not the story you want.",
-          "textKey": "episode_11.e11_n06_fail.event1.text"
+          "text": "No."
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Sector one opened the channel."
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Sector two carried the override."
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Sector three accepted the voice."
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Rebuild the sequence. Not the story you want."
         },
         {
           "type": "puzzle",
@@ -528,162 +827,281 @@
       ],
       "choices": []
     },
-    "e11_n07": {
-      "id": "e11_n07",
-      "speaker": "SYSTEM",
+    "e11_n07_sequence_ok": {
+      "id": "e11_n07_sequence_ok",
+      "speaker": "NOAH",
       "events": [
         {
           "type": "systemAlert",
           "text": "[BLACK BOX SEQUENCE RECONSTRUCTED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_11.e11_n07.event0.text"
+          "pauseAfterMs": 700
         },
         {
           "type": "statChange",
           "changes": {
-            "signalStrength": 5,
+            "signalStrength": 4,
             "danger": -1
           }
         },
         {
-          "type": "message",
-          "text": "Recovered fragments share matching audio signature. Voice sample integrity: 43%.",
-          "textKey": "episode_11.e11_n07.event1.text"
-        }
-      ],
-      "nextNodeId": "e11_n08"
-    },
-    "e11_n08": {
-      "id": "e11_n08",
-      "speaker": "NOAH",
-      "events": [
-        {
           "type": "typing",
-          "duration": 5200
+          "duration": 1700
         },
         {
           "type": "message",
-          "text": "Someone opened the station from the inside.",
-          "textKey": "episode_11.e11_n08.event0.text"
+          "text": "Channel."
         },
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "That is how Alpha started.",
-          "textKey": "episode_11.e11_n08.event1.text"
+          "text": "Override."
         },
         {
-          "type": "backgroundEvent",
-          "delay": 6000,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "Great. The haunted recorder has opinions now. Exactly what I wanted today.",
-            "textKey": "episode_11.e11_n08.backgroundEvent0.text"
-          }
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "Voice."
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "That's the order."
+        },
+        {
+          "type": "typing",
+          "duration": 1900
+        },
+        {
+          "type": "message",
+          "text": "That's how Alpha opened."
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "And the voice is hidden."
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "No."
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "Buried."
         }
       ],
       "choices": [
         {
-          "id": "was_it_hale",
-          "text": "WAS IT HALE?",
+          "id": "safe_voice_recovery",
+          "text": "RECOVER SAFELY.",
           "effects": {
-            "haleTrust": -5,
-            "noahTrust": 2,
-            "mayaTrust": 1,
-            "danger": 3,
-            "signalStrength": -2,
-            "suspectedHaleOpenedStation": true
+            "safeVoiceRecovery": true,
+            "blackBoxCorrupted": true,
+            "blackBoxSector04Lost": true,
+            "episode12BlackBoxState": "sector_04_permanently_lost",
+            "danger": 2,
+            "signalStrength": 2,
+            "irreversibleConsequence": "black_box_sector_04_lost"
           },
-          "nextNodeId": "e11_n09a",
-          "textKey": "episode_11.e11_n08.choice0.text"
+          "nextNodeId": "e11_n08_safe_recovery"
         },
         {
-          "id": "was_it_you",
-          "text": "WAS IT YOU?",
+          "id": "aggressive_voice_recovery",
+          "text": "RECOVER EVERYTHING.",
           "effects": {
-            "noahTrust": -6,
-            "haleTrust": 2,
-            "morale": -2,
-            "danger": 5,
-            "signalStrength": -3,
-            "suspectedNoahOpenedStation": true
+            "aggressiveVoiceRecovery": true,
+            "noahMemoryCollapse": true,
+            "episode12NoahState": "memory_damaged",
+            "danger": 7,
+            "signalStrength": -4,
+            "irreversibleConsequence": "noah_memory_collapse"
           },
-          "nextNodeId": "e11_n09b",
-          "textKey": "episode_11.e11_n08.choice1.text"
+          "nextNodeId": "e11_n08_aggressive_recovery"
         }
       ]
     },
-    "e11_n09a": {
-      "id": "e11_n09a",
-      "speaker": "NOAH",
+    "e11_n08_safe_recovery": {
+      "id": "e11_n08_safe_recovery",
+      "speaker": "SYSTEM",
       "events": [
         {
-          "type": "typing",
-          "duration": 4600
-        },
-        {
-          "type": "message",
-          "text": "Hale wanted the station sealed.",
-          "textKey": "episode_11.e11_n09a.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "Whatever he became after that... I do not know.",
-          "textKey": "episode_11.e11_n09a.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4800
-        },
-        {
-          "type": "message",
-          "text": "But before Alpha, he was afraid of something outside. Not inside.",
-          "textKey": "episode_11.e11_n09a.event2.text"
-        }
-      ],
-      "nextNodeId": "e11_n10"
-    },
-    "e11_n09b": {
-      "id": "e11_n09b",
-      "speaker": "NOAH",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "I thought you would ask that.",
-          "textKey": "episode_11.e11_n09b.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "And I wish I could answer without being afraid of the answer.",
-          "textKey": "episode_11.e11_n09b.event1.text"
+          "type": "progressTask",
+          "id": "safe_voice_recovery_11",
+          "title": "SAFE VOICE RECOVERY",
+          "subtitle": "Protecting live subject from neural echo exposure",
+          "duration": 36000,
+          "completeText": "[SAFE RECOVERY COMPLETE]",
+          "tone": "system",
+          "pauseAfterMs": 700
         },
         {
           "type": "systemAlert",
-          "text": "[NOAH TRUST DEGRADED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_11.e11_n09b.event2.text"
+          "text": "[BLACK BOX SECTOR 04 LOST]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "systemAlert",
+          "text": "[PERMANENT DATA LOSS]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "blackBoxCorrupted": true,
+            "blackBoxSector04Lost": true,
+            "noahStress": -2
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "Noah's breathing slowed."
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "And the recorder just lost a room."
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "A room?"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "That's what a sector is when people die in it."
         }
       ],
-      "nextNodeId": "e11_n10"
+      "nextNodeId": "e11_n10_voice_sample"
     },
-    "e11_n10": {
-      "id": "e11_n10",
+    "e11_n08_aggressive_recovery": {
+      "id": "e11_n08_aggressive_recovery",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "progressTask",
+          "id": "aggressive_voice_recovery_11",
+          "title": "AGGRESSIVE VOICE RECOVERY",
+          "subtitle": "Forcing full voiceprint extraction through live memory echo",
+          "duration": 30000,
+          "completeText": "[FULL VOICE DATA RECOVERED]",
+          "tone": "danger",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "Wait."
+        },
+        {
+          "type": "typing",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "No."
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "Why can't I remember her face?"
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "Whose face?"
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "I don't know."
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "That's the problem."
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "noahMemoryCollapse": true,
+            "danger": 4,
+            "morale": -2
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 3000,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "NOAH WAS NOT THE FIRST.",
+            "pauseAfterMs": 700
+          }
+        }
+      ],
+      "nextNodeId": "e11_n10_voice_sample"
+    },
+    "e11_n10_voice_sample": {
+      "id": "e11_n10_voice_sample",
       "speaker": "SYSTEM",
       "events": [
         {
@@ -692,24 +1110,22 @@
           "fileId": "voice_fragment_unknown",
           "fileType": "log",
           "title": "VOICE SAMPLE",
-          "content": "VOICE SAMPLE\nCORRUPTED\nRECOVERY POSSIBLE\n\nRecovered phrase:\n\"OPEN THE STATION\"\n\nReference candidates:\n- Ethan Hale\n- Maya Chen\n- Noah Voss\n\nManual identification required.",
+          "content": "VOICE SAMPLE\nCORRUPTED\nRECOVERY POSSIBLE\n\nRecovered phrase:\n\"OPEN THE STATION\"\n\nReference candidates:\n- Ethan Hale\n- Maya Chen\n- Noah Voss\n\nManual identification required.\nConflict: source subject appears inside pod prior to authorization.",
           "caption": "Corrupted voice sample recovered from black box recorder.",
           "source": "BLACK_BOX_RECORDER",
           "tags": [
             "voice_sample",
             "blackbox",
-            "open_the_station"
+            "open_the_station",
+            "identity_conflict"
           ],
           "correlationTags": [
             "blackbox_reconstruction",
-            "voice_identity"
+            "voice_identity",
+            "pod_conflict"
           ],
           "message": "[VOICE SAMPLE ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_11.e11_n10.event0.title",
-          "contentKey": "episode_11.e11_n10.event0.content",
-          "captionKey": "episode_11.e11_n10.event0.caption",
-          "messageKey": "episode_11.e11_n10.event0.message"
+          "pauseAfterMs": 900
         }
       ],
       "choices": [
@@ -717,27 +1133,27 @@
           "id": "use_noah_reference",
           "text": "USE NOAH AS REFERENCE.",
           "effects": {
+            "usedNoahVoiceReference": true,
+            "noahMemoryStrain": true,
             "noahTrust": 2,
-            "haleTrust": -1,
-            "danger": 2,
+            "danger": 3,
             "signalStrength": -2,
-            "usedNoahVoiceReference": true
+            "episode12NoahState": "strained_by_reference"
           },
-          "nextNodeId": "e11_n11_noah_ref",
-          "textKey": "episode_11.e11_n10.choice0.text"
+          "nextNodeId": "e11_n11_noah_ref"
         },
         {
           "id": "use_blackbox_reference",
-          "text": "USE BLACK BOX REFERENCE ONLY.",
+          "text": "USE BLACK BOX ONLY.",
           "effects": {
+            "usedBlackBoxOnlyReference": true,
+            "blackBoxReferenceOnly": true,
             "noahTrust": -1,
             "haleTrust": 1,
             "danger": 1,
-            "signalStrength": 1,
-            "usedBlackBoxOnlyReference": true
+            "episode12BlackBoxState": "reference_only"
           },
-          "nextNodeId": "e11_n11_blackbox_ref",
-          "textKey": "episode_11.e11_n10.choice1.text"
+          "nextNodeId": "e11_n11_blackbox_ref"
         }
       ]
     },
@@ -747,24 +1163,50 @@
       "events": [
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1500
         },
         {
           "type": "message",
-          "text": "Use me if you have to.",
-          "textKey": "episode_11.e11_n11_noah_ref.event0.text"
+          "text": "Use me."
         },
         {
           "type": "typing",
-          "duration": 5200
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "But if the answer comes back as my voice, do not assume that means I remember doing it.",
-          "textKey": "episode_11.e11_n11_noah_ref.event1.text"
+          "text": "Carefully."
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "If it comes back as my voice..."
+        },
+        {
+          "type": "pause",
+          "duration": 600
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "don't call that proof."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Call it a problem."
         }
       ],
-      "nextNodeId": "e11_n12"
+      "nextNodeId": "e11_n12_voice_puzzle"
     },
     "e11_n11_blackbox_ref": {
       "id": "e11_n11_blackbox_ref",
@@ -772,34 +1214,48 @@
       "events": [
         {
           "type": "typing",
-          "duration": 4200
+          "duration": 1500
         },
         {
           "type": "message",
-          "text": "Good. Do not let a living subject contaminate the sample.",
-          "textKey": "episode_11.e11_n11_blackbox_ref.event0.text"
+          "text": "Good."
         },
         {
           "type": "typing",
-          "duration": 4800
+          "duration": 1700
         },
         {
           "type": "message",
-          "text": "And yes, I know how cold that sounds. Science is not known for bedside manner.",
-          "textKey": "episode_11.e11_n11_blackbox_ref.event1.text"
+          "text": "Do not drag a living brain through a damaged recorder."
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "That almost sounded human."
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "text": "I'm trying something new."
         }
       ],
-      "nextNodeId": "e11_n12"
+      "nextNodeId": "e11_n12_voice_puzzle"
     },
-    "e11_n12": {
-      "id": "e11_n12",
+    "e11_n12_voice_puzzle": {
+      "id": "e11_n12_voice_puzzle",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[MANUAL VOICE IDENTIFICATION REQUIRED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_11.e11_n12.event0.text"
+          "pauseAfterMs": 700
         },
         {
           "type": "puzzle",
@@ -809,15 +1265,14 @@
       ],
       "choices": []
     },
-    "e11_n15_fail": {
-      "id": "e11_n15_fail",
+    "e11_n13_voice_fail": {
+      "id": "e11_n13_voice_fail",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[VOICE MATCH FAILED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_11.e11_n15_fail.event0.text"
+          "pauseAfterMs": 700
         },
         {
           "type": "statChange",
@@ -829,8 +1284,44 @@
         },
         {
           "type": "message",
-          "text": "Signature mismatch. The answer is in the suit ID, the pod records, and the medical scan.",
-          "textKey": "episode_11.e11_n15_fail.event1.text"
+          "speaker": "MAYA",
+          "text": "No. Stop guessing."
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "Suit ID."
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "Pod record."
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "Medical scan."
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "NOAH",
+          "text": "They all point at me."
         },
         {
           "type": "puzzle",
@@ -840,34 +1331,24 @@
       ],
       "choices": []
     },
-    "e11_n16": {
-      "id": "e11_n16",
+    "e11_n14_voice_match": {
+      "id": "e11_n14_voice_match",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "progressTask",
-          "id": "voice_signature_match",
+          "id": "voice_signature_match_11_v8",
           "title": "VOICE SIGNATURE MATCH",
-          "subtitle": "Comparing recovered voiceprint with pod medical archive",
-          "duration": 45000,
+          "subtitle": "Comparing recovered voiceprint with pod archive",
+          "duration": 30000,
           "completeText": "[VOICE SIGNATURE MATCH COMPLETE]",
           "tone": "system",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_11.e11_n16.event0.title",
-          "subtitleKey": "episode_11.e11_n16.event0.subtitle",
-          "completeTextKey": "episode_11.e11_n16.event0.completeText"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[NOTIFICATION QUEUED: VOICE SIGNATURE MATCH COMPLETE]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_11.e11_n16.event1.text"
+          "pauseAfterMs": 700
         },
         {
           "type": "systemAlert",
           "text": "[MATCH FOUND]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_11.e11_n16.event2.text"
+          "pauseAfterMs": 700
         },
         {
           "type": "file",
@@ -875,59 +1356,96 @@
           "fileId": "voice_analysis_result",
           "fileType": "log",
           "title": "VOICE ANALYSIS RESULT",
-          "content": "MATCH FOUND\n\nIDENTITY: NOAH VOSS\nAUTHORIZED COMMAND: OPEN THE STATION\nTIMESTAMP: 21:15\n\nConflict: Noah Voss was registered inside emergency pod cryostasis before voice authorization was accepted.",
-          "caption": "Voiceprint match result from black box recorder sample.",
+          "content": "MATCH FOUND\n\nIDENTITY: NOAH VOSS\nAUTHORIZED COMMAND: OPEN THE STATION\nTIMESTAMP: 21:15\n\nConflict: Noah Voss was registered inside emergency pod cryostasis before voice authorization was accepted.\nSecondary Conflict: Crew manifest checksum expects NINE active profiles, not eight.",
+          "caption": "Voiceprint match result. The voice is Noah's, but the timeline and crew count conflict.",
           "source": "VOICE_ANALYSIS_MODULE",
           "tags": [
             "voiceprint",
             "noah_voss",
             "blackbox",
-            "open_the_station"
+            "open_the_station",
+            "crew_nine"
           ],
           "correlationTags": [
             "blackbox_reconstruction",
-            "voice_identity"
+            "voice_identity",
+            "crew_nine"
           ],
           "message": "[VOICE ANALYSIS RESULT ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1200,
-          "titleKey": "episode_11.e11_n16.event3.title",
-          "contentKey": "episode_11.e11_n16.event3.content",
-          "captionKey": "episode_11.e11_n16.event3.caption",
-          "messageKey": "episode_11.e11_n16.event3.message"
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 2500,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "THE POD WAS NEVER EMPTY.",
+            "pauseAfterMs": 700
+          }
         }
       ],
-      "nextNodeId": "e11_n17"
+      "nextNodeId": "e11_n15_impossible"
     },
-    "e11_n17": {
-      "id": "e11_n17",
+    "e11_n15_impossible": {
+      "id": "e11_n15_impossible",
       "speaker": "NOAH",
       "events": [
         {
           "type": "typing",
-          "duration": 5200
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "That is impossible.",
-          "textKey": "episode_11.e11_n17.event0.text"
+          "text": "No."
         },
         {
           "type": "typing",
-          "duration": 5600
+          "duration": 1000
         },
         {
           "type": "message",
-          "text": "I was already in the pod. I remember the lock engaging.",
-          "textKey": "episode_11.e11_n17.event1.text"
+          "text": "No, that can't be right."
         },
         {
           "type": "typing",
-          "duration": 5000
+          "duration": 1600
         },
         {
           "type": "message",
-          "text": "I remember cold. I remember glass. I remember Hale saying not to wake me.",
-          "textKey": "episode_11.e11_n17.event2.text"
+          "text": "I was in the pod."
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "I remember the lock."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Glass."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Cold."
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "text": "Hale saying not to wake me."
         }
       ],
       "choices": [
@@ -937,10 +1455,9 @@
           "effects": {
             "noahTrust": 3,
             "danger": 2,
-            "signalStrength": -1
+            "askedNoahImpossibleMemory": true
           },
-          "nextNodeId": "e11_n18_noah",
-          "textKey": "episode_11.e11_n17.choice0.text"
+          "nextNodeId": "e11_n16_noah_memory"
         },
         {
           "id": "ask_hale_lock",
@@ -949,137 +1466,197 @@
             "haleTrust": -4,
             "noahTrust": 1,
             "danger": 3,
-            "signalStrength": -2
+            "pressedHaleAboutLock": true
           },
-          "nextNodeId": "e11_n18_hale",
-          "textKey": "episode_11.e11_n17.choice1.text"
+          "nextNodeId": "e11_n16_hale_lock"
         }
       ]
     },
-    "e11_n18_noah": {
-      "id": "e11_n18_noah",
+    "e11_n16_noah_memory": {
+      "id": "e11_n16_noah_memory",
       "speaker": "NOAH",
       "events": [
         {
           "type": "typing",
-          "duration": 5200
+          "duration": 1700
         },
         {
           "type": "message",
-          "text": "I remember hearing my own voice from outside the pod.",
-          "textKey": "episode_11.e11_n18_noah.event0.text"
+          "text": "I heard my own voice."
         },
         {
           "type": "typing",
-          "duration": 5600
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "That is not a memory a person should have.",
-          "textKey": "episode_11.e11_n18_noah.event1.text"
+          "text": "Outside the pod."
+        },
+        {
+          "type": "pause",
+          "duration": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not through a speaker."
+        },
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "text": "Behind me."
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "Noah..."
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "I know."
         }
       ],
-      "nextNodeId": "e11_n19"
+      "nextNodeId": "e11_n17_why"
     },
-    "e11_n18_hale": {
-      "id": "e11_n18_hale",
+    "e11_n16_hale_lock": {
+      "id": "e11_n16_hale_lock",
       "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 5600
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Because something was using his authorization.",
-          "textKey": "episode_11.e11_n18_hale.event0.text"
+          "text": "Because something was using his authorization."
         },
         {
           "type": "typing",
-          "duration": 5600
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "I did not lock Noah away to punish him. I locked him away because the station kept answering in his voice.",
-          "textKey": "episode_11.e11_n18_hale.event1.text"
+          "text": "And before you ask, yes, I know how that sounds."
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "I locked Noah away because the station kept answering in his voice."
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "You wanted a monster."
+        },
+        {
+          "type": "typing",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "text": "I had a door."
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "haleTrust": -1,
+            "haleDefensiveState": true
+          }
         }
       ],
-      "nextNodeId": "e11_n19"
+      "nextNodeId": "e11_n17_why"
     },
-    "e11_n19": {
-      "id": "e11_n19",
+    "e11_n17_why": {
+      "id": "e11_n17_why",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "backgroundEvent",
-          "delay": 5000,
+          "delay": 2200,
           "event": {
-            "type": "message",
+            "type": "corruptMessage",
             "speaker": "UNKNOWN",
-            "text": "Now ask why.",
-            "textKey": "episode_11.e11_n19.backgroundEvent0.text"
+            "text": "ASK WHO WAS REMOVED.",
+            "pauseAfterMs": 700
           }
         },
         {
           "type": "backgroundEvent",
-          "delay": 9500,
+          "delay": 4500,
           "event": {
             "type": "message",
             "speaker": "HALE",
-            "text": "Do not.",
-            "textKey": "episode_11.e11_n19.backgroundEvent1.text"
+            "text": "Do not."
           }
         },
         {
           "type": "backgroundEvent",
-          "delay": 14000,
+          "delay": 6800,
           "event": {
             "type": "message",
             "speaker": "MAYA",
-            "text": "Ask.",
-            "textKey": "episode_11.e11_n19.backgroundEvent2.text"
+            "text": "Ask."
           }
         }
       ],
       "choices": [
         {
-          "id": "ask_why",
-          "text": "WHY?",
+          "id": "ask_removed_profile",
+          "text": "WHO WAS REMOVED?",
           "effects": {
+            "askedWhoWasRemoved": true,
             "mayaTrust": 2,
             "haleTrust": -2,
             "noahTrust": 2,
-            "danger": 3,
+            "danger": 4,
             "signalStrength": -2,
-            "askedWhyBlackBox": true
+            "episode12StartQuestion": "who_was_removed"
           },
-          "nextNodeId": "e11_n20",
-          "textKey": "episode_11.e11_n19.choice0.text"
+          "nextNodeId": "e11_n18_removed"
         },
         {
-          "id": "pause_before_why",
-          "text": "PAUSE AND SECURE THE RECORDING.",
+          "id": "secure_recording_first",
+          "text": "SECURE THE RECORDING FIRST.",
           "effects": {
+            "securedBlackBoxBeforeReveal": true,
             "haleTrust": 2,
             "mayaTrust": -1,
             "danger": 1,
             "signalStrength": 3,
-            "securedBlackBoxBeforeWhy": true
+            "episode12StartQuestion": "recording_secured_first"
           },
-          "nextNodeId": "e11_n19_secure",
-          "textKey": "episode_11.e11_n19.choice1.text"
+          "nextNodeId": "e11_n18_secure"
         }
       ]
     },
-    "e11_n19_secure": {
-      "id": "e11_n19_secure",
+    "e11_n18_secure": {
+      "id": "e11_n18_secure",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
           "text": "[BLACK BOX RECORDING SECURED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_11.e11_n19_secure.event0.text"
+          "pauseAfterMs": 700
         },
         {
           "type": "statChange",
@@ -1089,90 +1666,285 @@
           }
         },
         {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
           "type": "message",
           "speaker": "MAYA",
-          "text": "Fine. Secure it. But after that, we ask.",
-          "textKey": "episode_11.e11_n19_secure.event1.text"
+          "text": "Fine."
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "But after that, we ask."
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 2500,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "SECURE ALL YOU WANT.",
+            "pauseAfterMs": 700
+          }
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 4200,
+          "event": {
+            "type": "corruptMessage",
+            "speaker": "UNKNOWN",
+            "text": "SHE IS STILL MISSING.",
+            "pauseAfterMs": 700
+          }
         }
       ],
-      "nextNodeId": "e11_n20"
+      "nextNodeId": "e11_n18_removed"
     },
-    "e11_n20": {
-      "id": "e11_n20",
+    "e11_n18_removed": {
+      "id": "e11_n18_removed",
       "speaker": "NOAH",
       "events": [
         {
           "type": "typing",
-          "duration": 5200
+          "duration": 1600
         },
         {
           "type": "message",
-          "text": "If that voice was mine...",
-          "textKey": "episode_11.e11_n20.event0.text"
+          "text": "Wait."
         },
         {
           "type": "typing",
-          "duration": 5600
+          "duration": 900
         },
         {
           "type": "message",
-          "text": "Then who opened the station?",
-          "textKey": "episode_11.e11_n20.event1.text"
+          "text": "No."
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "That's wrong."
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "What is?"
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "text": "The voice was mine."
+        },
+        {
+          "type": "typing",
+          "duration": 1700
+        },
+        {
+          "type": "message",
+          "text": "But that's not the impossible part."
+        },
+        {
+          "type": "typing",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "The impossible part is the crew list."
+        }
+      ],
+      "nextNodeId": "e11_n19_final_reveal"
+    },
+    "e11_n19_final_reveal": {
+      "id": "e11_n19_final_reveal",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "What crew list?"
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "We keep saying eight crew."
+        },
+        {
+          "type": "typing",
+          "duration": 1000
+        },
+        {
+          "type": "message",
+          "speaker": "MAYA",
+          "text": "Yeah."
+        },
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "text": "That's wrong."
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "speaker": "HALE",
+          "text": "Noah..."
+        },
+        {
+          "type": "typing",
+          "duration": 1600
+        },
+        {
+          "type": "message",
+          "text": "We had nine."
         },
         {
           "type": "glitch",
           "duration": 1200,
-          "pauseAfterMs": 800
+          "pauseAfterMs": 700
         },
         {
-          "type": "message",
-          "text": "And who am I?",
-          "textKey": "episode_11.e11_n20.event2.text"
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "FINALLY.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "HE REMEMBERS HER.",
+          "pauseAfterMs": 700
         },
         {
           "type": "signalLost",
           "duration": 2800,
           "message": "[SIGNAL LOST]",
           "restoreMessage": "[SIGNAL RESTORED]",
-          "pauseAfterMs": 1000,
-          "messageKey": "episode_11.e11_n20.event3.message",
-          "restoreMessageKey": "episode_11.e11_n20.event3.restoreMessage"
+          "pauseAfterMs": 700
         },
         {
           "type": "statChange",
           "changes": {
-            "danger": 5,
+            "danger": 6,
             "signalStrength": -6,
-            "morale": -3
+            "morale": -3,
+            "crewNineRevealed": true
           }
         }
       ],
       "choices": [
         {
-          "id": "follow_voiceprint",
-          "text": "FOLLOW THE VOICEPRINT.",
+          "id": "follow_missing_ninth",
+          "text": "FOLLOW THE NINTH CREW TRACE.",
           "effects": {
-            "danger": 3,
+            "followedNinthCrewTrace": true,
+            "crewNineRevealed": true,
+            "danger": 4,
             "signalStrength": -3,
-            "followedVoiceprint": true
+            "episode12StartMode": "ninth_crew_trace"
           },
-          "nextEpisodeId": "episode_12",
-          "textKey": "episode_11.e11_n20.choice0.text"
+          "nextEpisodeId": "episode_12"
         },
         {
-          "id": "preserve_noah_channel",
-          "text": "PRESERVE NOAH'S CHANNEL.",
+          "id": "protect_noah_channel",
+          "text": "PROTECT NOAH'S CHANNEL.",
           "effects": {
+            "protectedNoahChannel": true,
+            "crewNineRevealed": true,
             "noahTrust": 4,
             "danger": 2,
             "signalStrength": 2,
-            "preservedNoahChannel": true
+            "episode12StartMode": "protect_noah_channel"
           },
-          "nextEpisodeId": "episode_12",
-          "textKey": "episode_11.e11_n20.choice1.text"
+          "nextEpisodeId": "episode_12"
         }
       ]
     }
   },
-  "titleKey": "episode_11.meta.episode0.title"
+  "relationshipConsequenceSystem": {
+    "episode11PersistentFlags": [
+      "toldNoahTruthEarly",
+      "keptNoahFocused",
+      "pressedHaleEarly",
+      "askedNoahMemoryFirst",
+      "tracedDeletedOverride",
+      "fastBlackBoxRecovery",
+      "safeVoiceRecovery",
+      "aggressiveVoiceRecovery",
+      "blackBoxCorrupted",
+      "blackBoxSector04Lost",
+      "noahMemoryCollapse",
+      "usedNoahVoiceReference",
+      "usedBlackBoxOnlyReference",
+      "pressedHaleAboutLock",
+      "askedWhoWasRemoved",
+      "securedBlackBoxBeforeReveal",
+      "crewNineRevealed",
+      "followedNinthCrewTrace",
+      "protectedNoahChannel"
+    ],
+    "episode12UsageNotes": {
+      "blackBoxSector04Lost": "Sector 04 is permanently lost; Episode 12 must not recover it cleanly.",
+      "noahMemoryCollapse": "Noah should have memory skips and trouble recalling the missing woman's face.",
+      "pressedHaleEarly": "Hale begins Episode 12 more defensive and less cooperative.",
+      "tracedDeletedOverride": "Episode 12 can reference the N.V. deleted override shadow.",
+      "fastBlackBoxRecovery": "Fast recovery should leave heat damage or corrupted side effects.",
+      "securedBlackBoxBeforeReveal": "Recording is safer, but Maya remembers the operator delayed the question.",
+      "crewNineRevealed": "Episode 12 must begin with the ninth crew contradiction active.",
+      "followedNinthCrewTrace": "Episode 12 opens by chasing the missing crew trace.",
+      "protectedNoahChannel": "Episode 12 opens with Noah more stable but UNKNOWN less constrained."
+    }
+  },
+  "directorCut": {
+    "version": "FINAL_DIRECTORS_CUT_V8",
+    "sourceEpisode": "episode_11",
+    "coreRewrite": "Rebuilt compact version from the provided Episode 11 JSON while preserving the Black Box puzzle spine and voice identification puzzle.",
+    "majorChanges": [
+      "Noah rewritten as physically damaged and unreliable before providing lore.",
+      "Hale trust pressure made visible in dialogue.",
+      "UNKNOWN rewritten to push story: Hale lock, missing first lock, timestamp conflict, missing ninth crew.",
+      "Added irreversible branch: safe recovery loses Black Box Sector 04 permanently.",
+      "Added irreversible branch: aggressive recovery damages Noah's memory.",
+      "Voice match now exposes crew count mismatch.",
+      "Final cliffhanger changed from identity confusion to the ninth crew reveal.",
+      "Episode 12 chain flags added."
+    ],
+    "qualityTarget": {
+      "technical": "10/10",
+      "humanization": "9.5/10",
+      "unknownStoryFunction": "10/10",
+      "consequence": "10/10",
+      "trustVisibility": "9.5/10",
+      "horror": "9.5/10",
+      "episodeHook": "10/10"
+    },
+    "nextEpisode": "episode_12"
+  }
 }
