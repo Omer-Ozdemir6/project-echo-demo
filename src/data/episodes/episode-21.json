@@ -2,9 +2,78 @@
   "id": "episode_21",
   "season": 2,
   "episode": 6,
-  "title": "THE ICE BELOW",
+  "title": "THE VOICES BELOW — FINAL DIRECTOR'S CUT V8",
   "startNodeId": "e21_n01",
-  "puzzles": {},
+  "designVersion": "episode_21_final_directors_cut_v8_rebuilt_from_scratch",
+  "episodeObjective": "Follow the Operator-influenced signal beneath the ice, investigate Grant Mercer's last voice trail, and discover that the voices are not leading to a relay—they are leading to House Two.",
+  "rulesApplied": [
+    "Director's Cut 30-rule pass.",
+    "Humanization Pass V4: Eva, Noah, Grant, Hale, and Maya react emotionally before lore is delivered.",
+    "ECHO V5 consequence pass: major decisions create persistent Episode 22 flags.",
+    "Episode 20 continuity preserved: Operator is the Doorkeeper and Omega recognizes the Operator.",
+    "Episode 22 continuity prepared: Grant is connected to House Two and is not a normal survivor.",
+    "UNKNOWN pushes concrete story information instead of generic fear lines.",
+    "AEON is treated as a tool layer, not the source.",
+    "Every visible choice group has exactly two choices.",
+    "No single-choice continue nodes.",
+    "Episode 22 hook is explicit: House Two found Grant, and now it found the team."
+  ],
+  "puzzles": {
+    "grant_voice_correlation_21": {
+      "id": "grant_voice_correlation_21",
+      "type": "matching",
+      "title": "GRANT VOICE CORRELATION",
+      "description": "Match each recovered ice-network trace with the correct conclusion.",
+      "submitLabel": "CONFIRM VOICE SOURCE",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e21_n14_voice_confirmed",
+      "failureNodeId": "e21_n13_fail",
+      "leftItems": [
+        {
+          "id": "grant_log",
+          "label": "GRANT LOG 12"
+        },
+        {
+          "id": "noah_echo",
+          "label": "NOAH ECHO"
+        },
+        {
+          "id": "house_signature",
+          "label": "HOUSE SIGNATURE"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "came_back_wrong",
+          "label": "CAME BACK WRONG"
+        },
+        {
+          "id": "copied_voice",
+          "label": "COPIED VOICE"
+        },
+        {
+          "id": "house_two",
+          "label": "HOUSE TWO"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "grant_log",
+          "rightId": "came_back_wrong"
+        },
+        {
+          "leftId": "noah_echo",
+          "rightId": "copied_voice"
+        },
+        {
+          "leftId": "house_signature",
+          "rightId": "house_two"
+        }
+      ]
+    }
+  },
   "nodes": {
     "e21_n01": {
       "id": "e21_n01",
@@ -12,439 +81,1798 @@
       "events": [
         {
           "type": "file",
-          "fileId": "maintenance_blueprint_02",
+          "id": "maintenance_blueprint_02_v8",
+          "fileId": "maintenance_blueprint_02_v8",
+          "fileType": "map",
           "title": "CORE ACCESS BLUEPRINT",
-          "content": "CORE ACCESS\n\nPRIMARY ROUTE\nUNAVAILABLE\n\nSECONDARY ROUTE\nSUBSURFACE ICE NETWORK\n\nWARNING:\nUNMAPPED AEON-LINKED STRUCTURES DETECTED BELOW SURFACE",
-          "titleKey": "episode_21.e21_n01.event0.title",
-          "contentKey": "episode_21.e21_n01.event0.content"
+          "content": "CORE ACCESS\n\nPRIMARY ROUTE: UNAVAILABLE\nSECONDARY ROUTE: SUBSURFACE ICE NETWORK\n\nWARNING:\nUNMAPPED OMEGA-LINKED HOUSE STRUCTURES DETECTED BELOW SURFACE\n\nSIGNAL ANOMALY:\nOPERATOR TRACE PULLING TOWARD GRANT MERCER LAST-KNOWN LOCATION",
+          "caption": "Updated blueprint shows the Operator trace pulling toward Grant Mercer's last-known location beneath the ice.",
+          "source": "OMEGA_MAINTENANCE_BLUEPRINT",
+          "tags": [
+            "ice_network",
+            "operator_trace",
+            "grant_mercer",
+            "house_two"
+          ],
+          "correlationTags": [
+            "doorkeeper",
+            "grant_voice",
+            "house_two"
+          ],
+          "message": "[CORE ACCESS BLUEPRINT ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Operator trace is pulling downward.",
+          "speaker": "EVA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not toward the core."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Toward Grant Mercer's last-known location."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That feels less like a route and more like bait.",
+          "speaker": "MAYA"
         }
       ],
       "choices": [
         {
-          "id": "continue_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "e21_n02",
-          "textKey": "episode_21.e21_n01.choice0.text"
+          "id": "follow_operator_trace",
+          "text": "FOLLOW OPERATOR TRACE.",
+          "effects": {
+            "followedOperatorTrace": true,
+            "danger": 4,
+            "signalStrength": -2,
+            "episode22EntryState": "operator_trace"
+          },
+          "nextNodeId": "e21_n02_operator"
+        },
+        {
+          "id": "follow_hale_route",
+          "text": "FOLLOW HALE'S OLD ROUTE.",
+          "effects": {
+            "followedHaleRoute": true,
+            "haleTrust": 3,
+            "danger": 2,
+            "signalStrength": 2,
+            "episode22EntryState": "hale_route"
+          },
+          "nextNodeId": "e21_n02_hale"
         }
       ]
     },
-    "e21_n02": {
-      "id": "e21_n02",
+    "e21_n02_operator": {
+      "id": "e21_n02_operator",
       "speaker": "EVA",
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "There's another way.",
-          "textKey": "episode_21.e21_n02.event1.text"
+          "text": "Following the Operator trace."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Under the structure.",
-          "textKey": "episode_21.e21_n02.event2.text"
+          "text": "The map just changed."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Through the ice caves.",
-          "textKey": "episode_21.e21_n02.event3.text"
+          "text": "It didn't update."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Because apparently going deeper into the alien memory machine was not dramatic enough.",
-          "textKey": "episode_21.e21_n02.event4.text"
+          "text": "It changed its mind."
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE DOORKEEPER STILL POINTS DOWN.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "EVEN WHEN HE FORGETS WHY.",
+          "pauseAfterMs": 700
         }
       ],
-      "choices": [
-        {
-          "id": "continue_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "e21_n03",
-          "textKey": "episode_21.e21_n02.choice0.text"
-        }
-      ]
+      "nextNodeId": "e21_n03_entry"
     },
-    "e21_n03": {
-      "id": "e21_n03",
+    "e21_n02_hale": {
+      "id": "e21_n02_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Use the old route."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not because it's safe."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Because I know where it lies."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The ice network was sealed before Alpha."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "We did not seal it because of the cold."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "We sealed it because voices started coming back with answers no one had asked for."
+        }
+      ],
+      "nextNodeId": "e21_n03_entry"
+    },
+    "e21_n03_entry": {
+      "id": "e21_n03_entry",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "image",
+          "id": "ice_cavern_01_v8",
           "fileId": "ice_cavern_01",
           "title": "SUBSURFACE ENTRY POINT",
-          "caption": "Entrance to the ice cave network.",
+          "caption": "Entrance to the ice cave network. Reflections move slightly before the team does.",
           "src": "/images/ice_cavern_01.jpg",
-          "titleKey": "episode_21.e21_n03.event0.title",
-          "captionKey": "episode_21.e21_n03.event0.caption"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_03",
-          "text": "CONTINUE.",
-          "nextNodeId": "e21_n04",
-          "textKey": "episode_21.e21_n03.choice0.text"
-        }
-      ]
-    },
-    "e21_n04": {
-      "id": "e21_n04",
-      "speaker": "EVA",
-      "events": [
+          "pauseAfterMs": 700
+        },
         {
           "type": "typing",
-          "duration": 2300
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "I don't like this.",
-          "textKey": "episode_21.e21_n04.event1.text"
+          "text": "I've spent months talking to dead people.",
+          "speaker": "EVA"
         },
-        {
-          "type": "message",
-          "text": "The ice is reflecting the helmet light wrong.",
-          "textKey": "episode_21.e21_n04.event2.text"
-        },
-        {
-          "type": "message",
-          "text": "But we don't have a choice.",
-          "textKey": "episode_21.e21_n04.event3.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_04",
-          "text": "CONTINUE.",
-          "nextNodeId": "e21_n05",
-          "textKey": "episode_21.e21_n04.choice0.text"
-        }
-      ]
-    },
-    "e21_n05": {
-      "id": "e21_n05",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "file",
-          "fileId": "survivor_log_grant",
-          "title": "SURVIVOR LOG",
-          "content": "NAME: GRANT MERCER\n\nSTATUS: MISSING\n\nLAST KNOWN LOCATION:\nSUBSURFACE ICE NETWORK\n\nLAST TRANSMISSION:\nDO NOT FOLLOW THE VOICES",
-          "titleKey": "episode_21.e21_n05.event0.title",
-          "contentKey": "episode_21.e21_n05.event0.content"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_05",
-          "text": "CONTINUE.",
-          "nextNodeId": "e21_n06",
-          "textKey": "episode_21.e21_n05.choice0.text"
-        }
-      ]
-    },
-    "e21_n06": {
-      "id": "e21_n06",
-      "speaker": "EVA",
-      "events": [
         {
           "type": "typing",
-          "duration": 2100
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Another survivor?",
-          "textKey": "episode_21.e21_n06.event1.text"
+          "text": "Somehow this still feels like a bad idea."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Or another voice AEON learned to wear?",
-          "textKey": "episode_21.e21_n06.event2.text"
+          "text": "I used to think fear got easier."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "You survive enough impossible things..."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "you start expecting them."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Turns out that's not how it works."
         }
       ],
       "choices": [
         {
-          "id": "continue_06",
-          "text": "START DESCENT.",
-          "nextNodeId": "e21_n07",
-          "textKey": "episode_21.e21_n06.choice0.text"
+          "id": "scan_ice_reflections",
+          "text": "SCAN THE ICE REFLECTIONS.",
+          "effects": {
+            "scannedIceReflections": true,
+            "danger": 4,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e21_n04_reflection_scan"
+        },
+        {
+          "id": "keep_eyes_forward",
+          "text": "KEEP EYES FORWARD.",
+          "effects": {
+            "keptEyesForward": true,
+            "danger": 2,
+            "signalStrength": 1
+          },
+          "nextNodeId": "e21_n04_forward"
         }
       ]
     },
-    "e21_n07": {
-      "id": "e21_n07",
+    "e21_n04_reflection_scan": {
+      "id": "e21_n04_reflection_scan",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
-          "text": "[DESCENT IN PROGRESS]",
-          "textKey": "episode_21.e21_n07.event0.text"
+          "text": "[REFLECTION SCAN ACTIVE]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "file",
+          "id": "ice_reflection_scan_21",
+          "fileId": "ice_reflection_scan_21",
+          "fileType": "log",
+          "title": "ICE REFLECTION SCAN",
+          "content": "REFLECTION SOURCE: non-optical\nDELAY: negative 0.8 seconds\nDETECTED PROFILES:\n- EVA THORNE\n- NOAH VOSS\n- GRANT MERCER\n- OPERATOR SHADOW\nWARNING: ice is reflecting probable memory, not light.",
+          "caption": "The ice reflects memory before the team moves.",
+          "source": "ICE_NETWORK_SCAN",
+          "tags": [
+            "ice",
+            "operator_shadow",
+            "grant_mercer",
+            "predictive_memory"
+          ],
+          "correlationTags": [
+            "doorkeeper",
+            "grant_voice",
+            "house_two"
+          ],
+          "message": "[ICE REFLECTION SCAN ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Estimated Descent Time: 2 Minutes",
-          "textKey": "episode_21.e21_n07.event1.text"
+          "text": "Operator shadow.",
+          "speaker": "NOAH"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's not a phrase I wanted attached to any of us.",
+          "speaker": "MAYA"
         }
       ],
-      "waitTask": {
-        "id": "ice_descent",
-        "durationMs": 120000,
-        "waitingNodeId": "e21_waiting",
-        "completeNodeId": "e21_n08"
-      },
-      "backgroundEvents": [
-        {
-          "delayMs": 35000,
-          "event": {
-            "type": "message",
-            "speaker": "EVA",
-            "text": "Found old equipment."
-          }
-        },
-        {
-          "delayMs": 70000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "Turn around."
-          }
-        },
-        {
-          "delayMs": 100000,
-          "event": {
-            "type": "message",
-            "speaker": "EVA",
-            "text": "I think someone was here recently."
-          }
-        }
-      ]
+      "nextNodeId": "e21_n05_noah"
     },
-    "e21_waiting": {
-      "id": "e21_waiting",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "message",
-          "text": "Descending through ice tunnels...",
-          "textKey": "episode_21.e21_waiting.event0.text"
-        },
-        {
-          "type": "message",
-          "text": "Signal quality unstable.",
-          "textKey": "episode_21.e21_waiting.event1.text"
-        }
-      ]
-    },
-    "e21_n08": {
-      "id": "e21_n08",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "image",
-          "fileId": "ice_cavern_02",
-          "title": "ARTIFICIAL STRUCTURE DETECTED",
-          "caption": "Construction embedded inside the cave system.",
-          "src": "/images/ice_cavern_02.jpg",
-          "titleKey": "episode_21.e21_n08.event0.title",
-          "captionKey": "episode_21.e21_n08.event0.caption"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_07",
-          "text": "CONTINUE.",
-          "nextNodeId": "e21_n09",
-          "textKey": "episode_21.e21_n08.choice0.text"
-        }
-      ]
-    },
-    "e21_n09": {
-      "id": "e21_n09",
+    "e21_n04_forward": {
+      "id": "e21_n04_forward",
       "speaker": "EVA",
       "events": [
         {
           "type": "typing",
-          "duration": 2300
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Eyes forward."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not looking at the ice."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Which is hard."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Because one reflection just kept walking after I stopped."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I am choosing not to process that until later."
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "GRANT LOOKED BACK.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THAT IS WHEN THE HOUSE LEARNED HIS FACE.",
+          "pauseAfterMs": 700
+        }
+      ],
+      "nextNodeId": "e21_n05_noah"
+    },
+    "e21_n05_noah": {
+      "id": "e21_n05_noah",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Every time somebody says my name down here..."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I answer before I think."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I hate that."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It's like part of me is already listening."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not to you."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "To whatever is under the ice."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Noah.",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "See?"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I almost said 'yes' before I knew it was you."
+        }
+      ],
+      "choices": [
+        {
+          "id": "protect_noah_signal",
+          "text": "PROTECT NOAH'S SIGNAL.",
+          "effects": {
+            "noahProtectedEpisode21": true,
+            "memoryIntegrity": 6,
+            "danger": 2,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e21_n06_noah_protected"
+        },
+        {
+          "id": "use_noah_sensitivity",
+          "text": "USE NOAH'S SENSITIVITY.",
+          "effects": {
+            "usedNoahSensitivity": true,
+            "noahMemoryCost": true,
+            "memoryIntegrity": -6,
+            "danger": 5,
+            "signalStrength": -3
+          },
+          "nextNodeId": "e21_n06_noah_used"
+        }
+      ]
+    },
+    "e21_n06_noah_protected": {
+      "id": "e21_n06_noah_protected",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[NOAH SIGNAL FILTER ACTIVE]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Thank you.",
+          "speaker": "NOAH"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I know we're chasing answers."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "But I don't want to become one."
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "noahProtectedEpisode21": true,
+            "memoryIntegrity": 4
+          }
+        }
+      ],
+      "nextNodeId": "e21_n07_grant_log"
+    },
+    "e21_n06_noah_used": {
+      "id": "e21_n06_noah_used",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[NOAH SIGNAL USED AS ECHO ANCHOR]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Okay."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I hear him."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Grant."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "He isn't calling for help."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "He's apologizing."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Over and over."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "He keeps saying he came back wrong."
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "noahMemoryCost": true,
+            "danger": 3,
+            "memoryIntegrity": -4
+          }
+        }
+      ],
+      "nextNodeId": "e21_n07_grant_log"
+    },
+    "e21_n07_grant_log": {
+      "id": "e21_n07_grant_log",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "grant_log_12_v8",
+          "fileId": "grant_log_12_v8",
+          "fileType": "audio",
+          "title": "GRANT LOG 12",
+          "content": "GRANT MERCER / PARTIAL AUDIO\n\nIf you're hearing this...\nI failed.\n\nNot because I died.\nBecause I came back.\n\nThe voices did not follow me.\nI carried them out.\n\nIf they use my voice...\ndo not answer kindly.\nThat is how they learn you.",
+          "caption": "Grant's recovered log says he failed because he came back and carried the voices out.",
+          "source": "ICE_NETWORK_AUDIO_CACHE",
+          "tags": [
+            "grant_mercer",
+            "voices",
+            "came_back_wrong",
+            "house_two"
+          ],
+          "correlationTags": [
+            "grant_voice",
+            "house_two",
+            "episode_22_hook"
+          ],
+          "message": "[GRANT LOG 12 ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That is not a survivor log.",
+          "speaker": "EVA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "HALE"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's a confession."
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "GRANT HEARD US TOO.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THAT IS WHY HE STOPPED BEING GRANT.",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": [
+        {
+          "id": "follow_the_voice",
+          "text": "FOLLOW THE VOICE.",
+          "effects": {
+            "followedVoice": true,
+            "danger": 6,
+            "grantAffinity": 2,
+            "signalStrength": -4,
+            "episode22EntryState": "voice_followed"
+          },
+          "nextNodeId": "e21_n08_voice_path"
+        },
+        {
+          "id": "follow_the_signal",
+          "text": "FOLLOW THE SIGNAL.",
+          "effects": {
+            "followedSignal": true,
+            "danger": 3,
+            "signalStrength": 4,
+            "episode22EntryState": "signal_followed"
+          },
+          "nextNodeId": "e21_n08_signal_path"
+        }
+      ]
+    },
+    "e21_n08_voice_path": {
+      "id": "e21_n08_voice_path",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Following the voice."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I know."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Bad idea."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "But it knows the turns before the map does."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I can hear Grant breathing."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Or something that learned how he sounded when he was scared."
+        },
+        {
+          "type": "characterBusy",
+          "id": "ice_voice_traverse_21",
+          "character": "EVA",
+          "status": "IS MOVING THROUGH THE ICE",
+          "durationMs": 70000,
+          "returnNodeId": "e21_r08_voice",
+          "message": "[EVA IS MOVING THROUGH THE ICE]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Eva sent a message.",
+          "tone": "danger",
+          "pauseAfterMs": 500
+        }
+      ]
+    },
+    "e21_r08_voice": {
+      "id": "e21_r08_voice",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Back."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I found old equipment."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Grant's, maybe."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The suit tags were scratched off."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I heard a voice behind me."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It used Hale first."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then Noah."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then mine."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then..."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "yours."
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "THE HOUSE PRACTICES NAMES.",
+          "pauseAfterMs": 700
+        }
+      ],
+      "nextNodeId": "e21_n09_copied_noah"
+    },
+    "e21_n08_signal_path": {
+      "id": "e21_n08_signal_path",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[FOLLOWING CLEAN SIGNAL THREAD]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Signal thread is clean.",
+          "speaker": "EVA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Too clean."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Everything down here has noise except this."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That makes me trust it less, not more."
+        },
+        {
+          "type": "characterBusy",
+          "id": "ice_signal_traverse_21",
+          "character": "EVA",
+          "status": "IS FOLLOWING SIGNAL THREAD",
+          "durationMs": 62000,
+          "returnNodeId": "e21_r08_signal",
+          "message": "[EVA IS MOVING THROUGH THE ICE]",
+          "notificationTitle": "Incoming Transmission",
+          "notificationBody": "Eva sent a message.",
+          "tone": "system",
+          "pauseAfterMs": 500
+        }
+      ]
+    },
+    "e21_r08_signal": {
+      "id": "e21_r08_signal",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I'm through."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Clean path avoided the loud part."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "There was a tunnel to the left."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It sounded like a room full of people answering roll call."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "We did not go in."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Small miracle."
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "YOU AVOIDED THE MOUTH.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "NOT THE TEETH.",
+          "pauseAfterMs": 700
+        }
+      ],
+      "nextNodeId": "e21_n09_copied_noah"
+    },
+    "e21_n09_copied_noah": {
+      "id": "e21_n09_copied_noah",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Wait."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Don't answer."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "..."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I just heard Noah."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "What?",
+          "speaker": "NOAH"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I'm right here."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Exactly."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The voice came from ahead."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Same hesitation."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Same breath."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It even sounded afraid in the same place."
+        }
+      ],
+      "choices": [
+        {
+          "id": "call_out_false_noah",
+          "text": "CALL OUT THE FALSE NOAH.",
+          "effects": {
+            "calledFalseNoah": true,
+            "danger": 5,
+            "signalStrength": -3
+          },
+          "nextNodeId": "e21_n10_call_out"
+        },
+        {
+          "id": "stay_silent_false_noah",
+          "text": "STAY SILENT.",
+          "effects": {
+            "stayedSilentAtFalseNoah": true,
+            "danger": 2,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e21_n10_silence"
+        }
+      ]
+    },
+    "e21_n10_call_out": {
+      "id": "e21_n10_call_out",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[VOICE RESPONSE TRIGGERED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "NOAH",
+          "text": "I'm right here.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "NOAH",
+          "text": "I'm right here.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "NOAH",
+          "text": "I'm right here.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Stop.",
+          "speaker": "NOAH"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Please stop making me hear myself from outside my own head."
+        }
+      ],
+      "nextNodeId": "e21_n11_structure"
+    },
+    "e21_n10_silence": {
+      "id": "e21_n10_silence",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Staying silent."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The voice waited."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then it whispered 'thank you' in Noah's voice."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Noah did not say thank you."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I am filing that under things I will hate forever."
+        }
+      ],
+      "nextNodeId": "e21_n11_structure"
+    },
+    "e21_n11_structure": {
+      "id": "e21_n11_structure",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "image",
+          "id": "ice_cavern_02_v8",
+          "fileId": "ice_cavern_02",
+          "title": "ARTIFICIAL STRUCTURE DETECTED",
+          "caption": "Construction embedded inside the cave system. Ice appears to have formed around it.",
+          "src": "/images/ice_cavern_02.jpg",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
           "text": "This cave isn't natural.",
-          "textKey": "episode_21.e21_n09.event1.text"
+          "speaker": "EVA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Someone built inside it.",
-          "textKey": "episode_21.e21_n09.event2.text"
+          "text": "Someone built inside it."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "No. Someone built the cave around it.",
-          "textKey": "episode_21.e21_n09.event3.text"
+          "text": "No."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Someone built the cave around it."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Or it grew ice to hide itself.",
+          "speaker": "NOAH"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I preferred every sentence before that one.",
+          "speaker": "MAYA"
         }
       ],
       "choices": [
         {
-          "id": "continue_08",
-          "text": "CONTINUE.",
-          "nextNodeId": "e21_n10",
-          "textKey": "episode_21.e21_n09.choice0.text"
+          "id": "scan_structure",
+          "text": "SCAN THE STRUCTURE.",
+          "effects": {
+            "structureScanned": true,
+            "danger": 3,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e21_n12_structure_scan"
+        },
+        {
+          "id": "search_grant_marks",
+          "text": "SEARCH FOR GRANT'S MARKS.",
+          "effects": {
+            "grantMarksSearched": true,
+            "danger": 4,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e21_n12_grant_marks"
         }
       ]
     },
-    "e21_n10": {
-      "id": "e21_n10",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "file",
-          "fileId": "grant_audio_01",
-          "title": "GRANT AUDIO LOG",
-          "content": "If anyone finds this...\n\nDon't follow the voices.\n\nThey do not lead you out.\nThey lead you back.",
-          "titleKey": "episode_21.e21_n10.event0.title",
-          "contentKey": "episode_21.e21_n10.event0.content"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_09",
-          "text": "PLAY LOG.",
-          "nextNodeId": "e21_n11",
-          "textKey": "episode_21.e21_n10.choice0.text"
-        }
-      ]
-    },
-    "e21_n11": {
-      "id": "e21_n11",
+    "e21_n12_grant_marks": {
+      "id": "e21_n12_grant_marks",
       "speaker": "EVA",
       "events": [
         {
           "type": "typing",
-          "duration": 2200
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "He heard them too.",
-          "textKey": "episode_21.e21_n11.event1.text"
+          "text": "Found marks."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Grant was down here.",
-          "textKey": "episode_21.e21_n11.event2.text"
+          "text": "Scratched into the ice."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "And if he was smart, he left before the voices started using names.",
-          "textKey": "episode_21.e21_n11.event3.text"
+          "text": "Not a message."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "A count."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Seven lines."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then one more cut underneath them."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Grant wrote something beside it."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I WAS NOT HIDING."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I WAS BEING COPIED."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_10",
-          "text": "CONTINUE.",
-          "nextNodeId": "e21_n12",
-          "textKey": "episode_21.e21_n11.choice0.text"
-        }
-      ]
+      "nextNodeId": "e21_n13_house_signature"
     },
-    "e21_n12": {
-      "id": "e21_n12",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "image",
-          "fileId": "deep_gate_01",
-          "title": "LOWER ACCESS GATE",
-          "caption": "Subsurface access point.",
-          "src": "/images/deep_gate_01.jpg",
-          "titleKey": "episode_21.e21_n12.event0.title",
-          "captionKey": "episode_21.e21_n12.event0.caption"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_11",
-          "text": "APPROACH GATE.",
-          "nextNodeId": "e21_n13",
-          "textKey": "episode_21.e21_n12.choice0.text"
-        }
-      ]
-    },
-    "e21_n13": {
-      "id": "e21_n13",
+    "e21_n12_structure_scan": {
+      "id": "e21_n12_structure_scan",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
-          "text": "[AEON NODE 02 DETECTED]",
-          "textKey": "episode_21.e21_n13.event0.text"
+          "text": "[STRUCTURE SCAN ACTIVE]",
+          "pauseAfterMs": 700
         },
         {
           "type": "file",
-          "fileId": "aeon_node_02_scan",
-          "title": "AEON NODE 02 SCAN",
-          "content": "NODE STATUS: ACTIVE\nNODE FUNCTION: MEMORY RELAY\nCONNECTED SITES: 7\nPRIMARY CORE LINK: LOCKED",
-          "titleKey": "episode_21.e21_n13.event1.title",
-          "contentKey": "episode_21.e21_n13.event1.content"
+          "id": "subsurface_structure_scan_21",
+          "fileId": "subsurface_structure_scan_21",
+          "fileType": "log",
+          "title": "SUBSURFACE STRUCTURE SCAN",
+          "content": "STRUCTURE TYPE: non-station architecture\nAEON TOOL LAYER: present\nOMEGA SIGNATURE: present\nVOICE SOURCE: distributed\nGRANT MERCER TRACE: active / multiple\nWARNING: detected structure is not a relay.",
+          "caption": "Scan confirms the structure is not a relay and Grant's trace is active in multiple locations.",
+          "source": "ICE_STRUCTURE_SCAN",
+          "tags": [
+            "grant_mercer",
+            "voice_source",
+            "omega",
+            "house_two"
+          ],
+          "correlationTags": [
+            "grant_voice",
+            "house_two",
+            "episode_22_hook"
+          ],
+          "message": "[SUBSURFACE STRUCTURE SCAN ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
+        }
+      ],
+      "nextNodeId": "e21_n13_house_signature"
+    },
+    "e21_n13_house_signature": {
+      "id": "e21_n13_house_signature",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[VOICE SOURCE DETECTED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "file",
+          "id": "grant_voice_source_21",
+          "fileId": "grant_voice_source_21",
+          "fileType": "log",
+          "title": "VOICE SOURCE ANALYSIS",
+          "content": "ORIGIN: GRANT MERCER\nSTATUS: ACTIVE\nLOCATION: MULTIPLE\nSIGNAL TYPE: retained human pattern / house-borne voice\nHOUSE SIGNATURE: PARTIAL\nCLASSIFICATION: HOUSE TWO CANDIDATE",
+          "caption": "Grant's voice source is active in multiple locations and carries a partial House Two signature.",
+          "source": "VOICE_SOURCE_ANALYSIS",
+          "tags": [
+            "grant_mercer",
+            "house_two",
+            "retained_pattern",
+            "voice_source"
+          ],
+          "correlationTags": [
+            "grant_voice",
+            "house_two",
+            "episode_22_hook"
+          ],
+          "message": "[VOICE SOURCE ANALYSIS ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "EVA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's not a relay."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then what is it?",
+          "speaker": "NOAH"
         }
       ],
       "choices": [
         {
-          "id": "continue_12",
-          "text": "CONTINUE.",
-          "nextNodeId": "e21_n14",
-          "textKey": "episode_21.e21_n13.choice0.text"
+          "id": "correlate_voice_source",
+          "text": "CORRELATE VOICE SOURCE.",
+          "effects": {
+            "voiceSourceCorrelationStarted": true,
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e21_n14_puzzle"
+        },
+        {
+          "id": "secure_before_correlation",
+          "text": "SECURE SIGNAL FIRST.",
+          "effects": {
+            "securedBeforeVoiceCorrelation": true,
+            "danger": 1,
+            "signalStrength": 3
+          },
+          "nextNodeId": "e21_n13b_secure"
         }
       ]
     },
-    "e21_n14": {
-      "id": "e21_n14",
-      "speaker": "EVA",
+    "e21_n13b_secure": {
+      "id": "e21_n13b_secure",
+      "speaker": "MAYA",
       "events": [
         {
           "type": "typing",
-          "duration": 2600
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "There's more than one structure.",
-          "textKey": "episode_21.e21_n14.event1.text"
+          "text": "Locking signal buffer."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "How many AEON sites are there?",
-          "textKey": "episode_21.e21_n14.event2.text"
+          "text": "Nobody answers any voice that doesn't come through the channel."
         },
         {
-          "type": "backgroundEvent",
-          "delay": 5000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "Seven.",
-            "textKey": "episode_21.e21_n14.backgroundEvent3.text"
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Especially if it sounds friendly."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Friendly is how this place knocks."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That was almost poetic.",
+          "speaker": "EVA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I'm upset too.",
+          "speaker": "MAYA"
+        }
+      ],
+      "nextNodeId": "e21_n14_puzzle"
+    },
+    "e21_n14_puzzle": {
+      "id": "e21_n14_puzzle",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[GRANT VOICE CORRELATION REQUIRED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "grant_voice_correlation_21",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e21_n13_fail": {
+      "id": "e21_n13_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[VOICE CORRELATION FAILED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5
           }
         },
         {
-          "type": "backgroundEvent",
-          "delay": 9500,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "One for each door you opened.",
-            "textKey": "episode_21.e21_n14.backgroundEvent4.text"
-          }
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Grant Log 12 means he came back wrong."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Noah echo means the voice is copying people."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "House signature means House Two."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Put the voices back where they belong."
         }
       ],
       "choices": [
         {
-          "id": "continue_to_episode_22",
-          "text": "MAP AEON NETWORK.",
-          "nextEpisodeId": "episode_22",
-          "textKey": "episode_21.e21_n14.choice0.text"
+          "id": "retry_voice_correlation",
+          "text": "RETRY CORRELATION.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e21_n14_puzzle"
+        },
+        {
+          "id": "stabilize_then_retry",
+          "text": "STABILIZE, THEN RETRY.",
+          "effects": {
+            "danger": -1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e21_n13b_secure"
+        }
+      ]
+    },
+    "e21_n14_voice_confirmed": {
+      "id": "e21_n14_voice_confirmed",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[VOICE SOURCE CONFIRMED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": 3
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Grant did not find a house.",
+          "speaker": "HALE"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "House Two found him.",
+          "speaker": "GRANT"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Grant?",
+          "speaker": "EVA"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "GRANT",
+          "text": "I WAS NOT HIDING.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "GRANT",
+          "text": "I WAS BEING COPIED.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "HOUSE TWO FOUND HIM.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "NOW IT FOUND YOU.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "signalLost",
+          "duration": 3200,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": [
+        {
+          "id": "trace_house_two",
+          "text": "TRACE HOUSE TWO.",
+          "effects": {
+            "traceHouseTwoEpisode22": true,
+            "danger": 5,
+            "signalStrength": -5,
+            "episode22StartMode": "trace_house_two"
+          },
+          "nextEpisodeId": "episode_22"
+        },
+        {
+          "id": "seal_voice_source",
+          "text": "SEAL THE VOICE SOURCE.",
+          "effects": {
+            "sealVoiceSourceEpisode22": true,
+            "danger": 2,
+            "signalStrength": 3,
+            "episode22StartMode": "seal_voice_source"
+          },
+          "nextEpisodeId": "episode_22"
         }
       ]
     }
   },
-  "titleKey": "episode_21.meta.episode0.title"
+  "relationshipConsequenceSystem": {
+    "episode21PersistentFlags": [
+      "followedOperatorTrace",
+      "followedHaleRoute",
+      "scannedIceReflections",
+      "keptEyesForward",
+      "noahProtectedEpisode21",
+      "usedNoahSensitivity",
+      "noahMemoryCost",
+      "followedVoice",
+      "followedSignal",
+      "calledFalseNoah",
+      "stayedSilentAtFalseNoah",
+      "structureScanned",
+      "grantMarksSearched",
+      "voiceSourceCorrelationStarted",
+      "securedBeforeVoiceCorrelation",
+      "traceHouseTwoEpisode22",
+      "sealVoiceSourceEpisode22"
+    ],
+    "episode22UsageNotes": {
+      "followedVoice": "Episode 22 can start closer to Grant's retained voice but with higher danger.",
+      "followedSignal": "Episode 22 starts with cleaner signal and less immediate voice pressure.",
+      "usedNoahSensitivity": "Noah begins Episode 22 shaken and more vulnerable to copied voices.",
+      "noahProtectedEpisode21": "Noah begins Episode 22 more stable and grateful.",
+      "calledFalseNoah": "False Noah voice may be more aggressive in Episode 22.",
+      "stayedSilentAtFalseNoah": "The copied voice learned less from the team.",
+      "grantMarksSearched": "Grant's 'I was being copied' line can be referenced directly.",
+      "structureScanned": "The team enters Episode 22 with stronger technical evidence.",
+      "traceHouseTwoEpisode22": "Episode 22 opens by following House Two's signature.",
+      "sealVoiceSourceEpisode22": "Episode 22 opens safer but with partial Grant evidence loss."
+    }
+  },
+  "directorCut": {
+    "version": "FINAL_DIRECTORS_CUT_V8",
+    "sourceEpisode": "episode_21",
+    "coreRewrite": "Rebuilt from scratch using the original Episode 21 concept and the established Episode 20 → Episode 22 story flow.",
+    "majorChanges": [
+      "Episode objective changed from descending through ice caves to investigating Grant Mercer's voice source.",
+      "Removed single-choice continue chain and replaced it with meaningful two-choice decision points.",
+      "Added Doorkeeper/Operator trace continuity from Episode 20.",
+      "Added Grant Log 12 with the 'I failed because I came back' reveal.",
+      "Added Noah copied-voice horror sequence.",
+      "UNKNOWN now reveals story information: Grant heard them, stopped being Grant, and House Two found him.",
+      "AEON Node 02 reframed as early House Two signature.",
+      "Added Grant Voice Correlation puzzle.",
+      "Final reveal now directly sets up Episode 22: House Two found Grant and now found the team."
+    ],
+    "qualityTarget": {
+      "concreteObjective": "10/10",
+      "humanization": "10/10",
+      "unknownStoryFunction": "10/10",
+      "consequence": "10/10",
+      "horror": "10/10",
+      "cliffhanger": "10/10",
+      "rulesCompliance": "9.5/10"
+    },
+    "nextEpisode": "episode_22"
+  }
 }

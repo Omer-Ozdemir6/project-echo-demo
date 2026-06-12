@@ -2,9 +2,78 @@
   "id": "episode_22",
   "season": 2,
   "episode": 7,
-  "title": "GRANT",
+  "title": "HOUSE TWO — FINAL DIRECTOR'S CUT V8",
   "startNodeId": "e22_n01",
-  "puzzles": {},
+  "designVersion": "episode_22_final_directors_cut_v8_rebuilt_complete",
+  "episodeObjective": "Enter House Two, determine whether the figure calling himself Grant Mercer is real, and reveal that there were eight Founders—and the Eighth Founder is the Operator.",
+  "rulesApplied": [
+    "Director's Cut 30-rule pass.",
+    "Humanization Pass V4: Grant, Eva, Noah, Hale, and Maya react emotionally before exposition.",
+    "ECHO V5 consequence pass: major decisions create persistent Episode 23 flags.",
+    "Episode 21 V8 continuity preserved: Grant was not a survivor; Grant was another Founder; House Two still speaks with his mouth.",
+    "UNKNOWN pushes concrete story information instead of generic fear lines.",
+    "Grant identity is treated as the central mystery.",
+    "AEON is treated as a tool layer, not the source.",
+    "Every visible choice group has exactly two choices.",
+    "No single-choice continue nodes.",
+    "Episode 23 hook is explicit: the Eighth Founder / Operator reveal."
+  ],
+  "puzzles": {
+    "grant_identity_correlation_22": {
+      "id": "grant_identity_correlation_22",
+      "type": "matching",
+      "title": "GRANT IDENTITY CORRELATION",
+      "description": "Match each House Two record with the correct conclusion.",
+      "submitLabel": "CONFIRM GRANT IDENTITY",
+      "acceptedAnswers": [
+        "MATCH_CONFIRMED"
+      ],
+      "successNodeId": "e22_n14_grant_confirmed",
+      "failureNodeId": "e22_n13_fail",
+      "leftItems": [
+        {
+          "id": "biometric_match",
+          "label": "BIOMETRIC MATCH"
+        },
+        {
+          "id": "death_record",
+          "label": "DEATH RECORD"
+        },
+        {
+          "id": "house_two_voice",
+          "label": "HOUSE TWO VOICE"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "grant_body",
+          "label": "GRANT BODY PATTERN"
+        },
+        {
+          "id": "grant_deceased",
+          "label": "GRANT DECEASED"
+        },
+        {
+          "id": "grant_retained",
+          "label": "GRANT RETAINED"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "biometric_match",
+          "rightId": "grant_body"
+        },
+        {
+          "leftId": "death_record",
+          "rightId": "grant_deceased"
+        },
+        {
+          "leftId": "house_two_voice",
+          "rightId": "grant_retained"
+        }
+      ]
+    }
+  },
   "nodes": {
     "e22_n01": {
       "id": "e22_n01",
@@ -12,533 +81,1732 @@
       "events": [
         {
           "type": "systemAlert",
-          "text": "[LOWER ACCESS GATE OPEN]",
-          "textKey": "episode_22.e22_n01.event0.text"
+          "text": "[HOUSE TWO ACCESS GATE OPEN]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "systemAlert",
+          "text": "[MOVEMENT DETECTED BEYOND THE GATE]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "file",
+          "id": "house_two_entry_scan_22",
+          "fileId": "house_two_entry_scan_22",
+          "fileType": "log",
+          "title": "HOUSE TWO ENTRY SCAN",
+          "content": "BIOMETRIC MATCH: GRANT MERCER\nCONFIDENCE: 97.1%\nDEATH RECORD MATCH: GRANT MERCER\nSTATUS: DECEASED\nCONFLICT: living motion detected inside House Two",
+          "caption": "The entry scan detects both a living Grant Mercer pattern and a verified death record.",
+          "source": "HOUSE_TWO_GATE",
+          "tags": [
+            "grant_mercer",
+            "house_two",
+            "biometric",
+            "death_record"
+          ],
+          "correlationTags": [
+            "grant_identity",
+            "house_two",
+            "founder_record"
+          ],
+          "message": "[HOUSE TWO ENTRY SCAN ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Movement detected beyond the gate.",
-          "textKey": "episode_22.e22_n01.event1.text"
+          "text": "Biometric and death record.",
+          "speaker": "EVA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Same person."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Same door."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Different answers."
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "HE FOUND HOUSE TWO.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "HE SHOULD HAVE STAYED DEAD.",
+          "pauseAfterMs": 700
         }
       ],
       "choices": [
         {
-          "id": "continue_01",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n02",
-          "textKey": "episode_22.e22_n01.choice0.text"
+          "id": "approach_carefully",
+          "text": "APPROACH CAREFULLY.",
+          "effects": {
+            "approachedGrantCarefully": true,
+            "danger": 2,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e22_n02_approach"
+        },
+        {
+          "id": "challenge_identity",
+          "text": "CHALLENGE THE IDENTITY.",
+          "effects": {
+            "challengedGrantIdentity": true,
+            "danger": 4,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e22_n02_challenge"
         }
       ]
     },
-    "e22_n02": {
-      "id": "e22_n02",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "message",
-          "text": "Someone's inside.",
-          "textKey": "episode_22.e22_n02.event0.text"
-        },
-        {
-          "type": "message",
-          "text": "Definitely human.",
-          "textKey": "episode_22.e22_n02.event1.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 3000,
-          "event": {
-            "type": "message",
-            "speaker": "UNKNOWN",
-            "text": "Go away.",
-            "textKey": "episode_22.e22_n02.backgroundEvent2.text"
-          }
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_02",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n03",
-          "textKey": "episode_22.e22_n02.choice0.text"
-        }
-      ]
-    },
-    "e22_n03": {
-      "id": "e22_n03",
+    "e22_n02_approach": {
+      "id": "e22_n02_approach",
       "speaker": "EVA",
       "events": [
         {
           "type": "typing",
-          "duration": 2000
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Wait...",
-          "textKey": "episode_22.e22_n03.event1.text"
+          "text": "Approaching slow."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "That's not AEON.",
-          "textKey": "episode_22.e22_n03.event2.text"
+          "text": "Hands visible."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "His are too."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "He's shaking."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Either he's human..."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "or House Two learned fear really well."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_03",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n04",
-          "textKey": "episode_22.e22_n03.choice0.text"
-        }
-      ]
+      "nextNodeId": "e22_n03_first_contact"
     },
-    "e22_n04": {
-      "id": "e22_n04",
+    "e22_n02_challenge": {
+      "id": "e22_n02_challenge",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Identity challenge sent."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "He flinched before the ping reached him."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's not normal."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "He knew we were about to ask."
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "HE ANSWERS BEFORE QUESTIONS NOW.",
+          "pauseAfterMs": 700
+        }
+      ],
+      "nextNodeId": "e22_n03_first_contact"
+    },
+    "e22_n03_first_contact": {
+      "id": "e22_n03_first_contact",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "image",
+          "id": "grant_first_contact_v8",
           "fileId": "grant_first_contact",
-          "title": "UNKNOWN SURVIVOR",
-          "caption": "First visual contact with a living survivor.",
+          "title": "HOUSE TWO CONTACT",
+          "caption": "Visual contact with a man matching Grant Mercer's biometric profile.",
           "src": "/images/grant_first_contact.jpg",
-          "titleKey": "episode_22.e22_n04.event0.title",
-          "captionKey": "episode_22.e22_n04.event0.caption"
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "HALE"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No no no."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's impossible."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Grant died years before Alpha."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I read the report."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I signed the report."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I burned the report."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I remember all three."
         }
       ],
       "choices": [
         {
-          "id": "continue_04",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n05",
-          "textKey": "episode_22.e22_n04.choice0.text"
+          "id": "trust_hale_record",
+          "text": "TRUST HALE'S RECORD.",
+          "effects": {
+            "trustedHaleRecord": true,
+            "haleTrust": 4,
+            "danger": 2,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e22_n04_hale"
+        },
+        {
+          "id": "listen_to_grant",
+          "text": "LISTEN TO GRANT.",
+          "effects": {
+            "listenedToGrant": true,
+            "grantTrust": 3,
+            "danger": 4,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e22_n04_grant"
         }
       ]
     },
-    "e22_n05": {
-      "id": "e22_n05",
-      "speaker": "UNKNOWN",
-      "events": [
-        {
-          "type": "message",
-          "text": "How did you get here?",
-          "textKey": "episode_22.e22_n05.event0.text"
-        },
-        {
-          "type": "message",
-          "text": "Nobody comes here.",
-          "textKey": "episode_22.e22_n05.event1.text"
-        },
-        {
-          "type": "message",
-          "text": "Not twice.",
-          "textKey": "episode_22.e22_n05.event2.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "friendly",
-          "text": "WE'RE FRIENDLY.",
-          "effects": {
-            "grantTrust": 10
-          },
-          "flags": {
-            "grantFirstImpression": "friendly"
-          },
-          "nextNodeId": "e22_n06",
-          "textKey": "episode_22.e22_n05.choice0.text"
-        },
-        {
-          "id": "identify",
-          "text": "IDENTIFY YOURSELF.",
-          "effects": {
-            "grantTrust": -5
-          },
-          "flags": {
-            "grantFirstImpression": "hostile"
-          },
-          "nextNodeId": "e22_n06",
-          "textKey": "episode_22.e22_n05.choice1.text"
-        }
-      ]
-    },
-    "e22_n06": {
-      "id": "e22_n06",
-      "speaker": "UNKNOWN",
+    "e22_n04_hale": {
+      "id": "e22_n04_hale",
+      "speaker": "HALE",
       "events": [
         {
           "type": "typing",
-          "duration": 2500
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "...",
-          "textKey": "episode_22.e22_n06.event1.text"
+          "text": "Do not let him set the pace."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "My name is Grant Mercer.",
-          "textKey": "episode_22.e22_n06.event2.text"
-        }
-      ],
-      "choices": [
+          "text": "If House Two is using his mouth, it will sound hurt first."
+        },
         {
-          "id": "continue_05",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n07",
-          "textKey": "episode_22.e22_n06.choice0.text"
-        }
-      ]
-    },
-    "e22_n07": {
-      "id": "e22_n07",
-      "speaker": "GRANT",
-      "events": [
-        {
-          "type": "message",
-          "text": "I thought I was the last one alive.",
-          "textKey": "episode_22.e22_n07.event0.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_06",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n08",
-          "textKey": "episode_22.e22_n07.choice0.text"
-        }
-      ]
-    },
-    "e22_n08": {
-      "id": "e22_n08",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "message",
-          "text": "We found your logs.",
-          "textKey": "episode_22.e22_n08.event0.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_07",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n09",
-          "textKey": "episode_22.e22_n08.choice0.text"
-        }
-      ]
-    },
-    "e22_n09": {
-      "id": "e22_n09",
-      "speaker": "GRANT",
-      "events": [
-        {
-          "type": "conditionalMessage",
-          "condition": "read_grant_audio",
-          "trueText": "Then you ignored my warning.",
-          "falseText": "Then you never heard it."
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_08",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n10",
-          "textKey": "episode_22.e22_n09.choice0.text"
-        }
-      ]
-    },
-    "e22_n10": {
-      "id": "e22_n10",
-      "speaker": "GRANT",
-      "events": [
-        {
-          "type": "message",
-          "text": "Don't follow the voices.",
-          "textKey": "episode_22.e22_n10.event0.text"
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "I did.",
-          "textKey": "episode_22.e22_n10.event1.text"
+          "text": "Then helpful."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "That's why I'm still trapped here.",
-          "textKey": "episode_22.e22_n10.event2.text"
-        }
-      ],
-      "choices": [
+          "text": "Then familiar."
+        },
         {
-          "id": "continue_09",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n11",
-          "textKey": "episode_22.e22_n10.choice0.text"
-        }
-      ]
-    },
-    "e22_n11": {
-      "id": "e22_n11",
-      "speaker": "EVA",
-      "events": [
+          "type": "typing",
+          "duration": 1400
+        },
         {
           "type": "message",
-          "text": "What happened?",
-          "textKey": "episode_22.e22_n11.event0.text"
+          "text": "That is the order these things use."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_10",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n12",
-          "textKey": "episode_22.e22_n11.choice0.text"
-        }
-      ]
+      "nextNodeId": "e22_n05_grant_speaks"
     },
-    "e22_n12": {
-      "id": "e22_n12",
+    "e22_n04_grant": {
+      "id": "e22_n04_grant",
       "speaker": "GRANT",
       "events": [
         {
           "type": "typing",
-          "duration": 3000
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "I lost everyone.",
-          "textKey": "episode_22.e22_n12.event1.text"
+          "text": "You know what's strange?"
         },
         {
-          "type": "backgroundEvent",
-          "delay": 5000,
-          "event": {
-            "type": "message",
-            "speaker": "GRANT",
-            "text": "Sorry.",
-            "textKey": "episode_22.e22_n12.backgroundEvent2.text"
-          }
+          "type": "typing",
+          "duration": 1400
         },
         {
-          "type": "backgroundEvent",
-          "delay": 9000,
-          "event": {
-            "type": "message",
-            "speaker": "GRANT",
-            "text": "I still hear them sometimes.",
-            "textKey": "episode_22.e22_n12.backgroundEvent3.text"
-          }
+          "type": "message",
+          "text": "I stopped counting years."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Stopped counting days."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "But I still count voices."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Every new voice means I wasn't alone after all."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Or it means House Two learned a new way to hurt me."
+        }
+      ],
+      "nextNodeId": "e22_n05_grant_speaks"
+    },
+    "e22_n05_grant_speaks": {
+      "id": "e22_n05_grant_speaks",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "How did you get here?"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Nobody comes here."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not twice."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not unless the House wants them back."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "My name is Grant Mercer."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I think."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I need that to still be true."
         }
       ],
       "choices": [
         {
-          "id": "continue_11",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n13",
-          "textKey": "episode_22.e22_n12.choice0.text"
+          "id": "friendly_response",
+          "text": "WE'RE NOT HERE TO HURT YOU.",
+          "effects": {
+            "grantTrust": 5,
+            "grantFirstImpression": "friendly",
+            "danger": 1
+          },
+          "nextNodeId": "e22_n06_noah"
+        },
+        {
+          "id": "demand_proof",
+          "text": "PROVE YOU'RE GRANT.",
+          "effects": {
+            "grantTrust": -2,
+            "grantFirstImpression": "hostile",
+            "danger": 3
+          },
+          "nextNodeId": "e22_n06_noah"
         }
       ]
     },
-    "e22_n13": {
-      "id": "e22_n13",
+    "e22_n06_noah": {
+      "id": "e22_n06_noah",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I know his face."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I shouldn't."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "But I do."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Why do I do?"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Every time I remember something, something else disappears."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I can't keep paying for answers with pieces of myself."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Noah.",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No, let me say it while I still can."
+        }
+      ],
+      "choices": [
+        {
+          "id": "protect_noah_from_grant",
+          "text": "PROTECT NOAH FROM THE TRACE.",
+          "effects": {
+            "noahProtectedFromGrant": true,
+            "memoryIntegrity": 6,
+            "danger": 2,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e22_n07_protect_noah"
+        },
+        {
+          "id": "use_noah_recognition",
+          "text": "USE NOAH'S RECOGNITION.",
+          "effects": {
+            "usedNoahRecognition": true,
+            "noahMemoryCost": true,
+            "memoryIntegrity": -8,
+            "danger": 5,
+            "signalStrength": -3
+          },
+          "nextNodeId": "e22_n07_use_noah"
+        }
+      ]
+    },
+    "e22_n07_protect_noah": {
+      "id": "e22_n07_protect_noah",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[NOAH TRACE SHIELD ACTIVE]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Thanks.",
+          "speaker": "NOAH"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I'm tired of being a key."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I want to be a person for five minutes."
+        }
+      ],
+      "nextNodeId": "e22_n08_grant_warning"
+    },
+    "e22_n07_use_noah": {
+      "id": "e22_n07_use_noah",
+      "speaker": "NOAH",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[NOAH RECOGNITION TRACE OPEN]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Grant is afraid of mirrors."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I don't know how I know that."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "He covered them."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "All of them."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Because sometimes they showed the version that came back."
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "noahMemoryCost": true,
+            "danger": 3,
+            "memoryIntegrity": -5
+          }
+        }
+      ],
+      "nextNodeId": "e22_n08_grant_warning"
+    },
+    "e22_n08_grant_warning": {
+      "id": "e22_n08_grant_warning",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "You found my logs."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then you ignored my warning."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Or you never heard it."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Either way..."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "you're here."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Don't follow the voices."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I did."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That's why something wearing me learned how to wait."
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_what_wears_him",
+          "text": "WHAT IS WEARING YOU?",
+          "effects": {
+            "askedWhatWearsGrant": true,
+            "danger": 4,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e22_n09_wearing"
+        },
+        {
+          "id": "ask_house_two",
+          "text": "WHAT IS HOUSE TWO?",
+          "effects": {
+            "askedHouseTwo": true,
+            "danger": 3,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e22_n09_house_two"
+        }
+      ]
+    },
+    "e22_n09_wearing": {
+      "id": "e22_n09_wearing",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I don't know anymore."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Some days it feels like I'm the mask."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Some days it feels like I'm the thing underneath."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Worst days..."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I can't tell which one is lying."
+        }
+      ],
+      "nextNodeId": "e22_n10_founder_record"
+    },
+    "e22_n09_house_two": {
+      "id": "e22_n09_house_two",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "House Two is not a place."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It's a habit."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "A mouth the Door kept open."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It speaks with whoever failed to leave."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I failed better than most."
+        }
+      ],
+      "nextNodeId": "e22_n10_founder_record"
+    },
+    "e22_n10_founder_record": {
+      "id": "e22_n10_founder_record",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "file",
+          "id": "grant_founder_record_22",
+          "fileId": "grant_founder_record_22",
+          "fileType": "log",
+          "title": "FOUNDER RECORD: GRANT MERCER",
+          "content": "NAME: GRANT MERCER\nSTATUS: DECEASED\nDATE OF DEATH: 17 YEARS AGO\nHOUSE: 02\nFOUNDER CLASSIFICATION: CONFIRMED\nRETURN STATUS: FAILED\nCURRENT SIGNAL: RETAINED / ACTIVE",
+          "caption": "Founder record confirms Grant Mercer died seventeen years ago but remains retained and active in House Two.",
+          "source": "HOUSE_TWO_CORE",
+          "tags": [
+            "grant_mercer",
+            "founder",
+            "deceased",
+            "house_two"
+          ],
+          "correlationTags": [
+            "grant_identity",
+            "founder_record",
+            "house_two"
+          ],
+          "message": "[GRANT FOUNDER RECORD ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Then who are you?",
+          "speaker": "EVA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "..."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I don't know anymore.",
+          "speaker": "GRANT"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "HE IS NOT THE FIRST GRANT.",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": [
+        {
+          "id": "correlate_identity",
+          "text": "CORRELATE GRANT IDENTITY.",
+          "effects": {
+            "grantIdentityCorrelationStarted": true,
+            "danger": 3,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e22_n11_puzzle"
+        },
+        {
+          "id": "secure_grant_before_correlation",
+          "text": "SECURE GRANT FIRST.",
+          "effects": {
+            "grantSecuredBeforeCorrelation": true,
+            "grantTrust": 3,
+            "danger": 1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e22_n10b_secure"
+        }
+      ]
+    },
+    "e22_n10b_secure": {
+      "id": "e22_n10b_secure",
+      "speaker": "EVA",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Grant, stay where we can see you."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "He laughed."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Not because it was funny."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Because 'where we can see you' means something different in this place."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Still."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "He's staying."
+        }
+      ],
+      "nextNodeId": "e22_n11_puzzle"
+    },
+    "e22_n11_puzzle": {
+      "id": "e22_n11_puzzle",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[GRANT IDENTITY CORRELATION REQUIRED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "grant_identity_correlation_22",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e22_n13_fail": {
+      "id": "e22_n13_fail",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[GRANT IDENTITY CORRELATION FAILED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": -5
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No.",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Biometric means body pattern."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Death record means Grant died."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "House Two voice means Grant was retained."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "If we get this wrong, it gets to choose which Grant answers."
+        }
+      ],
+      "choices": [
+        {
+          "id": "retry_grant_identity",
+          "text": "RETRY CORRELATION.",
+          "effects": {
+            "danger": 1,
+            "signalStrength": -1
+          },
+          "nextNodeId": "e22_n11_puzzle"
+        },
+        {
+          "id": "stabilize_then_retry",
+          "text": "STABILIZE, THEN RETRY.",
+          "effects": {
+            "danger": -1,
+            "signalStrength": 2
+          },
+          "nextNodeId": "e22_n10b_secure"
+        }
+      ]
+    },
+    "e22_n14_grant_confirmed": {
+      "id": "e22_n14_grant_confirmed",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[GRANT IDENTITY CONFIRMED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "danger": 4,
+            "signalStrength": 3
+          }
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Body pattern is Grant.",
+          "speaker": "NOAH"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Death record says Grant died.",
+          "speaker": "MAYA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "House Two retained what came back.",
+          "speaker": "EVA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That is the worst possible compromise.",
+          "speaker": "GRANT"
+        }
+      ],
+      "choices": [
+        {
+          "id": "trust_grant_path",
+          "text": "TRUST GRANT'S PATH.",
+          "effects": {
+            "grantPath": true,
+            "houseTwoUnlocked": true,
+            "grantTrust": 5,
+            "danger": 5,
+            "signalStrength": -4,
+            "episode23StartMode": "house_two_unlocked",
+            "irreversibleConsequence": "house_two_unlocked"
+          },
+          "nextNodeId": "e22_n15_trust_grant"
+        },
+        {
+          "id": "trust_hale_seal",
+          "text": "TRUST HALE AND SEAL HOUSE TWO.",
+          "effects": {
+            "houseTwoSealed": true,
+            "grantTrustLost": true,
+            "haleTrust": 5,
+            "danger": 2,
+            "signalStrength": 3,
+            "episode23StartMode": "house_two_sealed",
+            "irreversibleConsequence": "house_two_evidence_lost"
+          },
+          "nextNodeId": "e22_n15_trust_hale"
+        }
+      ]
+    },
+    "e22_n15_trust_grant": {
+      "id": "e22_n15_trust_grant",
+      "speaker": "GRANT",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "You trust me."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "That is either kind or stupid."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I don't remember which one saves people."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "House Two is opening."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "If it starts using my voice..."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "don't answer me too quickly."
+        },
+        {
+          "type": "systemAlert",
+          "text": "[HOUSE TWO UNLOCKED]",
+          "pauseAfterMs": 700
+        }
+      ],
+      "nextNodeId": "e22_n16_team_photo"
+    },
+    "e22_n15_trust_hale": {
+      "id": "e22_n15_trust_hale",
+      "speaker": "HALE",
+      "events": [
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Seal it."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Now."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Before it convinces you that mercy and access are the same thing."
+        },
+        {
+          "type": "systemAlert",
+          "text": "[HOUSE TWO LINK SEALED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Grant is staring at the floor.",
+          "speaker": "EVA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "He looks... smaller."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "You cut off his way out.",
+          "speaker": "NOAH"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Or his way in.",
+          "speaker": "HALE"
+        }
+      ],
+      "nextNodeId": "e22_n16_team_photo"
+    },
+    "e22_n16_team_photo": {
+      "id": "e22_n16_team_photo",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "image",
+          "id": "grant_team_photo_v8",
           "fileId": "grant_team_photo",
           "title": "TEAM MERCER",
-          "caption": "Old team photo recovered from Grant's archives.",
+          "caption": "Old team photo recovered from Grant's retained archive. One face is blurred in every version.",
           "src": "/images/grant_team_photo.jpg",
-          "titleKey": "episode_22.e22_n13.event0.title",
-          "captionKey": "episode_22.e22_n13.event0.caption"
-        }
-      ],
-      "choices": [
+          "pauseAfterMs": 700
+        },
         {
-          "id": "continue_12",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n14",
-          "textKey": "episode_22.e22_n13.choice0.text"
-        }
-      ]
-    },
-    "e22_n14": {
-      "id": "e22_n14",
-      "speaker": "GRANT",
-      "events": [
+          "type": "file",
+          "id": "team_mercer_record_22",
+          "fileId": "team_mercer_record_22",
+          "fileType": "log",
+          "title": "TEAM MERCER RECORD",
+          "content": "TEAM MERCER: 6 LISTED MEMBERS\nHOUSE TWO FOUNDER: GRANT MERCER\nUNLISTED PRESENCE: 1\nVISUAL STATUS: blurred across all recovered frames\nNOTE: AEON did not erase this figure. House Two refuses to resolve it.",
+          "caption": "Team Mercer record contains an unresolved seventh presence.",
+          "source": "HOUSE_TWO_ARCHIVE",
+          "tags": [
+            "grant_mercer",
+            "team_mercer",
+            "unlisted_presence",
+            "house_two"
+          ],
+          "correlationTags": [
+            "eighth_founder",
+            "operator_trace",
+            "episode_23_hook"
+          ],
+          "message": "[TEAM MERCER RECORD ARCHIVED TO DATA BANK]",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
         {
           "type": "message",
           "text": "That's them.",
-          "textKey": "episode_22.e22_n14.event0.text"
+          "speaker": "GRANT"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "All six.",
-          "textKey": "episode_22.e22_n14.event1.text"
+          "text": "All six."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "AEON remembers them better than I do.",
-          "textKey": "episode_22.e22_n14.event2.text"
+          "text": "And the blur?",
+          "speaker": "EVA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I used to think that was damage.",
+          "speaker": "GRANT"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "It isn't."
         }
       ],
       "choices": [
         {
-          "id": "continue_13",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n15",
-          "textKey": "episode_22.e22_n14.choice0.text"
+          "id": "ask_about_blur",
+          "text": "ASK ABOUT THE BLURRED FIGURE.",
+          "effects": {
+            "askedAboutBlur": true,
+            "danger": 4,
+            "signalStrength": -2
+          },
+          "nextNodeId": "e22_n17_blur"
+        },
+        {
+          "id": "ask_about_team_loss",
+          "text": "ASK WHAT HAPPENED TO THE TEAM.",
+          "effects": {
+            "askedTeamLoss": true,
+            "grantTrust": 2,
+            "danger": 3
+          },
+          "nextNodeId": "e22_n17_team"
         }
       ]
     },
-    "e22_n15": {
-      "id": "e22_n15",
-      "speaker": "EVA",
-      "events": [
-        {
-          "type": "message",
-          "text": "What happened to them?",
-          "textKey": "episode_22.e22_n15.event0.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_14",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n16",
-          "textKey": "episode_22.e22_n15.choice0.text"
-        }
-      ]
-    },
-    "e22_n16": {
-      "id": "e22_n16",
+    "e22_n17_team": {
+      "id": "e22_n17_team",
       "speaker": "GRANT",
       "events": [
         {
           "type": "typing",
-          "duration": 2500
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "AEON happened.",
-          "textKey": "episode_22.e22_n16.event1.text"
+          "text": "I lost everyone."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "And once it learns your voice...",
-          "textKey": "episode_22.e22_n16.event2.text"
+          "text": "No."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "It never forgets.",
-          "textKey": "episode_22.e22_n16.event3.text"
+          "text": "That's too clean."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "I led them where the voices told me to go."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "One by one, House Two learned them."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "By the end..."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "it remembered them better than I did."
         }
       ],
-      "choices": [
-        {
-          "id": "continue_15",
-          "text": "CONTINUE.",
-          "nextNodeId": "e22_n17",
-          "textKey": "episode_22.e22_n16.choice0.text"
-        }
-      ]
+      "nextNodeId": "e22_n18_reveal"
     },
-    "e22_n17": {
-      "id": "e22_n17",
+    "e22_n17_blur": {
+      "id": "e22_n17_blur",
       "speaker": "GRANT",
       "events": [
         {
-          "type": "message",
-          "text": "I know a way to Node 02.",
-          "textKey": "episode_22.e22_n17.event0.text"
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "But it's dangerous.",
-          "textKey": "episode_22.e22_n17.event1.text"
+          "text": "The blur is not missing."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "And if I'm right...",
-          "textKey": "episode_22.e22_n17.event2.text"
+          "text": "It's refusing."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Someone has been guiding you there from the beginning.",
-          "textKey": "episode_22.e22_n17.event3.text"
+          "text": "Every time I try to remember the face, House Two changes the room."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "But I remember the title."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Founder."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "And I remember Hale saying there were only seven."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "He was wrong."
         }
       ],
-      "choices": [
-        {
-          "id": "trust_grant",
-          "text": "TRUST GRANT.",
-          "flags": {
-            "trustedGrant": true
-          },
-          "effects": {
-            "grantTrust": 10
-          },
-          "nextNodeId": "e22_n18",
-          "textKey": "episode_22.e22_n17.choice0.text"
-        },
-        {
-          "id": "follow_eva",
-          "text": "FOLLOW EVA.",
-          "flags": {
-            "trustedGrant": false
-          },
-          "effects": {
-            "evaTrust": 5
-          },
-          "nextNodeId": "e22_n18",
-          "textKey": "episode_22.e22_n17.choice1.text"
-        }
-      ]
+      "nextNodeId": "e22_n18_reveal"
     },
-    "e22_n18": {
-      "id": "e22_n18",
+    "e22_n18_reveal": {
+      "id": "e22_n18_reveal",
       "speaker": "GRANT",
       "events": [
         {
-          "type": "message",
-          "text": "Choose carefully.",
-          "textKey": "episode_22.e22_n18.event0.text"
+          "type": "typing",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Some mistakes stay with you.",
-          "textKey": "episode_22.e22_n18.event1.text"
+          "text": "There weren't seven founders."
         },
         {
-          "type": "backgroundEvent",
-          "delay": 5000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "He's right.",
-            "textKey": "episode_22.e22_n18.backgroundEvent2.text"
-          }
+          "type": "typing",
+          "duration": 1400
         },
         {
-          "type": "backgroundEvent",
-          "delay": 9000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "You've already made one.",
-            "textKey": "episode_22.e22_n18.backgroundEvent3.text"
+          "type": "message",
+          "text": "What?",
+          "speaker": "EVA"
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "There were eight."
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "No...",
+          "speaker": "HALE"
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "FINALLY.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "SOMEONE REMEMBERED.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "The Eighth Founder opened the first Door."
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "AND YOU CALL HIM",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "OPERATOR.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "signalLost",
+          "duration": 3200,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "eighthFounderRevealed": true,
+            "operatorFounderRevealed": true,
+            "danger": 8,
+            "signalStrength": -6
           }
         }
       ],
       "choices": [
         {
-          "id": "end_episode_22",
-          "text": "END TRANSMISSION",
-          "nextEpisodeId": "episode_23",
-          "textKey": "episode_22.e22_n18.choice0.text"
+          "id": "open_eighth_founder_record",
+          "text": "OPEN EIGHTH FOUNDER RECORD.",
+          "effects": {
+            "openEighthFounderRecordEpisode23": true,
+            "eighthFounderRevealed": true,
+            "danger": 5,
+            "signalStrength": -5,
+            "episode23StartMode": "eighth_founder_record"
+          },
+          "nextEpisodeId": "episode_23"
+        },
+        {
+          "id": "seal_operator_record",
+          "text": "SEAL OPERATOR RECORD.",
+          "effects": {
+            "sealOperatorRecordEpisode23": true,
+            "eighthFounderRevealed": true,
+            "danger": 2,
+            "signalStrength": 3,
+            "episode23StartMode": "operator_record_sealed"
+          },
+          "nextEpisodeId": "episode_23"
         }
       ]
     }
   },
-  "titleKey": "episode_22.meta.episode0.title"
+  "relationshipConsequenceSystem": {
+    "episode22PersistentFlags": [
+      "approachedGrantCarefully",
+      "challengedGrantIdentity",
+      "trustedHaleRecord",
+      "listenedToGrant",
+      "grantFirstImpression",
+      "noahProtectedFromGrant",
+      "usedNoahRecognition",
+      "noahMemoryCost",
+      "askedWhatWearsGrant",
+      "askedHouseTwo",
+      "grantIdentityCorrelationStarted",
+      "grantSecuredBeforeCorrelation",
+      "grantPath",
+      "houseTwoUnlocked",
+      "houseTwoSealed",
+      "grantTrustLost",
+      "askedAboutBlur",
+      "askedTeamLoss",
+      "eighthFounderRevealed",
+      "operatorFounderRevealed",
+      "openEighthFounderRecordEpisode23",
+      "sealOperatorRecordEpisode23"
+    ],
+    "episode23UsageNotes": {
+      "houseTwoUnlocked": "Episode 23 can access deeper Grant/House Two evidence but with higher danger.",
+      "houseTwoSealed": "Episode 23 starts safer but with permanent House Two evidence loss.",
+      "grantTrustLost": "Grant may be hostile, less helpful, or unavailable.",
+      "usedNoahRecognition": "Noah starts Episode 23 with stronger Grant recognition but worse personal memory stability.",
+      "noahProtectedFromGrant": "Noah starts Episode 23 more stable.",
+      "askedAboutBlur": "Episode 23 can focus quickly on the Eighth Founder visual anomaly.",
+      "askedTeamLoss": "Episode 23 can foreground Grant guilt and House Two victim memories.",
+      "eighthFounderRevealed": "Episode 23 must treat the Operator as the Eighth Founder candidate.",
+      "openEighthFounderRecordEpisode23": "Episode 23 opens with the Eighth Founder record being accessed.",
+      "sealOperatorRecordEpisode23": "Episode 23 opens with the team trying to seal the Operator record while Omega pushes back."
+    }
+  },
+  "directorCut": {
+    "version": "FINAL_DIRECTORS_CUT_V8",
+    "sourceEpisode": "episode_22",
+    "coreRewrite": "Rebuilt from the provided Episode 22 JSON. The living-survivor meeting was transformed into a House Two / Grant identity paradox and Eighth Founder reveal.",
+    "majorChanges": [
+      "Episode objective changed from meeting Grant to proving whether Grant is really Grant.",
+      "Episode 21 continuity preserved: Grant is Founder, not survivor.",
+      "UNKNOWN now pushes concrete story information: House Two, retained Grant, not the first Grant.",
+      "Hale reacts strongly because he remembers Grant dying and destroying the report.",
+      "Noah's memory collapse continues and can be protected or exploited.",
+      "Added Grant Identity Correlation puzzle.",
+      "Added real consequence: trust Grant unlocks House Two; trust Hale seals House Two and loses evidence.",
+      "Team Mercer photo now contains a blurred unlisted presence.",
+      "Final reveal: there were eight Founders; the Eighth Founder opened the first Door and is called Operator.",
+      "Episode 23 hook branches between opening or sealing the Eighth Founder record."
+    ],
+    "qualityTarget": {
+      "concreteObjective": "10/10",
+      "humanization": "10/10",
+      "unknownStoryFunction": "10/10",
+      "consequence": "10/10",
+      "horror": "10/10",
+      "cliffhanger": "10/10",
+      "rulesCompliance": "9.5/10"
+    },
+    "nextEpisode": "episode_23"
+  }
 }

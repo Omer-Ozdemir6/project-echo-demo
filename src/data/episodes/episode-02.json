@@ -1,5168 +1,1650 @@
 {
   "id": "episode_02",
-  "title": "THE RECORDINGS — ECHO HUMANIZATION PASS V4",
-  "startNodeId": "e02_n01",
-  "designRules": {
-    "mode": "ECHO_HUMANIZATION_PASS_V4",
-    "objective": "Make Episode 02 feel like Hale and the Operator are performing a live archive recovery together: less report language, more in-the-moment reactions, stronger co-action, clearer fear, and visible consequence from player pressure.",
-    "choiceRule": "Every visible choice group has exactly two options.",
-    "dialoguePolicy": "No report-style action summaries. Hale should experience actions with the Operator through observation, interruption, hesitation, pain, fear, and small decisions.",
-    "coActionPolicy": "Doors, corridors, terminals, archive devices, and evidence decisions should invite operator participation rather than happen off-screen.",
-    "trustPolicy": "Trust changes are felt through dialogue, hesitation, cooperation, and future flags.",
-    "pacingPolicy": "Shorter is acceptable when it improves flow. Remove filler, exposition dumps, and redundant report lines."
+  "season": 1,
+  "episode": 2,
+  "title": "THE LOCKER",
+  "startNodeId": "e02_n01_return",
+  "designVersion": "episode_02_final_directors_cut_v1_no_visible_episode_transition",
+  "episodeObjective": "Continue naturally after Elias's sleep cycle, deepen the operator-Elias relationship, open the A-12 locker through a real code puzzle, reveal the scratched warning and the recorder, then send Elias offline to analyze the recorder without exposing episode boundaries to the player.",
+  "rulesApplied": [
+    "No visible END OF EPISODE or NEXT EPISODE alerts.",
+    "No image events.",
+    "Episode transition is hidden through characterBusy/offline flow.",
+    "Every non-system Elias message has typing before it.",
+    "Relationship-first opening before the task.",
+    "One concrete objective: open the A-12 locker.",
+    "One puzzle only: CodePuzzleInput for the locker override.",
+    "ProgressTask, glitch and signalLost are used as atmosphere, not filler.",
+    "Horror comes from implication, silence, logs and Elias's reactions.",
+    "Choices affect trust, danger, stress and future behavior."
+  ],
+  "globalFlags": {
+    "trust": 0,
+    "danger": 0,
+    "eliasStress": 0,
+    "operatorDistance": 0,
+    "lockerInspected": false,
+    "lockerTouchedEarly": false,
+    "scratchesFound": false,
+    "lockerCodeSolved": false,
+    "lockerOpened": false,
+    "recorderFound": false,
+    "recorderAnalysisStarted": false
   },
   "puzzles": {
-    "decrypt_disk_02": {
-      "id": "decrypt_disk_02",
-      "type": "decrypt",
-      "title": "ARCHIVE DECRYPTION",
-      "description": "Encrypted archive device detected. Hale must stay near the terminal while you recover the printed access key.",
-      "prompt": "DECRYPT ARCHIVE KEY",
-      "placeholder": "*****",
-      "inputMode": "text",
-      "maxLength": 12,
-      "submitLabel": "DECRYPT",
-      "seed": "INCIDENT",
-      "targetFrequency": "ALPHA",
+    "locker_a12_override": {
+      "id": "locker_a12_override",
+      "type": "code",
+      "title": "LOCKER A-12 MANUAL OVERRIDE",
+      "description": "The locker accepts a four-digit emergency override. Elias can only see fragments around the frame.",
+      "accessLevel": "REMOTE",
+      "panelStatus": "LOCKED",
+      "expectedFormat": "4 DIGITS",
+      "prompt": "ENTER MANUAL OVERRIDE CODE",
+      "placeholder": "----",
+      "maxLength": 4,
+      "inputMode": "numeric",
+      "uppercaseInput": false,
       "acceptedAnswers": [
-        "ALPHA"
+        "0311",
+        "311"
       ],
-      "successNodeId": "e02_n07_archive_opened",
-      "failureNodeId": "e02_n06_decrypt_fail",
-      "submitCooldownMs": 500,
-      "expectedFormat": "ARCHIVE KEY",
-      "knownFragment": "INCIDENT ___",
       "hints": [
-        "CHECK THE DEVICE LABEL",
-        "THE KEY IS PRINTED AS A DIRECT HINT",
-        "TYPE THE KEY EXACTLY"
+        {
+          "text": "Elias found a scratched date on the inner frame."
+        },
+        {
+          "text": "The date reads 03/11."
+        },
+        {
+          "text": "Try the date without the slash."
+        }
       ],
-      "titleKey": "episode_02.decrypt_disk_02.puzzle0.title",
-      "descriptionKey": "episode_02.decrypt_disk_02.puzzle0.description",
-      "promptKey": "episode_02.decrypt_disk_02.puzzle0.prompt",
-      "submitLabelKey": "episode_02.decrypt_disk_02.puzzle0.submitLabel",
-      "placeholderKey": "episode_02.decrypt_disk_02.puzzle0.placeholder"
+      "successNodeId": "e02_n16_code_success",
+      "failureNodeId": "e02_n15_code_fail",
+      "submitLabel": "TRANSMIT"
     }
   },
   "nodes": {
-    "e02_n01": {
-      "id": "e02_n01",
-      "speaker": "HALE",
+    "e02_n01_return": {
+      "id": "e02_n01_return",
+      "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Door 12 is locked away.",
-          "textKey": "episode_02.e02_n01.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1700
-        },
-        {
-          "type": "message",
-          "text": "Still feels like it's in the room.",
-          "textKey": "episode_02.e02_n01.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Stupid thing to say.",
-          "textKey": "episode_02.e02_n01.event6.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "My hands won't stop.",
-          "textKey": "episode_02.e02_n01.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "You still there?",
-          "textKey": "episode_02.e02_n01.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Good.",
-          "textKey": "episode_02.e02_n01.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "I know. You didn't answer.",
-          "textKey": "episode_02.e02_n01.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "I needed to ask.",
-          "textKey": "episode_02.e02_n01.event18.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Exit's beside me.",
-          "textKey": "episode_02.e02_n01.event21.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Archive Sector C should be below this deck.",
-          "textKey": "episode_02.e02_n01.event23.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Past the old junction.",
-          "textKey": "episode_02.e02_n01.event25.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Coffee cart used to be there.",
-          "textKey": "episode_02.e02_n01.event28.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "I remember coffee.",
-          "textKey": "episode_02.e02_n01.event30.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Not the death record.",
-          "textKey": "episode_02.e02_n01.event32.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "press_hale_now",
-          "text": "ASK WHAT HE IS HIDING.",
-          "nextNodeId": "e02_n01_pressure",
-          "effects": {
-            "haleTrust": -3,
-            "danger": 2
-          },
-          "textKey": "episode_02.e02_n01.choice0.text"
-        },
-        {
-          "id": "move_hale_to_archive",
-          "text": "SEND HIM TO THE ARCHIVE.",
-          "nextNodeId": "e02_n01_focus",
-          "effects": {
-            "haleTrust": 2,
-            "signalStrength": 1
-          },
-          "textKey": "episode_02.e02_n01.choice1.text"
-        }
-      ]
-    },
-    "e02_n01_pressure": {
-      "id": "e02_n01_pressure",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "You heard that.",
-          "textKey": "episode_02.e02_n01_pressure.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 800
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Yeah.",
-          "textKey": "episode_02.e02_n01_pressure.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "I remember the delete prompt.",
-          "textKey": "episode_02.e02_n01_pressure.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Not cleanly.",
-          "textKey": "episode_02.e02_n01_pressure.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Red light.",
-          "textKey": "episode_02.e02_n01_pressure.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "My hand over the key.",
-          "textKey": "episode_02.e02_n01_pressure.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Someone behind me.",
-          "textKey": "episode_02.e02_n01_pressure.event15.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Maybe.",
-          "textKey": "episode_02.e02_n01_pressure.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "See?",
-          "textKey": "episode_02.e02_n01_pressure.event20.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "That's what I hate.",
-          "textKey": "episode_02.e02_n01_pressure.event22.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Everything becomes maybe.",
-          "textKey": "episode_02.e02_n01_pressure.event24.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "I pressed something.",
-          "textKey": "episode_02.e02_n01_pressure.event27.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "I don't know why.",
-          "textKey": "episode_02.e02_n01_pressure.event29.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "That's the honest version.",
-          "textKey": "episode_02.e02_n01_pressure.event31.text"
-        }
-      ],
-      "nextNodeId": "e02_n02_corridor"
-    },
-    "e02_n01_focus": {
-      "id": "e02_n01_focus",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Okay.",
-          "textKey": "episode_02.e02_n01_focus.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Door's right here.",
-          "textKey": "episode_02.e02_n01_focus.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Corridor outside is darker.",
-          "textKey": "episode_02.e02_n01_focus.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Floor strip keeps blinking wrong.",
-          "textKey": "episode_02.e02_n01_focus.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Dust.",
-          "textKey": "episode_02.e02_n01_focus.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Footprints.",
-          "textKey": "episode_02.e02_n01_focus.event13.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Mine, I think.",
-          "textKey": "episode_02.e02_n01_focus.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "I'm choosing mine.",
-          "textKey": "episode_02.e02_n01_focus.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Don't ruin that for me, station.",
-          "textKey": "episode_02.e02_n01_focus.event20.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Stay with me.",
-          "textKey": "episode_02.e02_n01_focus.event23.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "I need your eyes.",
-          "textKey": "episode_02.e02_n01_focus.event25.text"
-        }
-      ],
-      "nextNodeId": "e02_n02_corridor"
-    },
-    "e02_n02_corridor": {
-      "id": "e02_n02_corridor",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Door's stuck.",
-          "textKey": "episode_02.e02_n02_corridor.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Come on...",
-          "textKey": "episode_02.e02_n02_corridor.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Seriously?",
-          "textKey": "episode_02.e02_n02_corridor.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "There we go.",
-          "textKey": "episode_02.e02_n02_corridor.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Service corridor.",
-          "textKey": "episode_02.e02_n02_corridor.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Left wall's scraped raw.",
-          "textKey": "episode_02.e02_n02_corridor.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Paint curled off the metal.",
-          "textKey": "episode_02.e02_n02_corridor.event15.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Something hit this hard.",
-          "textKey": "episode_02.e02_n02_corridor.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Or someone did.",
-          "textKey": "episode_02.e02_n02_corridor.event20.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Operator?",
-          "textKey": "episode_02.e02_n02_corridor.event23.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Still with me?",
-          "textKey": "episode_02.e02_n02_corridor.event25.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Don't answer.",
-          "textKey": "episode_02.e02_n02_corridor.event27.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "I just needed the shape of the question.",
-          "textKey": "episode_02.e02_n02_corridor.event29.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "walk_to_archive_access_v4",
-          "character": "HALE",
-          "status": "IS IN TRANSIT",
-          "durationMs": 5000,
-          "returnNodeId": "e02_n02_corridor_return",
-          "message": "[HALE IS MOVING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Hale sent a message.",
-          "tone": "character",
-          "pauseAfterMs": 700,
-          "messageKey": "episode_02.e02_n02_corridor.event30.message"
-        }
-      ],
-      "objective": "Start a real-time interruption for HALE."
-    },
-    "e02_n03_main": {
-      "id": "e02_n03_main",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Main corridor.",
-          "textKey": "episode_02.e02_n03_main.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Lights dead overhead.",
-          "textKey": "episode_02.e02_n03_main.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Floor strips still working.",
-          "textKey": "episode_02.e02_n03_main.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Something rolled.",
-          "textKey": "episode_02.e02_n03_main.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 900
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Bolt.",
-          "textKey": "episode_02.e02_n03_main.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "I think.",
-          "textKey": "episode_02.e02_n03_main.event13.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Not naming it.",
-          "textKey": "episode_02.e02_n03_main.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Names make things real.",
-          "textKey": "episode_02.e02_n03_main.event18.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "main_corridor_crossing_v4",
-          "character": "HALE",
-          "status": "IS IN TRANSIT",
-          "durationMs": 4500,
-          "returnNodeId": "e02_n03_main_return",
-          "message": "[HALE IS MOVING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Hale sent a message.",
-          "tone": "danger",
-          "pauseAfterMs": 700,
-          "messageKey": "episode_02.e02_n03_main.event19.message"
-        }
-      ],
-      "objective": "Start a real-time interruption for HALE."
-    },
-    "e02_n03_ladder": {
-      "id": "e02_n03_ladder",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Service ladder.",
-          "textKey": "episode_02.e02_n03_ladder.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Bad option.",
-          "textKey": "episode_02.e02_n03_ladder.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Still the smart one.",
-          "textKey": "episode_02.e02_n03_ladder.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Hatch is stiff.",
-          "textKey": "episode_02.e02_n03_ladder.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Give me a second.",
-          "textKey": "episode_02.e02_n03_ladder.event10.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Smells like hot cable insulation.",
-          "textKey": "episode_02.e02_n03_ladder.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Old dust too.",
-          "textKey": "episode_02.e02_n03_ladder.event15.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Noah hated this route.",
-          "textKey": "episode_02.e02_n03_ladder.event18.text"
-        },
-        {
-          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 1800
         },
         {
           "type": "message",
-          "text": "Said it was built by someone who never met shoulders.",
-          "textKey": "episode_02.e02_n03_ladder.event20.text"
+          "text": "Uyuyor musun?",
+          "pauseAfterMs": 12000
         },
         {
           "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "He was right.",
-          "textKey": "episode_02.e02_n03_ladder.event22.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Ribs are voting no.",
-          "textKey": "episode_02.e02_n03_ladder.event25.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Hands on the ladder.",
-          "textKey": "episode_02.e02_n03_ladder.event27.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "service_ladder_descent_v4",
-          "character": "HALE",
-          "status": "IS CLIMBING",
-          "durationMs": 6000,
-          "returnNodeId": "e02_n03_ladder_return",
-          "message": "[HALE IS CLIMBING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Hale sent a message.",
-          "tone": "character",
-          "pauseAfterMs": 700,
-          "messageKey": "episode_02.e02_n03_ladder.event28.message"
-        }
-      ],
-      "objective": "Start a real-time interruption for HALE."
-    },
-    "e02_n04_archive_door": {
-      "id": "e02_n04_archive_door",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Archive door.",
-          "textKey": "episode_02.e02_n04_archive_door.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Lock frame's blistered.",
-          "textKey": "episode_02.e02_n04_archive_door.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Heat came from inside.",
-          "textKey": "episode_02.e02_n04_archive_door.event6.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Window's filthy.",
-          "textKey": "episode_02.e02_n04_archive_door.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Wiping it.",
-          "textKey": "episode_02.e02_n04_archive_door.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Bad idea.",
-          "textKey": "episode_02.e02_n04_archive_door.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Rows inside.",
-          "textKey": "episode_02.e02_n04_archive_door.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Most dark.",
-          "textKey": "episode_02.e02_n04_archive_door.event18.text"
-        },
-        {
-          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 1400
         },
         {
           "type": "message",
-          "text": "One blue light at the far end.",
-          "textKey": "episode_02.e02_n04_archive_door.event20.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
+          "text": "Umarım hayır.",
+          "pauseAfterMs": 8000
         },
         {
           "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Çünkü biraz garip bir şey oldu.",
+          "pauseAfterMs": 6000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 900
         },
         {
           "type": "message",
-          "text": "Panel's awake.",
-          "textKey": "episode_02.e02_n04_archive_door.event23.text"
+          "text": "Tamam.",
+          "pauseAfterMs": 2500
         },
         {
           "type": "typing",
-          "duration": 600
+          "speaker": "ELIAS",
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Amber.",
-          "textKey": "episode_02.e02_n04_archive_door.event25.text"
+          "text": "Aslında bu cümleyi burada kullanmak büyük hata.",
+          "pauseAfterMs": 5000
         },
         {
           "type": "typing",
-          "duration": 600
+          "speaker": "ELIAS",
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Red.",
-          "textKey": "episode_02.e02_n04_archive_door.event27.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Lock's cycling.",
-          "textKey": "episode_02.e02_n04_archive_door.event30.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "What do you want?",
-          "textKey": "episode_02.e02_n04_archive_door.event32.text"
+          "text": "Burada her şey zaten garip."
         }
       ],
       "choices": [
         {
-          "id": "scan_archive_door",
-          "text": "SCAN THE DOOR FIRST.",
-          "nextNodeId": "e02_n05_scan",
+          "id": "what_happened",
+          "text": "NE OLDU?",
           "effects": {
-            "danger": -2,
-            "haleTrust": 2,
-            "archiveEvidencePreserved": true
+            "trust": 1,
+            "eliasStress": -1
           },
-          "textKey": "episode_02.e02_n04_archive_door.choice0.text"
+          "nextNodeId": "e02_n02_what_happened"
         },
         {
-          "id": "force_archive_panel",
-          "text": "FORCE THE PANEL NOW.",
-          "nextNodeId": "e02_n05_force",
+          "id": "opened_locker",
+          "text": "DOLABI MI AÇTIN?",
           "effects": {
-            "danger": 5,
-            "signalStrength": -4,
-            "haleStress": 3,
-            "archiveEvidenceDamaged": true
+            "trust": 0,
+            "eliasStress": 1
           },
-          "textKey": "episode_02.e02_n04_archive_door.choice1.text"
+          "nextNodeId": "e02_n03_locker_guess"
         }
       ]
     },
-    "e02_n05_scan": {
-      "id": "e02_n05_scan",
-      "speaker": "HALE",
+    "e02_n02_what_happened": {
+      "id": "e02_n02_what_happened",
+      "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
-          "duration": 600
+          "speaker": "ELIAS",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Alright.",
-          "textKey": "episode_02.e02_n05_scan.event1.text"
+          "text": "Hayır.",
+          "pauseAfterMs": 2500
         },
         {
           "type": "typing",
-          "duration": 800
+          "speaker": "ELIAS",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Scanner's up.",
-          "textKey": "episode_02.e02_n05_scan.event3.text"
+          "text": "Henüz açmadım.",
+          "pauseAfterMs": 6000
         },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Sorun da bu zaten.",
+          "pauseAfterMs": 9000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Dolap açılmadan ses çıkardı."
+        }
+      ],
+      "nextNodeId": "e02_n04_sound"
+    },
+    "e02_n03_locker_guess": {
+      "id": "e02_n03_locker_guess",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Hayır.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Ama keşke sorun o olsaydı.",
+          "pauseAfterMs": 7000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Dolap kapalı.",
+          "pauseAfterMs": 6000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Yine de içeriden ses geldi."
+        }
+      ],
+      "nextNodeId": "e02_n04_sound"
+    },
+    "e02_n04_sound": {
+      "id": "e02_n04_sound",
+      "speaker": "ELIAS",
+      "events": [
         {
           "type": "pause",
-          "duration": 600
+          "duration": 10000
         },
         {
           "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Uyumaya çalışıyordum.",
+          "pauseAfterMs": 8000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Bunu başarı sayamayız.",
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Sonra dolabın olduğu taraftan bir ses geldi.",
+          "pauseAfterMs": 9000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 700
+        },
+        {
+          "type": "message",
+          "text": "Tek ses.",
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 700
+        },
+        {
+          "type": "message",
+          "text": "Tak.",
+          "pauseAfterMs": 10000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Böyle yazınca komik oldu.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Duyunca komik değildi."
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_sound_detail",
+          "text": "NASIL BİR SES?",
+          "effects": {
+            "trust": 1,
+            "danger": 1,
+            "askedSoundDetail": true
+          },
+          "nextNodeId": "e02_n05_sound_detail"
+        },
+        {
+          "id": "tell_do_not_check",
+          "text": "KONTROL ETME.",
+          "effects": {
+            "trust": 1,
+            "danger": -1,
+            "cautiousPattern": 1
+          },
+          "nextNodeId": "e02_n06_dont_check"
+        }
+      ]
+    },
+    "e02_n05_sound_detail": {
+      "id": "e02_n05_sound_detail",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2600
+        },
+        {
+          "type": "message",
+          "text": "Sanki içeriden biri vuruyormuş gibi.",
+          "pauseAfterMs": 12000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 900
         },
         {
           "type": "message",
-          "text": "Against the frame.",
-          "textKey": "episode_02.e02_n05_scan.event6.text"
+          "text": "Bir kez.",
+          "pauseAfterMs": 3000
         },
         {
           "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Metal's warm through the glove.",
-          "textKey": "episode_02.e02_n05_scan.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Don't like that.",
-          "textKey": "episode_02.e02_n05_scan.event11.text"
-        },
-        {
-          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 700
         },
         {
           "type": "message",
-          "text": "Hold on.",
-          "textKey": "episode_02.e02_n05_scan.event13.text"
+          "text": "Tak.",
+          "pauseAfterMs": 8000
         },
         {
           "type": "typing",
-          "duration": 1100
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Numbers are jumping.",
-          "textKey": "episode_02.e02_n05_scan.event15.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
+          "text": "Sonra hiçbir şey.",
+          "pauseAfterMs": 10000
         },
         {
           "type": "typing",
-          "duration": 500
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "No.",
-          "textKey": "episode_02.e02_n05_scan.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "I had it upside down.",
-          "textKey": "episode_02.e02_n05_scan.event20.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Professional moment.",
-          "textKey": "episode_02.e02_n05_scan.event22.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "archive_door_scan_v4",
-          "character": "HALE",
-          "status": "IS SCANNING",
-          "durationMs": 5000,
-          "returnNodeId": "e02_n05_scan_return",
-          "message": "[HALE IS SCANNING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Hale sent a message.",
-          "tone": "character",
-          "pauseAfterMs": 700,
-          "messageKey": "episode_02.e02_n05_scan.event23.message"
+          "text": "Bu arada burada 'hiçbir şey' de çok fazla şey ifade ediyor."
         }
       ],
-      "objective": "Start a real-time interruption for HALE."
+      "nextNodeId": "e02_n07_moral_question"
     },
-    "e02_n05_force": {
-      "id": "e02_n05_force",
-      "speaker": "HALE",
+    "e02_n06_dont_check": {
+      "id": "e02_n06_dont_check",
+      "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
-          "duration": 600
+          "speaker": "ELIAS",
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Okay.",
-          "textKey": "episode_02.e02_n05_force.event1.text"
+          "text": "Mantıklı tavsiye.",
+          "pauseAfterMs": 5000
         },
         {
           "type": "typing",
-          "duration": 1000
+          "speaker": "ELIAS",
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Hands on the panel.",
-          "textKey": "episode_02.e02_n05_force.event3.text"
+          "text": "Dinlemeyeceğim muhtemelen.",
+          "pauseAfterMs": 7000
         },
         {
           "type": "typing",
-          "duration": 1000
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Latch power's live.",
-          "textKey": "episode_02.e02_n05_force.event5.text"
+          "text": "Ama şunu bilmeni isterim.",
+          "pauseAfterMs": 5000
         },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Tavsiyenin mantıklı olduğunu kabul ediyorum.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "Bu da bir şey."
+        }
+      ],
+      "nextNodeId": "e02_n07_moral_question"
+    },
+    "e02_n07_moral_question": {
+      "id": "e02_n07_moral_question",
+      "speaker": "ELIAS",
+      "events": [
         {
           "type": "pause",
-          "duration": 600
+          "duration": 15000
         },
         {
           "type": "typing",
-          "duration": 1300
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "If this arcs, I'm blaming you.",
-          "textKey": "episode_02.e02_n05_force.event8.text"
+          "text": "Bir şey soracağım.",
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Dürüst cevap ver.",
+          "pauseAfterMs": 6000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Eğer sen olsaydın...",
+          "pauseAfterMs": 7000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "O dolabı açar mıydın?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "yes_open_it",
+          "text": "EVET. AÇARDIM.",
+          "effects": {
+            "trust": 1,
+            "danger": 2,
+            "operatorRiskHonesty": true
+          },
+          "nextNodeId": "e02_n08_open_answer"
+        },
+        {
+          "id": "no_not_yet",
+          "text": "HAYIR. ÖNCE İNCELERDİM.",
+          "effects": {
+            "trust": 2,
+            "danger": -1,
+            "cautiousPattern": 1
+          },
+          "nextNodeId": "e02_n09_inspect_answer"
+        }
+      ]
+    },
+    "e02_n08_open_answer": {
+      "id": "e02_n08_open_answer",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Tamam.",
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Bunu duymak istedim mi bilmiyorum.",
+          "pauseAfterMs": 6000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Ama en azından dürüstsün.",
+          "pauseAfterMs": 8000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Yaklaşıyorum."
+        }
+      ],
+      "nextNodeId": "e02_n10_locker_approach"
+    },
+    "e02_n09_inspect_answer": {
+      "id": "e02_n09_inspect_answer",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Evet.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Bu daha akıllıca.",
+          "pauseAfterMs": 6000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Ve sinir bozucu şekilde daha korkutucu.",
+          "pauseAfterMs": 6000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Yaklaşıyorum."
+        }
+      ],
+      "nextNodeId": "e02_n10_locker_approach"
+    },
+    "e02_n10_locker_approach": {
+      "id": "e02_n10_locker_approach",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Dolabın önündeyim.",
+          "pauseAfterMs": 8000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Hâlâ kapalı.",
+          "pauseAfterMs": 7000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Bunu söylemem saçma ama...",
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Kapalı durması beni rahatlatmadı.",
+          "pauseAfterMs": 8000
+        },
+        {
+          "type": "log",
+          "title": "PERSONNEL LOCKER A-12",
+          "content": "LOCKER: A-12 / SERVICE BAY\nNAMEPLATE: ELIAS REED\nSTATUS: LOCKED\nSURFACE DAMAGE: DETECTED\nLOCAL RECORD: PARTIAL\nAUXILIARY PANEL: ACTIVE",
+          "pauseAfterMs": 900
+        }
+      ],
+      "choices": [
+        {
+          "id": "inspect_surface",
+          "text": "ÖNCE DIŞINI İNCELE.",
+          "effects": {
+            "trust": 1,
+            "lockerInspected": true,
+            "danger": -1
+          },
+          "nextNodeId": "e02_n11_surface"
+        },
+        {
+          "id": "touch_locker",
+          "text": "KİLİDİ KONTROL ET.",
+          "effects": {
+            "lockerTouchedEarly": true,
+            "danger": 2,
+            "eliasStress": 1
+          },
+          "nextNodeId": "e02_n12_touch"
+        }
+      ]
+    },
+    "e02_n11_surface": {
+      "id": "e02_n11_surface",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Dışını inceliyorum.",
+          "pauseAfterMs": 12000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Çizikler var.",
+          "pauseAfterMs": 8000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Rastgele değil.",
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Yazı gibi.",
+          "pauseAfterMs": 12000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "Bekle.",
+          "pauseAfterMs": 12000
+        },
+        {
+          "type": "log",
+          "title": "SURFACE MARKINGS",
+          "content": "REPEATED SCRATCH PATTERN DETECTED\n\nOPEN IT\nOPEN IT\nOPEN IT\nOPEN IT\n\nDEPTH VARIATION: HUMAN HAND PRESSURE\nTOOL: UNKNOWN",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Bunu ben yazmış olamam.",
+          "pauseAfterMs": 8000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Değil mi?"
+        }
+      ],
+      "nextNodeId": "e02_n13_code_hint"
+    },
+    "e02_n12_touch": {
+      "id": "e02_n12_touch",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Kilit paneline dokunuyorum.",
+          "pauseAfterMs": 9000
         },
         {
           "type": "glitch",
-          "duration": 1000,
-          "pauseAfterMs": 600
+          "duration": 800,
+          "pauseAfterMs": 700
         },
         {
           "type": "typing",
-          "duration": 500
+          "speaker": "ELIAS",
+          "duration": 700
         },
         {
           "type": "message",
-          "text": "Ow.",
-          "textKey": "episode_02.e02_n05_force.event11.text"
+          "text": "Ah.",
+          "pauseAfterMs": 3000
         },
         {
           "type": "typing",
-          "duration": 800
+          "speaker": "ELIAS",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Still here.",
-          "textKey": "episode_02.e02_n05_force.event13.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
+          "text": "Statik yedim.",
+          "pauseAfterMs": 5000
         },
         {
           "type": "typing",
-          "duration": 900
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Door moved.",
-          "textKey": "episode_02.e02_n05_force.event16.text"
+          "text": "Dolap beni tanımadı.",
+          "pauseAfterMs": 7000
         },
         {
           "type": "typing",
-          "duration": 1500
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Quarantine latch jammed halfway.",
-          "textKey": "episode_02.e02_n05_force.event18.text"
+          "text": "Bu cümle de normal değil.",
+          "pauseAfterMs": 9000
         },
         {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Cache just went unstable.",
-          "textKey": "episode_02.e02_n05_force.event20.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Some evidence may degrade.",
-          "textKey": "episode_02.e02_n05_force.event23.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Not blaming you.",
-          "textKey": "episode_02.e02_n05_force.event25.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Not out loud.",
-          "textKey": "episode_02.e02_n05_force.event27.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "archiveEvidenceDamaged": true,
-            "danger": 3,
-            "haleStress": 2
-          }
+          "type": "log",
+          "title": "AUXILIARY PANEL REACTION",
+          "content": "CONTACT DETECTED\nBIOMETRIC RESPONSE: REJECTED\nMANUAL OVERRIDE REQUIRED\nSURFACE MARKINGS: DETECTED",
+          "pauseAfterMs": 900
         }
       ],
-      "nextNodeId": "e02_n06_device"
+      "nextNodeId": "e02_n11_surface"
     },
-    "e02_n06_device": {
-      "id": "e02_n06_device",
-      "speaker": "HALE",
+    "e02_n13_code_hint": {
+      "id": "e02_n13_code_hint",
+      "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
-          "duration": 850
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Sector C.",
-          "textKey": "episode_02.e02_n06_device.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
+          "text": "Panelin iç kenarında başka bir şey var.",
+          "pauseAfterMs": 10000
         },
         {
           "type": "typing",
-          "duration": 1000
+          "speaker": "ELIAS",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Rows on both sides.",
-          "textKey": "episode_02.e02_n06_device.event4.text"
+          "text": "Kazınmış gibi.",
+          "pauseAfterMs": 8000
         },
         {
           "type": "typing",
-          "duration": 700
+          "speaker": "ELIAS",
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Most dark.",
-          "textKey": "episode_02.e02_n06_device.event6.text"
+          "text": "03/11.",
+          "pauseAfterMs": 6000
         },
         {
           "type": "typing",
-          "duration": 1300
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "A few blinking under frost.",
-          "textKey": "episode_02.e02_n06_device.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
+          "text": "Tarih mi bilmiyorum.",
+          "pauseAfterMs": 5000
         },
         {
           "type": "typing",
-          "duration": 900
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Floor crunches.",
-          "textKey": "episode_02.e02_n06_device.event11.text"
+          "text": "Ya da biri çok kötü şifre seçmiş.",
+          "pauseAfterMs": 8000
+        },
+        {
+          "type": "log",
+          "title": "LOCKER FRAME MARKING",
+          "content": "INNER FRAME SCRATCH\nREADABLE FRAGMENT: 03/11\nFORMAT: UNKNOWN\nPOSSIBLE DATE / POSSIBLE OVERRIDE KEY",
+          "pauseAfterMs": 900
+        }
+      ],
+      "choices": [
+        {
+          "id": "enter_code",
+          "text": "UZAKTAN KOD GİR.",
+          "effects": {
+            "startedLockerCodePuzzle": true
+          },
+          "nextNodeId": "e02_n14_code_puzzle"
+        },
+        {
+          "id": "ask_elias_before_code",
+          "text": "ELIAS'A HAZIR OLUP OLMADIĞINI SOR.",
+          "effects": {
+            "trust": 1,
+            "eliasPrepared": true
+          },
+          "nextNodeId": "e02_n13b_prepare"
+        }
+      ]
+    },
+    "e02_n13b_prepare": {
+      "id": "e02_n13b_prepare",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Hazır mıyım?",
+          "pauseAfterMs": 6000
         },
         {
           "type": "typing",
-          "duration": 800
+          "speaker": "ELIAS",
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Ice crystals.",
-          "textKey": "episode_02.e02_n06_device.event13.text"
+          "text": "Hayır.",
+          "pauseAfterMs": 5000
         },
         {
           "type": "typing",
-          "duration": 800
+          "speaker": "ELIAS",
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Paper scraps.",
-          "textKey": "episode_02.e02_n06_device.event15.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
+          "text": "Ama bu iyi.",
+          "pauseAfterMs": 6000
         },
         {
           "type": "typing",
-          "duration": 900
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Badge on the floor.",
-          "textKey": "episode_02.e02_n06_device.event18.text"
+          "text": "Burada hazır olduğumu söylediğim hiçbir şey iyi bitmedi.",
+          "pauseAfterMs": 6000
         },
         {
           "type": "typing",
-          "duration": 1000
+          "speaker": "ELIAS",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "Photo burned out.",
-          "textKey": "episode_02.e02_n06_device.event20.text"
-        },
+          "text": "Kodu gir."
+        }
+      ],
+      "nextNodeId": "e02_n14_code_puzzle"
+    },
+    "e02_n14_code_puzzle": {
+      "id": "e02_n14_code_puzzle",
+      "speaker": "SYSTEM",
+      "events": [
         {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Manual labels on cabinets.",
-          "textKey": "episode_02.e02_n06_device.event23.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1900
-        },
-        {
-          "type": "message",
-          "text": "People only do that when the system stops being trusted.",
-          "textKey": "episode_02.e02_n06_device.event25.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Initials.",
-          "textKey": "episode_02.e02_n06_device.event27.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "E.H.",
-          "textKey": "episode_02.e02_n06_device.event29.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "N.V.",
-          "textKey": "episode_02.e02_n06_device.event31.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "M.C.",
-          "textKey": "episode_02.e02_n06_device.event33.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "E.H. is me.",
-          "textKey": "episode_02.e02_n06_device.event36.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "N.V. is Noah.",
-          "textKey": "episode_02.e02_n06_device.event38.text"
-        },
-        {
-          "type": "typing",
-          "duration": 750
-        },
-        {
-          "type": "message",
-          "text": "M.C...",
-          "textKey": "episode_02.e02_n06_device.event40.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "I know that.",
-          "textKey": "episode_02.e02_n06_device.event42.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Can't find the face.",
-          "textKey": "episode_02.e02_n06_device.event44.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 3000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "I KNOW",
-            "pauseAfterMs": 900,
-            "textKey": "episode_02.e02_n06_device.backgroundEvent45.text"
-          }
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Portable device.",
-          "textKey": "episode_02.e02_n06_device.event47.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Still powered.",
-          "textKey": "episode_02.e02_n06_device.event49.text"
-        },
-        {
-          "type": "file",
-          "id": "encrypted_storage_02",
-          "fileId": "encrypted_storage_02",
-          "fileType": "log",
-          "title": "ENCRYPTED STORAGE DEVICE",
-          "content": "[ENCRYPTED ARCHIVE FRAGMENT]\n\nArchive Key Hint: ALPHA\n\nWarning: Failed decrypt attempts may trigger quarantine response.\n\nStatus: Locked",
-          "caption": "A portable archive device recovered inside Sector C.",
-          "message": "[ENCRYPTED DEVICE ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1000,
-          "titleKey": "episode_02.e02_n06_device.event20.title",
-          "contentKey": "episode_02.e02_n06_device.event20.content",
-          "captionKey": "episode_02.e02_n06_device.event20.caption",
-          "messageKey": "episode_02.e02_n06_device.event20.message"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "It wants a key.",
-          "textKey": "episode_02.e02_n06_device.event52.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Label says ALPHA.",
-          "textKey": "episode_02.e02_n06_device.event54.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Too obvious.",
-          "textKey": "episode_02.e02_n06_device.event56.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Which makes me trust it less.",
-          "textKey": "episode_02.e02_n06_device.event58.text"
+          "type": "systemAlert",
+          "text": "[REMOTE LOCKER OVERRIDE AVAILABLE]",
+          "pauseAfterMs": 700
         },
         {
           "type": "puzzle",
-          "puzzleId": "decrypt_disk_02",
+          "puzzleId": "locker_a12_override",
           "pauseAfterMs": 700
         }
       ],
       "choices": []
     },
-    "e02_n06_decrypt_fail": {
-      "id": "e02_n06_decrypt_fail",
-      "speaker": "HALE",
+    "e02_n15_code_fail": {
+      "id": "e02_n15_code_fail",
+      "speaker": "ELIAS",
       "events": [
         {
-          "type": "glitch",
-          "duration": 900,
-          "pauseAfterMs": 600
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Wrong key.",
-          "textKey": "episode_02.e02_n06_decrypt_fail.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Archive noticed.",
-          "textKey": "episode_02.e02_n06_decrypt_fail.event4.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Don't guess.",
-          "textKey": "episode_02.e02_n06_decrypt_fail.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "It's literal.",
-          "textKey": "episode_02.e02_n06_decrypt_fail.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1700
-        },
-        {
-          "type": "message",
-          "text": "Literal machines are the worst kind of stubborn.",
-          "textKey": "episode_02.e02_n06_decrypt_fail.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Terminal's heating through my glove.",
-          "textKey": "episode_02.e02_n06_decrypt_fail.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "One clean retry.",
-          "textKey": "episode_02.e02_n06_decrypt_fail.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Then it starts eating cache.",
-          "textKey": "episode_02.e02_n06_decrypt_fail.event18.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "retry_decrypt_direct",
-          "text": "TRY THE KEY AGAIN.",
-          "nextNodeId": "e02_n06_device",
-          "effects": {
-            "danger": 1
-          },
-          "textKey": "episode_02.e02_n06_decrypt_fail.choice0.text"
-        },
-        {
-          "id": "ask_hale_hint",
-          "text": "ASK HALE TO READ THE DEVICE AGAIN.",
-          "nextNodeId": "e02_n06_hint",
-          "effects": {
-            "haleTrust": 1,
-            "signalStrength": 1
-          },
-          "textKey": "episode_02.e02_n06_decrypt_fail.choice1.text"
-        }
-      ]
-    },
-    "e02_n06_hint": {
-      "id": "e02_n06_hint",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Give me a second.",
-          "textKey": "episode_02.e02_n06_hint.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Reading it again.",
-          "textKey": "episode_02.e02_n06_hint.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Archive Key Hint.",
-          "textKey": "episode_02.e02_n06_hint.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "ALPHA.",
-          "textKey": "episode_02.e02_n06_hint.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Not Incident Alpha.",
-          "textKey": "episode_02.e02_n06_hint.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Just ALPHA.",
-          "textKey": "episode_02.e02_n06_hint.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Feels less like a puzzle.",
-          "textKey": "episode_02.e02_n06_hint.event15.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1700
-        },
-        {
-          "type": "message",
-          "text": "More like a warning wearing a password.",
-          "textKey": "episode_02.e02_n06_hint.event17.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "decrypt_after_hint",
-          "text": "DECRYPT WITH ALPHA.",
-          "nextNodeId": "e02_n06_device",
-          "effects": {
-            "signalStrength": 1
-          },
-          "textKey": "episode_02.e02_n06_hint.choice0.text"
-        },
-        {
-          "id": "pause_before_decrypt",
-          "text": "LET HALE STEADY THE TERMINAL FIRST.",
-          "nextNodeId": "e02_n06_steady",
-          "effects": {
-            "danger": -1,
-            "haleStress": -1
-          },
-          "textKey": "episode_02.e02_n06_hint.choice1.text"
-        }
-      ]
-    },
-    "e02_n06_steady": {
-      "id": "e02_n06_steady",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Thank you.",
-          "textKey": "episode_02.e02_n06_steady.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Hands were getting bad.",
-          "textKey": "episode_02.e02_n06_steady.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "I was pretending they weren't.",
-          "textKey": "episode_02.e02_n06_steady.event6.text"
-        },
-        {
-          "type": "pause",
-          "duration": 900
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Ten seconds.",
-          "textKey": "episode_02.e02_n06_steady.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 500
-        },
-        {
-          "type": "message",
-          "text": "In.",
-          "textKey": "episode_02.e02_n06_steady.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 500
-        },
-        {
-          "type": "message",
-          "text": "Out.",
-          "textKey": "episode_02.e02_n06_steady.event13.text"
-        },
-        {
-          "type": "pause",
-          "duration": 800
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Archive hums like it knows something.",
-          "textKey": "episode_02.e02_n06_steady.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Ready.",
-          "textKey": "episode_02.e02_n06_steady.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Try it.",
-          "textKey": "episode_02.e02_n06_steady.event20.text"
-        }
-      ],
-      "nextNodeId": "e02_n06_device"
-    },
-    "e02_n07_archive_opened": {
-      "id": "e02_n07_archive_opened",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "file",
-          "id": "recording_transcript_02",
-          "fileId": "recording_transcript_02",
-          "fileType": "log",
-          "title": "INCIDENT ALPHA PARTIAL TRANSCRIPT",
-          "content": "21:14 — Door 12 opened.\n21:15 — Unidentified movement detected.\n21:17 — Security override accepted.\n21:19 — Signal interruption.\n21:20 — Casualty report created.\n21:22 — Archive deletion command issued.\n\nNOTE: Transcript incomplete. Visual, personnel, and identity data missing.",
-          "caption": "Partial transcript recovered from the encrypted archive device.",
-          "message": "[INCIDENT ALPHA PARTIAL TRANSCRIPT ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1100,
-          "titleKey": "episode_02.e02_n07_archive_opened.event0.title",
-          "contentKey": "episode_02.e02_n07_archive_opened.event0.content",
-          "captionKey": "episode_02.e02_n07_archive_opened.event0.caption",
-          "messageKey": "episode_02.e02_n07_archive_opened.event0.message"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "It opened.",
-          "textKey": "episode_02.e02_n07_archive_opened.event2.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Oh.",
-          "textKey": "episode_02.e02_n07_archive_opened.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "That recording shouldn't exist.",
-          "textKey": "episode_02.e02_n07_archive_opened.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Yes.",
-          "textKey": "episode_02.e02_n07_archive_opened.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "I hear how bad that sounds.",
-          "textKey": "episode_02.e02_n07_archive_opened.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Visual missing.",
-          "textKey": "episode_02.e02_n07_archive_opened.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Personnel missing.",
-          "textKey": "episode_02.e02_n07_archive_opened.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Identity missing.",
-          "textKey": "episode_02.e02_n07_archive_opened.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Someone cut the bones out.",
-          "textKey": "episode_02.e02_n07_archive_opened.event20.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "21:22.",
-          "textKey": "episode_02.e02_n07_archive_opened.event23.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Archive deletion command.",
-          "textKey": "episode_02.e02_n07_archive_opened.event25.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "That's the part I remember.",
-          "textKey": "episode_02.e02_n07_archive_opened.event27.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Confirm key under my finger.",
-          "textKey": "episode_02.e02_n07_archive_opened.event29.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Red light on my hand.",
-          "textKey": "episode_02.e02_n07_archive_opened.event31.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Still no why.",
-          "textKey": "episode_02.e02_n07_archive_opened.event33.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "If I start protecting myself...",
-          "textKey": "episode_02.e02_n07_archive_opened.event36.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "push back.",
-          "textKey": "episode_02.e02_n07_archive_opened.event38.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "ask_why_it_exists",
-          "text": "PRESS HIM ON THE DELETION.",
-          "nextNodeId": "e02_n08_confession",
-          "effects": {
-            "haleTrust": -2,
-            "danger": 2
-          },
-          "textKey": "episode_02.e02_n07_archive_opened.choice0.text"
-        },
-        {
-          "id": "keep_hale_moving",
-          "text": "KEEP HIM MOVING.",
-          "nextNodeId": "e02_n08_keep_moving",
-          "effects": {
-            "haleTrust": 2,
-            "signalStrength": 1
-          },
-          "textKey": "episode_02.e02_n07_archive_opened.choice1.text"
-        }
-      ]
-    },
-    "e02_n08_confession": {
-      "id": "e02_n08_confession",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Either I failed to delete it.",
-          "textKey": "episode_02.e02_n08_confession.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1900
-        },
-        {
-          "type": "message",
-          "text": "Or someone wanted me to remember failing.",
-          "textKey": "episode_02.e02_n08_confession.event4.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Terminal.",
-          "textKey": "episode_02.e02_n08_confession.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Emergency lights.",
-          "textKey": "episode_02.e02_n08_confession.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Red on the screen.",
-          "textKey": "episode_02.e02_n08_confession.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "My hand shaking.",
-          "textKey": "episode_02.e02_n08_confession.event13.text"
-        },
-        {
-          "type": "pause",
-          "duration": 800
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "A voice behind me.",
-          "textKey": "episode_02.e02_n08_confession.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Can't remember the words.",
-          "textKey": "episode_02.e02_n08_confession.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "I remember the tone.",
-          "textKey": "episode_02.e02_n08_confession.event20.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Calm.",
-          "textKey": "episode_02.e02_n08_confession.event23.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "That's what bothers me.",
-          "textKey": "episode_02.e02_n08_confession.event25.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Panic makes sense.",
-          "textKey": "episode_02.e02_n08_confession.event27.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1900
-        },
-        {
-          "type": "message",
-          "text": "Calm means someone thought they were right.",
-          "textKey": "episode_02.e02_n08_confession.event29.text"
-        }
-      ],
-      "nextNodeId": "e02_n09_camera_access"
-    },
-    "e02_n08_keep_moving": {
-      "id": "e02_n08_keep_moving",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Right.",
-          "textKey": "episode_02.e02_n08_keep_moving.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Next row.",
-          "textKey": "episode_02.e02_n08_keep_moving.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Camera terminals.",
-          "textKey": "episode_02.e02_n08_keep_moving.event6.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "I would like the visual trace not to be me.",
-          "textKey": "episode_02.e02_n08_keep_moving.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Aware hope is not a method.",
-          "textKey": "episode_02.e02_n08_keep_moving.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Too many columns.",
-          "textKey": "episode_02.e02_n08_keep_moving.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Too many blind spots.",
-          "textKey": "episode_02.e02_n08_keep_moving.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Keep talking if I go quiet.",
-          "textKey": "episode_02.e02_n08_keep_moving.event18.text"
-        }
-      ],
-      "nextNodeId": "e02_n09_camera_access"
-    },
-    "e02_n09_camera_access": {
-      "id": "e02_n09_camera_access",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Rows again.",
-          "textKey": "episode_02.e02_n09_camera_access.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Floor's slick.",
-          "textKey": "episode_02.e02_n09_camera_access.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Careful.",
-          "textKey": "episode_02.e02_n09_camera_access.event6.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Said that to myself.",
-          "textKey": "episode_02.e02_n09_camera_access.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "That's where we are emotionally.",
-          "textKey": "episode_02.e02_n09_camera_access.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Camera terminal ahead.",
-          "textKey": "episode_02.e02_n09_camera_access.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Screen cracked.",
-          "textKey": "episode_02.e02_n09_camera_access.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Still alive.",
-          "textKey": "episode_02.e02_n09_camera_access.event18.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "cross_archive_rows_v4",
-          "character": "HALE",
-          "status": "IS MOVING",
-          "durationMs": 4000,
-          "returnNodeId": "e02_n09_camera_access_return",
-          "message": "[HALE IS MOVING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Hale sent a message.",
-          "tone": "character",
-          "pauseAfterMs": 700,
-          "messageKey": "episode_02.e02_n09_camera_access.event19.message"
-        }
-      ],
-      "objective": "Start a real-time interruption for HALE."
-    },
-    "e02_n10_hale_inspect": {
-      "id": "e02_n10_hale_inspect",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "I hate this plan.",
-          "textKey": "episode_02.e02_n10_hale_inspect.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Probably useful then.",
-          "textKey": "episode_02.e02_n10_hale_inspect.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Raw frame's up.",
-          "textKey": "episode_02.e02_n10_hale_inspect.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Not footage.",
-          "textKey": "episode_02.e02_n10_hale_inspect.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "More like broken glass.",
-          "textKey": "episode_02.e02_n10_hale_inspect.event10.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Eyes watering.",
-          "textKey": "episode_02.e02_n10_hale_inspect.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Not fear.",
-          "textKey": "episode_02.e02_n10_hale_inspect.event15.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Probably fear.",
-          "textKey": "episode_02.e02_n10_hale_inspect.event18.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "hale_raw_frame_inspection_v4",
-          "character": "HALE",
-          "status": "IS INSPECTING",
-          "durationMs": 5000,
-          "returnNodeId": "e02_n10_hale_inspect_return",
-          "message": "[HALE IS INSPECTING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Hale sent a message.",
-          "tone": "danger",
-          "pauseAfterMs": 700,
-          "messageKey": "episode_02.e02_n10_hale_inspect.event19.message"
-        }
-      ],
-      "objective": "Start a real-time interruption for HALE."
-    },
-    "e02_n10_auto_analysis": {
-      "id": "e02_n10_auto_analysis",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Let the machine look.",
-          "textKey": "episode_02.e02_n10_auto_analysis.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Cold.",
-          "textKey": "episode_02.e02_n10_auto_analysis.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Fast.",
-          "textKey": "episode_02.e02_n10_auto_analysis.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Impersonal.",
-          "textKey": "episode_02.e02_n10_auto_analysis.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Might be kinder.",
-          "textKey": "episode_02.e02_n10_auto_analysis.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Starting it.",
-          "textKey": "episode_02.e02_n10_auto_analysis.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Screen says under a minute.",
-          "textKey": "episode_02.e02_n10_auto_analysis.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Unless the archive develops feelings.",
-          "textKey": "episode_02.e02_n10_auto_analysis.event16.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "auto_camera_analysis_v4",
-          "character": "ARCHIVE",
-          "status": "IS PROCESSING",
-          "durationMs": 4000,
-          "returnNodeId": "e02_n10_auto_analysis_return",
-          "message": "[ARCHIVE IS PROCESSING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Archive sent a message.",
-          "tone": "system",
-          "pauseAfterMs": 700,
-          "messageKey": "episode_02.e02_n10_auto_analysis.event17.message"
-        }
-      ],
-      "objective": "Start a real-time interruption for ARCHIVE."
-    },
-    "e02_n11_camera_file": {
-      "id": "e02_n11_camera_file",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "log",
-          "id": "camera_analysis_02",
-          "fileId": "camera_analysis_02",
-          "fileType": "log",
-          "title": "CORRIDOR CAMERA ANALYSIS",
-          "content": "SOURCE: Door 12 archive feed\nVisual frame unrecoverable.\nAutomated analysis result:\n- One suited figure detected.\n- Suit outline compatible with ECHO engineering issue.\n- Right-hand object: manual override handle.\n- Timestamp damaged.\n- Identity confidence: 64%\n- Secondary shadow detected behind subject. Classification failed.",
-          "caption": "Automated analysis generated from corrupted camera data. No image recovered.",
-          "source": "STATION_CAMERA_ANALYSIS",
-          "tags": [
-            "camera_analysis",
-            "door_12",
-            "override",
-            "hale"
-          ],
-          "correlationTags": [
-            "incident_alpha"
-          ],
-          "message": "[CAMERA ANALYSIS ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1100,
-          "titleKey": "episode_02.e02_n11_camera_file.event0.title",
-          "contentKey": "episode_02.e02_n11_camera_file.event0.content",
-          "captionKey": "episode_02.e02_n11_camera_file.event0.caption",
-          "messageKey": "episode_02.e02_n11_camera_file.event0.message"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Sixty-four percent.",
-          "textKey": "episode_02.e02_n11_camera_file.event2.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Enough to point at me.",
-          "textKey": "episode_02.e02_n11_camera_file.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Not enough to prove it.",
-          "textKey": "episode_02.e02_n11_camera_file.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "One figure.",
-          "textKey": "episode_02.e02_n11_camera_file.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Engineering suit.",
-          "textKey": "episode_02.e02_n11_camera_file.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Could be me.",
-          "textKey": "episode_02.e02_n11_camera_file.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "God, I hate saying that.",
-          "textKey": "episode_02.e02_n11_camera_file.event16.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Secondary shadow behind the subject.",
-          "textKey": "episode_02.e02_n11_camera_file.event19.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Classification failed.",
-          "textKey": "episode_02.e02_n11_camera_file.event21.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "So someone was behind me.",
-          "textKey": "episode_02.e02_n11_camera_file.event23.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 4200,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "BEHIND YOU",
-            "pauseAfterMs": 900,
-            "textKey": "episode_02.e02_n11_camera_file.backgroundEvent24.text"
-          }
-        }
-      ],
-      "nextNodeId": "e02_n12_override_search"
-    },
-    "e02_n12_override_search": {
-      "id": "e02_n12_override_search",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Override ledger should be beside this terminal.",
-          "textKey": "episode_02.e02_n12_override_search.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Found it.",
-          "textKey": "episode_02.e02_n12_override_search.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Terminal keeps dropping to read-only.",
-          "textKey": "episode_02.e02_n12_override_search.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "Like it wants to help without being responsible.",
-          "textKey": "episode_02.e02_n12_override_search.event8.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "override_ledger_pull_v4",
-          "character": "HALE",
-          "status": "IS WORKING",
-          "durationMs": 8000,
-          "returnNodeId": "e02_n12_override_search_return",
-          "message": "[HALE IS WORKING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Hale sent a message.",
-          "tone": "character",
-          "pauseAfterMs": 700,
-          "messageKey": "episode_02.e02_n12_override_search.event9.message"
-        }
-      ],
-      "objective": "Start a real-time interruption for HALE."
-    },
-    "e02_n13_confront_source": {
-      "id": "e02_n13_confront_source",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Could the source be me?",
-          "textKey": "episode_02.e02_n13_confront_source.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Maybe.",
-          "textKey": "episode_02.e02_n13_confront_source.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "I hate that honest answer.",
-          "textKey": "episode_02.e02_n13_confront_source.event6.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "But why redact the source...",
-          "textKey": "episode_02.e02_n13_confront_source.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "and leave a Hale-shaped outline?",
-          "textKey": "episode_02.e02_n13_confront_source.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Either I protected someone.",
-          "textKey": "episode_02.e02_n13_confront_source.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1700
-        },
-        {
-          "type": "message",
-          "text": "Or someone built a trail to my feet.",
-          "textKey": "episode_02.e02_n13_confront_source.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "If I'm wrong, catch it.",
-          "textKey": "episode_02.e02_n13_confront_source.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "I'm too close.",
-          "textKey": "episode_02.e02_n13_confront_source.event20.text"
-        }
-      ],
-      "nextNodeId": "e02_n14_evidence_decision"
-    },
-    "e02_n13_alt_source": {
-      "id": "e02_n13_alt_source",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Different angle.",
-          "textKey": "episode_02.e02_n13_alt_source.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "If it wasn't a person...",
-          "textKey": "episode_02.e02_n13_alt_source.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "maybe the system left another footprint.",
-          "textKey": "episode_02.e02_n13_alt_source.event6.text"
-        },
-        {
-          "type": "glitch",
-          "duration": 900,
-          "pauseAfterMs": 600
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "textKey": "episode_02.e02_n13_alt_source.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "It didn't like that.",
-          "textKey": "episode_02.e02_n13_alt_source.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Trying anyway.",
-          "textKey": "episode_02.e02_n13_alt_source.event13.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "nonhuman_source_filter_v4",
-          "character": "HALE",
-          "status": "IS FILTERING",
-          "durationMs": 7000,
-          "returnNodeId": "e02_n13_alt_source_return",
-          "message": "[HALE IS FILTERING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Hale sent a message.",
-          "tone": "danger",
-          "pauseAfterMs": 700,
-          "messageKey": "episode_02.e02_n13_alt_source.event14.message"
-        }
-      ],
-      "objective": "Start a real-time interruption for HALE."
-    },
-    "e02_n14_evidence_decision": {
-      "id": "e02_n14_evidence_decision",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2400
-        },
-        {
-          "type": "message",
-          "text": "We have four things now.",
-          "textKey": "episode_02.e02_n14_evidence_decision.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "Partial transcript.",
-          "textKey": "episode_02.e02_n14_evidence_decision.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Hale-shaped figure.",
-          "textKey": "episode_02.e02_n14_evidence_decision.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "Valid authorization from nowhere.",
-          "textKey": "episode_02.e02_n14_evidence_decision.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "Return signal before the channel opened.",
-          "textKey": "episode_02.e02_n14_evidence_decision.event9.text"
-        },
-        {
-          "type": "pause",
-          "duration": 800
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "I do not like how neatly those line up.",
-          "textKey": "episode_02.e02_n14_evidence_decision.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "There is a deletion chain in the command log.",
-          "textKey": "episode_02.e02_n14_evidence_decision.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "There is also an emergency note tied to the wake command.",
-          "textKey": "episode_02.e02_n14_evidence_decision.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Both are blinking at me.",
-          "textKey": "episode_02.e02_n14_evidence_decision.event18.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "I miss when lights just meant lights.",
-          "textKey": "episode_02.e02_n14_evidence_decision.event21.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Your call.",
-          "textKey": "episode_02.e02_n14_evidence_decision.event23.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "trace_deletion_chain",
-          "text": "TRACE THE DELETION CHAIN.",
-          "nextNodeId": "e02_n15_deletion_chain",
-          "effects": {
-            "haleTrust": 2,
-            "danger": 1
-          },
-          "textKey": "episode_02.e02_n14_evidence_decision.choice0.text"
-        },
-        {
-          "id": "open_emergency_note",
-          "text": "OPEN THE EMERGENCY NOTE.",
-          "nextNodeId": "e02_n15_emergency_note",
-          "effects": {
-            "danger": 3,
-            "signalStrength": -3
-          },
-          "textKey": "episode_02.e02_n14_evidence_decision.choice1.text"
-        }
-      ]
-    },
-    "e02_n15_deletion_chain": {
-      "id": "e02_n15_deletion_chain",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "Tracing deletion chain.",
-          "textKey": "episode_02.e02_n15_deletion_chain.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "I am following the command timestamps backward. This is not opening a file. This is pulling a thread and hoping the wall does not come with it.",
-          "textKey": "episode_02.e02_n15_deletion_chain.event3.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "deletion_chain_trace_v4__v5",
-          "character": "HALE",
-          "status": "IS WORKING",
-          "durationMs": 10000,
-          "returnNodeId": "e02_n15_deletion_chain_return",
-          "message": "[HALE IS WORKING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Hale sent a message.",
-          "tone": "system",
-          "pauseAfterMs": 900,
-          "messageKey": "episode_02.e02_n15_deletion_chain.event4.message"
-        }
-      ],
-      "objective": "Start a real-time interruption for HALE."
-    },
-    "e02_n15_emergency_note": {
-      "id": "e02_n15_emergency_note",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "Opening emergency note.",
-          "textKey": "episode_02.e02_n15_emergency_note.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "I already regret saying that out loud.",
-          "textKey": "episode_02.e02_n15_emergency_note.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "The terminal is fighting me. Not locking me out. Delaying me.",
-          "textKey": "episode_02.e02_n15_emergency_note.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4800
-        },
-        {
-          "type": "message",
-          "text": "That is somehow worse. A lock is honest. A delay is a decision.",
-          "textKey": "episode_02.e02_n15_emergency_note.event7.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 3500,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "YOU FOUND THE OTHER DOOR",
-            "pauseAfterMs": 1200,
-            "textKey": "episode_02.e02_n15_emergency_note.backgroundEvent8.text"
-          }
-        },
-        {
-          "type": "characterBusy",
-          "id": "emergency_note_pull_v4__v5",
-          "character": "HALE",
-          "status": "IS WORKING",
-          "durationMs": 9000,
-          "returnNodeId": "e02_n15_emergency_note_return",
-          "message": "[HALE IS WORKING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Hale sent a message.",
-          "tone": "danger",
-          "pauseAfterMs": 900,
-          "messageKey": "episode_02.e02_n15_emergency_note.event9.message"
-        }
-      ],
-      "objective": "Start a real-time interruption for HALE."
-    },
-    "e02_n16_714_note": {
-      "id": "e02_n16_714_note",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "file",
-          "id": "emergency_channel_note_02",
-          "fileId": "emergency_channel_note_02",
-          "fileType": "log",
-          "title": "EMERGENCY CHANNEL NOTE",
-          "content": "Emergency Backup Channel\n\n7.14 MHz\n\nUse only if primary communication systems fail.\n\nWarning: Do not open if unauthorized return signal is detected.\n\nNOTE: unauthorized return signal recorded before channel wake completion.",
-          "caption": "Recovered emergency channel instruction connected to Incident Alpha.",
-          "message": "[EMERGENCY CHANNEL NOTE ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1100,
-          "titleKey": "episode_02.e02_n16_714_note.event0.title",
-          "contentKey": "episode_02.e02_n16_714_note.event0.content",
-          "captionKey": "episode_02.e02_n16_714_note.event0.caption",
-          "messageKey": "episode_02.e02_n16_714_note.event0.message"
-        },
-        {
-          "type": "typing",
-          "duration": 2000
-        },
-        {
-          "type": "message",
-          "text": "7.14 MHz.",
-          "textKey": "episode_02.e02_n16_714_note.event2.text"
-        },
-        {
-          "type": "pause",
-          "duration": 900
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "textKey": "episode_02.e02_n16_714_note.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "Nobody was supposed to find that channel like this.",
-          "textKey": "episode_02.e02_n16_714_note.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3400
-        },
-        {
-          "type": "message",
-          "text": "Backup channels wait for someone to call them.",
-          "textKey": "episode_02.e02_n16_714_note.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "That is the entire point.",
-          "textKey": "episode_02.e02_n16_714_note.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "This one had a return signal before the wake command completed.",
-          "textKey": "episode_02.e02_n16_714_note.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "That is not a backup.",
-          "textKey": "episode_02.e02_n16_714_note.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "That is something listening behind a locked door.",
-          "textKey": "episode_02.e02_n16_714_note.event18.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "Keep it closed.",
-          "textKey": "episode_02.e02_n16_714_note.event21.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Please.",
-          "textKey": "episode_02.e02_n16_714_note.event23.text"
-        },
-        {
-          "type": "pause",
-          "duration": 800
-        },
-        {
-          "type": "typing",
-          "duration": 2800
-        },
-        {
-          "type": "message",
-          "text": "I did not mean to type please.",
-          "textKey": "episode_02.e02_n16_714_note.event26.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Leave it in. It is accurate.",
-          "textKey": "episode_02.e02_n16_714_note.event28.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "keep_714_closed",
-          "text": "KEEP 7.14 CLOSED.",
-          "nextNodeId": "e02_n17_keep_closed",
-          "effects": {
-            "haleTrust": 4,
-            "signalStrength": 2,
-            "danger": -1,
-            "keptDamagedChannelClosed": true,
-            "kept714Closed": true
-          },
-          "textKey": "episode_02.e02_n16_714_note.choice0.text"
-        },
-        {
-          "id": "open_714_anyway",
-          "text": "OPEN 7.14 ANYWAY.",
-          "nextNodeId": "e02_bad_714",
-          "effects": {
-            "haleTrust": -15,
-            "danger": 30,
-            "signalStrength": -60,
-            "opened714Early": true,
-            "openedDamagedChannelEarly": true
-          },
-          "textKey": "episode_02.e02_n16_714_note.choice1.text"
-        }
-      ]
-    },
-    "e02_n17_keep_closed": {
-      "id": "e02_n17_keep_closed",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Good.",
-          "textKey": "episode_02.e02_n17_keep_closed.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "Thank you for not making me beg. I was ready to, which is not a sentence I enjoyed discovering about myself.",
-          "textKey": "episode_02.e02_n17_keep_closed.event3.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 4200,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "7.14",
-            "pauseAfterMs": 1200,
-            "textKey": "episode_02.e02_n17_keep_closed.backgroundEvent4.text"
-          }
-        },
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "The note says not to open it if a return signal already exists.",
-          "textKey": "episode_02.e02_n17_keep_closed.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "We already have one.",
-          "textKey": "episode_02.e02_n17_keep_closed.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "And if you are reading my messages, Operator, part of this conversation is already crossing the same relay path it used.",
-          "textKey": "episode_02.e02_n17_keep_closed.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5000
-        },
-        {
-          "type": "message",
-          "text": "That thought is going to keep me awake. Assuming we get to keep having awake.",
-          "textKey": "episode_02.e02_n17_keep_closed.event12.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_to_death_records",
-          "text": "MOVE TO PERSONNEL RECORDS.",
-          "nextNodeId": "e02_end_personnel",
-          "effects": {
-            "haleTrust": 2
-          },
-          "textKey": "episode_02.e02_n17_keep_closed.choice0.text"
-        },
-        {
-          "id": "let_hale_breathe_first",
-          "text": "LET HALE REST FOR A MINUTE.",
-          "nextNodeId": "e02_end_rest",
-          "effects": {
-            "haleStress": -2,
-            "haleTrust": 1
-          },
-          "textKey": "episode_02.e02_n17_keep_closed.choice1.text"
-        }
-      ]
-    },
-    "e02_bad_714": {
-      "id": "e02_bad_714",
-      "speaker": "UNKNOWN",
-      "events": [
-        {
-          "type": "glitch",
-          "duration": 1800,
+          "type": "systemAlert",
+          "text": "[OVERRIDE REJECTED]",
           "pauseAfterMs": 700
         },
         {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "THANK YOU FOR OPENING THE DOOR",
-          "pauseAfterMs": 1500,
-          "textKey": "episode_02.e02_bad_714.event1.text"
-        },
-        {
           "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "No. Close it. Close it now.",
-          "speaker": "HALE",
-          "textKey": "episode_02.e02_bad_714.event3.text"
-        },
-        {
-          "type": "signalLost",
-          "duration": 4500,
-          "message": "[SIGNAL COLLAPSE]",
-          "restoreMessage": "[WEAK CARRIER RESTORED]",
-          "pauseAfterMs": 1200,
-          "messageKey": "episode_02.e02_bad_714.event4.message",
-          "restoreMessageKey": "episode_02.e02_bad_714.event4.restoreMessage"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "Operator, listen to my voice. Not the channel. Mine.",
-          "speaker": "HALE",
-          "textKey": "episode_02.e02_bad_714.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "Whatever answered is using the relay carrier as a handle. If we leave it open, it learns the shape of our signal.",
-          "speaker": "HALE",
-          "textKey": "episode_02.e02_bad_714.event8.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "TOO EARLY",
-          "pauseAfterMs": 1200,
-          "textKey": "episode_02.e02_bad_714.event9.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "seal_channel_now",
-          "text": "SEAL THE CHANNEL NOW.",
-          "nextNodeId": "e02_bad_714_seal",
-          "effects": {
-            "danger": 5,
-            "signalStrength": -10
-          },
-          "textKey": "episode_02.e02_bad_714.choice0.text"
-        },
-        {
-          "id": "listen_longer",
-          "text": "LISTEN THREE SECONDS LONGER.",
-          "nextNodeId": "e02_bad_714_listen",
-          "effects": {
-            "danger": 12,
-            "signalStrength": -18,
-            "unknownHeardOperator": true
-          },
-          "textKey": "episode_02.e02_bad_714.choice1.text"
-        }
-      ]
-    },
-    "e02_bad_714_seal": {
-      "id": "e02_bad_714_seal",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "Sealed. Partially.",
-          "textKey": "episode_02.e02_bad_714_seal.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "And before you ask, no, 'partially sealed' is not a comforting technical phrase. It means the bad thing is delayed, not solved.",
-          "textKey": "episode_02.e02_bad_714_seal.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "I am angry with you. That can be true while I am still trying to keep you alive.",
-          "textKey": "episode_02.e02_bad_714_seal.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "We keep moving. Personnel records next. I need to know who else the station thinks is dead.",
-          "textKey": "episode_02.e02_bad_714_seal.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "And I need to know whether it already wrote my name down.",
-          "textKey": "episode_02.e02_bad_714_seal.event9.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_compromised",
-          "text": "CONTINUE WITH COMPROMISED SIGNAL.",
-          "nextEpisodeId": "episode_03",
-          "effects": {
-            "opened714Early": true,
-            "channelPartiallySealed": true
-          },
-          "textKey": "episode_02.e02_bad_714_seal.choice0.text"
-        },
-        {
-          "id": "continue_silent",
-          "text": "CONTINUE WITHOUT DISCUSSING 7.14.",
-          "nextEpisodeId": "episode_03",
-          "effects": {
-            "opened714Early": true,
-            "haleTrust": -1
-          },
-          "textKey": "episode_02.e02_bad_714_seal.choice1.text"
-        }
-      ]
-    },
-    "e02_bad_714_listen": {
-      "id": "e02_bad_714_listen",
-      "speaker": "UNKNOWN",
-      "events": [
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "I KNOW YOUR SIGNAL NOW",
-          "pauseAfterMs": 1500,
-          "textKey": "episode_02.e02_bad_714_listen.event0.text"
-        },
-        {
-          "type": "glitch",
-          "duration": 1200,
-          "pauseAfterMs": 600
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "What did you just do?",
-          "speaker": "HALE",
-          "textKey": "episode_02.e02_bad_714_listen.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "No. Do not answer. I know what you did.",
-          "speaker": "HALE",
-          "textKey": "episode_02.e02_bad_714_listen.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "You gave it three more seconds. That may not sound like much until something starts measuring you back.",
-          "speaker": "HALE",
-          "textKey": "episode_02.e02_bad_714_listen.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "I do not know how much it learned. That is the problem.",
-          "speaker": "HALE",
-          "textKey": "episode_02.e02_bad_714_listen.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4600
-        },
-        {
-          "type": "message",
-          "text": "Personnel records. Now. Before it learns anything else from us.",
-          "speaker": "HALE",
-          "textKey": "episode_02.e02_bad_714_listen.event11.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_after_listening",
-          "text": "CONTINUE WITH EXPOSED SIGNAL.",
-          "nextEpisodeId": "episode_03",
-          "effects": {
-            "opened714Early": true,
-            "unknownHeardOperator": true,
-            "haleTrust": -4
-          },
-          "textKey": "episode_02.e02_bad_714_listen.choice0.text"
-        },
-        {
-          "id": "apologize_and_continue",
-          "text": "APOLOGIZE AND CONTINUE.",
-          "nextEpisodeId": "episode_03",
-          "effects": {
-            "opened714Early": true,
-            "unknownHeardOperator": true,
-            "haleTrust": -2
-          },
-          "textKey": "episode_02.e02_bad_714_listen.choice1.text"
-        }
-      ]
-    },
-    "e02_end_personnel": {
-      "id": "e02_end_personnel",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3400
-        },
-        {
-          "type": "message",
-          "text": "Personnel records are on the next deck.",
-          "textKey": "episode_02.e02_end_personnel.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "If Incident Alpha is the wound, personnel is where the station wrote down who bled.",
-          "textKey": "episode_02.e02_end_personnel.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "I am not ready for that.",
-          "textKey": "episode_02.e02_end_personnel.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "So obviously we are going.",
-          "textKey": "episode_02.e02_end_personnel.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "Route should take seven minutes if the stairs are clear. Longer if the station wants to be dramatic.",
-          "textKey": "episode_02.e02_end_personnel.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4600
-        },
-        {
-          "type": "message",
-          "text": "I am going quiet. Battery conservation, and also because I need a minute before I see another list of names.",
-          "textKey": "episode_02.e02_end_personnel.event11.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "move_to_personnel_records_v4__v5",
-          "character": "HALE",
-          "status": "IS IN TRANSIT",
-          "durationMs": 11000,
-          "returnNodeId": "e02_end_personnel_return",
-          "message": "[HALE IS IN TRANSIT]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Hale sent a message.",
-          "tone": "character",
-          "pauseAfterMs": 900,
-          "messageKey": "episode_02.e02_end_personnel.event12.message"
-        }
-      ],
-      "objective": "Start a real-time interruption for HALE."
-    },
-    "e02_end_rest": {
-      "id": "e02_end_rest",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2400
-        },
-        {
-          "type": "message",
-          "text": "A minute?",
-          "textKey": "episode_02.e02_end_rest.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3400
-        },
-        {
-          "type": "message",
-          "text": "I forgot people can offer those.",
-          "textKey": "episode_02.e02_end_rest.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4600
-        },
-        {
-          "type": "message",
-          "text": "Okay. I am sitting against the archive wall. Sixty seconds. No heroics. No touching cursed channels.",
-          "textKey": "episode_02.e02_end_rest.event5.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "hale_archive_rest_v4__v5",
-          "character": "HALE",
-          "status": "IS RESTING",
-          "durationMs": 9000,
-          "returnNodeId": "e02_end_rest_return",
-          "message": "[HALE IS RESTING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Hale sent a message.",
-          "tone": "character",
-          "pauseAfterMs": 900,
-          "messageKey": "episode_02.e02_end_rest.event6.message"
-        }
-      ],
-      "objective": "Start a real-time interruption for HALE."
-    },
-    "e02_end_rain_walk": {
-      "id": "e02_end_rain_walk",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "text": "Rain was the first thing I missed after month two on ECHO.",
-          "textKey": "episode_02.e02_end_rain_walk.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "Not sunlight. Not open air. Rain. The useless sound of water hitting something that was not trying to kill you.",
-          "textKey": "episode_02.e02_end_rain_walk.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "There was a window in the crew lounge that faced Earth. Noah used to sit there during storms we could not hear.",
-          "textKey": "episode_02.e02_end_rain_walk.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4600
-        },
-        {
-          "type": "message",
-          "text": "He said if he watched long enough, he could imagine the sound.",
-          "textKey": "episode_02.e02_end_rain_walk.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 900
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "I told him that was sentimental nonsense.",
-          "textKey": "episode_02.e02_end_rain_walk.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4000
-        },
-        {
-          "type": "message",
-          "text": "I would like to be that stupid again.",
-          "textKey": "episode_02.e02_end_rain_walk.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4600
-        },
-        {
-          "type": "message",
-          "text": "I am moving to personnel now. Quiet for the walk. Keep the channel ready.",
-          "textKey": "episode_02.e02_end_rain_walk.event14.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "move_to_personnel_after_rain_v4__v5",
-          "character": "HALE",
-          "status": "IS IN TRANSIT",
-          "durationMs": 10000,
-          "returnNodeId": "e02_end_rain_walk_return",
-          "message": "[HALE IS IN TRANSIT]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Hale sent a message.",
-          "tone": "character",
-          "pauseAfterMs": 900,
-          "messageKey": "episode_02.e02_end_rain_walk.event15.message"
-        }
-      ],
-      "objective": "Start a real-time interruption for HALE."
-    },
-    "e02_n02_corridor_return": {
-      "id": "e02_n02_corridor_return",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "At the junction.",
-          "textKey": "episode_02.e02_n02_corridor_return.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "And I was wrong.",
-          "textKey": "episode_02.e02_n02_corridor_return.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 2400
-        },
-        {
-          "type": "message",
-          "text": "Not completely wrong. Just the useful kind of wrong.",
-          "textKey": "episode_02.e02_n02_corridor_return.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "The old route is blocked by a collapsed ceiling panel.",
-          "textKey": "episode_02.e02_n02_corridor_return.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "There is a main corridor ahead. Faster. Exposed.",
-          "textKey": "episode_02.e02_n02_corridor_return.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "Service ladder to my right. Slower. Miserable. Probably safer.",
-          "textKey": "episode_02.e02_n02_corridor_return.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "I can hear something tapping in the main corridor.",
-          "textKey": "episode_02.e02_n02_corridor_return.event14.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Could be loose cable.",
-          "textKey": "episode_02.e02_n02_corridor_return.event17.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2000
-        },
-        {
-          "type": "message",
-          "text": "I am not betting my teeth on that.",
-          "textKey": "episode_02.e02_n02_corridor_return.event19.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "take_main_corridor",
-          "text": "TAKE THE MAIN CORRIDOR.",
-          "nextNodeId": "e02_n03_main",
-          "effects": {
-            "danger": 4,
-            "signalStrength": -2,
-            "mainCorridorChosen": true
-          },
-          "textKey": "episode_02.e02_n02_corridor_return.choice0.text"
-        },
-        {
-          "id": "take_service_ladder",
-          "text": "USE THE SERVICE LADDER.",
-          "nextNodeId": "e02_n03_ladder",
-          "effects": {
-            "danger": -1,
-            "haleFatigue": 2,
-            "serviceLadderChosen": true
-          },
-          "textKey": "episode_02.e02_n02_corridor_return.choice1.text"
-        }
-      ]
-    },
-    "e02_n03_main_return": {
-      "id": "e02_n03_main_return",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Made it.",
-          "textKey": "episode_02.e02_n03_main_return.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Barely.",
-          "textKey": "episode_02.e02_n03_main_return.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "A ceiling panel dropped behind me halfway through.",
-          "textKey": "episode_02.e02_n03_main_return.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Not on me. Which is my preferred type of structural failure.",
-          "textKey": "episode_02.e02_n03_main_return.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "Archive access is ahead. Door frame is lit.",
-          "textKey": "episode_02.e02_n03_main_return.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "I am going to pretend that is good news until proven otherwise.",
-          "textKey": "episode_02.e02_n03_main_return.event12.text"
-        }
-      ],
-      "nextNodeId": "e02_n04_archive_door"
-    },
-    "e02_n03_ladder_return": {
-      "id": "e02_n03_ladder_return",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Down.",
-          "textKey": "episode_02.e02_n03_ladder_return.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Mostly intact.",
-          "textKey": "episode_02.e02_n03_ladder_return.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3400
-        },
-        {
-          "type": "message",
-          "text": "My shoulders hate you a little. They will file a report.",
-          "textKey": "episode_02.e02_n03_ladder_return.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "The archive door is twenty meters ahead.",
-          "textKey": "episode_02.e02_n03_ladder_return.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "There is frost on the inspection window.",
-          "textKey": "episode_02.e02_n03_ladder_return.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Inside frost.",
-          "textKey": "episode_02.e02_n03_ladder_return.event12.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "That is bad, right?",
-          "textKey": "episode_02.e02_n03_ladder_return.event15.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "Rhetorical.",
-          "textKey": "episode_02.e02_n03_ladder_return.event17.text"
-        }
-      ],
-      "nextNodeId": "e02_n04_archive_door"
-    },
-    "e02_n05_scan_return": {
-      "id": "e02_n05_scan_return",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Scan finished.",
-          "textKey": "episode_02.e02_n05_scan_return.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Good call.",
-          "textKey": "episode_02.e02_n05_scan_return.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "There was a quarantine trigger wired into the latch.",
-          "textKey": "episode_02.e02_n05_scan_return.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "Not lethal. Just rude enough to erase whatever we came for.",
-          "textKey": "episode_02.e02_n05_scan_return.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "I bypassed it.",
-          "textKey": "episode_02.e02_n05_scan_return.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2400
-        },
-        {
-          "type": "message",
-          "text": "Door is opening.",
-          "textKey": "episode_02.e02_n05_scan_return.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "Slowly.",
-          "textKey": "episode_02.e02_n05_scan_return.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2000
-        },
-        {
-          "type": "message",
-          "text": "Dramatically.",
-          "textKey": "episode_02.e02_n05_scan_return.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "Unnecessarily.",
-          "textKey": "episode_02.e02_n05_scan_return.event18.text"
-        }
-      ],
-      "nextNodeId": "e02_n06_device"
-    },
-    "e02_n09_camera_access_return": {
-      "id": "e02_n09_camera_access_return",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "Reached the camera terminal.",
-          "textKey": "episode_02.e02_n09_camera_access_return.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "The screen is flickering through old frames.",
-          "textKey": "episode_02.e02_n09_camera_access_return.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "Most are static. Some are worse than static.",
-          "textKey": "episode_02.e02_n09_camera_access_return.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "There is a raw frame tied to Door 12.",
-          "textKey": "episode_02.e02_n09_camera_access_return.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "I can expand it myself.",
-          "textKey": "episode_02.e02_n09_camera_access_return.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "Or I can let the archive run analysis and hope the machine lies less creatively than people do.",
-          "textKey": "episode_02.e02_n09_camera_access_return.event12.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "hale_inspect_raw",
-          "text": "HAVE HALE INSPECT THE FRAME.",
-          "nextNodeId": "e02_n10_hale_inspect",
-          "effects": {
-            "haleStress": 3,
-            "haleTrust": 2
-          },
-          "textKey": "episode_02.e02_n09_camera_access_return.choice0.text"
-        },
-        {
-          "id": "run_auto_analysis",
-          "text": "RUN AUTOMATED ANALYSIS.",
-          "nextNodeId": "e02_n10_auto_analysis",
-          "effects": {
-            "danger": 1,
-            "haleStress": 1
-          },
-          "textKey": "episode_02.e02_n09_camera_access_return.choice1.text"
-        }
-      ]
-    },
-    "e02_n10_hale_inspect_return": {
-      "id": "e02_n10_hale_inspect_return",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Finished.",
-          "textKey": "episode_02.e02_n10_hale_inspect_return.event1.text"
-        },
-        {
-          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 1400
         },
         {
           "type": "message",
-          "text": "Had to stop twice.",
-          "textKey": "episode_02.e02_n10_hale_inspect_return.event3.text"
+          "text": "Tamam.",
+          "pauseAfterMs": 4000
         },
         {
           "type": "typing",
-          "duration": 3200
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "First because the frame kept tearing.",
-          "textKey": "episode_02.e02_n10_hale_inspect_return.event5.text"
+          "text": "Dolap bunu sevmedi.",
+          "pauseAfterMs": 5000
         },
         {
           "type": "typing",
-          "duration": 3000
+          "speaker": "ELIAS",
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Second because I thought I saw my own face.",
-          "textKey": "episode_02.e02_n10_hale_inspect_return.event7.text"
+          "text": "Ben de sevmedim.",
+          "pauseAfterMs": 6000
         },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "İç kenarda 03/11 yazıyordu.",
+          "pauseAfterMs": 6000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Belki eğik çizgiyi atmamız gerekiyordur."
+        }
+      ],
+      "choices": [
+        {
+          "id": "retry_code",
+          "text": "TEKRAR DENE.",
+          "effects": {
+            "danger": 1,
+            "eliasStress": 1
+          },
+          "nextNodeId": "e02_n14_code_puzzle"
+        },
+        {
+          "id": "inspect_again",
+          "text": "İŞARETİ TEKRAR KONTROL ET.",
+          "effects": {
+            "trust": 1,
+            "danger": -1
+          },
+          "nextNodeId": "e02_n13_code_hint"
+        }
+      ]
+    },
+    "e02_n16_code_success": {
+      "id": "e02_n16_code_success",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[OVERRIDE ACCEPTED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "progressTask",
+          "id": "locker_a12_remote_override",
+          "title": "REMOTE LOCK OVERRIDE",
+          "subtitle": "DISENGAGING LOCKER A-12 SEAL",
+          "duration": 6000,
+          "completeText": "[LOCKER SEAL DISENGAGED]",
+          "tone": "system",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "glitch",
+          "duration": 800,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "signalLost",
+          "duration": 3500,
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "lockerCodeSolved": true,
+            "lockerOpened": true,
+            "danger": 3
+          }
+        }
+      ],
+      "nextNodeId": "e02_n17_after_signal"
+    },
+    "e02_n17_after_signal": {
+      "id": "e02_n17_after_signal",
+      "speaker": "ELIAS",
+      "events": [
         {
           "type": "pause",
+          "duration": 30000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Operatör...",
+          "pauseAfterMs": 10000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Dolap açıldı.",
+          "pauseAfterMs": 15000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "İçinde kıyafet yok.",
+          "pauseAfterMs": 8000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Alet yok.",
+          "pauseAfterMs": 8000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Sadece küçük bir kayıt cihazı var.",
+          "pauseAfterMs": 15000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Ve üzerinde bir etiket.",
+          "pauseAfterMs": 12000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Benim el yazım gibi görünüyor.",
+          "pauseAfterMs": 20000
+        },
+        {
+          "type": "log",
+          "title": "RECORDER LABEL",
+          "content": "HANDWRITTEN LABEL\n\nIF I FORGET AGAIN\nPLAY THIS FIRST\n\nHANDWRITING MATCH: ELIAS REED / 92%",
+          "pauseAfterMs": 900
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_if_he_wrote_it",
+          "text": "BUNU SEN Mİ YAZDIN?",
+          "effects": {
+            "trust": 1,
+            "eliasStress": 2
+          },
+          "nextNodeId": "e02_n18_wrote_it"
+        },
+        {
+          "id": "tell_do_not_play_yet",
+          "text": "HENÜZ ÇALIŞTIRMA.",
+          "effects": {
+            "trust": 2,
+            "danger": -1,
+            "cautiousPattern": 1
+          },
+          "nextNodeId": "e02_n19_dont_play"
+        }
+      ]
+    },
+    "e02_n18_wrote_it": {
+      "id": "e02_n18_wrote_it",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Ben bunu yazmadım.",
+          "pauseAfterMs": 10000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 700
         },
         {
+          "type": "message",
+          "text": "Yani...",
+          "pauseAfterMs": 8000
+        },
+        {
           "type": "typing",
+          "speaker": "ELIAS",
           "duration": 2200
         },
         {
           "type": "message",
-          "text": "It was not clear enough.",
-          "textKey": "episode_02.e02_n10_hale_inspect_return.event10.text"
+          "text": "Yazdım.",
+          "pauseAfterMs": 12000
         },
         {
           "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "That did not help as much as you would think.",
-          "textKey": "episode_02.e02_n10_hale_inspect_return.event12.text"
-        }
-      ],
-      "nextNodeId": "e02_n11_camera_file"
-    },
-    "e02_n10_auto_analysis_return": {
-      "id": "e02_n10_auto_analysis_return",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
-          "type": "message",
-          "text": "Analysis complete. I did not look away from the screen.",
-          "textKey": "episode_02.e02_n10_auto_analysis_return.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "I probably should have.",
-          "textKey": "episode_02.e02_n10_auto_analysis_return.event3.text"
-        }
-      ],
-      "nextNodeId": "e02_n11_camera_file"
-    },
-    "e02_n12_override_search_return": {
-      "id": "e02_n12_override_search_return",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 2200
         },
         {
           "type": "message",
-          "text": "I pulled the override ledger.",
-          "textKey": "episode_02.e02_n12_override_search_return.event1.text"
+          "text": "Ama hatırlamıyorum.",
+          "pauseAfterMs": 10000
         },
         {
           "type": "typing",
-          "duration": 2280
-        },
-        {
-          "type": "message",
-          "text": "The terminal fought me the entire way.",
-          "textKey": "episode_02.e02_n12_override_search_return.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4020
-        },
-        {
-          "type": "message",
-          "text": "It kept dropping to read-only like it wanted plausible deniability.",
-          "textKey": "episode_02.e02_n12_override_search_return.event5.text"
-        },
-        {
-          "type": "file",
-          "id": "security_override_log_02",
-          "fileId": "security_override_log_02",
-          "fileType": "log",
-          "title": "SECURITY OVERRIDE LOG",
-          "content": "Override User: REDACTED\nAuthorization: VALID\nSource: UNKNOWN\nCommand Chain: Door 12 / Archive Delete / Emergency Channel Wake\nExternal Return Signal: PRESENT BEFORE WAKE COMPLETION",
-          "caption": "Recovered security ledger for Door 12 and connected commands.",
-          "message": "[SECURITY OVERRIDE LOG ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 1100,
-          "titleKey": "episode_02.e02_n12_override_search_return.event6.title",
-          "contentKey": "episode_02.e02_n12_override_search_return.event6.content",
-          "captionKey": "episode_02.e02_n12_override_search_return.event6.caption",
-          "messageKey": "episode_02.e02_n12_override_search_return.event6.message"
-        },
-        {
-          "type": "typing",
-          "duration": 3400
-        },
-        {
-          "type": "message",
-          "text": "Valid authorization. Unknown source.",
-          "textKey": "episode_02.e02_n12_override_search_return.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "And one more line: external return signal present before wake completion.",
-          "textKey": "episode_02.e02_n12_override_search_return.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "That means the channel was answering before it was officially awake.",
-          "textKey": "episode_02.e02_n12_override_search_return.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "That is not a normal system state. Something answered before the system says it was awake.",
-          "textKey": "episode_02.e02_n12_override_search_return.event14.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "ask_if_hale_source",
-          "text": "COULD THE SOURCE BE YOU?",
-          "nextNodeId": "e02_n13_confront_source",
-          "effects": {
-            "haleTrust": -3,
-            "haleStress": 3
-          },
-          "textKey": "episode_02.e02_n12_override_search_return.choice0.text"
-        },
-        {
-          "id": "search_for_other_source",
-          "text": "SEARCH FOR A NON-HUMAN SOURCE.",
-          "nextNodeId": "e02_n13_alt_source",
-          "effects": {
-            "danger": 2,
-            "signalStrength": -2
-          },
-          "textKey": "episode_02.e02_n12_override_search_return.choice1.text"
-        }
-      ]
-    },
-    "e02_n13_alt_source_return": {
-      "id": "e02_n13_alt_source_return",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "There. Something rode the emergency channel wake command.",
-          "textKey": "episode_02.e02_n13_alt_source_return.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4600
-        },
-        {
-          "type": "message",
-          "text": "It did not open Door 12. It waited until the door was open.",
-          "textKey": "episode_02.e02_n13_alt_source_return.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "That is worse. That means it was not forcing entry. It was waiting for an invitation.",
-          "textKey": "episode_02.e02_n13_alt_source_return.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 4200
-        },
-        {
-          "type": "message",
-          "text": "And we may have given it one.",
-          "textKey": "episode_02.e02_n13_alt_source_return.event7.text"
-        }
-      ],
-      "nextNodeId": "e02_n14_evidence_decision"
-    },
-    "e02_n15_deletion_chain_return": {
-      "id": "e02_n15_deletion_chain_return",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 4600
-        },
-        {
-          "type": "message",
-          "text": "Command issued after casualty report. Before emergency channel wake completed.",
-          "textKey": "episode_02.e02_n15_deletion_chain_return.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5600
-        },
-        {
-          "type": "message",
-          "text": "Whoever deleted Incident Alpha knew someone was dead, and knew the channel was waking up.",
-          "textKey": "episode_02.e02_n15_deletion_chain_return.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 5200
-        },
-        {
-          "type": "message",
-          "text": "That makes it less like cleanup and more like containment.",
-          "textKey": "episode_02.e02_n15_deletion_chain_return.event5.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 4500,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "CONTAINMENT FAILED",
-            "pauseAfterMs": 1200,
-            "textKey": "episode_02.e02_n15_deletion_chain_return.backgroundEvent6.text"
-          }
-        }
-      ],
-      "nextNodeId": "e02_n16_714_note"
-    },
-    "e02_n15_emergency_note_return": {
-      "id": "e02_n15_emergency_note_return",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "I am back. Something changed while I was away.",
-          "textKey": "episode_02.e02_n15_emergency_note_return.event1.text"
-        }
-      ],
-      "nextNodeId": "e02_n16_714_note"
-    },
-    "e02_end_personnel_return": {
-      "id": "e02_end_personnel_return",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2220
-        },
-        {
-          "type": "message",
-          "text": "I found the personnel index terminal.",
-          "textKey": "episode_02.e02_end_personnel_return.event1.text"
-        },
-        {
-          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 2200
         },
         {
           "type": "message",
-          "text": "It was not where I remembered it.",
-          "textKey": "episode_02.e02_end_personnel_return.event3.text"
+          "text": "Bu cevaptan nefret ettim."
+        }
+      ],
+      "nextNodeId": "e02_n20_prepare_analysis"
+    },
+    "e02_n19_dont_play": {
+      "id": "e02_n19_dont_play",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Evet.",
+          "pauseAfterMs": 6000
         },
         {
           "type": "typing",
-          "duration": 5200
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Someone moved it behind a maintenance partition and locked the panel from the wrong side.",
-          "textKey": "episode_02.e02_end_personnel_return.event5.text"
+          "text": "Bunu hemen çalıştırmak kötü fikir gibi.",
+          "pauseAfterMs": 6000
         },
         {
-          "type": "glitch",
-          "duration": 1000,
-          "pauseAfterMs": 600
-        },
-        {
-          "type": "systemAlert",
-          "text": "[PARTIAL PERSONNEL INDEX DETECTED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_02.e02_end_personnel_return.event7.text"
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "DECEASED PERSONNEL INDEX",
-          "pauseAfterMs": 700,
-          "textKey": "episode_02.e02_end_personnel_return.event8.text"
+          "text": "Bak, gelişiyorum.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "VISIBLE ENTRIES:",
-          "pauseAfterMs": 700,
-          "textKey": "episode_02.e02_end_personnel_return.event9.text"
+          "text": "Kötü fikri gördüm.",
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "GRANT — STATUS: DECEASED",
-          "pauseAfterMs": 700,
-          "textKey": "episode_02.e02_end_personnel_return.event10.text"
-        },
-        {
-          "type": "message",
-          "text": "RIVERA — STATUS: DECEASED",
-          "pauseAfterMs": 700,
-          "textKey": "episode_02.e02_end_personnel_return.event11.text"
-        },
-        {
-          "type": "message",
-          "text": "KIM — STATUS: DECEASED",
-          "pauseAfterMs": 700,
-          "textKey": "episode_02.e02_end_personnel_return.event12.text"
-        },
-        {
-          "type": "message",
-          "text": "ETHAN HALE — STATUS: DECEASED",
-          "pauseAfterMs": 900,
-          "textKey": "episode_02.e02_end_personnel_return.event13.text"
-        },
+          "text": "Ve hemen yapmadım."
+        }
+      ],
+      "nextNodeId": "e02_n20_prepare_analysis"
+    },
+    "e02_n20_prepare_analysis": {
+      "id": "e02_n20_prepare_analysis",
+      "speaker": "ELIAS",
+      "events": [
         {
           "type": "pause",
-          "duration": 900
+          "duration": 12000
         },
         {
           "type": "typing",
-          "duration": 3600
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Wait.",
-          "speaker": "HALE",
-          "textKey": "episode_02.e02_end_personnel_return.event16.text"
+          "text": "Kayıt cihazının pili zayıf.",
+          "pauseAfterMs": 7000
         },
         {
           "type": "typing",
-          "duration": 4200
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Why is my name on this list?",
-          "speaker": "HALE",
-          "textKey": "episode_02.e02_end_personnel_return.event18.text"
+          "text": "Direkt dinlersem yarıda kesilebilir.",
+          "pauseAfterMs": 7000
         },
         {
-          "type": "statChange",
-          "changes": {
-            "haleSawHisOwnRecord": true,
-            "sawHalePersonnelIndexTease": true
-          }
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Yakındaki bakım masasında eski bir okuyucu gördüm.",
+          "pauseAfterMs": 9000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Oraya götürüp veriyi çekmeyi deneyeceğim.",
+          "pauseAfterMs": 12000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Uzun sürmez.",
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Bunu söylememeliydim.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Burada uzun sürmeyen hiçbir şey yok."
         }
       ],
       "choices": [
         {
-          "id": "open_personnel_index_fast",
-          "text": "OPEN THE PERSONNEL INDEX.",
-          "nextEpisodeId": "episode_03",
+          "id": "go_analyze_recorder",
+          "text": "KAYIT CİHAZINI ANALİZ ET.",
           "effects": {
-            "haleFatigue": 2,
-            "haleTrust": 1,
-            "haleSawHisOwnRecord": true,
-            "sawHalePersonnelIndexTease": true
+            "recorderAnalysisStarted": true,
+            "danger": 2
           },
-          "textKey": "episode_02.e02_end_personnel_return.choice0.text"
+          "nextNodeId": "e02_n21_offline_analysis"
         },
         {
-          "id": "tell_hale_to_wait_before_index",
-          "text": "TELL HALE TO WAIT BEFORE OPENING IT.",
-          "nextEpisodeId": "episode_03",
+          "id": "secure_area_first",
+          "text": "ÖNCE ÇEVREYİ GÜVENCEYE AL.",
           "effects": {
+            "trust": 1,
             "danger": -1,
-            "haleTrust": 2,
-            "haleSawHisOwnRecord": true,
-            "sawHalePersonnelIndexTease": true
+            "securedBeforeAnalysis": true
           },
-          "textKey": "episode_02.e02_end_personnel_return.choice1.text"
+          "nextNodeId": "e02_n20b_secure"
         }
       ]
     },
-    "e02_end_rest_return": {
-      "id": "e02_end_rest_return",
-      "speaker": "HALE",
+    "e02_n20b_secure": {
+      "id": "e02_n20b_secure",
+      "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
-          "duration": 5600
+          "speaker": "ELIAS",
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "I can hear the station settling around me. For a second it almost sounds like rain.",
-          "textKey": "episode_02.e02_end_rest_return.event1.text"
+          "text": "Haklısın.",
+          "pauseAfterMs": 7000
         },
         {
           "type": "typing",
-          "duration": 3600
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Not real rain. Metal cooling. Pipes shifting. Air moving where it should not.",
-          "textKey": "episode_02.e02_end_rest_return.event3.text"
+          "text": "Kapıyı arkamdan kapatıyorum.",
+          "pauseAfterMs": 9000
         },
         {
           "type": "typing",
-          "duration": 4200
+          "speaker": "ELIAS",
+          "duration": 2200
         },
         {
           "type": "message",
-          "text": "Still. I miss rain.",
-          "textKey": "episode_02.e02_end_rest_return.event5.text"
+          "text": "Dolabı açık bırakmak istemiyorum.",
+          "pauseAfterMs": 6000
         },
         {
           "type": "typing",
-          "duration": 4800
+          "speaker": "ELIAS",
+          "duration": 1400
         },
         {
           "type": "message",
-          "text": "There. Minute over. Personnel records.",
-          "textKey": "episode_02.e02_end_rest_return.event7.text"
+          "text": "Bana bakıyormuş gibi.",
+          "pauseAfterMs": 4000
         },
         {
           "type": "typing",
-          "duration": 4600
-        },
-        {
-          "type": "message",
-          "text": "If you ask about rain while I walk, I might answer. Pretend that is operationally useful.",
-          "textKey": "episode_02.e02_end_rest_return.event9.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_after_rest",
-          "text": "MOVE TO PERSONNEL RECORDS.",
-          "nextNodeId": "e02_end_personnel",
-          "effects": {
-            "haleRested": true,
-            "haleTrust": 3
-          },
-          "textKey": "episode_02.e02_end_rest_return.choice0.text"
-        },
-        {
-          "id": "ask_about_rain",
-          "text": "ASK ABOUT RAIN WHILE HE MOVES.",
-          "nextNodeId": "e02_end_rain_walk",
-          "effects": {
-            "haleRested": true,
-            "haleTrust": 4,
-            "morale": 2
-          },
-          "textKey": "episode_02.e02_end_rest_return.choice1.text"
-        }
-      ]
-    },
-    "e02_end_rain_walk_return": {
-      "id": "e02_end_rain_walk_return",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "glitch",
-          "duration": 1000,
-          "pauseAfterMs": 600
-        },
-        {
-          "type": "systemAlert",
-          "text": "[PARTIAL PERSONNEL INDEX DETECTED]",
-          "pauseAfterMs": 900,
-          "textKey": "episode_02.e02_end_rain_walk_return.event1.text"
-        },
-        {
-          "type": "message",
-          "text": "DECEASED PERSONNEL INDEX",
-          "pauseAfterMs": 700,
-          "textKey": "episode_02.e02_end_rain_walk_return.event2.text"
-        },
-        {
-          "type": "message",
-          "text": "VISIBLE ENTRIES:",
-          "pauseAfterMs": 700,
-          "textKey": "episode_02.e02_end_rain_walk_return.event3.text"
-        },
-        {
-          "type": "message",
-          "text": "GRANT — STATUS: DECEASED",
-          "pauseAfterMs": 700,
-          "textKey": "episode_02.e02_end_rain_walk_return.event4.text"
-        },
-        {
-          "type": "message",
-          "text": "RIVERA — STATUS: DECEASED",
-          "pauseAfterMs": 700,
-          "textKey": "episode_02.e02_end_rain_walk_return.event5.text"
-        },
-        {
-          "type": "message",
-          "text": "KIM — STATUS: DECEASED",
-          "pauseAfterMs": 700,
-          "textKey": "episode_02.e02_end_rain_walk_return.event6.text"
-        },
-        {
-          "type": "message",
-          "text": "ETHAN HALE — STATUS: DECEASED",
-          "pauseAfterMs": 900,
-          "textKey": "episode_02.e02_end_rain_walk_return.event7.text"
-        },
-        {
-          "type": "pause",
+          "speaker": "ELIAS",
           "duration": 900
         },
         {
-          "type": "typing",
-          "duration": 3600
-        },
-        {
           "type": "message",
-          "text": "Operator. That is my name.",
-          "textKey": "episode_02.e02_end_rain_walk_return.event10.text"
+          "text": "Evet.",
+          "pauseAfterMs": 3000
         },
         {
           "type": "typing",
-          "duration": 4200
+          "speaker": "ELIAS",
+          "duration": 1800
         },
         {
           "type": "message",
-          "text": "Why is my name already on this list?",
-          "textKey": "episode_02.e02_end_rain_walk_return.event12.text"
+          "text": "Bunu da söyledim."
+        }
+      ],
+      "nextNodeId": "e02_n21_offline_analysis"
+    },
+    "e02_n21_offline_analysis": {
+      "id": "e02_n21_offline_analysis",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Bakım masasına gidiyorum.",
+          "pauseAfterMs": 6000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Bağlantı zayıflarsa panik yapma.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1400
+        },
+        {
+          "type": "message",
+          "text": "Tamam.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Bu cümleyi dün de kurdum.",
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Ve ikimiz de nasıl gittiğini biliyoruz.",
+          "pauseAfterMs": 6000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "text": "Geri yazacağım."
+        },
+        {
+          "type": "characterBusy",
+          "id": "elias_recorder_analysis_e02",
+          "character": "ELIAS",
+          "status": "ANALYZING RECORDER",
+          "durationMs": 300000,
+          "returnNodeId": "episode_03_start",
+          "message": "[ELIAS IS BUSY]",
+          "notificationTitle": "ECHO",
+          "notificationBody": "Elias sent a message.",
+          "tone": "working",
+          "pauseAfterMs": 600
         },
         {
           "type": "statChange",
           "changes": {
-            "haleSawHisOwnRecord": true,
-            "sawHalePersonnelIndexTease": true,
-            "noahRainMemoryHeard": true
+            "recorderFound": true,
+            "recorderAnalysisStarted": true
           }
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_to_episode_03_after_rain",
-          "text": "OPEN THE PERSONNEL INDEX.",
-          "nextEpisodeId": "episode_03",
-          "effects": {
-            "haleRested": true,
-            "haleTrust": 4,
-            "morale": 2,
-            "noahRainMemoryHeard": true,
-            "haleSawHisOwnRecord": true
-          },
-          "textKey": "episode_02.e02_end_rain_walk_return.choice0.text"
-        },
-        {
-          "id": "pause_before_personnel_index",
-          "text": "TELL HALE TO WAIT BEFORE OPENING IT.",
-          "nextEpisodeId": "episode_03",
-          "effects": {
-            "haleRested": true,
-            "haleTrust": 3,
-            "haleSawHisOwnRecord": true
-          },
-          "textKey": "episode_02.e02_end_rain_walk_return.choice1.text"
         }
       ]
     }
   },
-  "directorCut": {
-    "version": "ECHO_HUMANIZATION_PASS_V4",
-    "sourceStrategy": "Rebuilt/polished Episode 02 from the uploaded V6 JSON using the current ECHO rules: Lifeline rhythm, co-action, human dialogue, reduced report language, and stronger player consequence.",
-    "majorChanges": [
-      "Removed or rewrote report-like lines such as Moving, Scanning, Reading the device again, Running it now, and similar action summaries.",
-      "Added more Hale micro-reactions, hesitation, physical discomfort, and operator check-ins.",
-      "Strengthened archive door, scanner, Sector C, camera analysis, and source investigation scenes.",
-      "Made camera analysis feel like Hale reacting to evidence rather than reading a report.",
-      "Kept the decrypt puzzle, Incident Alpha evidence, Episode 03 hooks, and persistent flags intact."
+  "relationshipConsequenceSystem": {
+    "hiddenStats": {
+      "trust": "Controls how warm, honest, resistant or distant Elias becomes.",
+      "operatorDistance": "Tracks emotional distance created by cold or withholding responses.",
+      "danger": "Tracks immediate and delayed threat exposure.",
+      "eliasStress": "Affects message rhythm, hesitation and future panic decisions.",
+      "cautiousPattern": "Tracks if the operator repeatedly chooses safer, slower solutions."
+    },
+    "episode02PersistentFlags": [
+      "askedSoundDetail",
+      "lockerInspected",
+      "lockerTouchedEarly",
+      "eliasPrepared",
+      "startedLockerCodePuzzle",
+      "lockerCodeSolved",
+      "lockerOpened",
+      "recorderFound",
+      "securedBeforeAnalysis",
+      "recorderAnalysisStarted"
     ],
-    "nextEpisode": "episode_03"
+    "futureConsequences": {
+      "lockerTouchedEarly": "Elias may become more nervous around biometric panels and reactive locks.",
+      "lockerInspected": "Elias remembers the operator chose caution before touching the locker.",
+      "lockerCodeSolved": "The operator successfully opened the first real remote puzzle.",
+      "recorderFound": "Episode 3 begins from the recovered recorder, not from a visible episode transition.",
+      "securedBeforeAnalysis": "Elias starts Episode 3 in a more stable position.",
+      "danger": "Higher danger may add interruptions during the recorder analysis return."
+    }
   },
-  "designVersion": "LIFELINE_CINEMATIC_PASS_V6",
-  "ruleset": "ECHO_DIRECTORS_CUT_RULESET_V1_38_RULES",
-  "episodeObjective": "Guide Hale from the relay room into Archive Sector C, recover Incident Alpha evidence, expose the Door 12 deletion chain and 7.14 breadcrumb, and end with the personnel-index cliffhanger while preserving a real-time Lifeline-style remote-operation feel.",
-  "v6Upgrades": [
-    "CharacterBusy sequences are shortened and surrounded with live micro-transmissions.",
-    "Hale talks while walking, climbing, opening doors, scanning, and operating terminals.",
-    "Dialogue avoids option-explanation phrasing; choices emerge from action and pressure.",
-    "Hale makes minor mistakes, corrects himself, asks if the Operator is still present, and jokes under stress.",
-    "System messages remain minimal; emotional state is conveyed through dialogue and hesitation."
-  ],
-  "v5UpgradesPreserved": [
-    "Progress bars converted into characterBusy events with hidden wait time.",
-    "Return nodes added after travel/investigation so Hale reports what happened instead of instantly continuing.",
-    "Awkward/literal dialogue removed or rewritten.",
-    "No route is described as obviously correct; choices are framed through environment and uncertainty.",
-    "All visible choice groups keep exactly two choices.",
-    "Scenario spine preserved: Door 12 records, Incident Alpha archive, camera analysis, override source, 7.14, personnel cliffhanger.",
-    "Lore is delivered through lived environment, memory, and physical actions rather than long reports."
-  ],
-  "rulesApplied": [
-    "ECHO HUMANIZATION PASS V4 applied.",
-    "Report-style action narration reduced.",
-    "Co-action and player involvement strengthened.",
-    "Hale's personality preserved: guilty, technical, frightened, dry under stress, unreliable with memory.",
-    "CharacterBusy kept only for short physical/processing interruptions.",
-    "Episode 03 chain-effect flags preserved."
-  ],
-  "titleKey": "episode_02.meta.episode0.title"
+  "timingDesign": {
+    "normalConversationMs": "1000-5000",
+    "hesitationMs": "5000-15000",
+    "inspectionMs": "10000-30000",
+    "shockSilenceMs": "20000-60000",
+    "panicBurstMs": "300-1000",
+    "realWaitTasks": [
+      {
+        "id": "elias_recorder_analysis_e02",
+        "durationMs": 300000,
+        "notification": "Elias sent a message."
+      }
+    ]
+  },
+  "directorCut": {
+    "version": "FINAL_DIRECTORS_CUT_V1",
+    "coreDesign": "Natural hidden episode transition, relationship continuation, first real code puzzle, system process, glitch, signal loss, recorder cliffhanger.",
+    "qualityTarget": {
+      "characterBond": "10/10",
+      "operatorInteraction": "10/10",
+      "realisticTiming": "10/10",
+      "firstPuzzleIntegration": "10/10",
+      "horrorByImagination": "10/10",
+      "mysteryHook": "10/10",
+      "visibleEpisodeTransition": "0/10"
+    },
+    "nextEpisodeStartNode": "episode_03_start"
+  }
 }
