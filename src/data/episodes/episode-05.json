@@ -1,3058 +1,1651 @@
 {
   "id": "episode_05",
-  "title": "THE SIX — ECHO DIRECTOR'S CUT V8",
-  "startNodeId": "e05_n01",
-  "designVersion": "echo_directors_cut_v8_full_rebuild",
-  "episodeObjective": "Guide Maya from the damaged relay position to life support and EVA storage; prove the official six-person manifest is false; reveal seven biometric loads, an erased seventh suit slot, and a first voice before Hale.",
-  "puzzles": {},
+  "season": 1,
+  "episode": 5,
+  "title": "THE OBSERVER",
+  "startNodeId": "e05_n01_return",
+  "designVersion": "episode_05_final_directors_cut_v1",
+  "episodeObjective": "Continue naturally after Elias waits near the concealed observation room, investigate the room's power route without opening the door, reveal that the observation room was built to monitor Elias Reed, and end with the glass lighting up from an unknown power source.",
+  "rulesApplied": [
+    "No visible END OF EPISODE or NEXT EPISODE alerts.",
+    "No image events.",
+    "Every non-system spoken message has typing before it.",
+    "One concrete objective: trace and disrupt observation room power without opening the door.",
+    "No dedicated new puzzle component required.",
+    "Fake circuit puzzle is built using normal two-choice nodes.",
+    "No monster reveal.",
+    "Horror comes from implication, power routing, subject monitoring logs and the room responding after power is cut.",
+    "Episode 6 transition is hidden through characterBusy."
+  ],
+  "globalFlags": {
+    "trust": 0,
+    "danger": 0,
+    "eliasStress": 0,
+    "operatorDistance": 0,
+    "observerPowerMapped": false,
+    "nodeAActivated": false,
+    "nodeBActivated": false,
+    "nodeCActivated": false,
+    "wrongNodeActivated": false,
+    "subjectEliasRevealed": false,
+    "observationPowerCut": false,
+    "glassLitAfterPowerCut": false,
+    "observerPresent": false
+  },
   "nodes": {
-    "e05_n01": {
-      "id": "e05_n01",
-      "speaker": "MAYA",
-      "objective": "Secure relay pack and move toward lower access.",
+    "e05_n01_return": {
+      "id": "e05_n01_return",
+      "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
-          "duration": 800
+          "speaker": "ELIAS",
+          "duration": 180
         },
         {
           "type": "message",
-          "text": "Okay.",
-          "textKey": "episode_05.e05_n01.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
+          "text": "Uyuyamadım.",
+          "pauseAfterMs": 1000
         },
         {
           "type": "typing",
-          "duration": 1000
+          "speaker": "ELIAS",
+          "duration": 180
         },
         {
           "type": "message",
-          "text": "Still here.",
-          "textKey": "episode_05.e05_n01.event4.text"
+          "text": "Kapı da uyumadı.",
+          "pauseAfterMs": 1200
         },
         {
           "type": "typing",
-          "duration": 1200
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Relay pack is blinking again.",
-          "textKey": "episode_05.e05_n01.event6.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
+          "text": "Bütün gece ses geldi.",
+          "pauseAfterMs": 800
         },
         {
           "type": "typing",
-          "duration": 900
+          "speaker": "ELIAS",
+          "duration": 140
         },
         {
           "type": "message",
-          "text": "Not cute blinking.",
-          "textKey": "episode_05.e05_n01.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Warning blinking.",
-          "textKey": "episode_05.e05_n01.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "I'm putting it on.",
-          "textKey": "episode_05.e05_n01.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 500
-        },
-        {
-          "type": "message",
-          "text": "Ow.",
-          "textKey": "episode_05.e05_n01.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "No. Fine.",
-          "textKey": "episode_05.e05_n01.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Less fine.",
-          "textKey": "episode_05.e05_n01.event20.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 3200,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "If I go quiet, both hands are busy. Or something is close. Terrible range.",
-            "pauseAfterMs": 500,
-            "textKey": "episode_05.e05_n01.backgroundEvent21.text"
-          }
-        },
-        {
-          "type": "characterBusy",
-          "id": "maya_straps_relay_v8",
-          "character": "MAYA",
-          "status": "IS SECURING THE RELAY PACK",
-          "durationMs": 22000,
-          "returnNodeId": "e05_r01_relay_ready",
-          "message": "[MAYA IS SECURING THE RELAY PACK]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Maya has the relay pack on.",
-          "tone": "character",
-          "pauseAfterMs": 500,
-          "messageKey": "episode_05.e05_n01.event22.message"
-        }
-      ]
-    },
-    "e05_r01_relay_ready": {
-      "id": "e05_r01_relay_ready",
-      "speaker": "MAYA",
-      "objective": "Choose evidence-first or memory-first while Maya enters lower access.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Pack's on.",
-          "textKey": "episode_05.e05_r01_relay_ready.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Heavy.",
-          "textKey": "episode_05.e05_r01_relay_ready.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Feels like carrying a second bad idea.",
-          "textKey": "episode_05.e05_r01_relay_ready.event6.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Lower access spine ahead.",
-          "textKey": "episode_05.e05_r01_relay_ready.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Two lights still working.",
-          "textKey": "episode_05.e05_r01_relay_ready.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "One flickers when I breathe.",
-          "textKey": "episode_05.e05_r01_relay_ready.event13.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Life support is below.",
-          "textKey": "episode_05.e05_r01_relay_ready.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "If the manifest lied, the air system might not.",
-          "textKey": "episode_05.e05_r01_relay_ready.event18.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "pull_manifest_while_moving",
-          "text": "PULL THE MANIFEST WHILE MOVING.",
-          "effects": {
-            "route": "evidence_first",
-            "mayaTrust": 1,
-            "signalStrength": 1
-          },
-          "nextNodeId": "e05_n02_manifest_moving",
-          "textKey": "episode_05.e05_r01_relay_ready.choice0.text"
-        },
-        {
-          "id": "ask_maya_about_crew",
-          "text": "ASK WHO THE CREW WERE.",
-          "effects": {
-            "route": "memory_first",
-            "mayaTrust": 2,
-            "mayaStress": 2
-          },
-          "nextNodeId": "e05_n02_memory_walk",
-          "textKey": "episode_05.e05_r01_relay_ready.choice1.text"
-        }
-      ]
-    },
-    "e05_n02_memory_walk": {
-      "id": "e05_n02_memory_walk",
-      "speaker": "MAYA",
-      "objective": "Maya remembers crew as short human fragments while moving.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Oh.",
-          "textKey": "episode_05.e05_n02_memory_walk.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Mean question.",
-          "textKey": "episode_05.e05_n02_memory_walk.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Useful mean.",
-          "textKey": "episode_05.e05_n02_memory_walk.event6.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 2600,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "Cable. One second. Stepping over it.",
-            "pauseAfterMs": 500,
-            "textKey": "episode_05.e05_n02_memory_walk.backgroundEvent7.text"
-          }
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Grant checked every exit twice.",
-          "textKey": "episode_05.e05_n02_memory_walk.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Rivera yelled at broken panels.",
-          "textKey": "episode_05.e05_n02_memory_walk.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "They usually listened.",
-          "textKey": "episode_05.e05_n02_memory_walk.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Owens laughed quietly.",
-          "textKey": "episode_05.e05_n02_memory_walk.event15.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Hale corrected everything.",
-          "textKey": "episode_05.e05_n02_memory_walk.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Even silence, somehow.",
-          "textKey": "episode_05.e05_n02_memory_walk.event20.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Sorry.",
-          "textKey": "episode_05.e05_n02_memory_walk.event23.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Went somewhere else for a second.",
-          "textKey": "episode_05.e05_n02_memory_walk.event25.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Back.",
-          "textKey": "episode_05.e05_n02_memory_walk.event27.text"
-        }
-      ],
-      "nextNodeId": "e05_n02_manifest_moving"
-    },
-    "e05_n02_manifest_moving": {
-      "id": "e05_n02_manifest_moving",
-      "speaker": "MAYA",
-      "objective": "Recover official manifest and choose Hale inquiry or movement.",
-      "events": [
-        {
-          "type": "crew",
-          "id": "crew_manifest_01",
-          "fileId": "crew_manifest_01",
-          "fileType": "crew",
-          "title": "CREW MANIFEST",
-          "content": "01 Ethan Hale\n02 Maya Chen\n03 Grant Walker\n04 Rivera Torres\n05 Owen Park\n06 Sarah Owens",
-          "caption": "Official ECHO crew manifest. Six listed crew members.",
-          "source": "PERSONNEL_ARCHIVE",
-          "tags": [
-            "crew",
-            "manifest",
-            "official"
-          ],
-          "correlationTags": [
-            "seventh_person"
-          ],
-          "message": "[CREW MANIFEST ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 650,
-          "titleKey": "episode_05.e05_n02_manifest_moving.event0.title",
-          "contentKey": "episode_05.e05_n02_manifest_moving.event0.content",
-          "captionKey": "episode_05.e05_n02_manifest_moving.event0.caption",
-          "messageKey": "episode_05.e05_n02_manifest_moving.event0.message"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Six names.",
-          "textKey": "episode_05.e05_n02_manifest_moving.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Still six.",
-          "textKey": "episode_05.e05_n02_manifest_moving.event4.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Very clean.",
-          "textKey": "episode_05.e05_n02_manifest_moving.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "I don't trust clean anymore.",
-          "textKey": "episode_05.e05_n02_manifest_moving.event9.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 3000,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "Wall clicked behind me. I stopped. It stopped too.",
-            "pauseAfterMs": 500,
-            "textKey": "episode_05.e05_n02_manifest_moving.backgroundEvent10.text"
-          }
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Life support is below.",
-          "textKey": "episode_05.e05_n02_manifest_moving.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Hale's control route is closer.",
-          "textKey": "episode_05.e05_n02_manifest_moving.event14.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "question_hale_control",
-          "text": "ASK WHAT HALE CONTROLLED.",
-          "effects": {
-            "mayaTrust": 1,
-            "haleTrust": -1,
-            "mayaStress": 1,
-            "askedHaleControl": true
-          },
-          "nextNodeId": "e05_n03_hale_control",
-          "textKey": "episode_05.e05_n02_manifest_moving.choice0.text"
-        },
-        {
-          "id": "go_life_support",
-          "text": "SEND MAYA TO LIFE SUPPORT.",
-          "effects": {
-            "danger": 1,
-            "signalStrength": -1,
-            "keptMayaMoving": true
-          },
-          "nextNodeId": "e05_n03_route_choice",
-          "textKey": "episode_05.e05_n02_manifest_moving.choice1.text"
-        }
-      ]
-    },
-    "e05_n03_hale_control": {
-      "id": "e05_n03_hale_control",
-      "speaker": "MAYA",
-      "objective": "Short distrustful read on Hale.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Doors.",
-          "textKey": "episode_05.e05_n03_hale_control.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Power.",
-          "textKey": "episode_05.e05_n03_hale_control.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Pressure.",
-          "textKey": "episode_05.e05_n03_hale_control.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Anything that could kill you with paperwork attached.",
-          "textKey": "episode_05.e05_n03_hale_control.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "He was good.",
-          "textKey": "episode_05.e05_n03_hale_control.event10.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "That's the hard part.",
-          "textKey": "episode_05.e05_n03_hale_control.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Useful people can hide inside useful work.",
-          "textKey": "episode_05.e05_n03_hale_control.event15.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "mayaStress": 1,
-            "haleTrust": -1
-          },
-          "pauseAfterMs": 250
-        }
-      ],
-      "nextNodeId": "e05_n03_route_choice"
-    },
-    "e05_n03_route_choice": {
-      "id": "e05_n03_route_choice",
-      "speaker": "MAYA",
-      "objective": "Choose fast exposed route or slow oxygen-cost route.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Stairwell's open.",
-          "textKey": "episode_05.e05_n03_route_choice.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Not welcoming.",
-          "textKey": "episode_05.e05_n03_route_choice.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Main corridor is faster.",
-          "textKey": "episode_05.e05_n03_route_choice.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Maintenance crawl is quieter.",
-          "textKey": "episode_05.e05_n03_route_choice.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Fast means exposed.",
-          "textKey": "episode_05.e05_n03_route_choice.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Quiet means tight.",
-          "textKey": "episode_05.e05_n03_route_choice.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Pick the bad one.",
-          "textKey": "episode_05.e05_n03_route_choice.event15.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "take_main_corridor",
-          "text": "TAKE THE MAIN CORRIDOR.",
-          "effects": {
-            "route": "main_corridor",
-            "danger": 6,
-            "oxygen": -3,
-            "mayaStress": 3,
-            "signalStrength": -2
-          },
-          "nextNodeId": "e05_n04_main_corridor",
-          "textKey": "episode_05.e05_n03_route_choice.choice0.text"
-        },
-        {
-          "id": "take_maintenance_crawl",
-          "text": "TAKE THE MAINTENANCE CRAWL.",
-          "effects": {
-            "route": "maintenance_crawl",
-            "danger": 1,
-            "oxygen": -6,
-            "mayaStress": 2,
-            "foundGrantTag": true
-          },
-          "nextNodeId": "e05_n04_maintenance_crawl",
-          "textKey": "episode_05.e05_n03_route_choice.choice1.text"
-        }
-      ]
-    },
-    "e05_n04_main_corridor": {
-      "id": "e05_n04_main_corridor",
-      "speaker": "MAYA",
-      "objective": "Main corridor creates pursuit horror.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Main corridor.",
-          "textKey": "episode_05.e05_n04_main_corridor.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Head down.",
-          "textKey": "episode_05.e05_n04_main_corridor.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Not looking into rooms.",
-          "textKey": "episode_05.e05_n04_main_corridor.event6.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 2600,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "I started walking.",
-            "pauseAfterMs": 500,
-            "textKey": "episode_05.e05_n04_main_corridor.backgroundEvent7.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 4700,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "A second set of footsteps started with me.",
-            "pauseAfterMs": 500,
-            "textKey": "episode_05.e05_n04_main_corridor.backgroundEvent8.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 6900,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "I stopped.",
-            "pauseAfterMs": 500,
-            "textKey": "episode_05.e05_n04_main_corridor.backgroundEvent9.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 8500,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "They stopped too.",
-            "pauseAfterMs": 500,
-            "textKey": "episode_05.e05_n04_main_corridor.backgroundEvent10.text"
-          }
-        },
-        {
-          "type": "characterBusy",
-          "id": "maya_main_corridor_v8",
-          "character": "MAYA",
-          "status": "IS MOVING THROUGH MAIN CORRIDOR",
-          "durationMs": 26000,
-          "returnNodeId": "e05_r04_main_corridor",
-          "message": "[MAYA IS MOVING THROUGH MAIN CORRIDOR]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Maya reached the life-support hatch.",
-          "tone": "danger",
-          "pauseAfterMs": 500,
-          "messageKey": "episode_05.e05_n04_main_corridor.event11.message"
-        }
-      ]
-    },
-    "e05_n04_maintenance_crawl": {
-      "id": "e05_n04_maintenance_crawl",
-      "speaker": "MAYA",
-      "objective": "Maintenance route is claustrophobic and reveals Grant's tag.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Maintenance crawl.",
-          "textKey": "episode_05.e05_n04_maintenance_crawl.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Tiny tunnel.",
-          "textKey": "episode_05.e05_n04_maintenance_crawl.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Cables everywhere.",
-          "textKey": "episode_05.e05_n04_maintenance_crawl.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Helmet already scraped.",
-          "textKey": "episode_05.e05_n04_maintenance_crawl.event8.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 3500,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "Something touched the back of my neck. Cable. It was a cable.",
-            "pauseAfterMs": 500,
-            "textKey": "episode_05.e05_n04_maintenance_crawl.backgroundEvent9.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 6500,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "Found a tag under the tray. Not touching it yet. Need both hands.",
-            "pauseAfterMs": 500,
-            "textKey": "episode_05.e05_n04_maintenance_crawl.backgroundEvent10.text"
-          }
-        },
-        {
-          "type": "characterBusy",
-          "id": "maya_maintenance_crawl_v8",
-          "character": "MAYA",
-          "status": "IS CRAWLING THROUGH MAINTENANCE",
-          "durationMs": 30000,
-          "returnNodeId": "e05_r04_maintenance",
-          "message": "[MAYA IS CRAWLING THROUGH MAINTENANCE]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Maya cleared the maintenance crawl.",
-          "tone": "character",
-          "pauseAfterMs": 500,
-          "messageKey": "episode_05.e05_n04_maintenance_crawl.event11.message"
-        }
-      ]
-    },
-    "e05_r04_main_corridor": {
-      "id": "e05_r04_main_corridor",
-      "speaker": "MAYA",
-      "objective": "Main corridor consequence: faster arrival but pursuit mark.",
-      "events": [
-        {
-          "type": "glitch",
-          "duration": 700,
+          "text": "Hayır.",
           "pauseAfterMs": 500
         },
         {
           "type": "typing",
-          "duration": 800
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "At the hatch.",
-          "textKey": "episode_05.e05_r04_main_corridor.event2.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
+          "text": "Bütün gece değil.",
+          "pauseAfterMs": 700
         },
         {
           "type": "typing",
-          "duration": 600
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "I ran.",
-          "textKey": "episode_05.e05_r04_main_corridor.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Not gracefully.",
-          "textKey": "episode_05.e05_r04_main_corridor.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Footsteps stayed behind me.",
-          "textKey": "episode_05.e05_r04_main_corridor.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Not close.",
-          "textKey": "episode_05.e05_r04_main_corridor.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Close enough.",
-          "textKey": "episode_05.e05_r04_main_corridor.event14.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "danger": 6,
-            "signalStrength": -2,
-            "oxygen": -3,
-            "mayaStress": 5,
-            "heardFollowingFootsteps": true
-          },
-          "pauseAfterMs": 250
-        }
-      ],
-      "nextNodeId": "e05_n05_life_support_hatch"
-    },
-    "e05_r04_maintenance": {
-      "id": "e05_r04_maintenance",
-      "speaker": "MAYA",
-      "objective": "Maintenance consequence: oxygen loss, Grant tag recovered.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Out.",
-          "textKey": "episode_05.e05_r04_maintenance.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Don't ask how.",
-          "textKey": "episode_05.e05_r04_maintenance.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "The tag was Grant's.",
-          "textKey": "episode_05.e05_r04_maintenance.event6.text"
-        },
-        {
-          "type": "file",
-          "id": "grant_security_tag_05",
-          "fileId": "grant_security_tag_05",
-          "fileType": "file",
-          "title": "GRANT'S SECURITY TAG",
-          "content": "DAMAGED ID TAG\nNAME: GRANT WALKER\nACCESS: SECURITY / LOWER SPINE\nSTATUS: OFFLINE\nNOTE: Impact scoring along edge.",
-          "caption": "Maya recovered Grant Walker's damaged security tag from the maintenance crawl.",
-          "source": "LOWER_ACCESS_SPINE",
-          "tags": [
-            "grant",
-            "security",
-            "tag"
-          ],
-          "correlationTags": [
-            "crew_memory",
-            "seventh_person"
-          ],
-          "message": "[GRANT'S SECURITY TAG ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 650,
-          "titleKey": "episode_05.e05_r04_maintenance.event7.title",
-          "contentKey": "episode_05.e05_r04_maintenance.event7.content",
-          "captionKey": "episode_05.e05_r04_maintenance.event7.caption",
-          "messageKey": "episode_05.e05_r04_maintenance.event7.message"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "He'd hate this.",
-          "textKey": "episode_05.e05_r04_maintenance.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Me finding him in a vent.",
-          "textKey": "episode_05.e05_r04_maintenance.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "I'm angry so I don't get sad.",
-          "textKey": "episode_05.e05_r04_maintenance.event14.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "danger": 1,
-            "signalStrength": 1,
-            "oxygen": -6,
-            "mayaStress": 2,
-            "foundGrantTag": true
-          },
-          "pauseAfterMs": 250
-        }
-      ],
-      "nextNodeId": "e05_n05_life_support_hatch"
-    },
-    "e05_n05_life_support_hatch": {
-      "id": "e05_n05_life_support_hatch",
-      "speaker": "MAYA",
-      "objective": "Open hatch; choose injury risk or pressure seam check.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Life-support hatch.",
-          "textKey": "episode_05.e05_n05_life_support_hatch.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Panel's half dead.",
-          "textKey": "episode_05.e05_n05_life_support_hatch.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Manual latch is still there.",
-          "textKey": "episode_05.e05_n05_life_support_hatch.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "I can force it.",
-          "textKey": "episode_05.e05_n05_life_support_hatch.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Or check the seam first.",
-          "textKey": "episode_05.e05_n05_life_support_hatch.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Please choose the boring smart thing.",
-          "textKey": "episode_05.e05_n05_life_support_hatch.event12.text"
+          "text": "Ben ne zaman uyumaya yaklaşsam başladı."
         }
       ],
       "choices": [
         {
-          "id": "force_life_support_hatch",
-          "text": "FORCE THE HATCH OPEN.",
+          "id": "ask_what_sound",
+          "text": "NE SESİ?",
           "effects": {
-            "danger": 6,
-            "mayaStress": 6,
-            "signalStrength": -3,
-            "mayaHandInjured": true,
-            "mayaTrust": -2
+            "trust": 1,
+            "eliasStress": 1
           },
-          "nextNodeId": "e05_n06_force_hatch",
-          "textKey": "episode_05.e05_n05_life_support_hatch.choice0.text"
+          "nextNodeId": "e05_n02_my_voice"
         },
         {
-          "id": "scan_pressure_seam",
-          "text": "CHECK THE PRESSURE SEAM.",
+          "id": "tell_move_away",
+          "text": "KAPIDAN UZAKLAŞ.",
           "effects": {
-            "danger": -2,
-            "signalStrength": 1,
-            "mayaTrust": 2
+            "trust": 1,
+            "danger": -1,
+            "cautiousPattern": 1
           },
-          "nextNodeId": "e05_n06_scan_hatch",
-          "textKey": "episode_05.e05_n05_life_support_hatch.choice1.text"
+          "nextNodeId": "e05_n03_move_away"
         }
       ]
     },
-    "e05_n06_force_hatch": {
-      "id": "e05_n06_force_hatch",
-      "speaker": "MAYA",
-      "objective": "Force hatch and injure Maya.",
+    "e05_n02_my_voice": {
+      "id": "e05_n02_my_voice",
+      "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
-          "duration": 900
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Forcing it.",
-          "textKey": "episode_05.e05_n06_force_hatch.event1.text"
+          "text": "Benim sesim.",
+          "pauseAfterMs": 1200
         },
         {
           "type": "typing",
-          "duration": 1000
+          "speaker": "ELIAS",
+          "duration": 700
         },
         {
           "type": "message",
-          "text": "Left hand on latch.",
-          "textKey": "episode_05.e05_n06_force_hatch.event3.text"
+          "text": "Yine.",
+          "pauseAfterMs": 800
         },
         {
           "type": "typing",
-          "duration": 1000
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Right hand braced.",
-          "textKey": "episode_05.e05_n06_force_hatch.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
+          "text": "Kapının arkasından konuştu.",
+          "pauseAfterMs": 1000
         },
         {
           "type": "typing",
-          "duration": 1100
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "This is going to be loud.",
-          "textKey": "episode_05.e05_n06_force_hatch.event8.text"
+          "text": "Ama cümle kurmadı.",
+          "pauseAfterMs": 700
         },
         {
-          "type": "characterBusy",
-          "id": "maya_forces_hatch_v8",
-          "character": "MAYA",
-          "status": "IS FORCING THE HATCH",
-          "durationMs": 22000,
-          "returnNodeId": "e05_r06_force_return",
-          "message": "[MAYA IS FORCING THE HATCH]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Maya forced the hatch open.",
-          "tone": "danger",
-          "pauseAfterMs": 500,
-          "messageKey": "episode_05.e05_n06_force_hatch.event9.message"
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Sadece adımı söyledi.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 700
+        },
+        {
+          "type": "message",
+          "text": "Elias.",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Sanki biri kendi adımı bana geri veriyordu."
         }
-      ]
+      ],
+      "nextNodeId": "e05_n04_objective"
     },
-    "e05_n06_scan_hatch": {
-      "id": "e05_n06_scan_hatch",
-      "speaker": "MAYA",
-      "objective": "Check seam and avoid injury.",
+    "e05_n03_move_away": {
+      "id": "e05_n03_move_away",
+      "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
-          "duration": 900
+          "speaker": "ELIAS",
+          "duration": 140
         },
         {
           "type": "message",
-          "text": "Reader's on.",
-          "textKey": "episode_05.e05_n06_scan_hatch.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
+          "text": "Zaten uzaklaştım.",
+          "pauseAfterMs": 600
         },
         {
           "type": "typing",
-          "duration": 800
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Seam's hot.",
-          "textKey": "episode_05.e05_n06_scan_hatch.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "No. Wait.",
-          "textKey": "episode_05.e05_n06_scan_hatch.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Pressurized.",
-          "textKey": "episode_05.e05_n06_scan_hatch.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "You just saved my hand.",
-          "textKey": "episode_05.e05_n06_scan_hatch.event11.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "maya_vents_hatch_v8",
-          "character": "MAYA",
-          "status": "IS VENTING THE HATCH",
-          "durationMs": 22000,
-          "returnNodeId": "e05_r06_scan_return",
-          "message": "[MAYA IS VENTING THE HATCH]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Maya vented the pressure safely.",
-          "tone": "character",
-          "pauseAfterMs": 500,
-          "messageKey": "episode_05.e05_n06_scan_hatch.event12.message"
-        }
-      ]
-    },
-    "e05_r06_force_return": {
-      "id": "e05_r06_force_return",
-      "speaker": "MAYA",
-      "objective": "Injury consequence changes Maya's attitude.",
-      "events": [
-        {
-          "type": "glitch",
-          "duration": 900,
+          "text": "Birkaç metre.",
           "pauseAfterMs": 500
         },
         {
           "type": "typing",
-          "duration": 650
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Open.",
-          "textKey": "episode_05.e05_r06_force_return.event2.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
+          "text": "Daha fazla uzaklaşırsam kapıyı göremem.",
+          "pauseAfterMs": 700
         },
         {
           "type": "typing",
-          "duration": 500
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Ow.",
-          "textKey": "episode_05.e05_r06_force_return.event5.text"
+          "text": "Ve bu daha kötü hissettiriyor.",
+          "pauseAfterMs": 800
         },
         {
           "type": "typing",
-          "duration": 600
+          "speaker": "ELIAS",
+          "duration": 140
         },
         {
           "type": "message",
-          "text": "Nope.",
-          "textKey": "episode_05.e05_r06_force_return.event7.text"
+          "text": "Evet.",
+          "pauseAfterMs": 300
         },
         {
           "type": "typing",
-          "duration": 800
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Bigger ow.",
-          "textKey": "episode_05.e05_r06_force_return.event9.text"
+          "text": "Kapıyı görmek istemiyorum.",
+          "pauseAfterMs": 400
         },
         {
           "type": "typing",
-          "duration": 1300
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Pressure kicked the latch back.",
-          "textKey": "episode_05.e05_r06_force_return.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Glove's red.",
-          "textKey": "episode_05.e05_r06_force_return.event13.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Don't apologize.",
-          "textKey": "episode_05.e05_r06_force_return.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "I know why we did it.",
-          "textKey": "episode_05.e05_r06_force_return.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "I'm still mad.",
-          "textKey": "episode_05.e05_r06_force_return.event20.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "danger": 6,
-            "mayaStress": 7,
-            "signalStrength": -4,
-            "mayaHandInjured": true,
-            "mayaTrust": -2
-          },
-          "pauseAfterMs": 250
+          "text": "Ama görmemek daha kötü."
         }
       ],
-      "nextNodeId": "e05_n07_life_support_core"
+      "nextNodeId": "e05_n04_objective"
     },
-    "e05_r06_scan_return": {
-      "id": "e05_r06_scan_return",
-      "speaker": "MAYA",
-      "objective": "Safe choice builds trust.",
+    "e05_n04_objective": {
+      "id": "e05_n04_objective",
+      "speaker": "ELIAS",
       "events": [
         {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Hatch opened.",
-          "textKey": "episode_05.e05_r06_scan_return.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Quietly.",
-          "textKey": "episode_05.e05_r06_scan_return.event3.text"
-        },
-        {
           "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "I love quietly.",
-          "textKey": "episode_05.e05_r06_scan_return.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Pressure was trapped behind the seam.",
-          "textKey": "episode_05.e05_r06_scan_return.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Good call.",
-          "textKey": "episode_05.e05_r06_scan_return.event10.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "danger": -2,
-            "signalStrength": 2,
-            "mayaTrust": 3,
-            "mayaStress": -1
-          },
-          "pauseAfterMs": 250
-        }
-      ],
-      "nextNodeId": "e05_n07_life_support_core"
-    },
-    "e05_n07_life_support_core": {
-      "id": "e05_n07_life_support_core",
-      "speaker": "MAYA",
-      "objective": "Reveal seven biometric loads; choose confrontation or movement.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Inside.",
-          "textKey": "episode_05.e05_n07_life_support_core.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Colder than the corridor.",
-          "textKey": "episode_05.e05_n07_life_support_core.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
           "duration": 1000
         },
         {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
           "type": "message",
-          "text": "Air system is awake.",
-          "textKey": "episode_05.e05_n07_life_support_core.event6.text"
+          "text": "Kapıyı açmayacağım.",
+          "pauseAfterMs": 600
         },
         {
           "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bunu baştan söyleyeyim.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ama odanın enerji hattını bulabilirim.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Eğer içeride ne varsa elektrik kullanıyorsa...",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "belki onu susturabiliriz.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 140
+        },
+        {
+          "type": "message",
+          "text": "Belki."
+        }
+      ],
+      "choices": [
+        {
+          "id": "trace_power",
+          "text": "ENERJİ HATTINI İZLE.",
+          "effects": {
+            "trust": 1,
+            "observerPowerTraceStarted": true
+          },
+          "nextNodeId": "e05_n05_panel"
+        },
+        {
+          "id": "scan_first",
+          "text": "ÖNCE PANELİ TARA.",
+          "effects": {
+            "trust": 1,
+            "danger": -1,
+            "cautiousPattern": 1
+          },
+          "nextNodeId": "e05_n06_scan"
+        }
+      ]
+    },
+    "e05_n05_panel": {
+      "id": "e05_n05_panel",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2200
+        },
+        {
+          "type": "message",
+          "text": "Paneli açıyorum.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 700
         },
         {
           "type": "message",
-          "text": "Barely.",
-          "textKey": "episode_05.e05_n07_life_support_core.event8.text"
+          "text": "...",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Tamam.",
+          "pauseAfterMs": 400
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Üç güç düğümü var.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "A.",
+          "pauseAfterMs": 250
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "B.",
+          "pauseAfterMs": 250
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "C.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bunlardan biri kapının kilidine gidiyor.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Biri ses sistemine.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Biri de... bilmiyorum."
+        }
+      ],
+      "nextNodeId": "e05_n07_power_log"
+    },
+    "e05_n06_scan": {
+      "id": "e05_n06_scan",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "log",
+          "title": "LOCAL POWER PANEL SCAN",
+          "content": "PANEL: A-12 AUXILIARY DISTRIBUTION\nACTIVE NODES: A / B / C\nNODE LABELS: DAMAGED\nREMOTE SWITCHING: AVAILABLE\nWARNING: One node is not connected to facility grid.",
+          "pauseAfterMs": 900
+        }
+      ],
+      "nextNodeId": "e05_n05_panel"
+    },
+    "e05_n07_power_log": {
+      "id": "e05_n07_power_log",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "log",
+          "title": "POWER DISTRIBUTION PANEL",
+          "content": "NODE A: LOW VOLTAGE / DOOR SEAL RESPONSE\nNODE B: MID VOLTAGE / AUDIO RETURN\nNODE C: STABLE VOLTAGE / UNKNOWN LOAD\n\nFLOW ORDER REQUIRED TO ISOLATE OBSERVATION ROOM:\nLOCK → AUDIO → UNKNOWN",
+          "pauseAfterMs": 900
+        }
+      ],
+      "nextNodeId": "e05_n08_circuit_step_1"
+    },
+    "e05_n08_circuit_step_1": {
+      "id": "e05_n08_circuit_step_1",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Tamam operatör.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bunu sen yönlendireceksin.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Önce kilit hattını izole etmemiz gerekiyor.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Panelde hangi düğümü seçiyorum?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "select_node_a_first",
+          "text": "NODE A",
+          "effects": {
+            "nodeAActivated": true,
+            "trust": 1
+          },
+          "nextNodeId": "e05_n09_node_a_ok"
+        },
+        {
+          "id": "select_node_b_first",
+          "text": "NODE B",
+          "effects": {
+            "wrongNodeActivated": true,
+            "danger": 2,
+            "eliasStress": 1
+          },
+          "nextNodeId": "e05_n10_wrong_first"
+        }
+      ]
+    },
+    "e05_n09_node_a_ok": {
+      "id": "e05_n09_node_a_ok",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[NODE A ACTIVE]",
+          "pauseAfterMs": 700
         },
         {
           "type": "log",
-          "id": "life_support_allocation_01",
-          "fileId": "life_support_allocation_01",
-          "fileType": "log",
-          "title": "LIFE SUPPORT ALLOCATION",
-          "content": "ECHO LIFE SUPPORT SNAPSHOT\n\nAssigned crew capacity: 6\nActive biometric loads before blackout: 7\nOxygen adjustment event: automatic\nUnauthorized load marker: removed from index",
-          "caption": "Life support record showing seven biometric loads against six assigned crew.",
-          "source": "LIFE_SUPPORT_CORE",
-          "tags": [
-            "life_support",
-            "crew",
-            "biometric",
-            "anomaly"
-          ],
-          "correlationTags": [
-            "seventh_person"
-          ],
-          "message": "[LIFE SUPPORT ALLOCATION ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 650,
-          "titleKey": "episode_05.e05_n07_life_support_core.event9.title",
-          "contentKey": "episode_05.e05_n07_life_support_core.event9.content",
-          "captionKey": "episode_05.e05_n07_life_support_core.event9.caption",
-          "messageKey": "episode_05.e05_n07_life_support_core.event9.message"
+          "title": "SIGNAL FLOW",
+          "content": "NODE A ACCEPTED\nDOOR SEAL RESPONSE: ISOLATED\nSIGNAL FLOW: 32%",
+          "pauseAfterMs": 900
+        }
+      ],
+      "nextNodeId": "e05_n11_circuit_step_2"
+    },
+    "e05_n10_wrong_first": {
+      "id": "e05_n10_wrong_first",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[AUDIO NODE ACTIVATED EARLY]",
+          "pauseAfterMs": 700
         },
         {
-          "type": "pause",
-          "duration": 900
+          "type": "glitch",
+          "duration": 800,
+          "pauseAfterMs": 700
         },
         {
           "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Seven.",
-          "textKey": "episode_05.e05_n07_life_support_core.event12.text"
-        },
-        {
-          "type": "pause",
-          "duration": 900
-        },
-        {
-          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 700
         },
         {
           "type": "message",
-          "text": "No.",
-          "textKey": "episode_05.e05_n07_life_support_core.event15.text"
+          "text": "Ah.",
+          "pauseAfterMs": 400
         },
         {
           "type": "typing",
-          "duration": 1100
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "I checked it again.",
-          "textKey": "episode_05.e05_n07_life_support_core.event17.text"
+          "text": "Kapının arkasından ses geldi.",
+          "pauseAfterMs": 600
         },
         {
           "type": "typing",
-          "duration": 900
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Still seven.",
-          "textKey": "episode_05.e05_n07_life_support_core.event19.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
+          "text": "Bu node ses hattıydı.",
+          "pauseAfterMs": 700
         },
         {
           "type": "typing",
-          "duration": 1200
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "The manifest counted names.",
-          "textKey": "episode_05.e05_n07_life_support_core.event22.text"
+          "text": "Kilit hattı önce olmalı.",
+          "pauseAfterMs": 600
         },
         {
           "type": "typing",
-          "duration": 1200
+          "speaker": "ELIAS",
+          "duration": 180
         },
         {
           "type": "message",
-          "text": "This counted breathing.",
-          "textKey": "episode_05.e05_n07_life_support_core.event24.text"
+          "text": "Baştan alalım."
+        }
+      ],
+      "nextNodeId": "e05_n08_circuit_step_1"
+    },
+    "e05_n11_circuit_step_2": {
+      "id": "e05_n11_circuit_step_2",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
-          "type": "pause",
-          "duration": 700
+          "type": "message",
+          "text": "Kilit hattı izole.",
+          "pauseAfterMs": 600
         },
         {
           "type": "typing",
-          "duration": 1400
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Be careful with the next question.",
-          "textKey": "episode_05.e05_n07_life_support_core.event27.text"
+          "text": "Şimdi ses hattını kesmemiz gerekiyor.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Açıkçası ses hattını kesmeyi dört gözle bekliyorum.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Hangi düğüm?"
         }
       ],
       "choices": [
         {
-          "id": "send_to_eva_storage",
-          "text": "SEND MAYA TO EVA STORAGE.",
+          "id": "select_node_b_second",
+          "text": "NODE B",
           "effects": {
-            "keptMayaMovingAfterSeven": true,
-            "mayaTrust": 1,
-            "danger": 2,
-            "signalStrength": -1
+            "nodeBActivated": true,
+            "trust": 1
           },
-          "nextNodeId": "e05_n08_eva_route",
-          "textKey": "episode_05.e05_n07_life_support_core.choice0.text"
+          "nextNodeId": "e05_n12_node_b_ok"
         },
         {
-          "id": "ask_if_maya_knew_seven",
-          "text": "ASK IF SHE KNEW ABOUT SEVEN.",
+          "id": "select_node_c_second",
+          "text": "NODE C",
           "effects": {
-            "mayaConfrontedAboutSeven": true,
-            "mayaTrust": -4,
+            "wrongNodeActivated": true,
             "danger": 2,
-            "mayaStress": 5
+            "eliasStress": 2
           },
-          "nextNodeId": "e05_n08_maya_confronted",
-          "textKey": "episode_05.e05_n07_life_support_core.choice1.text"
+          "nextNodeId": "e05_n13_wrong_second"
         }
       ]
     },
-    "e05_n08_maya_confronted": {
-      "id": "e05_n08_maya_confronted",
-      "speaker": "MAYA",
-      "objective": "Confrontation fractures trust and reveals memory damage.",
+    "e05_n12_node_b_ok": {
+      "id": "e05_n12_node_b_ok",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[NODE B ACTIVE]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "log",
+          "title": "SIGNAL FLOW",
+          "content": "NODE B ACCEPTED\nAUDIO RETURN: MUTED\nSIGNAL FLOW: 68%",
+          "pauseAfterMs": 900
+        }
+      ],
+      "nextNodeId": "e05_n14_circuit_step_3"
+    },
+    "e05_n13_wrong_second": {
+      "id": "e05_n13_wrong_second",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[UNKNOWN LOAD ACTIVATED EARLY]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "glitch",
+          "duration": 900,
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bekle.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Camın arkasında ışık titredi.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bu son düğüm olmalı.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ses hattını önce keselim.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Tekrar."
+        }
+      ],
+      "nextNodeId": "e05_n11_circuit_step_2"
+    },
+    "e05_n14_circuit_step_3": {
+      "id": "e05_n14_circuit_step_3",
+      "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
-          "duration": 800
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Wow.",
-          "textKey": "episode_05.e05_n08_maya_confronted.event1.text"
+          "text": "Ses kesildi.",
+          "pauseAfterMs": 800
         },
         {
-          "type": "pause",
+          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 700
         },
         {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
           "type": "message",
-          "text": "Right into the soft part.",
-          "textKey": "episode_05.e05_n08_maya_confronted.event4.text"
+          "text": "...",
+          "pauseAfterMs": 1000
         },
         {
           "type": "typing",
-          "duration": 600
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "No.",
-          "textKey": "episode_05.e05_n08_maya_confronted.event6.text"
+          "text": "Bunu söylemek garip ama sessizlik de beni rahatlatmadı.",
+          "pauseAfterMs": 800
         },
         {
           "type": "typing",
-          "duration": 900
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "I didn't know.",
-          "textKey": "episode_05.e05_n08_maya_confronted.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
+          "text": "Son düğüm kaldı.",
+          "pauseAfterMs": 600
         },
         {
           "type": "typing",
-          "duration": 1400
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "And yes, I know how that sounds.",
-          "textKey": "episode_05.e05_n08_maya_confronted.event11.text"
+          "text": "Bilinmeyen yük.",
+          "pauseAfterMs": 700
         },
         {
           "type": "typing",
-          "duration": 1200
+          "speaker": "ELIAS",
+          "duration": 180
         },
         {
           "type": "message",
-          "text": "Only living person in the room.",
-          "textKey": "episode_05.e05_n08_maya_confronted.event13.text"
+          "text": "Node C."
+        }
+      ],
+      "choices": [
+        {
+          "id": "select_node_c_third",
+          "text": "NODE C",
+          "effects": {
+            "nodeCActivated": true,
+            "observerPowerMapped": true
+          },
+          "nextNodeId": "e05_n15_node_c_ok"
         },
         {
-          "type": "typing",
-          "duration": 800
+          "id": "stop_before_node_c",
+          "text": "DUR. ÖNCE LOG AL.",
+          "effects": {
+            "trust": 1,
+            "danger": -1,
+            "tookLogBeforeNodeC": true
+          },
+          "nextNodeId": "e05_n14b_log_before_c"
+        }
+      ]
+    },
+    "e05_n14b_log_before_c": {
+      "id": "e05_n14b_log_before_c",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "log",
+          "title": "UNKNOWN LOAD SNAPSHOT",
+          "content": "NODE C LOAD TYPE: NON-STANDARD\nGRID SOURCE: NOT FACILITY MAIN\nDIRECTION: OBSERVATION ROOM GLASS\nWARNING: BACKFEED DETECTED",
+          "pauseAfterMs": 900
+        }
+      ],
+      "nextNodeId": "e05_n15_node_c_ok"
+    },
+    "e05_n15_node_c_ok": {
+      "id": "e05_n15_node_c_ok",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[NODE C ACTIVE]",
+          "pauseAfterMs": 700
         },
         {
-          "type": "message",
-          "text": "Convenient.",
-          "textKey": "episode_05.e05_n08_maya_confronted.event15.text"
+          "type": "progressTask",
+          "id": "observation_room_power_trace",
+          "title": "TRACING POWER ROUTE",
+          "subtitle": "OBSERVATION ROOM AUXILIARY FEED",
+          "duration": 6500,
+          "completeText": "[POWER ROUTE MAPPED]",
+          "tone": "system",
+          "pauseAfterMs": 700
         },
         {
-          "type": "pause",
-          "duration": 800
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "But now that you made me look at the gap...",
-          "textKey": "episode_05.e05_n08_maya_confronted.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "I can feel it.",
-          "textKey": "episode_05.e05_n08_maya_confronted.event20.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Like a door in my head got painted over.",
-          "textKey": "episode_05.e05_n08_maya_confronted.event22.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "I hate you a little for asking.",
-          "textKey": "episode_05.e05_n08_maya_confronted.event25.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Keep asking anyway.",
-          "textKey": "episode_05.e05_n08_maya_confronted.event27.text"
+          "type": "log",
+          "title": "OBSERVATION ROOM POWER ROUTE",
+          "content": "PRIMARY PURPOSE: SUBJECT MONITORING\nOBSERVATION TARGET: ELIAS REED\nMONITORING STATUS: ACTIVE\nLAST KNOWN SESSION: UNKNOWN\nROOM STATUS: SEALED\nPOWER SOURCE: EXTERNAL / UNREGISTERED",
+          "pauseAfterMs": 900
         },
         {
           "type": "statChange",
           "changes": {
-            "mayaTrust": -4,
-            "mayaStress": 5,
-            "memoryFracture": true
-          },
-          "pauseAfterMs": 250
+            "observerPowerMapped": true,
+            "subjectEliasRevealed": true,
+            "danger": 3
+          }
         }
       ],
-      "nextNodeId": "e05_n08_eva_route"
+      "nextNodeId": "e05_n16_subject_reveal"
     },
-    "e05_n08_eva_route": {
-      "id": "e05_n08_eva_route",
-      "speaker": "MAYA",
-      "objective": "Choose direct traumatic route or slower oxygen-cost route to EVA registry.",
+    "e05_n16_subject_reveal": {
+      "id": "e05_n16_subject_reveal",
+      "speaker": "ELIAS",
       "events": [
         {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "EVA storage is close.",
-          "textKey": "episode_05.e05_n08_eva_route.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Close is suspicious now.",
-          "textKey": "episode_05.e05_n08_eva_route.event3.text"
-        },
-        {
           "type": "pause",
-          "duration": 500
+          "duration": 1200
         },
         {
           "type": "typing",
-          "duration": 1000
+          "speaker": "ELIAS",
+          "duration": 700
         },
         {
           "type": "message",
-          "text": "Suit prep is direct.",
-          "textKey": "episode_05.e05_n08_eva_route.event6.text"
+          "text": "Hayır.",
+          "pauseAfterMs": 800
         },
         {
           "type": "typing",
-          "duration": 900
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Decon is longer.",
-          "textKey": "episode_05.e05_n08_eva_route.event8.text"
+          "text": "Hayır, bu yanlış.",
+          "pauseAfterMs": 900
         },
         {
           "type": "typing",
-          "duration": 1000
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Suit prep means racks.",
-          "textKey": "episode_05.e05_n08_eva_route.event10.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
+          "text": "Subject monitoring.",
+          "pauseAfterMs": 800
         },
         {
           "type": "typing",
-          "duration": 1400
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "I know what's probably still hanging there.",
-          "textKey": "episode_05.e05_n08_eva_route.event13.text"
+          "text": "Observation target: Elias Reed.",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bu oda beni izlemek için yapılmış.",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ben doğmadan önce mi?",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Sonra mı?",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Hayır. Bunu bilmiyorum."
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "eliasStress": 4
+          }
         }
       ],
       "choices": [
         {
-          "id": "cut_through_suit_prep",
-          "text": "CUT THROUGH SUIT PREP.",
+          "id": "ask_if_he_wants_leave",
+          "text": "BURADAN ÇIKMAK İSTİYOR MUSUN?",
           "effects": {
-            "route": "suit_prep",
-            "danger": 6,
-            "oxygen": -1,
-            "mayaStress": 6
+            "trust": 2,
+            "eliasStress": -1
           },
-          "nextNodeId": "e05_n09_suit_prep",
-          "textKey": "episode_05.e05_n08_eva_route.choice0.text"
+          "nextNodeId": "e05_n17_leave_question"
         },
         {
-          "id": "take_decon_route",
-          "text": "GO THROUGH DECON.",
+          "id": "ask_cut_power",
+          "text": "ENERJİYİ KESELİM.",
           "effects": {
-            "route": "decon",
             "danger": 1,
-            "oxygen": -6,
-            "mayaStress": -1
+            "cautiousPattern": 1
           },
-          "nextNodeId": "e05_n09_decon",
-          "textKey": "episode_05.e05_n08_eva_route.choice1.text"
+          "nextNodeId": "e05_n18_cut_power_plan"
         }
       ]
     },
-    "e05_n09_suit_prep": {
-      "id": "e05_n09_suit_prep",
-      "speaker": "MAYA",
-      "objective": "Suit prep route creates missing suit horror.",
+    "e05_n17_leave_question": {
+      "id": "e05_n17_leave_question",
+      "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
-          "duration": 800
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Suit prep.",
-          "textKey": "episode_05.e05_n09_suit_prep.event1.text"
+          "text": "Evet.",
+          "pauseAfterMs": 800
         },
         {
           "type": "typing",
-          "duration": 850
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Direct route.",
-          "textKey": "episode_05.e05_n09_suit_prep.event3.text"
+          "text": "Çok.",
+          "pauseAfterMs": 700
         },
         {
           "type": "typing",
-          "duration": 1200
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Bad memories on hooks.",
-          "textKey": "episode_05.e05_n09_suit_prep.event5.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 2800,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "I am not looking at the name tags.",
-            "pauseAfterMs": 500,
-            "textKey": "episode_05.e05_n09_suit_prep.backgroundEvent6.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 5200,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "One suit is missing.",
-            "pauseAfterMs": 500,
-            "textKey": "episode_05.e05_n09_suit_prep.backgroundEvent7.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 7600,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "Not damaged. Not moved. Missing.",
-            "pauseAfterMs": 500,
-            "textKey": "episode_05.e05_n09_suit_prep.backgroundEvent8.text"
-          }
-        },
-        {
-          "type": "characterBusy",
-          "id": "maya_suit_prep_v8",
-          "character": "MAYA",
-          "status": "IS CROSSING SUIT PREP",
-          "durationMs": 25000,
-          "returnNodeId": "e05_r09_suit_prep",
-          "message": "[MAYA IS CROSSING SUIT PREP]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Maya reached EVA storage.",
-          "tone": "danger",
-          "pauseAfterMs": 500,
-          "messageKey": "episode_05.e05_n09_suit_prep.event9.message"
-        }
-      ]
-    },
-    "e05_n09_decon": {
-      "id": "e05_n09_decon",
-      "speaker": "MAYA",
-      "objective": "Decon route costs oxygen but gives eerie room memory.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Decon.",
-          "textKey": "episode_05.e05_n09_decon.event1.text"
+          "text": "Ama nereye çıkacağım?",
+          "pauseAfterMs": 800
         },
         {
           "type": "typing",
-          "duration": 850
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Long route.",
-          "textKey": "episode_05.e05_n09_decon.event3.text"
+          "text": "Bütün çıkışlar beni başka bir soru işaretine götürüyor.",
+          "pauseAfterMs": 900
         },
         {
           "type": "typing",
-          "duration": 900
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "More breathing.",
-          "textKey": "episode_05.e05_n09_decon.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Less seeing.",
-          "textKey": "episode_05.e05_n09_decon.event7.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 4800,
-          "event": {
-            "type": "message",
-            "speaker": "MAYA",
-            "text": "Blue. White. Blue. White. Lights still cycling like cleaning matters.",
-            "pauseAfterMs": 500,
-            "textKey": "episode_05.e05_n09_decon.backgroundEvent8.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 7200,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "CLEAN DOES NOT MEAN EMPTY",
-            "pauseAfterMs": 800,
-            "textKey": "episode_05.e05_n09_decon.backgroundEvent9.text"
-          }
-        },
-        {
-          "type": "characterBusy",
-          "id": "maya_decon_v8",
-          "character": "MAYA",
-          "status": "IS MOVING THROUGH DECON",
-          "durationMs": 27000,
-          "returnNodeId": "e05_r09_decon",
-          "message": "[MAYA IS MOVING THROUGH DECON]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Maya reached EVA storage.",
-          "tone": "character",
-          "pauseAfterMs": 500,
-          "messageKey": "episode_05.e05_n09_decon.event10.message"
-        }
-      ]
-    },
-    "e05_r09_suit_prep": {
-      "id": "e05_r09_suit_prep",
-      "speaker": "MAYA",
-      "objective": "Suit prep consequence: missing suit outline.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Through.",
-          "textKey": "episode_05.e05_r09_suit_prep.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 850
-        },
-        {
-          "type": "message",
-          "text": "Kicked a helmet.",
-          "textKey": "episode_05.e05_r09_suit_prep.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Empty.",
-          "textKey": "episode_05.e05_r09_suit_prep.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Cracked visor.",
-          "textKey": "episode_05.e05_r09_suit_prep.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "The missing suit had a shadow behind it.",
-          "textKey": "episode_05.e05_r09_suit_prep.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Dust outline.",
-          "textKey": "episode_05.e05_r09_suit_prep.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Someone took it fast.",
-          "textKey": "episode_05.e05_r09_suit_prep.event15.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "danger": 6,
-            "oxygen": -1,
-            "mayaStress": 7,
-            "sawMissingSuitOutline": true
-          },
-          "pauseAfterMs": 250
+          "text": "O yüzden önce bu odanın enerjisini keselim."
         }
       ],
-      "nextNodeId": "e05_n10_eva_registry"
+      "nextNodeId": "e05_n18_cut_power_plan"
     },
-    "e05_r09_decon": {
-      "id": "e05_r09_decon",
-      "speaker": "MAYA",
-      "objective": "Decon consequence: oxygen drop and steadier Maya.",
+    "e05_n18_cut_power_plan": {
+      "id": "e05_n18_cut_power_plan",
+      "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
-          "duration": 700
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Made it.",
-          "textKey": "episode_05.e05_r09_decon.event1.text"
+          "text": "Tamam.",
+          "pauseAfterMs": 500
         },
         {
           "type": "typing",
-          "duration": 1300
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Room smelled like metal and old antiseptic.",
-          "textKey": "episode_05.e05_r09_decon.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
+          "text": "Power route elimizde.",
+          "pauseAfterMs": 700
         },
         {
           "type": "typing",
-          "duration": 1100
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "I used to hate that smell.",
-          "textKey": "episode_05.e05_r09_decon.event6.text"
+          "text": "Eğer Node C'nin geri beslemesini kesersem...",
+          "pauseAfterMs": 900
         },
         {
           "type": "typing",
-          "duration": 1300
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Now it means the room stayed a room.",
-          "textKey": "episode_05.e05_r09_decon.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
+          "text": "oda tamamen kararmalı.",
+          "pauseAfterMs": 700
         },
         {
           "type": "typing",
-          "duration": 900
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Oxygen dipped.",
-          "textKey": "episode_05.e05_r09_decon.event11.text"
+          "text": "Dikkat et.",
+          "pauseAfterMs": 500
         },
         {
           "type": "typing",
-          "duration": 800
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Still worth it.",
-          "textKey": "episode_05.e05_r09_decon.event13.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "danger": 1,
-            "oxygen": -6,
-            "mayaStress": -1,
-            "tookDeconSaferRoute": true
-          },
-          "pauseAfterMs": 250
-        }
-      ],
-      "nextNodeId": "e05_n10_eva_registry"
-    },
-    "e05_n10_eva_registry": {
-      "id": "e05_n10_eva_registry",
-      "speaker": "MAYA",
-      "objective": "Recover EVA registry and erased seventh manifest layer.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Registry panel.",
-          "textKey": "episode_05.e05_n10_eva_registry.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Screen is cracked.",
-          "textKey": "episode_05.e05_n10_eva_registry.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Still accepts touch.",
-          "textKey": "episode_05.e05_n10_eva_registry.event5.text"
-        },
-        {
-          "type": "file",
-          "id": "eva_suit_registry_05",
-          "fileId": "eva_suit_registry_05",
-          "fileType": "file",
-          "title": "EVA SUIT REGISTRY",
-          "content": "EVA STORAGE REGISTRY\n\nSlot 01 — ETHAN HALE\nSlot 02 — MAYA CHEN\nSlot 03 — GRANT WALKER\nSlot 04 — RIVERA TORRES\nSlot 05 — OWEN PARK\nSlot 06 — SARAH OWENS\nSlot 07 — [IDENTITY ERASED]\n\nSlot 07 status: suit removed before blackout.",
-          "caption": "Recovered EVA registry showing seven suit slots and one erased identity.",
-          "source": "EVA_STORAGE",
-          "tags": [
-            "suit",
-            "registry",
-            "crew",
-            "erased"
-          ],
-          "correlationTags": [
-            "seventh_person"
-          ],
-          "message": "[EVA SUIT REGISTRY ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 650,
-          "titleKey": "episode_05.e05_n10_eva_registry.event6.title",
-          "contentKey": "episode_05.e05_n10_eva_registry.event6.content",
-          "captionKey": "episode_05.e05_n10_eva_registry.event6.caption",
-          "messageKey": "episode_05.e05_n10_eva_registry.event6.message"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Seven suit slots.",
-          "textKey": "episode_05.e05_n10_eva_registry.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Six names.",
-          "textKey": "episode_05.e05_n10_eva_registry.event10.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "No puzzle needed.",
-          "textKey": "episode_05.e05_n10_eva_registry.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "I hate the math by itself.",
-          "textKey": "episode_05.e05_n10_eva_registry.event15.text"
-        },
-        {
-          "type": "file",
-          "id": "manifest_v2",
-          "fileId": "manifest_v2",
-          "fileType": "file",
-          "title": "MANIFEST_V2",
-          "content": "01 Ethan Hale\n02 Maya Chen\n03 Grant Walker\n04 Rivera Torres\n05 Owen Park\n06 Sarah Owens\n07 █████████\n\nLayer status: identity erased, not redacted.",
-          "caption": "Alternate manifest layer. Seventh entry erased rather than redacted.",
-          "source": "PERSONNEL_ARCHIVE",
-          "tags": [
-            "crew",
-            "manifest",
-            "seventh",
-            "erased"
-          ],
-          "correlationTags": [
-            "seventh_person"
-          ],
-          "message": "[MANIFEST_V2 ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 650,
-          "titleKey": "episode_05.e05_n10_eva_registry.event16.title",
-          "contentKey": "episode_05.e05_n10_eva_registry.event16.content",
-          "captionKey": "episode_05.e05_n10_eva_registry.event16.caption",
-          "messageKey": "episode_05.e05_n10_eva_registry.event16.message"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Erased.",
-          "textKey": "episode_05.e05_n10_eva_registry.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Not redacted.",
-          "textKey": "episode_05.e05_n10_eva_registry.event20.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Redacted hides a name.",
-          "textKey": "episode_05.e05_n10_eva_registry.event22.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Erased removes the place where it lived.",
-          "textKey": "episode_05.e05_n10_eva_registry.event24.text"
+          "text": "Bu cümledeki 'malı' kısmına ben de güvenmiyorum."
         }
       ],
       "choices": [
         {
-          "id": "ask_where_seen_name",
-          "text": "ASK WHERE SHE SAW THE NAME.",
+          "id": "cut_power_now",
+          "text": "ENERJİYİ KES.",
           "effects": {
-            "askedNameMemory": true,
-            "mayaStress": 3,
-            "mayaTrust": 1
+            "observationPowerCut": true,
+            "danger": 2
           },
-          "nextNodeId": "e05_n11_break",
-          "textKey": "episode_05.e05_n10_eva_registry.choice0.text"
+          "nextNodeId": "e05_n19_cut_power"
         },
         {
-          "id": "ask_why_removed",
-          "text": "ASK WHY SOMEONE REMOVED IT.",
+          "id": "step_back_then_cut",
+          "text": "GERİ ÇEKİL, SONRA KES.",
           "effects": {
-            "askedRemovalMotive": true,
-            "danger": 2,
-            "signalStrength": -2
+            "trust": 1,
+            "danger": -1,
+            "observationPowerCut": true
           },
-          "nextNodeId": "e05_n11_removed",
-          "textKey": "episode_05.e05_n10_eva_registry.choice1.text"
+          "nextNodeId": "e05_n18b_step_back"
         }
       ]
     },
-    "e05_n11_removed": {
-      "id": "e05_n11_removed",
-      "speaker": "MAYA",
-      "objective": "UNKNOWN pushes story: removed, not missing.",
+    "e05_n18b_step_back": {
+      "id": "e05_n18b_step_back",
+      "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
-          "duration": 1200
+          "speaker": "ELIAS",
+          "duration": 180
         },
         {
           "type": "message",
-          "text": "Because missing can be found.",
-          "textKey": "episode_05.e05_n11_removed.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
+          "text": "Geri çekildim.",
+          "pauseAfterMs": 700
         },
         {
           "type": "typing",
-          "duration": 1000
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Removed is different.",
-          "textKey": "episode_05.e05_n11_removed.event4.text"
+          "text": "Panelle kapı arasında biraz mesafe var.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bu beni cesur yapmaz.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Sadece daha az aptal yapar."
+        }
+      ],
+      "nextNodeId": "e05_n19_cut_power"
+    },
+    "e05_n19_cut_power": {
+      "id": "e05_n19_cut_power",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[POWER DISCONNECT INITIATED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "progressTask",
+          "id": "disconnect_observation_power",
+          "title": "DISCONNECTING POWER",
+          "subtitle": "NODE C BACKFEED ISOLATION",
+          "duration": 7000,
+          "completeText": "[POWER DISCONNECTED]",
+          "tone": "system",
+          "pauseAfterMs": 700
         },
         {
           "type": "glitch",
           "duration": 1000,
-          "pauseAfterMs": 500
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "NOT MISSING",
-          "pauseAfterMs": 700,
-          "textKey": "episode_05.e05_n11_removed.event6.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "REMOVED",
-          "pauseAfterMs": 700,
-          "textKey": "episode_05.e05_n11_removed.event7.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "ASK WHO SIGNED THE ERASE",
-          "pauseAfterMs": 900,
-          "textKey": "episode_05.e05_n11_removed.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "I didn't say that.",
-          "textKey": "episode_05.e05_n11_removed.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "I didn't type that.",
-          "textKey": "episode_05.e05_n11_removed.event12.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "unknownPressure": 2,
-            "danger": 2
-          },
-          "pauseAfterMs": 250
-        }
-      ],
-      "nextNodeId": "e05_n11_break"
-    },
-    "e05_n11_break": {
-      "id": "e05_n11_break",
-      "speaker": "MAYA",
-      "objective": "Maya begins to remember absence.",
-      "events": [
-        {
-          "type": "backgroundEvent",
-          "delay": 1800,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "MISSING",
-            "pauseAfterMs": 800,
-            "textKey": "episode_05.e05_n11_break.backgroundEvent0.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 3600,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "NOT MISSING",
-            "pauseAfterMs": 800,
-            "textKey": "episode_05.e05_n11_break.backgroundEvent1.text"
-          }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 5600,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "REMOVED",
-            "pauseAfterMs": 800,
-            "textKey": "episode_05.e05_n11_break.backgroundEvent2.text"
-          }
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "textKey": "episode_05.e05_n11_break.event4.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "I don't know the name.",
-          "textKey": "episode_05.e05_n11_break.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "That's not right.",
-          "textKey": "episode_05.e05_n11_break.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "I don't know that I don't know it.",
-          "textKey": "episode_05.e05_n11_break.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Does that make sense?",
-          "textKey": "episode_05.e05_n11_break.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Don't answer.",
-          "textKey": "episode_05.e05_n11_break.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "It doesn't.",
-          "textKey": "episode_05.e05_n11_break.event18.text"
-        }
-      ],
-      "choices": [
-        {
-          "id": "ask_where_seen_name_again",
-          "text": "ASK WHERE SHE SAW IT.",
-          "effects": {
-            "pressedMayaMemory": true,
-            "mayaTrust": -2,
-            "mayaStress": 4
-          },
-          "nextNodeId": "e05_n12_accuse_maya",
-          "textKey": "episode_05.e05_n11_break.choice0.text"
-        },
-        {
-          "id": "ground_maya",
-          "text": "GROUND MAYA FIRST.",
-          "effects": {
-            "groundedMayaAfterErase": true,
-            "mayaTrust": 3,
-            "mayaStress": -2
-          },
-          "nextNodeId": "e05_n12_ground_maya",
-          "textKey": "episode_05.e05_n11_break.choice1.text"
-        }
-      ]
-    },
-    "e05_n12_ground_maya": {
-      "id": "e05_n12_ground_maya",
-      "speaker": "MAYA",
-      "objective": "Grounding earns trust before final intrusion.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Okay.",
-          "textKey": "episode_05.e05_n12_ground_maya.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Feet on floor.",
-          "textKey": "episode_05.e05_n12_ground_maya.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Left hand hurts if I move it.",
-          "textKey": "episode_05.e05_n12_ground_maya.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Air tastes like metal.",
-          "textKey": "episode_05.e05_n12_ground_maya.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Your voice is still there.",
-          "textKey": "episode_05.e05_n12_ground_maya.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "That helps.",
-          "textKey": "episode_05.e05_n12_ground_maya.event12.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "mayaTrust": 3,
-            "mayaStress": -2,
-            "mayaGrounded": true
-          },
-          "pauseAfterMs": 250
-        }
-      ],
-      "nextNodeId": "e05_n12_first_voice"
-    },
-    "e05_n12_accuse_maya": {
-      "id": "e05_n12_accuse_maya",
-      "speaker": "MAYA",
-      "objective": "Pressing Maya creates trust wound and memory crack.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "You keep cutting at it.",
-          "textKey": "episode_05.e05_n12_accuse_maya.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Fine.",
-          "textKey": "episode_05.e05_n12_accuse_maya.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Suit prep.",
-          "textKey": "episode_05.e05_n12_accuse_maya.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "No. Not there.",
-          "textKey": "episode_05.e05_n12_accuse_maya.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "A door.",
-          "textKey": "episode_05.e05_n12_accuse_maya.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "White paint over a number.",
-          "textKey": "episode_05.e05_n12_accuse_maya.event12.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "I saw the shape of a name.",
-          "textKey": "episode_05.e05_n12_accuse_maya.event15.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Not the name.",
-          "textKey": "episode_05.e05_n12_accuse_maya.event17.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Keep that question.",
-          "textKey": "episode_05.e05_n12_accuse_maya.event20.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "But if I die while you decide whether I'm guilty, I am haunting your interface.",
-          "textKey": "episode_05.e05_n12_accuse_maya.event22.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "mayaTrust": -6,
-            "mayaStress": 7,
-            "danger": 4,
-            "mayaAccused": true
-          },
-          "pauseAfterMs": 250
-        }
-      ],
-      "nextNodeId": "e05_n12_first_voice"
-    },
-    "e05_n12_first_voice": {
-      "id": "e05_n12_first_voice",
-      "speaker": "UNKNOWN",
-      "objective": "Cliffhanger: first contact was not Hale and slot seven moved.",
-      "events": [
-        {
-          "type": "glitch",
-          "duration": 1200,
-          "pauseAfterMs": 500
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "FIRST CONTACT",
-          "pauseAfterMs": 600,
-          "textKey": "episode_05.e05_n12_first_voice.event1.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "FIRST FILE",
-          "pauseAfterMs": 600,
-          "textKey": "episode_05.e05_n12_first_voice.event2.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "FIRST LIE",
-          "pauseAfterMs": 750,
-          "textKey": "episode_05.e05_n12_first_voice.event3.text"
+          "pauseAfterMs": 700
         },
         {
           "type": "signalLost",
-          "duration": 2200,
+          "duration": 3000,
           "message": "[SIGNAL LOST]",
           "restoreMessage": "[SIGNAL RESTORED]",
-          "pauseAfterMs": 600,
-          "messageKey": "episode_05.e05_n12_first_voice.event4.message",
-          "restoreMessageKey": "episode_05.e05_n12_first_voice.event4.restoreMessage"
+          "pauseAfterMs": 700
         },
         {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "NOT HALE",
-          "pauseAfterMs": 700,
-          "textKey": "episode_05.e05_n12_first_voice.event5.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "BEFORE HALE",
-          "pauseAfterMs": 700,
-          "textKey": "episode_05.e05_n12_first_voice.event6.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "ETHAN HALE WAS NOT THE FIRST VOICE.",
-          "pauseAfterMs": 1000,
-          "textKey": "episode_05.e05_n12_first_voice.event7.text"
-        },
+          "type": "statChange",
+          "changes": {
+            "observationPowerCut": true,
+            "danger": 3
+          }
+        }
+      ],
+      "nextNodeId": "e05_n20_after_cut"
+    },
+    "e05_n20_after_cut": {
+      "id": "e05_n20_after_cut",
+      "speaker": "ELIAS",
+      "events": [
         {
           "type": "pause",
+          "duration": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 140
+        },
+        {
+          "type": "message",
+          "text": "Operatör...",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Elektrik kesildi.",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Panel öldü.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Koridor ışıkları düştü.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ama kapının camı aydınlandı.",
+          "pauseAfterMs": 1500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 700
         },
         {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
           "type": "message",
-          "text": "Operator...",
-          "speaker": "MAYA",
-          "textKey": "episode_05.e05_n12_first_voice.event10.text"
+          "text": "Hayır.",
+          "pauseAfterMs": 500
         },
         {
           "type": "typing",
-          "duration": 1400
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Something moved in the suit rack.",
-          "speaker": "MAYA",
-          "textKey": "episode_05.e05_n12_first_voice.event12.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "speaker": "MAYA",
-          "textKey": "episode_05.e05_n12_first_voice.event15.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Not moved.",
-          "speaker": "MAYA",
-          "textKey": "episode_05.e05_n12_first_voice.event17.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Stood up.",
-          "speaker": "MAYA",
-          "textKey": "episode_05.e05_n12_first_voice.event19.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "ASK WHO WORE SLOT SEVEN",
-          "pauseAfterMs": 1000,
-          "textKey": "episode_05.e05_n12_first_voice.event20.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "I need to run.",
-          "speaker": "MAYA",
-          "textKey": "episode_05.e05_n12_first_voice.event22.text"
+          "text": "İçeriden aydınlandı."
         }
       ],
       "choices": [
         {
-          "id": "search_first_contact",
-          "text": "SEARCH FIRST CONTACT RECORDS.",
+          "id": "ask_what_inside",
+          "text": "İÇERİDE NE VAR?",
           "effects": {
-            "nextEpisodeId": "episode_06",
-            "episode06Focus": "archive_first_contact",
             "danger": 2,
-            "signalStrength": -2,
-            "firstVoiceClueFound": true
+            "eliasStress": 2
           },
-          "textKey": "episode_05.e05_n12_first_voice.choice0.text"
+          "nextNodeId": "e05_n21_inside"
         },
         {
-          "id": "ask_maya_first_voice",
-          "text": "ASK MAYA ABOUT THE FIRST VOICE.",
+          "id": "tell_do_not_look",
+          "text": "BAKMA. GERİ ÇEKİL.",
           "effects": {
-            "nextEpisodeId": "episode_06",
-            "episode06Focus": "maya_memory",
-            "mayaTrust": 2,
-            "danger": 3,
-            "firstVoiceClueFound": true
+            "trust": 2,
+            "danger": -1
           },
-          "textKey": "episode_05.e05_n12_first_voice.choice1.text"
+          "nextNodeId": "e05_n22_dont_look"
+        }
+      ]
+    },
+    "e05_n21_inside": {
+      "id": "e05_n21_inside",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Göremiyorum.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Cam buzlu gibi.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ama içeride bir siluet var.",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Hareket etmiyor.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Sanki bekliyor.",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 700
+        },
+        {
+          "type": "message",
+          "text": "Beni."
         }
       ],
-      "nextEpisodeId": "episode_06"
+      "nextNodeId": "e05_n23_final"
+    },
+    "e05_n22_dont_look": {
+      "id": "e05_n22_dont_look",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 140
+        },
+        {
+          "type": "message",
+          "text": "Geri çekiliyorum.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ama cam hâlâ aydınlık.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bakmasam bile görüyorum.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Işık koridora vuruyor.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ve ışığın içinde bir gölge var."
+        }
+      ],
+      "nextNodeId": "e05_n23_final"
+    },
+    "e05_n23_final": {
+      "id": "e05_n23_final",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "pause",
+          "duration": 1200
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Kapı açılmadı.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Enerji kesildi.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ama içeride biri var.",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ve bence...",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "o kişi benim içeri bakmamı bekliyor.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bir süre burada kalıp gözlemleyeceğim.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Bu kelimeyi şu an hiç sevmedim."
+        },
+        {
+          "type": "characterBusy",
+          "id": "elias_observer_analysis_e05",
+          "character": "ELIAS",
+          "status": "WATCHING ROOM",
+          "durationMs": 42000,
+          "returnNodeId": "episode_06_start",
+          "message": "[ELIAS IS BUSY]",
+          "notificationTitle": "ECHO",
+          "notificationBody": "Elias sent a message.",
+          "tone": "watching",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "glassLitAfterPowerCut": true,
+            "observerPresent": true
+          }
+        }
+      ]
     }
   },
-  "titleKey": "episode_05.meta.title",
   "relationshipConsequenceSystem": {
+    "hiddenStats": {
+      "trust": "Controls whether Elias accepts cautious grounding or acts on fear.",
+      "danger": "Tracks immediate and delayed exposure near the observation room.",
+      "eliasStress": "Affects panic, omission and future refusal behavior.",
+      "cautiousPattern": "Tracks safer operator choices."
+    },
     "episode05PersistentFlags": [
-      "evidence_first",
-      "memory_first",
-      "askedHaleControl",
-      "keptMayaMoving",
-      "main_corridor",
-      "maintenance_crawl",
-      "heardFollowingFootsteps",
-      "foundGrantTag",
-      "mayaHandInjured",
-      "keptMayaMovingAfterSeven",
-      "mayaConfrontedAboutSeven",
-      "memoryFracture",
-      "suit_prep",
-      "decon",
-      "sawMissingSuitOutline",
-      "askedNameMemory",
-      "askedRemovalMotive",
-      "pressedMayaMemory",
-      "groundedMayaAfterErase",
-      "mayaAccused",
-      "firstVoiceClueFound",
-      "episode06Focus"
+      "observerPowerTraceStarted",
+      "nodeAActivated",
+      "nodeBActivated",
+      "nodeCActivated",
+      "wrongNodeActivated",
+      "tookLogBeforeNodeC",
+      "observerPowerMapped",
+      "subjectEliasRevealed",
+      "observationPowerCut",
+      "glassLitAfterPowerCut",
+      "observerPresent"
     ],
-    "episode06UsageNotes": {
-      "mayaHandInjured": "Maya should complain about pain and type slower during Episode 06.",
-      "mayaConfrontedAboutSeven": "Maya starts colder and more defensive if accused about the seventh person.",
-      "groundedMayaAfterErase": "Maya trusts the operator more when panic spikes.",
-      "main_corridor": "Footstep/pursuit motif can return.",
-      "maintenance_crawl": "Grant's tag can be referenced later.",
-      "suit_prep": "Missing suit outline strengthens EVA horror later.",
-      "decon": "Oxygen cost should be felt early in Episode 06.",
-      "episode06Focus": "Opening investigation branch for first-contact records or Maya memory."
+    "futureConsequences": {
+      "wrongNodeActivated": "The observation room may respond more aggressively later.",
+      "tookLogBeforeNodeC": "Episode 6 can use cleaner evidence about the external power source.",
+      "subjectEliasRevealed": "Elias now knows the room was built to monitor him.",
+      "observationPowerCut": "The room is no longer drawing facility power, but it still has another source.",
+      "observerPresent": "Episode 6 begins with Elias watching the lit glass."
     }
+  },
+  "timingDesign": {
+    "normalConversationMs": "1000-5000",
+    "hesitationMs": "5000-15000",
+    "inspectionMs": "10000-30000",
+    "shockSilenceMs": "20000-60000",
+    "panicBurstMs": "300-1000",
+    "realWaitTasks": [
+      {
+        "id": "elias_observer_analysis_e05",
+        "durationMs": 42000,
+        "notification": "Elias sent a message."
+      }
+    ]
   },
   "directorCut": {
-    "version": "ECHO_DIRECTORS_CUT_V8_FULL_REBUILD",
-    "sourceEpisode": "episode_05",
-    "sourceVersion": "THE SIX — DIRECTOR'S CUT V7",
-    "rebuildFocus": [
-      "Reduced excess comedy and tightened Maya's voice around fear, pain, exhaustion, and trauma.",
-      "Increased horror: following footsteps, missing suit, erased identity, suit rack movement.",
-      "Improved tempo by shortening crew memory and removing long joke chains.",
-      "Made choice consequences visible in dialogue and stats.",
-      "Preserved core story spine: six names, seven biometric loads, erased seventh EVA slot, first voice before Hale.",
-      "Strengthened final cliffhanger with slot seven and suit rack movement."
-    ],
-    "rulesApplied": [
-      "Each scene has a concrete operational goal.",
-      "Maya stays physically active.",
-      "Player directs routes, hatch handling, confrontation style, and final investigation focus.",
-      "Every visible choice has exactly two options.",
-      "Choices create visible consequences in dialogue and flags.",
-      "Report-style action language is minimized.",
-      "Lore is experienced through files, environment, and character reaction.",
-      "UNKNOWN pushes plot instead of generic glitching.",
-      "Episode ends with a strong next-question hook."
-    ],
+    "version": "FINAL_DIRECTORS_CUT_V1",
+    "coreDesign": "Natural hidden episode transition, fake circuit puzzle via choices, subject monitoring reveal, no door opening, lit glass cliffhanger.",
     "qualityTarget": {
-      "technical": "10/10",
-      "horror": "10/10",
-      "tempo": "10/10",
-      "choiceConsequence": "10/10",
-      "endingHook": "10/10",
-      "ruleCompliance": "10/10",
-      "lifelineFeeling": "10/10"
+      "characterBond": "10/10",
+      "operatorInteraction": "10/10",
+      "fakeCircuitPuzzleIntegration": "10/10",
+      "horrorByImagination": "10/10",
+      "mysteryPreservation": "10/10",
+      "visibleEpisodeTransition": "0/10"
     },
-    "nextEpisode": "episode_06"
+    "nextEpisodeStartNode": "episode_06_start"
   }
 }

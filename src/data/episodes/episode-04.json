@@ -1,3673 +1,1573 @@
 {
   "id": "episode_04",
-  "title": "THE SURVIVOR — ECHO DIRECTOR'S CUT V5",
-  "startNodeId": "e04_n01",
-  "designVersion": "echo_directors_cut_v5_30_rule_rebuild",
-  "episodeObjective": "Lock channel 7.14, establish Maya as a living survivor, guide her through lower access spine co-action choices, manage Hale/Maya conflict, recover or sacrifice evidence, and end with a consequence that directly shapes Episode 05.",
-  "directionRules": [
-    "1. Every episode has a concrete objective.",
-    "2. Characters stay physically active and move through real spaces.",
-    "3. The player directs character actions; the player is the operator, not a spectator.",
-    "4. Every decision has a visible consequence.",
-    "5. Some consequences are irreversible.",
-    "6. Every visible choice group has exactly two choices.",
-    "7. Choices create real branch consequences, not cosmetic routes.",
-    "8. Characters behave like real people.",
-    "9. Characters can psychologically change.",
-    "10. Characters can react negatively to the player.",
-    "11. Characters can react negatively to each other.",
-    "12. Characters remember previous decisions.",
-    "13. Every character has a distinct voice.",
-    "14. Characters can grow or break.",
-    "15. No meaningless dialogue.",
-    "16. Report-style action language is forbidden where lived action can replace it.",
-    "17. Characters experience actions instead of summarizing completed actions.",
-    "18. Character emotion must be visible in dialogue.",
-    "19. Characters are imperfect: hesitation, mistakes, interruptions, reversals.",
-    "20. Character first, information second.",
-    "21. Lore is delivered through lived character experience.",
-    "22. Every scene contains a micro-human moment.",
-    "23. Horror comes from absence, corrupted memory, and contradictions.",
-    "24. UNKNOWN must push story forward, not just glitch.",
-    "25. Trust values must become visible in later dialogue.",
-    "26. Pressured characters change behavior.",
-    "27. Irreversible loss must actually remove or damage something.",
-    "28. CharacterBusy is used only for important physical actions.",
-    "29. Every episode ends with a new major question.",
-    "30. Every episode has at least one consequence that makes the player feel responsible."
+  "season": 1,
+  "episode": 4,
+  "title": "THE DOOR",
+  "startNodeId": "e04_n01_return",
+  "designVersion": "episode_04_final_directors_cut_v1",
+  "episodeObjective": "Continue naturally after Elias investigates the unnumbered service door, identify what the door really is without opening it, use MatchingPuzzleInput to correlate evidence, and end with a voice behind the door calling Elias by name.",
+  "rulesApplied": [
+    "No visible END OF EPISODE or NEXT EPISODE alerts.",
+    "No image events.",
+    "Every non-system spoken message has typing before it.",
+    "One concrete objective: identify the unnumbered door without opening it.",
+    "One puzzle only: MatchingPuzzleInput.",
+    "No monster reveal.",
+    "Horror comes from logs, silence, impossible architecture and a voice behind the door.",
+    "Episode 5 transition is hidden through characterBusy."
   ],
   "puzzles": {
-    "frequency_714": {
-      "id": "frequency_714",
-      "type": "frequency",
-      "title": "SIGNAL TUNING",
-      "description": "Tune the emergency frequency until Maya's unstable survivor transmission locks.",
-      "prompt": "SET FREQUENCY",
-      "targetFrequency": 7.14,
-      "initialFrequency": 6.5,
-      "minFrequency": 6.5,
-      "maxFrequency": 8,
-      "step": 0.01,
-      "tolerance": 0.25,
-      "lockThreshold": 95,
-      "requiredLockHoldMs": 3000,
-      "driftEnabled": true,
-      "driftIntervalMs": 1500,
-      "driftAmount": 0.01,
-      "submitLabel": "LOCK SIGNAL",
+    "door_identity_matching": {
+      "id": "door_identity_matching",
+      "type": "matching",
+      "title": "DOOR IDENTITY CORRELATION",
+      "description": "Match each recovered clue to the correct conclusion before Elias decides what this door really is.",
+      "submitLabel": "CONFIRM CORRELATION",
       "acceptedAnswers": [
-        "7.14"
+        "MATCH_CONFIRMED"
       ],
-      "successNodeId": "e04_n05_signal_locked",
-      "failureNodeId": "e04_n04_fail",
-      "lockedMessage": "MAYA: I can hear you.",
-      "nearMessage": "M...a...y...a...",
-      "traceMessage": "...lower spine... oxygen...",
-      "submitCooldownMs": 500,
-      "titleKey": "episode_04.frequency_714.puzzle0.title",
-      "descriptionKey": "episode_04.frequency_714.puzzle0.description",
-      "promptKey": "episode_04.frequency_714.puzzle0.prompt",
-      "submitLabelKey": "episode_04.frequency_714.puzzle0.submitLabel"
+      "successNodeId": "e04_n16_match_success",
+      "failureNodeId": "e04_n15_match_fail",
+      "leftItems": [
+        {
+          "id": "no_number_plate",
+          "label": "NO NUMBER PLATE"
+        },
+        {
+          "id": "removed_blueprint",
+          "label": "REMOVED FROM BLUEPRINT"
+        },
+        {
+          "id": "audio_reference",
+          "label": "RECORDING WARNING"
+        }
+      ],
+      "rightItems": [
+        {
+          "id": "hidden_room",
+          "label": "HIDDEN ROOM"
+        },
+        {
+          "id": "observation_room",
+          "label": "OBSERVATION ROOM"
+        },
+        {
+          "id": "do_not_open",
+          "label": "DO NOT OPEN"
+        }
+      ],
+      "pairs": [
+        {
+          "leftId": "no_number_plate",
+          "rightId": "hidden_room"
+        },
+        {
+          "leftId": "removed_blueprint",
+          "rightId": "observation_room"
+        },
+        {
+          "leftId": "audio_reference",
+          "rightId": "do_not_open"
+        }
+      ]
     }
   },
   "nodes": {
-    "e04_n01": {
-      "id": "e04_n01",
+    "e04_n01_return": {
+      "id": "e04_n01_return",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Kapıyı buldum.",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Keşke bulmasaydım.",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 140
+        },
+        {
+          "type": "message",
+          "text": "Tamam.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bu dramatik oldu.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ama yanlış da değil."
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_what_it_looks_like",
+          "text": "NASIL GÖRÜNÜYOR?",
+          "effects": {
+            "trust": 1,
+            "doorDescriptionAsked": true
+          },
+          "nextNodeId": "e04_n02_describe_door"
+        },
+        {
+          "id": "tell_do_not_open",
+          "text": "AÇMA.",
+          "effects": {
+            "trust": 2,
+            "danger": -1,
+            "cautiousPattern": 1
+          },
+          "nextNodeId": "e04_n03_reassure"
+        }
+      ]
+    },
+    "e04_n02_describe_door": {
+      "id": "e04_n02_describe_door",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Servis kapısı gibi görünmüyor.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ama servis koridorunun sonunda.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Üzerinde numara yok.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Etiket yok.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Sadece çizilmiş eski bir boya izi var.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Sanki biri tabelayı sökmüş."
+        }
+      ],
+      "nextNodeId": "e04_n04_door_log"
+    },
+    "e04_n03_reassure": {
+      "id": "e04_n03_reassure",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 140
+        },
+        {
+          "type": "message",
+          "text": "Açmıyorum.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Gerçekten.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bak, güven ilişkimiz gelişiyor.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Sen 'açma' diyorsun, ben açmıyorum.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Şimdilik."
+        }
+      ],
+      "nextNodeId": "e04_n02_describe_door"
+    },
+    "e04_n04_door_log": {
+      "id": "e04_n04_door_log",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "log",
+          "title": "UNNUMBERED DOOR SCAN",
+          "content": "LOCATION: SERVICE CORRIDOR A-12\nNUMBER PLATE: REMOVED\nLOCK TYPE: INTERNAL MECHANICAL SEAL\nPOWER RESPONSE: NONE\nAUDIO RESPONSE: ACTIVE\nBLUEPRINT MATCH: FAILED",
+          "pauseAfterMs": 900
+        }
+      ],
+      "nextNodeId": "e04_n05_elias_memory"
+    },
+    "e04_n05_elias_memory": {
+      "id": "e04_n05_elias_memory",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "pause",
+          "duration": 1200
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bunu söylemek istemiyorum.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ama kapıyı görünce midem düğümlendi.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Sanki bedenim benden önce hatırladı.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "Bu normal mi?",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Sorma.",
+          "pauseAfterMs": 300
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Biliyorum. Normal değil."
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_if_he_remembers",
+          "text": "BİR ŞEY HATIRLIYOR MUSUN?",
+          "effects": {
+            "trust": 1,
+            "eliasStress": 1
+          },
+          "nextNodeId": "e04_n06_memory_question"
+        },
+        {
+          "id": "focus_on_evidence",
+          "text": "KANITA ODAKLAN.",
+          "effects": {
+            "danger": -1,
+            "operatorDistance": 1
+          },
+          "nextNodeId": "e04_n07_evidence_focus"
+        }
+      ]
+    },
+    "e04_n06_memory_question": {
+      "id": "e04_n06_memory_question",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Hayır.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ama bu sefer 'hayır' çok güvenilir gelmedi.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Kapıya bakınca bir ses hatırlıyorum.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Kendi sesimi değil.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Kapının arkasından gelen bir şeyi."
+        }
+      ],
+      "nextNodeId": "e04_n08_blueprint"
+    },
+    "e04_n07_evidence_focus": {
+      "id": "e04_n07_evidence_focus",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Evet.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Kanıt. Güzel.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Duygusal çöküşü ertelemek hoşuma gitti.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Yanımdaki eski duvar panelinde bakım etiketi var.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Okumaya çalışıyorum."
+        }
+      ],
+      "nextNodeId": "e04_n08_blueprint"
+    },
+    "e04_n08_blueprint": {
+      "id": "e04_n08_blueprint",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "log",
+          "title": "FACILITY BLUEPRINT REVISION 12",
+          "content": "SECTION: A-12 SERVICE BAY\nREVISION: 12\nREMOVED ENTRY:\nOBSERVATION ROOM\nSTATUS: SEALED / OMITTED FROM PUBLIC MAINTENANCE MAP\nAUTHORIZED BY: UNKNOWN\nNOTE: Door remains physically present.",
+          "pauseAfterMs": 900
+        }
+      ],
+      "nextNodeId": "e04_n09_observation_reveal"
+    },
+    "e04_n09_observation_reveal": {
+      "id": "e04_n09_observation_reveal",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Observation room.",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Gözlem odası.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ama burada gözlem odası yok.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Yani olmaması gerekiyor.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bu cümleyi burada çok sık kuruyoruz."
+        }
+      ],
+      "choices": [
+        {
+          "id": "ask_observed_what",
+          "text": "NEYİ GÖZLEMLİYORLARDI?",
+          "effects": {
+            "trust": 1,
+            "danger": 1
+          },
+          "nextNodeId": "e04_n10_observed_what"
+        },
+        {
+          "id": "ask_who_removed_it",
+          "text": "BUNU KİM HARİTADAN SİLDİ?",
+          "effects": {
+            "trust": 0,
+            "danger": 1
+          },
+          "nextNodeId": "e04_n11_who_removed"
+        }
+      ]
+    },
+    "e04_n10_observed_what": {
+      "id": "e04_n10_observed_what",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bilmiyorum.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ama yanlış soru bu olabilir.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Belki de içeriden dışarıyı gözlemlemiyorlardı.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Belki de dışarıdan içeriyi gözlemliyorlardı.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 700
+        },
+        {
+          "type": "message",
+          "text": "Beni.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Tamam. Bunu sevmedim."
+        }
+      ],
+      "nextNodeId": "e04_n12_second_log"
+    },
+    "e04_n11_who_removed": {
+      "id": "e04_n11_who_removed",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bakım kayıtlarında yetkili adı yok.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bu da çok sağlıklı bir işaret.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bir odayı haritadan silmişler.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ama kapıyı bırakmışlar.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bu ya dikkatsizlik.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ya da bir tuzak."
+        }
+      ],
+      "nextNodeId": "e04_n12_second_log"
+    },
+    "e04_n12_second_log": {
+      "id": "e04_n12_second_log",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "log",
+          "title": "MAINTENANCE TAG FRAGMENTS",
+          "content": "TAG 1: NUMBER PLATE REMOVED\nTAG 2: ROOM ENTRY OMITTED FROM REVISION 12\nTAG 3: AUDIO WARNING REFERENCES DOOR\n\nUNRESOLVED QUESTION:\nIS THIS A SERVICE DOOR OR A CONCEALED OBSERVATION ROOM?",
+          "pauseAfterMs": 900
+        }
+      ],
+      "nextNodeId": "e04_n13_correlation_prompt"
+    },
+    "e04_n13_correlation_prompt": {
+      "id": "e04_n13_correlation_prompt",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bunu senin tarafında eşleştirebilir misin?",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Çünkü benim tarafımda düşünmek biraz zorlaştı.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "Kapı var.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 140
+        },
+        {
+          "type": "message",
+          "text": "Kapının olmaması gerekiyor.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ve eski ben kapıyı açmamamı söylüyor."
+        }
+      ],
+      "choices": [
+        {
+          "id": "start_matching",
+          "text": "KANITLARI EŞLEŞTİR.",
+          "effects": {
+            "startedDoorCorrelation": true
+          },
+          "nextNodeId": "e04_n14_matching"
+        },
+        {
+          "id": "ask_elias_step_back",
+          "text": "ÖNCE KAPIDAN UZAKLAŞ.",
+          "effects": {
+            "trust": 1,
+            "danger": -1
+          },
+          "nextNodeId": "e04_n13b_step_back"
+        }
+      ]
+    },
+    "e04_n13b_step_back": {
+      "id": "e04_n13b_step_back",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 140
+        },
+        {
+          "type": "message",
+          "text": "Tamam.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "İki adım geri çekildim.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bunu yaptığıma şaşırıyorum.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Normalde aptalca bir cesaret gösterisi yapardım.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Sanırım kötü etkileniyorum senden."
+        }
+      ],
+      "nextNodeId": "e04_n14_matching"
+    },
+    "e04_n14_matching": {
+      "id": "e04_n14_matching",
       "speaker": "SYSTEM",
       "events": [
         {
           "type": "systemAlert",
-          "text": "[OPENING CHANNEL 7.14]",
-          "pauseAfterMs": 800,
-          "textKey": "episode_04.e04_n01.event0.text"
+          "text": "[CORRELATION MODULE AVAILABLE]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "door_identity_matching",
+          "pauseAfterMs": 700
+        }
+      ],
+      "choices": []
+    },
+    "e04_n15_match_fail": {
+      "id": "e04_n15_match_fail",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CORRELATION FAILED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 140
+        },
+        {
+          "type": "message",
+          "text": "Bu uymadı.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Numara plakası yoksa kapı gizlenmiş.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Haritadan silinen şey gözlem odası.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ve kayıt açıkça kapıyı açmamamı söylüyor.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Bir daha deneyelim."
+        }
+      ],
+      "choices": [
+        {
+          "id": "retry_matching",
+          "text": "TEKRAR EŞLEŞTİR.",
+          "effects": {
+            "danger": 1,
+            "eliasStress": 1
+          },
+          "nextNodeId": "e04_n14_matching"
+        },
+        {
+          "id": "review_logs",
+          "text": "KAYITLARI TEKRAR GÖZDEN GEÇİR.",
+          "effects": {
+            "trust": 1,
+            "danger": -1
+          },
+          "nextNodeId": "e04_n12_second_log"
+        }
+      ]
+    },
+    "e04_n16_match_success": {
+      "id": "e04_n16_match_success",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "systemAlert",
+          "text": "[CORRELATION CONFIRMED]",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "log",
+          "title": "DOOR IDENTITY RESULT",
+          "content": "UNNUMBERED DOOR: HIDDEN ROOM\nBLUEPRINT REMOVAL: OBSERVATION ROOM\nAUDIO WARNING: DO NOT OPEN\n\nCONCLUSION:\nA-12 UNNUMBERED DOOR IS A CONCEALED OBSERVATION ROOM.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "doorIdentified": true,
+            "danger": 2
+          }
+        }
+      ],
+      "nextNodeId": "e04_n17_elias_paranoia"
+    },
+    "e04_n17_elias_paranoia": {
+      "id": "e04_n17_elias_paranoia",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "pause",
+          "duration": 1200
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Operatör...",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Sana saçma bir soru soracağım.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bu kapıyı daha önce konuştuk mu?",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 900
+        },
+        {
+          "type": "message",
+          "text": "Seninle.",
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ben ve sen.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Daha önce."
+        }
+      ],
+      "choices": [
+        {
+          "id": "say_no_we_did_not",
+          "text": "HAYIR. DAHA ÖNCE KONUŞMADIK.",
+          "effects": {
+            "trust": 2,
+            "eliasStress": 1
+          },
+          "nextNodeId": "e04_n18_truth"
+        },
+        {
+          "id": "ask_why_he_thinks_that",
+          "text": "NEDEN BÖYLE DÜŞÜNDÜN?",
+          "effects": {
+            "trust": 1,
+            "eliasStress": 2
+          },
+          "nextNodeId": "e04_n19_why"
+        }
+      ]
+    },
+    "e04_n18_truth": {
+      "id": "e04_n18_truth",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Tamam.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Sana inanıyorum.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bu beni rahatlatmalı.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Rahatlatmadı.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Çünkü benim kafam hâlâ bu konuşmayı hatırlıyor gibi."
+        }
+      ],
+      "nextNodeId": "e04_n20_knocking"
+    },
+    "e04_n19_why": {
+      "id": "e04_n19_why",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Çünkü cevabını beklerken...",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "ne diyeceğini biliyordum.",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Bu mümkün değil.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 180
+        },
+        {
+          "type": "message",
+          "text": "Biliyorum.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Yine de bildim."
+        }
+      ],
+      "nextNodeId": "e04_n20_knocking"
+    },
+    "e04_n20_knocking": {
+      "id": "e04_n20_knocking",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "pause",
+          "duration": 1500
+        },
+        {
+          "type": "log",
+          "title": "AUDIO EVENT",
+          "content": "SOURCE: BEHIND UNNUMBERED DOOR\nPATTERN: THREE IMPACTS\n\nTAK\nTAK\nTAK",
+          "pauseAfterMs": 900
+        }
+      ],
+      "nextNodeId": "e04_n21_voice"
+    },
+    "e04_n21_voice": {
+      "id": "e04_n21_voice",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 700
+        },
+        {
+          "type": "message",
+          "text": "Hayır.",
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 700
+        },
+        {
+          "type": "message",
+          "text": "Hayır hayır hayır.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Kapının arkasından ses geldi.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Biri ismimi söyledi.",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ama sorun bu değil.",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Sorun şu ki..."
         },
         {
           "type": "glitch",
-          "duration": 1200,
-          "pauseAfterMs": 600
+          "duration": 900,
+          "pauseAfterMs": 700
         },
         {
           "type": "signalLost",
           "duration": 2500,
-          "message": "[SIGNAL INTERFERENCE]",
-          "restoreMessage": "[CHANNEL PARTIALLY ESTABLISHED]",
-          "pauseAfterMs": 800,
-          "messageKey": "episode_04.e04_n01.event2.message",
-          "restoreMessageKey": "episode_04.e04_n01.event2.restoreMessage"
-        }
-      ],
-      "objective": "Open channel 7.14 and catch the first unstable survivor transmission.",
-      "nextNodeId": "e04_n02_first_voice"
-    },
-    "e04_n02_first_voice": {
-      "id": "e04_n02_first_voice",
-      "speaker": "UNKNOWN",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "...hello?",
-          "textKey": "episode_04.e04_n02_first_voice.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Wait.",
-          "textKey": "episode_04.e04_n02_first_voice.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "textKey": "episode_04.e04_n02_first_voice.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Don't vanish.",
-          "textKey": "episode_04.e04_n02_first_voice.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Someone answered.",
-          "textKey": "episode_04.e04_n02_first_voice.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Say anything back.",
-          "textKey": "episode_04.e04_n02_first_voice.event13.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "A word.",
-          "textKey": "episode_04.e04_n02_first_voice.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "A cough.",
-          "textKey": "episode_04.e04_n02_first_voice.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Rude breathing. I will take that.",
-          "textKey": "episode_04.e04_n02_first_voice.event20.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Sorry.",
-          "textKey": "episode_04.e04_n02_first_voice.event23.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "I've been talking to static too long.",
-          "textKey": "episode_04.e04_n02_first_voice.event25.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "The relay casing is sliding under my hand.",
-          "textKey": "episode_04.e04_n02_first_voice.event27.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "I can't hold this alone.",
-          "textKey": "episode_04.e04_n02_first_voice.event29.text"
-        }
-      ],
-      "objective": "The player chooses whether to connect emotionally first or treat Maya as an unknown signal.",
-      "choices": [
-        {
-          "id": "identify_yourself",
-          "text": "TELL HER YOU CAN HEAR HER.",
-          "effects": {
-            "mayaTrust": 2,
-            "signalStrength": 1
-          },
-          "nextNodeId": "e04_n03_identify",
-          "textKey": "episode_04.e04_n02_first_voice.choice0.text"
-        },
-        {
-          "id": "verify_transmission",
-          "text": "VERIFY THE TRANSMISSION FIRST.",
-          "effects": {
-            "mayaTrust": -1,
-            "danger": -1,
-            "signalStrength": 2
-          },
-          "nextNodeId": "e04_n03_verify",
-          "textKey": "episode_04.e04_n02_first_voice.choice1.text"
-        }
-      ]
-    },
-    "e04_n03_identify": {
-      "id": "e04_n03_identify",
-      "speaker": "UNKNOWN",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Okay.",
-          "textKey": "episode_04.e04_n03_identify.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 750
-        },
-        {
-          "type": "message",
-          "text": "That's you.",
-          "textKey": "episode_04.e04_n03_identify.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "A real answer.",
-          "textKey": "episode_04.e04_n03_identify.event6.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "I forgot how that feels.",
-          "textKey": "episode_04.e04_n03_identify.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Trying not to sound desperate.",
-          "textKey": "episode_04.e04_n03_identify.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Failing.",
-          "textKey": "episode_04.e04_n03_identify.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 850
-        },
-        {
-          "type": "message",
-          "text": "With dignity.",
-          "textKey": "episode_04.e04_n03_identify.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Keep me on the channel and I will give you my name.",
-          "textKey": "episode_04.e04_n03_identify.event18.text"
-        }
-      ],
-      "objective": "Maya reacts better to direct human contact but still needs technical help.",
-      "nextNodeId": "e04_n03_trace"
-    },
-    "e04_n03_verify": {
-      "id": "e04_n03_verify",
-      "speaker": "UNKNOWN",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "You sound like mission control.",
-          "textKey": "episode_04.e04_n03_verify.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Annoying.",
-          "textKey": "episode_04.e04_n03_verify.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Useful, maybe.",
-          "textKey": "episode_04.e04_n03_verify.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "textKey": "episode_04.e04_n03_verify.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Fair.",
-          "textKey": "episode_04.e04_n03_verify.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 850
-        },
-        {
-          "type": "message",
-          "text": "Verify me.",
-          "textKey": "episode_04.e04_n03_verify.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "I would verify me too.",
-          "textKey": "episode_04.e04_n03_verify.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Anything that answers too fast is usually lying.",
-          "textKey": "episode_04.e04_n03_verify.event16.text"
-        }
-      ],
-      "objective": "Maya is irritated by verification, but respects the discipline.",
-      "nextNodeId": "e04_n03_trace"
-    },
-    "e04_n03_trace": {
-      "id": "e04_n03_trace",
-      "speaker": "UNKNOWN",
-      "events": [
-        {
-          "type": "log",
-          "id": "audio_transcript_714",
-          "fileId": "audio_transcript_714",
-          "fileType": "log",
-          "title": "EMERGENCY AUDIO TRANSCRIPT",
-          "content": "CHANNEL: 7.14 MHz\nSIGNAL STATE: DISTORTED\nVOICEPRINT: UNKNOWN FEMALE\nRECOVERED FRAGMENTS:\n\n\"...anyone...\"\n\"...relay is drifting...\"\n\"...not Hale...\"\n\"...lower access spine...\"\n\nRecommended action: manual signal tuning required.",
-          "caption": "Text reconstruction of distorted emergency audio from channel 7.14.",
-          "source": "CHANNEL_7_14",
-          "tags": [
-            "audio_transcript",
-            "frequency",
-            "7.14",
-            "maya"
-          ],
-          "message": "[ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_04.e04_n03_trace.event0.title",
-          "contentKey": "episode_04.e04_n03_trace.event0.content",
-          "captionKey": "episode_04.e04_n03_trace.event0.caption",
-          "messageKey": "episode_04.e04_n03_trace.event0.message"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "That's my channel.",
-          "textKey": "episode_04.e04_n03_trace.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Or the bones of it.",
-          "textKey": "episode_04.e04_n03_trace.event4.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Relay casing is kicking under my palm.",
-          "textKey": "episode_04.e04_n03_trace.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Every time it kicks, the line slides.",
-          "textKey": "episode_04.e04_n03_trace.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Can you tune it?",
-          "textKey": "episode_04.e04_n03_trace.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Not later.",
-          "textKey": "episode_04.e04_n03_trace.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 500
-        },
-        {
-          "type": "message",
-          "text": "Now.",
-          "textKey": "episode_04.e04_n03_trace.event16.text"
-        }
-      ],
-      "objective": "Player decides whether to trust the new signal or consult Hale first.",
-      "choices": [
-        {
-          "id": "manual_tune",
-          "text": "MANUALLY TUNE THE SIGNAL.",
-          "effects": {
-            "signalStrength": 1,
-            "mayaTrust": 1,
-            "operatorPrioritizedMaya": true
-          },
-          "nextNodeId": "e04_n04_tune",
-          "textKey": "episode_04.e04_n03_trace.choice0.text"
-        },
-        {
-          "id": "ask_hale_before_tuning",
-          "text": "ASK HALE BEFORE TUNING.",
-          "effects": {
-            "haleTrust": 2,
-            "mayaTrust": -2,
-            "danger": 2,
-            "signalStrength": -2,
-            "askedHaleBeforeMaya": true,
-            "mayaRemembersDelay": true
-          },
-          "nextNodeId": "e04_n04_hale_warning",
-          "textKey": "episode_04.e04_n03_trace.choice1.text"
-        }
-      ]
-    },
-    "e04_n04_hale_warning": {
-      "id": "e04_n04_hale_warning",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Operator, wait.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_warning.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Small corrections.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_warning.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Don't let 7.14 drag your hand.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_warning.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "And if she gives you a name...",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_warning.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "don't let the name do the thinking.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_warning.event10.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 550
-        },
-        {
-          "type": "message",
-          "text": "Yes.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_warning.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "I hear myself.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_warning.event15.text"
-        }
-      ],
-      "objective": "Hale warns the operator without fully stopping the rescue.",
-      "nextNodeId": "e04_n04_tune"
-    },
-    "e04_n04_tune": {
-      "id": "e04_n04_tune",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "puzzle",
-          "puzzleId": "frequency_714",
+          "message": "[SIGNAL LOST]",
+          "restoreMessage": "[SIGNAL RESTORED]",
           "pauseAfterMs": 700
-        }
-      ],
-      "objective": "Tune 7.14 without letting the carrier drift out of reach.",
-      "choices": []
-    },
-    "e04_n04_fail": {
-      "id": "e04_n04_fail",
-      "speaker": "UNKNOWN",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[SIGNAL LOCK FAILED]",
-          "pauseAfterMs": 800,
-          "textKey": "episode_04.e04_n04_fail.event0.text"
         },
         {
-          "type": "glitch",
-          "duration": 1000,
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Ses benim sesimdi."
+        }
+      ],
+      "choices": [
+        {
+          "id": "tell_step_back",
+          "text": "GERİ ÇEKİL.",
+          "effects": {
+            "trust": 2,
+            "danger": -2,
+            "steppedBackFromDoor": true
+          },
+          "nextNodeId": "e04_n22_step_back_final"
+        },
+        {
+          "id": "ask_repeat_voice",
+          "text": "NE DEDİ?",
+          "effects": {
+            "danger": 2,
+            "eliasStress": 2,
+            "askedVoiceWords": true
+          },
+          "nextNodeId": "e04_n23_repeat_voice"
+        }
+      ]
+    },
+    "e04_n22_step_back_final": {
+      "id": "e04_n22_step_back_final",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 140
+        },
+        {
+          "type": "message",
+          "text": "Geri çekiliyorum.",
+          "pauseAfterMs": 900
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Hayır.",
           "pauseAfterMs": 600
         },
         {
           "type": "typing",
-          "duration": 2500
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "No— don't let it drift.",
-          "textKey": "episode_04.e04_n04_fail.event3.text"
+          "text": "Koşmuyorum.",
+          "pauseAfterMs": 600
         },
         {
           "type": "typing",
-          "duration": 3200
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "I had you for a second. Don't make me go back to static.",
-          "textKey": "episode_04.e04_n04_fail.event5.text"
+          "text": "Koşarsam kapının beni takip edeceğini düşünüyorum.",
+          "pauseAfterMs": 800
         },
         {
           "type": "typing",
-          "duration": 3400
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Hold it steady when it bites. The drift gets worse right before the lock.",
-          "textKey": "episode_04.e04_n04_fail.event7.text"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[MANUAL RETUNE REQUIRED]",
-          "pauseAfterMs": 800,
-          "textKey": "episode_04.e04_n04_fail.event8.text"
-        }
-      ],
-      "objective": "Failure no longer stalls; the player can retry or review a clue.",
-      "choices": [
-        {
-          "id": "retry_frequency_714",
-          "text": "TRY TO LOCK 7.14 AGAIN.",
-          "effects": {
-            "signalStrength": -1,
-            "danger": 1
-          },
-          "nextNodeId": "e04_n04_tune",
-          "textKey": "episode_04.e04_n04_fail.choice0.text"
-        },
-        {
-          "id": "review_signal_trace_714",
-          "text": "REVIEW SIGNAL TRACE.",
-          "effects": {
-            "signalStrength": 1,
-            "mayaTrust": 1
-          },
-          "nextNodeId": "e04_n04_hint",
-          "textKey": "episode_04.e04_n04_fail.choice1.text"
-        }
-      ]
-    },
-    "e04_n04_hint": {
-      "id": "e04_n04_hint",
-      "speaker": "UNKNOWN",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2800
-        },
-        {
-          "type": "message",
-          "text": "Listen. Not to the words. To the pull.",
-          "textKey": "episode_04.e04_n04_hint.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3400
-        },
-        {
-          "type": "message",
-          "text": "It drifts below seven, then snaps back. It wants you to overcorrect.",
-          "textKey": "episode_04.e04_n04_hint.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "text": "Don't chase it. Let it come to 7.14 and hold there.",
-          "textKey": "episode_04.e04_n04_hint.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 3000
-        },
-        {
-          "type": "message",
-          "text": "I hate that I sound like Hale right now.",
-          "textKey": "episode_04.e04_n04_hint.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Just... lock the signal.",
-          "textKey": "episode_04.e04_n04_hint.event9.text"
-        }
-      ],
-      "objective": "Offer a clue while preserving the two-choice rule.",
-      "choices": [
-        {
-          "id": "retry_after_signal_trace",
-          "text": "LOCK THE SIGNAL AGAIN.",
-          "effects": {
-            "signalStrength": 1,
-            "mayaTrust": 1
-          },
-          "nextNodeId": "e04_n04_tune",
-          "textKey": "episode_04.e04_n04_hint.choice0.text"
-        },
-        {
-          "id": "ask_hale_for_tuning_help",
-          "text": "ASK HALE FOR A STABILIZATION TIP.",
-          "effects": {
-            "haleTrust": 1,
-            "mayaTrust": -1
-          },
-          "nextNodeId": "e04_n04_hale_tip",
-          "textKey": "episode_04.e04_n04_hint.choice1.text"
-        }
-      ]
-    },
-    "e04_n04_hale_tip": {
-      "id": "e04_n04_hale_tip",
-      "speaker": "HALE",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Fine.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_tip.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Technical answer.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_tip.event3.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Don't chase the carrier.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_tip.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Let it drift into your hand.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_tip.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Small corrections.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_tip.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Hold when it bites.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_tip.event12.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "And don't tell Maya I helped.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_tip.event15.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "She will survive just to be smug.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n04_hale_tip.event17.text"
-        }
-      ],
-      "objective": "Hale contributes operationally, but involving him affects Maya.",
-      "choices": [
-        {
-          "id": "retry_with_hale_tip",
-          "text": "LOCK THE SIGNAL AGAIN.",
-          "effects": {
-            "signalStrength": 2,
-            "haleTrust": 1
-          },
-          "nextNodeId": "e04_n04_tune",
-          "textKey": "episode_04.e04_n04_hale_tip.choice0.text"
-        },
-        {
-          "id": "ignore_hale_tip_retry",
-          "text": "RETRY WITHOUT USING HALE'S METHOD.",
-          "effects": {
-            "mayaTrust": 1,
-            "danger": 1
-          },
-          "nextNodeId": "e04_n04_tune",
-          "textKey": "episode_04.e04_n04_hale_tip.choice1.text"
-        }
-      ]
-    },
-    "e04_n05_signal_locked": {
-      "id": "e04_n05_signal_locked",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[SIGNAL LOCKED]",
-          "pauseAfterMs": 800,
-          "textKey": "episode_04.e04_n05_signal_locked.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "There.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n05_signal_locked.event2.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Give me a second.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n05_signal_locked.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "I forgot how to talk to someone who answers back.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n05_signal_locked.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Maya.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n05_signal_locked.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Maya Chen.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n05_signal_locked.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "I was starting to think I'd die insulting static.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n05_signal_locked.event14.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Damaged relay console.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n05_signal_locked.event17.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Lower access spine.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n05_signal_locked.event19.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Strut across my left leg.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n05_signal_locked.event21.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Not broken.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n05_signal_locked.event24.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Probably.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n05_signal_locked.event26.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "If Ethan Hale is on your other channel...",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n05_signal_locked.event28.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "don't let him steer you.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n05_signal_locked.event31.text"
-        }
-      ],
-      "objective": "Maya becomes a living person with a physical location and urgent survival objective.",
-      "nextNodeId": "e04_n06_maya_position"
-    },
-    "e04_n06_maya_position": {
-      "id": "e04_n06_maya_position",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "log",
-          "id": "survivor_biometric_scan_maya",
-          "fileId": "survivor_biometric_scan_maya",
-          "fileType": "log",
-          "title": "SURVIVOR BIOMETRIC SCAN",
-          "content": "CHANNEL SOURCE: 7.14 MHz\nVOICEPRINT MATCH: MAYA CHEN\nLIFE SIGNS: ACTIVE\nOXYGEN: 18%\nLOCATION ESTIMATE: DAMAGED RELAY CONSOLE / LOWER ACCESS SPINE\nVISUAL FEED: UNAVAILABLE\nSTATUS: ALIVE / CRITICAL",
-          "caption": "Automated survivor verification generated from channel telemetry. No image recovered.",
-          "source": "CHANNEL_7_14",
-          "tags": [
-            "maya",
-            "survivor",
-            "biometric",
-            "relay"
-          ],
-          "message": "[ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_04.e04_n06_maya_position.event0.title",
-          "contentKey": "episode_04.e04_n06_maya_position.event0.content",
-          "captionKey": "episode_04.e04_n06_maya_position.event0.caption",
-          "messageKey": "episode_04.e04_n06_maya_position.event0.message"
-        },
-        {
-          "type": "typing",
-          "duration": 750
-        },
-        {
-          "type": "message",
-          "text": "That's me.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n06_maya_position.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Alive.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n06_maya_position.event4.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "For now.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n06_maya_position.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Oxygen says eighteen percent.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n06_maya_position.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "My lungs are calling it a liar.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n06_maya_position.event11.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Console's holding the strut off my leg.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n06_maya_position.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "I named the console Malcolm.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n06_maya_position.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Do not judge me.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n06_maya_position.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "You name things when you're alone.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n06_maya_position.event20.text"
-        }
-      ],
-      "objective": "First true operation decision: data vs survival pace.",
-      "choices": [
-        {
-          "id": "stabilize_maya_console",
-          "text": "STABILIZE THE RELAY CONSOLE FIRST.",
-          "effects": {
-            "recordedMayaTelemetry": true,
-            "mayaTrust": 2,
-            "oxygen": -3,
-            "telemetryCanBeRecovered": true,
-            "episode05MayaMemory": "operator_chose_data_over_air"
-          },
-          "nextNodeId": "e04_n07_console_route",
-          "textKey": "episode_04.e04_n06_maya_position.choice0.text"
-        },
-        {
-          "id": "move_maya_now",
-          "text": "MOVE MAYA TOWARD THE ACCESS SPINE.",
-          "effects": {
-            "mayaTrust": 1,
-            "danger": 2,
-            "oxygen": -1,
-            "mayaTelemetryLost": true,
-            "irreversibleTelemetryLoss": true,
-            "episode05MayaMemory": "operator_chose_air_over_data"
-          },
-          "nextNodeId": "e04_n07_move_route",
-          "textKey": "episode_04.e04_n06_maya_position.choice1.text"
-        }
-      ]
-    },
-    "e04_n07_console_route": {
-      "id": "e04_n07_console_route",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 850
-        },
-        {
-          "type": "message",
-          "text": "Console first.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_console_route.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Okay.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_console_route.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Malcolm and I are about to have a workplace dispute.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_console_route.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Casing's cracked.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_console_route.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Local buffer is blinking behind the glass.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_console_route.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "I need to shift the strut without dropping it.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_console_route.event12.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "If I go quiet, both hands are busy.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_console_route.event15.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Not dead.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_console_route.event17.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "maya_extracts_console_telemetry_v6",
-          "character": "MAYA",
-          "status": "IS WORKING",
-          "durationMs": 14000,
-          "returnNodeId": "e04_r07_console_return",
-          "message": "[MAYA IS WORKING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Maya sent a message.",
-          "tone": "character",
-          "pauseAfterMs": 500,
-          "messageKey": "episode_04.e04_n07_console_route.event10.message"
-        }
-      ],
-      "objective": "Staying gives a reward but reveals danger."
-    },
-    "e04_n07_move_route": {
-      "id": "e04_n07_move_route",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Leg first.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_move_route.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Okay.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_move_route.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Malcolm is being dramatic.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_move_route.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "I'm dragging the strut off slow.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_move_route.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_move_route.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Not slow enough.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_move_route.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "If I swear, blame the channel.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n07_move_route.event15.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "maya_leaves_console_v6",
-          "character": "MAYA",
-          "status": "IS MOVING",
-          "durationMs": 12000,
-          "returnNodeId": "e04_r07_move_return",
-          "message": "[MAYA IS MOVING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Maya sent a message.",
-          "tone": "danger",
-          "pauseAfterMs": 500,
-          "messageKey": "episode_04.e04_n07_move_route.event8.message"
-        }
-      ],
-      "objective": "Moving preserves oxygen but loses early telemetry."
-    },
-    "e04_n08_hale_interrupt": {
-      "id": "e04_n08_hale_interrupt",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[DUAL TRANSMISSION DETECTED]",
-          "pauseAfterMs": 800,
-          "textKey": "episode_04.e04_n08_hale_interrupt.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Don't trust her.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n08_hale_interrupt.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Wow.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_hale_interrupt.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Of course that's the first thing he says.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_hale_interrupt.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 750
-        },
-        {
-          "type": "message",
-          "text": "Maya—",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n08_hale_interrupt.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 500
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_hale_interrupt.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "You don't get to use my name like a brake.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_hale_interrupt.event12.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 750
-        },
-        {
-          "type": "message",
-          "text": "Operator.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_hale_interrupt.event15.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1700
-        },
-        {
-          "type": "message",
-          "text": "I'm at a pressure lock with bad air and one good leg.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_hale_interrupt.event17.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "He wants proof.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_hale_interrupt.event19.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "I want the next door open.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_hale_interrupt.event21.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "That is not fair.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n08_hale_interrupt.event23.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Is it false?",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n08_hale_interrupt.event25.text"
-        }
-      ],
-      "objective": "Player manages interpersonal conflict while Maya is physically vulnerable.",
-      "choices": [
-        {
-          "id": "mute_hale",
-          "text": "TEMPORARILY MUTE HALE.",
-          "effects": {
-            "mayaTrust": 5,
-            "haleTrust": -6,
-            "danger": 2,
-            "route": "maya_priority",
-            "haleMutedEpisode04": true,
-            "episode05HaleTone": "resentful_muted"
-          },
-          "nextNodeId": "e04_n09_mute_hale",
-          "textKey": "episode_04.e04_n08_hale_interrupt.choice0.text"
-        },
-        {
-          "id": "keep_both_channels",
-          "text": "KEEP BOTH CHANNELS OPEN.",
-          "effects": {
-            "mayaTrust": -2,
-            "haleTrust": 2,
-            "signalStrength": -4,
-            "danger": 3,
-            "route": "dual_channel",
-            "dualChannelStress": true,
-            "episode05MayaTone": "less_trusting_operator"
-          },
-          "nextNodeId": "e04_n09_both_channels",
-          "textKey": "episode_04.e04_n08_hale_interrupt.choice1.text"
-        }
-      ]
-    },
-    "e04_n09_mute_hale": {
-      "id": "e04_n09_mute_hale",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[HALE CHANNEL TEMPORARILY MUTED]",
-          "pauseAfterMs": 800,
-          "textKey": "episode_04.e04_n09_mute_hale.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Thank you.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_mute_hale.event2.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "I know that probably felt wrong.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_mute_hale.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "He makes silence feel like betrayal.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_mute_hale.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "I don't have much air.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_mute_hale.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "So blunt version.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_mute_hale.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Hale is dead.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_mute_hale.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "I saw the corridor.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_mute_hale.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2100
-        },
-        {
-          "type": "message",
-          "text": "Now get me through Service Lock C before whatever is using his signal notices I'm moving.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_mute_hale.event18.text"
+          "text": "Bunun mantıklı olmadığını biliyorum."
         },
         {
           "type": "statChange",
           "changes": {
-            "haleMutedEpisode04": true,
-            "mayaTrust": 5,
-            "haleTrust": -6
-          },
-          "pauseAfterMs": 300
-        }
-      ],
-      "objective": "Maya opens up more if Hale is muted, but Hale may remember this later.",
-      "nextNodeId": "e04_n10_route_choice"
-    },
-    "e04_n09_both_channels": {
-      "id": "e04_n09_both_channels",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Fine.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_both_channels.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Let him listen.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_both_channels.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "But if he steers this, I cut the channel myself.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_both_channels.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Technically you would interrupt the carrier.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n09_both_channels.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 550
-        },
-        {
-          "type": "message",
-          "text": "See?",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_both_channels.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "I was being helpful.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n09_both_channels.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 850
-        },
-        {
-          "type": "message",
-          "text": "You were being you.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_both_channels.event13.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Operator, both channels are fighting the carrier.",
-          "speaker": "HALE",
-          "textKey": "episode_04.e04_n09_both_channels.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1700
-        },
-        {
-          "type": "message",
-          "text": "Then help me open a door instead of narrating the funeral.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n09_both_channels.event18.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "dualChannelStress": true,
-            "signalStrength": -4,
-            "danger": 3
-          },
-          "pauseAfterMs": 300
-        }
-      ],
-      "objective": "Keeping both channels preserves Hale but increases signal stress.",
-      "nextNodeId": "e04_n10_route_choice"
-    },
-    "e04_n10_route_choice": {
-      "id": "e04_n10_route_choice",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Split ahead.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n10_route_choice.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Left crawlway.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n10_route_choice.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Tight. Dark. Wet pennies.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n10_route_choice.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Right main spine.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n10_route_choice.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Faster.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n10_route_choice.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 750
-        },
-        {
-          "type": "message",
-          "text": "Too open.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n10_route_choice.event12.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Reflection in the right panel.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n10_route_choice.event15.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "It moved before I did.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n10_route_choice.event17.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "I hate reflections.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n10_route_choice.event19.text"
-        }
-      ],
-      "objective": "Second operation decision: safe/slow vs fast/dangerous.",
-      "choices": [
-        {
-          "id": "crawlway_route",
-          "text": "TAKE THE MAINTENANCE CRAWLWAY.",
-          "effects": {
-            "oxygen": -4,
             "danger": -1,
-            "mayaStress": 1,
-            "stealthRoute": true,
-            "episode05MayaPhysicalState": "oxygen_low_but_hidden"
-          },
-          "nextNodeId": "e04_n11_crawlway",
-          "textKey": "episode_04.e04_n10_route_choice.choice0.text"
-        },
-        {
-          "id": "main_spine_route",
-          "text": "TAKE THE MAIN ACCESS SPINE.",
-          "effects": {
-            "oxygen": -1,
-            "danger": 5,
-            "mayaStress": 4,
-            "unknownAttention": true,
-            "episode05MayaPhysicalState": "oxygen_better_but_exposed"
-          },
-          "nextNodeId": "e04_n11_main_spine",
-          "textKey": "episode_04.e04_n10_route_choice.choice1.text"
+            "eliasStress": 2
+          }
         }
-      ]
+      ],
+      "nextNodeId": "e04_n24_offline"
     },
-    "e04_n11_crawlway": {
-      "id": "e04_n11_crawlway",
-      "speaker": "MAYA",
+    "e04_n23_repeat_voice": {
+      "id": "e04_n23_repeat_voice",
+      "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
+        },
+        {
+          "type": "message",
+          "text": "Sadece ismimi.",
+          "pauseAfterMs": 700
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
           "duration": 700
         },
         {
           "type": "message",
-          "text": "Crawlway.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_crawlway.event1.text"
+          "text": "Elias.",
+          "pauseAfterMs": 1000
         },
         {
           "type": "typing",
-          "duration": 550
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Great.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_crawlway.event3.text"
+          "text": "Ama benim sesimle.",
+          "pauseAfterMs": 1000
         },
         {
           "type": "typing",
-          "duration": 1100
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "I love becoming luggage.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_crawlway.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
+          "text": "Sanki kapının arkasında ben varım.",
+          "pauseAfterMs": 900
         },
         {
           "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Head first.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_crawlway.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Radio clipped to collar.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_crawlway.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1700
-        },
-        {
-          "type": "message",
-          "text": "If I drop out, it's because I'm inside a metal throat.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_crawlway.event12.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Operator?",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_crawlway.event15.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Keep talking if you can.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_crawlway.event17.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "maya_crawlway_route_v6",
-          "character": "MAYA",
-          "status": "IS CRAWLING",
-          "durationMs": 15000,
-          "returnNodeId": "e04_r11_crawlway_return",
-          "message": "[MAYA IS CRAWLING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Maya sent a message.",
-          "tone": "character",
-          "pauseAfterMs": 500,
-          "messageKey": "episode_04.e04_n11_crawlway.event8.message"
-        }
-      ],
-      "objective": "Safer path preserves stealth but plants horror."
-    },
-    "e04_n11_main_spine": {
-      "id": "e04_n11_main_spine",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Main spine.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_main_spine.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Fast and stupid.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_main_spine.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Sometimes that works.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_main_spine.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Channel low.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_main_spine.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Feet quiet.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_main_spine.event10.text"
-        },
-        {
-          "type": "pause",
-          "duration": 500
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "If I say run, assume I started early.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n11_main_spine.event13.text"
-        },
-        {
-          "type": "characterBusy",
-          "id": "maya_main_spine_run_v6",
-          "character": "MAYA",
-          "status": "IS RUNNING",
-          "durationMs": 11000,
-          "returnNodeId": "e04_r11_main_return",
-          "message": "[MAYA IS RUNNING]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Maya sent a message.",
-          "tone": "danger",
-          "pauseAfterMs": 500,
-          "messageKey": "episode_04.e04_n11_main_spine.event6.message"
-        }
-      ],
-      "objective": "Faster path saves oxygen but raises Maya's stress and unknown attention."
-    },
-    "e04_n12_crew_memory": {
-      "id": "e04_n12_crew_memory",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Service Lock C has pressure.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n12_crew_memory.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Barely.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n12_crew_memory.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "It keeps cycling.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n12_crew_memory.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1700
-        },
-        {
-          "type": "message",
-          "text": "Like it can't decide whether to save me or make a point.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n12_crew_memory.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Six of us were assigned to ECHO.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n12_crew_memory.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Hale. Rourke. Lin. Patel. Arman. Me.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n12_crew_memory.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Lin labeled labels.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n12_crew_memory.event15.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Patel fixed coffee ratios when nobody watched.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n12_crew_memory.event17.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Arman sang when he was nervous.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n12_crew_memory.event19.text"
-        },
-        {
-          "type": "pause",
+          "speaker": "ELIAS",
           "duration": 700
         },
         {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
           "type": "message",
-          "text": "He sang a lot near the end.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n12_crew_memory.event22.text"
+          "text": "Hayır.",
+          "pauseAfterMs": 500
         },
         {
           "type": "typing",
-          "duration": 1100
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Records keep death times.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n12_crew_memory.event24.text"
+          "text": "Hayır, bunu yazınca daha kötü oldu."
         },
         {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "They don't keep people.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n12_crew_memory.event26.text"
-        }
-      ],
-      "objective": "Conversation happens during movement, not instead of movement.",
-      "choices": [
-        {
-          "id": "ask_for_proof",
-          "text": "PROVE HALE IS DEAD.",
-          "effects": {
-            "mayaTrust": -2,
+          "type": "statChange",
+          "changes": {
             "danger": 2,
-            "signalStrength": -2
-          },
-          "nextNodeId": "e04_n13_proof",
-          "textKey": "episode_04.e04_n12_crew_memory.choice0.text"
-        },
-        {
-          "id": "ask_what_maya_needs",
-          "text": "WHAT DO YOU NEED RIGHT NOW?",
-          "effects": {
-            "mayaTrust": 3,
-            "morale": 1
-          },
-          "nextNodeId": "e04_n13_need",
-          "textKey": "episode_04.e04_n12_crew_memory.choice1.text"
+            "eliasStress": 3
+          }
         }
-      ]
+      ],
+      "nextNodeId": "e04_n24_offline"
     },
-    "e04_n13_proof": {
-      "id": "e04_n13_proof",
-      "speaker": "MAYA",
+    "e04_n24_offline": {
+      "id": "e04_n24_offline",
+      "speaker": "ELIAS",
       "events": [
         {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "You want proof.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_proof.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Good.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_proof.event3.text"
-        },
-        {
-          "type": "typing",
+          "type": "pause",
           "duration": 1000
         },
         {
-          "type": "message",
-          "text": "Keep wanting proof.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_proof.event5.text"
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
-          "type": "pause",
-          "duration": 600
+          "type": "message",
+          "text": "Şu an açmayacağım.",
+          "pauseAfterMs": 700
         },
         {
           "type": "typing",
-          "duration": 2100
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "But the station is good at handing out records after witnesses are gone.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_proof.event8.text"
+          "text": "Bunu gururla söylüyorum.",
+          "pauseAfterMs": 600
         },
         {
           "type": "typing",
-          "duration": 1500
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Logs. Timestamps. Clean labels.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_proof.event10.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
+          "text": "Biraz uzakta oturacağım.",
+          "pauseAfterMs": 700
         },
         {
           "type": "typing",
-          "duration": 1900
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "Not the sound Hale made when the corridor decompressed.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_proof.event13.text"
+          "text": "Düşünmem gerekiyor.",
+          "pauseAfterMs": 800
         },
         {
           "type": "typing",
-          "duration": 1200
+          "speaker": "ELIAS",
+          "duration": 220
         },
         {
           "type": "message",
-          "text": "I still hear that.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_proof.event15.text"
+          "text": "Ve mümkünse kapının düşünmemesini umacağım.",
+          "pauseAfterMs": 500
         },
         {
           "type": "typing",
-          "duration": 1700
+          "speaker": "ELIAS",
+          "duration": 140
         },
         {
           "type": "message",
-          "text": "Get me to the terminal and I'll pull my statement.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_proof.event17.text"
-        }
-      ],
-      "objective": "Proof path increases tension but gives a concrete next action.",
-      "nextNodeId": "e04_n14_terminal"
-    },
-    "e04_n13_need": {
-      "id": "e04_n13_need",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Right now?",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_need.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Air.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_need.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Then water.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_need.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Then a room where nothing knows my name.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_need.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Operationally: Service Lock C opens without cycling the outer seal.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_need.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 2100
-        },
-        {
-          "type": "message",
-          "text": "Emotionally: ask me when my lungs stop voting against me.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_need.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Terminal first.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n13_need.event14.text"
-        }
-      ],
-      "objective": "Survival-focused path strengthens Maya as a person and a rescue target.",
-      "nextNodeId": "e04_n14_terminal"
-    },
-    "e04_n14_terminal": {
-      "id": "e04_n14_terminal",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Terminal is a few meters away.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n14_terminal.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 750
-        },
-        {
-          "type": "message",
-          "text": "Which is rude.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n14_terminal.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Few meters should feel smaller.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n14_terminal.event5.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Knee hit the wall.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n14_terminal.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Didn't cry.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n14_terminal.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Filing that under heroism.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n14_terminal.event12.text"
+          "text": "Geri yazacağım."
         },
         {
           "type": "characterBusy",
-          "id": "maya_reaches_terminal_v6",
-          "character": "MAYA",
-          "status": "IS ACCESSING TERMINAL",
-          "durationMs": 12000,
-          "returnNodeId": "e04_r14_terminal_return",
-          "message": "[MAYA IS ACCESSING TERMINAL]",
-          "notificationTitle": "Incoming Transmission",
-          "notificationBody": "Maya sent a message.",
-          "tone": "character",
-          "pauseAfterMs": 500,
-          "messageKey": "episode_04.e04_n14_terminal.event4.message"
-        }
-      ],
-      "objective": "End on a rescue decision that affects Maya's emotional state going into Episode 05."
-    },
-    "e04_r07_console_return": {
-      "id": "e04_r07_console_return",
-      "speaker": "MAYA",
-      "objective": "Maya returns after extracting telemetry from the damaged relay console.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 850
-        },
-        {
-          "type": "message",
-          "text": "Still here.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_console_return.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Buffer kept dropping when I shifted my weight.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_console_return.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Leg hurts.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_console_return.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Negotiable hurt.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_console_return.event8.text"
-        },
-        {
-          "type": "log",
-          "id": "maya_relay_telemetry_01",
-          "fileId": "maya_relay_telemetry_01",
-          "fileType": "log",
-          "title": "MAYA RELAY TELEMETRY",
-          "content": "LOWER ACCESS SPINE\nOXYGEN BLEED: ACTIVE\nAIRFLOW SOURCE: SERVICE LOCK C\nSECONDARY MOVEMENT TRACE: DETECTED NEAR DOOR 12 RETURN LINE\nNOTE: trace does not match Maya's current position.",
-          "caption": "Maya extracted this while stabilizing the damaged relay console.",
-          "source": "MAYA_LOCAL_RELAY",
-          "tags": [
-            "maya",
-            "movement_trace",
-            "door_12",
-            "operation"
-          ],
-          "message": "[ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_04.e04_r07_console_return.event6.title",
-          "contentKey": "episode_04.e04_r07_console_return.event6.content",
-          "captionKey": "episode_04.e04_r07_console_return.event6.caption",
-          "messageKey": "episode_04.e04_r07_console_return.event6.message"
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Door 12 return line.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_console_return.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 850
-        },
-        {
-          "type": "message",
-          "text": "Movement trace.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_console_return.event13.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Not me.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_console_return.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "So yes. Data.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_console_return.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Also yes. Something else is moving.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_console_return.event20.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "mayaTelemetryRecovered": true,
-            "oxygen": -3,
-            "danger": 2
-          },
-          "pauseAfterMs": 300
-        }
-      ],
-      "nextNodeId": "e04_n08_hale_interrupt"
-    },
-    "e04_r07_move_return": {
-      "id": "e04_r07_move_return",
-      "speaker": "MAYA",
-      "objective": "Maya returns after leaving the damaged console.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Clear.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_move_return.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Not graceful.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_move_return.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Not quiet.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_move_return.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Clear.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_move_return.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Access spine.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_move_return.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Cold panels.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_move_return.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Condensation on the seams.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_move_return.event14.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "Smells like hot plastic and old blood.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_move_return.event16.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Console telemetry is gone.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_move_return.event19.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "I know.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_move_return.event21.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "But I'm farther from the leak.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r07_move_return.event23.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "mayaTelemetryLost": true,
-            "irreversibleTelemetryLoss": true,
-            "oxygen": -1
-          },
-          "pauseAfterMs": 300
-        }
-      ],
-      "nextNodeId": "e04_n08_hale_interrupt"
-    },
-    "e04_r11_crawlway_return": {
-      "id": "e04_r11_crawlway_return",
-      "speaker": "MAYA",
-      "objective": "Maya returns after clearing the crawlway.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Through.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_crawlway_return.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Slow.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_crawlway_return.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "Quiet.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_crawlway_return.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Awful.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_crawlway_return.event7.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "Scratch marks inside the paneling.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_crawlway_return.event10.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Not tool marks.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_crawlway_return.event12.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Fingernails.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_crawlway_return.event14.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "I'm putting that in a box marked later.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_crawlway_return.event17.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "stealthRoute": true,
-            "oxygen": -4,
-            "danger": -1
-          },
-          "pauseAfterMs": 300
-        }
-      ],
-      "nextNodeId": "e04_n12_crew_memory"
-    },
-    "e04_r11_main_return": {
-      "id": "e04_r11_main_return",
-      "speaker": "MAYA",
-      "objective": "Maya returns after crossing the main access spine.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Service Lock C.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_main_return.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Something moved behind me halfway across.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_main_return.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "I ran.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_main_return.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Hit my shoulder on the frame.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_main_return.event8.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1700
-        },
-        {
-          "type": "message",
-          "text": "Said a word that would get me banned from two briefings.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_main_return.event10.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "But I'm here.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_main_return.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Door in front of me.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r11_main_return.event15.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "unknownAttention": true,
-            "oxygen": -1,
-            "danger": 5
-          },
-          "pauseAfterMs": 300
-        }
-      ],
-      "nextNodeId": "e04_n12_crew_memory"
-    },
-    "e04_r14_terminal_return": {
-      "id": "e04_r14_terminal_return",
-      "speaker": "MAYA",
-      "objective": "Maya returns from the Service Lock C terminal with her survivor statement.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Terminal's alive.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r14_terminal_return.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Screen cracked.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r14_terminal_return.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Buttons sticky.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r14_terminal_return.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Choosing not to identify the substance.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r14_terminal_return.event7.text"
-        },
-        {
-          "type": "log",
-          "id": "survivor_statement_maya_01",
-          "fileId": "survivor_statement_maya_01",
-          "fileType": "log",
-          "title": "SURVIVOR STATEMENT: MAYA",
-          "content": "TEXT TRANSCRIPT / CHANNEL 7.14\n\nMAYA CHEN:\n\"There were six assigned crew members on ECHO. After the breach, only one confirmed biological survivor remained: me. The signal using Ethan Hale's identity is not a living crew member. Do not allow it to control station routing.\"\n\nTranscript confidence: 91%",
-          "caption": "Text transcript reconstructed from Maya's stabilized emergency channel.",
-          "source": "CHANNEL_7_14",
-          "tags": [
-            "maya",
-            "crew",
-            "hale",
-            "survivor"
-          ],
-          "message": "[ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_04.e04_r14_terminal_return.event4.title",
-          "contentKey": "episode_04.e04_r14_terminal_return.event4.content",
-          "captionKey": "episode_04.e04_r14_terminal_return.event4.caption",
-          "messageKey": "episode_04.e04_r14_terminal_return.event4.message"
-        },
-        {
-          "type": "typing",
-          "duration": 1300
-        },
-        {
-          "type": "message",
-          "text": "One confirmed biological survivor.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r14_terminal_return.event10.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "That phrase is too clean.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r14_terminal_return.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1700
-        },
-        {
-          "type": "message",
-          "text": "Like the station is politely avoiding the word alone.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r14_terminal_return.event15.text"
-        },
-        {
-          "type": "glitch",
-          "duration": 1200,
+          "id": "elias_observation_room_wait_e04",
+          "character": "ELIAS",
+          "status": "THINKING",
+          "durationMs": 36000,
+          "returnNodeId": "episode_05_start",
+          "message": "[ELIAS OFFLINE]",
+          "notificationTitle": "ECHO",
+          "notificationBody": "Elias sent a message.",
+          "tone": "thinking",
           "pauseAfterMs": 600
         },
         {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "NOT THE VICTIM",
-          "pauseAfterMs": 1200,
-          "textKey": "episode_04.e04_r14_terminal_return.event17.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "ASK WHAT SHE LEFT OUT",
-          "pauseAfterMs": 1200,
-          "textKey": "episode_04.e04_r14_terminal_return.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r14_terminal_return.event20.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1600
-        },
-        {
-          "type": "message",
-          "text": "Do not let it turn this into a trial.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_r14_terminal_return.event22.text"
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 5000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "SHE REMEMBERS",
-            "pauseAfterMs": 1100,
-            "textKey": "episode_04.e04_r14_terminal_return.backgroundEvent23.text"
+          "type": "statChange",
+          "changes": {
+            "observationDoorNotOpened": true
           }
-        },
-        {
-          "type": "backgroundEvent",
-          "delay": 9000,
-          "event": {
-            "type": "corruptMessage",
-            "speaker": "UNKNOWN",
-            "text": "THE DOOR OPENED TWICE",
-            "pauseAfterMs": 1100,
-            "textKey": "episode_04.e04_r14_terminal_return.backgroundEvent24.text"
-          }
-        }
-      ],
-      "choices": [
-        {
-          "id": "ask_maya_memory",
-          "text": "MAYA, WHAT DO YOU REMEMBER?",
-          "effects": {
-            "mayaTrust": -4,
-            "danger": 4,
-            "signalStrength": -3,
-            "route": "pressed_maya_memory",
-            "pressedMayaMemory": true,
-            "irreversibleUnknownAttention": true,
-            "episode05StartFlag": "maya_pressed_memory"
-          },
-          "nextNodeId": "e04_n15_press_memory",
-          "textKey": "episode_04.e04_r14_terminal_return.choice0.text"
-        },
-        {
-          "id": "seal_statement",
-          "text": "SEAL HER STATEMENT AND MOVE.",
-          "effects": {
-            "mayaTrust": 3,
-            "danger": 1,
-            "signalStrength": 1,
-            "route": "maya_statement_sealed",
-            "statementSealed": true,
-            "memoryClueDelayed": true,
-            "episode05StartFlag": "statement_sealed"
-          },
-          "nextNodeId": "e04_n15_seal_statement",
-          "textKey": "episode_04.e04_r14_terminal_return.choice1.text"
         }
       ]
-    },
-    "e04_n15_press_memory": {
-      "id": "e04_n15_press_memory",
-      "speaker": "MAYA",
-      "objective": "Press Maya for memory and create a trust wound that carries into Episode 05.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Now?",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_press_memory.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "You want that now?",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_press_memory.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 650
-        },
-        {
-          "type": "message",
-          "text": "Fine.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_press_memory.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Door 12.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_press_memory.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 700
-        },
-        {
-          "type": "typing",
-          "duration": 1100
-        },
-        {
-          "type": "message",
-          "text": "Hale was outside it.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_press_memory.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1900
-        },
-        {
-          "type": "message",
-          "text": "But his voice was already on the comm before the door opened.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_press_memory.event13.text"
-        },
-        {
-          "type": "glitch",
-          "duration": 1200,
-          "pauseAfterMs": 600
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "NOT HIS FIRST VOICE",
-          "pauseAfterMs": 1000,
-          "textKey": "episode_04.e04_n15_press_memory.event15.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "SHE HEARD ME FIRST",
-          "pauseAfterMs": 1000,
-          "textKey": "episode_04.e04_n15_press_memory.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 600
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_press_memory.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "I said enough.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_press_memory.event20.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1900
-        },
-        {
-          "type": "message",
-          "text": "Next time, ask before you put your hands in my head.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_press_memory.event22.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "mayaTrust": -4,
-            "danger": 4,
-            "irreversibleUnknownAttention": true
-          },
-          "pauseAfterMs": 300
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_episode_05_pressed",
-          "text": "CONTINUE.",
-          "effects": {
-            "nextEpisodeId": "episode_05",
-            "episode05StartFlag": "maya_pressed_memory",
-            "pressedMayaMemory": true,
-            "irreversibleUnknownAttention": true
-          },
-          "textKey": "episode_04.e04_n15_press_memory.choice0.text"
-        },
-        {
-          "id": "apologize_then_continue",
-          "text": "APOLOGIZE, THEN CONTINUE.",
-          "effects": {
-            "nextEpisodeId": "episode_05",
-            "episode05StartFlag": "maya_pressed_memory_apology",
-            "pressedMayaMemory": true,
-            "operatorApologizedToMaya": true,
-            "mayaTrust": 1,
-            "irreversibleUnknownAttention": true
-          },
-          "textKey": "episode_04.e04_n15_press_memory.choice1.text"
-        }
-      ],
-      "nextEpisodeId": "episode_05"
-    },
-    "e04_n15_seal_statement": {
-      "id": "e04_n15_seal_statement",
-      "speaker": "MAYA",
-      "objective": "Protect Maya's trust but delay the memory clue into Episode 05.",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 850
-        },
-        {
-          "type": "message",
-          "text": "Thank you.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_seal_statement.event1.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 800
-        },
-        {
-          "type": "message",
-          "text": "Seriously.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_seal_statement.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-        {
-          "type": "message",
-          "text": "I know curiosity is screaming right now.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_seal_statement.event6.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Let it scream quietly.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_seal_statement.event8.text"
-        },
-        {
-          "type": "pause",
-          "duration": 600
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "Statement sealed.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_seal_statement.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-        {
-          "type": "message",
-          "text": "Service Lock C is opening.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_seal_statement.event13.text"
-        },
-        {
-          "type": "glitch",
-          "duration": 1000,
-          "pauseAfterMs": 600
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "MERCY HIDES THE TEETH",
-          "pauseAfterMs": 1000,
-          "textKey": "episode_04.e04_n15_seal_statement.event15.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "ASK HER LATER",
-          "pauseAfterMs": 1000,
-          "textKey": "episode_04.e04_n15_seal_statement.event16.text"
-        },
-        {
-          "type": "typing",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Later.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_seal_statement.event18.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-        {
-          "type": "message",
-          "text": "If there is a later.",
-          "speaker": "MAYA",
-          "textKey": "episode_04.e04_n15_seal_statement.event20.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "mayaTrust": 3,
-            "memoryClueDelayed": true,
-            "danger": 1
-          },
-          "pauseAfterMs": 300
-        }
-      ],
-      "choices": [
-        {
-          "id": "continue_episode_05_sealed",
-          "text": "CONTINUE.",
-          "effects": {
-            "nextEpisodeId": "episode_05",
-            "episode05StartFlag": "statement_sealed",
-            "statementSealed": true,
-            "memoryClueDelayed": true
-          },
-          "textKey": "episode_04.e04_n15_seal_statement.choice0.text"
-        },
-        {
-          "id": "hold_position_sealed",
-          "text": "HOLD POSITION.",
-          "effects": {
-            "nextEpisodeId": "episode_05",
-            "episode05StartFlag": "statement_sealed_hold",
-            "statementSealed": true,
-            "memoryClueDelayed": true,
-            "operatorHeldPosition": true
-          },
-          "textKey": "episode_04.e04_n15_seal_statement.choice1.text"
-        }
-      ],
-      "nextEpisodeId": "episode_05"
     }
-  },
-  "directorCut": {
-    "version": "ECHO_DIRECTORS_CUT_V5_30_RULE_REBUILD",
-    "sourceEpisode": "episode_04",
-    "upgradeFocus": [
-      "Removed remaining report-style lines and replaced them with lived action beats.",
-      "Made Maya/Hale trust consequences visible inside branch dialogue.",
-      "Added irreversible tradeoffs: console telemetry can be recovered or lost, and Maya memory can be pressured or protected.",
-      "Strengthened UNKNOWN so it gives story information, not only atmosphere.",
-      "Reduced busy feeling by framing each busy event with active physical stakes.",
-      "Added final consequence nodes that lead into Episode 05 with different start flags."
-    ],
-    "qualityTarget": {
-      "technical": "10/10",
-      "atmosphere": "10/10",
-      "realTimeFeeling": "10/10",
-      "lifelineSimilarity": "10/10",
-      "humanDialogue": "10/10",
-      "choiceConsequenceVisibility": "10/10",
-      "chainEffect": "10/10"
-    },
-    "nextEpisode": "episode_05"
-  },
-  "titleKey": "episode_04.meta.episode0.title",
-  "lifelineRulesApplied": {
-    "ruleset": "ECHO_DIRECTORS_CUT_RULESET_V1",
-    "summary": [
-      "Scenario spine preserved.",
-      "Progress bars replaced where appropriate with characterBusy + returnNodeId.",
-      "Maya speaks like a real exhausted survivor, not a lore dispenser.",
-      "Hale/Maya conflict is shown through behavior and friction, not UI trust alerts.",
-      "Every visible choice group has exactly two choices.",
-      "Physical actions and movement produce return reports.",
-      "No visible wait timer is exposed to the player.",
-      "Lore is delivered through lived experience, environment, and recovered evidence."
-    ]
-  },
-  "lifelineV6Pass": {
-    "name": "LIFELINE CINEMATIC PASS V2 / Episode 04 V6",
-    "focus": [
-      "Characters speak while moving, crawling, opening locks, losing breath, and reacting to the immediate space.",
-      "Choice setup lines avoid explaining two options mechanically; the scene itself creates the decision.",
-      "Maya makes mistakes, jokes under stress, gets irritated, misunderstands the Operator, and recovers.",
-      "Hale and Maya conflict through personality, not UI trust text.",
-      "Long busy blocks are shortened and framed by live micro-messages so the player feels ongoing rescue momentum."
-    ]
-  },
-  "rulesAppliedV5": {
-    "framework": "30-rule Echo Director's Cut framework",
-    "majorConsequences": [
-      "Leaving the console preserves oxygen but permanently loses the early movement telemetry.",
-      "Stabilizing the console recovers Door 12 movement telemetry but costs oxygen.",
-      "Muting Hale gives Maya trust but creates a Hale resentment flag for Episode 05.",
-      "Keeping both channels preserves Hale trust but increases carrier instability.",
-      "Pressing Maya's memory increases UNKNOWN attention and damages Maya trust.",
-      "Sealing Maya's statement protects her trust but delays a memory clue into Episode 05."
-    ]
   },
   "relationshipConsequenceSystem": {
+    "hiddenStats": {
+      "trust": "Controls how much Elias accepts operator restraint and emotional grounding.",
+      "danger": "Tracks immediate and delayed threat exposure.",
+      "eliasStress": "Affects hesitation, panic bursts and whether Elias hides details.",
+      "cautiousPattern": "Tracks if the operator repeatedly chooses safer, slower solutions."
+    },
     "episode04PersistentFlags": [
-      "operatorPrioritizedMaya",
-      "askedHaleBeforeMaya",
-      "mayaRemembersDelay",
-      "telemetryCanBeRecovered",
-      "mayaTelemetryRecovered",
-      "mayaTelemetryLost",
-      "irreversibleTelemetryLoss",
-      "haleMutedEpisode04",
-      "dualChannelStress",
-      "stealthRoute",
-      "unknownAttention",
-      "pressedMayaMemory",
-      "statementSealed",
-      "memoryClueDelayed",
-      "irreversibleUnknownAttention",
-      "episode05StartFlag",
-      "episode05MayaMemory",
-      "episode05HaleTone",
-      "episode05MayaTone",
-      "episode05MayaPhysicalState"
+      "doorDescriptionAsked",
+      "startedDoorCorrelation",
+      "doorIdentified",
+      "steppedBackFromDoor",
+      "askedVoiceWords",
+      "observationDoorNotOpened"
     ],
-    "episode05UsageNotes": {
-      "irreversibleTelemetryLoss": "The early movement trace near Door 12 is unavailable; Maya knows the operator chose air over data.",
-      "mayaTelemetryRecovered": "The operator has proof of movement near the Door 12 return line, but Maya paid oxygen for it.",
-      "haleMutedEpisode04": "Hale should remember being muted and begin colder or more wounded in Episode 05.",
-      "dualChannelStress": "Maya should be less trusting if the operator kept Hale on during her rescue.",
-      "pressedMayaMemory": "Maya enters Episode 05 guarded and angry; UNKNOWN has more hooks into her memory.",
-      "statementSealed": "Maya trusts the operator more, but the Door 12 memory clue is delayed.",
-      "unknownAttention": "If the main spine or memory pressure path was taken, UNKNOWN can become more direct."
+    "futureConsequences": {
+      "steppedBackFromDoor": "Elias begins Episode 5 safer and more trusting.",
+      "askedVoiceWords": "The voice behind the door may have more influence later.",
+      "doorIdentified": "The unnumbered door is now known as a concealed observation room.",
+      "observationDoorNotOpened": "The door remains closed, preserving the central mystery."
     }
+  },
+  "timingDesign": {
+    "normalConversationMs": "1000-5000",
+    "hesitationMs": "5000-15000",
+    "inspectionMs": "10000-30000",
+    "shockSilenceMs": "20000-60000",
+    "panicBurstMs": "300-1000",
+    "realWaitTasks": [
+      {
+        "id": "elias_observation_room_wait_e04",
+        "durationMs": 36000,
+        "notification": "Elias sent a message."
+      }
+    ]
+  },
+  "directorCut": {
+    "version": "FINAL_DIRECTORS_CUT_V1",
+    "coreDesign": "Natural hidden episode transition, matching puzzle, hidden observation room reveal, no door opening, voice-behind-door cliffhanger.",
+    "qualityTarget": {
+      "characterBond": "10/10",
+      "operatorInteraction": "10/10",
+      "matchingPuzzleIntegration": "10/10",
+      "horrorByImagination": "10/10",
+      "mysteryPreservation": "10/10",
+      "visibleEpisodeTransition": "0/10"
+    },
+    "nextEpisodeStartNode": "episode_05_start"
   }
 }
