@@ -11,7 +11,6 @@ import {
   setActivePuzzle,
   markFileAsRead,
   resolveActiveWaitTask,
-  resolveBusyState,
   clearPendingNotifications,
   getCurrentEpisode
 } from "./engine/gameEngine";
@@ -252,7 +251,7 @@ function startGame() {
     });
   }, [phase, gameState.pendingNotifications?.length]);
 
-  useEffect(() => {
+ /* useEffect(() => {
     if (phase !== "game") return;
 
     setGameState((prevState) => {
@@ -270,6 +269,7 @@ function startGame() {
       return nextState;
     });
   }, [phase]);
+  */
 
   useEffect(() => {
     const resolvedState = resolveActiveWaitTask(gameState);
@@ -535,25 +535,51 @@ onComplete: () => {
   }
 
   // EPISODE TRANSITION
-  if (currentNode?.nextEpisodeId) {
-    setTimeout(() => {
-      setGameState(prev => {
-        const nextEpisode = getCurrentEpisode({
+if (currentNode?.nextEpisodeId) {
+  console.log(
+    "EPISODE TRANSITION TRIGGERED",
+    currentNode.nextEpisodeId
+  );
+
+  setTimeout(() => {
+    setGameState(prev => {
+
+      const nextEpisode =
+        getCurrentEpisode({
           ...prev,
-          episodeId: currentNode.nextEpisodeId
+          episodeId:
+            currentNode.nextEpisodeId
         });
 
-        const nextState = {
-          ...prev,
-          episodeId: currentNode.nextEpisodeId,
-          currentNodeId: nextEpisode.startNodeId
-        };
+      console.log(
+        "NEXT EPISODE FOUND",
+        nextEpisode?.id
+      );
 
-        saveGameState(nextState);
-        return nextState;
-      });
-    }, 500);
-  }
+      console.log(
+        "NEXT START NODE",
+        nextEpisode?.startNodeId
+      );
+
+      const nextState = {
+        ...prev,
+        episodeId:
+          currentNode.nextEpisodeId,
+        currentNodeId:
+          nextEpisode.startNodeId
+      };
+
+      console.log(
+        "SAVING STATE",
+        nextState
+      );
+
+      saveGameState(nextState);
+
+      return nextState;
+    });
+  }, 500);
+}
 }
     });
   }, [phase, currentNode?.id]);
@@ -742,6 +768,10 @@ const canShowChoices =
 console.log("NODE FINISHED:", nodeFinished);
 console.log("VISIBLE CHOICES:", visibleChoices);
 console.log("CAN SHOW:", canShowChoices);
+
+console.log("CURRENT EPISODE", gameState.episodeId);
+console.log("CURRENT NODE", gameState.currentNodeId);
+console.log("CURRENT NODE OBJECT", currentNode?.id);
 console.log(
   "EPISODE:",
   gameState.episodeId,

@@ -422,6 +422,7 @@ export function getCurrentEpisode(gameState) {
 }
 
 export function getCurrentNode(gameState) {
+
   const normalizedState =
     normalizeGameState(gameState);
 
@@ -430,11 +431,20 @@ export function getCurrentNode(gameState) {
       normalizedState
     );
 
+  console.log(
+    "LOOKING FOR NODE:",
+    normalizedState.currentNodeId
+  );
+
+  console.log(
+    "AVAILABLE NODES:",
+    Object.keys(episode.nodes)
+  );
+
   const node =
     episode.nodes[
       normalizedState.currentNodeId
     ] || null;
-
 
   return node;
 }

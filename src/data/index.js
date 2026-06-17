@@ -7,46 +7,35 @@ const episodeModules = import.meta.glob(
     import: "default"
   }
 );
-console.log("LOADED EPISODES", Object.keys(episodes));
+
 function toEpisodeId(path) {
-  const match =
-    path.match(
-      /episode-(\d+)(?:-part-(\d+))?\.json$/
-    );
+  const match = path.match(
+    /episode-(\d+)\.json$/
+  );
 
   if (!match) {
     return null;
   }
 
-  const episode =
-    match[1];
-
-  const part =
-    match[2];
-
-  if (part) {
-    return `episode_${episode}_part_${part}`;
-  }
-
-  return `episode_${episode}`;
+  return `episode_${match[1]}`;
 }
 
 export const episodes =
   Object.fromEntries(
-    Object.entries(
-      episodeModules
-    )
-      .map(
-        ([path, episode]) => [
-          toEpisodeId(path),
-          episode
-        ]
-      )
-      .filter(
-        ([episodeId]) =>
-          Boolean(episodeId)
+    Object.entries(episodeModules)
+      .map(([path, episode]) => [
+        toEpisodeId(path),
+        episode
+      ])
+      .filter(([episodeId]) =>
+        Boolean(episodeId)
       )
   );
+
+console.log("LOADED EPISODES");
+console.table(
+  Object.keys(episodes)
+);
 
 export const DEFAULT_EPISODE_ID =
   "episode_01";
