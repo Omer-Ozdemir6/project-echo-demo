@@ -520,6 +520,11 @@ export function playNodeEvents({
   let accumulatedDelay = 0;
   let maxBackgroundDelay = 0;
 
+  const hasCharacterBusy =
+  events.some(
+    event => event.type === "characterBusy"
+  );
+
 const handlers = {
   timers,
   translate,
@@ -572,16 +577,20 @@ const handlers = {
 
   const finalDelay = Math.max(accumulatedDelay, maxBackgroundDelay);
 
-const completeTimer =
-  setTimeout(() => {
+if (!hasCharacterBusy) {
 
-    onTypingStop?.();
-    onGlitchStop?.();
-    onComplete?.();
+  const completeTimer =
+    setTimeout(() => {
 
-  }, finalDelay + 1200);
+      onTypingStop?.();
+      onGlitchStop?.();
+      onComplete?.();
+
+    }, finalDelay + 1200);
 
   timers.push(completeTimer);
+
+}
 
   return () => {
     timers.forEach(clearTimeout);

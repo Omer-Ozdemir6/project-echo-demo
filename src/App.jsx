@@ -742,6 +742,12 @@ const canShowChoices =
 console.log("NODE FINISHED:", nodeFinished);
 console.log("VISIBLE CHOICES:", visibleChoices);
 console.log("CAN SHOW:", canShowChoices);
+console.log(
+  "EPISODE:",
+  gameState.episodeId,
+  "NODE:",
+  gameState.currentNodeId
+);
 
   return (
     <TerminalScreen

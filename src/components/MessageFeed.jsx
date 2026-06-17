@@ -53,6 +53,30 @@ export default function MessageFeed({
     return message.speaker || speaker;
   }
 
+  function getSpeakerColor(speakerName, isPlayer = false, isSystemAlert = false) {
+  if (isPlayer) {
+    return "text-emerald-300";
+  }
+
+  if (isSystemAlert || speakerName === "SYSTEM") {
+    return "text-rose-400";
+  }
+
+  switch ((speakerName || "").toUpperCase()) {
+    case "ELIAS":
+      return "text-cyan-300";
+
+    case "UNKNOWN":
+      return "text-amber-300";
+
+    case "OBSERVER":
+      return "text-violet-300";
+
+    default:
+      return "text-cyan-300/80";
+  }
+}
+
   function getMessageText(message) {
     return getGameText(
       message.textKey,
@@ -180,14 +204,18 @@ export default function MessageFeed({
               isSystemAlert ? "border-l-2 border-rose-400/75 pl-3" : ""
             ].join(" ")}
           >
-            <span
-              className={[
-                "mb-2 block text-[11px] tracking-[0.14em]",
-                isPlayer ? "text-emerald-300" : "text-cyan-300/80"
-              ].join(" ")}
-            >
-              {messageSpeaker}
-            </span>
+<span
+  className={[
+    "mb-2 block text-[11px] tracking-[0.14em]",
+    getSpeakerColor(
+      messageSpeaker,
+      isPlayer,
+      isSystemAlert
+    )
+  ].join(" ")}
+>
+  {messageSpeaker}
+</span>
 
             <p
               className={[
@@ -207,9 +235,14 @@ export default function MessageFeed({
 
       {isTyping && (
         <div className="max-w-[92%] animate-[messageIn_0.35s_ease-out_both] sm:max-w-[78%]">
-          <span className="mb-2 block text-[11px] tracking-[0.14em] text-cyan-300/80">
-            {speaker}
-          </span>
+<span
+  className={[
+    "mb-2 block text-[11px] tracking-[0.14em]",
+    getSpeakerColor(speaker)
+  ].join(" ")}
+>
+  {speaker}
+</span>
 
           <div className="flex h-8 items-center gap-2">
             <span className="h-1.5 w-1.5 animate-[typingDotPulse_0.9s_infinite_ease-in-out] rounded-full bg-cyan-300 shadow-[0_0_8px_rgba(103,232,249,0.7)]" />

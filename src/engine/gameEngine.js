@@ -868,11 +868,24 @@ export function resolveBusyState(gameState) {
   if (Date.now() < busy.busyUntil)
     return gameState;
 
-  const nextState = normalizeGameState({
-    ...gameState,
-    currentNodeId: busy.returnNodeId,
-    busyState: null
-  });
+  const nextEpisodeId =
+    busy.returnEpisodeId ||
+    gameState.episodeId;
+
+  const nextEpisode =
+    getEpisode(nextEpisodeId);
+
+  const nextNodeId =
+    busy.returnNodeId ||
+    nextEpisode.startNodeId;
+
+  const nextState =
+    normalizeGameState({
+      ...gameState,
+      episodeId: nextEpisodeId,
+      currentNodeId: nextNodeId,
+      busyState: null
+    });
 
   saveGameState(nextState);
 

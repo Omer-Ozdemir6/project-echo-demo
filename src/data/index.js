@@ -7,7 +7,7 @@ const episodeModules = import.meta.glob(
     import: "default"
   }
 );
-
+console.log("LOADED EPISODES", Object.keys(episodes));
 function toEpisodeId(path) {
   const match =
     path.match(
