@@ -35,12 +35,17 @@ function getSignalLabel(quality, t) {
   return resolveText(t, "puzzle.frequency.static", "STATIC");
 }
 
-function getDecodedPreview(quality, puzzle, t) {
+function getDecodedPreview(
+  quality,
+  puzzle,
+  t
+) {
   if (quality >= 95) {
     return resolveText(
       t,
       puzzle?.lockedMessageKey,
-      puzzle?.lockedMessage || "MAYA: Can anyone hear me?"
+      puzzle?.lockedMessage ||
+        "UNKNOWN: ...don't let him see you..."
     );
   }
 
@@ -48,7 +53,8 @@ function getDecodedPreview(quality, puzzle, t) {
     return resolveText(
       t,
       puzzle?.nearMessageKey,
-      puzzle?.nearMessage || "M...a...y...a..."
+      puzzle?.nearMessage ||
+        "...don't let..."
     );
   }
 
@@ -56,15 +62,16 @@ function getDecodedPreview(quality, puzzle, t) {
     return resolveText(
       t,
       puzzle?.traceMessageKey,
-      puzzle?.traceMessage || "...a... anyone..."
+      puzzle?.traceMessage ||
+        "...see..."
     );
   }
 
   if (quality >= 20) {
-    return resolveText(t, "puzzle.frequency.noiseWeak", "...krrrzzzt...");
+    return "...krrzzzt...";
   }
 
-  return resolveText(t, "puzzle.frequency.noiseStatic", "~~~~~~~~~~~~");
+  return "~~~~~~~~~~~~";
 }
 
 function buildBars(quality) {

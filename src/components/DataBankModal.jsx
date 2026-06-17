@@ -2,12 +2,26 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const CATEGORIES = [
-  { id: "all", labelKey: "dataBank.categories.all", fallback: "ALL" },
-  { id: "image", labelKey: "dataBank.categories.images", fallback: "IMAGES" },
-  { id: "log", labelKey: "dataBank.categories.logs", fallback: "LOGS" },
-  { id: "map", labelKey: "dataBank.categories.maps", fallback: "MAPS" },
-  { id: "crew", labelKey: "dataBank.categories.crew", fallback: "CREW" },
-  { id: "file", labelKey: "dataBank.categories.files", fallback: "FILES" }
+  {
+    id: "all",
+    labelKey: "dataBank.categories.all",
+    fallback: "ALL"
+  },
+  {
+    id: "log",
+    labelKey: "dataBank.categories.logs",
+    fallback: "LOGS"
+  },
+  {
+    id: "archive",
+    labelKey: "dataBank.categories.archive",
+    fallback: "ARCHIVE"
+  },
+  {
+    id: "personnel",
+    labelKey: "dataBank.categories.personnel",
+    fallback: "PERSONNEL"
+  }
 ];
 
 function resolveText(t, key, fallback = "") {

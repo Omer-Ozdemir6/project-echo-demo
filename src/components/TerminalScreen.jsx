@@ -11,6 +11,7 @@ import SettingsModal from "./SettingsModal";
 import ProgressTaskModal from "./ProgressTaskModal";
 import DecodeFileModal from "./DecodeFileModal";
 import { playSound } from "../audio/soundManager";
+import { filterChoices } from "../engine/choiceFilter";
 
 export default function TerminalScreen({
   config,
@@ -101,6 +102,13 @@ export default function TerminalScreen({
     !isGlitching &&
     !signalStatus &&
     !progressTask;
+
+const visibleChoices = canShowChoices
+  ? filterChoices(
+      gameState,
+      currentNode?.choices || []
+    )
+  : [];
 
   function clampSignal(value) {
     const number = Number(value);
@@ -298,7 +306,7 @@ export default function TerminalScreen({
 
         <div className="min-h-0 flex-1 overflow-hidden">
           <MessageFeed
-            speaker={currentNode.speaker}
+           speaker={currentNode?.speaker}
             messages={visibleMessages}
             isTyping={isTyping}
             onOpenFile={setActiveFile}
@@ -342,12 +350,12 @@ export default function TerminalScreen({
 
         {canShowChoices && !activePuzzle && !progressTask && (
           <div className="shrink-0 border-t border-cyan-300/20 bg-slate-950/95 pt-3">
-            <ChoicePanel
-              choices={currentNode.choices || []}
-              onChoice={onChoice}
-              settings={settings}
-              language={language}
-            />
+<ChoicePanel
+  choices={visibleChoices}
+  onChoice={onChoice}
+  settings={settings}
+  language={language}
+/>
           </div>
         )}
       </section>

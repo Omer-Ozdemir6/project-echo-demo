@@ -18,6 +18,7 @@ import {
 import { playNodeEvents } from "./engine/eventPlayer";
 import { runIntroTimeline } from "./engine/introEngine";
 import { runBootStep } from "./engine/bootEngine";
+import { evaluateConditions } from "./engine/conditionEngine";
 
 import gameConfig from "./data/game.config.json";
 import bootConfig from "./data/boot.config.json";
@@ -359,8 +360,9 @@ function startGame() {
   setNodeFinished(false);
 
   return playNodeEvents({
-    events: currentNode.events || [],
-    signalStrength: gameState.signalStrength,
+  events: currentNode.events || [],
+  save: gameState,
+  signalStrength: gameState.signalStrength,
 
     translate: (key, fallback = "") => {
       return getGameText(key, fallback, settings.language);
@@ -487,9 +489,38 @@ onComplete: () => {
 
   setNodeFinished(true);
 
+  // BRANCHING
+  if (currentNode?.branching?.length) {
+
+    const matchedBranch = currentNode.branching.find(branch =>
+      evaluateConditions(gameState, branch.conditions)
+    );
+
+    const targetNodeId =
+      matchedBranch?.nextNodeId ||
+      currentNode.defaultNextNodeId;
+
+    if (targetNodeId) {
+      setTimeout(() => {
+        setGameState(prev => {
+          const nextState = {
+            ...prev,
+            currentNodeId: targetNodeId
+          };
+
+          saveGameState(nextState);
+          return nextState;
+        });
+      }, 500);
+
+      return;
+    }
+  }
+
+  // NORMAL NODE FLOW
   if (currentNode?.nextNodeId) {
     setTimeout(() => {
-      setGameState((prev) => {
+      setGameState(prev => {
         const nextState = {
           ...prev,
           currentNodeId: currentNode.nextNodeId
@@ -503,25 +534,26 @@ onComplete: () => {
     return;
   }
 
+  // EPISODE TRANSITION
   if (currentNode?.nextEpisodeId) {
-  setTimeout(() => {
-    setGameState((prev) => {
-      const nextEpisode = getCurrentEpisode({
-        ...prev,
-        episodeId: currentNode.nextEpisodeId
+    setTimeout(() => {
+      setGameState(prev => {
+        const nextEpisode = getCurrentEpisode({
+          ...prev,
+          episodeId: currentNode.nextEpisodeId
+        });
+
+        const nextState = {
+          ...prev,
+          episodeId: currentNode.nextEpisodeId,
+          currentNodeId: nextEpisode.startNodeId
+        };
+
+        saveGameState(nextState);
+        return nextState;
       });
-
-      const nextState = {
-        ...prev,
-        episodeId: currentNode.nextEpisodeId,
-        currentNodeId: nextEpisode.startNodeId
-      };
-
-      saveGameState(nextState);
-      return nextState;
-    });
-  }, 500);
-}
+    }, 500);
+  }
 }
     });
   }, [phase, currentNode?.id]);
@@ -676,9 +708,26 @@ function handleChoice(choiceId) {
       />
     );
   }
+  console.log(
+  "CURRENT NODE:",
+  currentNode
+);
+
+console.log(
+  "CURRENT NODE CHOICES:",
+  currentNode?.choices
+);
+  const visibleChoices =
+  (currentNode?.choices || []).filter(
+    (choice) =>
+      evaluateConditions(
+        gameState,
+        choice.conditions
+      )
+  );
 
   const hasChoices =
-    Array.isArray(currentNode?.choices) && currentNode.choices.length > 0;
+  visibleChoices.length > 0;
 
 const canShowChoices =
   !gameState.busyState &&
@@ -689,12 +738,19 @@ const canShowChoices =
   !isGlitching &&
   !signalStatus &&
   !progressTask;
+  console.log("NODE:", currentNode?.id);
+console.log("NODE FINISHED:", nodeFinished);
+console.log("VISIBLE CHOICES:", visibleChoices);
+console.log("CAN SHOW:", canShowChoices);
 
   return (
     <TerminalScreen
       config={gameConfig}
       gameState={gameState}
-      currentNode={currentNode}
+        currentNode={{
+    ...currentNode,
+    choices: visibleChoices
+  }}
       visibleMessages={visibleMessages}
       isTyping={isTyping}
       isGlitching={isGlitching}

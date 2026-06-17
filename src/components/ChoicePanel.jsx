@@ -7,11 +7,11 @@ export default function ChoicePanel({
   settings,
   language = "en"
 }) {
-  function handleChoice(choice) {
-    playSound("choiceSelect", settings);
-    onChoice?.(choice.id);
-  }
+function handleChoice(choice) {
+  playSound("choiceSelect", settings);
 
+  onChoice?.(choice.id);
+}
   function resolveChoiceText(choice) {
     return getGameText(
       choice.textKey,
@@ -20,15 +20,19 @@ export default function ChoicePanel({
     );
   }
 
-  if (!choices.length) return null;
+  if (!choices.length) {
+    return null;
+  }
 
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       {choices.map((choice, index) => (
         <button
-          key={choice.id}
+          key={choice.id || `choice-${index}`}
           type="button"
-          onClick={() => handleChoice(choice)}
+          onClick={() =>
+            handleChoice(choice, index)
+          }
           className={[
             "group relative w-full overflow-hidden",
             "border border-cyan-300/15 bg-slate-950/70",
@@ -39,7 +43,9 @@ export default function ChoicePanel({
             "hover:shadow-[0_0_20px_rgba(34,211,238,0.08)]",
             "active:scale-[0.99]"
           ].join(" ")}
-          style={{ animationDelay: `${index * 90}ms` }}
+          style={{
+            animationDelay: `${index * 90}ms`
+          }}
         >
           <div className="flex items-center gap-3">
             <span className="shrink-0 font-mono text-sm text-cyan-400/40 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-cyan-300">

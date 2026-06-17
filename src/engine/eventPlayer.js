@@ -1,3 +1,5 @@
+import { resolveDialogue } from "./dialogueEngine";
+
 function resolveText(source, keyName, fallbackName, translate) {
   const key = source?.[keyName];
   const fallback = source?.[fallbackName] || "";
@@ -70,6 +72,7 @@ function createFilePayload(event, fallbackType = "file", translate) {
 
 function playSingleEvent({
   event,
+    save,
   delay = 0,
   timers,
   translate,
@@ -98,7 +101,10 @@ function playSingleEvent({
     const duration = event.duration || 1000;
 
     const startTimer = setTimeout(() => {
-      onTypingStart?.();
+      onTypingStart?.({
+  speaker: event.speaker,
+  duration
+});
     }, delay);
 
     const stopTimer = setTimeout(() => {
@@ -128,7 +134,72 @@ if (event.type === "message") {
   }, delay);
 
   timers.push(messageTimer);
-  return event.pauseAfterMs ?? 700;
+  const text =
+  resolveText(
+    event,
+    "textKey",
+    "text",
+    translate
+  ) || "";
+
+const readingTime =
+  Math.max(
+    1200,
+    text.length * 45
+  );
+
+return (
+  event.pauseAfterMs ??
+  readingTime
+);
+}
+
+if (event.type === "relationshipDialogue") {
+
+  const relationshipTimer =
+    setTimeout(() => {
+
+      onTypingStop?.();
+
+      const text =
+        resolveDialogue(
+          save,
+          event.variants
+        );
+
+      onMessage?.({
+        type: "message",
+        speaker: event.speaker,
+        sender: event.sender,
+        text,
+        tone:
+          event.tone ||
+          event.mood ||
+          "calm"
+      });
+
+    }, delay);
+
+  timers.push(
+    relationshipTimer
+  );
+
+const text =
+  resolveDialogue(
+    save,
+    event.variants
+  ) || "";
+
+const readingTime =
+  Math.max(
+    1200,
+    text.length * 45
+  );
+
+return (
+  event.pauseAfterMs ??
+  readingTime
+);
 }
 
 if (event.type === "corruptMessage") {
@@ -147,7 +218,24 @@ if (event.type === "corruptMessage") {
   }, delay);
 
   timers.push(corruptTimer);
-  return event.pauseAfterMs ?? 1200;
+  const text =
+  resolveText(
+    event,
+    "textKey",
+    "text",
+    translate
+  ) || "";
+
+const readingTime =
+  Math.max(
+    1500,
+    text.length * 50
+  );
+
+return (
+  event.pauseAfterMs ??
+  readingTime
+);
 }
 
 if (event.type === "systemAlert") {
@@ -166,7 +254,24 @@ if (event.type === "systemAlert") {
   }, delay);
 
   timers.push(alertTimer);
-  return event.pauseAfterMs ?? 1200;
+  const text =
+  resolveText(
+    event,
+    "textKey",
+    "text",
+    translate
+  ) || "";
+
+const readingTime =
+  Math.max(
+    1500,
+    text.length * 50
+  );
+
+return (
+  event.pauseAfterMs ??
+  readingTime
+);
 }
 
   if (event.type === "image") {
@@ -196,7 +301,24 @@ if (event.type === "systemAlert") {
     }, delay);
 
     timers.push(imageTimer);
-    return event.pauseAfterMs ?? 1200;
+    const text =
+  resolveText(
+    event,
+    "textKey",
+    "text",
+    translate
+  ) || "";
+
+const readingTime =
+  Math.max(
+    1500,
+    text.length * 50
+  );
+
+return (
+  event.pauseAfterMs ??
+  readingTime
+);
   }
 
   if (
@@ -391,30 +513,32 @@ export function playNodeEvents({
   onProgressTaskEnd,
   onCharacterBusyStart,
   onComplete,
-  signalStrength = 100
+  save,
+  signalStrength
 }) {
   const timers = [];
   let accumulatedDelay = 0;
   let maxBackgroundDelay = 0;
 
-  const handlers = {
-    timers,
-    translate,
-    onTypingStart,
-    onTypingStop,
-    onMessage,
-    onGlitchStart,
-    onGlitchStop,
-    onSignalLost,
-    onSignalRestored,
-    onCharacterBusyStart,
-    onStatChange,
-    onCollectFile,
-    onPuzzleStart,
-    onProgressTaskStart,
-    onProgressTaskEnd,
-    signalStrength
-  };
+const handlers = {
+  timers,
+  translate,
+  onTypingStart,
+  onTypingStop,
+  onMessage,
+  onGlitchStart,
+  onGlitchStop,
+  onSignalLost,
+  onSignalRestored,
+  onCharacterBusyStart,
+  onStatChange,
+  onCollectFile,
+  onPuzzleStart,
+  onProgressTaskStart,
+  onProgressTaskEnd,
+  save,
+  signalStrength
+};
 
   events.forEach((event) => {
     if (event.type === "backgroundEvent") {
@@ -448,11 +572,14 @@ export function playNodeEvents({
 
   const finalDelay = Math.max(accumulatedDelay, maxBackgroundDelay);
 
-  const completeTimer = setTimeout(() => {
+const completeTimer =
+  setTimeout(() => {
+
     onTypingStop?.();
     onGlitchStop?.();
     onComplete?.();
-  }, finalDelay);
+
+  }, finalDelay + 1200);
 
   timers.push(completeTimer);
 

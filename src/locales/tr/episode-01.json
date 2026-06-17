@@ -1,1189 +1,334 @@
 {
-  "episode_01": {
-    "meta": {
-      "episode0": {
-        "title": "İLK TEMAS — ECHO İNSANİLEŞTİRME V4"
-      }
+  "id": "episode_01_part_01",
+  "title": "First Contact",
+  "startNodeId": "boot_contact",
+
+  "nodes": {
+
+    "boot_contact": {
+      "id": "boot_contact",
+
+      "events": [
+        {
+          "type": "typing",
+          "duration": 2000
+        },
+
+        {
+          "type": "message",
+          "speaker": "SYSTEM",
+          "text": "LINK STABILIZED"
+        },
+
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+
+        {
+          "type": "relationshipDialogue",
+          "speaker": "ELIAS",
+
+          "variants": {
+            "TRUSTING": "Orada olduğunu biliyordum.",
+            "CAUTIOUS": "Birisi varsa cevap versin.",
+            "BROKEN": "Lütfen cevap ver...",
+            "REBELLIOUS": "Bu şey gerçekten çalışıyor mu?"
+          }
+        }
+      ],
+
+      "choices": [
+        {
+          "id": "answer_friendly",
+          "text": "Buradayım.",
+
+          "effects": {
+            "trust": 3
+          },
+
+          "memory": [
+            "answered_first_call"
+          ],
+
+          "nextNodeId": "friendly_reply"
+        },
+
+        {
+          "id": "answer_cold",
+          "text": "Kimsin?",
+
+          "effects": {
+            "resentment": 2
+          },
+
+          "memory": [
+            "suspicious_first_contact"
+          ],
+
+          "nextNodeId": "cold_reply"
+        }
+      ]
     },
-    "relay_password": {
-      "puzzle0": {
-        "title": "RÖLE ERİŞİMİ",
-        "description": "Mevcut bakım yetkisi 73_1. Kullanımdan kalkan parça 319. Uygun eksik rakamı girin.",
-        "prompt": "RÖLE KODUNU GİRİN",
-        "submitLabel": "ONAYLA",
-        "placeholder": "0000"
-      }
+
+    "friendly_reply": {
+
+      "id": "friendly_reply",
+
+      "events": [
+
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Tamam..."
+        },
+
+        {
+          "type": "typing",
+          "duration": 1200
+        },
+
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Garip gelecek ama birinin cevap vereceğini düşünmemiştim."
+        }
+      ],
+
+      "choices": [
+        {
+          "id": "ask_name",
+          "text": "Adın ne?",
+
+          "effects": {
+            "trust": 2
+          },
+
+          "memory": [
+            "asked_name"
+          ],
+
+          "nextNodeId": "name_conversation"
+        },
+
+        {
+          "id": "ask_location",
+          "text": "Neredesin?",
+
+          "nextNodeId": "location_conversation"
+        }
+      ]
     },
-    "e01_n01_signal": {
-      "event0": {
-        "text": "[BİLİNMEYEN RÖLE SİNYALİ TESPİT EDİLDİ]"
-      },
-      "event2": {
-        "text": "Merhaba?"
-      },
-      "event5": {
-        "text": "Bekle."
-      },
-      "event7": {
-        "text": "Kimse var mı?"
-      },
-      "event10": {
-        "text": "Hayır."
-      },
-      "event12": {
-        "text": "Olamaz."
-      },
-      "event15": {
-        "text": "Gitme."
-      },
-      "choice0": {
-        "text": "SAKİNLEŞ."
-      },
-      "choice1": {
-        "text": "KİMSİN SEN?"
-      }
+
+    "cold_reply": {
+
+      "id": "cold_reply",
+
+      "events": [
+
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Bilmiyorum."
+        },
+
+        {
+          "type": "typing",
+          "duration": 1000
+        },
+
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Yani adımı biliyorum ama nerede olduğumu bilmiyorum."
+        }
+      ],
+
+      "choices": [
+        {
+          "id": "continue_cold",
+          "text": "Devam et.",
+
+          "nextNodeId": "name_conversation"
+        }
+      ]
     },
-    "e01_n02_calm": {
-      "event1": {
-        "text": "Tamam."
-      },
-      "event3": {
-        "text": "Nefes alıyorum."
-      },
-      "event6": {
-        "text": "Deniyorum."
-      },
-      "event8": {
-        "text": "Teşekkürler."
-      },
-      "event11": {
-        "text": "Ethan."
-      },
-      "event13": {
-        "text": "Ethan Hale."
-      },
-      "choice0": {
-        "text": "YARALANDIN MI?"
-      },
-      "choice1": {
-        "text": "NEREDESİN?"
-      }
+
+    "name_conversation": {
+
+      "id": "name_conversation",
+
+      "events": [
+
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Elias."
+        },
+
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "En azından öyle olduğumu düşünüyorum."
+        }
+      ],
+
+      "choices": [
+        {
+          "id": "joke_about_name",
+          "text": "Bundan da emin değil misin?",
+
+          "effects": {
+            "trust": 2
+          },
+
+          "memory": [
+            "lighthearted_operator"
+          ],
+
+          "nextNodeId": "fear_topic"
+        },
+
+        {
+          "id": "serious_about_name",
+          "text": "Bu iyi bir başlangıç.",
+
+          "nextNodeId": "fear_topic"
+        }
+      ]
     },
-    "e01_n02_identity": {
-      "event1": {
-        "text": "Ethan."
-      },
-      "event4": {
-        "text": "Hale."
-      },
-      "event6": {
-        "text": "Mühendis."
-      },
-      "event9": {
-        "text": "Baş mühendis."
-      },
-      "event11": {
-        "text": "Sanırım."
-      },
-      "event13": {
-        "text": "Hayır."
-      },
-      "event15": {
-        "text": "Bunu biliyorum."
-      },
-      "choice0": {
-        "text": "NEREDESİN?"
-      },
-      "choice1": {
-        "text": "KANITLA."
-      }
+
+    "location_conversation": {
+
+      "id": "location_conversation",
+
+      "events": [
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Karanlık bir odadayım."
+        },
+
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Ve bunun ne kadar kötü duyulduğunun farkındayım."
+        }
+      ],
+
+      "choices": [
+        {
+          "id": "continue_location",
+          "text": "Sakin ol.",
+
+          "effects": {
+            "trust": 2
+          },
+
+          "nextNodeId": "fear_topic"
+        }
+      ]
     },
-    "e01_n03_hurt": {
-      "event1": {
-        "text": "Belki."
-      },
-      "event4": {
-        "text": "Kanama yok."
-      },
-      "event6": {
-        "text": "Kaburgalarım sızlıyor."
-      },
-      "event9": {
-        "text": "Oksijen yüzde otuz iki."
-      },
-      "event11": {
-        "text": "Hiç iyi değil."
-      },
-      "choice0": {
-        "text": "YAVAŞ HAREKET ET."
-      },
-      "choice1": {
-        "text": "ÇIKIŞ ARA."
-      }
+
+    "fear_topic": {
+
+      "id": "fear_topic",
+
+      "events": [
+
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Sana bir şey sorabilir miyim?"
+        }
+      ],
+
+      "choices": [
+        {
+          "id": "allow_question",
+          "text": "Sor.",
+
+          "nextNodeId": "fear_question"
+        }
+      ]
     },
-    "e01_n03_where_slow": {
-      "event1": {
-        "text": "Yavaş."
-      },
-      "event3": {
-        "text": "Evet."
-      },
-      "event6": {
-        "text": "İyi."
-      },
-      "event8": {
-        "text": "Böyle devam et."
-      }
+
+    "fear_question": {
+
+      "id": "fear_question",
+
+      "events": [
+
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "İnsan tamamen yalnız kaldığında ne kadar sürede korkmaya başlar?"
+        }
+      ],
+
+      "choices": [
+        {
+          "id": "comfort_elias",
+
+          "text": "Yalnız değilsin.",
+
+          "effects": {
+            "trust": 4
+          },
+
+          "memory": [
+            "comforted_elias"
+          ],
+
+          "nextNodeId": "part_end"
+        },
+
+        {
+          "id": "logical_answer",
+
+          "text": "Kişiye göre değişir.",
+
+          "nextNodeId": "part_end"
+        }
+      ]
     },
-    "e01_n03_prove": {
-      "event1": {
-        "text": "Kanıt."
-      },
-      "event4": {
-        "text": "Tamam."
-      },
-      "event6": {
-        "text": "Tulum bağlantısı."
-      },
-      "event7": {
-        "title": "BİYOMETRİK PARÇA: HALE",
-        "content": "KONU: ETHAN HALE\nKALP ATIŞI: YÜKSEK\nOKSİJEN: %32\nTULUM BAĞLANTISI: KARARSIZ\nSES İZİ EŞLEŞMESİ: %81",
-        "caption": "Röle üzerinden iletilen kısmi telemetri parçası.",
-        "message": "[BİYOMETRİK PARÇA: HALE ARŞİVLENDİ]"
-      },
-      "event9": {
-        "text": "Bu benim."
-      },
-      "event12": {
-        "text": "Muhtemelen."
-      },
-      "event14": {
-        "text": "Muhtemelen'den nefret ederim."
-      }
-    },
-    "e01_n03_where": {
-      "event1": {
-        "text": "Karanlık."
-      },
-      "event4": {
-        "text": "Bekle."
-      },
-      "event7": {
-        "text": "Kırmızı zemin ışığı."
-      },
-      "event9": {
-        "text": "Servis duvarı."
-      },
-      "event12": {
-        "text": "Tıklama sesleri."
-      },
-      "event14": {
-        "text": "Hayır."
-      },
-      "event16": {
-        "text": "Durdu."
-      },
-      "choice0": {
-        "text": "HAREKETSİZ KAL VE DİNLE."
-      },
-      "choice1": {
-        "text": "BİR ÇIKIŞ YOLU ARA."
-      }
-    },
-    "e01_n04_listen": {
-      "event1": {
-        "text": "Sessiz."
-      },
-      "event4": {
-        "text": "Üzerimde hava var."
-      },
-      "event7": {
-        "text": "Duvarın arkasından tıklama sesi."
-      },
-      "event10": {
-        "text": "Tekrar."
-      },
-      "event12": {
-        "text": "Hayır."
-      },
-      "event14": {
-        "text": "Bundan hoşlanmadım."
-      },
-      "choice0": {
-        "text": "DUVARI KONTROL ET."
-      },
-      "choice1": {
-        "text": "ÇIKIŞ ARA."
-      }
-    },
-    "e01_n04_wall": {
-      "event1": {
-        "text": "Panel birleşimi."
-      },
-      "event3": {
-        "text": "Gevşek."
-      },
-      "event6": {
-        "text": "İçinden soğuk hava geliyor."
-      },
-      "event9": {
-        "text": "Çekebilirim."
-      },
-      "event11": {
-        "text": "Kötü fikir mi?"
-      },
-      "choice0": {
-        "text": "ÇEK ONU."
-      },
-      "choice1": {
-        "text": "BIRAK KALSIN."
-      }
-    },
-    "e01_n04_pull_panel": {
-      "event1": {
-        "text": "Tamam."
-      },
-      "event4": {
-        "text": "Ah."
-      },
-      "event6": {
-        "text": "Keskin kenar."
-      },
-      "event9": {
-        "text": "İçeride kablo var."
-      },
-      "event11": {
-        "text": "RÖLE olarak işaretlenmiş."
-      }
-    },
-    "e01_n04_look_exit": {
-      "event1": {
-        "text": "Koridor."
-      },
-      "event4": {
-        "text": "Dar."
-      },
-      "event6": {
-        "text": "Zeminde kırağı var."
-      },
-      "event9": {
-        "text": "İleride tabela."
-      },
-      "event11": {
-        "text": "RÖL..."
-      },
-      "event14": {
-        "text": "Röle."
-      },
-      "choice0": {
-        "text": "ÖNCE KORİDORU KONTROL ET."
-      },
-      "choice1": {
-        "text": "RÖLEYE DOĞRU İLERLE."
-      }
-    },
-    "e01_n05_corridor_check": {
-      "event1": {
-        "text": "Sol taraf temiz."
-      },
-      "event4": {
-        "text": "Sağ taraf..."
-      },
-      "event7": {
-        "text": "Hayır."
-      },
-      "event9": {
-        "text": "Sadece buhar."
-      },
-      "event12": {
-        "text": "Hareket ettiğini sandım."
-      },
-      "choice0": {
-        "text": "YAVAŞ KAL."
-      },
-      "choice1": {
-        "text": "DAHA HIZLI HAREKET ET."
-      }
-    },
-    "e01_n05_relay_approach_fast": {
-      "event1": {
-        "text": "Daha hızlı."
-      },
-      "event4": {
-        "text": "Akıllıca değil."
-      },
-      "event7": {
-        "text": "Tamam."
-      },
-      "event9": {
-        "text": "Kahretsin."
-      },
-      "event11": {
-        "text": "Dizim bir şeye çarptı."
-      }
-    },
-    "e01_n05_relay_approach": {
-      "event1": {
-        "text": "Kapı."
-      },
-      "event3": {
-        "text": "Büyük olan."
-      },
-      "event6": {
-        "text": "Yanında panel var."
-      },
-      "event8": {
-        "text": "Karanlık ekran."
-      },
-      "event11": {
-        "text": "Şimdi ne olacak?"
-      },
-      "choice0": {
-        "text": "PANELİ KONTROL ET."
-      },
-      "choice1": {
-        "text": "KAPIYI DENE."
-      }
-    },
-    "e01_n06_try_door": {
-      "event1": {
-        "text": "Kol hareket etmiyor."
-      },
-      "event4": {
-        "text": "Kilitli."
-      },
-      "event6": {
-        "text": "Panel uyandı."
-      },
-      "event9": {
-        "text": "Elbette."
-      }
-    },
-    "e01_n06_panel_check": {
-      "event1": {
-        "text": "Ekran çatlak."
-      },
-      "event4": {
-        "text": "Hala okuyor."
-      },
-      "event6": {
-        "text": "Kod istiyor."
-      },
-      "event9": {
-        "text": "Bende yok."
-      },
-      "event11": {
-        "text": "Bekle."
-      },
-      "event13": {
-        "text": "Belki arşivde vardır."
-      },
-      "choice0": {
-        "text": "MÜRETTEBAT KAYDINI ÇEK."
-      },
-      "choice1": {
-        "text": "HATIRLAMAYA ÇALIŞ."
-      }
-    },
-    "e01_n07_bad_guess": {
-      "event1": {
-        "text": "Yetmiş..."
-      },
-      "event4": {
-        "text": "Hayır."
-      },
-      "event6": {
-        "text": "Ondört mü?"
-      },
-      "event8": {
-        "text": "Hayır."
-      },
-      "event11": {
-        "text": "Beni tahmin yapmaya zorlama."
-      },
-      "event13": {
-        "text": "Lütfen."
-      }
-    },
-    "e01_n06_record": {
-      "event1": {
-        "text": "Arşiv araması."
-      },
-      "event4": {
-        "text": "İşte."
-      },
-      "event5": {
-        "title": "MÜRETTEBAT KAYDI: ETHAN HALE",
-        "content": "DR. ETHAN HALE — BAŞ MÜHENDİS\nRÖLE BAKIM YETKİSİ: 73_1\nDURUM: AKTİF\n\nNOT: İkincil bakım dizini eski parçayı listeler: _319.\nGüncel yetki, aktif kayıttan yeniden oluşturulmalıdır.",
-        "caption": "Kurtarılan kimlik ve hasarlı röle bakım parçası.",
-        "message": "[MÜRETTEBAT KAYDI: ETHAN HALE ARŞİVLENDİ]"
-      },
-      "event7": {
-        "text": "73 boşluk 1."
-      },
-      "event10": {
-        "text": "Eski hat 319."
-      },
-      "event13": {
-        "text": "Boşluk..."
-      },
-      "event16": {
-        "text": "9."
-      },
-      "event18": {
-        "text": "Lütfen 9 olsun."
-      },
-      "choice0": {
-        "text": "KODU GİR."
-      },
-      "choice1": {
-        "text": "TEKRAR ETTİR."
-      }
-    },
-    "e01_n07_explain_code": {
-      "event1": {
-        "text": "Tamam."
-      },
-      "event3": {
-        "text": "73 boşluk 1."
-      },
-      "event6": {
-        "text": "319."
-      },
-      "event9": {
-        "text": "Yani 9."
-      },
-      "event11": {
-        "text": "7391."
-      },
-      "event14": {
-        "text": "Eğer yanılıyorsam..."
-      },
-      "event16": {
-        "text": "Hayır."
-      },
-      "event18": {
-        "text": "Giriyorum."
-      }
-    },
-    "e01_n07_relay_door": {
-      "event1": {
-        "text": "Parmaklarım titriyor."
-      },
-      "event4": {
-        "text": "İlk hane."
-      },
-      "event6": {
-        "text": "Yedi."
-      },
-      "event8": {
-        "text": "Üç."
-      },
-      "event10": {
-        "text": "[KİLİTLİ CİHAZ TESPİT EDİLDİ: RÖLE ERİŞİMİ]"
-      }
-    },
-    "e01_n08_access_denied": {
-      "event0": {
-        "text": "[ERİŞİM REDDEDİLDİ]"
-      },
-      "event4": {
-        "text": "Dur."
-      },
-      "event6": {
-        "text": "Dur."
-      },
-      "event9": {
-        "text": "Panelin arkasında bir şey hareket etti."
-      },
-      "event11": {
-        "text": "Kapı değil."
-      },
-      "choice0": {
-        "text": "TEKRAR DENE."
-      },
-      "choice1": {
-        "text": "KODU YENİDEN OLUŞTUR."
-      }
-    },
-    "e01_n08_relay_door_opens": {
-      "event0": {
-        "text": "[ERİŞİM ONAYLANDI]"
-      },
-      "event3": {
-        "text": "Kapı hareket ediyor."
-      },
-      "event6": {
-        "text": "Soğuk hava."
-      },
-      "event8": {
-        "text": "Çok fazla."
-      },
-      "event11": {
-        "text": "İçeriyi görebiliyorum."
-      },
-      "event13": {
-        "text": "Bakmak istemiyorum."
-      },
-      "choice0": {
-        "text": "ÖNCE İÇERİ GÖZ AT."
-      },
-      "choice1": {
-        "text": "İÇERİ ADIM AT."
-      }
-    },
-    "e01_n08_relay_room_peek": {
-      "event1": {
-        "text": "Üç yığın."
-      },
-      "event4": {
-        "text": "Hayır."
-      },
-      "event6": {
-        "text": "İki buçuk."
-      },
-      "event9": {
-        "text": "Biri ölü."
-      },
-      "event11": {
-        "text": "Biri uyanık."
-      },
-      "event13": {
-        "text": "Üçüncüsü hatalı."
-      },
-      "choice0": {
-        "text": "YAVAŞÇA GİR."
-      },
-      "choice1": {
-        "text": "KAPIDA KAL."
-      }
-    },
-    "e01_n08_relay_room_hold": {
-      "event1": {
-        "text": "Bekliyorum."
-      },
-      "event4": {
-        "text": "Zemin titriyor."
-      },
-      "event6": {
-        "text": "Çok değil."
-      },
-      "event9": {
-        "text": "Yeterli."
-      },
-      "event11": {
-        "text": "Güç kaynağını seçmem gerek."
-      }
-    },
-    "e01_n08_relay_room_entry": {
-      "event1": {
-        "text": "Bir adım."
-      },
-      "event4": {
-        "text": "Tamam."
-      },
-      "event6": {
-        "text": "Bir tane daha."
-      },
-      "event9": {
-        "text": "Nefesimi görebiliyorum."
-      },
-      "event11": {
-        "text": "Bu yanlış."
-      },
-      "event14": {
-        "text": "Güç bölündü."
-      }
-    },
-    "e01_n08_relay_power_choice": {
-      "event1": {
-        "text": "Yaşam desteği hattı."
-      },
-      "event3": {
-        "text": "Röle hattı."
-      },
-      "event6": {
-        "text": "İkisine de yetmez."
-      },
-      "event8": {
-        "text": "Karar senin."
-      },
-      "choice0": {
-        "text": "OKSİJENİ KORU."
-      },
-      "choice1": {
-        "text": "SİNYALİ GÜÇLENDİR."
-      }
-    },
-    "e01_n09_oxygen": {
-      "event1": {
-        "text": "Oksijen."
-      },
-      "event4": {
-        "text": "İyi."
-      },
-      "event6": {
-        "text": "Teşekkür ederim."
-      },
-      "event9": {
-        "text": "Röle şikayet edecek."
-      },
-      "event11": {
-        "text": "Bırak etsin."
-      },
-      "event12": {
-        "message": "[HALE ÇALIŞIYOR]"
-      }
-    },
-    "e01_r09_oxygen": {
-      "event1": {
-        "text": "Orada mısın?"
-      },
-      "event4": {
-        "text": "Alet kaydı."
-      },
-      "event6": {
-        "text": "Buldum."
-      },
-      "event9": {
-        "text": "Röle gürültü yapıyor."
-      },
-      "event11": {
-        "text": "Hala hayattayım."
-      },
-      "event13": {
-        "text": "Oksijen seviyesi düşmedi."
-      },
-      "event16": {
-        "text": "Haklıydın."
-      },
-      "choice0": {
-        "text": "GÜRÜLTÜYÜ KONTROL ET."
-      },
-      "choice1": {
-        "text": "ODANIN ETRAFINA BAK."
-      }
-    },
-    "e01_n09_signal": {
-      "event1": {
-        "text": "Sinyal."
-      },
-      "event4": {
-        "text": "Tamam."
-      },
-      "event6": {
-        "text": "Oksijen düştü."
-      },
-      "event9": {
-        "text": "Bunu hissettim."
-      },
-      "event11": {
-        "text": "Hala düşüyor."
-      },
-      "event12": {
-        "message": "[HALE ÇALIŞIYOR]"
-      }
-    },
-    "e01_r09_signal": {
-      "event1": {
-        "text": "Buradayım."
-      },
-      "event4": {
-        "text": "Diz çökmek zorunda kaldım."
-      },
-      "event6": {
-        "text": "Dramatik değil."
-      },
-      "event9": {
-        "text": "Belki biraz dramatik."
-      },
-      "event11": {
-        "text": "Sinyal temiz."
-      },
-      "event13": {
-        "text": "Çok temiz."
-      },
-      "choice0": {
-        "text": "HAVASINI SOR."
-      },
-      "choice1": {
-        "text": "TEMİZ SİNYALİ KULLAN."
-      }
-    },
-    "e01_n10_signal_air": {
-      "event1": {
-        "text": "Hala düşük."
-      },
-      "event3": {
-        "text": "Ölü değilim."
-      },
-      "event6": {
-        "text": "Sordun."
-      },
-      "event8": {
-        "text": "Bu bir şeydir."
-      }
-    },
-    "e01_n10_relay_noise": {
-      "event1": {
-        "text": "İkinci yığının arkasında gürültü."
-      },
-      "event4": {
-        "text": "Makineden gelmiyor."
-      },
-      "event6": {
-        "text": "Bir şey gevşek."
-      },
-      "event9": {
-        "text": "Orada bir panel var."
-      }
-    },
-    "e01_n10_cache_scan": {
-      "event1": {
-        "text": "Küçük panel."
-      },
-      "event3": {
-        "text": "Gizli."
-      },
-      "event6": {
-        "text": "Etiket."
-      },
-      "event9": {
-        "text": "Kapı..."
-      },
-      "event11": {
-        "text": "14."
-      },
-      "event14": {
-        "text": "Hayır."
-      },
-      "event16": {
-        "text": "12."
-      },
-      "choice0": {
-        "text": "PANELİ İNCELE."
-      },
-      "choice1": {
-        "text": "KAPI 12 HAKKINDA SOR."
-      }
-    },
-    "e01_n11_ask_door12": {
-      "event1": {
-        "text": "Kapı 12."
-      },
-      "event4": {
-        "text": "Kırmızı ışık."
-      },
-      "event6": {
-        "text": "Cam."
-      },
-      "event9": {
-        "text": "Birisi bağırıyor."
-      },
-      "event11": {
-        "text": "Sonra sessizlik."
-      },
-      "backgroundEvent12": {
-        "text": "SOR"
-      },
-      "backgroundEvent13": {
-        "text": "ONA SOR"
-      },
-      "choice0": {
-        "text": "PANELİ İNCELE."
-      },
-      "choice1": {
-        "text": "BIRAK KALSIN."
-      }
-    },
-    "e01_n11_inspect_cache": {
-      "event1": {
-        "text": "Mandal bükülmüş."
-      },
-      "event4": {
-        "text": "Kilitli değil."
-      },
-      "event6": {
-        "text": "Sıkışmış."
-      },
-      "event9": {
-        "text": "Kanırtabilirim."
-      },
-      "event11": {
-        "text": "Bırakabilirim."
-      },
-      "choice0": {
-        "text": "KANIRTIP AÇ."
-      },
-      "choice1": {
-        "text": "BIRAK KALSIN."
-      }
-    },
-    "e01_n11_leave_cache": {
-      "event1": {
-        "text": "Tamam."
-      },
-      "event4": {
-        "text": "İyi."
-      },
-      "event6": {
-        "text": "Hayır."
-      },
-      "event8": {
-        "text": "İyi değil."
-      },
-      "event10": {
-        "text": "KAPI"
-      },
-      "event11": {
-        "text": "12"
-      },
-      "choice0": {
-        "text": "HAYIR. AÇ ONU."
-      },
-      "choice1": {
-        "text": "DEVAM ET."
-      }
-    },
-    "e01_n11_pry_cache": {
-      "event1": {
-        "text": "Destek oturuyor."
-      },
-      "event4": {
-        "text": "Neredeyse."
-      },
-      "event7": {
-        "text": "Ah."
-      },
-      "event9": {
-        "text": "Başparmağım."
-      },
-      "event11": {
-        "text": "İyiyim."
-      },
-      "event14": {
-        "text": "Panel açıldı."
-      },
-      "choice0": {
-        "text": "GÜVENLİK DOSYASINI AÇ."
-      },
-      "choice1": {
-        "text": "TIBBİ DOSYAYI AÇ."
-      }
-    },
-    "e01_n12_security": {
-      "event0": {
-        "title": "GÜVENLİK KAYDI",
-        "content": "21:17 — Kapı 12 açıldı.\n21:17 — Manuel geçersiz kılma onaylandı.\n21:18 — Operatör kimliği gizlendi.\n21:20 — İç sensör dekompresyon riski uyarısı verdi.",
-        "caption": "İstasyon arşivinden kurtarılan güvenlik olayı.",
-        "message": "[GÜVENLİK KAYDI ARŞİVLENDİ]"
-      },
-      "event2": {
-        "text": "Kapı açıldı."
-      },
-      "event4": {
-        "text": "Manuel geçersiz kılma."
-      },
-      "event7": {
-        "text": "Operatör gizlendi."
-      },
-      "event9": {
-        "text": "Bundan hiç hoşlanmadım."
-      },
-      "choice0": {
-        "text": "TIBBİ DOSYAYI AÇ."
-      },
-      "choice1": {
-        "text": "KAMERA DOSYASINI AÇ."
-      }
-    },
-    "e01_n12_medical": {
-      "event0": {
-        "title": "TIBBİ RAPOR",
-        "content": "21:20 — Kazazede rapor edildi.\nNeden: dekompresyon travması.\nKonum: Kapı 12 erişim koridoru.\nDurum: ölümcül.",
-        "caption": "Kurtarılan acil tıbbi rapor.",
-        "message": "[TIBBİ RAPOR ARŞİVLENDİ]"
-      },
-      "event2": {
-        "text": "Ölümcül."
-      },
-      "event5": {
-        "text": "Hayır."
-      },
-      "event7": {
-        "text": "Birisi öldü."
-      },
-      "event9": {
-        "text": "Açıldıktan üç dakika sonra."
-      },
-      "choice0": {
-        "text": "GÜVENLİK DOSYASINI AÇ."
-      },
-      "choice1": {
-        "text": "KAMERA DOSYASINI AÇ."
-      }
-    },
-    "e01_n12_medical_after_security": {
-      "event0": {
-        "title": "TIBBİ RAPOR",
-        "content": "21:20 — Kazazede rapor edildi.\nNeden: dekompresyon travması.\nKonum: Kapı 12 erişim koridoru.\nDurum: ölümcül.",
-        "caption": "Kurtarılan acil tıbbi rapor.",
-        "message": "[TIBBİ RAPOR ARŞİVLENDİ]"
-      },
-      "event2": {
-        "text": "Ölümcül."
-      },
-      "event5": {
-        "text": "Üç dakika."
-      },
-      "event7": {
-        "text": "Geçersiz kılmadan sonra."
-      }
-    },
-    "e01_n12_security_after_medical": {
-      "event0": {
-        "title": "GÜVENLİK KAYDI",
-        "content": "21:17 — Kapı 12 açıldı.\n21:17 — Manuel geçersiz kılma onaylandı.\n21:18 — Operatör kimliği gizlendi.\n21:20 — İç sensör dekompresyon riski uyarısı verdi.",
-        "caption": "İstasyon arşivinden kurtarılan güvenlik olayı.",
-        "message": "[GÜVENLİK KAYDI ARŞİVLENDİ]"
-      },
-      "event2": {
-        "text": "Önce geçersiz kılma."
-      },
-      "event4": {
-        "text": "Sonra dekompresyon."
-      },
-      "event7": {
-        "text": "Hayır."
-      }
-    },
-    "e01_n12_camera_after_security": {
-      "event0": {
-        "title": "KAMERA ANALİZ RAPORU",
-        "content": "KAYNAK: KAPI 12 GÜVENLİK YAYINI\nKARE DURUMU: GÖRSEL VERİ BOZUK\nANALİZ SONUCU:\n- Kapı 12 dışında bir özne tespit edildi.\n- Biyometrik profil Ethan Hale ile eşleşiyor.\n- Özne sağ elinde manuel geçersiz kılma kolu tutuyor.\n- Kare, dekompresyon olayından önce sonlandı.",
-        "caption": "Bozuk görsel yayından üretilen otomatik analiz. Görüntü kurtarılamadı.",
-        "message": "[KAMERA ANALİZ RAPORU ARŞİVLENDİ]"
-      },
-      "event2": {
-        "text": "Bu benim."
-      },
-      "event5": {
-        "text": "Elimde kol var."
-      }
-    },
-    "e01_n12_camera_after_medical": {
-      "event0": {
-        "title": "KAMERA ANALİZ RAPORU",
-        "content": "KAYNAK: KAPI 12 GÜVENLİK YAYINI\nKARE DURUMU: GÖRSEL VERİ BOZUK\nANALİZ SONUCU:\n- Kapı 12 dışında bir özne tespit edildi.\n- Biyometrik profil Ethan Hale ile eşleşiyor.\n- Özne sağ elinde manuel geçersiz kılma kolu tutuyor.\n- Kare, dekompresyon olayından önce sonlandı.",
-        "caption": "Bozuk görsel yayından üretilen otomatik analiz. Görüntü kurtarılamadı.",
-        "message": "[KAMERA ANALİZ RAPORU ARŞİVLENDİ]"
-      },
-      "event2": {
-        "text": "Kamera beni söylüyor."
-      },
-      "event4": {
-        "text": "Kapının dışında."
-      },
-      "event7": {
-        "text": "Kolu tutuyorum."
-      }
-    },
-    "e01_n12_camera_final": {
-      "event0": {
-        "title": "KAMERA ANALİZ RAPORU",
-        "content": "KAYNAK: KAPI 12 GÜVENLİK YAYINI\nKARE DURUMU: GÖRSEL VERİ BOZUK\nANALİZ SONUCU:\n- Kapı 12 dışında bir özne tespit edildi.\n- Biyometrik profil Ethan Hale ile eşleşiyor.\n- Özne sağ elinde manuel geçersiz kılma kolu tutuyor.\n- Kare, dekompresyon olayından önce sonlandı.",
-        "caption": "Bozuk görsel yayından üretilen otomatik analiz. Görüntü kurtarılamadı.",
-        "message": "[KAMERA ANALİZ RAPORU ARŞİVLENDİ]"
-      },
-      "event2": {
-        "text": "Ben."
-      },
-      "event5": {
-        "text": "Beni işaret ediyor."
-      },
-      "event7": {
-        "text": "Elimde kol var."
-      }
-    },
-    "e01_n13_reaction": {
-      "event1": {
-        "text": "Hayır."
-      },
-      "event3": {
-        "text": "Hayır."
-      },
-      "event6": {
-        "text": "Kapı 12."
-      },
-      "event8": {
-        "text": "Kapı 14."
-      },
-      "event11": {
-        "text": "Hayır."
-      },
-      "event13": {
-        "text": "12."
-      },
-      "event16": {
-        "text": "Oradaydım."
-      },
-      "choice0": {
-        "text": "NE YAPTIĞINI SOR."
-      },
-      "choice1": {
-        "text": "NELERİ HATIRLADIĞINI SOR."
-      }
-    },
-    "e01_n13_accuse": {
-      "event1": {
-        "text": "Bilmiyorum."
-      },
-      "event3": {
-        "text": "Bilmiyorum."
-      },
-      "event6": {
-        "text": "Bunu evet'e çevirme."
-      },
-      "event8": {
-        "text": "Bunu hayır'a çevirme."
-      },
-      "event11": {
-        "text": "Sana hiçbirini veremem."
-      }
-    },
-    "e01_n13_ground": {
-      "event1": {
-        "text": "Hafıza."
-      },
-      "event4": {
-        "text": "Kırmızı ışık."
-      },
-      "event6": {
-        "text": "Cam."
-      },
-      "event8": {
-        "text": "Bağıran biri."
-      },
-      "event11": {
-        "text": "İsmim."
-      },
-      "event13": {
-        "text": "Belki."
-      },
-      "event15": {
-        "text": "Hayır."
-      }
-    },
-    "e01_n14_intrusion": {
-      "event1": {
-        "text": "O AÇTI"
-      },
-      "event2": {
-        "text": "O AÇTI"
-      },
-      "event3": {
-        "text": "O AÇTI ONU"
-      },
-      "event5": {
-        "text": "KAPI"
-      },
-      "event6": {
-        "text": "12"
-      },
-      "event7": {
-        "text": "ONA SOR"
-      },
-      "event9": {
-        "text": "Hayır."
-      },
-      "event11": {
-        "text": "Bu sen değilsin."
-      },
-      "event14": {
-        "text": "Operatör?"
-      },
-      "event16": {
-        "text": "Bir şey söyle."
-      },
-      "choice0": {
-        "text": "KAYITLARI MÜHÜRLE."
-      },
-      "choice1": {
-        "text": "KANALI AÇIK TUT."
-      }
-    },
-    "e01_n15_seal": {
-      "event1": {
-        "text": "Onları kilitliyorum."
-      },
-      "event4": {
-        "text": "Gitmediler."
-      },
-      "event6": {
-        "text": "Sadece kilitli."
-      },
-      "event9": {
-        "text": "Eğer tekrar Kapı 12 dersem..."
-      },
-      "event11": {
-        "text": "beni durdur."
-      },
-      "backgroundEvent12": {
-        "text": "AÇ"
-      },
-      "backgroundEvent13": {
-        "text": "TEKRAR"
-      },
-      "choice0": {
-        "text": "DEVAM ET."
-      },
-      "choice1": {
-        "text": "POZİSYONUNU KORU."
-      }
-    },
-    "e01_n15_open": {
-      "event1": {
-        "text": "Kanalı aç."
-      },
-      "event3": {
-        "text": "TEŞEKKÜR"
-      },
-      "event4": {
-        "text": "EDERİM"
-      },
-      "event6": {
-        "text": "Hayır."
-      },
-      "event8": {
-        "text": "Bunu kimse söylemedi."
-      },
-      "event11": {
-        "text": "Nefes sesi."
-      },
-      "event13": {
-        "text": "Bana ait değil."
-      },
-      "event16": {
-        "text": "Eğer bu bizi takip ediyorsa..."
-      },
-      "event18": {
-        "text": "bu senin kararın."
-      },
-      "event19": {
-        "text": "KAPI"
-      },
-      "event20": {
-        "text": "12"
-      },
-      "event21": {
-        "text": "HATIRLIYOR"
-      },
-      "choice0": {
-        "text": "DEVAM ET."
-      },
-      "choice1": {
-        "text": "GEÇ MÜHÜRLE."
-      }
+
+    "part_end": {
+
+      "id": "part_end",
+
+      "events": [
+
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Anladım."
+        },
+
+        {
+          "type": "typing",
+          "duration": 1500
+        },
+
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Sanırım bu konuşma düşündüğümden daha önemli olacak."
+        },
+
+        {
+          "type": "message",
+          "speaker": "SYSTEM",
+          "text": "EPISODE 01 - PART 01 COMPLETE"
+        }
+      ],
+
+      "choices": []
     }
   }
 }
