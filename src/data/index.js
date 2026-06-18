@@ -9,9 +9,7 @@ const episodeModules = import.meta.glob(
 );
 
 function toEpisodeId(path) {
-  const match = path.match(
-    /episode-(\d+)\.json$/
-  );
+  const match = path.match(/episode-(.+)\.json$/);
 
   if (!match) {
     return null;
@@ -33,9 +31,6 @@ export const episodes =
   );
 
 
-console.table(
-  Object.keys(episodes)
-);
 
 export const DEFAULT_EPISODE_ID =
   "episode_test";

@@ -13,6 +13,50 @@ function clampStat(value, min = 0, max = 100) {
 }
 
 // ─────────────────────────────────────────────
+// CONDITIONAL NEXT NODE
+// ─────────────────────────────────────────────
+
+function evaluateConditionalNext(state, conditions) {
+  if (!conditions || typeof conditions !== "object") return false;
+
+  return Object.entries(conditions).every(([key, expected]) => {
+    let actual;
+
+    if (state.injuries && state.injuries[key] !== undefined) {
+      actual = state.injuries[key];
+    } else if (state.stats && state.stats[key] !== undefined) {
+      actual = state.stats[key];
+    } else if (state.story && state.story[key] !== undefined) {
+      actual = state.story[key];
+    } else if (state.flags && state.flags[key] !== undefined) {
+      actual = state.flags[key];
+    } else {
+      return false;
+    }
+
+    if (typeof expected === "object" && expected !== null) {
+      if (expected.min !== undefined && actual < expected.min) return false;
+      if (expected.max !== undefined && actual > expected.max) return false;
+      return true;
+    }
+
+    return actual === expected;
+  });
+}
+
+function resolveNextNodeId(state, choice, fallbackEpisode) {
+  if (Array.isArray(choice.conditionalNext)) {
+    for (const branch of choice.conditionalNext) {
+      if (evaluateConditionalNext(state, branch.if)) {
+        return branch.nextNodeId;
+      }
+    }
+  }
+
+  return choice.nextNodeId || fallbackEpisode.startNodeId;
+}
+
+// ─────────────────────────────────────────────
 // OBSERVER MODE HELPER
 // ─────────────────────────────────────────────
 
@@ -47,71 +91,52 @@ function createFreshGameState() {
   return {
     episodeId: DEFAULT_EPISODE_ID,
     currentNodeId: episode.startNodeId,
-
     history: [],
-
     stats: {
       trust: 50,
       humanity: 50,
-
       fear: 0,
       resentment: 0,
-
       dependency: 50,
       curiosity: 0,
-
       riskPattern: 0,
       deathRisk: 0,
-
       mentalStability: 100,
       identityFracture: 0,
-
       injury: 0,
       oxygen: 100,
-
       machinePath: 0,
       humanityPath: 0,
-
       eliasStress: 0,
       echoProximity: 0
     },
-
     injuries: {
       legInjury: false,
       armInjury: false,
       headTrauma: false,
       breathingIssue: false
     },
-
     flags: {},
-
     memory: {
       minor: [],
       major: [],
       critical: []
     },
-
     relationship: {
       currentState: "CAUTIOUS",
       lastArgumentEpisode: null,
       lastTrustChangeEpisode: null,
       timesRejectedOrders: 0
     },
-
     relationshipTags: [],
-
     callbackUsage: {},
-
     scheduledEvents: [],
-
     completedEvents: [],
-
     story: {
       replacementPreparationActive: false,
       candidateIdentified: false,
       unknownContactDiscovered: false,
       operatorTargetConfirmed: false,
-
       observerMode: "passive",
       kiraIdentityRevealed: false,
       operatorIdentityRevealed: false,
@@ -119,7 +144,6 @@ function createFreshGameState() {
       echoNatureUnderstood: false,
       siblingInsideFacility: false
     },
-
     death: {
       deathRouteActive: false,
       criticalDeathRisk: false,
@@ -127,13 +151,11 @@ function createFreshGameState() {
       loopCount: 0,
       signalLostCount: 0
     },
-
     checkpoint: {
       episode: 1,
       nodeId: episode.startNodeId,
       timestamp: null
     },
-
     endings: {
       loyalEndingUnlocked: false,
       betrayalEndingUnlocked: false,
@@ -141,18 +163,14 @@ function createFreshGameState() {
       replacementEndingUnlocked: false,
       trueEndingUnlocked: false
     },
-
     solvedPuzzles: {},
     puzzleAttempts: {},
     knownClues: {},
-
     activePuzzleId: null,
     activeWaitTask: null,
-
     unlockedCorrelations: {},
     pendingNotifications: [],
     collectedFiles: [],
-
     busyState: null
   };
 }
@@ -184,115 +202,33 @@ function normalizeGameState(state) {
   return {
     episodeId,
     currentNodeId,
-
     history: Array.isArray(state.history) ? state.history : [],
-
-    stats:
-      state.stats && typeof state.stats === "object"
-        ? state.stats
-        : fallback.stats,
-
-    injuries:
-      state.injuries && typeof state.injuries === "object"
-        ? state.injuries
-        : fallback.injuries,
-
-    flags:
-      state.flags && typeof state.flags === "object"
-        ? state.flags
-        : {},
-
+    stats: state.stats && typeof state.stats === "object" ? state.stats : fallback.stats,
+    injuries: state.injuries && typeof state.injuries === "object" ? state.injuries : fallback.injuries,
+    flags: state.flags && typeof state.flags === "object" ? state.flags : {},
     memory: {
       minor: Array.isArray(state?.memory?.minor) ? state.memory.minor : [],
       major: Array.isArray(state?.memory?.major) ? state.memory.major : [],
       critical: Array.isArray(state?.memory?.critical) ? state.memory.critical : []
     },
-
-    relationship:
-      state.relationship && typeof state.relationship === "object"
-        ? state.relationship
-        : fallback.relationship,
-
-    relationshipTags: Array.isArray(state.relationshipTags)
-      ? state.relationshipTags
-      : [],
-
-    callbackUsage:
-      state.callbackUsage && typeof state.callbackUsage === "object"
-        ? state.callbackUsage
-        : {},
-
-    scheduledEvents: Array.isArray(state.scheduledEvents)
-      ? state.scheduledEvents
-      : [],
-
-    completedEvents: Array.isArray(state.completedEvents)
-      ? state.completedEvents
-      : [],
-
-    story:
-      state.story && typeof state.story === "object"
-        ? state.story
-        : fallback.story,
-
-    death:
-      state.death && typeof state.death === "object"
-        ? state.death
-        : fallback.death,
-
-    checkpoint:
-      state.checkpoint && typeof state.checkpoint === "object"
-        ? state.checkpoint
-        : fallback.checkpoint,
-
-    endings:
-      state.endings && typeof state.endings === "object"
-        ? state.endings
-        : fallback.endings,
-
-    solvedPuzzles:
-      state.solvedPuzzles && typeof state.solvedPuzzles === "object"
-        ? state.solvedPuzzles
-        : {},
-
-    puzzleAttempts:
-      state.puzzleAttempts && typeof state.puzzleAttempts === "object"
-        ? state.puzzleAttempts
-        : {},
-
-    knownClues:
-      state.knownClues && typeof state.knownClues === "object"
-        ? state.knownClues
-        : {},
-
-    activePuzzleId:
-      typeof state.activePuzzleId === "string" ? state.activePuzzleId : null,
-
-    activeWaitTask:
-      state.activeWaitTask && typeof state.activeWaitTask === "object"
-        ? state.activeWaitTask
-        : null,
-
-    unlockedCorrelations:
-      state.unlockedCorrelations && typeof state.unlockedCorrelations === "object"
-        ? state.unlockedCorrelations
-        : {},
-
-    pendingNotifications: Array.isArray(state.pendingNotifications)
-      ? state.pendingNotifications
-      : [],
-
-    collectedFiles: Array.isArray(state.collectedFiles)
-      ? state.collectedFiles
-      : [],
-
-    busyState:
-      state.busyState && typeof state.busyState === "object"
-        ? state.busyState
-        : null,
-
-    mayaTrust: typeof state.mayaTrust === "number" ? state.mayaTrust : 0,
-    haleTrust: typeof state.haleTrust === "number" ? state.haleTrust : 0
+    relationship: state.relationship && typeof state.relationship === "object" ? state.relationship : fallback.relationship,
+    relationshipTags: Array.isArray(state.relationshipTags) ? state.relationshipTags : [],
+    callbackUsage: state.callbackUsage && typeof state.callbackUsage === "object" ? state.callbackUsage : {},
+    scheduledEvents: Array.isArray(state.scheduledEvents) ? state.scheduledEvents : [],
+    completedEvents: Array.isArray(state.completedEvents) ? state.completedEvents : [],
+    story: state.story && typeof state.story === "object" ? state.story : fallback.story,
+    death: state.death && typeof state.death === "object" ? state.death : fallback.death,
+    checkpoint: state.checkpoint && typeof state.checkpoint === "object" ? state.checkpoint : fallback.checkpoint,
+    endings: state.endings && typeof state.endings === "object" ? state.endings : fallback.endings,
+    solvedPuzzles: state.solvedPuzzles && typeof state.solvedPuzzles === "object" ? state.solvedPuzzles : {},
+    puzzleAttempts: state.puzzleAttempts && typeof state.puzzleAttempts === "object" ? state.puzzleAttempts : {},
+    knownClues: state.knownClues && typeof state.knownClues === "object" ? state.knownClues : {},
+    activePuzzleId: typeof state.activePuzzleId === "string" ? state.activePuzzleId : null,
+    activeWaitTask: state.activeWaitTask && typeof state.activeWaitTask === "object" ? state.activeWaitTask : null,
+    unlockedCorrelations: state.unlockedCorrelations && typeof state.unlockedCorrelations === "object" ? state.unlockedCorrelations : {},
+    pendingNotifications: Array.isArray(state.pendingNotifications) ? state.pendingNotifications : [],
+    collectedFiles: Array.isArray(state.collectedFiles) ? state.collectedFiles : [],
+    busyState: state.busyState && typeof state.busyState === "object" ? state.busyState : null
   };
 }
 
@@ -301,11 +237,7 @@ function normalizeGameState(state) {
 // ─────────────────────────────────────────────
 
 function normalizeAnswer(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "")
-    .replace(/-/g, "");
+  return String(value || "").trim().toLowerCase().replace(/\s+/g, "").replace(/-/g, "");
 }
 
 function findPuzzleById(episode, puzzleId) {
@@ -323,9 +255,7 @@ function buildRewardFile(reward, correlation) {
     content: reward.content || "",
     source: reward.source || "SYSTEM_CORRELATION",
     tags: Array.isArray(reward.tags) ? reward.tags : [],
-    correlationTags: Array.isArray(reward.correlationTags)
-      ? reward.correlationTags
-      : [],
+    correlationTags: Array.isArray(reward.correlationTags) ? reward.correlationTags : [],
     isNew: true,
     collectedAt: new Date().toISOString()
   };
@@ -342,16 +272,11 @@ function checkCorrelations(gameState) {
     if (!correlation?.id) return;
     if (nextState.unlockedCorrelations?.[correlation.id]) return;
 
-    const requiredFiles = Array.isArray(correlation.requiredFiles)
-      ? correlation.requiredFiles
-      : [];
-
+    const requiredFiles = Array.isArray(correlation.requiredFiles) ? correlation.requiredFiles : [];
     if (!requiredFiles.length) return;
 
     const allRequiredFilesRead = requiredFiles.every((requiredFileId) => {
-      const file = nextState.collectedFiles.find(
-        (item) => item.id === requiredFileId
-      );
+      const file = nextState.collectedFiles.find((item) => item.id === requiredFileId);
       return file && file.isNew === false;
     });
 
@@ -362,9 +287,7 @@ function checkCorrelations(gameState) {
 
     if (reward?.type === "file") {
       const rewardFile = buildRewardFile(reward, correlation);
-      const alreadyCollected = collectedFiles.some(
-        (file) => file.id === rewardFile.id
-      );
+      const alreadyCollected = collectedFiles.some((file) => file.id === rewardFile.id);
       if (!alreadyCollected) {
         collectedFiles = [...collectedFiles, rewardFile];
       }
@@ -374,24 +297,15 @@ function checkCorrelations(gameState) {
       id: `correlation_${correlation.id}_${Date.now()}`,
       type: "correlation",
       title: correlation.title || "NEW CONNECTION DETECTED",
-      message:
-        reward?.message ||
-        correlation.message ||
-        "[NEW CONNECTION DETECTED]",
+      message: reward?.message || correlation.message || "[NEW CONNECTION DETECTED]",
       createdAt: new Date().toISOString()
     };
 
     nextState = normalizeGameState({
       ...nextState,
       collectedFiles,
-      unlockedCorrelations: {
-        ...nextState.unlockedCorrelations,
-        [correlation.id]: true
-      },
-      pendingNotifications: [
-        ...nextState.pendingNotifications,
-        notification
-      ],
+      unlockedCorrelations: { ...nextState.unlockedCorrelations, [correlation.id]: true },
+      pendingNotifications: [...nextState.pendingNotifications, notification],
       history: [
         ...nextState.history,
         {
@@ -415,14 +329,10 @@ function checkCorrelations(gameState) {
 export function getInitialGameState() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-
     if (!saved) return createFreshGameState();
-
     const parsed = JSON.parse(saved);
     const normalized = normalizeGameState(parsed);
-
     localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
-
     return normalized;
   } catch {
     const freshState = createFreshGameState();
@@ -439,9 +349,6 @@ export function getCurrentEpisode(gameState) {
 export function getCurrentNode(gameState) {
   const normalizedState = normalizeGameState(gameState);
   const episode = getCurrentEpisode(normalizedState);
-
-
-
   return episode.nodes[normalizedState.currentNodeId] || null;
 }
 
@@ -456,10 +363,7 @@ export function chooseOption(gameState, choiceId) {
 
   if (!currentNode) throw new Error("Current node not found");
 
-  const selectedChoice = currentNode.choices?.find(
-    (choice) => choice.id === choiceId
-  );
-
+  const selectedChoice = currentNode.choices?.find((choice) => choice.id === choiceId);
   if (!selectedChoice) throw new Error("Choice not found");
 
   // PUZZLE BRANCH
@@ -470,24 +374,12 @@ export function chooseOption(gameState, choiceId) {
   // WAIT TASK BRANCH
   if (selectedChoice.waitTask) {
     const waitTask = selectedChoice.waitTask;
-
-    const nextEpisodeId =
-      waitTask.nextEpisodeId ||
-      selectedChoice.nextEpisodeId ||
-      normalizedState.episodeId;
-
+    const nextEpisodeId = waitTask.nextEpisodeId || selectedChoice.nextEpisodeId || normalizedState.episodeId;
     const nextEpisode = getEpisode(nextEpisodeId);
-
-    const waitingNodeId =
-      waitTask.waitingNodeId ||
-      selectedChoice.nextNodeId ||
-      normalizedState.currentNodeId;
-
+    const waitingNodeId = waitTask.waitingNodeId || selectedChoice.nextNodeId || normalizedState.currentNodeId;
     const completeNodeId = waitTask.completeNodeId || nextEpisode.startNodeId;
-
     const stateAfterEffects = applyChoice(normalizedState, selectedChoice);
 
-    // nextState tanımlandıktan SONRA observer mode hesaplanır
     let nextState = normalizeGameState({
       ...stateAfterEffects,
       episodeId: nextEpisodeId,
@@ -525,22 +417,20 @@ export function chooseOption(gameState, choiceId) {
       ]
     });
 
-    // Observer mode: nextState tanımlandıktan SONRA
     nextState = applyObserverMode(nextState);
-
     localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
     return nextState;
   }
 
   // NORMAL BRANCH
-  const nextEpisodeId =
-    selectedChoice.nextEpisodeId || normalizedState.episodeId;
+  const nextEpisodeId = selectedChoice.nextEpisodeId || normalizedState.episodeId;
   const nextEpisode = getEpisode(nextEpisodeId);
-  const nextNodeId = selectedChoice.nextNodeId || nextEpisode.startNodeId;
+
+  // conditionalNext: injury/stat durumuna gore farkli node
+  const nextNodeId = resolveNextNodeId(normalizedState, selectedChoice, nextEpisode);
 
   const stateAfterEffects = applyChoice(normalizedState, selectedChoice);
 
-  // nextState tanımlandıktan SONRA observer mode hesaplanır
   let nextState = normalizeGameState({
     ...stateAfterEffects,
     checkpoint: {
@@ -567,36 +457,18 @@ export function chooseOption(gameState, choiceId) {
     ]
   });
 
-  // Observer mode: nextState tanımlandıktan SONRA
   nextState = applyObserverMode(nextState);
-
-  // Triggered events
-  const triggeredEvents = getTriggeredEvents(
-    nextState,
-    Number(nextEpisodeId) || 1
-  );
 
   // Ending check
   const ending = calculateEnding(nextState);
 
   switch (ending) {
-    case "LOYAL_ENDING":
-      nextState.endings.loyalEndingUnlocked = true;
-      break;
-    case "BETRAYAL_ENDING":
-      nextState.endings.betrayalEndingUnlocked = true;
-      break;
-    case "SACRIFICE_ENDING":
-      nextState.endings.sacrificeEndingUnlocked = true;
-      break;
-    case "REPLACEMENT_ENDING":
-      nextState.endings.replacementEndingUnlocked = true;
-      break;
-    case "TRUE_ENDING":
-      nextState.endings.trueEndingUnlocked = true;
-      break;
-    default:
-      break;
+    case "LOYAL_ENDING":      nextState.endings.loyalEndingUnlocked = true;       break;
+    case "BETRAYAL_ENDING":   nextState.endings.betrayalEndingUnlocked = true;    break;
+    case "SACRIFICE_ENDING":  nextState.endings.sacrificeEndingUnlocked = true;   break;
+    case "REPLACEMENT_ENDING":nextState.endings.replacementEndingUnlocked = true; break;
+    case "TRUE_ENDING":       nextState.endings.trueEndingUnlocked = true;        break;
+    default: break;
   }
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
@@ -615,94 +487,46 @@ export function submitPuzzleAnswer(gameState, puzzleId, answer) {
   if (!puzzle) throw new Error("Puzzle not found");
 
   const normalizedInput = normalizeAnswer(answer);
-  const acceptedAnswers = Array.isArray(puzzle.acceptedAnswers)
-    ? puzzle.acceptedAnswers
-    : [];
-
-  const isCorrect = acceptedAnswers.some(
-    (acceptedAnswer) => normalizeAnswer(acceptedAnswer) === normalizedInput
-  );
+  const acceptedAnswers = Array.isArray(puzzle.acceptedAnswers) ? puzzle.acceptedAnswers : [];
+  const isCorrect = acceptedAnswers.some((a) => normalizeAnswer(a) === normalizedInput);
 
   const currentAttempts = normalizedState.puzzleAttempts?.[puzzleId] || 0;
-  const nextAttempts = currentAttempts + 1;
+  const nextPuzzleAttempts = { ...normalizedState.puzzleAttempts, [puzzleId]: currentAttempts + 1 };
 
-  const nextPuzzleAttempts = {
-    ...normalizedState.puzzleAttempts,
-    [puzzleId]: nextAttempts
-  };
-
-  const baseState = {
-    ...normalizedState,
-    activePuzzleId: null,
-    activeWaitTask: null,
-    puzzleAttempts: nextPuzzleAttempts
-  };
+  const baseState = { ...normalizedState, activePuzzleId: null, activeWaitTask: null, puzzleAttempts: nextPuzzleAttempts };
 
   if (isCorrect) {
     const nextNodeId = puzzle.successNodeId || normalizedState.currentNodeId;
-
     const nextState = normalizeGameState({
       ...baseState,
       currentNodeId: nextNodeId,
-      solvedPuzzles: {
-        ...normalizedState.solvedPuzzles,
-        [puzzleId]: true
-      },
-      history: [
-        ...normalizedState.history,
-        {
-          type: "puzzle",
-          episodeId: episode.id,
-          puzzleId,
-          answer,
-          result: "success",
-          nextNodeId
-        }
-      ]
+      solvedPuzzles: { ...normalizedState.solvedPuzzles, [puzzleId]: true },
+      history: [...normalizedState.history, { type: "puzzle", episodeId: episode.id, puzzleId, answer, result: "success", nextNodeId }]
     });
-
     localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
     return { isCorrect: true, puzzle, nextState };
   }
 
   const nextNodeId = puzzle.failureNodeId || normalizedState.currentNodeId;
-
   const nextState = normalizeGameState({
     ...baseState,
     currentNodeId: nextNodeId,
-    history: [
-      ...normalizedState.history,
-      {
-        type: "puzzle",
-        episodeId: episode.id,
-        puzzleId,
-        answer,
-        result: "failure",
-        nextNodeId
-      }
-    ]
+    history: [...normalizedState.history, { type: "puzzle", episodeId: episode.id, puzzleId, answer, result: "failure", nextNodeId }]
   });
-
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
   return { isCorrect: false, puzzle, nextState };
 }
 
 export function clearActivePuzzle(gameState) {
   const normalizedState = normalizeGameState(gameState);
-  const nextState = normalizeGameState({
-    ...normalizedState,
-    activePuzzleId: null
-  });
+  const nextState = normalizeGameState({ ...normalizedState, activePuzzleId: null });
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
   return nextState;
 }
 
 export function setActivePuzzle(gameState, puzzleId) {
   const normalizedState = normalizeGameState(gameState);
-  const nextState = normalizeGameState({
-    ...normalizedState,
-    activePuzzleId: puzzleId
-  });
+  const nextState = normalizeGameState({ ...normalizedState, activePuzzleId: puzzleId });
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
   return nextState;
 }
@@ -741,15 +565,7 @@ export function resolveActiveWaitTask(gameState) {
     currentNodeId: completeNodeId,
     activeWaitTask: null,
     activePuzzleId: null,
-    history: [
-      ...normalizedState.history,
-      {
-        type: "waitTaskComplete",
-        waitTaskId: waitTask.id,
-        episodeId: nextEpisodeId,
-        nextNodeId: completeNodeId
-      }
-    ]
+    history: [...normalizedState.history, { type: "waitTaskComplete", waitTaskId: waitTask.id, episodeId: nextEpisodeId, nextNodeId: completeNodeId }]
   });
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
@@ -775,13 +591,7 @@ export function resolveBusyState(gameState) {
   const nextEpisode = getEpisode(nextEpisodeId);
   const nextNodeId = busy.returnNodeId || nextEpisode.startNodeId;
 
-  const nextState = normalizeGameState({
-    ...gameState,
-    episodeId: nextEpisodeId,
-    currentNodeId: nextNodeId,
-    busyState: null
-  });
-
+  const nextState = normalizeGameState({ ...gameState, episodeId: nextEpisodeId, currentNodeId: nextNodeId, busyState: null });
   saveGameState(nextState);
   return nextState;
 }
@@ -792,11 +602,7 @@ export function resolveBusyState(gameState) {
 
 export function collectFile(gameState, file) {
   const normalizedState = normalizeGameState(gameState);
-
-  const existingFile = normalizedState.collectedFiles.find(
-    (item) => item.id === file.id
-  );
-
+  const existingFile = normalizedState.collectedFiles.find((item) => item.id === file.id);
   if (existingFile) return normalizedState;
 
   const nextState = normalizeGameState({
@@ -812,9 +618,7 @@ export function collectFile(gameState, file) {
         content: file.content || "",
         source: file.source || "",
         tags: Array.isArray(file.tags) ? file.tags : [],
-        correlationTags: Array.isArray(file.correlationTags)
-          ? file.correlationTags
-          : [],
+        correlationTags: Array.isArray(file.correlationTags) ? file.correlationTags : [],
         isNew: file.isNew ?? true,
         collectedAt: file.collectedAt || new Date().toISOString()
       }
@@ -827,20 +631,12 @@ export function collectFile(gameState, file) {
 
 export function markFileAsRead(gameState, fileId) {
   const normalizedState = normalizeGameState(gameState);
-
   const readState = normalizeGameState({
     ...normalizedState,
     collectedFiles: normalizedState.collectedFiles.map((file) =>
-      file.id === fileId
-        ? {
-            ...file,
-            isNew: false,
-            readAt: file.readAt || new Date().toISOString()
-          }
-        : file
+      file.id === fileId ? { ...file, isNew: false, readAt: file.readAt || new Date().toISOString() } : file
     )
   });
-
   const nextState = checkCorrelations(readState);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
   return nextState;
@@ -852,10 +648,7 @@ export function markFileAsRead(gameState, fileId) {
 
 export function clearPendingNotifications(gameState) {
   const normalizedState = normalizeGameState(gameState);
-  const nextState = normalizeGameState({
-    ...normalizedState,
-    pendingNotifications: []
-  });
+  const nextState = normalizeGameState({ ...normalizedState, pendingNotifications: [] });
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
   return nextState;
 }
@@ -883,7 +676,6 @@ export function applySignalLost(gameState) {
   const currentLoopCount = normalizedState.death?.loopCount ?? 0;
   const newLoopCount = currentLoopCount + 1;
 
-  // Stats cezası stateManager üzerinden uygulanıyor
   const penaltyState = stateManager.applyEffects(normalizedState, {
     mentalStability: -12,
     trust: -12,

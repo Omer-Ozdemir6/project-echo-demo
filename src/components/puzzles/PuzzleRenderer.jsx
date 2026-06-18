@@ -3,6 +3,7 @@ import DecryptPuzzleInput from "./DecryptPuzzleInput";
 import FrequencyPuzzleInput from "./FrequencyPuzzleInput";
 import MatchingPuzzleInput from "./MatchingPuzzleInput";
 import SatellitePuzzleInput from "./SatellitePuzzleInput";
+import EchoIsolationPuzzleInput from "./EchoIsolationPuzzleInput";
 import { getGameText } from "../../i18n/gameText";
 
 export default function PuzzleRenderer({
@@ -26,6 +27,10 @@ export default function PuzzleRenderer({
 
   if (puzzle.type === "decrypt") {
     return <DecryptPuzzleInput {...sharedProps} />;
+  }
+
+  if (puzzle.type === "echo") {
+    return <EchoIsolationPuzzleInput {...sharedProps} />;
   }
 
   if (puzzle.type === "frequency") {

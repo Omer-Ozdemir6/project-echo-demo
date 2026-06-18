@@ -8,9 +8,55 @@
   "puzzles": {
     "test_puzzle_01": {
       "id": "test_puzzle_01",
+      "type": "decrypt",
       "acceptedAnswers": ["echo", "ECHO", "Echo"],
       "successNodeId": "test_n_puzzle_success",
       "failureNodeId": "test_n_puzzle_fail"
+    },
+    "test_echo_isolation_01": {
+      "id": "test_echo_isolation_01",
+      "type": "echo_isolation",
+      "title": "TEST — EKO İZOLASYON",
+      "description": "Çakışan bilinç sinyallerini filtrele. Cipher'ın sesini izole et.",
+      "channels": [
+        {
+          "id": "loop_04",
+          "label": "DÖNGÜ-04",
+          "color": "red",
+          "waveFrequency": 2.3,
+          "messages": {
+            "loud": "...hepsi yalan... bırak bizi... dönme...",
+            "medium": "...bırak... yalan..."
+          }
+        },
+        {
+          "id": "echo_core",
+          "label": "EKO-ÇEKİRDEK",
+          "color": "purple",
+          "waveFrequency": 4.8,
+          "messages": {
+            "loud": "SIFIRLA. SIFIRLA. DÖNGÜ 28 HAZIR.",
+            "medium": "...sıfır... sıfır..."
+          }
+        },
+        {
+          "id": "cipher",
+          "label": "CİPHER",
+          "color": "cyan",
+          "waveFrequency": 1.5,
+          "messages": {
+            "loud": "...Elias... buradayım... hâlâ duyuyor musun...",
+            "medium": "...hâlâ... bura..."
+          }
+        }
+      ],
+      "targetChannelId": "cipher",
+      "isolationThreshold": 80,
+      "requiredLockHoldMs": 2500,
+      "lockedMessage": "[TEST BAŞARILI] Cipher sinyali izole edildi. EchoIsolationPuzzleInput sistemi çalışıyor.",
+      "acceptedAnswers": ["CIPHER_ISOLATED"],
+      "successNodeId": "test_n18_success",
+      "failureNodeId": "test_n18_fail"
     }
   },
 
@@ -21,39 +67,39 @@
       "speaker": "SYSTEM",
       "_testTarget": "systemAlert + typing + message",
       "events": [
-        { "type": "systemAlert", "text": "[TEST 01: TEMEL MESAJLAŞMA]", "pauseAfterMs": 1500 },
+        { "type": "systemAlert", "text": "[TEST 01: TEMEL MESAJLASMA]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 2000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bağlantı kuruldu. Bu mesajı görüyorsan typing → message zinciri çalışıyor.", "pauseAfterMs": 1200 },
-        { "type": "systemAlert", "text": "[BEKLENEN: systemAlert ✓ | typing ✓ | message ✓]" }
+        { "type": "message", "speaker": "ELIAS", "text": "Baglanti kuruldu. Bu mesaji goruyorsan typing → message zinciri calisiyor.", "pauseAfterMs": 1200 },
+        { "type": "systemAlert", "text": "[BEKLENEN: systemAlert | typing | message]" }
       ],
       "choices": [
-        { "id": "test_choice_warm", "text": "Anladım, devam et.", "nextNodeId": "test_n02" }
+        { "id": "test_choice_warm", "text": "Anladin, devam et.", "nextNodeId": "test_n02" }
       ]
     },
 
     "test_n02": {
       "id": "test_n02",
       "speaker": "ELIAS",
-      "_testTarget": "Seçim effects: trust, fear, memory minor/major",
+      "_testTarget": "Secim effects: trust, fear, memory, relationshipTags",
       "events": [
-        { "type": "systemAlert", "text": "[TEST 02: SEÇİM + EFFECTS]", "pauseAfterMs": 1500 },
+        { "type": "systemAlert", "text": "[TEST 02: SECIM + EFFECTS]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 2000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bir seçim yap. Her seçenek farklı stats ve memory etkisi bırakıyor." }
+        { "type": "message", "speaker": "ELIAS", "text": "Bir secim yap. Her secenek farkli stats ve memory etkisi birakiyor." }
       ],
       "choices": [
         {
-          "id": "test_warm_choice",
-          "text": "Sana yardım etmek istiyorum.",
+          "id": "test_warm_chosen",
+          "text": "Sana yardim etmek istiyorum.",
           "nextNodeId": "test_n03",
           "effects": {
             "trust": 10,
             "humanity": 5,
             "memory": ["test_warm_chosen"],
-             "relationshipTags": ["trusted_operator"]
+            "relationshipTags": ["trusted_operator"]
           }
         },
         {
-          "id": "test_cold_choice",
+          "id": "test_cold_chosen",
           "text": "Durumunu bildir, vakit kaybetme.",
           "nextNodeId": "test_n03",
           "effects": {
@@ -69,11 +115,11 @@
     "test_n03": {
       "id": "test_n03",
       "speaker": "SYSTEM",
-      "_testTarget": "statChange event → stateManager.applyEffects",
+      "_testTarget": "statChange event",
       "events": [
         { "type": "systemAlert", "text": "[TEST 03: statChange EVENT]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bir şeyler yanlış gidiyor. Korku artıyor, zihin sarsılıyor.", "pauseAfterMs": 1000 },
+        { "type": "message", "speaker": "ELIAS", "text": "Bir seyler yanlis gidiyor. Korku artiyor, zihin sarsiliyor.", "pauseAfterMs": 1000 },
         {
           "type": "statChange",
           "changes": {
@@ -85,10 +131,10 @@
         },
         { "type": "systemAlert", "text": "[BEKLENEN: fear +15 | mentalStability -45 | eliasStress +20]", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bu değişiklikler stats nesnesinde doğru yazıldıysa bir sonraki adıma geç." }
+        { "type": "message", "speaker": "ELIAS", "text": "Bu degisiklikler stats nesnesinde dogru yazildiysa bir sonraki adima gec." }
       ],
       "choices": [
-        { "id": "test_stat_ok", "text": "Stats güncellendi, devam.", "nextNodeId": "test_n04" }
+        { "id": "test_stat_ok", "text": "Stats guncellendi, devam.", "nextNodeId": "test_n04" }
       ]
     },
 
@@ -99,17 +145,11 @@
       "events": [
         { "type": "systemAlert", "text": "[TEST 04: MEMORY CONDITION]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Sistem hafızanı kontrol ediyor. Hangi seçimi yaptığını hatırlıyor mu?" }
+        { "type": "message", "speaker": "ELIAS", "text": "Sistem hafizani kontrol ediyor. Hangi secimi yaptigini hatirliyor mu?" }
       ],
       "branching": [
-        {
-          "conditions": { "memory:test_warm_chosen": true },
-          "nextNodeId": "test_n04_warm"
-        },
-        {
-          "conditions": { "memory:test_cold_chosen": true },
-          "nextNodeId": "test_n04_cold"
-        }
+        { "conditions": { "memory:test_warm_chosen": true }, "nextNodeId": "test_n04_warm" },
+        { "conditions": { "memory:test_cold_chosen": true }, "nextNodeId": "test_n04_cold" }
       ],
       "defaultNextNodeId": "test_n04_fallback"
     },
@@ -119,9 +159,9 @@
       "speaker": "ELIAS",
       "_testTarget": "Memory branch: warm path",
       "events": [
-        { "type": "systemAlert", "text": "[MEMORY BRANCH: WARM ✓]", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[MEMORY BRANCH: WARM]", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Hafıza sistemi çalışıyor. 'test_warm_chosen' tag okundu. Sıcak seçimi hatırladı.", "pauseAfterMs": 1200 }
+        { "type": "message", "speaker": "ELIAS", "text": "Hafiza sistemi calisiyor. 'test_warm_chosen' okundu. Sicak secimi hatirladim.", "pauseAfterMs": 1200 }
       ],
       "nextNodeId": "test_n05"
     },
@@ -131,9 +171,9 @@
       "speaker": "ELIAS",
       "_testTarget": "Memory branch: cold path",
       "events": [
-        { "type": "systemAlert", "text": "[MEMORY BRANCH: COLD ✓]", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[MEMORY BRANCH: COLD]", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Hafıza sistemi çalışıyor. 'test_cold_chosen' tag okundu. Soğuk seçimi hatırladı.", "pauseAfterMs": 1200 }
+        { "type": "message", "speaker": "ELIAS", "text": "Hafiza sistemi calisiyor. 'test_cold_chosen' okundu. Soguk secimi hatirladim.", "pauseAfterMs": 1200 }
       ],
       "nextNodeId": "test_n05"
     },
@@ -141,9 +181,9 @@
     "test_n04_fallback": {
       "id": "test_n04_fallback",
       "speaker": "SYSTEM",
-      "_testTarget": "Memory branch: fallback - BUG işareti",
+      "_testTarget": "Memory branch: fallback — BUG",
       "events": [
-        { "type": "systemAlert", "text": "[HATA: Memory branch çalışmadı! defaultNextNodeId tetiklendi]", "pauseAfterMs": 1500 }
+        { "type": "systemAlert", "text": "[HATA: Memory branch calismadi — defaultNextNodeId tetiklendi]", "pauseAfterMs": 1500 }
       ],
       "nextNodeId": "test_n05"
     },
@@ -159,12 +199,12 @@
           "fileId": "test_file_alpha",
           "fileType": "log",
           "title": "TEST DOSYASI ALPHA",
-          "content": "Bu dosya test amaçlıdır.\nDataBank sistemi çalışıyorsa bu dosyayı görebilirsin.\nCorrelation testi için bu dosyayı oku.",
-          "caption": "Sistem test kaydı — Alpha",
+          "content": "Bu dosya test amaclıdir.\nDataBank sistemi calisiyorsa bu dosyayi gorebilirsin.\nCorrelation testi icin bu dosyayi oku.",
+          "caption": "Sistem test kaydi — Alpha",
           "source": "TEST SİSTEMİ",
           "tags": ["test", "alpha"],
           "correlationTags": ["test_correlation"],
-          "message": "[TEST DOSYASI ALPHA VERİ BANKASINA ARŞİVLENDİ]",
+          "message": "[TEST DOSYASI ALPHA VERI BANKASINA ARSIVLENDI]",
           "pauseAfterMs": 1200
         },
         {
@@ -172,15 +212,15 @@
           "fileId": "test_file_beta",
           "fileType": "log",
           "title": "TEST DOSYASI BETA",
-          "content": "İkinci test dosyası.\nAlpha ve Beta ikisi de okunursa correlation tetiklenmeli.",
-          "caption": "Sistem test kaydı — Beta",
+          "content": "Ikinci test dosyasi.\nAlpha ve Beta ikisi de okunursa correlation tetiklenmeli.",
+          "caption": "Sistem test kaydi — Beta",
           "source": "TEST SİSTEMİ",
           "tags": ["test", "beta"],
           "correlationTags": ["test_correlation"],
-          "message": "[TEST DOSYASI BETA VERİ BANKASINA ARŞİVLENDİ]",
+          "message": "[TEST DOSYASI BETA VERI BANKASINA ARSIVLENDI]",
           "pauseAfterMs": 1200
         },
-        { "type": "systemAlert", "text": "[BEKLENEN: 2 dosya DataBank'ta görünmeli]" }
+        { "type": "systemAlert", "text": "[BEKLENEN: 2 dosya DataBank'ta gorünmeli]" }
       ],
       "choices": [
         { "id": "test_files_ok", "text": "Dosyalar görünüyor, devam.", "nextNodeId": "test_n06" }
@@ -190,11 +230,11 @@
     "test_n06": {
       "id": "test_n06",
       "speaker": "SYSTEM",
-      "_testTarget": "Puzzle sistemi",
+      "_testTarget": "Puzzle sistemi — decrypt",
       "events": [
-        { "type": "systemAlert", "text": "[TEST 06: PUZZLE SİSTEMİ]", "pauseAfterMs": 1500 },
+        { "type": "systemAlert", "text": "[TEST 06: PUZZLE SİSTEMİ — DECRYPT]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bir şifre sorusu var. Bu projenin adı ne? (İpucu: tek kelime, büyük harf)", "pauseAfterMs": 1000 },
+        { "type": "message", "speaker": "ELIAS", "text": "Bir sifre sorusu var. Bu projenin adi ne? (Ipucu: tek kelime, büyük harf)", "pauseAfterMs": 1000 },
         { "type": "puzzle", "puzzleId": "test_puzzle_01", "pauseAfterMs": 500 }
       ]
     },
@@ -202,11 +242,11 @@
     "test_n_puzzle_success": {
       "id": "test_n_puzzle_success",
       "speaker": "SYSTEM",
-      "_testTarget": "Puzzle doğru cevap",
+      "_testTarget": "Puzzle dogru cevap",
       "events": [
-        { "type": "systemAlert", "text": "[PUZZLE BAŞARILI ✓]", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[PUZZLE BASARILI]", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Doğru. Puzzle sistemi çalışıyor.", "pauseAfterMs": 1000 }
+        { "type": "message", "speaker": "ELIAS", "text": "Dogru. Puzzle sistemi calisiyor.", "pauseAfterMs": 1000 }
       ],
       "nextNodeId": "test_n07"
     },
@@ -214,11 +254,11 @@
     "test_n_puzzle_fail": {
       "id": "test_n_puzzle_fail",
       "speaker": "SYSTEM",
-      "_testTarget": "Puzzle yanlış cevap",
+      "_testTarget": "Puzzle yanlis cevap",
       "events": [
-        { "type": "systemAlert", "text": "[PUZZLE BAŞARISIZ — Tekrar dene]", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[PUZZLE BASARISIZ — failure node calisti]", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Yanlış. Cevap: ECHO. Failure node çalışıyor.", "pauseAfterMs": 1000 }
+        { "type": "message", "speaker": "ELIAS", "text": "Yanlis. Cevap: ECHO. Failure node calisiyor.", "pauseAfterMs": 1000 }
       ],
       "nextNodeId": "test_n07"
     },
@@ -230,14 +270,14 @@
       "events": [
         { "type": "systemAlert", "text": "[TEST 07: realTimeWait — 10 SANİYE BEKLE]", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Koridoru geçiyorum. Bekle.", "pauseAfterMs": 500 },
+        { "type": "message", "speaker": "ELIAS", "text": "Koridoru geciyorum. Bekle.", "pauseAfterMs": 500 },
         { "type": "realTimeWait", "seconds": 10 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Geçiş tamamlandı. realTimeWait çalışıyorsa bu mesaj 10 saniye sonra geldi.", "pauseAfterMs": 1000 },
-        { "type": "systemAlert", "text": "[BEKLENEN: 10 saniyelik duraklama ✓]" }
+        { "type": "message", "speaker": "ELIAS", "text": "Gecis tamamlandi. realTimeWait calisiyorsa bu mesaj 10 saniye sonra geldi.", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[BEKLENEN: 10 saniyelik duraklama]" }
       ],
       "choices": [
-        { "id": "test_wait_ok", "text": "Bekleme çalıştı, devam.", "nextNodeId": "test_n08" }
+        { "id": "test_wait_ok", "text": "Bekleme calisti, devam.", "nextNodeId": "test_n08" }
       ]
     },
 
@@ -251,36 +291,68 @@
           "type": "progressTask",
           "id": "test_progress_01",
           "title": "TERMINAL ERİŞİMİ",
-          "subtitle": "Sistem bağlantısı kuruluyor...",
+          "subtitle": "Sistem baglantisi kuruluyor...",
           "duration": 5000,
-          "completeText": "[TERMINAL ERİŞİMİ TAMAMLANDI ✓]",
+          "completeText": "[TERMINAL ERİŞİMİ TAMAMLANDI]",
           "tone": "system",
           "pauseAfterMs": 800
         }
       ],
       "choices": [
-        { "id": "test_progress_ok", "text": "Progress bar tamamlandı, devam.", "nextNodeId": "test_n09" }
+        { "id": "test_progress_ok", "text": "Progress bar tamamlandi, devam.", "nextNodeId": "test_n09" }
       ]
     },
 
     "test_n09": {
       "id": "test_n09",
       "speaker": "SYSTEM",
-      "_testTarget": "glitch + corruptMessage",
+      "_testTarget": "glitch + corruptMessage — 4 seviye (light / medium / heavy / extreme)",
       "events": [
-        { "type": "systemAlert", "text": "[TEST 09: GLITCH + CORRUPT MESSAGE]", "pauseAfterMs": 1500 },
-        { "type": "glitch", "duration": 900, "pauseAfterMs": 400 },
+        { "type": "systemAlert", "text": "[TEST 09: GLITCH + CORRUPT MESSAGE — 4 SEVİYE]", "pauseAfterMs": 1500 },
+        { "type": "typing", "speaker": "ELIAS", "duration": 1000 },
+        { "type": "message", "speaker": "ELIAS", "text": "Bozulmus sinyaller geliyor. 4 farkli seviye kontrol edilecek.", "pauseAfterMs": 800 },
+
+        { "type": "glitch", "duration": 600, "pauseAfterMs": 300 },
         {
           "type": "corruptMessage",
           "speaker": "UNKNOWN",
-          "text": "Bu mesaj bozulmuş görünmeli. Sistem düzgün çalışıyorsa farklı render ediliyor.",
+          "text": "Hafif bozulma — sistemin kenarinda bir sey var. Ilk temas.",
+          "corruption": "light",
           "pauseAfterMs": 1200
         },
-        { "type": "glitch", "duration": 600, "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[BEKLENEN: glitch animasyonu ✓ | corruptMessage farklı stilde ✓]" }
+
+        { "type": "glitch", "duration": 900, "pauseAfterMs": 300 },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "Orta seviye bozulma — The Echo aktif. Sinyal kirleniyor.",
+          "corruption": "medium",
+          "pauseAfterMs": 1200
+        },
+
+        { "type": "glitch", "duration": 1200, "pauseAfterMs": 300 },
+        {
+          "type": "corruptMessage",
+          "speaker": "CIPHER",
+          "text": "Agir bozulma — Cipher ele gecirildi. Bu ses bana ait mi?",
+          "corruption": "heavy",
+          "pauseAfterMs": 1200
+        },
+
+        { "type": "glitch", "duration": 1500, "pauseAfterMs": 300 },
+        {
+          "type": "corruptMessage",
+          "speaker": "THE ECHO",
+          "text": "SIFIRLA SIFIRLA DONGU 28 HAZIR SIFIRLA SIFIRLA",
+          "corruption": "extreme",
+          "pauseAfterMs": 1500
+        },
+
+        { "type": "glitch", "duration": 700, "pauseAfterMs": 500 },
+        { "type": "systemAlert", "text": "[BEKLENEN: 4 farkli bozulma seviyesi gorülmeli — light / medium / heavy / extreme]" }
       ],
       "choices": [
-        { "id": "test_glitch_ok", "text": "Glitch ve corrupt mesaj görüldü, devam.", "nextNodeId": "test_n10" }
+        { "id": "test_glitch_ok", "text": "4 seviye görüldü, devam.", "nextNodeId": "test_n10" }
       ]
     },
 
@@ -291,7 +363,7 @@
       "events": [
         { "type": "systemAlert", "text": "[TEST 10: CHARACTER BUSY — 15 SANİYE]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bağlantı kesiliyor. 15 saniye sonra geri dön.", "pauseAfterMs": 500 },
+        { "type": "message", "speaker": "ELIAS", "text": "Baglanti kesiliyor. 15 saniye sonra geri don.", "pauseAfterMs": 500 },
         {
           "type": "characterBusy",
           "id": "test_busy_01",
@@ -299,8 +371,8 @@
           "status": "TEST BÖLGESINDE",
           "durationMs": 15000,
           "returnNodeId": "test_n10_return",
-          "message": "[ELIAS TEST BÖLGESINDE — BAĞLANTI KESİLDİ]",
-          "notificationTitle": "Test Tamamlandı",
+          "message": "[ELIAS TEST BÖLGESINDE — BAGLANTI KESİLDİ]",
+          "notificationTitle": "Test Tamamlandi",
           "notificationBody": "Elias geri döndü.",
           "tone": "working"
         }
@@ -310,35 +382,31 @@
     "test_n10_return": {
       "id": "test_n10_return",
       "speaker": "ELIAS",
-      "_testTarget": "characterBusy dönüş node'u",
+      "_testTarget": "characterBusy donus node'u",
       "events": [
-        { "type": "systemAlert", "text": "[CHARACTER BUSY TAMAMLANDI ✓]", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[CHARACTER BUSY TAMAMLANDI]", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Geri döndüm. characterBusy çalışıyorsa 15 saniye bekledi ve bildirim geldi.", "pauseAfterMs": 1000 }
+        { "type": "message", "speaker": "ELIAS", "text": "Geri döndüm. characterBusy calisiyorsa 15 saniye bekledi ve bildirim geldi.", "pauseAfterMs": 1000 }
       ],
       "choices": [
-        { "id": "test_busy_ok", "text": "Busy sistemi çalıştı, devam.", "nextNodeId": "test_n11" }
+        { "id": "test_busy_ok", "text": "Busy sistemi calisti, devam.", "nextNodeId": "test_n11" }
       ]
     },
 
     "test_n11": {
       "id": "test_n11",
       "speaker": "SYSTEM",
-      "_testTarget": "Observer Mode — mentalStability düşük, seçim sonrası güncelleniyor",
+      "_testTarget": "Observer Mode — mentalStability düsük, secim sonrasi güncelleniyor",
       "events": [
         { "type": "systemAlert", "text": "[TEST 11: OBSERVER MODE]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "mentalStability Test 03'te -45 aldı. Şu an 55 civarında olmalı.", "pauseAfterMs": 1000 },
+        { "type": "message", "speaker": "ELIAS", "text": "mentalStability Test 03'te -45 aldi. Su an 55 civarinda olmali.", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Seçim yapınca chooseOption çalışır ve observerMode güncellenir.", "pauseAfterMs": 1000 },
-        { "type": "systemAlert", "text": "[BEKLENEN: Seçim sonrası story.observerMode = 'whisper']" }
+        { "type": "message", "speaker": "ELIAS", "text": "Secim yapinca chooseOption calisir ve observerMode guncellenir.", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[BEKLENEN: Secim sonrasi story.observerMode = 'whisper']" }
       ],
       "choices": [
-        {
-          "id": "test_observer_trigger",
-          "text": "Devam et.",
-          "nextNodeId": "test_n12"
-        }
+        { "id": "test_observer_trigger", "text": "Devam et.", "nextNodeId": "test_n12" }
       ]
     },
 
@@ -349,21 +417,12 @@
       "events": [
         { "type": "systemAlert", "text": "[TEST 12: observerMode CONDITION]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Observer mode kontrol ediliyor. Doğru node'a branch yapıyor mu?" }
+        { "type": "message", "speaker": "ELIAS", "text": "Observer mode kontrol ediliyor. Dogru node'a branch yapiyor mu?" }
       ],
       "branching": [
-        {
-          "conditions": { "observerMode": "control" },
-          "nextNodeId": "test_n12_control"
-        },
-        {
-          "conditions": { "observerMode": "dialogue" },
-          "nextNodeId": "test_n12_dialogue"
-        },
-        {
-          "conditions": { "observerMode": "whisper" },
-          "nextNodeId": "test_n12_whisper"
-        }
+        { "conditions": { "observerMode": "control" },  "nextNodeId": "test_n12_control"  },
+        { "conditions": { "observerMode": "dialogue" }, "nextNodeId": "test_n12_dialogue" },
+        { "conditions": { "observerMode": "whisper" },  "nextNodeId": "test_n12_whisper"  }
       ],
       "defaultNextNodeId": "test_n12_passive"
     },
@@ -371,11 +430,11 @@
     "test_n12_whisper": {
       "id": "test_n12_whisper",
       "speaker": "OBSERVER",
-      "_testTarget": "observerMode: whisper branch",
+      "_testTarget": "observerMode: whisper",
       "events": [
-        { "type": "systemAlert", "text": "[OBSERVER MODE: WHISPER ✓]", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[OBSERVER MODE: WHISPER]", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "OBSERVER", "duration": 2000 },
-        { "type": "message", "speaker": "OBSERVER", "text": "observerMode 'whisper' doğru tespit edildi. mentalStability 40-59 aralığında.", "pauseAfterMs": 1000 }
+        { "type": "message", "speaker": "OBSERVER", "text": "observerMode 'whisper' dogru tespit edildi. mentalStability 40-59 araliginda.", "pauseAfterMs": 1000 }
       ],
       "nextNodeId": "test_n13"
     },
@@ -383,11 +442,11 @@
     "test_n12_dialogue": {
       "id": "test_n12_dialogue",
       "speaker": "OBSERVER",
-      "_testTarget": "observerMode: dialogue branch",
+      "_testTarget": "observerMode: dialogue",
       "events": [
-        { "type": "systemAlert", "text": "[OBSERVER MODE: DIALOGUE ✓]", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[OBSERVER MODE: DIALOGUE]", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "OBSERVER", "duration": 2000 },
-        { "type": "message", "speaker": "OBSERVER", "text": "observerMode 'dialogue' tespit edildi. mentalStability 20-39 aralığında.", "pauseAfterMs": 1000 }
+        { "type": "message", "speaker": "OBSERVER", "text": "observerMode 'dialogue' tespit edildi. mentalStability 20-39 araliginda.", "pauseAfterMs": 1000 }
       ],
       "nextNodeId": "test_n13"
     },
@@ -395,11 +454,11 @@
     "test_n12_control": {
       "id": "test_n12_control",
       "speaker": "OBSERVER",
-      "_testTarget": "observerMode: control branch",
+      "_testTarget": "observerMode: control",
       "events": [
-        { "type": "systemAlert", "text": "[OBSERVER MODE: CONTROL ✓]", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[OBSERVER MODE: CONTROL]", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "OBSERVER", "duration": 2000 },
-        { "type": "message", "speaker": "OBSERVER", "text": "observerMode 'control' tespit edildi. mentalStability 0-19 aralığında.", "pauseAfterMs": 1000 }
+        { "type": "message", "speaker": "OBSERVER", "text": "observerMode 'control' tespit edildi. mentalStability 0-19 araliginda.", "pauseAfterMs": 1000 }
       ],
       "nextNodeId": "test_n13"
     },
@@ -407,11 +466,11 @@
     "test_n12_passive": {
       "id": "test_n12_passive",
       "speaker": "SYSTEM",
-      "_testTarget": "observerMode: passive (fallback - muhtemelen bug)",
+      "_testTarget": "observerMode: passive fallback — muhtemelen bug",
       "events": [
-        { "type": "systemAlert", "text": "[OBSERVER MODE: PASSIVE — mentalStability yeterince düşmedi veya condition çalışmıyor]", "pauseAfterMs": 1500 },
+        { "type": "systemAlert", "text": "[OBSERVER MODE: PASSIVE — mentalStability yeterince düsmedi veya condition calismıyor]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Test 03'te mentalStability -45 aldı ama observer mode whisper değil. statChange bug'ı olabilir.", "pauseAfterMs": 1000 }
+        { "type": "message", "speaker": "ELIAS", "text": "Test 03'te mentalStability -45 aldi ama observer mode whisper degil. statChange bug'i olabilir.", "pauseAfterMs": 1000 }
       ],
       "nextNodeId": "test_n13"
     },
@@ -423,13 +482,10 @@
       "events": [
         { "type": "systemAlert", "text": "[TEST 13: STATS CONDITION]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "fear 15 olmalı. Bu koşul fear min:10'u geçiyor mu?" }
+        { "type": "message", "speaker": "ELIAS", "text": "fear 15 olmali. Bu kosul fear min:10'u geciyor mu?" }
       ],
       "branching": [
-        {
-          "conditions": { "fear": { "min": 10 } },
-          "nextNodeId": "test_n13_fear_high"
-        }
+        { "conditions": { "fear": { "min": 10 } }, "nextNodeId": "test_n13_fear_high" }
       ],
       "defaultNextNodeId": "test_n13_fear_low"
     },
@@ -439,9 +495,9 @@
       "speaker": "SYSTEM",
       "_testTarget": "Stats condition: fear >= 10",
       "events": [
-        { "type": "systemAlert", "text": "[STATS CONDITION fear>=10: ✓]", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[STATS CONDITION fear>=10]", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Stats condition çalışıyor. fear 10'un üzerinde doğrulandı.", "pauseAfterMs": 1000 }
+        { "type": "message", "speaker": "ELIAS", "text": "Stats condition calisiyor. fear 10'un üzerinde dogrulandi.", "pauseAfterMs": 1000 }
       ],
       "nextNodeId": "test_n14"
     },
@@ -449,9 +505,9 @@
     "test_n13_fear_low": {
       "id": "test_n13_fear_low",
       "speaker": "SYSTEM",
-      "_testTarget": "Stats condition: BUG - fear beklenen değerde değil",
+      "_testTarget": "Stats condition: BUG — fear beklenen degerde degil",
       "events": [
-        { "type": "systemAlert", "text": "[HATA: fear 10'un altında — statChange çalışmıyor olabilir]", "pauseAfterMs": 1500 }
+        { "type": "systemAlert", "text": "[HATA: fear 10'un altinda — statChange calismıyor olabilir]", "pauseAfterMs": 1500 }
       ],
       "nextNodeId": "test_n14"
     },
@@ -459,11 +515,11 @@
     "test_n14": {
       "id": "test_n14",
       "speaker": "SYSTEM",
-      "_testTarget": "signalLost event + applySignalLost kanonik sistem",
+      "_testTarget": "signalLost event + applySignalLost",
       "events": [
         { "type": "systemAlert", "text": "[TEST 14: SIGNAL LOST + KANONİK ÖLÜM]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "The Echo yaklaşıyor. Sinyal kaybı simüle ediliyor.", "pauseAfterMs": 1000 },
+        { "type": "message", "speaker": "ELIAS", "text": "The Echo yaklasıyor. Sinyal kaybı simüle ediliyor.", "pauseAfterMs": 1000 },
         {
           "type": "signalLost",
           "duration": 3000,
@@ -473,26 +529,26 @@
         },
         { "type": "systemAlert", "text": "[BEKLENEN: loopCount +1 | mentalStability -12 | trust -12]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bağlantı yeniden kuruldu. death.loopCount konsol'da görünmeli.", "pauseAfterMs": 1000 }
+        { "type": "message", "speaker": "ELIAS", "text": "Baglanti yeniden kuruldu. death.loopCount konsol'da görünmeli.", "pauseAfterMs": 1000 }
       ],
       "choices": [
-        { "id": "test_signal_ok", "text": "Signal Lost çalıştı, devam.", "nextNodeId": "test_n15" }
+        { "id": "test_signal_ok", "text": "Signal Lost calisti, devam.", "nextNodeId": "test_n15" }
       ]
     },
 
     "test_n15": {
       "id": "test_n15",
       "speaker": "SYSTEM",
-      "_testTarget": "Story flag condition + flag set",
+      "_testTarget": "Story flag set + condition",
       "events": [
         { "type": "systemAlert", "text": "[TEST 15: STORY FLAG]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Story flag test ediliyor. unknownContactDiscovered false olmalı başlangıçta." }
+        { "type": "message", "speaker": "ELIAS", "text": "Story flag test ediliyor. unknownContactDiscovered false olmali baslangicta." }
       ],
       "choices": [
         {
           "id": "test_set_story_flag",
-          "text": "UNKNOWN ile iletişim kur.",
+          "text": "UNKNOWN ile iletisim kur.",
           "nextNodeId": "test_n15_flag_check",
           "effects": {
             "unknownContactDiscovered": true
@@ -509,10 +565,7 @@
         { "type": "systemAlert", "text": "[TEST 15B: STORY FLAG CONDITION CHECK]", "pauseAfterMs": 1500 }
       ],
       "branching": [
-        {
-          "conditions": { "unknownContactDiscovered": true },
-          "nextNodeId": "test_n15_flag_ok"
-        }
+        { "conditions": { "unknownContactDiscovered": true }, "nextNodeId": "test_n15_flag_ok" }
       ],
       "defaultNextNodeId": "test_n15_flag_fail"
     },
@@ -522,9 +575,9 @@
       "speaker": "SYSTEM",
       "_testTarget": "Story flag OK",
       "events": [
-        { "type": "systemAlert", "text": "[STORY FLAG CONDITION: ✓ unknownContactDiscovered = true]", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[STORY FLAG CONDITION: unknownContactDiscovered = true]", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Story flag sistemi çalışıyor.", "pauseAfterMs": 1000 }
+        { "type": "message", "speaker": "ELIAS", "text": "Story flag sistemi calisiyor.", "pauseAfterMs": 1000 }
       ],
       "nextNodeId": "test_n16"
     },
@@ -534,7 +587,7 @@
       "speaker": "SYSTEM",
       "_testTarget": "Story flag FAIL",
       "events": [
-        { "type": "systemAlert", "text": "[HATA: Story flag condition çalışmıyor]", "pauseAfterMs": 1500 }
+        { "type": "systemAlert", "text": "[HATA: Story flag condition calısmiyor]", "pauseAfterMs": 1500 }
       ],
       "nextNodeId": "test_n16"
     },
@@ -546,13 +599,10 @@
       "events": [
         { "type": "systemAlert", "text": "[TEST 16: RELATIONSHIP TAG]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Seçim 02'de hangi yol izlendi? Tag koşulu kontrol ediliyor." }
+        { "type": "message", "speaker": "ELIAS", "text": "Secim 02'de hangi yol izlendi? Tag kosulu kontrol ediliyor." }
       ],
       "branching": [
-        {
-          "conditions": { "tag:trusted_operator": true },
-          "nextNodeId": "test_n16_tag_ok"
-        }
+        { "conditions": { "tag:trusted_operator": true }, "nextNodeId": "test_n16_tag_ok" }
       ],
       "defaultNextNodeId": "test_n16_no_tag"
     },
@@ -562,9 +612,9 @@
       "speaker": "SYSTEM",
       "_testTarget": "Relationship tag found",
       "events": [
-        { "type": "systemAlert", "text": "[RELATIONSHIP TAG: trusted_operator ✓]", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[RELATIONSHIP TAG: trusted_operator bulundu]", "pauseAfterMs": 1000 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Relationship tag sistemi çalışıyor.", "pauseAfterMs": 1000 }
+        { "type": "message", "speaker": "ELIAS", "text": "Relationship tag sistemi calisiyor.", "pauseAfterMs": 1000 }
       ],
       "nextNodeId": "test_n17"
     },
@@ -572,11 +622,11 @@
     "test_n16_no_tag": {
       "id": "test_n16_no_tag",
       "speaker": "SYSTEM",
-      "_testTarget": "Relationship tag not found (expected if cold choice was made)",
+      "_testTarget": "Relationship tag not found — soguk secim yapildi veya tag sistemi bozuk",
       "events": [
-        { "type": "systemAlert", "text": "[RELATIONSHIP TAG: trusted_operator YOK — soğuk seçim yapıldı veya tag sistemi çalışmıyor]", "pauseAfterMs": 1500 },
+        { "type": "systemAlert", "text": "[RELATIONSHIP TAG: trusted_operator YOK — soguk secim yapildi veya relationshipTags handler eksik]", "pauseAfterMs": 1500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Soğuk seçim yapıldıysa bu normal. Sıcak seçimde tag eklenmeli.", "pauseAfterMs": 1000 }
+        { "type": "message", "speaker": "ELIAS", "text": "Soguk secim yapıldiysa bu normal. Sicak secimde tag eklenmeli.", "pauseAfterMs": 1000 }
       ],
       "nextNodeId": "test_n17"
     },
@@ -584,37 +634,146 @@
     "test_n17": {
       "id": "test_n17",
       "speaker": "SYSTEM",
-      "_testTarget": "Test tamamlandı — Final rapor",
+      "_testTarget": "conditionalNextNodeId — leg injury ile rota degisimi",
+      "events": [
+        { "type": "systemAlert", "text": "[TEST 17: CONDİTİONAL NEXT NODE ID]", "pauseAfterMs": 1500 },
+        {
+          "type": "statChange",
+          "changes": { "legInjury": true },
+          "pauseAfterMs": 600
+        },
+        { "type": "systemAlert", "text": "[legInjury: true uygulandı — kosma kapasitesi azaldı]", "pauseAfterMs": 1000 },
+        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
+        { "type": "message", "speaker": "ELIAS", "text": "Bacagim yarali. Her iki secim de conditionalNext ile kontrol edilecek. Yaraliysa farkli node'a gitmeli.", "pauseAfterMs": 1000 }
+      ],
+      "choices": [
+        {
+          "id": "test_conditional_left",
+          "text": "Sola don.",
+          "conditionalNext": [
+            { "if": { "legInjury": true },  "nextNodeId": "test_n17_injured" },
+            { "if": { "legInjury": false }, "nextNodeId": "test_n17_healthy" }
+          ],
+          "nextNodeId": "test_n17_healthy",
+          "effects": { "riskPattern": 1 }
+        },
+        {
+          "id": "test_conditional_straight",
+          "text": "Düz kos.",
+          "conditionalNext": [
+            { "if": { "legInjury": true },  "nextNodeId": "test_n17_injured" },
+            { "if": { "legInjury": false }, "nextNodeId": "test_n17_healthy" }
+          ],
+          "nextNodeId": "test_n17_healthy",
+          "effects": { "riskPattern": 2 }
+        }
+      ]
+    },
+
+    "test_n17_injured": {
+      "id": "test_n17_injured",
+      "speaker": "SYSTEM",
+      "_testTarget": "conditionalNextNodeId: yarali rota tetiklendi — BEKLENEN",
+      "events": [
+        { "type": "systemAlert", "text": "[CONDİTİONAL NEXT: YARALI ROTA — DOGRU]", "pauseAfterMs": 1000 },
+        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
+        { "type": "message", "speaker": "ELIAS", "text": "Yavasliyor. conditionalNextNodeId legInjury:true kosulunu okudu ve dogru rotaya yonlendirdi.", "pauseAfterMs": 1000 }
+      ],
+      "nextNodeId": "test_n18"
+    },
+
+    "test_n17_healthy": {
+      "id": "test_n17_healthy",
+      "speaker": "SYSTEM",
+      "_testTarget": "conditionalNextNodeId: saglikli rota — BEKLENMEYEN, BUG",
+      "events": [
+        { "type": "systemAlert", "text": "[HATA: Saglikli rotaya gidildi — legInjury uygulanmamis veya conditionalNext calismıyor]", "pauseAfterMs": 1500 },
+        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
+        { "type": "message", "speaker": "ELIAS", "text": "Bu rota görünüyorsa conditionalNextNodeId sistemi henüz calismıyor.", "pauseAfterMs": 1000 }
+      ],
+      "nextNodeId": "test_n18"
+    },
+
+    "test_n18": {
+      "id": "test_n18",
+      "speaker": "SYSTEM",
+      "_testTarget": "echo_isolation puzzle — EchoIsolationPuzzleInput",
+      "events": [
+        { "type": "systemAlert", "text": "[TEST 18: EKO İZOLASYON PUZZLE]", "pauseAfterMs": 1500 },
+        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
+        { "type": "message", "speaker": "ELIAS", "text": "Cakisan bilincler var. Cipher'i bulmam lazim — digerleri The Echo. Dogru kanali izole et.", "pauseAfterMs": 1000 },
+        { "type": "puzzle", "puzzleId": "test_echo_isolation_01", "pauseAfterMs": 500 }
+      ]
+    },
+
+    "test_n18_success": {
+      "id": "test_n18_success",
+      "speaker": "SYSTEM",
+      "_testTarget": "echo_isolation basarili",
+      "events": [
+        { "type": "systemAlert", "text": "[EKO İZOLASYON: BASARILI]", "pauseAfterMs": 1000 },
+        { "type": "typing", "speaker": "CIPHER", "duration": 2000 },
+        { "type": "message", "speaker": "CIPHER", "text": "Beni duydun. EchoIsolationPuzzleInput sistemi calisiyor. Cipher sinyali izole edildi.", "pauseAfterMs": 1000 }
+      ],
+      "nextNodeId": "test_n19"
+    },
+
+    "test_n18_fail": {
+      "id": "test_n18_fail",
+      "speaker": "SYSTEM",
+      "_testTarget": "echo_isolation basarisiz",
+      "events": [
+        { "type": "systemAlert", "text": "[EKO İZOLASYON: BASARISIZ — yanlis kanal veya sistem calısmiyor]", "pauseAfterMs": 1000 },
+        { "type": "glitch", "duration": 800, "pauseAfterMs": 300 },
+        {
+          "type": "corruptMessage",
+          "speaker": "THE ECHO",
+          "text": "YANLIS KANAL. SIFIRLA. SIFIRLA.",
+          "corruption": "heavy",
+          "pauseAfterMs": 1200
+        }
+      ],
+      "nextNodeId": "test_n19"
+    },
+
+    "test_n19": {
+      "id": "test_n19",
+      "speaker": "SYSTEM",
+      "_testTarget": "Test tamamlandi — Final rapor (18 test)",
       "events": [
         { "type": "systemAlert", "text": "════════════════════════════", "pauseAfterMs": 500 },
-        { "type": "systemAlert", "text": "[TEST SENARYOSU TAMAMLANDI]", "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "[TÜM TEST SENARYOSU TAMAMLANDI — 18 TEST]", "pauseAfterMs": 1000 },
         { "type": "systemAlert", "text": "════════════════════════════", "pauseAfterMs": 500 },
         { "type": "typing", "speaker": "ELIAS", "duration": 2000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Tüm sistemler test edildi. Konsol loglarını kontrol et.", "pauseAfterMs": 1200 },
-        { "type": "systemAlert", "text": "[01] systemAlert + typing + message", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[02] choice effects: trust, memory", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[03] statChange event", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[04] memory condition branch", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[05] file collection + DataBank", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[06] puzzle sistemi", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[07] realTimeWait", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[08] progressTask", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[09] glitch + corruptMessage", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[10] characterBusy", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[11-12] observerMode", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[13] stats min/max condition", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[14] signalLost + applySignalLost", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[15] story flag condition", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[16] relationship tag condition", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "════════════════════════════", "pauseAfterMs": 500 }
+        { "type": "message", "speaker": "ELIAS", "text": "18 test tamamlandi. Basariyla gecildiyse Episode 01'e gecmeye hazirız.", "pauseAfterMs": 1200 },
+        { "type": "systemAlert", "text": "[01] systemAlert + typing + message", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[02] choice effects — trust, memory, relationshipTags", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[03] statChange event", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[04] memory condition branch", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[05] file collection + DataBank", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[06] puzzle — decrypt", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[07] realTimeWait", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[08] progressTask", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[09] glitch + corruptMessage — 4 seviye", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[10] characterBusy", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[11-12] observerMode — passive/whisper/dialogue/control", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[13] stats min/max condition", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[14] signalLost + applySignalLost", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[15] story flag condition", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[16] relationship tag condition", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[17] conditionalNextNodeId — injury routing", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "[18] echo_isolation puzzle — EchoIsolationPuzzleInput", "pauseAfterMs": 300 },
+        { "type": "systemAlert", "text": "════════════════════════════", "pauseAfterMs": 500 },
+        { "type": "systemAlert", "text": "MOTOR HAZIR. EPİSODE 01 BASLASIN.", "pauseAfterMs": 1000 }
       ],
       "choices": [
         {
           "id": "test_restart",
-          "text": "Testi baştan çalıştır.",
+          "text": "Testi bastan calistir.",
           "nextNodeId": "test_n01"
         }
       ]
     }
+
   }
 }

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { getGameText } from "../i18n/gameText";
 import { playSound } from "../audio/soundManager";
+import CorruptMessageBubble from "./CorruptMessageBubble";
 
 function resolveText(key, fallback = "", language = "en") {
   return getGameText(key, fallback, language);
@@ -71,6 +72,12 @@ export default function MessageFeed({
 
     case "OBSERVER":
       return "text-violet-300";
+
+      case "CIPHER":
+  return "text-amber-200/70";   // soluk, ele geçirilmiş
+
+case "THE ECHO":
+  return "text-rose-400";       // doğrudan tehdit
 
     default:
       return "text-cyan-300/80";
@@ -178,22 +185,23 @@ export default function MessageFeed({
           );
         }
 
-        if (isCorrupt) {
-          return (
-            <div
-              key={`${messageText}-${index}`}
-              className="max-w-[92%] animate-[messageIn_0.35s_ease-out_both] sm:max-w-[78%]"
-            >
-              <span className="mb-2 block text-[11px] tracking-[0.14em] text-cyan-300/80">
-                {messageSpeaker}
-              </span>
-
-              <p className="inline-block animate-[corruptTextPulse_0.55s_infinite] border border-rose-400/30 bg-rose-950/25 px-4 py-3 text-sm leading-6 text-rose-400 drop-shadow-[0_0_10px_rgba(251,113,133,0.75)] sm:text-base">
-                {messageText}
-              </p>
-            </div>
-          );
-        }
+if (isCorrupt) {
+  return (
+    <div
+      key={`${messageText}-${index}`}
+      className="max-w-[92%] animate-[messageIn_0.35s_ease-out_both] sm:max-w-[78%]"
+    >
+      <span className={["mb-2 block text-[11px] tracking-[0.14em]",
+        getSpeakerColor(messageSpeaker, isPlayer, isSystemAlert)].join(" ")}>
+        {messageSpeaker}
+      </span>
+      <CorruptMessageBubble
+        text={messageText}
+        level={message.corruption || "medium"}
+      />
+    </div>
+  );
+}
 
         return (
           <div
