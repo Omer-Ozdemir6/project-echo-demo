@@ -62,11 +62,10 @@ function main() {
 
     writeJson(trPath, nextTrLocale);
 
-    console.log(`TR locale generated: ${fileName}`);
+
   });
 
-  console.log("Done.");
-  console.log(`TR locale folder updated: ${TR_LOCALE_DIR}`);
+
 }
 
 main();

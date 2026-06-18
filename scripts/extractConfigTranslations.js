@@ -134,12 +134,12 @@ function main() {
 
     writeJson(config.filePath, data);
 
-    console.log(`Updated config: ${config.filePath}`);
+
   });
 
   writeJson(EN_LOCALE_PATH, locale);
 
-  console.log("Config translations extracted.");
+
 }
 
 main();

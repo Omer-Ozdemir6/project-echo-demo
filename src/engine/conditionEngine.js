@@ -109,6 +109,13 @@ export function evaluateConditions(
       ) {
         return false;
       }
+      if (key === "observerMode") {
+  const currentMode = save.story?.observerMode || "passive";
+  if (currentMode !== rule) {
+    return false;
+  }
+  continue;
+}
 
       if (
         rule.max !== undefined &&

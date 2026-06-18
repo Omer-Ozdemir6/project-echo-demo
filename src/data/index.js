@@ -32,13 +32,13 @@ export const episodes =
       )
   );
 
-console.log("LOADED EPISODES");
+
 console.table(
   Object.keys(episodes)
 );
 
 export const DEFAULT_EPISODE_ID =
-  "episode_01";
+  "episode_test";
 
 export function getEpisode(
   episodeId = DEFAULT_EPISODE_ID

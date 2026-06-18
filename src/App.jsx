@@ -12,12 +12,14 @@ import {
   markFileAsRead,
   resolveActiveWaitTask,
   clearPendingNotifications,
+  applySignalLost,
   getCurrentEpisode
 } from "./engine/gameEngine";
 import { playNodeEvents } from "./engine/eventPlayer";
 import { runIntroTimeline } from "./engine/introEngine";
 import { runBootStep } from "./engine/bootEngine";
 import { evaluateConditions } from "./engine/conditionEngine";
+import stateManager from "./engine/stateManager";
 
 import gameConfig from "./data/game.config.json";
 import bootConfig from "./data/boot.config.json";
@@ -86,11 +88,9 @@ function startIntroAudio() {
   audio.volume = 0.85;
   audio.preload = "auto";
 
-  console.log("AUDIO SRC:", audio.src);
-  console.log("CAN PLAY MP3:", audio.canPlayType("audio/mpeg"));
 
   audio.addEventListener("loadedmetadata", () => {
-    console.log("AUDIO LOADED:", audio.duration);
+
   });
 
   audio.addEventListener("error", () => {
@@ -415,9 +415,14 @@ function startGame() {
       onGlitchStart: () => setIsGlitching(true),
       onGlitchStop: () => setIsGlitching(false),
 
-      onSignalLost: (message) => {
-        setSignalStatus({ type: "lost", message });
-      },
+onSignalLost: (message) => {
+  setSignalStatus({ type: "lost", message });
+  
+  // Kanonik ölüm sistemi
+  setGameState((prev) => {
+    return applySignalLost(prev);
+  });
+},
 
       onSignalRestored: (message) => {
         setSignalStatus({ type: "restored", message });
@@ -468,17 +473,7 @@ function startGame() {
 
 onStatChange: (changes) => {
   setGameState((prev) => {
-    const nextState = {
-      ...prev,
-      trust: Math.max(0, Math.min(100, prev.trust + (changes.trust || 0))),
-      danger: Math.max(0, Math.min(100, prev.danger + (changes.danger || 0))),
-      morale: Math.max(0, Math.min(100, prev.morale + (changes.morale || 0))),
-      signalStrength: Math.max(
-        0,
-        Math.min(100, (prev.signalStrength ?? 96) + (changes.signalStrength || 0))
-      )
-    };
-
+    const nextState = stateManager.applyEffects(prev, changes);
     saveGameState(nextState);
     return nextState;
   });
@@ -536,10 +531,7 @@ onComplete: () => {
 
   // EPISODE TRANSITION
 if (currentNode?.nextEpisodeId) {
-  console.log(
-    "EPISODE TRANSITION TRIGGERED",
-    currentNode.nextEpisodeId
-  );
+
 
   setTimeout(() => {
     setGameState(prev => {
@@ -551,15 +543,9 @@ if (currentNode?.nextEpisodeId) {
             currentNode.nextEpisodeId
         });
 
-      console.log(
-        "NEXT EPISODE FOUND",
-        nextEpisode?.id
-      );
 
-      console.log(
-        "NEXT START NODE",
-        nextEpisode?.startNodeId
-      );
+
+
 
       const nextState = {
         ...prev,
@@ -569,10 +555,7 @@ if (currentNode?.nextEpisodeId) {
           nextEpisode.startNodeId
       };
 
-      console.log(
-        "SAVING STATE",
-        nextState
-      );
+
 
       saveGameState(nextState);
 
@@ -734,15 +717,9 @@ function handleChoice(choiceId) {
       />
     );
   }
-  console.log(
-  "CURRENT NODE:",
-  currentNode
-);
 
-console.log(
-  "CURRENT NODE CHOICES:",
-  currentNode?.choices
-);
+
+
   const visibleChoices =
   (currentNode?.choices || []).filter(
     (choice) =>
@@ -764,20 +741,7 @@ const canShowChoices =
   !isGlitching &&
   !signalStatus &&
   !progressTask;
-  console.log("NODE:", currentNode?.id);
-console.log("NODE FINISHED:", nodeFinished);
-console.log("VISIBLE CHOICES:", visibleChoices);
-console.log("CAN SHOW:", canShowChoices);
 
-console.log("CURRENT EPISODE", gameState.episodeId);
-console.log("CURRENT NODE", gameState.currentNodeId);
-console.log("CURRENT NODE OBJECT", currentNode?.id);
-console.log(
-  "EPISODE:",
-  gameState.episodeId,
-  "NODE:",
-  gameState.currentNodeId
-);
 
   return (
     <TerminalScreen

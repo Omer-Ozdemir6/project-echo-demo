@@ -23,10 +23,7 @@ class StateManager {
     effects = {}
   ) {
 
-    console.log(
-      "[StateManager] EFFECTS RECEIVED:",
-      effects
-    );
+
 
     const updatedState =
       structuredClone(
@@ -45,11 +42,7 @@ class StateManager {
     ).forEach(
       ([key, value]) => {
 
-        console.log(
-          "[StateManager] Processing:",
-          key,
-          value
-        );
+
 
         // MEMORY
 
@@ -65,10 +58,6 @@ class StateManager {
           memories.forEach(
             memoryId => {
 
-              console.log(
-                "[StateManager] Adding memory:",
-                memoryId
-              );
 
               memoryEngine
                 .recordMemory(
@@ -134,59 +123,39 @@ class StateManager {
           return;
         }
 
-        // FLAGS
+// STATS
+if (updatedState.stats && updatedState.stats[key] !== undefined) {
+  updatedState.stats[key] = clamp(updatedState.stats[key] + value);
+  return;
+}
 
-        if (
-          typeof value ===
-            "boolean" &&
-          updatedState.flags
-        ) {
+// STORY ← FLAGS'tan ÖNCE
+if (updatedState.story && updatedState.story[key] !== undefined) {
+  updatedState.story[key] = value;
+  return;
+}
 
-          updatedState.flags[
-            key
-          ] = value;
-
-          return;
-        }
-
-        // STORY
-
-        if (
-          updatedState.story &&
-          updatedState.story[
-            key
-          ] !== undefined
-        ) {
-
-          updatedState.story[
-            key
-          ] = value;
-
-          return;
-        }
-
-        // RELATIONSHIP
-
-        if (
-          updatedState.relationship &&
-          updatedState.relationship[
-            key
-          ] !== undefined
-        ) {
-
-          updatedState.relationship[
-            key
-          ] = value;
-
-          return;
-        }
+// RELATIONSHIP ← FLAGS'tan ÖNCE
+if (updatedState.relationship && updatedState.relationship[key] !== undefined) {
+  updatedState.relationship[key] = value;
+  return;
+}
+// RELATIONSHIP TAGS
+if (key === "relationshipTags" && Array.isArray(value)) {
+  if (!Array.isArray(updatedState.relationshipTags)) {
+    updatedState.relationshipTags = [];
+  }
+  value.forEach(tag => {
+    if (!updatedState.relationshipTags.includes(tag)) {
+      updatedState.relationshipTags.push(tag);
+    }
+  });
+  return;
+}
       }
     );
 
-    console.log(
-      "[StateManager] Memory after update:",
-      updatedState.memory
-    );
+
 
     // DEATH CHECK
 
@@ -202,9 +171,7 @@ class StateManager {
       updatedState.death
         .deathRouteActive = true;
 
-      console.log(
-        "[StateManager] Death route activated"
-      );
+
     }
 
     return updatedState;

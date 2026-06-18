@@ -2,16 +2,44 @@ import { DEFAULT_EPISODE_ID, getEpisode, correlations } from "../data";
 import { applyChoice } from "./choiceEngine";
 import { getTriggeredEvents } from "./eventEngine";
 import { calculateEnding } from "./endingEngine";
+import stateManager from "./stateManager";
 
 const STORAGE_KEY = "project_echo_progress";
 
 function clampStat(value, min = 0, max = 100) {
   const number = Number(value);
-
   if (Number.isNaN(number)) return min;
-
   return Math.max(min, Math.min(max, number));
 }
+
+// ─────────────────────────────────────────────
+// OBSERVER MODE HELPER
+// ─────────────────────────────────────────────
+
+function resolveObserverMode(state) {
+  const mentalStability = state.stats?.mentalStability ?? 100;
+
+  if (mentalStability <= 19) return "control";
+  if (mentalStability <= 39) return "dialogue";
+  if (mentalStability <= 59) return "whisper";
+  return "passive";
+}
+
+function applyObserverMode(state) {
+  const observerMode = resolveObserverMode(state);
+
+  return {
+    ...state,
+    story: {
+      ...state.story,
+      observerMode
+    }
+  };
+}
+
+// ─────────────────────────────────────────────
+// FRESH STATE
+// ─────────────────────────────────────────────
 
 function createFreshGameState() {
   const episode = getEpisode(DEFAULT_EPISODE_ID);
@@ -22,30 +50,31 @@ function createFreshGameState() {
 
     history: [],
 
-stats: {
-  trust: 50,
-  humanity: 50,
+    stats: {
+      trust: 50,
+      humanity: 50,
 
-  fear: 0,
-  resentment: 0,
+      fear: 0,
+      resentment: 0,
 
-  dependency: 50,
-  curiosity: 0,
+      dependency: 50,
+      curiosity: 0,
 
-  riskPattern: 0,
-  deathRisk: 0,
+      riskPattern: 0,
+      deathRisk: 0,
 
-  mentalStability: 100,
-  identityFracture: 0,
+      mentalStability: 100,
+      identityFracture: 0,
 
-  injury: 0,
-  oxygen: 100,
+      injury: 0,
+      oxygen: 100,
 
-  machinePath: 0,
-  humanityPath: 0,
+      machinePath: 0,
+      humanityPath: 0,
 
-  eliasStress: 0
-},
+      eliasStress: 0,
+      echoProximity: 0
+    },
 
     injuries: {
       legInjury: false,
@@ -81,13 +110,22 @@ stats: {
       replacementPreparationActive: false,
       candidateIdentified: false,
       unknownContactDiscovered: false,
-      operatorTargetConfirmed: false
+      operatorTargetConfirmed: false,
+
+      observerMode: "passive",
+      kiraIdentityRevealed: false,
+      operatorIdentityRevealed: false,
+      eliasFullMemoryRestored: false,
+      echoNatureUnderstood: false,
+      siblingInsideFacility: false
     },
 
     death: {
       deathRouteActive: false,
       criticalDeathRisk: false,
-      timesNearDeath: 0
+      timesNearDeath: 0,
+      loopCount: 0,
+      signalLostCount: 0
     },
 
     checkpoint: {
@@ -119,6 +157,10 @@ stats: {
   };
 }
 
+// ─────────────────────────────────────────────
+// NORMALIZE
+// ─────────────────────────────────────────────
+
 function normalizeGameState(state) {
   const fallback = createFreshGameState();
 
@@ -142,12 +184,71 @@ function normalizeGameState(state) {
   return {
     episodeId,
     currentNodeId,
+
     history: Array.isArray(state.history) ? state.history : [],
-    trust: typeof state.trust === "number" ? state.trust : 50,
-    danger: typeof state.danger === "number" ? state.danger : 10,
-    morale: typeof state.morale === "number" ? state.morale : 60,
-    signalStrength:
-  typeof state.signalStrength === "number" ? state.signalStrength : 96,
+
+    stats:
+      state.stats && typeof state.stats === "object"
+        ? state.stats
+        : fallback.stats,
+
+    injuries:
+      state.injuries && typeof state.injuries === "object"
+        ? state.injuries
+        : fallback.injuries,
+
+    flags:
+      state.flags && typeof state.flags === "object"
+        ? state.flags
+        : {},
+
+    memory: {
+      minor: Array.isArray(state?.memory?.minor) ? state.memory.minor : [],
+      major: Array.isArray(state?.memory?.major) ? state.memory.major : [],
+      critical: Array.isArray(state?.memory?.critical) ? state.memory.critical : []
+    },
+
+    relationship:
+      state.relationship && typeof state.relationship === "object"
+        ? state.relationship
+        : fallback.relationship,
+
+    relationshipTags: Array.isArray(state.relationshipTags)
+      ? state.relationshipTags
+      : [],
+
+    callbackUsage:
+      state.callbackUsage && typeof state.callbackUsage === "object"
+        ? state.callbackUsage
+        : {},
+
+    scheduledEvents: Array.isArray(state.scheduledEvents)
+      ? state.scheduledEvents
+      : [],
+
+    completedEvents: Array.isArray(state.completedEvents)
+      ? state.completedEvents
+      : [],
+
+    story:
+      state.story && typeof state.story === "object"
+        ? state.story
+        : fallback.story,
+
+    death:
+      state.death && typeof state.death === "object"
+        ? state.death
+        : fallback.death,
+
+    checkpoint:
+      state.checkpoint && typeof state.checkpoint === "object"
+        ? state.checkpoint
+        : fallback.checkpoint,
+
+    endings:
+      state.endings && typeof state.endings === "object"
+        ? state.endings
+        : fallback.endings,
 
     solvedPuzzles:
       state.solvedPuzzles && typeof state.solvedPuzzles === "object"
@@ -173,8 +274,7 @@ function normalizeGameState(state) {
         : null,
 
     unlockedCorrelations:
-      state.unlockedCorrelations &&
-      typeof state.unlockedCorrelations === "object"
+      state.unlockedCorrelations && typeof state.unlockedCorrelations === "object"
         ? state.unlockedCorrelations
         : {},
 
@@ -182,114 +282,23 @@ function normalizeGameState(state) {
       ? state.pendingNotifications
       : [],
 
-collectedFiles: Array.isArray(state.collectedFiles)
-  ? state.collectedFiles
-  : [],
+    collectedFiles: Array.isArray(state.collectedFiles)
+      ? state.collectedFiles
+      : [],
 
-  stats:
-  state.stats && typeof state.stats === "object"
-    ? state.stats
-    : fallback.stats,
+    busyState:
+      state.busyState && typeof state.busyState === "object"
+        ? state.busyState
+        : null,
 
-injuries:
-  state.injuries && typeof state.injuries === "object"
-    ? state.injuries
-    : fallback.injuries,
-
-flags:
-  state.flags && typeof state.flags === "object"
-    ? state.flags
-    : {},
-
-memory:
-  {
-    minor:
-      Array.isArray(
-        state?.memory?.minor
-      )
-        ? state.memory.minor
-        : [],
-
-    major:
-      Array.isArray(
-        state?.memory?.major
-      )
-        ? state.memory.major
-        : [],
-
-    critical:
-      Array.isArray(
-        state?.memory?.critical
-      )
-        ? state.memory.critical
-        : []
-  },
-
-relationship:
-  state.relationship &&
-  typeof state.relationship === "object"
-    ? state.relationship
-    : fallback.relationship,
-
-relationshipTags:
-  Array.isArray(state.relationshipTags)
-    ? state.relationshipTags
-    : [],
-
-callbackUsage:
-  state.callbackUsage &&
-  typeof state.callbackUsage === "object"
-    ? state.callbackUsage
-    : {},
-
-scheduledEvents:
-  Array.isArray(state.scheduledEvents)
-    ? state.scheduledEvents
-    : [],
-
-completedEvents:
-  Array.isArray(state.completedEvents)
-    ? state.completedEvents
-    : [],
-
-story:
-  state.story &&
-  typeof state.story === "object"
-    ? state.story
-    : fallback.story,
-
-death:
-  state.death &&
-  typeof state.death === "object"
-    ? state.death
-    : fallback.death,
-
-checkpoint:
-  state.checkpoint &&
-  typeof state.checkpoint === "object"
-    ? state.checkpoint
-    : fallback.checkpoint,
-
-endings:
-  state.endings &&
-  typeof state.endings === "object"
-    ? state.endings
-    : fallback.endings,
-
-busyState:
-  state.busyState && typeof state.busyState === "object"
-    ? state.busyState
-    : null,
-
-mayaTrust:
-  typeof state.mayaTrust === "number" ? state.mayaTrust : 0,
-
-haleTrust:
-  typeof state.haleTrust === "number" ? state.haleTrust : 0
+    mayaTrust: typeof state.mayaTrust === "number" ? state.mayaTrust : 0,
+    haleTrust: typeof state.haleTrust === "number" ? state.haleTrust : 0
   };
 }
 
-
+// ─────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────
 
 function normalizeAnswer(value) {
   return String(value || "")
@@ -322,6 +331,10 @@ function buildRewardFile(reward, correlation) {
   };
 }
 
+// ─────────────────────────────────────────────
+// CORRELATIONS
+// ─────────────────────────────────────────────
+
 function checkCorrelations(gameState) {
   let nextState = normalizeGameState(gameState);
 
@@ -339,7 +352,6 @@ function checkCorrelations(gameState) {
       const file = nextState.collectedFiles.find(
         (item) => item.id === requiredFileId
       );
-
       return file && file.isNew === false;
     });
 
@@ -353,7 +365,6 @@ function checkCorrelations(gameState) {
       const alreadyCollected = collectedFiles.some(
         (file) => file.id === rewardFile.id
       );
-
       if (!alreadyCollected) {
         collectedFiles = [...collectedFiles, rewardFile];
       }
@@ -397,6 +408,10 @@ function checkCorrelations(gameState) {
   return nextState;
 }
 
+// ─────────────────────────────────────────────
+// EXPORTS — READ
+// ─────────────────────────────────────────────
+
 export function getInitialGameState() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -422,32 +437,17 @@ export function getCurrentEpisode(gameState) {
 }
 
 export function getCurrentNode(gameState) {
+  const normalizedState = normalizeGameState(gameState);
+  const episode = getCurrentEpisode(normalizedState);
 
-  const normalizedState =
-    normalizeGameState(gameState);
 
-  const episode =
-    getCurrentEpisode(
-      normalizedState
-    );
 
-  console.log(
-    "LOOKING FOR NODE:",
-    normalizedState.currentNodeId
-  );
-
-  console.log(
-    "AVAILABLE NODES:",
-    Object.keys(episode.nodes)
-  );
-
-  const node =
-    episode.nodes[
-      normalizedState.currentNodeId
-    ] || null;
-
-  return node;
+  return episode.nodes[normalizedState.currentNodeId] || null;
 }
+
+// ─────────────────────────────────────────────
+// EXPORTS — CHOOSE OPTION
+// ─────────────────────────────────────────────
 
 export function chooseOption(gameState, choiceId) {
   const normalizedState = normalizeGameState(gameState);
@@ -462,13 +462,12 @@ export function chooseOption(gameState, choiceId) {
 
   if (!selectedChoice) throw new Error("Choice not found");
 
-if (selectedChoice.puzzleId) {
-  return setActivePuzzle(
-    normalizedState,
-    selectedChoice.puzzleId
-  );
-}
+  // PUZZLE BRANCH
+  if (selectedChoice.puzzleId) {
+    return setActivePuzzle(normalizedState, selectedChoice.puzzleId);
+  }
 
+  // WAIT TASK BRANCH
   if (selectedChoice.waitTask) {
     const waitTask = selectedChoice.waitTask;
 
@@ -486,13 +485,10 @@ if (selectedChoice.puzzleId) {
 
     const completeNodeId = waitTask.completeNodeId || nextEpisode.startNodeId;
 
-const stateAfterEffects =
-  applyChoice(
-    normalizedState,
-    selectedChoice
-  );
+    const stateAfterEffects = applyChoice(normalizedState, selectedChoice);
 
-    const nextState = normalizeGameState({
+    // nextState tanımlandıktan SONRA observer mode hesaplanır
+    let nextState = normalizeGameState({
       ...stateAfterEffects,
       episodeId: nextEpisodeId,
       currentNodeId: waitingNodeId,
@@ -505,11 +501,11 @@ const stateAfterEffects =
         waitingNodeId,
         completeNodeId,
         checkpoint: {
-  ...stateAfterEffects.checkpoint,
-  episode: Number(nextEpisodeId) || 1,
-  nodeId: waitingNodeId,
-  timestamp: Date.now()
-},
+          ...stateAfterEffects.checkpoint,
+          episode: Number(nextEpisodeId) || 1,
+          nodeId: waitingNodeId,
+          timestamp: Date.now()
+        },
         nextEpisodeId
       },
       history: [
@@ -529,31 +525,32 @@ const stateAfterEffects =
       ]
     });
 
+    // Observer mode: nextState tanımlandıktan SONRA
+    nextState = applyObserverMode(nextState);
+
     localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
     return nextState;
   }
 
-  const nextEpisodeId = selectedChoice.nextEpisodeId || normalizedState.episodeId;
+  // NORMAL BRANCH
+  const nextEpisodeId =
+    selectedChoice.nextEpisodeId || normalizedState.episodeId;
   const nextEpisode = getEpisode(nextEpisodeId);
   const nextNodeId = selectedChoice.nextNodeId || nextEpisode.startNodeId;
 
-const stateAfterEffects =
-  applyChoice(
-    normalizedState,
-    selectedChoice
-  );
+  const stateAfterEffects = applyChoice(normalizedState, selectedChoice);
 
-  const nextState = normalizeGameState({
+  // nextState tanımlandıktan SONRA observer mode hesaplanır
+  let nextState = normalizeGameState({
     ...stateAfterEffects,
-        checkpoint: {
-  ...stateAfterEffects.checkpoint,
-  episode: Number(nextEpisodeId) || 1,
-  nodeId: nextNodeId,
-  timestamp: Date.now()
-},
+    checkpoint: {
+      ...stateAfterEffects.checkpoint,
+      episode: Number(nextEpisodeId) || 1,
+      nodeId: nextNodeId,
+      timestamp: Date.now()
+    },
     episodeId: nextEpisodeId,
     currentNodeId: nextNodeId,
-
     activePuzzleId: null,
     activeWaitTask: null,
     history: [
@@ -569,46 +566,46 @@ const stateAfterEffects =
       }
     ]
   });
-  const triggeredEvents =
-  getTriggeredEvents(
+
+  // Observer mode: nextState tanımlandıktan SONRA
+  nextState = applyObserverMode(nextState);
+
+  // Triggered events
+  const triggeredEvents = getTriggeredEvents(
     nextState,
     Number(nextEpisodeId) || 1
   );
 
-const ending =
-  calculateEnding(
-    nextState
-  );
+  // Ending check
+  const ending = calculateEnding(nextState);
 
-switch (ending) {
-  case "LOYAL_ENDING":
-    nextState.endings.loyalEndingUnlocked = true;
-    break;
-
-  case "BETRAYAL_ENDING":
-    nextState.endings.betrayalEndingUnlocked = true;
-    break;
-
-  case "SACRIFICE_ENDING":
-    nextState.endings.sacrificeEndingUnlocked = true;
-    break;
-
-  case "REPLACEMENT_ENDING":
-    nextState.endings.replacementEndingUnlocked = true;
-    break;
-
-  case "TRUE_ENDING":
-    nextState.endings.trueEndingUnlocked = true;
-    break;
-
-  default:
-    break;
-}
+  switch (ending) {
+    case "LOYAL_ENDING":
+      nextState.endings.loyalEndingUnlocked = true;
+      break;
+    case "BETRAYAL_ENDING":
+      nextState.endings.betrayalEndingUnlocked = true;
+      break;
+    case "SACRIFICE_ENDING":
+      nextState.endings.sacrificeEndingUnlocked = true;
+      break;
+    case "REPLACEMENT_ENDING":
+      nextState.endings.replacementEndingUnlocked = true;
+      break;
+    case "TRUE_ENDING":
+      nextState.endings.trueEndingUnlocked = true;
+      break;
+    default:
+      break;
+  }
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
-
   return nextState;
 }
+
+// ─────────────────────────────────────────────
+// EXPORTS — PUZZLE
+// ─────────────────────────────────────────────
 
 export function submitPuzzleAnswer(gameState, puzzleId, answer) {
   const normalizedState = normalizeGameState(gameState);
@@ -618,7 +615,6 @@ export function submitPuzzleAnswer(gameState, puzzleId, answer) {
   if (!puzzle) throw new Error("Puzzle not found");
 
   const normalizedInput = normalizeAnswer(answer);
-
   const acceptedAnswers = Array.isArray(puzzle.acceptedAnswers)
     ? puzzle.acceptedAnswers
     : [];
@@ -666,12 +662,7 @@ export function submitPuzzleAnswer(gameState, puzzleId, answer) {
     });
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
-
-    return {
-      isCorrect: true,
-      puzzle,
-      nextState
-    };
+    return { isCorrect: true, puzzle, nextState };
   }
 
   const nextNodeId = puzzle.failureNodeId || normalizedState.currentNodeId;
@@ -693,55 +684,43 @@ export function submitPuzzleAnswer(gameState, puzzleId, answer) {
   });
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
-
-  return {
-    isCorrect: false,
-    puzzle,
-    nextState
-  };
+  return { isCorrect: false, puzzle, nextState };
 }
 
 export function clearActivePuzzle(gameState) {
   const normalizedState = normalizeGameState(gameState);
-
   const nextState = normalizeGameState({
     ...normalizedState,
     activePuzzleId: null
   });
-
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
-
   return nextState;
 }
 
 export function setActivePuzzle(gameState, puzzleId) {
   const normalizedState = normalizeGameState(gameState);
-
   const nextState = normalizeGameState({
     ...normalizedState,
     activePuzzleId: puzzleId
   });
-
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
-
   return nextState;
 }
 
 export function getActivePuzzle(gameState) {
   const normalizedState = normalizeGameState(gameState);
-
   if (!normalizedState.activePuzzleId) return null;
-
   const episode = getCurrentEpisode(normalizedState);
-
   return findPuzzleById(episode, normalizedState.activePuzzleId);
 }
 
+// ─────────────────────────────────────────────
+// EXPORTS — WAIT TASK
+// ─────────────────────────────────────────────
+
 export function getRemainingWaitMs(gameState) {
   const normalizedState = normalizeGameState(gameState);
-
   if (!normalizedState.activeWaitTask?.finishAt) return 0;
-
   return Math.max(0, normalizedState.activeWaitTask.finishAt - Date.now());
 }
 
@@ -774,18 +753,42 @@ export function resolveActiveWaitTask(gameState) {
   });
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
-
   return nextState;
 }
 
-export function saveGameState(gameState) {
-  const normalizedState = normalizeGameState(gameState);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizedState));
+// ─────────────────────────────────────────────
+// EXPORTS — BUSY STATE
+// ─────────────────────────────────────────────
+
+export function getRemainingBusyMs(gameState) {
+  const busyState = gameState.busyState;
+  if (!busyState?.busyUntil) return 0;
+  return Math.max(0, busyState.busyUntil - Date.now());
 }
 
-export function resetGame() {
-  localStorage.removeItem(STORAGE_KEY);
+export function resolveBusyState(gameState) {
+  const busy = gameState.busyState;
+  if (!busy) return gameState;
+  if (Date.now() < busy.busyUntil) return gameState;
+
+  const nextEpisodeId = busy.returnEpisodeId || gameState.episodeId;
+  const nextEpisode = getEpisode(nextEpisodeId);
+  const nextNodeId = busy.returnNodeId || nextEpisode.startNodeId;
+
+  const nextState = normalizeGameState({
+    ...gameState,
+    episodeId: nextEpisodeId,
+    currentNodeId: nextNodeId,
+    busyState: null
+  });
+
+  saveGameState(nextState);
+  return nextState;
 }
+
+// ─────────────────────────────────────────────
+// EXPORTS — FILES
+// ─────────────────────────────────────────────
 
 export function collectFile(gameState, file) {
   const normalizedState = normalizeGameState(gameState);
@@ -819,7 +822,6 @@ export function collectFile(gameState, file) {
   });
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
-
   return nextState;
 }
 
@@ -840,64 +842,75 @@ export function markFileAsRead(gameState, fileId) {
   });
 
   const nextState = checkCorrelations(readState);
-
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
-
   return nextState;
 }
 
+// ─────────────────────────────────────────────
+// EXPORTS — NOTIFICATIONS
+// ─────────────────────────────────────────────
+
 export function clearPendingNotifications(gameState) {
   const normalizedState = normalizeGameState(gameState);
-
   const nextState = normalizeGameState({
     ...normalizedState,
     pendingNotifications: []
   });
-
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
-
   return nextState;
 }
 
-export function getRemainingBusyMs(gameState) {
-  const busyState = gameState.busyState;
+// ─────────────────────────────────────────────
+// EXPORTS — SAVE / RESET
+// ─────────────────────────────────────────────
 
-  if (!busyState?.busyUntil) return 0;
-
-  return Math.max(
-    0,
-    busyState.busyUntil - Date.now()
-  );
+export function saveGameState(gameState) {
+  const normalizedState = normalizeGameState(gameState);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizedState));
 }
 
-export function resolveBusyState(gameState) {
-  const busy = gameState.busyState;
+export function resetGame() {
+  localStorage.removeItem(STORAGE_KEY);
+}
 
-  if (!busy) return gameState;
+// ─────────────────────────────────────────────
+// EXPORTS — THE ECHO / SIGNAL LOST
+// ─────────────────────────────────────────────
 
-  if (Date.now() < busy.busyUntil)
-    return gameState;
+export function applySignalLost(gameState) {
+  const normalizedState = normalizeGameState(gameState);
 
-  const nextEpisodeId =
-    busy.returnEpisodeId ||
-    gameState.episodeId;
+  const currentLoopCount = normalizedState.death?.loopCount ?? 0;
+  const newLoopCount = currentLoopCount + 1;
 
-  const nextEpisode =
-    getEpisode(nextEpisodeId);
+  // Stats cezası stateManager üzerinden uygulanıyor
+  const penaltyState = stateManager.applyEffects(normalizedState, {
+    mentalStability: -12,
+    trust: -12,
+    fear: 3,
+    identityFracture: 5
+  });
 
-  const nextNodeId =
-    busy.returnNodeId ||
-    nextEpisode.startNodeId;
-
-  const nextState =
-    normalizeGameState({
-      ...gameState,
-      episodeId: nextEpisodeId,
-      currentNodeId: nextNodeId,
-      busyState: null
-    });
+  const nextState = normalizeGameState({
+    ...penaltyState,
+    death: {
+      ...penaltyState.death,
+      loopCount: newLoopCount,
+      signalLostCount: (penaltyState.death?.signalLostCount ?? 0) + 1,
+      timesNearDeath: (penaltyState.death?.timesNearDeath ?? 0) + 1
+    },
+    history: [
+      ...penaltyState.history,
+      {
+        type: "signalLost",
+        loopCount: newLoopCount,
+        episodeId: normalizedState.episodeId,
+        nodeId: normalizedState.currentNodeId,
+        timestamp: new Date().toISOString()
+      }
+    ]
+  });
 
   saveGameState(nextState);
-
   return nextState;
 }

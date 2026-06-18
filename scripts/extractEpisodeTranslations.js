@@ -242,12 +242,10 @@ function main() {
     writeJson(episodePath, updatedEpisode);
     writeJson(localePath, locale);
 
-    console.log(`Updated episode: ${fileName}`);
-    console.log(`Created locale: ${localeFileName}`);
+
   });
 
-  console.log("Done.");
-  console.log(`Locale folder updated: ${EN_LOCALE_DIR}`);
+
 }
 
 main();

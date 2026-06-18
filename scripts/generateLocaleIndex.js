@@ -50,7 +50,7 @@ export default locale;
 
   fs.writeFileSync(path.join(localeDir, "index.js"), content, "utf8");
 
-  console.log(`Generated: ${language}/index.js`);
+
 }
 
 LANGUAGES.forEach(generateIndex);

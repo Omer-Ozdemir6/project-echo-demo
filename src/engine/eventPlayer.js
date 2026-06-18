@@ -97,6 +97,18 @@ function playSingleEvent({
     return event.duration || 1000;
   }
 
+  if (event.type === "realTimeWait") {
+  const seconds = event.seconds || 10;
+  const ms = seconds * 1000;
+
+  const waitTimer = setTimeout(() => {
+    onTypingStop?.();
+  }, delay + ms);
+
+  timers.push(waitTimer);
+  return ms + (event.pauseAfterMs ?? 500);
+}
+
   if (event.type === "typing") {
     const duration = event.duration || 1000;
 

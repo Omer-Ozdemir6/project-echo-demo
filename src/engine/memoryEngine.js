@@ -7,10 +7,7 @@ class MemoryEngine {
     memoryId
   ) {
 
-    console.log(
-      "[MemoryEngine] recordMemory called:",
-      memoryId
-    );
+
 
     const config =
       memoryDefinitions[
@@ -19,9 +16,7 @@ class MemoryEngine {
 
     if (!config) {
 
-      console.warn(
-        `[MemoryEngine] Unknown memory: ${memoryId}`
-      );
+
 
       return;
     }
@@ -62,9 +57,7 @@ class MemoryEngine {
       alreadyExists
     ) {
 
-      console.log(
-        `[MemoryEngine] Memory already exists: ${memoryId}`
-      );
+
 
       return;
     }
@@ -75,14 +68,9 @@ class MemoryEngine {
       memoryId
     );
 
-    console.log(
-      `[MemoryEngine] Added ${memoryId} (${memoryType})`
-    );
 
-    console.log(
-      "[MemoryEngine] Current memory:",
-      save.memory
-    );
+
+
   }
 
   hasMemory(
