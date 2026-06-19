@@ -394,7 +394,7 @@ export function chooseOption(gameState, choiceId) {
         completeNodeId,
         checkpoint: {
           ...stateAfterEffects.checkpoint,
-          episode: Number(nextEpisodeId) || 1,
+          episode: parseInt((nextEpisodeId || "").replace("episode_", "")) || 1,
           nodeId: waitingNodeId,
           timestamp: Date.now()
         },
@@ -435,7 +435,7 @@ export function chooseOption(gameState, choiceId) {
     ...stateAfterEffects,
     checkpoint: {
       ...stateAfterEffects.checkpoint,
-      episode: Number(nextEpisodeId) || 1,
+      episode: parseInt((nextEpisodeId || "").replace("episode_", "")) || 1,
       nodeId: nextNodeId,
       timestamp: Date.now()
     },

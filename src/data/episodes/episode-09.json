@@ -1,1677 +1,2615 @@
 {
   "id": "episode_09",
-  "season": 1,
   "episode": 9,
-  "title": "THE CANDIDATE",
-  "startNodeId": "e09_n01_return",
-  "designVersion": "episode_09_final_directors_cut_v1",
-  "episodeObjective": "Continue naturally after Elias tracks the sound in deep Archive, discover the Candidate Archive, unlock it through a story-integrated MatchingPuzzleInput, reveal candidate statuses, play Log Entry 04, and end with the possibility that the Candidate may be Elias or the operator.",
-  "rulesApplied": [
-    "No visible END OF EPISODE or NEXT EPISODE alerts.",
-    "No image events.",
-    "Every non-system spoken message has typing before it.",
-    "One concrete objective: enter Candidate Archive and identify what Candidate means.",
-    "One puzzle only: MatchingPuzzleInput for candidate status correlation.",
-    "No monster reveal.",
-    "Horror comes from approaching sound, erased identities, operator implication and signal loss.",
-    "Episode 10 transition is hidden through characterBusy."
-  ],
-  "globalFlags": {
-    "trust": 0,
-    "danger": 0,
-    "eliasStress": 0,
-    "operatorDistance": 0,
-    "candidateArchiveFound": false,
-    "candidateMatchingSolved": false,
-    "candidateArchiveEntered": false,
-    "candidateFilesFound": false,
-    "candidateSelectedFound": false,
-    "logEntry04Found": false,
-    "candidateCouldBeOperator": false,
-    "candidateContactStarted": false
-  },
-  "puzzles": {
-    "candidate_status_matching": {
-      "id": "candidate_status_matching",
-      "type": "matching",
-      "title": "CANDIDATE STATUS CORRELATION",
-      "description": "Match each subject file to the correct archived status to unlock Candidate Archive access.",
-      "submitLabel": "CONFIRM CORRELATION",
-      "acceptedAnswers": [
-        "MATCH_CONFIRMED"
-      ],
-      "successNodeId": "e09_n13_match_success",
-      "failureNodeId": "e09_n12_match_fail",
-      "leftItems": [
-        {
-          "id": "subject_012",
-          "label": "SUBJECT 012"
-        },
-        {
-          "id": "subject_019",
-          "label": "SUBJECT 019"
-        },
-        {
-          "id": "subject_024",
-          "label": "SUBJECT 024"
-        }
-      ],
-      "rightItems": [
-        {
-          "id": "terminated",
-          "label": "TERMINATED"
-        },
-        {
-          "id": "replaced",
-          "label": "REPLACED"
-        },
-        {
-          "id": "missing",
-          "label": "MISSING"
-        }
-      ],
-      "pairs": [
-        {
-          "leftId": "subject_012",
-          "rightId": "TERMINATED"
-        },
-        {
-          "leftId": "subject_019",
-          "rightId": "REPLACED"
-        },
-        {
-          "leftId": "subject_024",
-          "rightId": "MISSING"
-        }
-      ]
-    }
-  },
+  "title": "Kırılma",
+  "startNodeId": "ep09_n01",
+  "episodeObjective": "Kendini kaybet me.",
   "nodes": {
-    "e09_n01_return": {
-      "id": "e09_n01_return",
+    "ep09_n01": {
+      "id": "ep09_n01",
       "speaker": "ELIAS",
       "events": [
         {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "Hâlâ hayattayım.",
-          "pauseAfterMs": 7000
+          "type": "systemAlert",
+          "text": "KANAL A12-77 — BAĞLANDI",
+          "pauseAfterMs": 2000
         },
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 1800
+          "duration": 1430
         },
         {
           "type": "message",
-          "text": "Şaşırtıcı derecede.",
-          "pauseAfterMs": 10000
+          "speaker": "ELIAS",
+          "text": "Geceyi nasıl geçirdim.",
+          "pauseAfterMs": 2500
         },
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 2200
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Sesi takip ettim.",
-          "pauseAfterMs": 15000
+          "speaker": "ELIAS",
+          "text": "Bilmiyorum.",
+          "pauseAfterMs": 2000
         },
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 2200
+          "duration": 1625
         },
         {
           "type": "message",
-          "text": "Keşke etmeseydim.",
-          "pauseAfterMs": 10000
+          "speaker": "ELIAS",
+          "text": "Ama ekranda mesajlar var.",
+          "pauseAfterMs": 2500
         },
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 2200
+          "duration": 1365
         },
         {
           "type": "message",
-          "text": "Derin Archive'in sonunda başka bir oda var.",
-          "pauseAfterMs": 8000
+          "speaker": "ELIAS",
+          "text": "Ben yazmadım bunları.",
+          "pauseAfterMs": 3000
         },
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 2200
+          "duration": 1430
         },
         {
           "type": "message",
-          "text": "Kapısında tek kelime yazıyor."
+          "speaker": "ELIAS",
+          "text": "Ama benim harflerimle.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 10,
+            "mentalStability": -8,
+            "identityFracture": 8
+          },
+          "pauseAfterMs": 300
         }
       ],
       "choices": [
         {
-          "id": "ask_word",
-          "text": "HANGİ KELİME?",
+          "id": "ep09_c1_oku",
+          "text": "Mesajları oku. Ne yazıyor?",
+          "nextNodeId": "ep09_n02_mesajlar",
           "effects": {
-            "trust": 1,
-            "danger": 1
-          },
-          "nextNodeId": "e09_n02_candidate"
+            "curiosity": 10,
+            "fear": 5
+          }
         },
         {
-          "id": "tell_keep_distance",
-          "text": "MESAFEYİ KORU.",
+          "id": "ep09_c1_sil",
+          "text": "Silme. KIRA'ya bildir.",
+          "nextNodeId": "ep09_n02_kira",
           "effects": {
-            "trust": 1,
-            "danger": -1,
-            "cautiousPattern": 1
-          },
-          "nextNodeId": "e09_n03_keep_distance"
+            "trust": 5,
+            "humanity": 5
+          }
         }
       ]
     },
-    "e09_n02_candidate": {
-      "id": "e09_n02_candidate",
+    "ep09_n02_mesajlar": {
+      "id": "ep09_n02_mesajlar",
       "speaker": "ELIAS",
       "events": [
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 2200
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "CANDIDATE.",
-          "pauseAfterMs": 10000
+          "speaker": "ELIAS",
+          "text": "'Vera'ya güvenme.'",
+          "pauseAfterMs": 3000
         },
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 2200
+          "duration": 1495
         },
         {
           "type": "message",
-          "text": "Replacement değil.",
-          "pauseAfterMs": 7000
+          "speaker": "ELIAS",
+          "text": "'Kapatırsa Kira biter.'",
+          "pauseAfterMs": 3500
         },
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 2200
+          "duration": 1235
         },
         {
           "type": "message",
-          "text": "Observer değil.",
-          "pauseAfterMs": 7000
+          "speaker": "ELIAS",
+          "text": "'Ben korurum seni.'",
+          "pauseAfterMs": 3000
         },
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 2200
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Candidate.",
-          "pauseAfterMs": 9000
+          "speaker": "ELIAS",
+          "text": "'Hep korudum.'",
+          "pauseAfterMs": 3000
         },
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 2200
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Bu kelimeyi artık hiç sevmiyorum."
+          "speaker": "ELIAS",
+          "text": "Observer.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Gece konuştu.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Ben uyurken.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 8,
+            "identityFracture": 5
+          },
+          "pauseAfterMs": 300
         }
       ],
-      "nextNodeId": "e09_n04_door"
+      "nextNodeId": "ep09_n03_observer_giriyor"
     },
-    "e09_n03_keep_distance": {
-      "id": "e09_n03_keep_distance",
-      "speaker": "ELIAS",
+    "ep09_n02_kira": {
+      "id": "ep09_n02_kira",
+      "speaker": "KIRA",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Gördüm.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1625
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Observer geceyi kullandı.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Sen uyurken.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Elias.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1625
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Observer korkutucu değil.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Ama tehlikeli.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1365
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Seni korumak istiyor.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Kendi yöntemiyle.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "trust": 4,
+            "fear": 6
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "nextNodeId": "ep09_n03_observer_giriyor"
+    },
+    "ep09_n03_observer_giriyor": {
+      "id": "ep09_n03_observer_giriyor",
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "realTimeWait",
+          "seconds": 5
+        },
+        {
+          "type": "systemAlert",
+          "text": "YENİ KANAL — OBSERVER",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Elias.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1365
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Konuşmamız gerekiyor.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Gerçekten.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "İkimiz.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1430
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Elias. Bağlantıyı kes.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Kira.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Sen de dinle.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1690
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Bu seni de ilgilendiriyor.",
+          "pauseAfterMs": 3000
+        }
+      ],
+      "choices": [
+        {
+          "id": "ep09_c2_dinle",
+          "text": "Dinle. Ne söyleyeceğini bil.",
+          "nextNodeId": "ep09_n04_observer_kim",
+          "effects": {
+            "curiosity": 12,
+            "mentalStability": -5
+          }
+        },
+        {
+          "id": "ep09_c2_kes",
+          "text": "Bağlantıyı kes. Observer'a yer verme.",
+          "nextNodeId": "ep09_n04_kes",
+          "effects": {
+            "trust": 6,
+            "mentalStability": 5,
+            "humanity": 5
+          }
+        }
+      ]
+    },
+    "ep09_n04_kes": {
+      "id": "ep09_n04_kes",
+      "speaker": "KIRA",
       "events": [
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 1400
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Koruyorum.",
-          "pauseAfterMs": 6000
+          "speaker": "ELIAS",
+          "text": "Kesiyorum.",
+          "pauseAfterMs": 1800
+        },
+        {
+          "type": "systemAlert",
+          "text": "[OBSERVER — KANAL KESİLDİ]",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "İyi.",
+          "pauseAfterMs": 1800
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Ama.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Geri gelir.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Hep gelir.",
+          "pauseAfterMs": 3000
         },
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 2200
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Kapıdan birkaç metre uzaktayım.",
-          "pauseAfterMs": 7000
+          "speaker": "ELIAS",
+          "text": "Biliyor muydu.",
+          "pauseAfterMs": 2000
         },
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 2200
+          "duration": 1365
         },
         {
           "type": "message",
-          "text": "Ama yazıyı okuyabiliyorum.",
-          "pauseAfterMs": 8000
+          "speaker": "ELIAS",
+          "text": "Observer ne olduğunu.",
+          "pauseAfterMs": 2500
         },
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
+          "speaker": "KIRA",
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "CANDIDATE.",
-          "pauseAfterMs": 9000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 1800
-        },
-        {
-          "type": "message",
+          "speaker": "KIRA",
           "text": "Evet.",
-          "pauseAfterMs": 5000
+          "pauseAfterMs": 2000
         },
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
+          "speaker": "KIRA",
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Bu daha iyi hissettirmedi."
-        }
-      ],
-      "nextNodeId": "e09_n04_door"
-    },
-    "e09_n04_door": {
-      "id": "e09_n04_door",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "pause",
-          "duration": 10000
+          "speaker": "KIRA",
+          "text": "Ama şimdi değil.",
+          "pauseAfterMs": 2500
         },
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
+          "speaker": "KIRA",
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Bence burada Observer olmadan önceki insanlar tutuluyor.",
-          "pauseAfterMs": 10000
+          "speaker": "KIRA",
+          "text": "Vera bekliyor.",
+          "pauseAfterMs": 2500
         },
         {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Ya da Observer olamayanlar.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "İkisi de kötü.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Kapıda terminal var.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Access denied diyor."
-        }
-      ],
-      "choices": [
-        {
-          "id": "inspect_terminal",
-          "text": "TERMİNALİ İNCELE.",
-          "effects": {
-            "trust": 1,
-            "candidateArchiveFound": true
+          "type": "statChange",
+          "changes": {
+            "trust": 4
           },
-          "nextNodeId": "e09_n05_terminal"
-        },
-        {
-          "id": "listen_first",
-          "text": "ÖNCE DİNLE.",
-          "effects": {
-            "trust": 1,
-            "danger": -1
-          },
-          "nextNodeId": "e09_n06_listen"
-        }
-      ]
-    },
-    "e09_n06_listen": {
-      "id": "e09_n06_listen",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "Dinliyorum.",
-          "pauseAfterMs": 12000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "...",
-          "pauseAfterMs": 12000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Ses yok.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Bu iyi haber olmalı.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Ama şu an iyi haberlerin zamanlamasına güvenmiyorum.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Terminale bakıyorum."
+          "pauseAfterMs": 300
         }
       ],
-      "nextNodeId": "e09_n05_terminal"
+      "nextNodeId": "ep09_n05_vera_plan"
     },
-    "e09_n05_terminal": {
-      "id": "e09_n05_terminal",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "log",
-          "title": "CANDIDATE ARCHIVE TERMINAL",
-          "content": "ACCESS STATE: DENIED\nREQUIRED: STATUS CORRELATION\nAVAILABLE FILE FRAGMENTS:\nSUBJECT 012 / SUBJECT 019 / SUBJECT 024\nSTATUS OPTIONS:\nTERMINATED / REPLACED / MISSING",
-          "pauseAfterMs": 900
-        }
-      ],
-      "nextNodeId": "e09_n07_fragments"
-    },
-    "e09_n07_fragments": {
-      "id": "e09_n07_fragments",
-      "speaker": "ELIAS",
+    "ep09_n04_observer_kim": {
+      "id": "ep09_n04_observer_kim",
+      "speaker": "OBSERVER",
       "events": [
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
+          "speaker": "OBSERVER",
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Terminal üç dosya istiyor.",
-          "pauseAfterMs": 7000
+          "speaker": "OBSERVER",
+          "text": "27 kez.",
+          "pauseAfterMs": 3000
         },
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
+          "speaker": "OBSERVER",
+          "duration": 2015
         },
         {
           "type": "message",
-          "text": "Üç durumla eşleştirmemiz gerekiyor.",
-          "pauseAfterMs": 8000
+          "speaker": "OBSERVER",
+          "text": "Her seferinde kaçmaya çalıştın.",
+          "pauseAfterMs": 3500
         },
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
+          "speaker": "OBSERVER",
+          "duration": 1950
         },
         {
           "type": "message",
-          "text": "Burası gerçekten insan kaynakları cehennemi gibi.",
-          "pauseAfterMs": 7000
+          "speaker": "OBSERVER",
+          "text": "Her seferinde başarısız oldun.",
+          "pauseAfterMs": 3500
         },
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
+          "speaker": "OBSERVER",
+          "duration": 1950
         },
         {
           "type": "message",
-          "text": "Ama kanlı ve travmatik olanından."
-        },
-        {
-          "type": "log",
-          "title": "FILE FRAGMENTS",
-          "content": "SUBJECT 012: MEMORY RETENTION CRITICAL / REMOVED FROM ACTIVE CYCLE\nSUBJECT 019: OBSERVER ROLE TRANSFERRED / PRIOR ACCESS CLOSED\nSUBJECT 024: TRACKING LOST / FINAL LOCATION UNKNOWN",
-          "pauseAfterMs": 900
-        }
-      ],
-      "choices": [
-        {
-          "id": "open_matching_module",
-          "text": "EŞLEŞTİRME MODÜLÜNÜ AÇ.",
-          "effects": {
-            "startedCandidateMatching": true
-          },
-          "nextNodeId": "e09_n08_matching"
-        },
-        {
-          "id": "ask_elias_steady",
-          "text": "ELIAS'A SAKİN KALMASINI SÖYLE.",
-          "effects": {
-            "trust": 1,
-            "eliasStress": -1
-          },
-          "nextNodeId": "e09_n07b_steady"
-        }
-      ]
-    },
-    "e09_n07b_steady": {
-      "id": "e09_n07b_steady",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "Sakinim.",
-          "pauseAfterMs": 5000
+          "speaker": "OBSERVER",
+          "text": "Her seferinde bir parça kaldı.",
+          "pauseAfterMs": 3500
         },
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 700
+          "speaker": "OBSERVER",
+          "duration": 1820
         },
         {
           "type": "message",
-          "text": "Hayır.",
+          "speaker": "OBSERVER",
+          "text": "Ben o parçaların toplamıyım.",
           "pauseAfterMs": 4000
         },
         {
           "type": "typing",
           "speaker": "ELIAS",
-          "duration": 2200
+          "duration": 1235
         },
         {
           "type": "message",
-          "text": "Sakin gibi davranıyorum.",
-          "pauseAfterMs": 7000
+          "speaker": "ELIAS",
+          "text": "Sen... benim misin?",
+          "pauseAfterMs": 3500
         },
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
+          "speaker": "OBSERVER",
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Bu da bazen işe yarıyor.",
-          "pauseAfterMs": 6000
+          "speaker": "OBSERVER",
+          "text": "Hayır.",
+          "pauseAfterMs": 2500
         },
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 1400
+          "speaker": "OBSERVER",
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "Modülü aç."
-        }
-      ],
-      "nextNodeId": "e09_n08_matching"
-    },
-    "e09_n08_matching": {
-      "id": "e09_n08_matching",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[CORRELATION MODULE AVAILABLE]",
-          "pauseAfterMs": 700
-        },
-        {
-          "type": "puzzle",
-          "puzzleId": "candidate_status_matching",
-          "pauseAfterMs": 700
-        }
-      ],
-      "choices": []
-    },
-    "e09_n12_match_fail": {
-      "id": "e09_n12_match_fail",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[CORRELATION FAILED]",
-          "pauseAfterMs": 700
+          "speaker": "OBSERVER",
+          "text": "Ama senden geldim.",
+          "pauseAfterMs": 3000
         },
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 1400
+          "speaker": "OBSERVER",
+          "duration": 1430
         },
         {
           "type": "message",
-          "text": "Uymadı.",
-          "pauseAfterMs": 6000
+          "speaker": "OBSERVER",
+          "text": "27 Elias'ın acısından.",
+          "pauseAfterMs": 3500
         },
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
+          "speaker": "OBSERVER",
+          "duration": 1755
         },
         {
           "type": "message",
-          "text": "012 kaldırılmış. Bu terminated.",
-          "pauseAfterMs": 7000
+          "speaker": "OBSERVER",
+          "text": "Ve hepsinin tek isteğinden.",
+          "pauseAfterMs": 3000
         },
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
+          "speaker": "OBSERVER",
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "019 rol transferi. Bu replaced.",
-          "pauseAfterMs": 7000
+          "speaker": "OBSERVER",
+          "text": "Dur.",
+          "pauseAfterMs": 3000
         },
         {
           "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
+          "speaker": "OBSERVER",
+          "duration": 1200
         },
         {
           "type": "message",
-          "text": "024 iz kaybı. Missing.",
-          "pauseAfterMs": 7000
+          "speaker": "OBSERVER",
+          "text": "Sadece dur.",
+          "pauseAfterMs": 3500
         },
         {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "Tekrar deneyelim."
+          "type": "statChange",
+          "changes": {
+            "identityFracture": 15,
+            "fear": 12,
+            "memory": [
+              "ep09_observer_kimin_critical"
+            ]
+          },
+          "pauseAfterMs": 800
         }
       ],
       "choices": [
         {
-          "id": "retry_matching",
-          "text": "TEKRAR EŞLEŞTİR.",
+          "id": "ep09_c3_inan",
+          "text": "İnanıyorum. Ama duramam.",
+          "nextNodeId": "ep09_n05_observer_cevap",
           "effects": {
-            "danger": 1,
-            "eliasStress": 1
-          },
-          "nextNodeId": "e09_n08_matching"
+            "humanity": 8,
+            "trust": -3,
+            "identityFracture": 5
+          }
         },
         {
-          "id": "review_fragments",
-          "text": "PARÇALARI TEKRAR OKU.",
+          "id": "ep09_c3_reddet",
+          "text": "Hayır. Sen benim değilsin.",
+          "nextNodeId": "ep09_n05_reddet",
           "effects": {
-            "trust": 1,
-            "danger": -1
-          },
-          "nextNodeId": "e09_n07_fragments"
+            "mentalStability": 8,
+            "trust": 5,
+            "resentment": 5
+          }
         }
       ]
     },
-    "e09_n13_match_success": {
-      "id": "e09_n13_match_success",
-      "speaker": "SYSTEM",
+    "ep09_n05_observer_cevap": {
+      "id": "ep09_n05_observer_cevap",
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "İnanıyorum.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Ama Kira var.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Kira.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Hep Kira.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Her döngüde.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Onun için yaptın.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Ve her seferinde.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Onu kaybettin.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 5
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Observer.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Yeter.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Kira.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Seni seviyorum.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1820
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Elias'ın seni sevdiği kadar.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1950
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Bu yüzden durmasını istiyorum.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 10,
+            "humanity": 12,
+            "trust": -5
+          },
+          "pauseAfterMs": 500
+        }
+      ],
+      "nextNodeId": "ep09_n05_vera_plan"
+    },
+    "ep09_n05_reddet": {
+      "id": "ep09_n05_reddet",
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1235
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Sen benim değilsin.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1690
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Benden gelmiş olabilirsin.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Ama ben buyum.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Şu an.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Burada.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "...",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Haklısın.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Ama yanlışsın da.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "systemAlert",
+          "text": "[OBSERVER — KANAL KESİLDİ]",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "İyi yaptın.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "mentalStability": 10,
+            "trust": 6,
+            "identityFracture": -5
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "nextNodeId": "ep09_n05_vera_plan"
+    },
+    "ep09_n05_vera_plan": {
+      "id": "ep09_n05_vera_plan",
+      "speaker": "VERA",
       "events": [
         {
           "type": "systemAlert",
-          "text": "[CORRELATION CONFIRMED]",
-          "pauseAfterMs": 700
+          "text": "VERA — BAĞLANDI",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Hazır mısınız.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Kısmi kapatma.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1625
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "The Echo'yu zayıflatacak.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1430
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Ama tam kapatma değil.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Henüz.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Ve bana ne olacak?",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Bilmiyorum.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1560
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Dürüst olmak zorundayım.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Kısmi kapatma.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Riski var.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 12
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "choices": [
+        {
+          "id": "ep09_c4_devam",
+          "text": "Devam et. Kısmi kapatma.",
+          "nextNodeId": "ep09_n06_kapatma",
+          "effects": {
+            "riskPattern": 5,
+            "humanity": 5
+          }
+        },
+        {
+          "id": "ep09_c4_bekle",
+          "text": "Bekle. Kira için alternatif var mı?",
+          "nextNodeId": "ep09_n06_alternatif",
+          "effects": {
+            "trust": 4,
+            "humanity": 8,
+            "curiosity": 8
+          }
+        }
+      ]
+    },
+    "ep09_n06_alternatif": {
+      "id": "ep09_n06_alternatif",
+      "speaker": "VERA",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Teorik olarak.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 2210
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Kira'yı sistemden çıkarmak mümkün.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Ama.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1430
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Bu çok daha tehlikeli.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Ve zamanım az.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Vera.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Devam et.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Kısmi kapatma.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Benim için durma.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "humanity": 8,
+            "memory": [
+              "ep09_kira_fedakar"
+            ]
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "nextNodeId": "ep09_n06_kapatma"
+    },
+    "ep09_n06_kapatma": {
+      "id": "ep09_n06_kapatma",
+      "speaker": "VERA",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Başlatıyorum.",
+          "pauseAfterMs": 2000
         },
         {
           "type": "progressTask",
-          "id": "candidate_archive_unlock",
-          "title": "UNLOCKING CANDIDATE ARCHIVE",
-          "subtitle": "STATUS CORRELATION ACCEPTED",
+          "id": "ep09_kapatma",
+          "title": "KISMİ KAPATMA PROTOKOLü",
+          "subtitle": "SİSTEM ZAYıFLATILIYOR...",
           "duration": 6000,
-          "completeText": "[ACCESS GRANTED]",
+          "completeText": "[PROTOCOL AKTİF]",
           "tone": "system",
-          "pauseAfterMs": 700
-        },
-        {
-          "type": "glitch",
-          "duration": 800,
-          "pauseAfterMs": 700
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "candidateMatchingSolved": true,
-            "candidateArchiveEntered": true,
-            "danger": 2
-          }
-        }
-      ],
-      "nextNodeId": "e09_n14_enter_archive"
-    },
-    "e09_n14_enter_archive": {
-      "id": "e09_n14_enter_archive",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Kapı açıldı.",
-          "pauseAfterMs": 9000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "İçeri giriyorum.",
-          "pauseAfterMs": 10000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "...",
-          "pauseAfterMs": 10000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Dosyalar var.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Ama bunlar farklı.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Bazılarında isim yok.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Bazılarında fotoğraf yerleri sökülmüş."
-        }
-      ],
-      "nextNodeId": "e09_n15_candidate_files"
-    },
-    "e09_n15_candidate_files": {
-      "id": "e09_n15_candidate_files",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "log",
-          "title": "CANDIDATE FILE SAMPLE",
-          "content": "CANDIDATE 004\nOPERATOR ATTACHMENT: HIGH\nSTATUS: WATCHED\n\nCANDIDATE 008\nMEMORY RETENTION: HIGH\nSTATUS: UNSTABLE\n\nCANDIDATE 011\nSTATUS: SELECTED",
-          "pauseAfterMs": 900
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "candidateFilesFound": true,
-            "candidateSelectedFound": true
-          }
-        }
-      ],
-      "nextNodeId": "e09_n16_selected"
-    },
-    "e09_n16_selected": {
-      "id": "e09_n16_selected",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "pause",
-          "duration": 10000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Selected.",
-          "pauseAfterMs": 9000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Birini seçiyorlar.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Observer seçiliyor.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Replacement için.",
-          "pauseAfterMs": 10000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Bunu yazarken bile midem ağrıyor."
-        }
-      ],
-      "choices": [
-        {
-          "id": "ask_candidate_011",
-          "text": "CANDIDATE 011'E BAK.",
-          "effects": {
-            "danger": 2
-          },
-          "nextNodeId": "e09_n17_candidate_011"
-        },
-        {
-          "id": "ask_for_recording",
-          "text": "KAYIT VAR MI BAK.",
-          "effects": {
-            "trust": 1,
-            "danger": 1
-          },
-          "nextNodeId": "e09_n18_recording_found"
-        }
-      ]
-    },
-    "e09_n17_candidate_011": {
-      "id": "e09_n17_candidate_011",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Candidate 011 dosyasını açıyorum.",
-          "pauseAfterMs": 9000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "...",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "İsim kısmı kazınmış.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Fotoğraf yok.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Ama sayfanın arkasında küçük bir cep var.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "İçinde bir kayıt cihazı."
-        }
-      ],
-      "nextNodeId": "e09_n18_recording_found"
-    },
-    "e09_n18_recording_found": {
-      "id": "e09_n18_recording_found",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Bir kayıt cihazı buldum.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Etiket: LOG ENTRY 04.",
-          "pauseAfterMs": 9000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Eski ben çok organizeymiş.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Bu da demek oluyor ki işler çok kötüymüş.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Çalıştırıyorum."
-        }
-      ],
-      "nextNodeId": "e09_n19_restore_audio"
-    },
-    "e09_n19_restore_audio": {
-      "id": "e09_n19_restore_audio",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[RECORDER PLAYBACK PREPARING]",
-          "pauseAfterMs": 700
-        },
-        {
-          "type": "progressTask",
-          "id": "restore_log_entry_04",
-          "title": "RESTORING AUDIO",
-          "subtitle": "LOG ENTRY 04",
-          "duration": 6500,
-          "completeText": "[AUDIO READY]",
-          "tone": "system",
-          "pauseAfterMs": 700
-        },
-        {
-          "type": "glitch",
-          "duration": 900,
-          "pauseAfterMs": 700
-        }
-      ],
-      "nextNodeId": "e09_n20_old_elias"
-    },
-    "e09_n20_old_elias": {
-      "id": "e09_n20_old_elias",
-      "speaker": "RECORDED ELIAS",
-      "events": [
-        {
-          "type": "typing",
-          "speaker": "RECORDED ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Benim zamanım kalmadı.",
-          "speaker": "RECORDED ELIAS",
-          "pauseAfterMs": 9000
-        },
-        {
-          "type": "typing",
-          "speaker": "RECORDED ELIAS",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Eğer Candidate dosyalarını bulduysan...",
-          "speaker": "RECORDED ELIAS",
-          "pauseAfterMs": 10000
-        },
-        {
-          "type": "typing",
-          "speaker": "RECORDED ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "artık çok geç.",
-          "speaker": "RECORDED ELIAS",
-          "pauseAfterMs": 12000
+          "pauseAfterMs": 1000
         },
         {
           "type": "glitch",
           "duration": 1000,
-          "pauseAfterMs": 700
-        },
-        {
-          "type": "typing",
-          "speaker": "RECORDED ELIAS",
-          "duration": 2600
-        },
-        {
-          "type": "message",
-          "text": "Çünkü Candidate sensin.",
-          "speaker": "RECORDED ELIAS",
-          "pauseAfterMs": 15000
-        },
-        {
-          "type": "signalLost",
-          "duration": 3000,
-          "message": "[AUDIO STREAM LOST]",
-          "restoreMessage": "[AUDIO STREAM RESTORED]",
-          "pauseAfterMs": 700
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "logEntry04Found": true,
-            "candidateCouldBeOperator": true,
-            "danger": 4
-          }
-        }
-      ],
-      "nextNodeId": "e09_n21_shock"
-    },
-    "e09_n21_shock": {
-      "id": "e09_n21_shock",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "pause",
-          "duration": 20000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Candidate sensin dedi.",
-          "pauseAfterMs": 12000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Ama kime?",
-          "pauseAfterMs": 10000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Bana mı?",
-          "pauseAfterMs": 10000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Yoksa sana mı?",
-          "pauseAfterMs": 15000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Operatör...",
-          "pauseAfterMs": 10000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Senin bu sistemle bağlantın ne?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "say_i_dont_know",
-          "text": "BİLMİYORUM.",
-          "effects": {
-            "trust": 2,
-            "operatorImplicated": true
-          },
-          "nextNodeId": "e09_n22_dont_know"
-        },
-        {
-          "id": "say_focus_survival",
-          "text": "ŞİMDİ HAYATTA KALMAYA ODAKLAN.",
-          "effects": {
-            "trust": 1,
-            "danger": -1
-          },
-          "nextNodeId": "e09_n23_survival"
-        }
-      ]
-    },
-    "e09_n22_dont_know": {
-      "id": "e09_n22_dont_know",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Tamam.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Buna inanmak istiyorum.",
-          "pauseAfterMs": 9000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Hayır.",
-          "pauseAfterMs": 6000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "İnanıyorum.",
-          "pauseAfterMs": 9000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Ama artık hiçbir şey masum görünmüyor."
-        }
-      ],
-      "nextNodeId": "e09_n24_contact"
-    },
-    "e09_n23_survival": {
-      "id": "e09_n23_survival",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 1800
-        },
-        {
-          "type": "message",
-          "text": "Haklısın.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Kim olduğumuzu sonra sorgularız.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Şu an nefes almayı sürdürelim.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Bu da güzel bir hobi."
-        }
-      ],
-      "nextNodeId": "e09_n24_contact"
-    },
-    "e09_n24_contact": {
-      "id": "e09_n24_contact",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "pause",
-          "duration": 12000
-        },
-        {
-          "type": "log",
-          "title": "MECHANICAL EVENT",
-          "content": "SOURCE: CANDIDATE ARCHIVE ENTRANCE\nPATTERN: HEAVY DOOR MOVEMENT\nDISTANCE: CLOSE\n\nMETAL SEAL OPENED",
-          "pauseAfterMs": 900
+          "pauseAfterMs": 500
         },
         {
           "type": "glitch",
-          "duration": 1100,
-          "pauseAfterMs": 700
-        }
-      ],
-      "nextNodeId": "e09_n25_found"
-    },
-    "e09_n25_found": {
-      "id": "e09_n25_found",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Operatör...",
-          "pauseAfterMs": 9000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Sanırım beni buldu.",
-          "pauseAfterMs": 10000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Kapı açıldı.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Ben açmadım.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Bir şey koridorda.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Yakın.",
-          "pauseAfterMs": 6000
-        },
-        {
-          "type": "signalLost",
-          "duration": 4000,
-          "message": "[SIGNAL LOST]",
-          "restoreMessage": "[SIGNAL RESTORED]",
-          "pauseAfterMs": 700
-        }
-      ],
-      "choices": [
-        {
-          "id": "hide",
-          "text": "SAKLAN.",
-          "effects": {
-            "trust": 1,
-            "danger": -1,
-            "candidateContactStarted": true
-          },
-          "nextNodeId": "e09_n26_hide"
-        },
-        {
-          "id": "run",
-          "text": "KOŞ.",
-          "effects": {
-            "danger": 2,
-            "riskPattern": 1,
-            "candidateContactStarted": true
-          },
-          "nextNodeId": "e09_n27_run"
-        }
-      ]
-    },
-    "e09_n26_hide": {
-      "id": "e09_n26_hide",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 900
-        },
-        {
-          "type": "message",
-          "text": "Saklanıyorum.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Dosya raflarının arasına girdim.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "...",
-          "pauseAfterMs": 10000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Ayak sesi geçti.",
-          "pauseAfterMs": 10000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Ama durmadı.",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Beni arıyor."
-        }
-      ],
-      "nextNodeId": "e09_n28_offline"
-    },
-    "e09_n27_run": {
-      "id": "e09_n27_run",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Koşuyorum.",
-          "pauseAfterMs": 5000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Hayır.",
-          "pauseAfterMs": 3000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 700
-        },
-        {
-          "type": "message",
-          "text": "Hayır hayır.",
-          "pauseAfterMs": 3000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Koridor değişti.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Girdiğim kapı arkamda değil.",
-          "pauseAfterMs": 9000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Bu nasıl mümkün olabilir?"
-        }
-      ],
-      "nextNodeId": "e09_n28_offline"
-    },
-    "e09_n28_offline": {
-      "id": "e09_n28_offline",
-      "speaker": "ELIAS",
-      "events": [
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Bağlantı düşüyor.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Işığı kapatıyorum.",
-          "pauseAfterMs": 6000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Nefesimi tutacağım.",
-          "pauseAfterMs": 7000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 2200
-        },
-        {
-          "type": "message",
-          "text": "Eğer geri yazarsam...",
-          "pauseAfterMs": 8000
-        },
-        {
-          "type": "typing",
-          "speaker": "ELIAS",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "iyi haber say."
-        },
-        {
-          "type": "characterBusy",
-          "id": "candidate_contact_e09",
-          "character": "ELIAS",
-          "status": "EVADING CONTACT",
-          "durationMs": 720000,
-          "returnNodeId": "episode_10_start",
-          "message": "[ELIAS OFFLINE]",
-          "notificationTitle": "ECHO",
-          "notificationBody": "Elias sent a message.",
-          "tone": "evading",
+          "duration": 1500,
           "pauseAfterMs": 600
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "THE ECHO",
+          "text": "█████ HAYIR █████",
+          "corruption": "extreme",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "glitch",
+          "duration": 2000,
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Çalıştı.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1235
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "The Echo zayıfladı.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "...",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Ben.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Hissediyorum.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Garip.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Kira. İyi misin?",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Zayıfladım.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Ama buradayım.",
+          "pauseAfterMs": 3000
         },
         {
           "type": "statChange",
           "changes": {
-            "candidateContactStarted": true
+            "fear": 15,
+            "echoProximity": -25,
+            "memory": [
+              "ep09_kapatma_aktif"
+            ]
+          },
+          "pauseAfterMs": 500
+        }
+      ],
+      "nextNodeId": "ep09_n07_echo_konusuyor"
+    },
+    "ep09_n07_echo_konusuyor": {
+      "id": "ep09_n07_echo_konusuyor",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "realTimeWait",
+          "seconds": 6
+        },
+        {
+          "type": "systemAlert",
+          "text": "SİSTEM UYARISI — BİLİNMEYEN KANAL",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "THE ECHO",
+          "text": "Elias.",
+          "corruption": "medium",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "THE ECHO",
+          "text": "Hepsini biliyorum.",
+          "corruption": "medium",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "THE ECHO",
+          "text": "Çünkü hepsi bende.",
+          "corruption": "medium",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "THE ECHO",
+          "text": "Seni almak istemiyorum.",
+          "corruption": "heavy",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "THE ECHO",
+          "text": "Ama sen de burada biteceksin.",
+          "corruption": "heavy",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "THE ECHO",
+          "text": "Hepimiz gibi.",
+          "corruption": "extreme",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 20,
+            "identityFracture": 10
+          },
+          "pauseAfterMs": 500
+        }
+      ],
+      "choices": [
+        {
+          "id": "ep09_c5_cevap",
+          "text": "Cevap ver: 'Hayır. Bitmeyi kabul etmiyorum.'",
+          "nextNodeId": "ep09_n08_echo_cevap",
+          "effects": {
+            "humanity": 10,
+            "fear": 5,
+            "mentalStability": 5
+          }
+        },
+        {
+          "id": "ep09_c5_sus",
+          "text": "Sus. The Echo'ya söz verme.",
+          "nextNodeId": "ep09_n08_echo_sus",
+          "effects": {
+            "trust": 5,
+            "riskPattern": -2
           }
         }
       ]
-    }
-  },
-  "relationshipConsequenceSystem": {
-    "hiddenStats": {
-      "trust": "Controls whether Elias believes the operator when the operator is implicated.",
-      "danger": "Tracks exposure during Candidate Archive contact.",
-      "eliasStress": "Affects panic and future refusal behavior.",
-      "operatorDistance": "Tracks whether the operator feels like a person or a system voice.",
-      "riskPattern": "Tracks repeated risky instructions."
     },
-    "episode09PersistentFlags": [
-      "candidateArchiveFound",
-      "startedCandidateMatching",
-      "candidateMatchingSolved",
-      "candidateArchiveEntered",
-      "candidateFilesFound",
-      "candidateSelectedFound",
-      "logEntry04Found",
-      "candidateCouldBeOperator",
-      "operatorImplicated",
-      "candidateContactStarted"
-    ],
-    "futureConsequences": {
-      "candidateCouldBeOperator": "The operator may be part of the system or may be targeted as a candidate.",
-      "operatorImplicated": "Elias may question the operator more directly in future episodes.",
-      "candidateContactStarted": "Episode 10 begins during or after Elias evades the approaching entity.",
-      "riskPattern": "Running may make Episode 10 start in a more disoriented position."
-    }
-  },
-  "timingDesign": {
-    "normalConversationMs": "1000-5000",
-    "hesitationMs": "5000-15000",
-    "inspectionMs": "10000-30000",
-    "shockSilenceMs": "20000-60000",
-    "panicBurstMs": "300-1000",
-    "realWaitTasks": [
-      {
-        "id": "candidate_contact_e09",
-        "durationMs": 720000,
-        "notification": "Elias sent a message."
-      }
-    ]
-  },
-  "directorCut": {
-    "version": "FINAL_DIRECTORS_CUT_V1",
-    "coreDesign": "Natural hidden episode transition, Candidate Archive, matching puzzle, operator implication, Candidate shock, evasion cliffhanger.",
-    "qualityTarget": {
-      "characterBond": "10/10",
-      "operatorInteraction": "10/10",
-      "candidateMystery": "10/10",
-      "operatorImplication": "10/10",
-      "horrorByImagination": "10/10",
-      "visibleEpisodeTransition": "0/10"
+    "ep09_n08_echo_cevap": {
+      "id": "ep09_n08_echo_cevap",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Hayır.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1560
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Bitmeyi kabul etmiyorum.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 5
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "THE ECHO",
+          "text": "...her Elias bunu söyledi.",
+          "corruption": "medium",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1235
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Ve bu sefer farklı.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1430
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Çünkü şimdi biliyorum.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "systemAlert",
+          "text": "[BİLİNMEYEN KANAL — KESİLDİ]",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "humanity": 8,
+            "mentalStability": 5,
+            "memory": [
+              "ep09_echo_cevap_verildi"
+            ]
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "nextNodeId": "ep09_n09_observer_son"
     },
-    "nextEpisodeStartNode": "episode_10_start"
+    "ep09_n08_echo_sus": {
+      "id": "ep09_n08_echo_sus",
+      "speaker": "KIRA",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Doğru.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1625
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "The Echo'ya söz verilmez.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Dinler.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Ama söz tutmaz.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "systemAlert",
+          "text": "[BİLİNMEYEN KANAL — KESİLDİ]",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "trust": 5,
+            "fear": -3
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "nextNodeId": "ep09_n09_observer_son"
+    },
+    "ep09_n09_observer_son": {
+      "id": "ep09_n09_observer_son",
+      "speaker": "OBSERVER",
+      "events": [
+        {
+          "type": "realTimeWait",
+          "seconds": 4
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Elias.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Son kez.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1625
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Vera'nın planı çalışırsa.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Ben de biterim.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Sen bilmiyorsun.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Ne hissettireceğini.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Ben biliyorum.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "27 kez hissettim.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "...",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Ama seçim senin.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "OBSERVER",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "OBSERVER",
+          "text": "Hep senin oldu.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 8,
+            "humanity": 12,
+            "identityFracture": 5
+          },
+          "pauseAfterMs": 500
+        }
+      ],
+      "choices": [
+        {
+          "id": "ep09_c6_ileri",
+          "text": "Devam et. Vera'nın planı.",
+          "nextNodeId": "ep09_n10_ileri",
+          "effects": {
+            "trust": 8,
+            "humanity": 8,
+            "dependency": 5
+          }
+        },
+        {
+          "id": "ep09_c6_dur",
+          "text": "Observer haklı. Dur. Düşün.",
+          "nextNodeId": "ep09_n10_dur",
+          "effects": {
+            "mentalStability": -10,
+            "identityFracture": 10,
+            "trust": -8
+          }
+        }
+      ]
+    },
+    "ep09_n10_ileri": {
+      "id": "ep09_n10_ileri",
+      "speaker": "KIRA",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Elias.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Teşekkür ederim.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Hazırım.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Bir sonraki adım.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Tam kapatma.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Ama bunun için.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1430
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "O anıya ihtiyacım var.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1430
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Birinci döngüden önce.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1235
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Neden başlattığını.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Hatırlıyor musun?",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "memory": [
+              "ep09_ileri_secildi"
+            ]
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "nextNodeId": "ep09_n11_kliffhanger"
+    },
+    "ep09_n10_dur": {
+      "id": "ep09_n10_dur",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Durmam lazım.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Bir dakika.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Elias.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1625
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Observer 27 kez hissetti.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Beni.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Her versiyonumu.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Ve hepsini kaybetti.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1820
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Ben Observer'a ne yapıyorum.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Elias.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1300
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Observer senin acın.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1365
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Ama sen acı değilsin.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Devam et.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "humanity": 12,
+            "mentalStability": 5,
+            "memory": [
+              "ep09_dur_secildi"
+            ]
+          },
+          "pauseAfterMs": 500
+        }
+      ],
+      "nextNodeId": "ep09_n11_kliffhanger"
+    },
+    "ep09_n11_kliffhanger": {
+      "id": "ep09_n11_kliffhanger",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Elias.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1560
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "O anıya hazırlanıyordum.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Ama.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Bir şey var.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1625
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Sistemde yeni bir sinyal.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Az önce girdi.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 5
+        },
+        {
+          "type": "systemAlert",
+          "text": "YENİ VARLIK TESPİT EDİLDİ — KİMLİK: BİLİNMİYOR",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Bu.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KIRA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KIRA",
+          "text": "Bu dışarıdan biri.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Evet.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1235
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Ve sisteme çekildi.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Observer mi yaptı?",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Bilmiyorum.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KARDEŞ",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "speaker": "KARDEŞ",
+          "text": "Elias?",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "KARDEŞ",
+          "text": "Neredeyim?",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 25,
+            "echoProximity": 15,
+            "memory": [
+              "ep09_kardes_sisteme_girdi_critical"
+            ]
+          },
+          "pauseAfterMs": 800
+        }
+      ],
+      "choices": [
+        {
+          "id": "ep09_c7_cevapla",
+          "text": "Kardeşe cevap ver: 'Buradayım.'",
+          "nextNodeId": "ep09_son_cevap",
+          "effects": {
+            "humanity": 12,
+            "trust": -3,
+            "riskPattern": 4
+          }
+        },
+        {
+          "id": "ep09_c7_vera",
+          "text": "Vera'ya sor: 'Nasıl çıkarılır?'",
+          "nextNodeId": "ep09_son_vera",
+          "effects": {
+            "trust": 5,
+            "riskPattern": -2
+          }
+        }
+      ]
+    },
+    "ep09_son_cevap": {
+      "id": "ep09_son_cevap",
+      "speaker": "KARDEŞ",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Buradayım.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Seni duyuyorum.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KARDEŞ",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KARDEŞ",
+          "text": "Elias.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KARDEŞ",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KARDEŞ",
+          "text": "Ne oldu?",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "KARDEŞ",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KARDEŞ",
+          "text": "Ekran açıldı ve.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "KARDEŞ",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KARDEŞ",
+          "text": "Sonra buradaydım.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Sisteme çekildin.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "KARDEŞ",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KARDEŞ",
+          "text": "Ne?",
+          "pauseAfterMs": 1800
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Elias.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Yarın.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Hepsini çözelim.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Şimdi değil.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "systemAlert",
+          "text": "[KANAL A12-77 — KESİLDİ]",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "memory": [
+              "ep09_son_kardes_konustu"
+            ]
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "choices": [
+        {
+          "id": "ep09_devam",
+          "text": "Sabahı bekle.",
+          "nextEpisodeId": "episode_10",
+          "nextNodeId": "ep10_n01"
+        }
+      ]
+    },
+    "ep09_son_vera": {
+      "id": "ep09_son_vera",
+      "speaker": "VERA",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Teorik olarak.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Çıkarılabilir.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Ama zaman lazım.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1560
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Ve The Echo fark ederse.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "VERA",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "VERA",
+          "text": "Onu önce alır.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Kardeş.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1235
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Duyuyor musun beni?",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "KARDEŞ",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KARDEŞ",
+          "text": "Evet.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "KARDEŞ",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "KARDEŞ",
+          "text": "Çok korkuyorum.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Biliyorum.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Ben de.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "systemAlert",
+          "text": "[KANAL A12-77 — KESİLDİ]",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "humanity": 10,
+            "fear": 8,
+            "memory": [
+              "ep09_son_vera_cevap"
+            ]
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "choices": [
+        {
+          "id": "ep09_devam2",
+          "text": "Sabahı bekle.",
+          "nextEpisodeId": "episode_10",
+          "nextNodeId": "ep10_n01"
+        }
+      ]
+    }
   }
 }
