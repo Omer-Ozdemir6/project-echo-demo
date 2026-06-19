@@ -1,617 +1,1650 @@
 {
-  "id": "episode_test",
-  "episode": 0,
-  "title": "SİSTEM TEST SENARYOSU",
-  "startNodeId": "test_n01",
-  "episodeObjective": "Tüm oyun sistemlerinin doğru çalıştığını doğrula.",
-
-  "puzzles": {
-    "test_puzzle_01": {
-      "id": "test_puzzle_01",
-      "acceptedAnswers": ["echo", "ECHO", "Echo"],
-      "successNodeId": "test_n_puzzle_success",
-      "failureNodeId": "test_n_puzzle_fail"
-    }
-  },
-
+  "id": "episode_01",
+  "episode": 1,
+  "title": "Döngü",
+  "startNodeId": "ep01_n01",
+  "episodeObjective": "İlk teması kur.",
   "nodes": {
-
-    "test_n01": {
-      "id": "test_n01",
-      "speaker": "SYSTEM",
-      "_testTarget": "systemAlert + typing + message",
-      "events": [
-        { "type": "systemAlert", "text": "[TEST 01: TEMEL MESAJLAŞMA]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bağlantı kuruldu. Bu mesajı görüyorsan typing → message zinciri çalışıyor.", "pauseAfterMs": 1200 },
-        { "type": "systemAlert", "text": "[BEKLENEN: systemAlert ✓ | typing ✓ | message ✓]" }
-      ],
-      "choices": [
-        { "id": "test_choice_warm", "text": "Anladım, devam et.", "nextNodeId": "test_n02" }
-      ]
-    },
-
-    "test_n02": {
-      "id": "test_n02",
+    "ep01_n01": {
+      "id": "ep01_n01",
       "speaker": "ELIAS",
-      "_testTarget": "Seçim effects: trust, fear, memory minor/major",
       "events": [
-        { "type": "systemAlert", "text": "[TEST 02: SEÇİM + EFFECTS]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bir seçim yap. Her seçenek farklı stats ve memory etkisi bırakıyor." }
+        {
+          "type": "systemAlert",
+          "text": "KANAL A12-77 — BAĞLANTI BEKLENİYOR",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 6000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Merhaba.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Cevap verecek biri var mı diye yazdım. Büyük ihtimalle yok. Ama yazmak bile iyi hissettirdi.",
+          "pauseAfterMs": 3000
+        }
       ],
       "choices": [
         {
-          "id": "test_warm_choice",
-          "text": "Sana yardım etmek istiyorum.",
-          "nextNodeId": "test_n03",
+          "id": "ep01_c1_buradayim",
+          "text": "Buradayım.",
+          "nextNodeId": "ep01_n02_sicak",
           "effects": {
-            "trust": 10,
+            "trust": 5,
             "humanity": 5,
-            "memory": ["test_warm_chosen"]
+            "memory": [
+              "ep01_ilk_temas"
+            ]
           }
         },
         {
-          "id": "test_cold_choice",
-          "text": "Durumunu bildir, vakit kaybetme.",
-          "nextNodeId": "test_n03",
+          "id": "ep01_c1_cevap",
+          "text": "Evet. Cevap veriyorum.",
+          "nextNodeId": "ep01_n02_resmi",
           "effects": {
-            "trust": -5,
-            "resentment": 8,
-            "riskPattern": 3,
-            "memory": ["test_cold_chosen"]
+            "trust": 3,
+            "humanity": 2,
+            "memory": [
+              "ep01_ilk_temas"
+            ]
           }
         }
       ]
     },
-
-    "test_n03": {
-      "id": "test_n03",
-      "speaker": "SYSTEM",
-      "_testTarget": "statChange event → stateManager.applyEffects",
+    "ep01_n02": {
+      "id": "ep01_n02",
+      "speaker": "ELIAS",
       "events": [
-        { "type": "systemAlert", "text": "[TEST 03: statChange EVENT]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bir şeyler yanlış gidiyor. Korku artıyor, zihin sarsılıyor.", "pauseAfterMs": 1000 },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Yara yok. Sadece baş ağrısı. Ve bu... boşluk hissi.",
+          "pauseAfterMs": 1800
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 10
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Seni görüyorum.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Sesi çıkarma.",
+          "pauseAfterMs": 1800
+        },
         {
           "type": "statChange",
           "changes": {
-            "fear": 15,
-            "mentalStability": -45,
-            "eliasStress": 20
+            "unknownContactDiscovered": true,
+            "fear": 5
           },
-          "pauseAfterMs": 500
-        },
-        { "type": "systemAlert", "text": "[BEKLENEN: fear +15 | mentalStability -45 | eliasStress +20]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bu değişiklikler stats nesnesinde doğru yazıldıysa bir sonraki adıma geç." }
-      ],
-      "choices": [
-        { "id": "test_stat_ok", "text": "Stats güncellendi, devam.", "nextNodeId": "test_n04" }
-      ]
-    },
-
-    "test_n04": {
-      "id": "test_n04",
-      "speaker": "SYSTEM",
-      "_testTarget": "Memory condition branching",
-      "events": [
-        { "type": "systemAlert", "text": "[TEST 04: MEMORY CONDITION]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Sistem hafızanı kontrol ediyor. Hangi seçimi yaptığını hatırlıyor mu?" }
-      ],
-      "branching": [
-        {
-          "conditions": { "memory:test_warm_chosen": true },
-          "nextNodeId": "test_n04_warm"
-        },
-        {
-          "conditions": { "memory:test_cold_chosen": true },
-          "nextNodeId": "test_n04_cold"
-        }
-      ],
-      "defaultNextNodeId": "test_n04_fallback"
-    },
-
-    "test_n04_warm": {
-      "id": "test_n04_warm",
-      "speaker": "ELIAS",
-      "_testTarget": "Memory branch: warm path",
-      "events": [
-        { "type": "systemAlert", "text": "[MEMORY BRANCH: WARM ✓]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Hafıza sistemi çalışıyor. 'test_warm_chosen' tag okundu. Sıcak seçimi hatırladı.", "pauseAfterMs": 1200 }
-      ],
-      "nextNodeId": "test_n05"
-    },
-
-    "test_n04_cold": {
-      "id": "test_n04_cold",
-      "speaker": "ELIAS",
-      "_testTarget": "Memory branch: cold path",
-      "events": [
-        { "type": "systemAlert", "text": "[MEMORY BRANCH: COLD ✓]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Hafıza sistemi çalışıyor. 'test_cold_chosen' tag okundu. Soğuk seçimi hatırladı.", "pauseAfterMs": 1200 }
-      ],
-      "nextNodeId": "test_n05"
-    },
-
-    "test_n04_fallback": {
-      "id": "test_n04_fallback",
-      "speaker": "SYSTEM",
-      "_testTarget": "Memory branch: fallback - BUG işareti",
-      "events": [
-        { "type": "systemAlert", "text": "[HATA: Memory branch çalışmadı! defaultNextNodeId tetiklendi]", "pauseAfterMs": 1500 }
-      ],
-      "nextNodeId": "test_n05"
-    },
-
-    "test_n05": {
-      "id": "test_n05",
-      "speaker": "SYSTEM",
-      "_testTarget": "File collection + DataBank",
-      "events": [
-        { "type": "systemAlert", "text": "[TEST 05: FILE COLLECTION]", "pauseAfterMs": 1500 },
-        {
-          "type": "file",
-          "fileId": "test_file_alpha",
-          "fileType": "log",
-          "title": "TEST DOSYASI ALPHA",
-          "content": "Bu dosya test amaçlıdır.\nDataBank sistemi çalışıyorsa bu dosyayı görebilirsin.\nCorrelation testi için bu dosyayı oku.",
-          "caption": "Sistem test kaydı — Alpha",
-          "source": "TEST SİSTEMİ",
-          "tags": ["test", "alpha"],
-          "correlationTags": ["test_correlation"],
-          "message": "[TEST DOSYASI ALPHA VERİ BANKASINA ARŞİVLENDİ]",
-          "pauseAfterMs": 1200
-        },
-        {
-          "type": "file",
-          "fileId": "test_file_beta",
-          "fileType": "log",
-          "title": "TEST DOSYASI BETA",
-          "content": "İkinci test dosyası.\nAlpha ve Beta ikisi de okunursa correlation tetiklenmeli.",
-          "caption": "Sistem test kaydı — Beta",
-          "source": "TEST SİSTEMİ",
-          "tags": ["test", "beta"],
-          "correlationTags": ["test_correlation"],
-          "message": "[TEST DOSYASI BETA VERİ BANKASINA ARŞİVLENDİ]",
-          "pauseAfterMs": 1200
-        },
-        { "type": "systemAlert", "text": "[BEKLENEN: 2 dosya DataBank'ta görünmeli]" }
-      ],
-      "choices": [
-        { "id": "test_files_ok", "text": "Dosyalar görünüyor, devam.", "nextNodeId": "test_n06" }
-      ]
-    },
-
-    "test_n06": {
-      "id": "test_n06",
-      "speaker": "SYSTEM",
-      "_testTarget": "Puzzle sistemi",
-      "events": [
-        { "type": "systemAlert", "text": "[TEST 06: PUZZLE SİSTEMİ]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bir şifre sorusu var. Bu projenin adı ne? (İpucu: tek kelime, büyük harf)", "pauseAfterMs": 1000 },
-        { "type": "puzzle", "puzzleId": "test_puzzle_01", "pauseAfterMs": 500 }
-      ]
-    },
-
-    "test_n_puzzle_success": {
-      "id": "test_n_puzzle_success",
-      "speaker": "SYSTEM",
-      "_testTarget": "Puzzle doğru cevap",
-      "events": [
-        { "type": "systemAlert", "text": "[PUZZLE BAŞARILI ✓]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Doğru. Puzzle sistemi çalışıyor.", "pauseAfterMs": 1000 }
-      ],
-      "nextNodeId": "test_n07"
-    },
-
-    "test_n_puzzle_fail": {
-      "id": "test_n_puzzle_fail",
-      "speaker": "SYSTEM",
-      "_testTarget": "Puzzle yanlış cevap",
-      "events": [
-        { "type": "systemAlert", "text": "[PUZZLE BAŞARISIZ — Tekrar dene]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Yanlış. Cevap: ECHO. Failure node çalışıyor.", "pauseAfterMs": 1000 }
-      ],
-      "nextNodeId": "test_n07"
-    },
-
-    "test_n07": {
-      "id": "test_n07",
-      "speaker": "SYSTEM",
-      "_testTarget": "realTimeWait handler",
-      "events": [
-        { "type": "systemAlert", "text": "[TEST 07: realTimeWait — 10 SANİYE BEKLE]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Koridoru geçiyorum. Bekle.", "pauseAfterMs": 500 },
-        { "type": "realTimeWait", "seconds": 10 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Geçiş tamamlandı. realTimeWait çalışıyorsa bu mesaj 10 saniye sonra geldi.", "pauseAfterMs": 1000 },
-        { "type": "systemAlert", "text": "[BEKLENEN: 10 saniyelik duraklama ✓]" }
-      ],
-      "choices": [
-        { "id": "test_wait_ok", "text": "Bekleme çalıştı, devam.", "nextNodeId": "test_n08" }
-      ]
-    },
-
-    "test_n08": {
-      "id": "test_n08",
-      "speaker": "SYSTEM",
-      "_testTarget": "progressTask",
-      "events": [
-        { "type": "systemAlert", "text": "[TEST 08: PROGRESS TASK]", "pauseAfterMs": 1500 },
-        {
-          "type": "progressTask",
-          "id": "test_progress_01",
-          "title": "TERMINAL ERİŞİMİ",
-          "subtitle": "Sistem bağlantısı kuruluyor...",
-          "duration": 5000,
-          "completeText": "[TERMINAL ERİŞİMİ TAMAMLANDI ✓]",
-          "tone": "system",
-          "pauseAfterMs": 800
+          "pauseAfterMs": 300
         }
       ],
       "choices": [
-        { "id": "test_progress_ok", "text": "Progress bar tamamlandı, devam.", "nextNodeId": "test_n09" }
+        {
+          "id": "ep01_c2_guide",
+          "text": "Elias'a güvende olduğunu söyle.",
+          "nextNodeId": "ep01_n03_guide",
+          "effects": {
+            "trust": 5,
+            "humanity": 5,
+            "dependency": 3
+          }
+        },
+        {
+          "id": "ep01_c2_probe",
+          "text": "UNKNOWN'a sor: kim olduğunu açıklamasını iste.",
+          "nextNodeId": "ep01_n03_probe",
+          "effects": {
+            "trust": -2,
+            "curiosity": 8,
+            "resentment": 3
+          }
+        }
       ]
     },
-
-    "test_n09": {
-      "id": "test_n09",
-      "speaker": "SYSTEM",
-      "_testTarget": "glitch + corruptMessage",
+    "ep01_n03_guide": {
+      "id": "ep01_n03_guide",
+      "speaker": "UNKNOWN",
       "events": [
-        { "type": "systemAlert", "text": "[TEST 09: GLITCH + CORRUPT MESSAGE]", "pauseAfterMs": 1500 },
-        { "type": "glitch", "duration": 900, "pauseAfterMs": 400 },
         {
-          "type": "corruptMessage",
+          "type": "typing",
           "speaker": "UNKNOWN",
-          "text": "Bu mesaj bozulmuş görünmeli. Sistem düzgün çalışıyorsa farklı render ediliyor.",
-          "pauseAfterMs": 1200
+          "duration": 2500
         },
-        { "type": "glitch", "duration": 600, "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[BEKLENEN: glitch animasyonu ✓ | corruptMessage farklı stilde ✓]" }
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Güvende değil.",
+          "pauseAfterMs": 1800
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Ama şimdilik hayatta. Bu yeterli.",
+          "pauseAfterMs": 1800
+        }
       ],
-      "choices": [
-        { "id": "test_glitch_ok", "text": "Glitch ve corrupt mesaj görüldü, devam.", "nextNodeId": "test_n10" }
-      ]
+      "nextNodeId": "ep01_n04"
     },
-
-    "test_n10": {
-      "id": "test_n10",
-      "speaker": "SYSTEM",
-      "_testTarget": "characterBusy — 15 saniye",
+    "ep01_n03_probe": {
+      "id": "ep01_n03_probe",
+      "speaker": "UNKNOWN",
       "events": [
-        { "type": "systemAlert", "text": "[TEST 10: CHARACTER BUSY — 15 SANİYE]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bağlantı kesiliyor. 15 saniye sonra geri dön.", "pauseAfterMs": 500 },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Bunu bilmen gerekmiyor. Henüz.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Ama —",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Masanın altına bak.",
+          "pauseAfterMs": 1500
+        }
+      ],
+      "nextNodeId": "ep01_n04"
+    },
+    "ep01_n04": {
+      "id": "ep01_n04",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Masanın altına bak.",
+          "pauseAfterMs": 1500
+        },
         {
           "type": "characterBusy",
-          "id": "test_busy_01",
+          "id": "ep01_arama",
           "character": "ELIAS",
-          "status": "TEST BÖLGESINDE",
-          "durationMs": 15000,
-          "returnNodeId": "test_n10_return",
-          "message": "[ELIAS TEST BÖLGESINDE — BAĞLANTI KESİLDİ]",
-          "notificationTitle": "Test Tamamlandı",
-          "notificationBody": "Elias geri döndü.",
+          "status": "ARANIYOR",
+          "durationMs": 18000,
+          "returnNodeId": "ep01_n04_return",
+          "message": "[ELIAS ARIYOR]",
+          "notificationTitle": "Elias geri döndü",
+          "notificationBody": "Bir şey buldu.",
           "tone": "working"
         }
       ]
     },
-
-    "test_n10_return": {
-      "id": "test_n10_return",
+    "ep01_n04_return": {
+      "id": "ep01_n04_return",
       "speaker": "ELIAS",
-      "_testTarget": "characterBusy dönüş node'u",
       "events": [
-        { "type": "systemAlert", "text": "[CHARACTER BUSY TAMAMLANDI ✓]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Geri döndüm. characterBusy çalışıyorsa 15 saniye bekledi ve bildirim geldi.", "pauseAfterMs": 1000 }
-      ],
-      "choices": [
-        { "id": "test_busy_ok", "text": "Busy sistemi çalıştı, devam.", "nextNodeId": "test_n11" }
-      ]
-    },
-
-    "test_n11": {
-      "id": "test_n11",
-      "speaker": "SYSTEM",
-      "_testTarget": "Observer Mode — mentalStability düşük, seçim sonrası güncelleniyor",
-      "events": [
-        { "type": "systemAlert", "text": "[TEST 11: OBSERVER MODE]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "mentalStability Test 03'te -45 aldı. Şu an 55 civarında olmalı.", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Seçim yapınca chooseOption çalışır ve observerMode güncellenir.", "pauseAfterMs": 1000 },
-        { "type": "systemAlert", "text": "[BEKLENEN: Seçim sonrası story.observerMode = 'whisper']" }
-      ],
-      "choices": [
         {
-          "id": "test_observer_trigger",
-          "text": "Devam et.",
-          "nextNodeId": "test_n12"
-        }
-      ]
-    },
-
-    "test_n12": {
-      "id": "test_n12",
-      "speaker": "SYSTEM",
-      "_testTarget": "observerMode condition check",
-      "events": [
-        { "type": "systemAlert", "text": "[TEST 12: observerMode CONDITION]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Observer mode kontrol ediliyor. Doğru node'a branch yapıyor mu?" }
-      ],
-      "branching": [
-        {
-          "conditions": { "observerMode": "control" },
-          "nextNodeId": "test_n12_control"
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2000
         },
         {
-          "conditions": { "observerMode": "dialogue" },
-          "nextNodeId": "test_n12_dialogue"
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Bir kutu. İçinde kart var.",
+          "pauseAfterMs": 1500
         },
         {
-          "conditions": { "observerMode": "whisper" },
-          "nextNodeId": "test_n12_whisper"
-        }
-      ],
-      "defaultNextNodeId": "test_n12_passive"
-    },
-
-    "test_n12_whisper": {
-      "id": "test_n12_whisper",
-      "speaker": "OBSERVER",
-      "_testTarget": "observerMode: whisper branch",
-      "events": [
-        { "type": "systemAlert", "text": "[OBSERVER MODE: WHISPER ✓]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "OBSERVER", "duration": 2000 },
-        { "type": "message", "speaker": "OBSERVER", "text": "observerMode 'whisper' doğru tespit edildi. mentalStability 40-59 aralığında.", "pauseAfterMs": 1000 }
-      ],
-      "nextNodeId": "test_n13"
-    },
-
-    "test_n12_dialogue": {
-      "id": "test_n12_dialogue",
-      "speaker": "OBSERVER",
-      "_testTarget": "observerMode: dialogue branch",
-      "events": [
-        { "type": "systemAlert", "text": "[OBSERVER MODE: DIALOGUE ✓]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "OBSERVER", "duration": 2000 },
-        { "type": "message", "speaker": "OBSERVER", "text": "observerMode 'dialogue' tespit edildi. mentalStability 20-39 aralığında.", "pauseAfterMs": 1000 }
-      ],
-      "nextNodeId": "test_n13"
-    },
-
-    "test_n12_control": {
-      "id": "test_n12_control",
-      "speaker": "OBSERVER",
-      "_testTarget": "observerMode: control branch",
-      "events": [
-        { "type": "systemAlert", "text": "[OBSERVER MODE: CONTROL ✓]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "OBSERVER", "duration": 2000 },
-        { "type": "message", "speaker": "OBSERVER", "text": "observerMode 'control' tespit edildi. mentalStability 0-19 aralığında.", "pauseAfterMs": 1000 }
-      ],
-      "nextNodeId": "test_n13"
-    },
-
-    "test_n12_passive": {
-      "id": "test_n12_passive",
-      "speaker": "SYSTEM",
-      "_testTarget": "observerMode: passive (fallback - muhtemelen bug)",
-      "events": [
-        { "type": "systemAlert", "text": "[OBSERVER MODE: PASSIVE — mentalStability yeterince düşmedi veya condition çalışmıyor]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Test 03'te mentalStability -45 aldı ama observer mode whisper değil. statChange bug'ı olabilir.", "pauseAfterMs": 1000 }
-      ],
-      "nextNodeId": "test_n13"
-    },
-
-    "test_n13": {
-      "id": "test_n13",
-      "speaker": "SYSTEM",
-      "_testTarget": "Stats min/max condition",
-      "events": [
-        { "type": "systemAlert", "text": "[TEST 13: STATS CONDITION]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "fear 15 olmalı. Bu koşul fear min:10'u geçiyor mu?" }
-      ],
-      "branching": [
-        {
-          "conditions": { "fear": { "min": 10 } },
-          "nextNodeId": "test_n13_fear_high"
-        }
-      ],
-      "defaultNextNodeId": "test_n13_fear_low"
-    },
-
-    "test_n13_fear_high": {
-      "id": "test_n13_fear_high",
-      "speaker": "SYSTEM",
-      "_testTarget": "Stats condition: fear >= 10",
-      "events": [
-        { "type": "systemAlert", "text": "[STATS CONDITION fear>=10: ✓]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Stats condition çalışıyor. fear 10'un üzerinde doğrulandı.", "pauseAfterMs": 1000 }
-      ],
-      "nextNodeId": "test_n14"
-    },
-
-    "test_n13_fear_low": {
-      "id": "test_n13_fear_low",
-      "speaker": "SYSTEM",
-      "_testTarget": "Stats condition: BUG - fear beklenen değerde değil",
-      "events": [
-        { "type": "systemAlert", "text": "[HATA: fear 10'un altında — statChange çalışmıyor olabilir]", "pauseAfterMs": 1500 }
-      ],
-      "nextNodeId": "test_n14"
-    },
-
-    "test_n14": {
-      "id": "test_n14",
-      "speaker": "SYSTEM",
-      "_testTarget": "signalLost event + applySignalLost kanonik sistem",
-      "events": [
-        { "type": "systemAlert", "text": "[TEST 14: SIGNAL LOST + KANONİK ÖLÜM]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "The Echo yaklaşıyor. Sinyal kaybı simüle ediliyor.", "pauseAfterMs": 1000 },
-        {
-          "type": "signalLost",
-          "duration": 3000,
-          "message": "[SİNYAL KESİLDİ — TEST]",
-          "restoreMessage": "[SİNYAL YENİDEN KURULDU — TEST]",
-          "pauseAfterMs": 800
+          "type": "file",
+          "fileId": "ep01_kimlik_karti",
+          "fileType": "log",
+          "title": "KİMLİK KARTI — E-17",
+          "content": "PROJE EKO\nDenek Kodu: E-17\nDurum: AKTİF\nYetki Düzeyi: 1\n\n[DİĞER BİLGİLER — VERİ BOZULMUŞ]",
+          "caption": "Masanın altındaki kutudan çıkan lamine kart.",
+          "source": "NODE-7",
+          "tags": [
+            "kimlik",
+            "e17",
+            "proje_eko"
+          ],
+          "message": "[KİMLİK KARTI ARŞİVLENDİ]",
+          "pauseAfterMs": 2000
         },
-        { "type": "systemAlert", "text": "[BEKLENEN: loopCount +1 | mentalStability -12 | trust -12]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bağlantı yeniden kuruldu. death.loopCount konsol'da görünmeli.", "pauseAfterMs": 1000 }
-      ],
-      "choices": [
-        { "id": "test_signal_ok", "text": "Signal Lost çalıştı, devam.", "nextNodeId": "test_n15" }
-      ]
-    },
-
-    "test_n15": {
-      "id": "test_n15",
-      "speaker": "SYSTEM",
-      "_testTarget": "Story flag condition + flag set",
-      "events": [
-        { "type": "systemAlert", "text": "[TEST 15: STORY FLAG]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Story flag test ediliyor. unknownContactDiscovered false olmalı başlangıçta." }
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "E-17.",
+          "pauseAfterMs": 1500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Bu ben miyim?",
+          "pauseAfterMs": 2000
+        }
       ],
       "choices": [
         {
-          "id": "test_set_story_flag",
-          "text": "UNKNOWN ile iletişim kur.",
-          "nextNodeId": "test_n15_flag_check",
+          "id": "ep01_c3_empathy",
+          "text": "Ne hissediyorsun şimdi?",
+          "nextNodeId": "ep01_n05_warm",
           "effects": {
-            "unknownContactDiscovered": true
+            "trust": 5,
+            "humanity": 6,
+            "memory": [
+              "ep01_e17_kimlik"
+            ]
+          }
+        },
+        {
+          "id": "ep01_c3_focus",
+          "text": "Şimdilik önemli değil. Devam et.",
+          "nextNodeId": "ep01_n05_cold",
+          "effects": {
+            "riskPattern": 2,
+            "resentment": 3,
+            "memory": [
+              "ep01_e17_kimlik"
+            ]
           }
         }
       ]
     },
-
-    "test_n15_flag_check": {
-      "id": "test_n15_flag_check",
-      "speaker": "SYSTEM",
-      "_testTarget": "Story flag condition check",
+    "ep01_n05_warm": {
+      "id": "ep01_n05_warm",
+      "speaker": "ELIAS",
       "events": [
-        { "type": "systemAlert", "text": "[TEST 15B: STORY FLAG CONDITION CHECK]", "pauseAfterMs": 1500 }
-      ],
-      "branching": [
         {
-          "conditions": { "unknownContactDiscovered": true },
-          "nextNodeId": "test_n15_flag_ok"
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Tanıdık geliyor ama yabancı da. Elias. E-17. Sanki ikisi de ben ama ikisi de değil.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Normal bu.",
+          "pauseAfterMs": 1500
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Terminalde açık bir dosya var. Görüyorum. Açma.",
+          "pauseAfterMs": 2000
         }
       ],
-      "defaultNextNodeId": "test_n15_flag_fail"
+      "nextNodeId": "ep01_n06_arsiv_secim"
     },
-
-    "test_n15_flag_ok": {
-      "id": "test_n15_flag_ok",
-      "speaker": "SYSTEM",
-      "_testTarget": "Story flag OK",
+    "ep01_n05_cold": {
+      "id": "ep01_n05_cold",
+      "speaker": "ELIAS",
       "events": [
-        { "type": "systemAlert", "text": "[STORY FLAG CONDITION: ✓ unknownContactDiscovered = true]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Story flag sistemi çalışıyor.", "pauseAfterMs": 1000 }
-      ],
-      "nextNodeId": "test_n16"
-    },
-
-    "test_n15_flag_fail": {
-      "id": "test_n15_flag_fail",
-      "speaker": "SYSTEM",
-      "_testTarget": "Story flag FAIL",
-      "events": [
-        { "type": "systemAlert", "text": "[HATA: Story flag condition çalışmıyor]", "pauseAfterMs": 1500 }
-      ],
-      "nextNodeId": "test_n16"
-    },
-
-    "test_n16": {
-      "id": "test_n16",
-      "speaker": "SYSTEM",
-      "_testTarget": "Relationship tag condition",
-      "events": [
-        { "type": "systemAlert", "text": "[TEST 16: RELATIONSHIP TAG]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Seçim 02'de hangi yol izlendi? Tag koşulu kontrol ediliyor." }
-      ],
-      "branching": [
         {
-          "conditions": { "tag:trusted_operator": true },
-          "nextNodeId": "test_n16_tag_ok"
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Tamam. Ne yapmalıyım?",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Terminalde açık bir dosya var. Açma.",
+          "pauseAfterMs": 2000
         }
       ],
-      "defaultNextNodeId": "test_n16_no_tag"
+      "nextNodeId": "ep01_n06_arsiv_secim"
     },
-
-    "test_n16_tag_ok": {
-      "id": "test_n16_tag_ok",
-      "speaker": "SYSTEM",
-      "_testTarget": "Relationship tag found",
+    "ep01_n06_arsiv_secim": {
+      "id": "ep01_n06_arsiv_secim",
+      "speaker": "ELIAS",
       "events": [
-        { "type": "systemAlert", "text": "[RELATIONSHIP TAG: trusted_operator ✓]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Relationship tag sistemi çalışıyor.", "pauseAfterMs": 1000 }
-      ],
-      "nextNodeId": "test_n17"
-    },
-
-    "test_n16_no_tag": {
-      "id": "test_n16_no_tag",
-      "speaker": "SYSTEM",
-      "_testTarget": "Relationship tag not found (expected if cold choice was made)",
-      "events": [
-        { "type": "systemAlert", "text": "[RELATIONSHIP TAG: trusted_operator YOK — soğuk seçim yapıldı veya tag sistemi çalışmıyor]", "pauseAfterMs": 1500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Soğuk seçim yapıldıysa bu normal. Sıcak seçimde tag eklenmeli.", "pauseAfterMs": 1000 }
-      ],
-      "nextNodeId": "test_n17"
-    },
-
-    "test_n17": {
-      "id": "test_n17",
-      "speaker": "SYSTEM",
-      "_testTarget": "Test tamamlandı — Final rapor",
-      "events": [
-        { "type": "systemAlert", "text": "════════════════════════════", "pauseAfterMs": 500 },
-        { "type": "systemAlert", "text": "[TEST SENARYOSU TAMAMLANDI]", "pauseAfterMs": 1000 },
-        { "type": "systemAlert", "text": "════════════════════════════", "pauseAfterMs": 500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Tüm sistemler test edildi. Konsol loglarını kontrol et.", "pauseAfterMs": 1200 },
-        { "type": "systemAlert", "text": "[01] systemAlert + typing + message", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[02] choice effects: trust, memory", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[03] statChange event", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[04] memory condition branch", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[05] file collection + DataBank", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[06] puzzle sistemi", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[07] realTimeWait", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[08] progressTask", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[09] glitch + corruptMessage", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[10] characterBusy", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[11-12] observerMode", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[13] stats min/max condition", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[14] signalLost + applySignalLost", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[15] story flag condition", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[16] relationship tag condition", "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "════════════════════════════", "pauseAfterMs": 500 }
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Görüyorum. Neden açmayalım?",
+          "pauseAfterMs": 1800
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Açma.",
+          "pauseAfterMs": 2000
+        }
       ],
       "choices": [
         {
-          "id": "test_restart",
-          "text": "Testi baştan çalıştır.",
-          "nextNodeId": "test_n01"
+          "id": "ep01_c4_kapat",
+          "text": "UNKNOWN'a güven. Elias'a dosyayı kapatmasını söyle.",
+          "nextNodeId": "ep01_n07_kapat",
+          "effects": {
+            "trust": 5,
+            "humanity": 3
+          }
+        },
+        {
+          "id": "ep01_c4_ac",
+          "text": "Merak et. Elias'a dosyayı açmasını söyle.",
+          "nextNodeId": "ep01_n07_ac",
+          "effects": {
+            "curiosity": 10,
+            "riskPattern": 4,
+            "trust": -4
+          }
+        }
+      ]
+    },
+    "ep01_n07_kapat": {
+      "id": "ep01_n07_kapat",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Tamam. Kapattım.",
+          "pauseAfterMs": 1500
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "İyi.",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "O dosyada senin hakkında bir şeyler var. Ama şu an bilmen gerekmiyor.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 5,
+            "curiosity": 8
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "nextNodeId": "ep01_n08_eko"
+    },
+    "ep01_n07_ac": {
+      "id": "ep01_n07_ac",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Açıyorum.",
+          "pauseAfterMs": 1000
+        },
+        {
+          "type": "progressTask",
+          "id": "ep01_dosya_yukle",
+          "title": "ARŞİV ERİŞİMİ",
+          "subtitle": "DOSYA OKUNUYOR...",
+          "duration": 3000,
+          "completeText": "[DOSYA YÜKLENDİ]",
+          "tone": "system",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "file",
+          "fileId": "ep01_arsiv_27",
+          "fileType": "log",
+          "title": "ARŞİV KAYDI — DÖNGÜ 27",
+          "content": "Tarih  : [VERİ BOZULMUŞ]\nDenek  : E-17\nİşlem  : BELLEK SIFIRLAMA — TAM\n\nNot: Denek uyanma belirtileri gösterdi.\nOperatör bağlantısı yeniden kuruldu.\nBir sonraki değerlendirme: [VERİ BOZULMUŞ]\n\n[DOSYA SONU]",
+          "caption": "Terminalde açık bırakılmış son arşiv kaydı.",
+          "source": "PROJE EKO — SİSTEM KAYITLARI",
+          "tags": [
+            "arsiv",
+            "dongu_27",
+            "sifirlama",
+            "e17"
+          ],
+          "message": "[ARŞİV KAYDI 27 VERİ BANKASINA EKLENDİ]",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Bellek sıfırlama. Döngü 27. Bu... benim hakkımda yazıyor.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Harika. Şimdi onlar da biliyor.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Kim biliyor?",
+          "pauseAfterMs": 1500
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Elias.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Ne okuduğunu anladın mı?",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 8,
+            "identityFracture": 5,
+            "curiosity": 12,
+            "trust": -6
+          },
+          "pauseAfterMs": 500
+        }
+      ],
+      "nextNodeId": "ep01_n08_eko"
+    },
+    "ep01_n08_eko": {
+      "id": "ep01_n08_eko",
+      "speaker": "SYSTEM",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Elias. Dur.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Ne—",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 1200
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "SESSIZ.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "glitch",
+          "duration": 600,
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Koridorda bir şey var. Kapının hemen dışında.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Duyuyorum. Bir şey... kazıyor. Duvara.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "glitch",
+          "duration": 800,
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 1800
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Nefes al. Yavaş. Hareket etme.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 15,
+            "eliasStress": 20,
+            "echoProximity": 35
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "choices": [
+        {
+          "id": "ep01_c5_sessiz",
+          "text": "Sabır. Elias'a hareketsiz kalmasını söyle.",
+          "nextNodeId": "ep01_n09_gecti",
+          "effects": {
+            "trust": 4,
+            "humanity": 4
+          }
+        },
+        {
+          "id": "ep01_c5_kac",
+          "text": "Korkutucusu bu. Elias'a kapıdan uzaklaşmasını söyle.",
+          "nextNodeId": "ep01_n09_yakin",
+          "effects": {
+            "riskPattern": 4,
+            "fear": 8,
+            "trust": -3
+          }
+        }
+      ]
+    },
+    "ep01_n09_gecti": {
+      "id": "ep01_n09_gecti",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "realTimeWait",
+          "seconds": 20
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Geçti.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Ne geçti?",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Bilmen gerekmiyor. Henüz.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "echoProximity": -10
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "nextNodeId": "ep01_n10_vahiy"
+    },
+    "ep01_n09_yakin": {
+      "id": "ep01_n09_yakin",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Uzaklaşıyorum, ben—",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 1000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "HAYIR. DUR.",
+          "pauseAfterMs": 1500
+        },
+        {
+          "type": "glitch",
+          "duration": 1200,
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "THE ECHO",
+          "text": "████████████████████",
+          "corruption": "extreme",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "glitch",
+          "duration": 1500,
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Taş gibi kal. Nefes alma. ŞIMDI.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 25
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Geçti. Ama çok yakındı.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Özür dilerim.",
+          "pauseAfterMs": 1500
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Bir daha yapma.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 20,
+            "eliasStress": 15,
+            "echoProximity": 15,
+            "deathRisk": 15
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "nextNodeId": "ep01_n10_vahiy"
+    },
+    "ep01_n10_vahiy": {
+      "id": "ep01_n10_vahiy",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Ne oluyor burada?",
+          "pauseAfterMs": 1800
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Hatırlayamıyorsun çünkü bir şeyler yaptılar.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Ve bu ilk sefer değil.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 10,
+            "identityFracture": 10,
+            "trust": 8,
+            "memory": [
+              "ep01_ilk_vahiy"
+            ]
+          },
+          "pauseAfterMs": 800
+        }
+      ],
+      "choices": [
+        {
+          "id": "ep01_c6_inan",
+          "text": "Elias'a inanmasını söyle.",
+          "nextNodeId": "ep01_n11_inan",
+          "effects": {
+            "trust": 8,
+            "humanity": 5,
+            "dependency": 5
+          }
+        },
+        {
+          "id": "ep01_c6_sorgula",
+          "text": "Elias'a kanıt istemesini söyle.",
+          "nextNodeId": "ep01_n11_sorgula",
+          "effects": {
+            "trust": -3,
+            "curiosity": 10,
+            "resentment": 4,
+            "riskPattern": 2
+          }
+        }
+      ]
+    },
+    "ep01_n11_inan": {
+      "id": "ep01_n11_inan",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Tamam. İnanıyorum.",
+          "pauseAfterMs": 1800
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Buna henüz hazır değilsin. Ama yeterli.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Yarın daha fazlası var. Sol paneli kapat. Terminali uyku moduna al.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Tamam ama —",
+          "pauseAfterMs": 800
+        }
+      ],
+      "nextNodeId": "ep02_n01"
+    },
+    "ep01_n11_sorgula": {
+      "id": "ep01_n11_sorgula",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Nasıl bilebilirim?",
+          "pauseAfterMs": 1800
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Bilemezsin. Henüz.",
+          "pauseAfterMs": 1800
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Ama duvardaki sayılara bak. 4. 17. 27.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Duvardakileri...",
+          "pauseAfterMs": 1200
+        },
+        {
+          "type": "typing",
+          "speaker": "UNKNOWN",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "UNKNOWN",
+          "text": "Bunlar senin döngü sayıların, Elias.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "...",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "identityFracture": 12,
+            "fear": 8,
+            "memory": [
+              "ep01_dongu_sayilari"
+            ]
+          },
+          "pauseAfterMs": 500
+        }
+      ],
+      "nextNodeId": "ep02_n01"
+    },
+    "ep01_son": {
+      "id": "ep02_n01",
+      "speaker": "UNKNOWN",
+      "events": [
+        {
+          "type": "glitch",
+          "duration": 1000,
+          "pauseAfterMs": 600
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "UNKNOWN",
+          "text": "BAĞLANTI KESİLİYOR — GÜVENDE KAL",
+          "corruption": "medium",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Bekle—",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "systemAlert",
+          "text": "[BAĞLANTI KESİLDİ]",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "memory": [
+              "ep01_oturum_sonu"
+            ]
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "choices": [
+        {
+          "id": "ep01_devam",
+          "text": "Sabahı bekle.",
+          "nextNodeId": "ep02_n01"
+        }
+      ]
+    },
+    "ep01_n02_sicak": {
+      "id": "ep01_n02_sicak",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Gerçeksin.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Üzgünüm, sadece... beklemiyordum. Uzun zamandır cevap almadım. Belki hiç almadım. Bilmiyorum ne kadar süredir buradayım.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Kimsin?",
+          "pauseAfterMs": 2500
+        }
+      ],
+      "nextNodeId": "ep01_n03_kim"
+    },
+    "ep01_n02_resmi": {
+      "id": "ep01_n02_resmi",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Demek birileri var.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Kim olduğunu bilmiyorum. Neden cevap verdiğini de. Ama şu an bunları sormak bile garip geliyor — sanki bunları sormak hakkım yokmuş gibi.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Kimsin?",
+          "pauseAfterMs": 2500
+        }
+      ],
+      "nextNodeId": "ep01_n03_kim"
+    },
+    "ep01_n03_kim": {
+      "id": "ep01_n03_kim",
+      "speaker": "ELIAS",
+      "events": [],
+      "choices": [
+        {
+          "id": "ep01_c2_yardim",
+          "text": "Sana yardım etmek için buradayım.",
+          "nextNodeId": "ep01_n04_yardim",
+          "effects": {
+            "trust": 6,
+            "humanity": 5,
+            "dependency": 3
+          }
+        },
+        {
+          "id": "ep01_c2_operator",
+          "text": "Operatörüm. Seninle bağlantı kuruldu.",
+          "nextNodeId": "ep01_n04_operator",
+          "effects": {
+            "trust": 3,
+            "curiosity": 4
+          }
+        }
+      ]
+    },
+    "ep01_n04_yardim": {
+      "id": "ep01_n04_yardim",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Yardım.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Bu kelimeyi duyunca — yazınca — ne kadar süre geçti bilmiyorum ama uzun zaman oldu. Gerçekten uzun.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Nasıl yardım edeceksin ki? Neredesin sen?",
+          "pauseAfterMs": 2500
+        }
+      ],
+      "nextNodeId": "ep01_n05_soz"
+    },
+    "ep01_n04_operator": {
+      "id": "ep01_n04_operator",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Operatör. Tamam.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 4500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Bu ne demek tam olarak? Beni izleyen biri misin? Yönetiyor musun beni?",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Yargılamıyorum. Sadece anlamak istiyorum ne bekliyorsun benden.",
+          "pauseAfterMs": 2500
+        }
+      ],
+      "nextNodeId": "ep01_n05_soz"
+    },
+    "ep01_n05_soz": {
+      "id": "ep01_n05_soz",
+      "speaker": "ELIAS",
+      "events": [],
+      "choices": [
+        {
+          "id": "ep01_c3_soz_ver",
+          "text": "Sana söz veriyorum. Buradan çıkacaksın.",
+          "nextNodeId": "ep01_n06_soz_alindi",
+          "effects": {
+            "trust": 8,
+            "humanity": 6,
+            "dependency": 5
+          }
+        },
+        {
+          "id": "ep01_c3_gercekci",
+          "text": "Söz veremem. Ama elimden geleni yapacağım.",
+          "nextNodeId": "ep01_n06_gercekci",
+          "effects": {
+            "trust": 5,
+            "humanity": 8,
+            "resentment": -2
+          }
+        }
+      ]
+    },
+    "ep01_n06_soz_alindi": {
+      "id": "ep01_n06_soz_alindi",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 6000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Söz.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Uzun zaman oldu birinin söz vermesi üzerine. Sana inanıp inanmamam gerektiğini bilmiyorum. Ama şu an bunu önemsemin istiyorum.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Tamam. Nereden başlayalım.",
+          "pauseAfterMs": 2500
+        }
+      ],
+      "nextNodeId": "ep01_n07_oda"
+    },
+    "ep01_n06_gercekci": {
+      "id": "ep01_n06_gercekci",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Dürüst biri gibi konuşuyorsun. Burada bunu pek görmemiştim.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "İyi. Başlayalım o zaman.",
+          "pauseAfterMs": 2000
+        }
+      ],
+      "nextNodeId": "ep01_n07_oda"
+    },
+    "ep01_n07_oda": {
+      "id": "ep01_n07_oda",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Neredeyim mi.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Uzandığım yerden kalktım. Birkaç adım attım. Duvar. Geri döndüm. Yine duvar. Bu kadar büyük.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 5500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Üzerinde yattığım şey bir yatak sayılır, sanırım. İnce. Battaniye yok. Beton zemin soğuk — bunu ayak tabanlarımdan anladım. Kapı var, karşımda. Kilitli. Çekmeye çalıştım.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 4500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Duvarda izler var. Birinin tırnaklarıyla ya da başka bir şeyle kazıdığı. Rakamlar. 4. 17. 27. Çaresizce çizilmiş gibi. Bunları ilk gördüğümde neden bu kadar tanıdık geldi anlayamadım.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Seninle konuştuğum bu ekran — zaten açıktı. Ben basmadım. Belki biri bıraktı. Belki kendiliğinden. Bilmiyorum.",
+          "pauseAfterMs": 3000
+        }
+      ],
+      "choices": [
+        {
+          "id": "ep01_c4_adinhatirliyor",
+          "text": "Adını hatırlıyor musun?",
+          "nextNodeId": "ep01_n08_ad_sicak",
+          "effects": {
+            "trust": 4,
+            "humanity": 5
+          }
+        },
+        {
+          "id": "ep01_c4_baskabirsey",
+          "text": "Başka ne hatırlıyorsun?",
+          "nextNodeId": "ep01_n08_ad_merak",
+          "effects": {
+            "curiosity": 5,
+            "humanity": 3,
+            "trust": 3
+          }
+        }
+      ]
+    },
+    "ep01_n08_ad_sicak": {
+      "id": "ep01_n08_ad_sicak",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Elias.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 4500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Bunu hatırlıyorum. Başka bir şey değil. Yüzüm yok aklımda. Evin nasıl göründüğünü bilmiyorum. Birinin adını söyleyemem. Sadece Elias.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Ve biri bana E-17 demiş. Masanın altında kart var. Lamine edilmiş.",
+          "pauseAfterMs": 2500
+        }
+      ],
+      "nextNodeId": "ep01_n09_kart"
+    },
+    "ep01_n08_ad_merak": {
+      "id": "ep01_n08_ad_merak",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 5000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Adımı hatırlıyorum. Elias. Başka bir şey değil. Sanki biri içime girmiş, her şeyi almış, sadece onu bırakmış.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Korkunç olan şu: bunu ne zaman fark ettim hatırlamıyorum. Belki hep böyleydim. Belki değildim.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Masanın altında bir kart var. E-17 yazıyor.",
+          "pauseAfterMs": 2500
+        }
+      ],
+      "nextNodeId": "ep01_n09_kart"
+    },
+    "ep01_n09_kart": {
+      "id": "ep01_n09_kart",
+      "speaker": "ELIAS",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Açıyorum kutuyu.",
+          "pauseAfterMs": 1500
+        },
+        {
+          "type": "file",
+          "fileId": "ep01_kimlik_karti",
+          "fileType": "log",
+          "title": "KİMLİK KARTI — E-17",
+          "content": "PROJE EKO\nDenek Kodu: E-17\nDurum: AKTİF\nYetki Düzeyi: 1\n\n[DİĞER BİLGİLER — VERİ BOZULMUŞ]",
+          "caption": "Masanın altındaki kutudan çıkan lamine kart.",
+          "source": "NODE-7",
+          "tags": [
+            "kimlik",
+            "e17",
+            "proje_eko"
+          ],
+          "message": "[KİMLİK KARTI ARŞİVLENDİ]",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "E-17. Denek. Yetki Düzeyi 1.",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "ELIAS",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "speaker": "ELIAS",
+          "text": "Bu ben miyim? Yani, E-17 adım değil. Ama bana atılmış. Elias benim, ama E-17 de ben miyim?",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 5,
+            "identityFracture": 5,
+            "memory": [
+              "ep01_e17_kimlik"
+            ]
+          },
+          "pauseAfterMs": 300
+        }
+      ],
+      "choices": [
+        {
+          "id": "ep01_c5_empathy",
+          "text": "Ne hissediyorsun şimdi?",
+          "nextNodeId": "ep01_n05_warm",
+          "effects": {
+            "trust": 5,
+            "humanity": 6
+          }
+        },
+        {
+          "id": "ep01_c5_focus",
+          "text": "Şimdilik önemli değil. Terminali incele.",
+          "nextNodeId": "ep01_n05_cold",
+          "effects": {
+            "riskPattern": 2,
+            "resentment": 3
+          }
         }
       ]
     }
