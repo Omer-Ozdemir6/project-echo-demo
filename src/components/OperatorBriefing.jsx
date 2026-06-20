@@ -1,59 +1,24 @@
 import { useEffect, useState } from "react";
 import { getGameText } from "../i18n/gameText";
 
-function resolveConfigText(value, language = "en") {
-  if (typeof value === "string") return value;
-  if (value && typeof value === "object") {
-    return getGameText(value.textKey, value.text || "", language);
-  }
-  return "";
-}
-
-// Atmosferi katlayan tekinsiz bilinçaltı parazit havuzu (Flash için kullanılacak)
-const SUBLIMINAL_MESSAGES = [
-  "WELCOME BACK ELIAS",
-  "LOOP 28",
-  "MEMORY PURGE FAILED",
-  "HE REMEMBERED",
-  "YOU SHOULD NOT BE HERE",
-  "KIRA IS STILL WAITING",
-  "DO NOT TRUST HER"
-];
-
-export default function OperatorBriefing({ quote, onComplete, language = "en" }) {
-  // Ana Akış Adımları: "briefing" | "loading" | "quote" | "blackout" | "subliminalFlash"
-  const [step, setStep] = useState("briefing");
+export default function OperatorBriefing({ onComplete, language = "en" }) {
+  const [stage, setStage] = useState("briefing"); // "briefing" | "loading"
   const [briefingStage, setBriefingStage] = useState(0);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
-  const [flashMessage, setFlashMessage] = useState("");
 
-  const author = getGameText(
-    quote?.authorKey,
-    quote?.author || "",
-    language
-  );
-
-  // Rastgele şok mesajı seçimi
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * SUBLIMINAL_MESSAGES.length);
-    setFlashMessage(SUBLIMINAL_MESSAGES[randomIndex]);
-  }, []);
-
-  // 1. ADIM: Brifing Satır Satır Belirme Zamanlayıcıları
-  useEffect(() => {
-    if (step !== "briefing") return;
+    if (stage !== "briefing") return;
 
     const timers = [
       setTimeout(() => setBriefingStage(1), 500),   // PROJECT ECHO
-      setTimeout(() => setBootStepIndex && setBriefingStage(2), 1500),  // CLASSIFIED OPERATIONAL DATA
+      setTimeout(() => setBriefingStage(2), 1500),  // // OPERATOR BRIEFING_
       setTimeout(() => setBriefingStage(3), 2500)   // İçerik metni ve buton
     ];
 
     return () => timers.forEach(clearTimeout);
-  }, [step]);
+  }, [stage]);
 
-  // Brifing Buton Aksiyonu
   const handleAcceptBriefing = () => {
     if (isButtonLoading) return;
     setIsButtonLoading(true);
@@ -63,69 +28,30 @@ export default function OperatorBriefing({ quote, onComplete, language = "en" })
     }, 1000);
 
     setTimeout(() => {
-      setStep("loading");
+      setStage("loading");
       setIsLeaving(false);
     }, 1600);
   };
 
-  // 2. ADIM: Ara Yükleme (Loading) Zamanlayıcısı
   useEffect(() => {
-    if (step !== "loading") return;
+    if (stage !== "loading") return;
 
     const toQuote = setTimeout(() => {
-      setStep("quote");
+      if (onComplete) onComplete();
     }, 3000);
 
     return () => clearTimeout(toQuote);
-  }, [step]);
-
-  // 3. ADIM: Anlatıcı Yazılarından Sonraki Akış (Blackout ve Flash Geçişleri)
-  useEffect(() => {
-    if (step !== "quote") return;
-
-    const timers = [
-      // Senin verdiğin saf CSS delay sürelerinin (14.8s + 1.4s) bittiği an blackout yapar (16.2 saniye)
-      setTimeout(() => {
-        setStep("blackout");
-      }, 16200)
-    ];
-
-    return () => timers.forEach(clearTimeout);
-  }, [step]);
-
-  // 4. ADIM: Siyah Ekran (Blackout) Süresi
-  useEffect(() => {
-    if (step !== "blackout") return;
-
-    const blackoutTimer = setTimeout(() => {
-      setStep("subliminalFlash");
-    }, 1200);
-
-    return () => clearTimeout(blackoutTimer);
-  }, [step]);
-
-  // 5. ADIM: Subliminal Glitch Parlaması ve Üst Katmana Çıkış Sinyali
-  useEffect(() => {
-    if (step !== "subliminalFlash") return;
-
-    const flashTimer = setTimeout(() => {
-      if (onComplete) onComplete();
-    }, 80);
-
-    return () => clearTimeout(flashTimer);
-  }, [step, onComplete]);
+  }, [stage, onComplete]);
 
   const crtOverlay = (
     <div className="pointer-events-none fixed inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(255,255,255,0.015)_1px,transparent_1px,transparent_5px)] opacity-35" />
   );
 
-  // ==================== SAHNE YAPILARI ====================
-
-  // SEYİR A: OUTLAST TARZI OPERATÖR BRİFİNGİ
-  if (step === "briefing") {
+  if (stage === "briefing") {
     return (
       <main className="relative grid min-h-dvh place-items-center overflow-hidden bg-black px-6 font-mono select-none text-cyan-50">
         {crtOverlay}
+        
         <section 
           className={[
             "w-full max-w-2xl text-center",
@@ -198,8 +124,7 @@ export default function OperatorBriefing({ quote, onComplete, language = "en" })
     );
   }
 
-  // SEYİR B: ARA BEYİN DALGASI YÜKLEME EKRANI
-  if (step === "loading") {
+  if (stage === "loading") {
     return (
       <main className="relative min-h-dvh bg-black font-mono select-none text-cyan-50/60">
         {crtOverlay}
@@ -207,57 +132,6 @@ export default function OperatorBriefing({ quote, onComplete, language = "en" })
           <span className="inline-block animate-spin text-rose-500">⚡</span> 
           <span className="text-rose-500/80">SYNCHRONIZING_BRAINWAVES_</span>
         </div>
-      </main>
-    );
-  }
-
-  // SEYİR C: SENİN ORİJİNAL, GECİKMELİ SAF CSS ANİMASYONLU ANLATICI EKRANIN
-  if (step === "quote") {
-    return (
-      <main className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-black px-6 py-16 text-white animate-[quoteSceneFadeOut_1.4s_ease_forwards] [animation-delay:22.8s]">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.06),transparent_72%)]" />
-        {crtOverlay}
-
-        <section className="relative z-10 w-full max-w-4xl">
-          <div className="space-y-5">
-            {(quote?.lines || []).map((line, index) => {
-              const text = resolveConfigText(line, language);
-
-              return (
-                <p
-                  key={`${text}-${index}`}
-                  className={[
-                    "opacity-0 text-xl leading-loose tracking-wide text-white/90 sm:text-3xl",
-                    "animate-[quoteFadeIn_1.8s_forwards,quoteFadeOut_1.5s_forwards]",
-                    index === 0 ? "[animation-delay:0.7s,10.8s]" : "",
-                    index === 1 ? "[animation-delay:2.8s,11.5s]" : "",
-                    index === 2 ? "[animation-delay:4.9s,12.2s]" : ""
-                  ].join(" ")}
-                >
-                  {text}
-                </p>
-              );
-            })}
-          </div>
-
-          <div className="mt-12 text-right text-xs tracking-[0.3em] text-white/65 opacity-0 animate-[quoteFadeIn_1.6s_forwards,quoteFadeOut_1.8s_forwards] [animation-delay:7.2s,13.6s] sm:text-sm">
-            {author}
-          </div>
-        </section>
-      </main>
-    );
-  }
-
-  // SEYİR D: TAM SİYAH PRO-BOŞLUK EKRANI
-  if (step === "blackout") {
-    return <main className="fixed inset-0 bg-black z-50" />;
-  }
-
-  // SEYİR E: RASTGELE METİNLİ GLITCH PARAZİT SHOCK FLAŞI
-  if (step === "subliminalFlash") {
-    return (
-      <main className="fixed inset-0 z-[99999] grid place-items-center bg-black text-rose-500 font-mono tracking-[0.4em] text-base sm:text-lg font-bold select-none animate-[screenGlitch_0.05s_infinite]">
-        {flashMessage}
       </main>
     );
   }

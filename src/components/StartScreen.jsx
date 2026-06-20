@@ -6,17 +6,19 @@ import ProducerLogoAnimation from "./ProducerLogoAnimation";
 export default function StartScreen({
   gameTitle,
   subtitle,
-  onStart,
+  onStart, // Orijinal props ismini koruyoruz ki dış katmanda hata vermesin
   settings,
   onChangeSettings,
   onReset
 }) {
+  // Akış Kademeleri: "producerLogo" | "disclaimer" | "initialLoading" | "start"
   const [introStep, setIntroStep] = useState("producerLogo");
   const [isLeaving, setIsLeaving] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const language = settings?.language || "en";
 
+  // 1. ZAMANLAYICI DÖNGÜSÜ: Yasal Uyarı / Disclaimer Ekranı
   useEffect(() => {
     if (introStep !== "disclaimer") return;
 
@@ -25,7 +27,7 @@ export default function StartScreen({
     }, 3600);
 
     const nextTimer = setTimeout(() => {
-      setIntroStep("start");
+      setIntroStep("initialLoading");
       setIsLeaving(false);
     }, 4800);
 
@@ -35,19 +37,32 @@ export default function StartScreen({
     };
   }, [introStep]);
 
+  // 2. ZAMANLAYICI DÖNGÜSÜ: Menü Öncesi Ara Yükleme (Initial Loading)
+  useEffect(() => {
+    if (introStep !== "initialLoading") return;
+
+    const menuTimer = setTimeout(() => {
+      setIntroStep("start");
+    }, 2500);
+
+    return () => clearTimeout(menuTimer);
+  }, [introStep]);
+
+  // AŞAMA 1: Yapımcı Logosu
   if (introStep === "producerLogo") {
     return (
       <ProducerLogoAnimation
         src="/red-door-logo.jpg"
         alt="Red Door"
-        onComplete={() => setIntroStep("logoAnimation")}
+        onComplete={() => setIntroStep("disclaimer")}
       />
     );
   }
 
+  // AŞAMA 2: Yasal Uyarı / Disclaimer
   if (introStep === "disclaimer") {
     return (
-      <main className="relative grid min-h-dvh place-items-center overflow-hidden bg-black px-6">
+      <main className="relative grid min-h-dvh place-items-center overflow-hidden bg-black px-6 select-none font-mono">
         <div
           className={[
             "max-w-5xl text-center",
@@ -56,7 +71,7 @@ export default function StartScreen({
               : "animate-[producerLogoFadeIn_1.2s_ease-out_forwards]"
           ].join(" ")}
         >
-          <p className="text-2xl leading-relaxed tracking-[0.04em] text-white/90 sm:text-4xl">
+          <p className="text-xl leading-relaxed tracking-[0.06em] text-white/90 sm:text-3xl">
             {getGameText(
               "start.disclaimer.line1",
               "All characters and locations in this game are fictional.",
@@ -64,7 +79,7 @@ export default function StartScreen({
             )}
           </p>
 
-          <p className="mt-6 text-2xl leading-relaxed tracking-[0.04em] text-white/90 sm:text-4xl">
+          <p className="mt-6 text-xl leading-relaxed tracking-[0.06em] text-white/90 sm:text-3xl">
             {getGameText(
               "start.disclaimer.line2",
               "Any resemblance to real people or places is purely coincidental.",
@@ -76,8 +91,22 @@ export default function StartScreen({
     );
   }
 
+  // AŞAMA 3: Menü Öncesi Metinsiz Temiz Loading Ekranı
+  if (introStep === "initialLoading") {
+    return (
+      <main className="relative min-h-dvh bg-black font-mono select-none text-cyan-50/60">
+        <div className="pointer-events-none fixed inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(255,255,255,0.015)_1px,transparent_1px,transparent_5px)] opacity-35" />
+        <div className="fixed bottom-8 right-8 text-[11px] tracking-widest opacity-40 flex items-center gap-2">
+          <span className="inline-block animate-spin">⚡</span> 
+          <span>CONNECTING_</span>
+        </div>
+      </main>
+    );
+  }
+
+  // AŞAMA 4: Ana Menü Görüntüsü
   return (
-    <main className="relative flex min-h-dvh items-center justify-center overflow-hidden px-6 py-10 text-cyan-50 animate-[startScreenFadeIn_0.9s_ease-out_both]">
+    <main className="relative flex min-h-dvh items-center justify-center overflow-hidden px-6 py-10 text-cyan-50 animate-[startScreenFadeIn_0.9s_ease-out_both] font-mono select-none">
       <img
         src="/echo-menu-bg.jpg"
         alt=""
@@ -85,11 +114,11 @@ export default function StartScreen({
         draggable={false}
       />
 
-      <div className="absolute inset-0 bg-black/35" />
+      <div className="absolute inset-0 bg-black/40" />
 
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent,rgba(0,0,0,0.48))]" />
-
-      <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.018),rgba(255,255,255,0.018)_1px,transparent_1px,transparent_5px)] opacity-35" />
+      {/* Atmosferik Grid ve Işık Katmanları */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent,rgba(0,0,0,0.5))]" />
+      <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(255,255,255,0.015)_1px,transparent_1px,transparent_5px)] opacity-35" />
 
       <button
         type="button"
@@ -112,12 +141,19 @@ export default function StartScreen({
             {gameTitle}
           </h1>
 
+          {subtitle && (
+            <p className="mt-3 text-xs tracking-[0.4em] text-cyan-400/70 uppercase">
+              {subtitle}
+            </p>
+          )}
+
           <div className="mx-auto mt-5 h-px w-64 bg-cyan-300/40 shadow-[0_0_20px_rgba(34,211,238,0.65)]" />
         </div>
 
+        {/* BAĞLANTIYI BAŞLAT BUTONU */}
         <button
           type="button"
-          onClick={onStart}
+          onClick={onStart} // Fonksiyon tetiklendiğinde üst katmandaki state brifing sayfasına kırılacak
           className={[
             "w-full max-w-xs border border-cyan-300/50 bg-slate-950/40 px-8 py-4",
             "text-sm tracking-[0.28em] text-cyan-100 backdrop-blur-sm",

@@ -7,31 +7,19 @@
 html,
 body,
 #root {
+  width: 100%;
+  height: 100%;
   min-height: 100%;
+  background: #020617;
 }
 
 body {
   margin: 0;
-  background: #020617;
   color: #d8f8ff;
   font-family: "Courier New", monospace;
-}
-
-html,
-body,
-#root {
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-  overflow: hidden;
+  /* Mobil tarayıcılarda elastik sekmeleri ve gereksiz kaymaları engelleme */
   overscroll-behavior: none;
   touch-action: manipulation;
-  background: #020617;
-}
-
-body {
-  position: fixed;
-  inset: 0;
 }
 
 button,
@@ -48,21 +36,23 @@ img {
   max-width: 100%;
 }
 
+/* CRT Ekran Parazit Katmanı */
 .noise-overlay {
   position: fixed;
   inset: 0;
   z-index: 40;
   pointer-events: none;
   opacity: 0.06;
-  background-image:
-    repeating-radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.22) 0px,
-      rgba(255, 255, 255, 0) 2px
-    );
+  background-image: repeating-radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.22) 0px,
+    rgba(255, 255, 255, 0) 2px
+  );
   animation: noiseMove 0.18s infinite;
   mix-blend-mode: screen;
 }
+
+/* === SİNEMATİK GEÇİŞ VE ATALET ANİMASYONLARI === */
 
 @keyframes producerLogoFadeIn {
   from {
@@ -70,7 +60,6 @@ img {
     transform: scale(0.96);
     filter: blur(8px);
   }
-
   to {
     opacity: 1;
     transform: scale(1);
@@ -84,7 +73,6 @@ img {
     transform: scale(1);
     filter: blur(0);
   }
-
   to {
     opacity: 0;
     transform: scale(1.04);
@@ -93,42 +81,38 @@ img {
 }
 
 @keyframes startScreenFadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes noiseMove {
-  0% {
-    transform: translate(0, 0);
-  }
-  25% {
-    transform: translate(-2px, 1px);
-  }
-  50% {
-    transform: translate(2px, -1px);
-  }
-  75% {
-    transform: translate(-1px, 2px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, 2px); }
+  100% { transform: translate(0, 0); }
 }
 
-@keyframes quoteFadeIn {
+/* EKLENDİ: Anlatıcı Ekranı Yumuşak Giriş Efekti */
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(18px);
-    filter: blur(8px);
+    filter: blur(4px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* EKLENDİ: Anlatıcı Ekranı Satır Bazlı Fade In / Out Desteği */
+@keyframes quoteFadeIn {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
     filter: blur(0);
   }
 }
@@ -144,22 +128,9 @@ img {
   }
 }
 
-@keyframes quoteSceneFadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
 @keyframes modalFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes modalScaleIn {
@@ -262,236 +233,63 @@ img {
   }
 }
 
+/* Kritik Hata Ekranı ve Sarsıntı Efektleri */
 @keyframes screenGlitch {
-  0% {
-    transform: translateX(0);
-    filter: hue-rotate(0deg);
-  }
-  25% {
-    transform: translateX(-2px);
-    filter: hue-rotate(20deg);
-  }
-  50% {
-    transform: translateX(2px);
-    filter: hue-rotate(-20deg);
-  }
-  75% {
-    transform: translateX(-1px);
-    filter: hue-rotate(10deg);
-  }
-  100% {
-    transform: translateX(0);
-    filter: hue-rotate(0deg);
-  }
+  0% { transform: translateX(0); filter: hue-rotate(0deg); }
+  25% { transform: translateX(-2px); filter: hue-rotate(15deg); }
+  50% { transform: translateX(2px); filter: hue-rotate(-15deg); }
+  75% { transform: translateX(-1px); filter: hue-rotate(5deg); }
+  100% { transform: translateX(0); filter: hue-rotate(0deg); }
 }
 
 @keyframes corruptTextPulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  50% {
-    opacity: 0.55;
-    transform: translateX(2px);
-  }
+  0%, 100% { opacity: 1; transform: translateX(0); }
+  50% { opacity: 0.55; transform: translateX(2px); }
 }
 
 @keyframes signalPulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  50% {
-    opacity: 0.45;
-    transform: translateX(3px);
-  }
+  0%, 100% { opacity: 1; transform: translateX(0); }
+  50% { opacity: 0.45; transform: translateX(3px); }
 }
 
 @keyframes criticalErrorBlink {
-  0%,
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  50% {
-    opacity: 0.35;
-    transform: translateX(4px);
-  }
+  0%, 100% { opacity: 1; transform: translateX(0); }
+  50% { opacity: 0.35; transform: translateX(3px); }
 }
 
 @keyframes errorPulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  50% {
-    opacity: 0.45;
-    transform: translateX(2px);
-  }
+  0%, 100% { opacity: 1; transform: translateX(0); }
+  50% { opacity: 0.45; transform: translateX(2px); }
 }
 
 @keyframes noiseShift {
-  0% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(2px, -2px);
-  }
-  100% {
-    transform: translate(-2px, 2px);
-  }
-}
-
-@keyframes staticNoise {
-  0% {
-    transform: translate(0, 0);
-  }
-  25% {
-    transform: translate(2px, -1px);
-  }
-  50% {
-    transform: translate(-2px, 2px);
-  }
-  75% {
-    transform: translate(1px, 1px);
-  }
-  100% {
-    transform: translate(-1px, -2px);
-  }
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(2px, -2px); }
+  100% { transform: translate(-2px, 2px); }
 }
 
 @keyframes typingDotPulse {
-  0%,
-  80%,
-  100% {
-    opacity: 0.25;
-    transform: translateY(0);
-  }
-  40% {
-    opacity: 1;
-    transform: translateY(-3px);
-  }
+  0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-3px); }
 }
 
 @keyframes cursorBlink {
-  0%,
-  45% {
-    opacity: 1;
-  }
-  46%,
-  100% {
-    opacity: 0;
-  }
+  0%, 45% { opacity: 1; }
+  46%, 100% { opacity: 0; }
 }
 
 @keyframes flicker {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  45% {
-    opacity: 0.55;
-  }
-  50% {
-    opacity: 0.9;
-  }
-}
-
-@keyframes redDoorGlitchIntro {
-  0% {
-    opacity: 0;
-    transform: scale(0.98);
-    filter: brightness(0.25) contrast(1.4) blur(3px);
-  }
-
-  12% {
-    opacity: 1;
-    transform: scale(1);
-    filter: brightness(0.9) contrast(1.2) blur(0);
-  }
-
-  20%,
-  21% {
-    transform: translateX(-8px) skewX(8deg);
-    filter: brightness(2.2) contrast(2.8) saturate(1.5);
-  }
-
-  22% {
-    transform: translateX(10px) skewX(-10deg);
-    filter: brightness(0.4) contrast(3) hue-rotate(35deg);
-  }
-
-  24% {
-    transform: translateX(0) skewX(0);
-    filter: brightness(1) contrast(1.25);
-  }
-
-  48% {
-    opacity: 1;
-    transform: scale(1);
-    filter: brightness(1) contrast(1.2);
-  }
-
-  52% {
-    transform: translateX(14px) scale(1.02) skewX(-8deg);
-    filter: brightness(2.5) contrast(3) saturate(1.8);
-  }
-
-  54% {
-    transform: translateX(-12px) scale(0.99) skewX(8deg);
-    filter: brightness(0.55) contrast(3.2) hue-rotate(-25deg);
-  }
-
-  57% {
-    transform: translateX(0) scale(1) skewX(0);
-    filter: brightness(1) contrast(1.25);
-  }
-
-  78% {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  82% {
-    transform: translateX(-18px) skewX(14deg);
-    filter: brightness(3) contrast(3.5) saturate(2);
-  }
-
-  85% {
-    transform: translateX(18px) skewX(-14deg);
-    opacity: 0.75;
-    filter: brightness(0.3) contrast(4) hue-rotate(60deg);
-  }
-
-  88% {
-    transform: translateX(-6px) skewX(5deg);
-    opacity: 1;
-    filter: brightness(2.4) contrast(3);
-  }
-
-  91% {
-    transform: translateX(0) skewX(0);
-    filter: brightness(1) contrast(1.3);
-  }
-
-  100% {
-    opacity: 0;
-    transform: scale(1.05);
-    filter: brightness(0) contrast(3) blur(8px);
-  }
+  0%, 100% { opacity: 1; }
+  45% { opacity: 0.55; }
+  50% { opacity: 0.9; }
 }
 
 @keyframes spinPulse {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
+
+/* === TERMINAL SCROLLBAR UTILITIES === */
 @layer utilities {
   .terminal-scrollbar::-webkit-scrollbar {
     width: 6px;
@@ -514,4 +312,12 @@ img {
     scrollbar-width: thin;
     scrollbar-color: rgba(34, 211, 238, 0.25) rgba(15, 23, 42, 0.6);
   }
+}
+/* Anlatıcı yazılarının giriş ve tek tek siliniş animasyon sınıfları */
+.animate-quote-in {
+  animation: quoteFadeIn 1.5s ease-out forwards;
+}
+
+.animate-quote-out {
+  animation: quoteFadeOut 1.5s ease-in forwards;
 }

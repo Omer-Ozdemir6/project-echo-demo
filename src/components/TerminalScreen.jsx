@@ -35,8 +35,12 @@ export default function TerminalScreen({
   const [isDataBankOpen, setIsDataBankOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [decodeFile, setDecodeFile] = useState(null);
+  const [isPuzzleMinimized, setIsPuzzleMinimized] = useState(false);
 
   const language = settings?.language || "en";
+
+  // Puzzle State Kontrolü (Refaktör edildi)
+  const isPuzzleActive = Boolean(activePuzzle);
 
   const busyState = gameState?.busyState || null;
   const isBusyActive =
@@ -96,25 +100,22 @@ export default function TerminalScreen({
   const signalMeta = getSignalMeta(signalValue);
   const signalBar = getSignalBar(signalValue);
 
+  // Etkileşim ve Seçim Paneli Kilit mekanizmaları güncellendi
   const canInteract =
+    !isPuzzleActive &&
     !isBusyActive &&
     !isTyping &&
     !isGlitching &&
     !signalStatus &&
     !progressTask;
 
-const visibleChoices = canShowChoices
-  ? filterChoices(
-      gameState,
-      currentNode?.choices || []
-    )
-  : [];
+  const visibleChoices = canShowChoices
+    ? filterChoices(gameState, currentNode?.choices || [])
+    : [];
 
   function clampSignal(value) {
     const number = Number(value);
-
     if (Number.isNaN(number)) return 96;
-
     return Math.max(5, Math.min(100, number));
   }
 
@@ -160,24 +161,53 @@ const visibleChoices = canShowChoices
   function getSignalBar(value) {
     const safeValue = clampSignal(value);
     const filled = Math.max(1, Math.round(safeValue / 10));
-
     return "█".repeat(filled) + "░".repeat(10 - filled);
   }
 
-
+  // Sinyal ses efektleri tetikleyicisi
   useEffect(() => {
     if (signalStatus?.type === "lost") {
       playSound("signalLost", settings);
     }
-
     if (signalStatus?.type === "restored") {
       playSound("signalRestored", settings);
     }
   }, [signalStatus, settings]);
 
+  // Yeni bir bulmaca geldiğinde otomatik olarak minimize durumunu kapat
+  useEffect(() => {
+    if (isPuzzleActive) {
+      setIsPuzzleMinimized(false);
+    }
+  }, [activePuzzle?.id, isPuzzleActive]);
+
+  // İYİLEŞTİRME 3: ESC Tuşu Desteği
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && isPuzzleActive && !isPuzzleMinimized) {
+        setIsPuzzleMinimized(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isPuzzleActive, isPuzzleMinimized]);
+
+  // İYİLEŞTİRME 4: Arka Plan Scroll Kilidi (Body Scroll Lock)
+  useEffect(() => {
+    if (isPuzzleActive && !isPuzzleMinimized) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isPuzzleActive, isPuzzleMinimized]);
+
   function handleOpenDataBankFile(file) {
     const shouldDecode = file.isNew;
-
     onFileRead?.(file.id);
 
     const openedFile = {
@@ -306,7 +336,7 @@ const visibleChoices = canShowChoices
 
         <div className="min-h-0 flex-1 overflow-hidden">
           <MessageFeed
-           speaker={currentNode?.speaker}
+            speaker={currentNode?.speaker}
             messages={visibleMessages}
             isTyping={isTyping}
             onOpenFile={setActiveFile}
@@ -314,7 +344,7 @@ const visibleChoices = canShowChoices
             settings={settings}
             hasBottomPanel={
               canShowChoices ||
-              Boolean(activePuzzle) ||
+              isPuzzleActive ||
               isBusyActive
             }
           />
@@ -329,33 +359,39 @@ const visibleChoices = canShowChoices
               </div>
 
               <p className="mt-2 text-xs leading-5 text-cyan-50/50">
-                {language === "tr"
-                  ? "Karakter görev üzerinde. Eski iletileri inceleyebilir veya veri bankasını açabilirsiniz."
-                  : "The character is working. You can review previous transmissions or open the Data Bank."}
+                {getGameText(
+                  "busy.description",
+                  language === "tr"
+                    ? "Karakter görev üzerinde. Eski iletileri inceleyebilir veya veri bankasını açabilirsiniz."
+                    : "The character is working. You can review previous transmissions or open the Data Bank.",
+                  language
+                )}
               </p>
             </div>
           </div>
         )}
 
-        {activePuzzle && canInteract && (
-          <div className="shrink-0 max-h-[42dvh] overflow-y-auto border-t border-cyan-300/20 bg-slate-950/95 pt-3">
-            <PuzzleRenderer
-              puzzle={activePuzzle}
-              attempts={gameState.puzzleAttempts?.[activePuzzle.id] || 0}
-              onSubmit={handlePuzzleSubmit}
-              language={language}
-            />
+        {/* İYİLEŞTİRME 2: i18n Entegrasyonu (Transmission Paused) */}
+        {isPuzzleActive && isPuzzleMinimized && (
+          <div className="shrink-0 border-t border-amber-300/20 bg-slate-950/95 pt-3">
+            <button
+              className="w-full border border-amber-300/30 bg-amber-950/10 px-4 py-3 text-sm text-amber-200 transition hover:bg-amber-950/20"
+              onClick={() => setIsPuzzleMinimized(false)}
+            >
+              🧩 {getGameText("puzzle.paused", language === "tr" ? "AKTİF BULMACA — İletim Durduruldu" : "ACTIVE PUZZLE — Transmission Paused", language)}
+            </button>
           </div>
         )}
 
-        {canShowChoices && !activePuzzle && !progressTask && (
+        {/* İYİLEŞTİRME 1: Kontroller isPuzzleActive yapısına bağlandı */}
+        {canShowChoices && !isPuzzleActive && !progressTask && (
           <div className="shrink-0 border-t border-cyan-300/20 bg-slate-950/95 pt-3">
-<ChoicePanel
-  choices={visibleChoices}
-  onChoice={onChoice}
-  settings={settings}
-  language={language}
-/>
+            <ChoicePanel
+              choices={visibleChoices}
+              onChoice={onChoice}
+              settings={settings}
+              language={language}
+            />
           </div>
         )}
       </section>
@@ -390,6 +426,36 @@ const visibleChoices = canShowChoices
           onReset={onReset}
           onClose={() => setIsSettingsOpen(false)}
         />
+      )}
+
+      {/* İYİLEŞTİRME 2 & 5: i18n Entegrasyonu & CSS Açılış Animasyonu */}
+      {isPuzzleActive && !isPuzzleMinimized && (
+        <div className="fixed inset-0 z-[9999] bg-slate-950 animate-[fadeIn_0.22s_ease-out]">
+          <div className="flex h-full flex-col">
+            <div className="flex items-center justify-between border-b border-cyan-300/20 p-4">
+              <div className="text-cyan-300 tracking-[0.2em] text-sm">
+                {getGameText("puzzle.active", language === "tr" ? "AKTİF VERİ BULMACASI" : "ACTIVE PUZZLE", language)}
+              </div>
+
+              <button
+                className="border border-cyan-300/30 px-3 py-2 text-xs text-cyan-100 tracking-wider transition hover:bg-cyan-400/10"
+                onClick={() => setIsPuzzleMinimized(true)}
+              >
+                {getGameText("puzzle.minimize", language === "tr" ? "SİMGE DURUMUNA GETİR" : "MINIMIZE", language)}
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-auto p-4">
+              <PuzzleRenderer
+                puzzle={activePuzzle}
+                attempts={gameState.puzzleAttempts?.[activePuzzle.id] || 0}
+                onSubmit={handlePuzzleSubmit}
+                language={language}
+                gameState={gameState}
+              />
+            </div>
+          </div>
+        </div>
       )}
     </main>
   );
