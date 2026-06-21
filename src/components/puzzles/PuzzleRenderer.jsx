@@ -4,6 +4,7 @@ import EchoIsolationPuzzleInput from "./EchoIsolationPuzzleInput";
 import FrequencyPuzzleInput from "./FrequencyPuzzleInput";
 import MatchingPuzzleInput from "./MatchingPuzzleInput";
 import SatellitePuzzleInput from "./SatellitePuzzleInput";
+import TerminalInterface from "./TerminalInterface";
 import { getGameText } from "../../i18n/gameText";
 
 export default function PuzzleRenderer({

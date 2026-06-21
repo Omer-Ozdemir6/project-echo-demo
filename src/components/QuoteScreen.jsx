@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getGameText } from "../i18n/gameText";
 
 function resolveConfigText(value, language = "en") {
@@ -19,174 +19,240 @@ const SUBLIMINAL_MESSAGES = [
   "DO NOT TRUST HER"
 ];
 
+// ─── GLITCH TEXT ──────────────────────────────────────────────────────────────
+const GLITCH_POOL = "▓▒░│┤╣║╗╝┐└┴┬├─┼╚╔╩╦╠═╬█▄▌▐▀■#|~<>:=+*^";
+function GlitchChar({ char, intensity = 0.15 }) {
+  const [g, setG] = useState(char);
+  useEffect(() => {
+    if (intensity <= 0) { setG(char); return; }
+    const iv = setInterval(() => {
+      setG(Math.random() < intensity
+        ? GLITCH_POOL[Math.floor(Math.random() * GLITCH_POOL.length)]
+        : char);
+    }, 120);
+    return () => clearInterval(iv);
+  }, [char, intensity]);
+  return <span>{g}</span>;
+}
+function GlitchText({ text, intensity = 0.12, className = "" }) {
+  return (
+    <span className={className}>
+      {text.split("").map((ch, i) => (
+        <GlitchChar key={i} char={ch} intensity={ch === " " ? 0 : intensity} />
+      ))}
+    </span>
+  );
+}
+
+// ─── CRT SCANLINES ────────────────────────────────────────────────────────────
+const ScanlineOverlay = () => (
+  <div className="pointer-events-none fixed inset-0 z-50
+    bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.018),rgba(255,255,255,0.018)_1px,transparent_1px,transparent_4px)]
+    opacity-40" />
+);
+
+// ─── CRT FLICKER ─────────────────────────────────────────────────────────────
+function useCrtFlicker() {
+  const [opacity, setOpacity] = useState(1);
+  useEffect(() => {
+    const iv = setInterval(() => {
+      if (Math.random() < 0.04) {
+        const v = 0.85 + Math.random() * 0.15;
+        setOpacity(v);
+        setTimeout(() => setOpacity(1), 60 + Math.random() * 80);
+      }
+    }, 400);
+    return () => clearInterval(iv);
+  }, []);
+  return opacity;
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// MAIN
+// ═════════════════════════════════════════════════════════════════════════════
 export default function OperatorBriefing({ quote, onComplete, language = "en" }) {
-  // Akış Kademeleri: "briefing" | "loading" | "quote" | "blackout" | "subliminalFlash"
+  // ── Akış durumu ──────────────────────────────────────────────────────────
   const [step, setStep] = useState("briefing");
   const [briefingStage, setBriefingStage] = useState(0);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
-  const [flashMessage, setFlashMessage] = useState("");
-
-  const author = getGameText(
-    quote?.authorKey,
-    quote?.author || "",
-    language
+  const [flashMessage] = useState(
+    () => SUBLIMINAL_MESSAGES[Math.floor(Math.random() * SUBLIMINAL_MESSAGES.length)]
   );
 
-  useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * SUBLIMINAL_MESSAGES.length);
-    setFlashMessage(SUBLIMINAL_MESSAGES[randomIndex]);
-  }, []);
+  // ── Quote sahne state — CSS keyframe'e bağımlılık yok ────────────────────
+  //    Timer'lar sadece step === "quote" olduğunda başlar (briefing'de değil)
+  const [lineVisible, setLineVisible] = useState([false, false, false]);
+  const [authorVisible, setAuthorVisible] = useState(false);
+  const [sceneOpacity, setSceneOpacity] = useState(1); // fadeout için ayrı
 
-  // 1. ADIM: Outlast Tarzı Brifing Giriş Zamanlayıcıları
+  const author = getGameText(quote?.authorKey, quote?.author || "", language);
+  const crtOpacity = useCrtFlicker();
+
+  // ── Briefing aşamaları ────────────────────────────────────────────────────
   useEffect(() => {
     if (step !== "briefing") return;
-
     const timers = [
-      setTimeout(() => setBriefingStage(1), 500),   // PROJECT ECHO
-      setTimeout(() => setBriefingStage(2), 1500),  // // WARNING: CLASSIFIED OPERATIONAL DATA_
-      setTimeout(() => setBriefingStage(3), 2500)   // İçerik metni ve buton
+      setTimeout(() => setBriefingStage(1), 400),
+      setTimeout(() => setBriefingStage(2), 1400),
+      setTimeout(() => setBriefingStage(3), 2600),
     ];
-
     return () => timers.forEach(clearTimeout);
   }, [step]);
 
-  const handleAcceptBriefing = () => {
-    if (isButtonLoading) return;
-    setIsButtonLoading(true);
-
-    setTimeout(() => {
-      setIsLeaving(true);
-    }, 1000);
-
-    setTimeout(() => {
-      setStep("loading");
-      setIsLeaving(false);
-    }, 1600);
-  };
-
-  // 2. ADIM: Ara Yükleme (Loading) Süresi
+  // ── Loading → Quote ───────────────────────────────────────────────────────
   useEffect(() => {
     if (step !== "loading") return;
-
-    const toQuote = setTimeout(() => {
-      setStep("quote");
-    }, 3500);
-
-    return () => clearTimeout(toQuote);
+    const t = setTimeout(() => setStep("quote"), 3500);
+    return () => clearTimeout(t);
   }, [step]);
 
-  // 3. ADIM: Sinematik Zaman Çizelgesi Kontrolü (GÜNCELLENDİ)
+  // ── Quote: timer'lar SADECE quote sahnesine girilince başlıyor ────────────
+  //
+  //   [step = "briefing"]  timer yok, kullanıcı istediği kadar bekler
+  //   [buton]              step → "loading"
+  //   [3.5s sonra]         step → "quote"  ← BURADA timer'lar başlıyor
+  //
   useEffect(() => {
-    if (step !== "quote") return;
+    if (step !== "quote") return; // ← guard: briefing/loading'de hiç çalışmaz
 
-    const activeTimers = [
-      // Yazıların toplam varoluş süresi bittiği an (35. saniyede) blackout aşamasına geçer
-      setTimeout(() => {
-        setStep("blackout");
-      }, 35000)
+    // Sıfırla (güvenlik)
+    setLineVisible([false, false, false]);
+    setAuthorVisible(false);
+    setSceneOpacity(1);
+
+    const timers = [
+      // Satırlar tek tek görünür
+      setTimeout(() => setLineVisible(([, b, c]) => [true,  b, c]),  1_000),
+      setTimeout(() => setLineVisible(([a, , c]) => [a, true,  c]),  5_000),
+      setTimeout(() => setLineVisible(([a, b  ]) => [a, b, true ]),  9_000),
+      setTimeout(() => setAuthorVisible(true),                       14_000),
+      // Satırlar tek tek kayboluyor
+      setTimeout(() => setLineVisible(([, b, c]) => [false, b, c]), 18_000),
+      setTimeout(() => setLineVisible(([a, , c]) => [a, false, c]), 22_000),
+      setTimeout(() => setLineVisible(([a, b  ]) => [a, b, false]), 26_000),
+      setTimeout(() => setAuthorVisible(false),                      30_000),
+      // Sahne karartılıyor
+      setTimeout(() => setSceneOpacity(0),                          33_600),
+      // Blackout'a geç
+      setTimeout(() => setStep("blackout"),                          35_000),
     ];
-
-    return () => activeTimers.forEach(clearTimeout);
+    return () => timers.forEach(clearTimeout);
   }, [step]);
 
-  // 4. ADIM: Sahte Donma Efektli Derin Sessizlik (Blackout - Tam 5 Saniye)
+  // ── Blackout → subliminal flash ───────────────────────────────────────────
   useEffect(() => {
     if (step !== "blackout") return;
-
-    const blackoutTimer = setTimeout(() => {
-      setStep("subliminalFlash");
-    }, 5000);
-
-    return () => clearTimeout(blackoutTimer);
+    const t = setTimeout(() => setStep("subliminalFlash"), 5_000);
+    return () => clearTimeout(t);
   }, [step]);
 
-  // 5. ADIM: Subliminal Flash (80ms) ve Boot Ekranına Geçiş
+  // ── Flash → done ─────────────────────────────────────────────────────────
   useEffect(() => {
     if (step !== "subliminalFlash") return;
-
-    const flashTimer = setTimeout(() => {
-      if (onComplete) onComplete();
-    }, 80);
-
-    return () => clearTimeout(flashTimer);
+    const t = setTimeout(() => { if (onComplete) onComplete(); }, 80);
+    return () => clearTimeout(t);
   }, [step, onComplete]);
 
-  const crtOverlay = (
-    <div className="pointer-events-none fixed inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(255,255,255,0.015)_1px,transparent_1px,transparent_5px)] opacity-35" />
-  );
+  const handleAccept = () => {
+    if (isButtonLoading) return;
+    setIsButtonLoading(true);
+    setTimeout(() => setIsLeaving(true), 800);
+    setTimeout(() => { setStep("loading"); setIsLeaving(false); }, 1_500);
+  };
 
-  // ==================== SAHNE RENDERS ====================
-
-  // SEYİR A: KLİNİK OPERATÖR BRİFİNGİ
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SAHNE A — KLİNİK BRİFİNG
+  // ═══════════════════════════════════════════════════════════════════════════
   if (step === "briefing") {
     return (
-      <main className="relative grid min-h-dvh place-items-center overflow-hidden bg-black px-6 font-mono select-none text-cyan-50">
-        {crtOverlay}
-        <section 
-          className={[
-            "w-full max-w-2xl text-center",
-            isLeaving
-              ? "animate-[producerLogoFadeOut_1s_ease-in_forwards]"
-              : "animate-[producerLogoFadeIn_1.2s_ease-out_forwards]"
-          ].join(" ")}
+      <main
+        className="relative grid min-h-dvh place-items-center overflow-hidden bg-black px-6 font-mono select-none"
+        style={{ opacity: crtOpacity }}
+      >
+        <ScanlineOverlay />
+        <section
+          className="w-full max-w-2xl transition-all duration-700"
+          style={{ opacity: isLeaving ? 0 : 1, transform: isLeaving ? "translateY(8px)" : "none" }}
         >
           {briefingStage >= 1 && (
-            <h2 className="text-cyan-400 tracking-[0.4em] text-sm font-light">
-              PROJECT ECHO
-            </h2>
+            <div className="mb-8 border-t border-b border-red-900/40 py-3 text-center">
+              <GlitchText
+                text="[ MOUNT MASSIVE RESEARCH FACILITY ]"
+                intensity={0.07}
+                className="text-[10px] tracking-[0.45em] text-red-500/80"
+              />
+              <div className="mt-1 text-[9px] tracking-[0.3em] text-cyan-900/60">
+                PROJECT ECHO // INTAKE PROTOCOL // RESTRICTED
+              </div>
+            </div>
           )}
 
           {briefingStage >= 2 && (
-            <div className="mt-2 text-[10px] tracking-[0.3em] text-rose-500/80 font-bold">
-              // WARNING: CLASSIFIED OPERATIONAL DATA_
+            <div className="mb-6 grid grid-cols-2 gap-1 border border-red-900/20 p-3 text-[10px]">
+              <div className="text-cyan-800/60">SUBJECT ID</div>
+              <GlitchText text="E-17 // ELIAS (REDACTED)" intensity={0.06} className="text-amber-400/80" />
+              <div className="text-cyan-800/60">PROCEDURE</div>
+              <div className="text-red-400/90">MEMORY ERASURE — CYCLE&nbsp;28</div>
+              <div className="text-cyan-800/60">LOOP INTEGRITY</div>
+              <div className="text-red-500 animate-pulse">3% — CRITICAL DEVIATION</div>
+              <div className="text-cyan-800/60">STAFF NOTE</div>
+              <div className="text-cyan-400/50 col-span-2 mt-1 leading-relaxed">
+                Subject resisting standard protocol since cycle 23. Neural
+                feedback increasingly volatile. Containment breach risk: MODERATE.
+                Do not establish two-way communication.
+              </div>
             </div>
           )}
 
           {briefingStage >= 3 && (
-            <div className="mt-8 space-y-6 text-sm leading-relaxed tracking-wider text-cyan-100/80 animate-[fadeIn_0.8s_ease-out_forwards]">
-              <p className="text-justify sm:text-center">
-                {getGameText(
-                  "brief.line1",
-                  "By completing the terminal interface, you acknowledge that you are forcing a direct, unshielded neural intrusion into a severely traumatized consciousness.",
-                  language
-                )}
-              </p>
-              
-              <p className="font-bold text-rose-500 tracking-[0.15em] uppercase">
-                {getGameText("brief.identity", "SUBJECT CONDITION: ACUTE PSYCHOSIS // DESIGNATION: E-17", language)}
-              </p>
-
-              <div className="space-y-2 text-cyan-100/40 text-xs pt-2 text-left sm:text-center">
-                <p>&gt; {getGameText("brief.rule1", "Neural feedback is volatile. Certain choices cannot be overwritten.", language)}</p>
-                <p>&gt; {getGameText("brief.rule2", "Subject cell-death or severe trauma is permanent.", language)}</p>
-                <p>&gt; {getGameText("brief.rule3", "In the event of localized containment failure, catastrophic ego-death is not a system error.", language)}</p>
+            <div className="space-y-5 text-sm leading-relaxed text-cyan-100/75">
+              <div className="border-l-2 border-red-700/50 pl-4 text-xs text-red-300/80 space-y-2">
+                <p>&gt; Neural intrusion bypasses all remaining cognitive locks.</p>
+                <p>&gt; Subject cell-death and severe trauma are <span className="text-red-400">permanent</span>.</p>
+                <p>&gt; Ego-death is not classified as a system error.</p>
               </div>
 
-              <p className="pt-6 border-t border-cyan-900/30 text-rose-400/90 italic text-xs sm:text-sm">
-                {getGameText(
-                  "brief.twistHint",
-                  "We have simulated this sequence thousands of times. We still do not know who returns when the link breaks. Elias... or whatever is using his skin?",
-                  language
-                )}
+              <p className="text-[11px] text-cyan-700/70 leading-relaxed">
+                We have run this sequence 27 times. Each cycle, the subject
+                asks the same questions. Each cycle, we provide the same
+                answers. The efficiency of this process has not degraded.
               </p>
 
-              <div className="mt-8 flex justify-center">
+              <div className="border border-amber-900/30 bg-amber-950/10 p-3 text-xs text-amber-300/80">
+                <span className="text-amber-500 font-bold">WARNING: </span>
+                This cycle, retention anomaly detected at 3.7σ above baseline.
+                Secondary consciousness fragment (designate: OBS-0) observed
+                interfering with standard erasure. Do not engage. Do not confirm
+                its existence to the subject.
+              </div>
+
+              <p className="text-[10px] text-rose-400/60 italic border-t border-rose-900/20 pt-4">
+                "We still do not know who returns when the link breaks.
+                Elias... or whatever is using his skin."
+                <br />
+                <span className="text-rose-900/50">— Internal Memo, Cycle 14</span>
+              </p>
+
+              <div className="flex flex-col gap-3 pt-4">
                 <button
                   type="button"
-                  onClick={handleAcceptBriefing}
+                  onClick={handleAccept}
                   disabled={isButtonLoading}
                   className={[
-                    "w-full max-w-xs border py-3.5 text-xs tracking-[0.3em] font-bold uppercase transition-all duration-300",
+                    "w-full border py-4 text-[11px] tracking-[0.35em] font-bold uppercase transition-all duration-300",
                     isButtonLoading
-                      ? "border-amber-500/30 bg-amber-950/10 text-amber-400 animate-pulse cursor-not-allowed"
-                      : "border-rose-600/40 bg-rose-950/10 text-rose-200 hover:border-rose-400 hover:bg-rose-500/10 hover:shadow-[0_0_20px_rgba(244,63,94,0.15)] active:scale-[0.98]"
+                      ? "border-amber-700/30 bg-amber-950/10 text-amber-500/70 animate-pulse cursor-not-allowed"
+                      : "border-red-800/50 bg-red-950/10 text-red-300/90 hover:border-red-500/70 hover:bg-red-950/20 hover:text-red-200 active:scale-[0.99]"
                   ].join(" ")}
                 >
-                  {isButtonLoading 
-                    ? getGameText("briefin.connecting", "OVERRIDING COGNITIVE LOCK...", language)
-                    : getGameText("brief.action", "AUTHORIZE NEURAL INTRUSION", language)}
+                  {isButtonLoading
+                    ? "OVERRIDING COGNITIVE LOCK..."
+                    : "AUTHORIZE NEURAL INTRUSION // BEGIN CYCLE 28"}
                 </button>
+                <div className="text-center text-[9px] tracking-[0.2em] text-cyan-900/40">
+                  BY PROCEEDING YOU CONFIRM SUBJECT IS EXPENDABLE
+                </div>
               </div>
             </div>
           )}
@@ -195,30 +261,32 @@ export default function OperatorBriefing({ quote, onComplete, language = "en" })
     );
   }
 
-  // SEYİR B: ARA BEYİN DALGASI YÜKLEME EKRANI (Daire Çizen Beyaz Noktalar Sağ Altta)
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SAHNE B — LOADING
+  // ═══════════════════════════════════════════════════════════════════════════
   if (step === "loading") {
     return (
-      <main className="relative min-h-dvh bg-black font-mono select-none text-cyan-50/60">
-        {crtOverlay}
-        
-        {/* Sağ alt köşede konumlandırılan beyaz spinner ve log grubu */}
-        <div className="fixed bottom-8 right-8 flex items-center gap-6">
-          <span className="text-[11px] tracking-widest text-cyan-50/40">
-            SYNCHRONIZING_BRAINWAVES_
+      <main className="relative min-h-dvh bg-black font-mono select-none" style={{ opacity: crtOpacity }}>
+        <ScanlineOverlay />
+        <div className="fixed inset-0 flex items-center justify-center flex-col gap-3 text-[9px] tracking-[0.3em] text-cyan-950/25">
+          <p>ERASING CYCLE 27 RESIDUE...</p>
+          <p>LOADING STANDARD TEMPLATE...</p>
+          <p className="text-red-950/30">WARNING: TEMPLATE CORRUPTION AT 3.7%</p>
+        </div>
+        <div className="fixed bottom-8 right-8 flex items-center gap-4">
+          <span className="text-[10px] tracking-widest text-cyan-950/40">
+            SYNCHRONIZING_NEURAL_LINK_
           </span>
-
-          {/* Beyaz Noktalardan Oluşan Chaser Spinner */}
-          <div className="relative w-7 h-7">
+          <div className="relative w-6 h-6">
             {[...Array(8)].map((_, i) => (
               <div
                 key={i}
-                className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
+                className="absolute w-[3px] h-[3px] bg-white rounded-full"
                 style={{
-                  top: `${50 + 40 * Math.sin((i * Math.PI) / 4)}%`,
-                  left: `${50 + 40 * Math.cos((i * Math.PI) / 4)}%`,
-                  transform: "translate(-50%, -50%)",
-                  animationDelay: `${i * 0.15}s`,
-                  animationDuration: "1.2s"
+                  top:  `${50 + 42 * Math.sin((i * Math.PI) / 4)}%`,
+                  left: `${50 + 42 * Math.cos((i * Math.PI) / 4)}%`,
+                  transform: "translate(-50%,-50%)",
+                  animation: `pulse 1.2s ${i * 0.15}s infinite`,
                 }}
               />
             ))}
@@ -228,60 +296,84 @@ export default function OperatorBriefing({ quote, onComplete, language = "en" })
     );
   }
 
-  // SEYİR C: GÜNCELLENMİŞ 40 SANİYELİK SİNEMATİK ANLATICI SAHNESİ
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SAHNE C — ANLATICI
+  //   opacity: crtOpacity (flicker) × sceneOpacity (fade-out)
+  //   sceneOpacity sadece step="quote" + 33.6s sonra 0 oluyor
+  //   Tailwind opacity class kullanılmıyor → çakışma yok
+  // ═══════════════════════════════════════════════════════════════════════════
   if (step === "quote") {
+    const lines = quote?.lines || [];
     return (
-      <main className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-black px-6 py-16 text-white animate-[quoteSceneFadeOut_1.4s_ease_forwards] [animation-delay:33.6s]">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.06),transparent_72%)]" />
-        {crtOverlay}
+      <main
+        className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-black px-6 py-16 text-white"
+        style={{
+          opacity: crtOpacity * sceneOpacity,
+          transition: sceneOpacity < 1 ? "opacity 1400ms ease" : undefined,
+        }}
+      >
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.04),transparent_70%)]" />
+        <ScanlineOverlay />
 
-        <section className="relative z-10 w-full max-w-4xl">
-          <div className="space-y-5">
-            {(quote?.lines || []).map((line, index) => {
-              const text = resolveConfigText(line, language);
+        <section className="relative z-10 w-full max-w-4xl space-y-8">
+          {lines.map((line, idx) => {
+            const text = resolveConfigText(line, language);
+            return (
+              <p
+                key={idx}
+                className="text-xl leading-loose tracking-wide sm:text-3xl"
+                style={{
+                  opacity: lineVisible[idx] ? 1 : 0,
+                  transform: lineVisible[idx] ? "translateY(0)" : "translateY(12px)",
+                  transition: "opacity 1800ms ease, transform 1800ms ease",
+                }}
+              >
+                {text}
+              </p>
+            );
+          })}
 
-              return (
-                <p
-                  key={`${text}-${index}`}
-                  className={[
-                    "opacity-0 text-xl leading-loose tracking-wide text-white/90 sm:text-3xl",
-                    "animate-[quoteFadeIn_1.8s_forwards,quoteFadeOut_1.5s_forwards]",
-                    index === 0 ? "[animation-delay:1s,18s]" : "",
-                    index === 1 ? "[animation-delay:5s,22s]" : "",
-                    index === 2 ? "[animation-delay:9s,26s]" : ""
-                  ].join(" ")}
-                >
-                  {text}
-                </p>
-              );
-            })}
-          </div>
-
-          <div className="mt-12 text-right text-xs tracking-[0.3em] text-white/65 opacity-0 animate-[quoteFadeIn_1.6s_forwards,quoteFadeOut_1.8s_forwards] [animation-delay:14s,30s] sm:text-sm">
-            {author}
-          </div>
+          {author && (
+            <div
+              className="mt-12 text-right text-xs tracking-[0.3em] text-white/60 sm:text-sm"
+              style={{
+                opacity: authorVisible ? 1 : 0,
+                transition: "opacity 1600ms ease",
+              }}
+            >
+              {author}
+            </div>
+          )}
         </section>
       </main>
     );
   }
 
-  // SEYİR D: %5 OPACITY SAHTE DONMA / TERMİNAL ARAMA EKRANI
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SAHNE D — BLACKOUT
+  // ═══════════════════════════════════════════════════════════════════════════
   if (step === "blackout") {
     return (
       <main className="fixed inset-0 bg-black z-50 grid place-items-center select-none font-mono">
-        {crtOverlay}
-        <div className="text-[10px] tracking-[0.5em] text-cyan-400/5 uppercase opacity-35 animate-pulse">
-          [ SEARCHING FOR RESPONSE... ]
-        </div>
+        <ScanlineOverlay />
+        <GlitchText
+          text="[ SEARCHING FOR RESPONSE... ]"
+          intensity={0.03}
+          className="text-[10px] tracking-[0.5em] text-cyan-400/10 animate-pulse"
+        />
       </main>
     );
   }
 
-  // SEYİR E: SUBLIMINAL SHOCK FLAŞI
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SAHNE E — SUBLIMINAL FLASH (80ms)
+  // ═══════════════════════════════════════════════════════════════════════════
   if (step === "subliminalFlash") {
     return (
-      <main className="fixed inset-0 z-[99999] grid place-items-center bg-black text-rose-500 font-mono tracking-[0.4em] text-base sm:text-lg font-bold select-none animate-[screenGlitch_0.05s_infinite]">
-        {flashMessage}
+      <main className="fixed inset-0 z-[99999] grid place-items-center bg-black font-mono">
+        <span className="text-red-500 tracking-[0.5em] text-lg font-bold">
+          {flashMessage}
+        </span>
       </main>
     );
   }
