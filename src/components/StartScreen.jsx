@@ -92,17 +92,37 @@ export default function StartScreen({
   }
 
   // AŞAMA 3: Menü Öncesi Metinsiz Temiz Loading Ekranı
-  if (introStep === "initialLoading") {
-    return (
-      <main className="relative min-h-dvh bg-black font-mono select-none text-cyan-50/60">
-        <div className="pointer-events-none fixed inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(255,255,255,0.015)_1px,transparent_1px,transparent_5px)] opacity-35" />
-        <div className="fixed bottom-8 right-8 text-[11px] tracking-widest opacity-40 flex items-center gap-2">
-          <span className="inline-block animate-spin">⚡</span> 
-          <span>CONNECTING_</span>
+if (introStep === "initialLoading") {
+  return (
+    <main className="relative min-h-dvh bg-black font-mono select-none text-cyan-50/60">
+      <div className="pointer-events-none fixed inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(255,255,255,0.015)_1px,transparent_1px,transparent_5px)] opacity-35" />
+      
+      {/* Sağ alt köşede konumlandırılan beyaz spinner ve log grubu */}
+      <div className="fixed bottom-8 right-8 flex items-center gap-6">
+        <span className="text-[11px] tracking-widest opacity-40">
+          CONNECTING_
+        </span>
+
+        {/* Beyaz Noktalardan Oluşan Chaser Spinner */}
+        <div className="relative w-7 h-7">
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
+              style={{
+                top: `${50 + 40 * Math.sin((i * Math.PI) / 4)}%`,
+                left: `${50 + 40 * Math.cos((i * Math.PI) / 4)}%`,
+                transform: "translate(-50%, -50%)",
+                animationDelay: `${i * 0.15}s`,
+                animationDuration: "1.2s"
+              }}
+            />
+          ))}
         </div>
-      </main>
-    );
-  }
+      </div>
+    </main>
+  );
+}
 
   // AŞAMA 4: Ana Menü Görüntüsü
   return (

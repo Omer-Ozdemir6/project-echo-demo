@@ -9,7 +9,6 @@ function resolveConfigText(value, language = "en") {
   return "";
 }
 
-// Atmosferi katlayan tekinsiz bilinçaltı parazit havuzu (Flash için kullanılacak)
 const SUBLIMINAL_MESSAGES = [
   "WELCOME BACK ELIAS",
   "LOOP 28",
@@ -21,7 +20,7 @@ const SUBLIMINAL_MESSAGES = [
 ];
 
 export default function OperatorBriefing({ quote, onComplete, language = "en" }) {
-  // Ana Akış Adımları: "briefing" | "loading" | "quote" | "blackout" | "subliminalFlash"
+  // Akış Kademeleri: "briefing" | "loading" | "quote" | "blackout" | "subliminalFlash"
   const [step, setStep] = useState("briefing");
   const [briefingStage, setBriefingStage] = useState(0);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
@@ -34,26 +33,24 @@ export default function OperatorBriefing({ quote, onComplete, language = "en" })
     language
   );
 
-  // Rastgele şok mesajı seçimi
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * SUBLIMINAL_MESSAGES.length);
     setFlashMessage(SUBLIMINAL_MESSAGES[randomIndex]);
   }, []);
 
-  // 1. ADIM: Brifing Satır Satır Belirme Zamanlayıcıları
+  // 1. ADIM: Outlast Tarzı Brifing Giriş Zamanlayıcıları
   useEffect(() => {
     if (step !== "briefing") return;
 
     const timers = [
       setTimeout(() => setBriefingStage(1), 500),   // PROJECT ECHO
-      setTimeout(() => setBootStepIndex && setBriefingStage(2), 1500),  // CLASSIFIED OPERATIONAL DATA
+      setTimeout(() => setBriefingStage(2), 1500),  // // WARNING: CLASSIFIED OPERATIONAL DATA_
       setTimeout(() => setBriefingStage(3), 2500)   // İçerik metni ve buton
     ];
 
     return () => timers.forEach(clearTimeout);
   }, [step]);
 
-  // Brifing Buton Aksiyonu
   const handleAcceptBriefing = () => {
     if (isButtonLoading) return;
     setIsButtonLoading(true);
@@ -68,43 +65,43 @@ export default function OperatorBriefing({ quote, onComplete, language = "en" })
     }, 1600);
   };
 
-  // 2. ADIM: Ara Yükleme (Loading) Zamanlayıcısı
+  // 2. ADIM: Ara Yükleme (Loading) Süresi
   useEffect(() => {
     if (step !== "loading") return;
 
     const toQuote = setTimeout(() => {
       setStep("quote");
-    }, 3000);
+    }, 3500);
 
     return () => clearTimeout(toQuote);
   }, [step]);
 
-  // 3. ADIM: Anlatıcı Yazılarından Sonraki Akış (Blackout ve Flash Geçişleri)
+  // 3. ADIM: Sinematik Zaman Çizelgesi Kontrolü (GÜNCELLENDİ)
   useEffect(() => {
     if (step !== "quote") return;
 
-    const timers = [
-      // Senin verdiğin saf CSS delay sürelerinin (14.8s + 1.4s) bittiği an blackout yapar (16.2 saniye)
+    const activeTimers = [
+      // Yazıların toplam varoluş süresi bittiği an (35. saniyede) blackout aşamasına geçer
       setTimeout(() => {
         setStep("blackout");
-      }, 16200)
+      }, 35000)
     ];
 
-    return () => timers.forEach(clearTimeout);
+    return () => activeTimers.forEach(clearTimeout);
   }, [step]);
 
-  // 4. ADIM: Siyah Ekran (Blackout) Süresi
+  // 4. ADIM: Sahte Donma Efektli Derin Sessizlik (Blackout - Tam 5 Saniye)
   useEffect(() => {
     if (step !== "blackout") return;
 
     const blackoutTimer = setTimeout(() => {
       setStep("subliminalFlash");
-    }, 1200);
+    }, 5000);
 
     return () => clearTimeout(blackoutTimer);
   }, [step]);
 
-  // 5. ADIM: Subliminal Glitch Parlaması ve Üst Katmana Çıkış Sinyali
+  // 5. ADIM: Subliminal Flash (80ms) ve Boot Ekranına Geçiş
   useEffect(() => {
     if (step !== "subliminalFlash") return;
 
@@ -119,9 +116,9 @@ export default function OperatorBriefing({ quote, onComplete, language = "en" })
     <div className="pointer-events-none fixed inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(255,255,255,0.015)_1px,transparent_1px,transparent_5px)] opacity-35" />
   );
 
-  // ==================== SAHNE YAPILARI ====================
+  // ==================== SAHNE RENDERS ====================
 
-  // SEYİR A: OUTLAST TARZI OPERATÖR BRİFİNGİ
+  // SEYİR A: KLİNİK OPERATÖR BRİFİNGİ
   if (step === "briefing") {
     return (
       <main className="relative grid min-h-dvh place-items-center overflow-hidden bg-black px-6 font-mono select-none text-cyan-50">
@@ -198,23 +195,43 @@ export default function OperatorBriefing({ quote, onComplete, language = "en" })
     );
   }
 
-  // SEYİR B: ARA BEYİN DALGASI YÜKLEME EKRANI
+  // SEYİR B: ARA BEYİN DALGASI YÜKLEME EKRANI (Daire Çizen Beyaz Noktalar Sağ Altta)
   if (step === "loading") {
     return (
       <main className="relative min-h-dvh bg-black font-mono select-none text-cyan-50/60">
         {crtOverlay}
-        <div className="fixed bottom-8 right-8 text-[11px] tracking-widest opacity-40 flex items-center gap-2">
-          <span className="inline-block animate-spin text-rose-500">⚡</span> 
-          <span className="text-rose-500/80">SYNCHRONIZING_BRAINWAVES_</span>
+        
+        {/* Sağ alt köşede konumlandırılan beyaz spinner ve log grubu */}
+        <div className="fixed bottom-8 right-8 flex items-center gap-6">
+          <span className="text-[11px] tracking-widest text-cyan-50/40">
+            SYNCHRONIZING_BRAINWAVES_
+          </span>
+
+          {/* Beyaz Noktalardan Oluşan Chaser Spinner */}
+          <div className="relative w-7 h-7">
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
+                style={{
+                  top: `${50 + 40 * Math.sin((i * Math.PI) / 4)}%`,
+                  left: `${50 + 40 * Math.cos((i * Math.PI) / 4)}%`,
+                  transform: "translate(-50%, -50%)",
+                  animationDelay: `${i * 0.15}s`,
+                  animationDuration: "1.2s"
+                }}
+              />
+            ))}
+          </div>
         </div>
       </main>
     );
   }
 
-  // SEYİR C: SENİN ORİJİNAL, GECİKMELİ SAF CSS ANİMASYONLU ANLATICI EKRANIN
+  // SEYİR C: GÜNCELLENMİŞ 40 SANİYELİK SİNEMATİK ANLATICI SAHNESİ
   if (step === "quote") {
     return (
-      <main className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-black px-6 py-16 text-white animate-[quoteSceneFadeOut_1.4s_ease_forwards] [animation-delay:22.8s]">
+      <main className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-black px-6 py-16 text-white animate-[quoteSceneFadeOut_1.4s_ease_forwards] [animation-delay:33.6s]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.06),transparent_72%)]" />
         {crtOverlay}
 
@@ -229,9 +246,9 @@ export default function OperatorBriefing({ quote, onComplete, language = "en" })
                   className={[
                     "opacity-0 text-xl leading-loose tracking-wide text-white/90 sm:text-3xl",
                     "animate-[quoteFadeIn_1.8s_forwards,quoteFadeOut_1.5s_forwards]",
-                    index === 0 ? "[animation-delay:0.7s,10.8s]" : "",
-                    index === 1 ? "[animation-delay:2.8s,11.5s]" : "",
-                    index === 2 ? "[animation-delay:4.9s,12.2s]" : ""
+                    index === 0 ? "[animation-delay:1s,18s]" : "",
+                    index === 1 ? "[animation-delay:5s,22s]" : "",
+                    index === 2 ? "[animation-delay:9s,26s]" : ""
                   ].join(" ")}
                 >
                   {text}
@@ -240,7 +257,7 @@ export default function OperatorBriefing({ quote, onComplete, language = "en" })
             })}
           </div>
 
-          <div className="mt-12 text-right text-xs tracking-[0.3em] text-white/65 opacity-0 animate-[quoteFadeIn_1.6s_forwards,quoteFadeOut_1.8s_forwards] [animation-delay:7.2s,13.6s] sm:text-sm">
+          <div className="mt-12 text-right text-xs tracking-[0.3em] text-white/65 opacity-0 animate-[quoteFadeIn_1.6s_forwards,quoteFadeOut_1.8s_forwards] [animation-delay:14s,30s] sm:text-sm">
             {author}
           </div>
         </section>
@@ -248,12 +265,19 @@ export default function OperatorBriefing({ quote, onComplete, language = "en" })
     );
   }
 
-  // SEYİR D: TAM SİYAH PRO-BOŞLUK EKRANI
+  // SEYİR D: %5 OPACITY SAHTE DONMA / TERMİNAL ARAMA EKRANI
   if (step === "blackout") {
-    return <main className="fixed inset-0 bg-black z-50" />;
+    return (
+      <main className="fixed inset-0 bg-black z-50 grid place-items-center select-none font-mono">
+        {crtOverlay}
+        <div className="text-[10px] tracking-[0.5em] text-cyan-400/5 uppercase opacity-35 animate-pulse">
+          [ SEARCHING FOR RESPONSE... ]
+        </div>
+      </main>
+    );
   }
 
-  // SEYİR E: RASTGELE METİNLİ GLITCH PARAZİT SHOCK FLAŞI
+  // SEYİR E: SUBLIMINAL SHOCK FLAŞI
   if (step === "subliminalFlash") {
     return (
       <main className="fixed inset-0 z-[99999] grid place-items-center bg-black text-rose-500 font-mono tracking-[0.4em] text-base sm:text-lg font-bold select-none animate-[screenGlitch_0.05s_infinite]">
