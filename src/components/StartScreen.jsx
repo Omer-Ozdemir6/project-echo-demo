@@ -3,38 +3,6 @@ import SettingsModal from "./SettingsModal";
 import { getGameText } from "../i18n/gameText";
 import ProducerLogoAnimation from "./ProducerLogoAnimation";
 
-// ─── CLASSIC DOS TEXT (OUTLAST RAPOR STİLİ) ──────────────────────────────────
-// Karmaşık siberpunk glitche'leri yerine eski terminal ve veri bozulması etkisi
-const GLITCH_POOL = "01X█▒░▄▀■";
-function GlitchChar({ char, intensity = 0.05 }) {
-  const [g, setG] = useState(char);
-  useEffect(() => {
-    if (intensity <= 0) { setG(char); return; }
-    const iv = setInterval(() => {
-      setG(Math.random() < intensity
-        ? GLITCH_POOL[Math.floor(Math.random() * GLITCH_POOL.length)]
-        : char);
-    }, 200);
-    return () => clearInterval(iv);
-  }, [char, intensity]);
-  return <span>{g}</span>;
-}
-
-function RaporText({ text, intensity = 0.04, className = "" }) {
-  return (
-    <span className={className}>
-      {text.split("").map((ch, i) => (
-        <GlitchChar key={i} char={ch} intensity={ch === " " ? 0 : intensity} />
-      ))}
-    </span>
-  );
-}
-
-// ─── CRT SCANLINES (SOLUK VE KANLI ARKA PLANSIZ) ──────────────────────────────
-const ScanlineOverlay = () => (
-  <div className="pointer-events-none fixed inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.008),rgba(255,255,255,0.008)_1px,transparent_1px,transparent_4px)] opacity-25" />
-);
-
 export default function StartScreen({
   gameTitle,
   subtitle,
@@ -75,13 +43,12 @@ export default function StartScreen({
     return () => clearTimeout(menuTimer);
   }, [introStep]);
 
-  // Klinik Brifing Kademeli Görünme Zamanlayıcıları
+  // Paragrafların ekrana sırayla gelme zamanlayıcıları
   useEffect(() => {
     if (introStep !== "briefing") return;
     const timers = [
       setTimeout(() => setBriefingStage(1), 500),
-      setTimeout(() => setBriefingStage(2), 1500),
-      setTimeout(() => setBriefingStage(3), 3000),
+      setTimeout(() => setBriefingStage(2), 2500),
     ];
     return () => timers.forEach(clearTimeout);
   }, [introStep]);
@@ -122,16 +89,16 @@ export default function StartScreen({
       <main className="relative grid min-h-dvh place-items-center overflow-hidden bg-black px-6 select-none font-mono">
         <div
           className={[
-            "max-w-5xl text-center",
+            "max-w-4xl text-center",
             isLeaving
-              ? "animate-[producerLogoFadeOut_1s_ease-in_forwards]"
-              : "animate-[producerLogoFadeIn_1.2s_ease-out_forwards]"
+              ? "opacity-0 transition-opacity duration-1000"
+              : "opacity-100 transition-opacity duration-1200"
           ].join(" ")}
         >
-          <p className="text-xl leading-relaxed tracking-[0.06em] text-white/95 sm:text-2xl">
+          <p className="text-lg leading-relaxed tracking-wide text-zinc-200 sm:text-xl">
             {getGameText("start.disclaimer.line1", "All characters and locations in this game are fictional.", language)}
           </p>
-          <p className="mt-6 text-xl leading-relaxed tracking-[0.06em] text-white/95 sm:text-2xl">
+          <p className="mt-4 text-lg leading-relaxed tracking-wide text-zinc-200 sm:text-xl">
             {getGameText("start.disclaimer.line2", "Any resemblance to real people or places is purely coincidental.", language)}
           </p>
         </div>
@@ -139,14 +106,13 @@ export default function StartScreen({
     );
   }
 
-  // AŞAMA 3: Menü Öncesi Metinsiz Temiz Loading Ekranı
+  // AŞAMA 3: Menü Öncesi Ara Yükleme Ekranı (Beyaz Döner Daire)
   if (introStep === "initialLoading") {
     return (
-      <main className="relative min-h-dvh bg-black font-mono select-none text-white/40">
-        <ScanlineOverlay />
+      <main className="relative min-h-dvh bg-black font-mono select-none text-zinc-600">
         <div className="fixed bottom-8 right-8 flex items-center gap-6">
-          <span className="text-[11px] tracking-widest opacity-40">CONNECTING_</span>
-          <div className="relative w-7 h-7">
+          <span className="text-xs tracking-widest opacity-50">CONNECTING_</span>
+          <div className="relative w-6 h-6">
             {[...Array(8)].map((_, i) => (
               <div
                 key={i}
@@ -166,101 +132,81 @@ export default function StartScreen({
     );
   }
 
-  // AŞAMA 4: KLİNİK BRİFİNG EKRANI (OUTLAST GİZLİ BELGE STİLİ)
+  // AŞAMA 4: SADENİN SAFİSİ OUTLAST TİPİ BRİFİNG EKRANI (Aynen Ekran Görüntüsündeki Stil)
   if (introStep === "briefing") {
     return (
-      <main className="relative flex items-center justify-center min-h-dvh overflow-hidden bg-black px-6 font-mono select-none text-white">
-        <ScanlineOverlay />
+      <main className="fixed inset-0 grid place-items-center bg-black px-8 py-16 font-mono select-none text-zinc-200">
         <section
-          className="w-full max-w-2xl transition-all duration-1000 ease-in-out py-10"
-          style={{ opacity: isLeaving ? 0 : 1, transform: isLeaving ? "translateY(12px)" : "none" }}
+          className="w-full max-w-2xl text-center space-y-12 transition-opacity duration-1000 ease-in-out"
+          style={{ opacity: isLeaving ? 0 : 1 }}
         >
+          
+          {/* Paragraf 1 */}
           {briefingStage >= 1 && (
-            <div className="mb-10 border-b border-white/20 pb-4 text-left">
-              <RaporText
-                text="CONFIDENTIAL // MURKOFF PSYCHIATRIC SYSTEMS"
-                intensity={0.02}
-                className="text-xs font-bold tracking-[0.2em] text-white/90"
-              />
-              <div className="mt-1 text-[10px] tracking-[0.15em] text-white/50 uppercase">
-                Mount Massive Research Facility // Subject Intake Report
-              </div>
-            </div>
+            <p className="text-base leading-relaxed tracking-wide text-zinc-200/90 max-w-xl mx-auto animate-[startScreenFadeIn_1s_both]">
+              Mount Massive Research Facility contains classified medical data, severe neural trauma, and highly restricted system files. Please proceed with caution.
+            </p>
           )}
 
+          {/* Paragraf 2 */}
           {briefingStage >= 2 && (
-            <div className="mb-8 space-y-3 border border-white/10 bg-zinc-900/20 p-4 text-xs tracking-wide leading-relaxed text-white/80">
-              <div className="grid grid-cols-3 gap-y-2 border-b border-white/5 pb-3">
-                <div className="text-white/40 font-bold">PROJECT CODE:</div>
-                <div className="col-span-2 tracking-widest text-white/90">ECHO-28</div>
-                
-                <div className="text-white/40 font-bold">SUBJECT ID:</div>
-                <div className="col-span-2"><RaporText text="E-17 // ELIAS [REDACTED]" intensity={0.03} /></div>
-                
-                <div className="text-white/40 font-bold">PROCEDURE:</div>
-                <div className="col-span-2 text-white/90">Deep Neural Erasure // Cycle 28</div>
-                
-                <div className="text-white/40 font-bold">SYSTEM STATUS:</div>
-                <div className="col-span-2 text-white font-bold tracking-wider animate-pulse">[ 3% CRITICAL DEVIATION ]</div>
-              </div>
-              
-              <div className="pt-2 text-[11px] text-white/60 leading-relaxed text-justify">
-                <span className="text-white/90 font-bold">STAFF MEMORANDUM:</span> Subject demonstrates severe cognitive resistance since completion of Cycle 23. Standard amnesiac routing patterns are increasingly volatile. Risk of total ego-collapse or uncontrolled neural leakage is evaluated as high. Avoid direct bidirectional communication protocols.
-              </div>
-            </div>
-          )}
-
-          {briefingStage >= 3 && (
-            <div className="space-y-6 text-xs tracking-wide leading-relaxed text-white/70">
-              <div className="border-l border-white/30 pl-4 space-y-2 text-white/60 italic">
-                <p>&gt; Intrusion protocol bypasses all remaining semantic and somatic security frames.</p>
-                <p>&gt; Induced neural trauma and cellular decay within the temporal lobe are permanent.</p>
-                <p>&gt; Complete memory purge is required for system initialization.</p>
-              </div>
-
-              <p className="text-[11px] text-white/50 text-justify">
-                This exact data sequence has been initialized 27 times. In every iteration, the subject recreates identical behavioral anomalies and presents identical inquiries. System efficiency parameters remain within acceptable margins.
+            <div className="space-y-12 animate-[startScreenFadeIn_1s_both]">
+              <p className="text-base leading-relaxed tracking-wide text-zinc-200/90 max-w-xl mx-auto">
+                You are executing Project Echo, a system clearance routing to authorize Deep Neural Erasure on Subject E-17. Avoid two-way cognitive links. Do not answer questions. Your only choices are to execute, overwrite, or fail.
               </p>
 
-              <div className="border border-white/20 bg-zinc-950/40 p-4 text-[11px] text-white/80 leading-relaxed">
-                <span className="font-bold underline text-white">WARNING NOTICE:</span> Sub-somatic data traces detected at 3.7σ above predicted baseline. A secondary consciousness fragment (Obs-0) is actively interfering with full-slate erasure. Under no circumstances should the operator acknowledge or validate this anomaly to the subject.
-              </div>
-
-              <div className="pt-6">
+              {/* Ekran görüntüsündeki en altta duran sade "Continue" yapısındaki buton */}
+              <div className="pt-8">
                 <button
                   type="button"
                   onClick={handleAcceptBriefing}
                   disabled={isButtonLoading}
                   className={[
-                    "w-full border py-4 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300",
+                    "text-sm tracking-[0.3em] uppercase transition-all duration-300 bg-transparent text-zinc-400 font-normal border-b border-transparent pb-1",
                     isButtonLoading
-                      ? "border-white/10 bg-zinc-900/30 text-white/30 cursor-not-allowed"
-                      : "border-white/30 bg-black text-white hover:border-white/80 hover:bg-white hover:text-black"
+                      ? "opacity-30 cursor-not-allowed"
+                      : "hover:text-white hover:border-white"
                   ].join(" ")}
                 >
-                  {isButtonLoading ? "INITIALIZING INTRUSION OVERRIDE..." : "AUTHORIZE PROCEDURE // PURGE LOG MEMORY"}
+                  {isButtonLoading ? "LOADING..." : "CONTINUE"}
                 </button>
               </div>
             </div>
           )}
+
         </section>
       </main>
     );
   }
 
-  // AŞAMA 5: GİZLİ SİLME VE DOSYA YÜKLEME SEKANSI
+  // AŞAMA 5: GİZLİ YÜKLEME SEKANSI (Beyaz Döner Daire)
   if (introStep === "loading") {
     return (
-      <main className="relative flex items-center justify-center min-h-dvh bg-black font-mono select-none text-white/80">
-        <ScanlineOverlay />
-        <div className="w-full max-w-md text-left px-6 space-y-1.5 text-[10px] tracking-widest opacity-60">
+      <main className="fixed inset-0 flex items-center justify-center bg-black font-mono select-none text-zinc-500">
+        <div className="w-full max-w-md text-left px-6 space-y-2 text-xs tracking-widest opacity-60">
           <p>DELETING DATA SEGMENTS [CYCLE 27]...</p>
           <p>RE-WRITING CORE MEMORY CELLS...</p>
-          <p className="font-bold text-white">[ ALERT: UNEXPECTED RESIDUE DETECTED AT SECTOR 7 ]</p>
+          <p className="font-bold text-zinc-300">[ ALERT: UNEXPECTED RESIDUE DETECTED AT SECTOR 7 ]</p>
           <p>STABILIZING TERMINAL SECTOR...</p>
         </div>
-        <div className="fixed bottom-8 right-8 flex items-center gap-4 text-white/40">
-          <span className="text-[10px] tracking-wider uppercase font-bold">LINKING_TO_SUBJECT_NEURONS...</span>
+        
+        <div className="fixed bottom-8 right-8 flex items-center gap-4 text-zinc-400">
+          <span className="text-[10px] tracking-wider uppercase font-bold opacity-50">LINKING_</span>
+          <div className="relative w-6 h-6">
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-[3px] h-[3px] bg-white rounded-full animate-pulse"
+                style={{
+                  top: `${50 + 42 * Math.sin((i * Math.PI) / 4)}%`,
+                  left: `${50 + 42 * Math.cos((i * Math.PI) / 4)}%`,
+                  transform: "translate(-50%,-50%)",
+                  animationDelay: `${i * 0.15}s`,
+                  animationDuration: "1.2s"
+                }}
+              />
+            ))}
+          </div>
         </div>
       </main>
     );
@@ -271,7 +217,6 @@ export default function StartScreen({
     <main className="relative flex min-h-dvh items-center justify-center overflow-hidden px-6 py-10 text-cyan-50 animate-[startScreenFadeIn_0.9s_ease-out_both] font-mono select-none">
       <img src="/echo-menu-bg.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" draggable={false} />
       <div className="absolute inset-0 bg-black/40" />
-      <ScanlineOverlay />
 
       <button
         type="button"
