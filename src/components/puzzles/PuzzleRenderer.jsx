@@ -5,6 +5,7 @@ import FrequencyPuzzleInput from "./FrequencyPuzzleInput";
 import MatchingPuzzleInput from "./MatchingPuzzleInput";
 import SatellitePuzzleInput from "./SatellitePuzzleInput";
 import TerminalInterface from "./TerminalInterface";
+import BreathControlMinigame from "./BreathControlMinigame";
 import { getGameText } from "../../i18n/gameText";
 
 export default function PuzzleRenderer({
@@ -21,12 +22,7 @@ export default function PuzzleRenderer({
     return getGameText(key, key, language);
   }
 
-  const sharedProps = {
-    puzzle,
-    attempts,
-    onSubmit,
-    t
-  };
+  const sharedProps = { puzzle, attempts, onSubmit, t };
 
   if (puzzle.type === "decrypt") {
     return <DecryptPuzzleInput {...sharedProps} />;
@@ -60,6 +56,17 @@ export default function PuzzleRenderer({
     );
   }
 
-  // Varsayılan: kod/metin girişi
+  if (puzzle.type === "breath_control") {
+    return (
+      <BreathControlMinigame
+        difficulty={puzzle.difficulty || 1}
+        hitsNeeded={puzzle.hitsNeeded ?? puzzle.roundsNeeded ?? 3}
+        echoLabel={puzzle.echoLabel ?? puzzle.echoDistance ?? "ECHO YAKIN"}
+        onSuccess={() => onSubmit("BREATH_SUCCESS")}
+        onFail={() => onSubmit("BREATH_FAIL")}
+      />
+    );
+  }
+
   return <CodePuzzleInput {...sharedProps} />;
 }

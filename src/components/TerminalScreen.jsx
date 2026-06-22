@@ -17,6 +17,7 @@ export default function TerminalScreen({
   config,
   gameState,
   currentNode,
+  crtOverlay,
   visibleMessages,
   isTyping,
   isGlitching,

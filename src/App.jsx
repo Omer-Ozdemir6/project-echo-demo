@@ -743,29 +743,32 @@ const canShowChoices =
   !progressTask;
 
 
-  return (
-    <TerminalScreen
-      config={gameConfig}
-      gameState={gameState}
-        currentNode={{
-    ...currentNode,
-    choices: visibleChoices
-  }}
-      visibleMessages={visibleMessages}
-      isTyping={isTyping}
-      isGlitching={isGlitching}
-      signalStatus={signalStatus}
-      progressTask={progressTask}
-      canShowChoices={canShowChoices}
-      activePuzzle={activePuzzle}
-      onChoice={handleChoice}
-      onPuzzleSubmit={handlePuzzleSubmit}
-      onFileRead={handleFileRead}
-      onReset={handleReset}
-      settings={settings}
-      onChangeSettings={setSettings}
-    />
-  );
+// App.jsx - En alttaki return bloğunu bu şekilde değiştir:
+
+return (
+  <TerminalScreen
+    config={gameConfig}
+    gameState={gameState}
+    /* 🚀 GÜNCELLEME: Eğer seçenekler gösterilebilecek durumda değilse choices'ı boş dizi ([]) gönder */
+    currentNode={{
+      ...currentNode,
+      choices: canShowChoices ? visibleChoices : []
+    }}
+    visibleMessages={visibleMessages}
+    isTyping={isTyping}
+    isGlitching={isGlitching}
+    signalStatus={signalStatus}
+    progressTask={progressTask}
+    canShowChoices={canShowChoices}
+    activePuzzle={activePuzzle}
+    onChoice={handleChoice}
+    onPuzzleSubmit={handlePuzzleSubmit}
+    onFileRead={handleFileRead}
+    onReset={handleReset}
+    settings={settings}
+    onChangeSettings={setSettings}
+  />
+);
 }
 
 export default App;

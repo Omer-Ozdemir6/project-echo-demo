@@ -6,7 +6,10 @@ import ProducerLogoAnimation from "./ProducerLogoAnimation";
 export default function StartScreen({
   gameTitle,
   subtitle,
-  onStart, // Orijinal props ismini koruyoruz ki dış katmanda hata vermesin
+  onStart,           // New Game tetikleyicisi
+  onContinue,        // 🚀 Kaldığı yerden devam etme işlevi (Üst katmandan gelen fonksiyon)
+  hasSavedGame = false, // 🚀 Kayıtlı oyun var mı kontrolü (true ise Continue butonu aktifleşir)
+  onOpenCredits,     // 🚀 Credits modülünü veya ekranını açacak işlev
   settings,
   onChangeSettings,
   onReset
@@ -92,37 +95,35 @@ export default function StartScreen({
   }
 
   // AŞAMA 3: Menü Öncesi Metinsiz Temiz Loading Ekranı
-if (introStep === "initialLoading") {
-  return (
-    <main className="relative min-h-dvh bg-black font-mono select-none text-cyan-50/60">
-      <div className="pointer-events-none fixed inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(255,255,255,0.015)_1px,transparent_1px,transparent_5px)] opacity-35" />
-      
-      {/* Sağ alt köşede konumlandırılan beyaz spinner ve log grubu */}
-      <div className="fixed bottom-8 right-8 flex items-center gap-6">
-        <span className="text-[11px] tracking-widest opacity-40">
-          CONNECTING_
-        </span>
+  if (introStep === "initialLoading") {
+    return (
+      <main className="relative min-h-dvh bg-black font-mono select-none text-cyan-50/60">
+        <div className="pointer-events-none fixed inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(255,255,255,0.015)_1px,transparent_1px,transparent_5px)] opacity-35" />
+        
+        <div className="fixed bottom-8 right-8 flex items-center gap-6">
+          <span className="text-[11px] tracking-widest opacity-40">
+            CONNECTING_
+          </span>
 
-        {/* Beyaz Noktalardan Oluşan Chaser Spinner */}
-        <div className="relative w-7 h-7">
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
-              style={{
-                top: `${50 + 40 * Math.sin((i * Math.PI) / 4)}%`,
-                left: `${50 + 40 * Math.cos((i * Math.PI) / 4)}%`,
-                transform: "translate(-50%, -50%)",
-                animationDelay: `${i * 0.15}s`,
-                animationDuration: "1.2s"
-              }}
-            />
-          ))}
+          <div className="relative w-7 h-7">
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
+                style={{
+                  top: `${50 + 40 * Math.sin((i * Math.PI) / 4)}%`,
+                  left: `${50 + 40 * Math.cos((i * Math.PI) / 4)}%`,
+                  transform: "translate(-50%, -50%)",
+                  animationDelay: `${i * 0.15}s`,
+                  animationDuration: "1.2s"
+                }}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    </main>
-  );
-}
+      </main>
+    );
+  }
 
   // AŞAMA 4: Ana Menü Görüntüsü
   return (
@@ -136,7 +137,6 @@ if (introStep === "initialLoading") {
 
       <div className="absolute inset-0 bg-black/40" />
 
-      {/* Atmosferik Grid ve Işık Katmanları */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent,rgba(0,0,0,0.5))]" />
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(255,255,255,0.015)_1px,transparent_1px,transparent_5px)] opacity-35" />
 
@@ -170,21 +170,57 @@ if (introStep === "initialLoading") {
           <div className="mx-auto mt-5 h-px w-64 bg-cyan-300/40 shadow-[0_0_20px_rgba(34,211,238,0.65)]" />
         </div>
 
-        {/* BAĞLANTIYI BAŞLAT BUTONU */}
-        <button
-          type="button"
-          onClick={onStart} // Fonksiyon tetiklendiğinde üst katmandaki state brifing sayfasına kırılacak
-          className={[
-            "w-full max-w-xs border border-cyan-300/50 bg-slate-950/40 px-8 py-4",
-            "text-sm tracking-[0.28em] text-cyan-100 backdrop-blur-sm",
-            "transition-all duration-300",
-            "hover:border-cyan-300/85 hover:bg-cyan-400/10",
-            "hover:shadow-[0_0_30px_rgba(34,211,238,0.24)]",
-            "active:scale-[0.98]"
-          ].join(" ")}
-        >
-          {getGameText("start.establishLink", "ESTABLISH LINK", language)}
-        </button>
+        {/* MENÜ BUTONLARI GRUBU */}
+        <div className="flex w-full max-w-xs flex-col gap-3.5">
+          
+          {/* 1. CONTINUE (DEVAM ET) BUTONU */}
+          <button
+            type="button"
+            disabled={!hasSavedGame} // Kayıtlı oyun yoksa tıklanamaz olur
+            onClick={onContinue}
+            className={[
+              "w-full border bg-slate-950/40 px-8 py-3.5",
+              "text-sm tracking-[0.28em] backdrop-blur-sm transition-all duration-300",
+              hasSavedGame
+                ? "border-cyan-300/50 text-cyan-100 hover:border-cyan-300/85 hover:bg-cyan-400/10 hover:shadow-[0_0_30px_rgba(34,211,238,0.2)] active:scale-[0.98]"
+                : "border-neutral-800 text-neutral-600 cursor-not-allowed opacity-40 bg-neutral-950/20"
+            ].join(" ")}
+          >
+            {getGameText("start.continueLink", "CONTINUE", language)}
+          </button>
+
+          {/* 2. NEW GAME (YENİ OYUN) BUTONU */}
+          <button
+            type="button"
+            onClick={onStart}
+            className={[
+              "w-full border border-cyan-300/40 bg-slate-950/30 px-8 py-3.5",
+              "text-sm tracking-[0.28em] text-cyan-200/90 backdrop-blur-sm",
+              "transition-all duration-300",
+              "hover:border-cyan-300/75 hover:bg-cyan-400/10 hover:text-cyan-100",
+              "hover:shadow-[0_0_25px_rgba(34,211,238,0.15)]",
+              "active:scale-[0.98]"
+            ].join(" ")}
+          >
+            {getGameText("start.establishLink", "NEW GAME", language)}
+          </button>
+
+          {/* 3. CREDITS (YAPIMCILAR) BUTONU */}
+          <button
+            type="button"
+            onClick={onOpenCredits}
+            className={[
+              "w-full border border-cyan-300/20 bg-slate-950/15 px-8 py-3.5",
+              "text-xs tracking-[0.28em] text-cyan-300/60 backdrop-blur-sm",
+              "transition-all duration-300",
+              "hover:border-cyan-300/50 hover:bg-cyan-400/5 hover:text-cyan-200",
+              "active:scale-[0.98]"
+            ].join(" ")}
+          >
+            {getGameText("start.creditsLink", "CREDITS", language)}
+          </button>
+
+        </div>
       </section>
 
       {isSettingsOpen && (

@@ -281,12 +281,16 @@ export default function OperatorBriefing({ quote, onComplete, language = "en" })
             {[...Array(8)].map((_, i) => (
               <div
                 key={i}
-                className="absolute w-[3px] h-[3px] bg-white rounded-full"
+                className="absolute w-[3px] h-[3px] bg-red-500/50 rounded-full"
                 style={{
                   top:  `${50 + 42 * Math.sin((i * Math.PI) / 4)}%`,
                   left: `${50 + 42 * Math.cos((i * Math.PI) / 4)}%`,
                   transform: "translate(-50%,-50%)",
-                  animation: `pulse 1.2s ${i * 0.15}s infinite`,
+                  animationName: "pulse",
+                  animationDuration: "1.2s",
+                  animationDelay: `${i * 0.15}s`,
+                  animationIterationCount: "infinite",
+                  animationTimingFunction: "ease-in-out",
                 }}
               />
             ))}
