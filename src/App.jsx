@@ -20,6 +20,7 @@ import { runIntroTimeline } from "./engine/introEngine";
 import { runBootStep } from "./engine/bootEngine";
 import { evaluateConditions } from "./engine/conditionEngine";
 import stateManager from "./engine/stateManager";
+import ContinueLoadingScreen from "./components/ContinueLoadingScreen";
 
 import gameConfig from "./data/game.config.json";
 import bootConfig from "./data/boot.config.json";
@@ -33,14 +34,12 @@ import RebootConfirmScreen from "./components/RebootConfirmScreen";
 import TransmissionInitScreen from "./components/TransmissionInitScreen";
 import TerminalScreen from "./components/TerminalScreen";
 import MissingNodeScreen from "./components/MissingNodeScreen";
+import CreditsScreen from "./components/CreditsScreen";
 
 import "./index.css";
 
 function App() {
-  const [phase, setPhase] = useState(() => {
-    const savedProgress = localStorage.getItem("project_echo_progress");
-    return savedProgress ? "game" : "start";
-  });
+  const [phase, setPhase] = useState("start");
 
   const [bootAttempt, setBootAttempt] = useState(1);
   const [bootStepIndex, setBootStepIndex] = useState(0);
@@ -58,7 +57,6 @@ function App() {
 
   const [settings, setSettings] = useState(() => {
     const saved = localStorage.getItem("echo_settings");
-
     return saved
       ? JSON.parse(saved)
       : {
@@ -68,6 +66,23 @@ function App() {
           vibrationEnabled: true
         };
   });
+
+  // Kayıtlı oyun kontrolü
+  const hasSavedGame = localStorage.getItem("project_echo_progress") !== null;
+
+  // 🚀 Continue butonu artık save dosyasını yükleyip state'e aktarıyor
+  function continueGame() {
+    const saveData = localStorage.getItem("project_echo_progress");
+    if (!saveData) return;
+
+    try {
+      const parsedSave = JSON.parse(saveData);
+      setGameState(parsedSave);
+      setPhase("continueLoading");
+    } catch (error) {
+      console.error("SAVE DATA CORRUPTED:", error);
+    }
+  }
 
   const currentNode = getCurrentNode(gameState);
   const activePuzzle = getActivePuzzle(gameState);
@@ -79,30 +94,27 @@ function App() {
 
   const introAudioRef = useRef(null);
 
-function startIntroAudio() {
-  if (!settings.soundEnabled || introAudioRef.current) return;
+  function startIntroAudio() {
+    if (!settings.soundEnabled || introAudioRef.current) return;
 
-  const audio = new Audio();
-  audio.src = "/audio/link-start.mp3";
-  audio.loop = true;
-  audio.volume = 0.85;
-  audio.preload = "auto";
+    const audio = new Audio();
+    audio.src = "/audio/link-start.mp3";
+    audio.loop = true;
+    audio.volume = 0.85;
+    audio.preload = "auto";
 
+    audio.addEventListener("loadedmetadata", () => {});
 
-  audio.addEventListener("loadedmetadata", () => {
+    audio.addEventListener("error", () => {
+      console.error("AUDIO ERROR:", audio.error);
+    });
 
-  });
+    introAudioRef.current = audio;
 
-  audio.addEventListener("error", () => {
-    console.error("AUDIO ERROR:", audio.error);
-  });
-
-  introAudioRef.current = audio;
-
-  audio.play().catch((error) => {
-    console.warn("INTRO AUDIO PLAY FAILED:", error);
-  });
-}
+    audio.play().catch((error) => {
+      console.warn("INTRO AUDIO PLAY FAILED:", error);
+    });
+  }
 
   function stopIntroAudio() {
     if (!introAudioRef.current) return;
@@ -175,14 +187,14 @@ function startIntroAudio() {
     };
   }
 
-function startGame() {
-  startIntroAudio();
+  function startGame() {
+    startIntroAudio();
 
-  runIntroTimeline({
-    timeline: gameConfig.introTimeline,
-    onPhaseChange: setPhase
-  });
-}
+    runIntroTimeline({
+      timeline: gameConfig.introTimeline,
+      onPhaseChange: setPhase
+    });
+  }
 
   function startRecoveryBoot() {
     setShowError(false);
@@ -215,7 +227,8 @@ function startGame() {
       phase === "start" ||
       phase === "game" ||
       phase === "booting" ||
-      phase === "rebootConfirm"
+      phase === "rebootConfirm" ||
+      phase === "credits"
     ) {
       stopIntroAudio();
     }
@@ -250,26 +263,6 @@ function startGame() {
       return nextState;
     });
   }, [phase, gameState.pendingNotifications?.length]);
-
- /* useEffect(() => {
-    if (phase !== "game") return;
-
-    setGameState((prevState) => {
-      const nextState = resolveBusyState(prevState);
-
-      if (
-        nextState.episodeId === prevState.episodeId &&
-        nextState.currentNodeId === prevState.currentNodeId &&
-        Boolean(nextState.busyState) === Boolean(prevState.busyState)
-      ) {
-        return prevState;
-      }
-
-      saveGameState(nextState);
-      return nextState;
-    });
-  }, [phase]);
-  */
 
   useEffect(() => {
     const resolvedState = resolveActiveWaitTask(gameState);
@@ -351,24 +344,24 @@ function startGame() {
   }, [phase, activeStep, bootStepIndex, bootAttempt, currentBoot]);
 
   useEffect(() => {
-  if (phase !== "game" || !currentNode) return;
+    if (phase !== "game" || !currentNode) return;
 
-  setIsTyping(false);
-  setIsGlitching(false);
-  setSignalStatus(null);
-  setProgressTask(null);
-  setNodeFinished(false);
+    setIsTyping(false);
+    setIsGlitching(false);
+    setSignalStatus(null);
+    setProgressTask(null);
+    setNodeFinished(false);
 
-  return playNodeEvents({
-  events: currentNode.events || [],
-  save: gameState,
-  signalStrength: gameState.signalStrength,
+    return playNodeEvents({
+      events: currentNode.events || [],
+      save: gameState,
+      signalStrength: gameState.signalStrength,
 
-    translate: (key, fallback = "") => {
-      return getGameText(key, fallback, settings.language);
-    },
+      translate: (key, fallback = "") => {
+        return getGameText(key, fallback, settings.language);
+      },
 
-    onCharacterBusyStart: (busy) => {
+      onCharacterBusyStart: (busy) => {
         setIsTyping(false);
         setIsGlitching(false);
         setSignalStatus(null);
@@ -415,14 +408,13 @@ function startGame() {
       onGlitchStart: () => setIsGlitching(true),
       onGlitchStop: () => setIsGlitching(false),
 
-onSignalLost: (message) => {
-  setSignalStatus({ type: "lost", message });
-  
-  // Kanonik ölüm sistemi
-  setGameState((prev) => {
-    return applySignalLost(prev);
-  });
-},
+      onSignalLost: (message) => {
+        setSignalStatus({ type: "lost", message });
+
+        setGameState((prev) => {
+          return applySignalLost(prev);
+        });
+      },
 
       onSignalRestored: (message) => {
         setSignalStatus({ type: "restored", message });
@@ -471,131 +463,115 @@ onSignalLost: (message) => {
         });
       },
 
-onStatChange: (changes) => {
-  setGameState((prev) => {
-    const nextState = stateManager.applyEffects(prev, changes);
-    saveGameState(nextState);
-    return nextState;
-  });
-},
-
-onComplete: () => {
-  if (gameState.busyState) return;
-
-  setNodeFinished(true);
-
-  // BRANCHING
-  if (currentNode?.branching?.length) {
-
-    const matchedBranch = currentNode.branching.find(branch =>
-      evaluateConditions(gameState, branch.conditions)
-    );
-
-    const targetNodeId =
-      matchedBranch?.nextNodeId ||
-      currentNode.defaultNextNodeId;
-
-    if (targetNodeId) {
-      setTimeout(() => {
-        setGameState(prev => {
-          const nextState = {
-            ...prev,
-            currentNodeId: targetNodeId
-          };
-
+      onStatChange: (changes) => {
+        setGameState((prev) => {
+          const nextState = stateManager.applyEffects(prev, changes);
           saveGameState(nextState);
           return nextState;
         });
-      }, 500);
+      },
 
-      return;
-    }
-  }
+      onComplete: () => {
+        if (gameState.busyState) return;
 
-  // NORMAL NODE FLOW
-  if (currentNode?.nextNodeId) {
-    setTimeout(() => {
-      setGameState(prev => {
-        const nextState = {
-          ...prev,
-          currentNodeId: currentNode.nextNodeId
-        };
+        setNodeFinished(true);
 
-        saveGameState(nextState);
-        return nextState;
-      });
-    }, 500);
+        // BRANCHING
+        if (currentNode?.branching?.length) {
+          const matchedBranch = currentNode.branching.find((branch) =>
+            evaluateConditions(gameState, branch.conditions)
+          );
 
-    return;
-  }
+          const targetNodeId =
+            matchedBranch?.nextNodeId || currentNode.defaultNextNodeId;
 
-  // EPISODE TRANSITION
-if (currentNode?.nextEpisodeId) {
+          if (targetNodeId) {
+            setTimeout(() => {
+              setGameState((prev) => {
+                const nextState = {
+                  ...prev,
+                  currentNodeId: targetNodeId
+                };
 
+                saveGameState(nextState);
+                return nextState;
+              });
+            }, 500);
 
-  setTimeout(() => {
-    setGameState(prev => {
+            return;
+          }
+        }
 
-      const nextEpisode =
-        getCurrentEpisode({
-          ...prev,
-          episodeId:
-            currentNode.nextEpisodeId
-        });
+        // NORMAL NODE FLOW
+        if (currentNode?.nextNodeId) {
+          setTimeout(() => {
+            setGameState((prev) => {
+              const nextState = {
+                ...prev,
+                currentNodeId: currentNode.nextNodeId
+              };
 
+              saveGameState(nextState);
+              return nextState;
+            });
+          }, 500);
 
+          return;
+        }
 
+        // EPISODE TRANSITION
+        if (currentNode?.nextEpisodeId) {
+          setTimeout(() => {
+            setGameState((prev) => {
+              const nextEpisode = getCurrentEpisode({
+                ...prev,
+                episodeId: currentNode.nextEpisodeId
+              });
 
+              const nextState = {
+                ...prev,
+                episodeId: currentNode.nextEpisodeId,
+                currentNodeId: nextEpisode.startNodeId
+              };
 
-      const nextState = {
-        ...prev,
-        episodeId:
-          currentNode.nextEpisodeId,
-        currentNodeId:
-          nextEpisode.startNodeId
-      };
-
-
-
-      saveGameState(nextState);
-
-      return nextState;
-    });
-  }, 500);
-}
-}
+              saveGameState(nextState);
+              return nextState;
+            });
+          }, 500);
+        }
+      }
     });
   }, [phase, currentNode?.id]);
 
-function handleChoice(choiceId) {
-  if (gameState.busyState) return;
+  function handleChoice(choiceId) {
+    if (gameState.busyState) return;
 
-  const selectedChoice = currentNode?.choices?.find(
-    (choice) => choice.id === choiceId
-  );
+    const selectedChoice = currentNode?.choices?.find(
+      (choice) => choice.id === choiceId
+    );
 
-  if (selectedChoice) {
-    setVisibleMessages((prev) => [
-      ...prev,
-      {
-        type: "playerMessage",
-        text: getGameText(
-          selectedChoice.textKey,
-          selectedChoice.text,
-          settings.language
-        ),
-        sender: "player",
-        speaker: "YOU"
-      }
-    ]);
+    if (selectedChoice) {
+      setVisibleMessages((prev) => [
+        ...prev,
+        {
+          type: "playerMessage",
+          text: getGameText(
+            selectedChoice.textKey,
+            selectedChoice.text,
+            settings.language
+          ),
+          sender: "player",
+          speaker: "YOU"
+        }
+      ]);
+    }
+
+    setNodeFinished(false);
+
+    const nextState = chooseOption(gameState, choiceId);
+    setGameState(nextState);
+    saveGameState(nextState);
   }
-
-  setNodeFinished(false);
-
-  const nextState = chooseOption(gameState, choiceId);
-  setGameState(nextState);
-  saveGameState(nextState);
-}
 
   function handlePuzzleSubmit(answer) {
     if (!activePuzzle) return;
@@ -638,14 +614,34 @@ function handleChoice(choiceId) {
 
   if (phase === "start") {
     return (
-<StartScreen
-  gameTitle={gameConfig.gameTitle}
-  subtitle={gameConfig.subtitle}
-  onStart={startGame}
-  settings={settings}
-  onChangeSettings={setSettings}
-  onReset={handleReset}
-/>
+      <StartScreen
+        gameTitle={gameConfig.gameTitle}
+        subtitle={gameConfig.subtitle}
+        onStart={startGame}
+        onContinue={continueGame}
+        hasSavedGame={hasSavedGame}
+        onOpenCredits={() => setPhase("credits")}
+        settings={settings}
+        onChangeSettings={setSettings}
+        onReset={handleReset}
+      />
+    );
+  }
+
+  if (phase === "credits") {
+    return (
+      <CreditsScreen
+        onClose={() => setPhase("start")}
+      />
+    );
+  }
+
+  if (phase === "continueLoading") {
+    return (
+      <ContinueLoadingScreen
+        saveData={gameState}
+        onComplete={() => setPhase("game")}
+      />
     );
   }
 
@@ -683,7 +679,7 @@ function handleChoice(choiceId) {
         bootProgress={bootProgress}
         showError={showError}
         criticalError={bootConfig.criticalError}
-         language={settings.language}
+        language={settings.language}
       />
     );
   }
@@ -718,57 +714,45 @@ function handleChoice(choiceId) {
     );
   }
 
-
-
-  const visibleChoices =
-  (currentNode?.choices || []).filter(
-    (choice) =>
-      evaluateConditions(
-        gameState,
-        choice.conditions
-      )
+  const visibleChoices = (currentNode?.choices || []).filter((choice) =>
+    evaluateConditions(gameState, choice.conditions)
   );
 
-  const hasChoices =
-  visibleChoices.length > 0;
+  const hasChoices = visibleChoices.length > 0;
 
-const canShowChoices =
-  !gameState.busyState &&
-  nodeFinished &&
-  hasChoices &&
-  !activePuzzle &&
-  !isTyping &&
-  !isGlitching &&
-  !signalStatus &&
-  !progressTask;
+  const canShowChoices =
+    !gameState.busyState &&
+    nodeFinished &&
+    hasChoices &&
+    !activePuzzle &&
+    !isTyping &&
+    !isGlitching &&
+    !signalStatus &&
+    !progressTask;
 
-
-// App.jsx - En alttaki return bloğunu bu şekilde değiştir:
-
-return (
-  <TerminalScreen
-    config={gameConfig}
-    gameState={gameState}
-    /* 🚀 GÜNCELLEME: Eğer seçenekler gösterilebilecek durumda değilse choices'ı boş dizi ([]) gönder */
-    currentNode={{
-      ...currentNode,
-      choices: canShowChoices ? visibleChoices : []
-    }}
-    visibleMessages={visibleMessages}
-    isTyping={isTyping}
-    isGlitching={isGlitching}
-    signalStatus={signalStatus}
-    progressTask={progressTask}
-    canShowChoices={canShowChoices}
-    activePuzzle={activePuzzle}
-    onChoice={handleChoice}
-    onPuzzleSubmit={handlePuzzleSubmit}
-    onFileRead={handleFileRead}
-    onReset={handleReset}
-    settings={settings}
-    onChangeSettings={setSettings}
-  />
-);
+  return (
+    <TerminalScreen
+      config={gameConfig}
+      gameState={gameState}
+      currentNode={{
+        ...currentNode,
+        choices: canShowChoices ? visibleChoices : []
+      }}
+      visibleMessages={visibleMessages}
+      isTyping={isTyping}
+      isGlitching={isGlitching}
+      signalStatus={signalStatus}
+      progressTask={progressTask}
+      canShowChoices={canShowChoices}
+      activePuzzle={activePuzzle}
+      onChoice={handleChoice}
+      onPuzzleSubmit={handlePuzzleSubmit}
+      onFileRead={handleFileRead}
+      onReset={handleReset}
+      settings={settings}
+      onChangeSettings={setSettings}
+    />
+  );
 }
 
 export default App;

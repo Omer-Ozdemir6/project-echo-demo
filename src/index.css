@@ -93,7 +93,7 @@ img {
   100% { transform: translate(0, 0); }
 }
 
-/* EKLENDİ: Anlatıcı Ekranı Yumuşak Giriş Efekti */
+/* Anlatıcı Ekranı Yumuşak Giriş Efekti */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -105,7 +105,7 @@ img {
   }
 }
 
-/* EKLENDİ: Anlatıcı Ekranı Satır Bazlı Fade In / Out Desteği */
+/* Anlatıcı Ekranı Satır Bazlı Fade In / Out Desteği */
 @keyframes quoteFadeIn {
   from {
     opacity: 0;
@@ -289,6 +289,23 @@ img {
   to { transform: rotate(360deg); }
 }
 
+/* 🚀 KESİN ÇÖZÜM: Yazıların yatayda kaymasını önleyen dikey akış animasyonu */
+@keyframes creditsLinearScroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    /* Listendeki tüm yazılar yukarıda tamamen kaybolana kadar dikey eksende öteler */
+    transform: translateY(-260%);
+  }
+}
+
+/* Sınıfın tetiklendiğinden ve Tailwind katmanlarının altında ezilmediğinden emin oluyoruz */
+.credits-scroll-active {
+  display: block !important;
+  animation: creditsLinearScroll 40s linear forwards !important;
+}
+
 /* === TERMINAL SCROLLBAR UTILITIES === */
 @layer utilities {
   .terminal-scrollbar::-webkit-scrollbar {
@@ -313,6 +330,7 @@ img {
     scrollbar-color: rgba(34, 211, 238, 0.25) rgba(15, 23, 42, 0.6);
   }
 }
+
 /* Anlatıcı yazılarının giriş ve tek tek siliniş animasyon sınıfları */
 .animate-quote-in {
   animation: quoteFadeIn 1.5s ease-out forwards;
