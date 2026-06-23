@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getGameText } from "../i18n/gameText";
 
 function resolveConfigText(value, language = "en") {
@@ -24,10 +24,10 @@ const ScanlineOverlay = () => (
 );
 
 export default function QuoteScreen({ quote, onComplete, language = "en" }) {
-  // Akış Durumları: "quote" | "blackout" | "subliminalFlash"
   const [step, setStep] = useState("quote");
   const [lineVisible, setLineVisible] = useState([false, false, false]);
   const [authorVisible, setAuthorVisible] = useState(false);
+  const [authorBlowAway, setAuthorBlowAway] = useState(false); // 🚀 Rüzgar efekti tetikleyicisi
   const [sceneOpacity, setSceneOpacity] = useState(1);
   const [flashMessage] = useState(
     () => SUBLIMINAL_MESSAGES[Math.floor(Math.random() * SUBLIMINAL_MESSAGES.length)]
@@ -35,39 +35,43 @@ export default function QuoteScreen({ quote, onComplete, language = "en" }) {
 
   const author = getGameText(quote?.authorKey, quote?.author || "", language);
 
-  // Anlatıcı metinlerinin ekranda kalma süreleri uzatıldı (Daha sinematik tempo)
   useEffect(() => {
     if (step !== "quote") return;
 
     setLineVisible([false, false, false]);
+    setAuthorVisible(false);
+    setAuthorBlowAway(false);
+    setSceneOpacity(1);
+
     const timers = [
-      // Satırlar daha geniş aralıklarla ve sindirerek ekrana geliyor
+      // ─── EKRANA GELİŞ TEMPOSU ──────────────────────────────
       setTimeout(() => setLineVisible(([, b, c]) => [true, b, c]), 1500),
-      setTimeout(() => setLineVisible(([a, , c]) => [a, true, c]), 6500),
-      setTimeout(() => setLineVisible(([a, b]) => [a, b, true]), 11500),
-      setTimeout(() => setAuthorVisible(true), 17000),
+      setTimeout(() => setLineVisible(([a, , c]) => [a, true, c]), 5000),
+      setTimeout(() => setLineVisible(([a, b]) => [a, b, true]), 8500),
+      setTimeout(() => setAuthorVisible(true), 10000),
       
-      // Yazıların ekrandan zarifçe siliniş temposu
-      setTimeout(() => setLineVisible(([, b, c]) => [false, b, c]), 23000),
-      setTimeout(() => setLineVisible(([a, , c]) => [a, false, c]), 27500),
-      setTimeout(() => setLineVisible(([a, b]) => [a, b, false]), 32000),
-      setTimeout(() => setAuthorVisible(false), 36000),
+      // ─── METİNLERİN SİLİNİŞ TEMPOSU ────────────────────────────
+      setTimeout(() => setLineVisible(([, b, c]) => [false, b, c]), 16000),
+      setTimeout(() => setLineVisible(([a, , c]) => [a, false, c]), 19000),
+      setTimeout(() => setLineVisible(([a, b]) => [a, b, false]), 22000),
       
-      // Sahnenin tamamen kararmaya başlama ve blackout anı
-      setTimeout(() => setSceneOpacity(0), 39500),
-      setTimeout(() => setStep("blackout"), 41500),
+      // 🚀 24. saniyede yazar ismine rüzgar vurur ve uçuşma başlar
+      setTimeout(() => setAuthorBlowAway(true), 24000),
+      
+      // ─── KARARMA VE GEÇİŞ ──────────────────────────────
+      setTimeout(() => setSceneOpacity(0), 26000),
+      setTimeout(() => setStep("blackout"), 30000),
     ];
+
     return () => timers.forEach(clearTimeout);
   }, [step]);
 
-  // Blackout -> Subliminal Flash Geçişi
   useEffect(() => {
     if (step !== "blackout") return;
     const t = setTimeout(() => setStep("subliminalFlash"), 5000);
     return () => clearTimeout(t);
   }, [step]);
 
-  // Subliminal Flash -> Tamamlandı ve Terminale Sızma Başladı
   useEffect(() => {
     if (step !== "subliminalFlash") return;
     const t = setTimeout(() => {
@@ -76,7 +80,6 @@ export default function QuoteScreen({ quote, onComplete, language = "en" }) {
     return () => clearTimeout(t);
   }, [step, onComplete]);
 
-  // ANLATICI SATIRLARI RENDER
   if (step === "quote") {
     const lines = quote?.lines || [];
     return (
@@ -87,11 +90,50 @@ export default function QuoteScreen({ quote, onComplete, language = "en" }) {
           transition: sceneOpacity < 1 ? "opacity 2000ms ease-in-out" : undefined,
         }}
       >
-        {/* Sıcak turuncu/kehribar tonlarında loş bir mum ışığı arka plan parlaması */}
+        {/* CSS Enjeksiyonu: Üfleme ve Rüzgarda Küle Dönüşerek Uçuşma Efekti */}
+        <style>{`
+          @keyframes windBlowAway {
+            0% {
+              opacity: 1;
+              filter: blur(0px);
+              transform: translate(0, 0) scale(1) skewX(0deg);
+              mask-image: linear-gradient(to right, rgba(0,0,0,1) 100%, rgba(0,0,0,1) 100%);
+              -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 100%, rgba(0,0,0,1) 100%);
+            }
+            30% {
+              filter: blur(0.5px);
+              /* Rüzgarın ilk vurduğu an hafifçe yukarı dalgalanma */
+              transform: translate(30px, -8px) scale(0.98) skewX(-10deg);
+              opacity: 0.9;
+            }
+            60% {
+              filter: blur(2px);
+              /* Sağa doğru savrulurken yerçekimsiz dağılma etkisi */
+              transform: translate(120px, 4px) scale(0.92) skewX(-25deg);
+              opacity: 0.5;
+            }
+            100% {
+              opacity: 0;
+              filter: blur(6px);
+              /* Tamamen rüzgarda yok oluş */
+              transform: translate(250px, -15px) scale(0.85) skewX(-40deg);
+              
+              /* Soldan sağa doğru eriyerek/silinerek gitmesini sağlayan gradyan maskesi */
+              mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+              -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+            }
+          }
+
+          .wind-particles {
+            /* 1.8 saniye boyunca akıcı ve organik bir rüzgar ivmesi (cubic-bezier) */
+            animation: windBlowAway 1800ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            display: inline-block;
+          }
+        `}</style>
+
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.03),transparent_70%)]" />
         <ScanlineOverlay />
 
-        {/* 🚀 GÜNCELLEME: font-serif ve italic ile klasik el yazısı/roman estetiği */}
         <section className="relative z-10 w-full max-w-3xl space-y-12 text-center font-serif italic">
           {lines.map((line, idx) => {
             const text = resolveConfigText(line, language);
@@ -113,12 +155,15 @@ export default function QuoteScreen({ quote, onComplete, language = "en" }) {
 
           {author && (
             <div
-              className="mt-16 text-right text-sm font-normal tracking-[0.2em] text-amber-600/60 uppercase not-italic font-mono"
-              style={{
+              className={[
+                "mt-16 text-right text-sm font-normal tracking-[0.2em] text-amber-600/60 uppercase not-italic font-mono transition-all duration-[2000ms]",
+                customElements,
+                authorBlowAway ? "wind-particles" : ""
+              ].join(" ")}
+              style={!authorBlowAway ? {
                 opacity: authorVisible ? 1 : 0,
                 transform: authorVisible ? "translateX(0)" : "translateX(-10px)",
-                transition: "opacity 2000ms ease, transform 2000ms ease",
-              }}
+              } : undefined}
             >
               — {author}
             </div>
@@ -128,7 +173,6 @@ export default function QuoteScreen({ quote, onComplete, language = "en" }) {
     );
   }
 
-  // BLACKOUT SAHNESİ RENDER
   if (step === "blackout") {
     return (
       <main className="fixed inset-0 bg-black z-50 grid place-items-center select-none font-mono">
@@ -140,7 +184,6 @@ export default function QuoteScreen({ quote, onComplete, language = "en" }) {
     );
   }
 
-  // SUBLIMINAL FLASH SAHNESİ RENDER (80ms)
   if (step === "subliminalFlash") {
     return (
       <main className="fixed inset-0 z-[99999] grid place-items-center bg-black font-mono">
