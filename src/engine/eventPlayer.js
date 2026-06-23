@@ -72,7 +72,7 @@ function createFilePayload(event, fallbackType = "file", translate) {
 
 function playSingleEvent({
   event,
-    save,
+  save,
   delay = 0,
   timers,
   translate,
@@ -89,34 +89,35 @@ function playSingleEvent({
   onProgressTaskStart,
   onProgressTaskEnd,
   onCharacterBusyStart,
+  onLoopReset,
   signalStrength = 100
 }) {
   if (!event || typeof event !== "object") return 0;
 
+  // ─── pause ───────────────────────────────────────────────────────────────
   if (event.type === "pause") {
     return event.duration || 1000;
   }
 
+  // ─── realTimeWait ─────────────────────────────────────────────────────────
   if (event.type === "realTimeWait") {
-  const seconds = event.seconds || 10;
-  const ms = seconds * 1000;
+    const seconds = event.seconds || 10;
+    const ms = seconds * 1000;
 
-  const waitTimer = setTimeout(() => {
-    onTypingStop?.();
-  }, delay + ms);
+    const waitTimer = setTimeout(() => {
+      onTypingStop?.();
+    }, delay + ms);
 
-  timers.push(waitTimer);
-  return ms + (event.pauseAfterMs ?? 500);
-}
+    timers.push(waitTimer);
+    return ms + (event.pauseAfterMs ?? 500);
+  }
 
+  // ─── typing ──────────────────────────────────────────────────────────────
   if (event.type === "typing") {
     const duration = event.duration || 1000;
 
     const startTimer = setTimeout(() => {
-      onTypingStart?.({
-  speaker: event.speaker,
-  duration
-});
+      onTypingStart?.({ speaker: event.speaker, duration });
     }, delay);
 
     const stopTimer = setTimeout(() => {
@@ -127,165 +128,106 @@ function playSingleEvent({
     return duration + (event.pauseAfterMs ?? 300);
   }
 
-if (event.type === "message") {
-  const messageTimer = setTimeout(() => {
-    onTypingStop?.();
-
-    onMessage?.({
-      type: "message",
-      speaker: event.speaker,
-      sender: event.sender,
-      textKey: event.textKey,
-      fallbackText: event.text,
-      text: corruptTextBySignal(
-  resolveText(event, "textKey", "text", translate),
-  signalStrength
-),
-      tone: event.tone || event.mood || "calm"
-    });
-  }, delay);
-
-  timers.push(messageTimer);
-  const text =
-  resolveText(
-    event,
-    "textKey",
-    "text",
-    translate
-  ) || "";
-
-const readingTime =
-  Math.max(
-    1200,
-    text.length * 45
-  );
-
-return (
-  event.pauseAfterMs ??
-  readingTime
-);
-}
-
-if (event.type === "relationshipDialogue") {
-
-  const relationshipTimer =
-    setTimeout(() => {
-
+  // ─── message ─────────────────────────────────────────────────────────────
+  if (event.type === "message") {
+    const messageTimer = setTimeout(() => {
       onTypingStop?.();
 
-      const text =
-        resolveDialogue(
-          save,
-          event.variants
-        );
+      onMessage?.({
+        type: "message",
+        speaker: event.speaker,
+        sender: event.sender,
+        textKey: event.textKey,
+        fallbackText: event.text,
+        text: corruptTextBySignal(
+          resolveText(event, "textKey", "text", translate),
+          signalStrength
+        ),
+        tone: event.tone || event.mood || "calm"
+      });
+    }, delay);
+
+    timers.push(messageTimer);
+
+    const text = resolveText(event, "textKey", "text", translate) || "";
+    const readingTime = Math.max(1200, text.length * 45);
+
+    return event.pauseAfterMs ?? readingTime;
+  }
+
+  // ─── relationshipDialogue ─────────────────────────────────────────────────
+  if (event.type === "relationshipDialogue") {
+    const relationshipTimer = setTimeout(() => {
+      onTypingStop?.();
+
+      const text = resolveDialogue(save, event.variants);
 
       onMessage?.({
         type: "message",
         speaker: event.speaker,
         sender: event.sender,
         text,
-        tone:
-          event.tone ||
-          event.mood ||
-          "calm"
+        tone: event.tone || event.mood || "calm"
       });
-
     }, delay);
 
-  timers.push(
-    relationshipTimer
-  );
+    timers.push(relationshipTimer);
 
-const text =
-  resolveDialogue(
-    save,
-    event.variants
-  ) || "";
+    const text = resolveDialogue(save, event.variants) || "";
+    const readingTime = Math.max(1200, text.length * 45);
 
-const readingTime =
-  Math.max(
-    1200,
-    text.length * 45
-  );
+    return event.pauseAfterMs ?? readingTime;
+  }
 
-return (
-  event.pauseAfterMs ??
-  readingTime
-);
-}
+  // ─── corruptMessage ───────────────────────────────────────────────────────
+  if (event.type === "corruptMessage") {
+    const corruptTimer = setTimeout(() => {
+      onTypingStop?.();
 
-if (event.type === "corruptMessage") {
-  const corruptTimer = setTimeout(() => {
-    onTypingStop?.();
+      onMessage?.({
+        type: "corruptMessage",
+        speaker: event.speaker,
+        sender: event.sender,
+        textKey: event.textKey,
+        fallbackText: event.text,
+        text: resolveText(event, "textKey", "text", translate),
+        tone: "corrupt"
+      });
+    }, delay);
 
-    onMessage?.({
-      type: "corruptMessage",
-      speaker: event.speaker,
-      sender: event.sender,
-      textKey: event.textKey,
-      fallbackText: event.text,
-      text: resolveText(event, "textKey", "text", translate),
-      tone: "corrupt"
-    });
-  }, delay);
+    timers.push(corruptTimer);
 
-  timers.push(corruptTimer);
-  const text =
-  resolveText(
-    event,
-    "textKey",
-    "text",
-    translate
-  ) || "";
+    const text = resolveText(event, "textKey", "text", translate) || "";
+    const readingTime = Math.max(1500, text.length * 50);
 
-const readingTime =
-  Math.max(
-    1500,
-    text.length * 50
-  );
+    return event.pauseAfterMs ?? readingTime;
+  }
 
-return (
-  event.pauseAfterMs ??
-  readingTime
-);
-}
+  // ─── systemAlert ─────────────────────────────────────────────────────────
+  if (event.type === "systemAlert") {
+    const alertTimer = setTimeout(() => {
+      onTypingStop?.();
 
-if (event.type === "systemAlert") {
-  const alertTimer = setTimeout(() => {
-    onTypingStop?.();
+      onMessage?.({
+        type: "systemAlert",
+        speaker: event.speaker || "SYSTEM",
+        sender: "system",
+        textKey: event.textKey,
+        fallbackText: event.text,
+        text: resolveText(event, "textKey", "text", translate),
+        tone: "system"
+      });
+    }, delay);
 
-    onMessage?.({
-      type: "systemAlert",
-      speaker: event.speaker || "SYSTEM",
-      sender: "system",
-      textKey: event.textKey,
-      fallbackText: event.text,
-      text: resolveText(event, "textKey", "text", translate),
-      tone: "system"
-    });
-  }, delay);
+    timers.push(alertTimer);
 
-  timers.push(alertTimer);
-  const text =
-  resolveText(
-    event,
-    "textKey",
-    "text",
-    translate
-  ) || "";
+    const text = resolveText(event, "textKey", "text", translate) || "";
+    const readingTime = Math.max(1500, text.length * 50);
 
-const readingTime =
-  Math.max(
-    1500,
-    text.length * 50
-  );
+    return event.pauseAfterMs ?? readingTime;
+  }
 
-return (
-  event.pauseAfterMs ??
-  readingTime
-);
-}
-
+  // ─── image ────────────────────────────────────────────────────────────────
   if (event.type === "image") {
     const imageTimer = setTimeout(() => {
       const file = createFilePayload(event, "image", translate);
@@ -306,33 +248,18 @@ return (
         tags: file.tags
       });
 
-      onCollectFile?.({
-        ...file,
-        type: "image"
-      });
+      onCollectFile?.({ ...file, type: "image" });
     }, delay);
 
     timers.push(imageTimer);
-    const text =
-  resolveText(
-    event,
-    "textKey",
-    "text",
-    translate
-  ) || "";
 
-const readingTime =
-  Math.max(
-    1500,
-    text.length * 50
-  );
+    const text = resolveText(event, "textKey", "text", translate) || "";
+    const readingTime = Math.max(1500, text.length * 50);
 
-return (
-  event.pauseAfterMs ??
-  readingTime
-);
+    return event.pauseAfterMs ?? readingTime;
   }
 
+  // ─── file / log / map / crew ──────────────────────────────────────────────
   if (
     event.type === "file" ||
     event.type === "log" ||
@@ -361,6 +288,7 @@ return (
     return event.pauseAfterMs ?? 1000;
   }
 
+  // ─── puzzle ───────────────────────────────────────────────────────────────
   if (event.type === "puzzle") {
     const puzzleTimer = setTimeout(() => {
       onTypingStop?.();
@@ -371,6 +299,7 @@ return (
     return event.pauseAfterMs ?? 500;
   }
 
+  // ─── glitch ───────────────────────────────────────────────────────────────
   if (event.type === "glitch") {
     const duration = event.duration || 900;
 
@@ -387,6 +316,7 @@ return (
     return duration + (event.pauseAfterMs ?? 400);
   }
 
+  // ─── signalLost ───────────────────────────────────────────────────────────
   if (event.type === "signalLost") {
     const duration = event.duration || 3000;
 
@@ -410,43 +340,99 @@ return (
     return duration + (event.pauseAfterMs ?? 800);
   }
 
+  // ─── characterBusy ────────────────────────────────────────────────────────
   if (event.type === "characterBusy") {
+    const busyTimer = setTimeout(() => {
+      onTypingStop?.();
+      onGlitchStop?.();
 
-  const busyTimer = setTimeout(() => {
-    onTypingStop?.();
-    onGlitchStop?.();
+      onMessage?.({
+        type: "systemAlert",
+        speaker: "SYSTEM",
+        sender: "system",
+        text:
+          event.message ||
+          `[${event.character || "CHARACTER"} ${event.status || "UNAVAILABLE"}]`,
+        tone: event.tone || "danger"
+      });
 
-    onMessage?.({
-      type: "systemAlert",
-      speaker: "SYSTEM",
-      sender: "system",
-      text:
-        event.message ||
-        `[${event.character || "CHARACTER"} ${event.status || "UNAVAILABLE"}]`,
-      tone: event.tone || "danger"
-    });
+      onCharacterBusyStart?.({
+        id: event.id || `busy_${Date.now()}`,
+        character: event.character || "UNKNOWN",
+        status: event.status || "UNAVAILABLE",
+        durationMs: event.durationMs || 60000,
+        returnNodeId: event.returnNodeId,
+        returnEpisodeId: event.returnEpisodeId || null,
+        notificationTitle:
+          event.notificationTitle || "Incoming Transmission",
+        notificationBody:
+          event.notificationBody ||
+          `${event.character || "Someone"} has returned.`
+      });
+    }, delay);
 
-    onCharacterBusyStart?.({
-      id: event.id || `busy_${Date.now()}`,
-      character: event.character || "UNKNOWN",
-      status: event.status || "UNAVAILABLE",
-      durationMs: event.durationMs || 60000,
-      returnNodeId: event.returnNodeId,
-      returnEpisodeId: event.returnEpisodeId || null,
-      notificationTitle:
-        event.notificationTitle ||
-        "Incoming Transmission",
-      notificationBody:
-        event.notificationBody ||
-        `${event.character || "Someone"} has returned.`
-    });
-  }, delay);
+    timers.push(busyTimer);
+    return event.pauseAfterMs ?? 500;
+  }
 
-  timers.push(busyTimer);
+  // ─── loopReset ────────────────────────────────────────────────────────────
+  //
+  // Echo yakalandığında tetiklenir.
+  // Siyah ekran → dönen daire (eksik/kırık) → mesaj → checkpoint restore.
+  //
+  // JSON örneği:
+  // {
+  //   "type": "loopReset",
+  //   "loaderDurationMs": 4000,
+  //   "fadeInMs": 800,
+  //   "fadeOutMs": 600,
+  //   "loaderMessage": "DÖNGÜ 27 — YENİDEN BAŞLATILIYOR",
+  //   "subMessage": "Bellek sıfırlama protokolü aktif.",
+  //   "autoRestoreCheckpointAfterLoader": true,
+  //   "restoreCheckpointId": "ep03_cp01"
+  // }
+  //
+  // onLoopReset callback'i frontend'de şunları yapmalı:
+  //   1. fadeToBlack(fadeInMs)
+  //   2. LoopResetScreen göster (loaderMessage, subMessage, kırık daire)
+  //   3. loaderDurationMs kadar bekle
+  //   4. fadeFromBlack(fadeOutMs)
+  //   5. LoopResetScreen gizle
+  //   6. autoRestoreCheckpointAfterLoader true ise → restoreCheckpoint(restoreCheckpointId)
+  //
+  if (event.type === "loopReset") {
+    const fadeInMs = event.fadeInMs ?? 800;
+    const loaderDurationMs = event.loaderDurationMs ?? 4000;
+    const fadeOutMs = event.fadeOutMs ?? 600;
+    const totalDuration = fadeInMs + loaderDurationMs + fadeOutMs;
 
-  return event.pauseAfterMs ?? 500;
-}
+    const resetTimer = setTimeout(() => {
+      onTypingStop?.();
+      onGlitchStop?.();
 
+      onLoopReset?.({
+        style: event.style || "blackout_loader",
+        fadeInMs,
+        loaderDurationMs,
+        fadeOutMs,
+        loaderMessage:
+          event.loaderMessage || "DÖNGÜ — YENİDEN BAŞLATILIYOR",
+        subMessage:
+          event.subMessage || "Bellek sıfırlama protokolü aktif.",
+        autoRestoreCheckpointAfterLoader:
+          event.autoRestoreCheckpointAfterLoader ?? true,
+        restoreCheckpointId: event.restoreCheckpointId || null
+      });
+    }, delay);
+
+    timers.push(resetTimer);
+
+    // onComplete ÇALIŞMAMALI — loopReset kendi akışını yönetir.
+    // hasLoopReset kontrolü playNodeEvents'te yapılıyor.
+    return totalDuration + (event.pauseAfterMs ?? 0);
+  }
+
+  // ─── progressTask ─────────────────────────────────────────────────────────
   if (event.type === "progressTask") {
     const duration = event.duration || 6000;
 
@@ -496,6 +482,7 @@ return (
     return duration + (event.pauseAfterMs ?? 900);
   }
 
+  // ─── statChange ───────────────────────────────────────────────────────────
   if (event.type === "statChange") {
     const statTimer = setTimeout(() => {
       onStatChange?.(event.changes || {});
@@ -524,6 +511,7 @@ export function playNodeEvents({
   onProgressTaskStart,
   onProgressTaskEnd,
   onCharacterBusyStart,
+  onLoopReset,
   onComplete,
   save,
   signalStrength
@@ -532,30 +520,34 @@ export function playNodeEvents({
   let accumulatedDelay = 0;
   let maxBackgroundDelay = 0;
 
-  const hasCharacterBusy =
-  events.some(
-    event => event.type === "characterBusy"
+  // characterBusy VEYA loopReset varsa onComplete otomatik çalışmaz.
+  // Her iki event tipi de kendi akışını yönetir.
+  const hasBlockingEvent = events.some(
+    (event) =>
+      event.type === "characterBusy" ||
+      event.type === "loopReset"
   );
 
-const handlers = {
-  timers,
-  translate,
-  onTypingStart,
-  onTypingStop,
-  onMessage,
-  onGlitchStart,
-  onGlitchStop,
-  onSignalLost,
-  onSignalRestored,
-  onCharacterBusyStart,
-  onStatChange,
-  onCollectFile,
-  onPuzzleStart,
-  onProgressTaskStart,
-  onProgressTaskEnd,
-  save,
-  signalStrength
-};
+  const handlers = {
+    timers,
+    translate,
+    onTypingStart,
+    onTypingStop,
+    onMessage,
+    onGlitchStart,
+    onGlitchStop,
+    onSignalLost,
+    onSignalRestored,
+    onCharacterBusyStart,
+    onLoopReset,
+    onStatChange,
+    onCollectFile,
+    onPuzzleStart,
+    onProgressTaskStart,
+    onProgressTaskEnd,
+    save,
+    signalStrength
+  };
 
   events.forEach((event) => {
     if (event.type === "backgroundEvent") {
@@ -589,20 +581,15 @@ const handlers = {
 
   const finalDelay = Math.max(accumulatedDelay, maxBackgroundDelay);
 
-if (!hasCharacterBusy) {
-
-  const completeTimer =
-    setTimeout(() => {
-
+  if (!hasBlockingEvent) {
+    const completeTimer = setTimeout(() => {
       onTypingStop?.();
       onGlitchStop?.();
       onComplete?.();
-
     }, finalDelay + 1200);
 
-  timers.push(completeTimer);
-
-}
+    timers.push(completeTimer);
+  }
 
   return () => {
     timers.forEach(clearTimeout);
