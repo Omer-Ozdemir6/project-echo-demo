@@ -56,14 +56,16 @@ export default function PuzzleRenderer({
     );
   }
 
+  // 🚀 GÜNCELLEME: Breath Control Parametreleri ve onSubmit Köprüsü Revize Edildi
   if (puzzle.type === "breath_control") {
     return (
       <BreathControlMinigame
-        difficulty={puzzle.difficulty ?? 1}
-        hitsNeeded={puzzle.hitsNeeded ?? 3}
-        echoLabel={puzzle.echoLabel ?? "ECHO YAKIN"}
-        onSuccess={onSuccess}
-        onFail={onFail}
+        difficulty={Number(puzzle.difficulty) || 1}
+        hitsNeeded={Number(puzzle.hitsNeeded || puzzle.roundsNeeded || 3)}
+        echoLabel={puzzle.echoLabel || puzzle.echoDistance || "ECHO_PROXIMITY_WARN"}
+        // Motorun successNodeId / failureNodeId ayrımına gidebilmesi için boolean veya onay kodu paslanır
+        onSuccess={() => onSubmit(puzzle.acceptedAnswers?.[0] || true)}
+        onFail={() => onSubmit(false)}
       />
     );
   }
