@@ -1,28 +1,20 @@
 import { useEffect, useState, useMemo } from "react";
 import { getGameText } from "../i18n/gameText";
 
-function resolveConfigText(value, language = "en") {
-  if (typeof value === "string") return value;
-  if (value && typeof value === "object") {
-    return getGameText(value.textKey, value.text || "", language);
-  }
-  return "";
-}
-
 export default function SignalOverlay({ status, language = "en" }) {
   const [isVisible, setIsVisible] = useState(true);
   const [shouldRender, setShouldRender] = useState(false);
-  const [liveDb, setLiveDb] = useState(-14.2); // Anlık sinyal dalgalanma metriği
+  const [liveDb, setLiveDb] = useState(-14.2); // Telsiz rezonans dalgalanma metriği
 
   const isLost = status?.type === "lost";
   const isRestored = status?.type === "restored";
 
-  // Sinyal gücünü canlı simüle eden mikro döngü
+  // Telsiz sinyal gücünü canlı simüle eden mikro döngü
   useEffect(() => {
     if (!shouldRender || isLost) return;
     
     const dbInterval = setInterval(() => {
-      // Sinyal stabilken -12.0 ile -15.5 dB arasında gerçekçi mikro dalgalanma
+      // Sığınak derinliklerinde -12.0 ile -15.5 dB arasında gerçekçi analog dalgalanma
       setLiveDb((prev) => {
         const jitter = (Math.random() - 0.5) * 0.8;
         const next = prev + jitter;
@@ -44,15 +36,15 @@ export default function SignalOverlay({ status, language = "en" }) {
     setIsVisible(true);
 
     if (isLost) {
-      setLiveDb(-99.9); // Sinyal koptuğunda desibel tabana vurur (-Infinity)
+      setLiveDb(-99.9); // Sinyal koptuğunda desibel tabana vurur
     }
 
     if (isRestored) {
-      setLiveDb(-12.4); // Sinyal geri geldiğinde ideal değere oturur
+      setLiveDb(-12.4); // Sinyal geri geldiğinde ideal rezonansa oturur
       
       const fadeTimer = setTimeout(() => {
         setIsVisible(false);
-      }, 2200); // Oyuncunun durum loglarını okuması için süre hafifçe esnetildi
+      }, 2200);
 
       const removeTimer = setTimeout(() => {
         setShouldRender(false);
@@ -65,30 +57,30 @@ export default function SignalOverlay({ status, language = "en" }) {
     }
   }, [status, isRestored, isLost]);
 
-  // Tema Renk Yönetimi
+  // Antik Taş ve Mağara Atmosferi Tema Renk Yönetimi
   const theme = useMemo(() => {
     if (isLost) return {
-      border: "border-rose-600 shadow-[0_0_40px_rgba(225,29,72,0.15)]",
-      text: "text-rose-400",
-      accent: "text-rose-600",
-      badge: "bg-rose-950 text-rose-400 border-rose-800",
-      corner: "border-rose-500",
-      pulse: "animate-[screenGlitch_0.1s_infinite]"
+      border: "border-rose-950 shadow-[0_0_40px_rgba(220,38,38,0.1)]",
+      text: "text-rose-600",
+      accent: "text-rose-700",
+      badge: "bg-rose-950/40 text-rose-500 border-rose-900",
+      corner: "border-rose-700",
+      pulse: "animate-pulse"
     };
     if (isRestored) return {
-      border: "border-emerald-500 shadow-[0_0_40px_rgba(52,211,153,0.15)]",
-      text: "text-emerald-400",
-      accent: "text-emerald-600",
-      badge: "bg-emerald-950 text-emerald-400 border-emerald-800",
-      corner: "border-emerald-400",
+      border: "border-amber-900 shadow-[0_0_40px_rgba(245,158,11,0.1)]",
+      text: "text-amber-500",
+      accent: "text-amber-600",
+      badge: "bg-amber-950/40 text-amber-500 border-amber-900",
+      corner: "border-amber-600",
       pulse: "animate-pulse"
     };
     return {
-      border: "border-cyan-500",
-      text: "text-cyan-400",
-      accent: "text-cyan-600",
-      badge: "bg-cyan-950 text-cyan-400 border-cyan-800",
-      corner: "border-cyan-400",
+      border: "border-stone-800",
+      text: "text-stone-400",
+      accent: "text-stone-500",
+      badge: "bg-stone-900/40 text-stone-400 border-stone-800",
+      corner: "border-stone-700",
       pulse: "animate-pulse"
     };
   }, [isLost, isRestored]);
@@ -97,7 +89,7 @@ export default function SignalOverlay({ status, language = "en" }) {
 
   const headerText = getGameText(
     "signal.transmissionStatus",
-    language === "tr" ? "İLETİM DURUMU" : "TRANSMISSION STATUS",
+    language === "tr" ? "TELSİZ REZONANS DURUMU" : "RADIO FREQUENCY STATUS",
     language
   );
 
@@ -108,31 +100,31 @@ export default function SignalOverlay({ status, language = "en" }) {
         isVisible ? "opacity-100 scale-100" : "opacity-0 scale-[0.98] filter blur-md"
       ].join(" ")}
     >
-      {/* CSS Enjeksiyonu: Gerçekçi Analog Karlanma ve Parazit Dalga Efektleri */}
+      {/* CSS Enjeksiyonu: Yer Altı Analog Parazit ve Dalga Efektleri */}
       <style>{`
         @keyframes scanlineMove {
           0% { transform: translateY(-100%); }
           100% { transform: translateY(100%); }
         }
         .analog-noise {
-          background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.2), rgba(0,0,0,0.2) 1px, transparent 1px, transparent 3px);
-          animation: scanlineMove 8s linear infinite;
+          background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25) 1px, transparent 1px, transparent 4px);
+          animation: scanlineMove 10s linear infinite;
         }
         .analog-noise::before {
           content: " ";
           display: block;
           position: absolute;
           inset: 0;
-          background: rgba(244, 63, 94, 0.02);
+          background: rgba(185, 28, 28, 0.03);
           opacity: ${isLost ? 1 : 0};
         }
       `}</style>
 
-      {/* Arka Plan Cam Küre Filtresi */}
+      {/* Arka Plan Mağara/Sığınak Karartma Filtresi */}
       <div
         className={[
           "absolute inset-0 transition-colors duration-700",
-          isLost ? "bg-rose-950/25 backdrop-blur-[2px]" : isRestored ? "bg-emerald-950/12 backdrop-blur-xs" : "bg-black/40"
+          isLost ? "bg-rose-950/20 backdrop-blur-[1px]" : isRestored ? "bg-amber-950/5 backdrop-blur-xs" : "bg-black/50"
         ].join(" ")}
       />
 
@@ -142,51 +134,51 @@ export default function SignalOverlay({ status, language = "en" }) {
       {/* ANA PANEL */}
       <div
         className={[
-          "relative border-2 p-6 min-w-[300px] sm:min-w-[400px] rounded-sm bg-black/95 shadow-2xl backdrop-blur-md transition-all duration-300",
+          "relative border p-6 min-w-[300px] sm:min-w-[380px] rounded-xs bg-neutral-950/98 shadow-2xl backdrop-blur-md transition-all duration-300",
           theme.border, theme.pulse
         ].join(" ")}
       >
-        {/* Endüstriyel Köşe Braketleri */}
-        <div className={`absolute -top-1.5 -left-1.5 h-3.5 w-3.5 border-t-4 border-l-4 ${theme.corner}`} />
-        <div className={`absolute -bottom-1.5 -right-1.5 h-3.5 w-3.5 border-b-4 border-r-4 ${theme.corner}`} />
+        {/* Endüstriyel Taş/Metal Köşe Braketleri */}
+        <div className={`absolute -top-1 -left-1 h-3 w-3 border-t-2 border-l-2 ${theme.corner}`} />
+        <div className={`absolute -bottom-1 -right-1 h-3 w-3 border-b-2 border-r-2 ${theme.corner}`} />
 
         {/* Panel Üst Küçük Süs Verileri */}
-        <div className="flex items-center justify-between border-b border-neutral-900 pb-2.5 mb-4 text-[9px] text-neutral-500 tracking-widest font-bold">
-          <span>NET_TRANS_RELAY_v2.8</span>
+        <div className="flex items-center justify-between border-b border-stone-900 pb-2.5 mb-4 text-[8px] text-stone-600 tracking-widest font-black uppercase">
+          <span>FREK_RELAY_v2.8</span>
           <span className={theme.text}>
-            {isLost ? "DB_GAIN: -INF" : `DB_GAIN: ${liveDb.toFixed(1)} dB`}
+            {isLost ? "GAIN: -INF" : `GAIN: ${liveDb.toFixed(1)} dB`}
           </span>
         </div>
 
         {/* Merkez Gövde */}
         <div className="text-center relative">
-          {/* Arka Plan Büyük Şematik İkon Su Damgası */}
-          <div className={`absolute inset-0 flex items-center justify-center opacity-[0.02] text-5xl font-black ${theme.text}`}>
-            {isLost ? "ERR" : "SYNC"}
+          {/* Arka Plan Filigranı */}
+          <div className={`absolute inset-0 flex items-center justify-center opacity-[0.015] text-4xl font-black ${theme.text}`}>
+            {isLost ? "ERR" : "LINK"}
           </div>
 
-          <div className={`mb-2 text-[9px] tracking-[0.45em] uppercase font-black ${theme.accent}`}>
+          <div className={`mb-2 text-[8px] tracking-[0.4em] uppercase font-black ${theme.accent}`}>
             {headerText}
           </div>
 
           {/* Dinamik Durum Mesajı */}
           <p className={[
-            "text-center tracking-[0.18em] uppercase font-black text-xs sm:text-sm my-3 font-mono",
+            "text-center tracking-[0.15em] uppercase font-bold text-xs my-3 font-mono",
             theme.text,
-            isLost ? "drop-shadow-[0_0_12px_rgba(244,63,94,0.6)]" : "drop-shadow-[0_0_12px_rgba(52,211,153,0.4)]"
+            isLost ? "drop-shadow-[0_0_10px_rgba(220,38,38,0.4)]" : "drop-shadow-[0_0_10px_rgba(245,158,11,0.25)]"
           ].join(" ")}>
             {isLost ? `[ ☠ ] ${status.message}` : isRestored ? `[ ✓ ] ${status.message}` : status.message}
           </p>
         </div>
 
-        {/* Alt Sinyal Durum Çubuğu (Klinik Grafik) */}
-        <div className="mt-4 pt-2.5 border-t border-neutral-900 flex items-center justify-between text-[9px] text-neutral-500 tracking-wider">
+        {/* Alt Sinyal Durum Çubuğu */}
+        <div className="mt-4 pt-2.5 border-t border-stone-900 flex items-center justify-between text-[8px] text-stone-600 tracking-widest font-bold uppercase">
           <div className="flex items-center gap-1.5">
-            <span className={`w-1.5 h-1.5 rounded-full ${isLost ? "bg-rose-500 animate-ping" : "bg-emerald-400"}`} />
-            <span className="uppercase">{isLost ? "LINK_TERMINATED" : "STREAM_RE_ESTABLISHED"}</span>
+            <span className={`w-1 h-1 rounded-full ${isLost ? "bg-rose-600 animate-ping" : "bg-amber-500"}`} />
+            <span>{isLost ? "HAT_KESİLDİ" : "FREKANS_YAKALANDI"}</span>
           </div>
-          <span className="font-mono opacity-60">
-            {isLost ? "ADDR_FAULT_0x04" : "RE-ROUTING_COMPLETE"}
+          <span className="font-mono opacity-50">
+            {isLost ? "SIGNAL_ERR_0x04" : "RE_ROUTING_OK"}
           </span>
         </div>
       </div>

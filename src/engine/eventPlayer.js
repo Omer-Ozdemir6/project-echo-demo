@@ -40,7 +40,8 @@ function corruptTextBySignal(text = "", signalStrength = 100) {
       if (char === " " || char === "\n") return char;
       if (Math.random() > corruptionRate) return char;
 
-      return Math.random() > 0.5 ? "-" : "█";
+      // Sığınak akustik paraziti için sismik blok karakterleri
+      return Math.random() > 0.5 ? "░" : "█";
     })
     .join("");
 }
@@ -55,7 +56,7 @@ function createFilePayload(event, fallbackType = "file", translate) {
       `${fileType}_${event.title || event.src || Date.now()}`,
     type: fileType,
     title:
-      resolveText(event, "titleKey", "title", translate) || "[INCOMING FILE]",
+      resolveText(event, "titleKey", "title", translate) || "[GELEN BULGU AKTI]",
     caption:
       resolveText(event, "captionKey", "caption", translate) ||
       resolveText(event, "descriptionKey", "description", translate),
@@ -94,12 +95,12 @@ function playSingleEvent({
 }) {
   if (!event || typeof event !== "object") return 0;
 
-  // ─── pause ───────────────────────────────────────────────────────────────
+  // ─── duraklatma (pause) ───────────────────────────────────────────────────
   if (event.type === "pause") {
     return event.duration || 1000;
   }
 
-  // ─── realTimeWait ─────────────────────────────────────────────────────────
+  // ─── gerçek zamanlı bekleme (realTimeWait) ────────────────────────────────
   if (event.type === "realTimeWait") {
     const seconds = event.seconds || 10;
     const ms = seconds * 1000;
@@ -112,7 +113,7 @@ function playSingleEvent({
     return ms + (event.pauseAfterMs ?? 500);
   }
 
-  // ─── typing ──────────────────────────────────────────────────────────────
+  // ─── yazıyor efekti (typing) ──────────────────────────────────────────────
   if (event.type === "typing") {
     const duration = event.duration || 1000;
 
@@ -128,7 +129,7 @@ function playSingleEvent({
     return duration + (event.pauseAfterMs ?? 300);
   }
 
-  // ─── message ─────────────────────────────────────────────────────────────
+  // ─── standart diyalog mesajı (message) ────────────────────────────────────
   if (event.type === "message") {
     const messageTimer = setTimeout(() => {
       onTypingStop?.();
@@ -155,7 +156,7 @@ function playSingleEvent({
     return event.pauseAfterMs ?? readingTime;
   }
 
-  // ─── relationshipDialogue ─────────────────────────────────────────────────
+  // ─── ilişki / psikolojik duruma duyarlı diyalog (relationshipDialogue) ───
   if (event.type === "relationshipDialogue") {
     const relationshipTimer = setTimeout(() => {
       onTypingStop?.();
@@ -179,7 +180,7 @@ function playSingleEvent({
     return event.pauseAfterMs ?? readingTime;
   }
 
-  // ─── corruptMessage ───────────────────────────────────────────────────────
+  // ─── parazitli / ele geçirilmiş mesaj (corruptMessage) ────────────────────
   if (event.type === "corruptMessage") {
     const corruptTimer = setTimeout(() => {
       onTypingStop?.();
@@ -203,14 +204,14 @@ function playSingleEvent({
     return event.pauseAfterMs ?? readingTime;
   }
 
-  // ─── systemAlert ─────────────────────────────────────────────────────────
+  // ─── sığınak sistem uyarısı (systemAlert) ─────────────────────────────────
   if (event.type === "systemAlert") {
     const alertTimer = setTimeout(() => {
       onTypingStop?.();
 
       onMessage?.({
         type: "systemAlert",
-        speaker: event.speaker || "SYSTEM",
+        speaker: event.speaker || "SİSTEM",
         sender: "system",
         textKey: event.textKey,
         fallbackText: event.text,
@@ -227,7 +228,7 @@ function playSingleEvent({
     return event.pauseAfterMs ?? readingTime;
   }
 
-  // ─── image ────────────────────────────────────────────────────────────────
+  // ─── görsel / fotoğraf aktarımı (image) ───────────────────────────────────
   if (event.type === "image") {
     const imageTimer = setTimeout(() => {
       const file = createFilePayload(event, "image", translate);
@@ -259,7 +260,7 @@ function playSingleEvent({
     return event.pauseAfterMs ?? readingTime;
   }
 
-  // ─── file / log / map / crew ──────────────────────────────────────────────
+  // ─── bulgu / yazıt / harita kaydı (file / log / map / crew) ────────────────
   if (
     event.type === "file" ||
     event.type === "log" ||
@@ -273,11 +274,11 @@ function playSingleEvent({
 
       onMessage?.({
         type: "systemAlert",
-        speaker: event.speaker || "SYSTEM",
+        speaker: event.speaker || "SİSTEM",
         sender: "system",
         text:
           resolveText(event, "messageKey", "message", translate) ||
-          `[${file.title} ARCHIVED TO DATA BANK]`,
+          `[${file.title} BULGU BANKASINA ARŞİVLENDİ]`,
         tone: "system"
       });
 
@@ -288,7 +289,7 @@ function playSingleEvent({
     return event.pauseAfterMs ?? 1000;
   }
 
-  // ─── puzzle ───────────────────────────────────────────────────────────────
+  // ─── rezonans mühür tetiklenmesi (puzzle) ──────────────────────────────────
   if (event.type === "puzzle") {
     const puzzleTimer = setTimeout(() => {
       onTypingStop?.();
@@ -299,7 +300,7 @@ function playSingleEvent({
     return event.pauseAfterMs ?? 500;
   }
 
-  // ─── glitch ───────────────────────────────────────────────────────────────
+  // ─── anlık ekran / telsiz yırtılması (glitch) ──────────────────────────────
   if (event.type === "glitch") {
     const duration = event.duration || 900;
 
@@ -316,7 +317,7 @@ function playSingleEvent({
     return duration + (event.pauseAfterMs ?? 400);
   }
 
-  // ─── signalLost ───────────────────────────────────────────────────────────
+  // ─── sinyal kaybı and frekans arama (signalLost) ───────────────────────────
   if (event.type === "signalLost") {
     const duration = event.duration || 3000;
 
@@ -325,14 +326,14 @@ function playSingleEvent({
       onGlitchStop?.();
       onSignalLost?.(
         resolveText(event, "messageKey", "message", translate) ||
-          "[SIGNAL LOST]"
+          "[SİNYAL KESİLDİ]"
       );
     }, delay);
 
     const restoredTimer = setTimeout(() => {
       onSignalRestored?.(
         resolveText(event, "restoreMessageKey", "restoreMessage", translate) ||
-          "[SIGNAL RESTORED]"
+          "[FREKANS YAKALANDI]"
       );
     }, delay + duration);
 
@@ -340,7 +341,7 @@ function playSingleEvent({
     return duration + (event.pauseAfterMs ?? 800);
   }
 
-  // ─── characterBusy ────────────────────────────────────────────────────────
+  // ─── kaşif meşgul / telsiz ulaşılamaz modu (characterBusy) ──────────────────
   if (event.type === "characterBusy") {
     const busyTimer = setTimeout(() => {
       onTypingStop?.();
@@ -348,26 +349,26 @@ function playSingleEvent({
 
       onMessage?.({
         type: "systemAlert",
-        speaker: "SYSTEM",
+        speaker: "SİSTEM",
         sender: "system",
         text:
           event.message ||
-          `[${event.character || "CHARACTER"} ${event.status || "UNAVAILABLE"}]`,
+          `[${event.character || "KAŞİF"} HATTA DEĞİL: ${event.status || "ULAŞILAMAZ"}]`,
         tone: event.tone || "danger"
       });
 
       onCharacterBusyStart?.({
         id: event.id || `busy_${Date.now()}`,
-        character: event.character || "UNKNOWN",
-        status: event.status || "UNAVAILABLE",
+        character: event.character || "MEÇHUL",
+        status: event.status || "ULAŞILAMAZ",
         durationMs: event.durationMs || 60000,
         returnNodeId: event.returnNodeId,
         returnEpisodeId: event.returnEpisodeId || null,
         notificationTitle:
-          event.notificationTitle || "Incoming Transmission",
+          event.notificationTitle || "Gelen Telsiz Çağrısı",
         notificationBody:
           event.notificationBody ||
-          `${event.character || "Someone"} has returned.`
+          `${event.character || "Özne"} rezonans alanına geri döndü.`
       });
     }, delay);
 
@@ -375,31 +376,7 @@ function playSingleEvent({
     return event.pauseAfterMs ?? 500;
   }
 
-  // ─── loopReset ────────────────────────────────────────────────────────────
-  //
-  // Echo yakalandığında tetiklenir.
-  // Siyah ekran → dönen daire (eksik/kırık) → mesaj → checkpoint restore.
-  //
-  // JSON örneği:
-  // {
-  //   "type": "loopReset",
-  //   "loaderDurationMs": 4000,
-  //   "fadeInMs": 800,
-  //   "fadeOutMs": 600,
-  //   "loaderMessage": "DÖNGÜ 27 — YENİDEN BAŞLATILIYOR",
-  //   "subMessage": "Bellek sıfırlama protokolü aktif.",
-  //   "autoRestoreCheckpointAfterLoader": true,
-  //   "restoreCheckpointId": "ep03_cp01"
-  // }
-  //
-  // onLoopReset callback'i frontend'de şunları yapmalı:
-  //   1. fadeToBlack(fadeInMs)
-  //   2. LoopResetScreen göster (loaderMessage, subMessage, kırık daire)
-  //   3. loaderDurationMs kadar bekle
-  //   4. fadeFromBlack(fadeOutMs)
-  //   5. LoopResetScreen gizle
-  //   6. autoRestoreCheckpointAfterLoader true ise → restoreCheckpoint(restoreCheckpointId)
-  //
+  // ─── hafıza / döngü sıfırlanması (loopReset) ──────────────────────────────
   if (event.type === "loopReset") {
     const fadeInMs = event.fadeInMs ?? 800;
     const loaderDurationMs = event.loaderDurationMs ?? 4000;
@@ -416,9 +393,9 @@ function playSingleEvent({
         loaderDurationMs,
         fadeOutMs,
         loaderMessage:
-          event.loaderMessage || "DÖNGÜ — YENİDEN BAŞLATILIYOR",
+          event.loaderMessage || "DÖNGÜ // REZONANS YENİDEN BAŞLATILIYOR",
         subMessage:
-          event.subMessage || "Bellek sıfırlama protokolü aktif.",
+          event.subMessage || "Telsiz frekans ve bellek sıfırlama protokolü aktif.",
         autoRestoreCheckpointAfterLoader:
           event.autoRestoreCheckpointAfterLoader ?? true,
         restoreCheckpointId: event.restoreCheckpointId || null
@@ -426,13 +403,10 @@ function playSingleEvent({
     }, delay);
 
     timers.push(resetTimer);
-
-    // onComplete ÇALIŞMAMALI — loopReset kendi akışını yönetir.
-    // hasLoopReset kontrolü playNodeEvents'te yapılıyor.
     return totalDuration + (event.pauseAfterMs ?? 0);
   }
 
-  // ─── progressTask ─────────────────────────────────────────────────────────
+  // ─── sismik analiz / arka plan süreci (progressTask) ──────────────────────
   if (event.type === "progressTask") {
     const duration = event.duration || 6000;
 
@@ -444,7 +418,7 @@ function playSingleEvent({
         id: event.id || `progress_${Date.now()}`,
         title:
           resolveText(event, "titleKey", "title", translate) ||
-          "SYSTEM PROCESS",
+          "SİSMİK ANALİZ SÜRECİ",
         subtitle: resolveText(event, "subtitleKey", "subtitle", translate),
         duration,
         completeText: resolveText(
@@ -470,7 +444,7 @@ function playSingleEvent({
       if (completeText) {
         onMessage?.({
           type: "systemAlert",
-          speaker: event.speaker || "SYSTEM",
+          speaker: event.speaker || "SİSTEM",
           sender: "system",
           text: completeText,
           tone: "system"
@@ -482,7 +456,7 @@ function playSingleEvent({
     return duration + (event.pauseAfterMs ?? 900);
   }
 
-  // ─── statChange ───────────────────────────────────────────────────────────
+  // ─── istatistik değişim tetikleyicisi (statChange) ──────────────────────────
   if (event.type === "statChange") {
     const statTimer = setTimeout(() => {
       onStatChange?.(event.changes || {});
@@ -520,8 +494,6 @@ export function playNodeEvents({
   let accumulatedDelay = 0;
   let maxBackgroundDelay = 0;
 
-  // characterBusy VEYA loopReset varsa onComplete otomatik çalışmaz.
-  // Her iki event tipi de kendi akışını yönetir.
   const hasBlockingEvent = events.some(
     (event) =>
       event.type === "characterBusy" ||

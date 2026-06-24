@@ -4,11 +4,11 @@ export default function LogoScreen({ gameTitle = "PROJECT ECHO", onComplete }) {
   const [progress, setProgress] = useState(0);
   const [blackout, setBlackout] = useState(false);
   const [glitchActive, setGlitchActive] = useState(false);
-  const [systemLog, setSystemLog] = useState("INITIALIZING HARMONIC RECEIVER...");
+  const [systemLog, setSystemLog] = useState("HARMONİK ALICI BAŞLATILIYOR...");
 
   const canvasRef = useRef(null);
 
-  // 1. Dinamik Arka Plan Sinyal Dalgalanması (Canvas)
+  // 1. Dinamik Yer Altı Sismik ve Frekans Dalgalanması (Canvas)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -25,21 +25,21 @@ export default function LogoScreen({ gameTitle = "PROJECT ECHO", onComplete }) {
 
     const draw = () => {
       frame++;
-      ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+      ctx.fillStyle = "rgba(5, 5, 5, 0.18)"; // Zifiri taş karanlığı
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const midY = canvas.height / 2;
-      // İlerleme arttıkça parazit azalır, sinyal daha düzgün bir sinüse dönüşür
+      // Frekans kilitlendikçe parazit azalır, sismik dalga stabil bir analoga dönüşür
       const noiseSeverity = Math.max(2, (100 - progress) * 0.4);
 
       ctx.beginPath();
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 1.2;
       ctx.strokeStyle = progress >= 100 
-        ? `rgba(52, 211, 153, ${Math.random() * 0.3})` // Emerald Yeşil
-        : `rgba(34, 211, 238, ${0.08 + Math.random() * 0.08})`; // Cyan
+        ? `rgba(245, 158, 11, 0.25)` // Stabil Kehribar Rezonansı
+        : `rgba(120, 113, 108, ${0.08 + Math.random() * 0.08})`; // Loş Taş Rengi Parazit
 
       for (let x = 0; x < canvas.width; x += 4) {
-        const sine = Math.sin(x * 0.015 + frame * 0.1) * 30;
+        const sine = Math.sin(x * 0.015 + frame * 0.08) * 25;
         const noise = (Math.random() - 0.5) * noiseSeverity;
         
         if (x === 0) ctx.moveTo(x, midY + sine + noise);
@@ -57,31 +57,29 @@ export default function LogoScreen({ gameTitle = "PROJECT ECHO", onComplete }) {
     };
   }, [progress]);
 
-  // 2. Mikro Dalgalanmalı Sinyal İlerlemesi ve Dinamik Log Akışı
+  // 2. Mikro Dalgalanmalı Sinyal İlerlemesi ve Dinamik Sığınak Log Akışı
   useEffect(() => {
     let currentProgress = 0;
 
     const logs = [
-      { p: 15, text: "PROBING SUBCARRIER FREQUENCIES..." },
-      { p: 40, text: "ESTABLISHING HANDSHAKE PROTOCOL [A12-77]..." },
-      { p: 65, text: "DECRYPTING NURAL FEED STREAM..." },
-      { p: 85, text: "SYNCHRONIZING BUFFER MEMORY CORE..." },
-      { p: 100, text: "TERMINAL CONNECTION ONLINE." }
+      { p: 15, text: "YERALTI ALT TAŞIYICI FREKANSLARI TARANIYOR..." },
+      { p: 40, text: "TELSİZ KÖPRÜSÜ FREKANS PROTOKOLÜ BAŞLATILDI..." },
+      { p: 65, text: "AKUSTİK YANKI VE PARÇALANMIŞ VERİ AYRIŞTIRILIYOR..." },
+      { p: 85, text: "TELSİZ ÖN BELLEK REZONANSI EŞLEŞTİRİLİYOR..." },
+      { p: 100, text: "YER ALTI SİNYAL BAĞLANTISI AKTİF." }
     ];
 
     const nextStep = () => {
       if (currentProgress >= 100) return;
 
-      // Sabit adımlar yerine organik, değişken artışlar (Organik yükleme hissi)
+      // Değişken artışlarla analog yükleme hissi
       const increment = Math.floor(Math.random() * 8) + 4; 
       currentProgress = Math.min(100, currentProgress + increment);
       setProgress(currentProgress);
 
-      // İlerlemeye göre alt terminal logunu güncelle
       const matchingLog = logs.find(l => currentProgress <= l.p);
       if (matchingLog) setSystemLog(matchingLog.text);
 
-      // Rastgele gecikmelerle bir sonraki adımı tetikle (Jitter efekti)
       const nextDelay = Math.floor(Math.random() * 250) + 150;
       setTimeout(nextStep, nextDelay);
     };
@@ -90,21 +88,20 @@ export default function LogoScreen({ gameTitle = "PROJECT ECHO", onComplete }) {
     return () => clearTimeout(startTimeout);
   }, []);
 
-  // 3. Aşırı Yüklenme (Glitch Burst) ve Blackout Geçiş Yönetimi
+  // 3. Aşırı Yüklenme (Telsiz Parazit Patlaması) ve Blackout Yönetimi
   useEffect(() => {
     if (progress < 100) return;
 
-    // Sinyal yakalandığı an ekranda anlık patlama/yırtılma efekti tetiklenir
     setGlitchActive(true);
 
     const glitchTimeout = setTimeout(() => {
       setGlitchActive(false);
       setBlackout(true);
-    }, 350); // Glitch patlama süresi
+    }, 350);
 
     const completeTimeout = setTimeout(() => {
       onComplete?.();
-    }, 1200); // Toplam kararma ve ana ekrana geçiş süresi optimize edildi (Sıkmamak adına)
+    }, 1200);
 
     return () => {
       clearTimeout(glitchTimeout);
@@ -127,65 +124,65 @@ export default function LogoScreen({ gameTitle = "PROJECT ECHO", onComplete }) {
   return (
     <main 
       className={[
-        "relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-black font-mono select-none text-cyan-50",
-        glitchActive ? "animate-[screenGlitch_0.05s_infinite]" : "animate-[flicker_5s_infinite]"
+        "relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-black font-mono select-none text-stone-200",
+        glitchActive ? "animate-[screenGlitch_0.05s_infinite]" : ""
       ].join(" ")}
     >
-      {/* Canvas Sinyal Çizgileri */}
+      {/* Sismik Sinyal Çizgileri */}
       <canvas ref={canvasRef} className="absolute inset-0 z-0 pointer-events-none opacity-80" />
 
       {/* CRT Tarama Perdeleri */}
-      <div className="pointer-events-none fixed inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.012),rgba(255,255,255,0.012)_2px,transparent_2px,transparent_5px)] opacity-40 shadow-[inset_0_0_80px_rgba(0,0,0,0.85)]" />
-      <div className={`pointer-events-none absolute inset-0 z-10 transition-colors duration-700 ${isComplete ? 'bg-[radial-gradient(circle_at_center,rgba(52,211,153,0.04),transparent_60%)]' : 'bg-[radial-gradient(circle_at_center,rgba(8,145,178,0.08),transparent_65%)]'}`} />
+      <div className="pointer-events-none fixed inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.01),rgba(255,255,255,0.01)_2px,transparent_2px,transparent_5px)] opacity-25 shadow-[inset_0_0_80px_rgba(0,0,0,0.95)]" />
+      <div className={`pointer-events-none absolute inset-0 z-10 transition-colors duration-700 ${isComplete ? 'bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.03),transparent_60%)]' : 'bg-[radial-gradient(circle_at_center,rgba(120,113,108,0.02),transparent_65%)]'}`} />
 
       {/* Ana İçerik Grubu */}
       <div className="relative z-20 flex flex-col items-center">
         
-        {/* Merkez Nöral Sinyal Logosu */}
+        {/* Merkez Telsiz Sinyal Logosu */}
         <div 
           className={[
-            "grid h-48 w-48 place-items-center rounded-full border border-cyan-500/30 text-center text-xs tracking-[0.5em] font-black uppercase transition-all duration-500 relative",
+            "grid h-44 w-44 place-items-center rounded-full border text-center text-[11px] tracking-[0.4em] font-bold uppercase transition-all duration-500 relative",
             isComplete 
-              ? "border-emerald-500 text-emerald-400 shadow-[0_0_40px_rgba(52,211,153,0.25)]" 
-              : "border-cyan-400 text-cyan-300 shadow-[0_0_30px_rgba(34,211,238,0.2)] animate-pulse"
+              ? "border-amber-600 text-amber-500 shadow-[0_0_35px_rgba(245,158,11,0.25)]" 
+              : "border-stone-800 text-stone-400 shadow-[0_0_20px_rgba(0,0,0,0.8)] animate-pulse"
           ].join(" ")}
         >
-          {/* İç Dönen Dekoratif Halka */}
-          <div className={`absolute inset-1.5 border border-dashed rounded-full opacity-20 ${isComplete ? 'border-emerald-400 animate-spin' : 'border-cyan-400 animate-[spin_30s_linear_infinite]'}`} />
+          {/* İç Dönen Dekoratif Rezonans Halkası */}
+          <div className={`absolute inset-2 border border-dashed rounded-full opacity-10 ${isComplete ? 'border-amber-500 animate-spin' : 'border-stone-600 animate-[spin_40s_linear_infinite]'}`} />
           
-          <span className="pl-2 z-10">{gameTitle}</span>
+          <span className="pl-1.5 z-10 font-bold tracking-[0.3em] uppercase">{gameTitle}</span>
         </div>
 
         {/* Durum Gösterge Paneli */}
         <div className="mt-12 text-center w-72">
-          <p className={`text-[9px] tracking-[0.4em] font-bold uppercase transition-colors duration-300 ${isComplete ? "text-emerald-400" : "text-cyan-400/70"}`}>
-            {isComplete ? "// SIGNAL_STABLE" : "// ACQUIRING_RELAY_STREAM"}
+          <p className={`text-[8px] tracking-[0.35em] font-black uppercase transition-colors duration-300 ${isComplete ? "text-amber-500" : "text-stone-600"}`}>
+            {isComplete ? "// SİNYAL_SABİTLENDİ" : "// REZONANS_AKIŞI_ARANIYOR"}
           </p>
 
-          {/* Klinik Matrix Yükleme Kutusu */}
-          <div className={`mt-4 border bg-black/80 px-4 py-3.5 font-mono text-xs tracking-[0.2em] transition-all duration-300 rounded ${isComplete ? 'border-emerald-950 shadow-[0_0_20px_rgba(52,211,153,0.05)]' : 'border-cyan-950/40 shadow-[0_0_15px_rgba(34,211,238,0.03)]'}`}>
+          {/* Antik Yükleme Çerçevesi */}
+          <div className={`mt-4 border bg-neutral-950 px-4 py-3.5 font-mono text-xs tracking-[0.15em] transition-all duration-300 rounded-xs ${isComplete ? 'border-amber-950 shadow-[0_0_20px_rgba(245,158,11,0.03)]' : 'border-stone-900'}`}>
             <div className="flex items-center justify-between">
-              <span className={isComplete ? "text-emerald-500" : "text-cyan-500/50"}>&gt;</span>
-              <span className={`font-light ${isComplete ? 'text-emerald-400/80' : 'text-cyan-200/70'}`}>{bar}</span>
-              <span className={`w-10 text-right font-bold ${isComplete ? "text-emerald-400" : "text-cyan-300"}`}>
-                {progress}%
+              <span className={isComplete ? "text-amber-600 font-bold" : "text-stone-700"}>&gt;</span>
+              <span className={`font-light tracking-normal ${isComplete ? 'text-amber-500/70' : 'text-stone-600'}`}>{bar}</span>
+              <span className={`w-10 text-right font-mono font-bold ${isComplete ? "text-amber-500" : "text-stone-500"}`}>
+                %{progress}
               </span>
             </div>
           </div>
 
-          {/* Dinamik Altyazı / Sistem Logu */}
-          <p className="mt-3.5 h-4 text-[8px] tracking-[0.18em] text-neutral-500 font-mono uppercase truncate">
+          {/* Dinamik Altyazı / Telsiz Logu */}
+          <p className="mt-3.5 h-4 text-[8px] tracking-[0.15em] text-stone-600 font-mono uppercase truncate font-bold m-0">
             {systemLog}
           </p>
         </div>
       </div>
 
-      {/* Sağ Üst Köşe: Sistem İstatistik Süslemesi */}
-      <div className="absolute top-6 right-6 hidden sm:block text-right text-[8px] text-neutral-600 tracking-widest leading-relaxed">
-        <div>SYS_RELAY: ACTIVE</div>
-        <div>BAND_FREQ: 1420.4 MHz</div>
-        <div className={isComplete ? "text-emerald-600" : "text-cyan-700"}>
-          STATUS: {isComplete ? "CONNECTED" : "SEARCHING"}
+      {/* Sağ Üst Köşe: Telsiz İstasyon İstatistik Süslemesi */}
+      <div className="absolute top-6 right-6 hidden sm:block text-right text-[8px] text-stone-600 tracking-widest leading-relaxed font-black uppercase">
+        <div>KOLON_BAĞLANTI: AKTİF</div>
+        <div>FREKANS_BANDI: 1420.4 MHz</div>
+        <div className={isComplete ? "text-amber-600" : "text-stone-700"}>
+          DURUM: {isComplete ? "BAĞLANDI" : "ARANIYOR"}
         </div>
       </div>
     </main>

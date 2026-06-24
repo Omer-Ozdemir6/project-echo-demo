@@ -44,33 +44,33 @@ export default function TerminalScreen({
   const busyState = gameState?.busyState || null;
   const isBusyActive = Boolean(busyState?.busyUntil) && Date.now() < busyState.busyUntil;
 
-  const busyCharacter = busyState?.character || "UNKNOWN";
-  const busyStatus = busyState?.status || "UNAVAILABLE";
+  const busyCharacter = busyState?.character || "JONES";
+  const busyStatus = busyState?.status || "BUSY";
 
-  const busyTitle = busyState?.displayText || busyState?.message || `[${busyCharacter} ${busyStatus}]`;
+  const busyTitle = busyState?.displayText || busyState?.message || `[${busyCharacter} — ${busyStatus}]`;
 
   const terminalTitle = getGameText(
     config?.terminalTitleKey,
-    config?.terminalTitle || "ECHO COMMAND",
+    config?.terminalTitle || "KATMAN_FREKANS_KONTROL",
     language
   );
 
   const terminalSubtitle = getGameText(
     config?.terminalSubtitleKey,
-    config?.terminalSubtitle || "REMOTE OPERATIONS TERMINAL",
+    config?.terminalSubtitle || "UZAKTAN_ARKEOLOJİK_SİNYAL_MASASI",
     language
   );
 
   const collectedFiles = gameState.collectedFiles || [];
   const unreadFileCount = collectedFiles.filter((file) => file.isNew).length;
 
-  const connectionLabel = getGameText("status.connection", language === "tr" ? "BAĞLANTI" : "LINK", language);
-  const signalLabel = getGameText("status.signal", language === "tr" ? "SİNYAL" : "SIGNAL", language);
+  const connectionLabel = getGameText("status.connection", language === "tr" ? "TELSİZ_HATTI" : "RADIO_LINK", language);
+  const signalLabel = getGameText("status.signal", language === "tr" ? "RESONANS" : "RESONANCE", language);
 
   const connectionValue =
     signalStatus?.type === "lost"
-      ? getGameText("status.lost", language === "tr" ? "KOPTU" : "LOST", language)
-      : getGameText("status.active", language === "tr" ? "AKTİF" : "ACTIVE", language);
+      ? getGameText("status.lost", language === "tr" ? "KESİLDİ" : "LOST", language)
+      : getGameText("status.active", language === "tr" ? "KİLİTLİ" : "LOCKED", language);
 
   const baseSignal = Number(gameState.signalStrength ?? 96);
 
@@ -102,15 +102,15 @@ export default function TerminalScreen({
   function getSignalMeta(value) {
     const safeValue = clampSignal(value);
     if (safeValue >= 80) {
-      return { icon: "🟢", label: "STABLE", className: "text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.3)]" };
+      return { icon: "🟢", label: "STABLE", className: "text-amber-500 drop-shadow-[0_0_6px_rgba(245,158,11,0.3)]" };
     }
     if (safeValue >= 50) {
-      return { icon: "🟡", label: "DEGRADED", className: "text-amber-400 opacity-80" };
+      return { icon: "🟡", label: "DEGRADED", className: "text-stone-400 opacity-80" };
     }
     if (safeValue >= 20) {
-      return { icon: "🟠", label: "CRITICAL", className: "text-orange-500 font-bold animate-pulse" };
+      return { icon: "🟠", label: "WEAK", className: "text-orange-600 font-bold animate-pulse" };
     }
-    return { icon: "🔴", label: "COLLAPSE", className: "text-rose-500 font-black animate-[errorPulse_0.3s_infinite]" };
+    return { icon: "🔴", label: "DISRUPTED", className: "text-rose-600 font-black animate-[errorPulse_0.3s_infinite]" };
   }
 
   function getSignalBar(value) {
@@ -160,18 +160,18 @@ export default function TerminalScreen({
 
   const getDynamicGlow = () => {
     if (signalStatus?.type === "lost" || signalValue < 20) {
-      return "bg-[radial-gradient(circle_at_center,rgba(225,29,72,0.07),transparent_65%)]";
+      return "bg-[radial-gradient(circle_at_center,rgba(225,29,72,0.06),transparent_65%)]";
     }
-    return "bg-[radial-gradient(circle_at_center,rgba(6,182,212,0.03),transparent_55%)]";
+    return "bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.02),transparent_55%)]";
   };
 
   return (
     <main
       className={[
-        "relative h-dvh overflow-hidden bg-black px-3 py-3 text-cyan-50 font-mono select-none transition-all duration-500",
+        "relative h-dvh overflow-hidden bg-black px-3 py-3 text-stone-200 font-mono select-none transition-all duration-500",
         "sm:px-5 sm:py-5",
         "before:pointer-events-none before:fixed before:inset-0",
-        "before:bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.012),rgba(255,255,255,0.012)_1px,transparent_1px,transparent_5px)]",
+        "before:bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.01),rgba(255,255,255,0.01)_1px,transparent_1px,transparent_5px)]",
         "before:mix-blend-overlay before:z-50",
         isGlitching || signalStatus?.type === "lost" ? "animate-[screenGlitch_0.15s_infinite]" : ""
       ].join(" ")}
@@ -179,54 +179,54 @@ export default function TerminalScreen({
       <div className={`pointer-events-none fixed inset-0 transition-all duration-700 ${getDynamicGlow()}`} />
 
       {(isGlitching || signalStatus?.type === "lost") && (
-        <div className="noise-overlay opacity-15" />
+        <div className="noise-overlay opacity-20 filter sepia" />
       )}
 
       <section
         className={[
           "relative z-10 mx-auto flex h-full w-full max-w-3xl flex-col overflow-hidden transition-all duration-300",
-          "bg-neutral-950/95 p-3 sm:p-5 border",
+          "bg-neutral-950/98 p-3 sm:p-5 border animate-[startScreenFadeIn_0.6s_both]",
           signalStatus?.type === "lost" || signalValue < 20
-            ? "border-rose-950 shadow-[0_0_50px_rgba(225,29,72,0.06)]"
-            : "border-cyan-950/40 shadow-[0_0_40px_rgba(34,211,238,0.03)]"
+            ? "border-rose-950 shadow-[0_0_40px_rgba(225,29,72,0.05)]"
+            : "border-stone-900 shadow-[0_0_30px_rgba(245,158,11,0.02)]"
         ].join(" ")}
       >
         <div className="shrink-0">
-          <header className="mb-4 border-b border-neutral-900 pb-4">
+          <header className="mb-4 border-b border-stone-900 pb-4">
             <div className="grid grid-cols-[auto_1fr_auto] items-start gap-4">
               
-              {/* SOL BUTON: Veri Bankası */}
+              {/* SOL BUTON: Arşiv / Veri Bankası */}
               <button
                 type="button"
                 className={[
-                  "relative border border-cyan-950 bg-neutral-900/40 px-3 py-2 text-[10px] font-bold tracking-[0.2em]",
-                  "transition-all duration-300 active:scale-95",
+                  "relative border bg-stone-950/40 px-3 py-2 text-[10px] font-bold tracking-[0.2em]",
+                  "transition-all duration-300 active:scale-95 rounded-xs",
                   unreadFileCount > 0 
-                    ? "border-rose-700 text-rose-400 animate-pulse bg-rose-950/10" 
-                    : "border-cyan-950 text-cyan-400/80 hover:border-cyan-600 hover:text-white"
+                    ? "border-amber-600 text-amber-500 animate-pulse bg-amber-950/10" 
+                    : "border-stone-850 text-stone-400 hover:border-amber-900 hover:text-stone-100"
                 ].join(" ")}
                 onClick={() => {
                   playSound("uiClick", settings);
                   setIsDataBankOpen(true);
                 }}
               >
-                DATA {unreadFileCount > 0 ? `(${unreadFileCount})` : ""}
+                BULGULAR {unreadFileCount > 0 ? `(${unreadFileCount})` : ""}
                 {unreadFileCount > 0 && (
-                  <span className="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.9)]" />
+                  <span className="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.9)]" />
                 )}
               </button>
 
-              {/* ORTA: Terminal Klinik Başlıkları */}
+              {/* ORTA: Antik Katman Başlıkları */}
               <div className="min-w-0 text-center">
-                <h1 className={`m-0 truncate text-sm sm:text-base font-black tracking-[0.35em] transition-colors duration-500 ${signalValue < 20 ? 'text-rose-500' : 'text-cyan-400'}`}>
+                <h1 className={`m-0 truncate text-xs sm:text-sm font-bold tracking-[0.3em] transition-colors duration-500 uppercase ${signalValue < 20 ? 'text-rose-600' : 'text-amber-500'}`}>
                   {terminalTitle}
                 </h1>
-                <p className="mt-1 truncate text-[10px] tracking-widest text-neutral-500 uppercase">
+                <p className="mt-1.5 truncate text-[8px] tracking-[0.25em] text-stone-600 uppercase font-black">
                   {terminalSubtitle}
                 </p>
               </div>
 
-              {/* SAĞ BUTON GRUBU: Ayarlar ve Reset (Spinner kaldırıldı) */}
+              {/* SAĞ BUTON GRUBU: Ayarlar ve Sıfırlama */}
               <div className="flex items-center gap-3">
                 <button
                   type="button"
@@ -234,7 +234,7 @@ export default function TerminalScreen({
                     playSound("uiClick", settings);
                     setIsSettingsOpen(true);
                   }}
-                  className="grid h-8 w-8 place-items-center border border-neutral-900 bg-neutral-900/20 text-xs text-neutral-400 transition hover:border-cyan-800 hover:text-white"
+                  className="grid h-8 w-8 place-items-center border border-stone-900 bg-stone-950/20 text-xs text-stone-500 transition hover:border-stone-800 hover:text-stone-300 rounded-xs"
                   aria-label="Open settings"
                 >
                   ⚙
@@ -243,9 +243,9 @@ export default function TerminalScreen({
                 <button
                   type="button"
                   onClick={onReset}
-                  className="border border-rose-950 bg-transparent px-2.5 py-1.5 text-[10px] tracking-[0.18em] text-rose-700 font-bold transition hover:border-rose-600 hover:bg-rose-950/10 hover:text-rose-400"
+                  className="border border-stone-900 bg-transparent px-2.5 py-1.5 text-[10px] tracking-[0.18em] text-stone-600 font-bold transition hover:border-rose-900 hover:bg-rose-950/10 hover:text-rose-500 rounded-xs"
                 >
-                  RESET
+                  BAĞLANTIYI_KOPAR
                 </button>
               </div>
             </div>
@@ -253,17 +253,17 @@ export default function TerminalScreen({
 
           {/* Sinyal ve Bağlantı Çubukları */}
           <div className="mb-4 grid grid-cols-2 gap-2 text-left">
-            <span className="border border-neutral-900 bg-neutral-950/40 p-2 text-[10px] tracking-wider text-neutral-500">
+            <span className="border border-stone-900 bg-black/40 p-2 text-[9px] tracking-widest text-stone-500 font-bold uppercase">
               {connectionLabel}:{" "}
-              <strong className={signalStatus?.type === "lost" ? "text-rose-500 font-bold" : "text-cyan-400"}>
+              <strong className={signalStatus?.type === "lost" ? "text-rose-600 font-bold" : "text-amber-500"}>
                 {connectionValue}
               </strong>
             </span>
 
-            <span className="border border-neutral-900 bg-neutral-950/40 p-2 text-[10px] tracking-wider text-neutral-500">
+            <span className="border border-stone-900 bg-black/40 p-2 text-[9px] tracking-widest text-stone-500 font-bold uppercase">
               {signalLabel}:{" "}
               <strong className={signalMeta.className}>
-                %{signalValue} {signalMeta.label} <span className="font-mono tracking-normal ml-1 opacity-70">[{signalBar}]</span>
+                %{signalValue} {signalMeta.label} <span className="font-mono tracking-normal ml-1 opacity-40">[{signalBar}]</span>
               </strong>
             </span>
           </div>
@@ -282,20 +282,20 @@ export default function TerminalScreen({
           />
         </div>
 
-        {/* Karakter Meşgul/Görevde Paneli */}
+        {/* Karakter Keşif Yapıyor Paneli (Busy) */}
         {isBusyActive && (
-          <div className="shrink-0 border-t border-neutral-900 bg-neutral-950 pt-3">
-            <div className="border border-amber-950 bg-amber-950/5 px-4 py-3 shadow-sm">
-              <div className="flex items-center gap-2 text-[10px] tracking-[0.2em] text-amber-500 font-bold uppercase">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
+          <div className="shrink-0 border-t border-stone-900 bg-neutral-950 pt-3">
+            <div className="border border-stone-900 bg-stone-950/50 px-4 py-3">
+              <div className="flex items-center gap-2 text-[9px] tracking-[0.2em] text-stone-500 font-bold uppercase">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-stone-600 shadow-[0_0_8px_rgba(120,113,108,0.5)]" />
                 <span>{busyTitle}</span>
               </div>
-              <p className="mt-2 text-[11px] leading-relaxed text-neutral-500">
+              <p className="mt-2 text-[11px] leading-relaxed text-stone-500">
                 {getGameText(
                   "busy.description",
                   language === "tr"
-                    ? "Karakter işlem gerçekleştiriyor. Eski iletileri inceleyebilir veya veri bankasını açabilirsiniz."
-                    : "The character is executing a process. You can review previous transmissions or open the Data Bank.",
+                    ? "Jones şu an derin odalarda ilerliyor ya da veri aktarıyor. Bu sırada geçmiş bulguları inceleyebilir veya bekleyebilirsiniz."
+                    : "Jones is currently navigating deeper shafts or transmitting data. You may review previous log archives while waiting.",
                   language
                 )}
               </p>
@@ -305,19 +305,19 @@ export default function TerminalScreen({
 
         {/* Aktif Bulmaca Minimize Bildirimi */}
         {isPuzzleActive && isPuzzleMinimized && (
-          <div className="shrink-0 border-t border-neutral-900 bg-neutral-950 pt-3">
+          <div className="shrink-0 border-t border-stone-900 bg-neutral-950 pt-3">
             <button
-              className="w-full border border-amber-900/40 bg-amber-950/5 px-4 py-3 text-xs font-bold tracking-widest text-amber-500/80 transition hover:bg-amber-950/10 active:scale-[0.99]"
+              className="w-full border border-stone-900 bg-stone-950/40 px-4 py-3 text-[10px] font-bold tracking-widest text-stone-400 transition hover:bg-stone-900/40 active:scale-[0.99] rounded-xs"
               onClick={() => setIsPuzzleMinimized(false)}
             >
-              🧩 {getGameText("puzzle.paused", language === "tr" ? "AKTİF VERİ BULMACASI — İLETİM ASKIYA ALINDI" : "ACTIVE PUZZLE — TRANSMISSION SUSPENDED", language)}
+              MÜHÜR 🧩 {getGameText("puzzle.paused", language === "tr" ? "AKTİF ŞİFRE BARİYERİ — SES AKIŞI DURDURULDU" : "ACTIVE CRYPT BARRIER — FREQUENCY SUSPENDED", language)}
             </button>
           </div>
         )}
 
         {/* Seçim Paneli Katmanı */}
         {canShowChoices && !isPuzzleActive && !progressTask && (
-          <div className="shrink-0 border-t border-neutral-900 bg-neutral-950 pt-3">
+          <div className="shrink-0 border-t border-stone-900 bg-neutral-950 pt-3">
             <ChoicePanel
               choices={visibleChoices}
               onChoice={onChoice}
@@ -361,22 +361,22 @@ export default function TerminalScreen({
         />
       )}
 
-      {/* TAM EKRAN BULMACA MODÜLÜ */}
+      {/* TAM EKRAN MÜHÜR / BULMACA MODÜLÜ */}
       {isPuzzleActive && !isPuzzleMinimized && (
-        <div className="fixed inset-0 z-[9999] bg-black animate-[fadeIn_0.25s_ease-out] font-mono select-none">
-          <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_center,rgba(225,29,72,0.04),transparent_70%)]" />
+        <div className="fixed inset-0 z-[9999] bg-stone-950 animate-[fadeIn_0.25s_ease-out] font-mono select-none">
+          <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_center,rgba(217,119,6,0.03),transparent_70%)]" />
           {crtOverlay}
           <div className="flex h-full flex-col p-4 sm:p-6 mx-auto max-w-3xl">
-            <div className="flex items-center justify-between border-b border-neutral-900 pb-4 mb-4">
-              <div className="text-rose-500 font-black tracking-[0.25em] text-xs uppercase animate-pulse">
-                ☠ {getGameText("puzzle.active", language === "tr" ? "KRİTİK VERİ BARIYERI" : "CRITICAL DATA COGNITIVE BARRIER", language)}
+            <div className="flex items-center justify-between border-b border-stone-900 pb-4 mb-4">
+              <div className="text-amber-600 font-bold tracking-[0.25em] text-[10px] uppercase animate-pulse">
+                🕳 {getGameText("puzzle.active", language === "tr" ? "ANTİK ŞİFRELEME ENGELİ" : "ANCIENT COGNITIVE BARRIER", language)}
               </div>
 
               <button
-                className="border border-neutral-800 bg-neutral-900/20 px-3 py-1.5 text-[10px] font-bold text-neutral-400 tracking-widest uppercase transition hover:border-cyan-800 hover:text-white"
+                className="border border-stone-900 bg-stone-950/40 px-3 py-1.5 text-[9px] font-bold text-stone-500 tracking-widest uppercase transition hover:border-stone-800 hover:text-stone-300 rounded-xs"
                 onClick={() => setIsPuzzleMinimized(true)}
               >
-                {getGameText("puzzle.minimize", language === "tr" ? "BEYİN DALGASINI SİMGE DURUMUNA GETİR" : "MINIMIZE LINK", language)}
+                {getGameText("puzzle.minimize", language === "tr" ? "FREKANSI SİMGE DURUMUNA GETİR" : "MINIMIZE CHANNEL", language)}
               </button>
             </div>
 

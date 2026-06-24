@@ -37,7 +37,7 @@ export default function MatchingPuzzleInput({
   const title = resolveText(
     t,
     puzzle?.titleKey,
-    puzzle?.title || "EVIDENCE MATCHING"
+    puzzle?.title || "BULGU İLİŞKİLENDİRME PANELİ"
   );
 
   const description = resolveText(
@@ -49,7 +49,7 @@ export default function MatchingPuzzleInput({
   const submitLabel = resolveText(
     t,
     puzzle?.submitLabelKey,
-    puzzle?.submitLabel || "CONFIRM MATCHES"
+    puzzle?.submitLabel || "KORELASYONU DOĞRULA"
   );
 
   const progressText = useMemo(() => {
@@ -108,49 +108,55 @@ export default function MatchingPuzzleInput({
   }
 
   return (
-    <div className="mt-4 border border-cyan-300/35 bg-cyan-950/10 p-4 shadow-[0_0_24px_rgba(34,211,238,0.1)]">
-      <div className="mb-3 flex items-start justify-between gap-4 border-b border-cyan-300/20 pb-3">
+    <div className="mt-4 border border-stone-900 bg-neutral-950 p-4 shadow-[0_0_30px_rgba(0,0,0,0.6)] font-mono rounded-xs select-none">
+      
+      {/* ÜST PANEL DURUM BAŞLIĞI */}
+      <div className="mb-3 flex items-start justify-between gap-4 border-b border-stone-900 pb-3">
         <div>
-          <p className="m-0 text-[10px] tracking-[0.25em] text-cyan-300/60">
-            {resolveText(t, "puzzle.matching.moduleActive", "CORRELATION MODULE ACTIVE")}
+          <p className="m-0 text-[9px] tracking-[0.25em] text-stone-600 font-black uppercase">
+            {resolveText(t, "puzzle.matching.moduleActive", "ANALOG KORELASYON MODÜLÜ AKTİF")}
           </p>
 
-          <h3 className="mt-1 text-xs tracking-[0.24em] text-cyan-200">
+          <h3 className="mt-1 text-xs tracking-[0.24em] text-amber-500 font-bold uppercase">
             {title}
           </h3>
         </div>
 
-        <div className="text-right">
-          <p className="m-0 text-[10px] tracking-[0.18em] text-cyan-50/45">
-            {resolveText(t, "puzzle.matching.progress", "MATCHES")}: {progressText}
+        <div className="text-right font-bold uppercase">
+          <p className="m-0 text-[9px] tracking-[0.15em] text-stone-500">
+            {resolveText(t, "puzzle.matching.progress", "BAĞLANTILAR")}: <span className="text-amber-600">{progressText}</span>
           </p>
 
           {attempts > 0 && (
-            <p className="m-0 mt-1 text-[10px] tracking-[0.18em] text-rose-300">
-              {resolveText(t, "puzzle.common.attempts", "ATTEMPTS")}: {attempts}
+            <p className="m-0 mt-1 text-[9px] tracking-[0.15em] text-rose-600">
+              {resolveText(t, "puzzle.common.attempts", "DENEME")}: {attempts}
             </p>
           )}
         </div>
       </div>
 
       {description && (
-        <p className="mb-3 text-xs leading-5 text-cyan-50/55">
+        <p className="mb-3 text-[11px] leading-relaxed text-stone-500 text-justify font-mono">
           {description}
         </p>
       )}
 
-      <div className="mb-3 border border-cyan-300/15 bg-black/35 p-3 text-[11px] tracking-[0.14em] text-cyan-100/60">
+      {/* REZONANS KILAVUZ SATIRI */}
+      <div className="mb-4 border border-stone-900 bg-black p-3 text-[11px] tracking-wide text-stone-400 font-bold rounded-xs">
         &gt; {resolveText(
           t,
           "puzzle.matching.instructions",
-          "SELECT ONE ITEM ON THE LEFT, THEN MATCH IT WITH ONE ITEM ON THE RIGHT."
+          "SOL KOLONDAN BİR VERİ SEÇİN, ARDINDAN SAĞ KOLONDAKİ DOĞRU ANALİZ SEÇENEĞİYLE EŞLEŞTİRİN."
         )}
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      {/* MATRİS KOLONLARI */}
+      <div className="grid gap-4 sm:grid-cols-2">
+        
+        {/* SOL KOLON: BULGULAR */}
         <div className="space-y-2">
-          <p className="text-[10px] tracking-[0.22em] text-cyan-300/50">
-            {resolveText(t, "puzzle.matching.leftColumn", "EVIDENCE")}
+          <p className="text-[9px] tracking-widest text-stone-600 font-black uppercase border-b border-stone-900 pb-1">
+            {resolveText(t, "puzzle.matching.leftColumn", "KAZI BULGULARI / VERİLER")}
           </p>
 
           {leftItems.map((item) => {
@@ -165,19 +171,19 @@ export default function MatchingPuzzleInput({
                 type="button"
                 onClick={() => handleLeftClick(id)}
                 className={[
-                  "w-full border p-3 text-left text-xs leading-5 tracking-[0.08em] transition",
+                  "w-full border p-3 text-left text-xs leading-relaxed tracking-wide transition font-mono font-bold rounded-xs",
                   isSelected
-                    ? "border-emerald-300/60 bg-emerald-950/25 text-emerald-100"
+                    ? "border-amber-600 bg-amber-950/10 text-amber-500 shadow-[inset_0_0_8px_rgba(245,158,11,0.1)]"
                     : matchedRightId
-                      ? "border-cyan-300/35 bg-cyan-950/20 text-cyan-100"
-                      : "border-cyan-300/15 bg-slate-950/60 text-cyan-50/65 hover:border-cyan-300/35 hover:bg-cyan-400/10"
+                      ? "border-stone-800 bg-stone-900/40 text-stone-300"
+                      : "border-stone-900 bg-black/40 text-stone-500 hover:border-stone-700 hover:text-stone-400"
                 ].join(" ")}
               >
                 <span className="block">{label}</span>
 
                 {matchedRightId && (
-                  <span className="mt-2 block text-[10px] tracking-[0.12em] text-emerald-300/70">
-                    → {resolveItemLabel(
+                  <span className="mt-2 block text-[10px] tracking-wide text-amber-600 font-black uppercase">
+                    ➔ {resolveItemLabel(
                       rightItems.find((right) => (right.id || right.value || right.label) === matchedRightId),
                       t
                     )}
@@ -188,9 +194,10 @@ export default function MatchingPuzzleInput({
           })}
         </div>
 
+        {/* SAĞ KOLON: ANALİZ / ETKİLER */}
         <div className="space-y-2">
-          <p className="text-[10px] tracking-[0.22em] text-cyan-300/50">
-            {resolveText(t, "puzzle.matching.rightColumn", "CORRELATION")}
+          <p className="text-[9px] tracking-widest text-stone-600 font-black uppercase border-b border-stone-900 pb-1">
+            {resolveText(t, "puzzle.matching.rightColumn", "ANLAMSAL EŞLEŞMELER")}
           </p>
 
           {rightItems.map((item) => {
@@ -205,11 +212,11 @@ export default function MatchingPuzzleInput({
                 disabled={!selectedLeftId}
                 onClick={() => handleRightClick(id)}
                 className={[
-                  "w-full border p-3 text-left text-xs leading-5 tracking-[0.08em] transition",
+                  "w-full border p-3 text-left text-xs leading-relaxed tracking-wide transition font-mono font-bold rounded-xs",
                   isUsed
-                    ? "border-emerald-300/35 bg-emerald-950/15 text-emerald-100"
-                    : "border-cyan-300/15 bg-slate-950/60 text-cyan-50/65 hover:border-cyan-300/35 hover:bg-cyan-400/10",
-                  !selectedLeftId ? "cursor-not-allowed opacity-60" : ""
+                    ? "border-stone-800 bg-stone-900/20 text-stone-600 opacity-40"
+                    : "border-stone-900 bg-black/40 text-stone-400 hover:border-stone-700 hover:text-stone-300",
+                  !selectedLeftId ? "cursor-not-allowed opacity-40" : ""
                 ].join(" ")}
               >
                 {label}
@@ -219,10 +226,11 @@ export default function MatchingPuzzleInput({
         </div>
       </div>
 
+      {/* MEVCUT BAĞLAR LİSTESİ PANELİ */}
       {Object.keys(matches).length > 0 && (
-        <div className="mt-3 border border-cyan-300/15 bg-slate-950/45 p-3">
-          <p className="mb-2 text-[10px] tracking-[0.2em] text-cyan-300/55">
-            {resolveText(t, "puzzle.matching.currentLinks", "CURRENT LINKS")}
+        <div className="mt-4 border border-stone-900 bg-black p-3 rounded-xs">
+          <p className="mb-2 text-[9px] tracking-widest text-stone-600 font-black uppercase">
+            {resolveText(t, "puzzle.matching.currentLinks", "AKTİF KORELASYON HATLARI")}
           </p>
 
           <div className="space-y-2">
@@ -240,25 +248,26 @@ export default function MatchingPuzzleInput({
                   key={`${leftId}-${rightId}`}
                   type="button"
                   onClick={() => removeMatch(leftId)}
-                  className="block w-full border border-cyan-300/10 bg-black/25 p-2 text-left text-[11px] tracking-[0.1em] text-cyan-50/65 transition hover:border-rose-300/40 hover:text-rose-200"
+                  className="block w-full border border-stone-900 bg-neutral-950 p-2 text-left text-[11px] tracking-wide text-stone-400 font-bold font-mono transition hover:border-rose-900 hover:text-rose-600 rounded-xs"
                 >
-                  {resolveItemLabel(leftItem, t)} → {resolveItemLabel(rightItem, t)}
+                  {resolveItemLabel(leftItem, t)} ➔ {resolveItemLabel(rightItem, t)}
                 </button>
               );
             })}
           </div>
 
-          <p className="mt-2 text-[10px] tracking-[0.12em] text-cyan-50/35">
-            {resolveText(t, "puzzle.matching.removeHint", "CLICK A LINK TO REMOVE IT.")}
+          <p className="mt-2.5 text-[9px] tracking-wide text-stone-600 font-bold uppercase">
+            {resolveText(t, "puzzle.matching.removeHint", "BAĞLANTIYI KOPARMAK İÇİN ÜZERİNE TIKLAYIN.")}
           </p>
         </div>
       )}
 
+      {/* DOĞRULAMA AKSİYON BUTONU */}
       <button
         type="button"
         disabled={isSubmitting || Object.keys(matches).length < pairs.length}
         onClick={handleSubmit}
-        className="mt-3 w-full border border-emerald-300/45 bg-emerald-950/20 px-4 py-3 text-[11px] tracking-[0.22em] text-emerald-200 transition hover:bg-emerald-400/10 disabled:cursor-not-allowed disabled:opacity-40"
+        className="mt-4 w-full border border-stone-800 bg-stone-900/20 px-4 py-3 text-[10px] tracking-widest text-stone-400 font-black uppercase transition hover:border-amber-900 hover:bg-amber-950/10 hover:text-amber-500 disabled:cursor-not-allowed disabled:opacity-20 rounded-xs"
       >
         {isSubmitting
           ? resolveText(t, "puzzle.common.submitting", "...")

@@ -22,15 +22,15 @@ export default function RebootConfirmScreen({
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
 
-  // Dil destekli text tanımlamaları
-  const kicker = getGameText(config?.kickerKey, config?.kicker || "CRITICAL MEMORY CORRUPTION // AREA 4", language);
-  const title = getGameText(config?.titleKey, config?.title || "COGNITIVE CONTAINMENT BREACHED", language);
-  const restartingText = getGameText(config?.restartingTextKey, config?.restartingText || "FORCING NEURAL SYNAPSE RE-IGNITION...", language);
-  const countdownLabel = getGameText(config?.countdownLabelKey, config?.countdownLabel || "SYSTEM RE-PURGE SEQUENCE IN", language);
-  const buttonLoadingText = getGameText(config?.buttonLoadingTextKey, config?.buttonLoadingText || "RE-IGNITING...", language);
-  const buttonText = getGameText(config?.buttonTextKey, config?.buttonText || "FORCE COGNITIVE OVERRIDE", language);
+  // Dil destekli yeni yerel/kültürel text tanımlamaları
+  const kicker = getGameText(config?.kickerKey, config?.kicker || "SİNYAL REZONANS KAYBI // DERİN KATMAN", language);
+  const title = getGameText(config?.titleKey, config?.title || "TELSİZ FREKANSI ÇÖKÜŞÜ", language);
+  const restartingText = getGameText(config?.restartingTextKey, config?.restartingText || "TELSİZ KÖPRÜSÜ YENİDEN BAĞLANIYOR...", language);
+  const countdownLabel = getGameText(config?.countdownLabelKey, config?.countdownLabel || "HAT SIFIRLAMA SEKANSI BAŞLANGICI:", language);
+  const buttonLoadingText = getGameText(config?.buttonLoadingTextKey, config?.buttonLoadingText || "BAĞLANILIYOR...", language);
+  const buttonText = getGameText(config?.buttonTextKey, config?.buttonText || "FREKANSI ZORLA (KÖPRÜ KUR)", language);
 
-  // 1. Dinamik Nöral Bozulma Efekti (Canvas)
+  // 1. Dinamik Yer Altı Akustik Bozulma Efekti (Canvas)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -47,16 +47,16 @@ export default function RebootConfirmScreen({
 
     const draw = () => {
       frame++;
-      ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+      ctx.fillStyle = "rgba(5, 5, 5, 0.18)"; // Zifiri taş karanlığı
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const midY = canvas.height / 2;
-      // Geri sayım azaldıkça veya yeniden başlatma başladıkça dalga vahşileşir
+      // Geri sayım azaldıkça sismik titreşim dalgası vahşileşir
       const severity = isRestarting ? 45 : (11 - countdown) * 4;
 
       ctx.beginPath();
-      ctx.lineWidth = isRestarting ? 3 : 1.5;
-      ctx.strokeStyle = `rgba(239, 68, 68, ${isRestarting ? 0.4 : 0.15})`;
+      ctx.lineWidth = isRestarting ? 2.5 : 1.2;
+      ctx.strokeStyle = isRestarting ? `rgba(245, 158, 11, 0.3)` : `rgba(185, 28, 28, 0.15)`; // Amber veya Pas kırmızısı sismik hat
 
       for (let x = 0; x < canvas.width; x += 5) {
         const noise = Math.sin(x * 0.01 + frame * 0.2) * Math.cos(x * 0.005 - frame * 0.05) * severity;
@@ -77,14 +77,14 @@ export default function RebootConfirmScreen({
     };
   }, [countdown, isRestarting]);
 
-  // 2. Rastgele Biyometrik Arıza Logları Akışı
+  // 2. Rastgele Mağara Arıza ve Sinyal Logları Akışı
   useEffect(() => {
     if (isRestarting) return;
     const extraLogs = [
-      "SYS: Synaptic rejection at 44%",
-      "EGO_FRACTURE: Elias core identity de-stabilizing.",
-      "THE_ECHO: Resonance proximity anomaly detected.",
-      "BIOMED: Adrenaline saturation critical."
+      "HAT: Sinyal kazanımı %12 altına düştü.",
+      "ANOMALİ: Jones Aydın panik atağı tetiklendi.",
+      "KARALTI: Yakın alan rezonans mırıldanması.",
+      "HAVA_SEVİYESİ: Statik oksijen tüketimi hızlandı."
     ];
 
     const logInterval = setInterval(() => {
@@ -128,93 +128,88 @@ export default function RebootConfirmScreen({
     setIsRestarting(true);
     setGlitchTrigger(true);
 
-    if (audioRef.current) {
-      // audioRef.current.src = "/sounds/neural_burst.mp3";
-      // audioRef.current.play().catch(() => {});
-    }
-
     setTimeout(() => {
       onRestart();
     }, config?.restartDelayMs || 1500);
   }
 
   const crtOverlay = (
-    <div className="pointer-events-none fixed inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(255,255,255,0.015)_2px,transparent_2px,transparent_5px)] opacity-40 shadow-[inset_0_0_80px_rgba(0,0,0,0.9)]" />
+    <div className="pointer-events-none fixed inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.01),rgba(255,255,255,0.01)_2px,transparent_2px,transparent_5px)] opacity-35 shadow-[inset_0_0_80px_rgba(0,0,0,0.95)]" />
   );
 
   return (
     <main 
       className={[
-        "relative grid min-h-dvh place-items-center overflow-hidden bg-black p-4 font-mono select-none text-rose-100",
-        isRestarting ? "animate-[screenGlitch_0.08s_infinite]" : glitchTrigger ? "animate-[screenGlitch_0.12s_infinite]" : "animate-[flicker_5s_infinite]"
+        "relative grid min-h-dvh place-items-center overflow-hidden bg-black p-4 font-mono select-none text-stone-200",
+        isRestarting ? "animate-pulse" : glitchTrigger ? "animate-[screenGlitch_0.12s_infinite]" : ""
       ].join(" ")}
     >
       <audio ref={audioRef} />
       
-      {/* Canvas Arka Plan Dalgalanması */}
+      {/* Sismik Arka Plan Dalgalanması */}
       <canvas ref={canvasRef} className="absolute inset-0 z-0 pointer-events-none opacity-90" />
       {crtOverlay}
 
       <section 
         className={[
-          "relative z-10 w-full max-w-3xl border-2 bg-black/95 p-6 shadow-2xl transition-all duration-500 border-b-4 rounded-t backdrop-blur-xs",
+          "relative z-10 w-full max-w-2xl border bg-neutral-950 p-6 shadow-2xl transition-all duration-500 border-b-2 rounded-xs backdrop-blur-md",
           isRestarting 
-            ? "border-amber-600 shadow-[0_0_60px_rgba(245,158,11,0.15)]" 
-            : "border-rose-950 shadow-[0_0_50px_rgba(225,29,72,0.06)]"
+            ? "border-amber-900 shadow-[0_0_50px_rgba(245,158,11,0.1)]" 
+            : "border-stone-900 shadow-[0_0_40px_rgba(0,0,0,0.8)]"
         ].join(" ")}
       >
         {/* Terminal Üst Bilgi Satırı */}
-        <div className="flex items-center justify-between border-b border-rose-950/50 pb-3 mb-5">
+        <div className="flex items-center justify-between border-b border-stone-900 pb-3 mb-5 text-[8px] tracking-widest font-black uppercase">
           <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping" />
-            <p className="text-[10px] tracking-[0.35em] text-rose-500 font-bold uppercase">
+            <span className="w-1 h-1 bg-rose-600 rounded-full animate-ping" />
+            <p className="m-0 text-rose-600">
               {kicker}
             </p>
           </div>
-          <span className="text-[9px] tracking-widest text-rose-700/60 font-bold font-mono">
-            HOST_E17_SIGNAL_STABLE_FALSE
+          <span className="text-stone-600">
+            SIGNAL_STABLE: FALSE
           </span>
         </div>
 
-        {/* Ana Tehdit Başlığı */}
-        <h1 className="mb-6 text-base tracking-[0.22em] text-rose-500 font-black uppercase sm:text-lg border-l-2 border-rose-600 pl-3">
+        {/* Ana Başlık */}
+        <h1 className="mb-6 text-xs tracking-[0.22em] text-rose-600 font-bold uppercase border-l-2 border-rose-800 pl-3">
           {title}
         </h1>
 
-        {/* Klinik Uyarılar & Canlı Simüle Edilen Arıza Logları */}
-        <div className="mb-6 border border-rose-950/70 bg-rose-950/5 p-4 space-y-2.5 max-h-[160px] overflow-hidden">
+        {/* Antik Bölge Bulguları & Canlı Simüle Edilen Arıza Logları */}
+        <div className="mb-6 border border-stone-900/60 bg-black/50 p-4 space-y-2.5 max-h-[160px] overflow-hidden rounded-xs">
           {(config?.warnings || [
-            "WARNING: Host consciousness is rejecting the neural link infrastructure.",
-            "CRITICAL: Structural ego-death detected in subject Elias.",
-            "PROCEED AT YOUR OWN RISK. LONG-TERM COGNITIVE DAMAGE WILL NOT BE COMPENSATED BY THE CORPORATION."
+            "UYARI: Jones Aydın'ın telsiz frekansı derin dehlizlerde sismik engellere takılıyor.",
+            "KRİTİK: Bağlantı kurulan öznenin yaşamsal ritminde akut panik sapması tespit edildi.",
+            "KATMAN PROJESİ TALİMATI: Akustik yansımalara ve mırıldanmalara yanıt vermeyin. Telsiz köprüsünün kopması durumunda rezonansı manuel olarak zorlayın."
           ]).map((warning, index) => {
             const warningText = resolveConfigText(warning, language);
             return (
-              <p key={`warn-${index}`} className="text-xs leading-relaxed tracking-wide text-rose-300/60 text-justify">
-                <span className="text-rose-900 font-bold">&gt;</span> {warningText}
+              <p key={`warn-${index}`} className="text-[11px] leading-relaxed tracking-wide text-stone-500 text-justify">
+                <span className="text-stone-700 font-bold">&gt;</span> {warningText}
               </p>
             );
           })}
 
           {/* Canlı Akıcı Loglar */}
           {dynamicLogs.map((log, index) => (
-            <p key={`dyn-${index}`} className="text-xs tracking-wide text-rose-500/80 font-bold animate-[bootLineIn_0.1s_ease-out_both]">
-              <span className="text-rose-700 font-black">!!</span> {log}
+            <p key={`dyn-${index}`} className="text-[11px] tracking-wide text-rose-500/80 font-bold animate-[bootLineIn_0.1s_ease-out_both]">
+              <span className="text-rose-800 font-black">!!</span> {log}
             </p>
           ))}
         </div>
 
         {/* Geri Sayım / Şok Alanı */}
-        <div className="mb-6 border border-rose-950/40 bg-neutral-900/40 p-4 text-xs tracking-[0.2em] text-rose-400/70 flex items-center justify-between rounded">
+        <div className="mb-6 border border-stone-900/60 bg-stone-950/40 p-4 text-[10px] tracking-[0.2em] text-stone-500 flex items-center justify-between rounded-xs">
           {isRestarting ? (
-            <span className="text-amber-500 font-black animate-pulse tracking-[0.18em] uppercase flex items-center gap-3">
-              <span className="animate-spin text-sm">⚡</span> {restartingText}
+            <span className="text-amber-500 font-bold tracking-[0.15em] uppercase flex items-center gap-2">
+              <span className="animate-spin text-xs">⚡</span> {restartingText}
             </span>
           ) : (
-            <div className="w-full flex items-center justify-between font-mono">
+            <div className="w-full flex items-center justify-between font-mono font-bold uppercase">
               <span>{countdownLabel}</span>
-              <strong className="text-2xl text-rose-500 font-black tracking-normal drop-shadow-[0_0_12px_rgba(244,63,94,0.6)] animate-[errorPulse_0.5s_infinite]">
-                {countdown === 3 ? "☠" : countdown === 1 ? "ERR" : countdown}
+              <strong className="text-xl text-rose-600 font-black tracking-normal drop-shadow-[0_0_10px_rgba(220,38,38,0.45)]">
+                {countdown === 3 ? "⚠" : countdown === 1 ? "ERR" : `${countdown}S`}
               </strong>
             </div>
           )}
@@ -224,10 +219,10 @@ export default function RebootConfirmScreen({
         <button
           type="button"
           className={[
-            "w-full border-2 py-4.5 text-xs tracking-[0.35em] font-black uppercase transition-all duration-300 rounded",
+            "w-full border py-4 text-[10px] tracking-[0.3em] font-bold uppercase transition-all duration-300 rounded-xs",
             isRestarting
-              ? "border-amber-600 bg-amber-950/20 text-amber-500 cursor-not-allowed"
-              : "border-rose-800/80 bg-rose-950/10 text-rose-400 hover:border-rose-400 hover:bg-rose-600/20 hover:text-white hover:shadow-[0_0_30px_rgba(244,63,94,0.2)] active:scale-[0.995]"
+              ? "border-amber-900 bg-amber-950/10 text-amber-600 cursor-not-allowed"
+              : "border-stone-800 bg-stone-900/20 text-stone-400 hover:border-amber-900 hover:bg-amber-950/10 hover:text-amber-500 active:scale-[0.99]"
           ].join(" ")}
           onClick={handleRestart}
           disabled={isRestarting}
@@ -236,16 +231,16 @@ export default function RebootConfirmScreen({
         </button>
       </section>
 
-      {/* Sağ Alttaki Agresif Spinner Grubu */}
-      <div className="fixed bottom-6 right-6 flex items-center gap-4 opacity-40 z-30">
-        <span className="text-[9px] tracking-[0.25em] text-rose-600 font-bold uppercase">
-          {isRestarting ? "FORCE_SYNAPSE_OVERDRIVE_" : "COGNITIVE_CONTAINMENT_CRIT_"}
+      {/* Sağ Alttaki Frekans Arama Spinner Grubu */}
+      <div className="fixed bottom-6 right-6 flex items-center gap-4 opacity-30 z-30 font-black">
+        <span className="text-[8px] tracking-[0.25em] text-stone-600 font-bold uppercase">
+          {isRestarting ? "FORCE_RADIO_OVERDRIVE_" : "TUNNEL_RESONANCE_CRIT_"}
         </span>
-        <div className="relative w-6 h-6 animate-spin" style={{ animationDuration: isRestarting ? "0.4s" : "3s" }}>
+        <div className="relative w-5 h-5 animate-spin" style={{ animationDuration: isRestarting ? "0.5s" : "4s" }}>
           {[...Array(8)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-1.5 h-1.5 bg-rose-500 rounded-full"
+              className="absolute w-1 h-1 bg-rose-600 rounded-full"
               style={{
                 top: `${50 + 35 * Math.sin((i * Math.PI) / 4)}%`,
                 left: `${50 + 35 * Math.cos((i * Math.PI) / 4)}%`,

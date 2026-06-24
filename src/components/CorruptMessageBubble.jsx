@@ -27,65 +27,56 @@ function injectStyles() {
   if (document.getElementById(STYLE_ID)) return;
 
   var css = [
-    // Border color cycling: rose → purple → cyan → amber
+    // Kenarlık döngüsü: Sığınak pas kırmızısından derin kehribara sismik geçişler
     "@keyframes cBorder{",
       "0%,100%{",
-        "border-color:rgba(251,113,133,.5);",
-        "box-shadow:0 0 14px rgba(251,113,133,.28),inset 0 0 8px rgba(251,113,133,.1)",
-      "}",
-      "25%{",
-        "border-color:rgba(168,85,247,.7);",
-        "box-shadow:0 0 22px rgba(168,85,247,.45),inset 0 0 14px rgba(168,85,247,.14)",
+        "border-color:rgba(225,29,72,.35);",
+        "box-shadow:0 0 14px rgba(225,29,72,.15),inset 0 0 8px rgba(225,29,72,.05);",
       "}",
       "50%{",
-        "border-color:rgba(34,211,238,.38);",
-        "box-shadow:0 0 10px rgba(34,211,238,.3),inset 0 0 6px rgba(34,211,238,.07)",
-      "}",
-      "75%{",
-        "border-color:rgba(251,191,36,.6);",
-        "box-shadow:0 0 18px rgba(251,191,36,.4),inset 0 0 10px rgba(251,191,36,.12)",
+        "border-color:rgba(245,158,11,.25);",
+        "box-shadow:0 0 10px rgba(245,158,11,.1),inset 0 0 6px rgba(245,158,11,.03);",
       "}",
     "}",
 
-    // Main text occasional flicker/blackout
+    // Ana metin parazit titremesi
     "@keyframes cFlicker{",
       "0%,16%,18%,21%,51%,55%,100%{opacity:1}",
-      "17%,22%{opacity:.04}",
+      "17%,22%{opacity:.08}",
       "19%{opacity:.8}",
-      "52%,56%{opacity:.06}",
+      "52%,56%{opacity:.1}",
       "54%{opacity:.7}",
     "}",
 
-    // Glitch: horizontal displacement with clip-path strips
+    // Sinyal kayması ve clip-path yırtılması
     "@keyframes cGlitch{",
       "0%,75%,100%{clip-path:inset(0 0 100% 0);transform:translateX(0)}",
-      "7%{clip-path:inset(15% 0 72% 0);transform:translateX(-6px)}",
-      "14%{clip-path:inset(58% 0 28% 0);transform:translateX(7px)}",
-      "21%{clip-path:inset(7% 0 85% 0);transform:translateX(-4px)}",
-      "28%{clip-path:inset(80% 0 5% 0);transform:translateX(8px)}",
-      "35%{clip-path:inset(42% 0 45% 0);transform:translateX(-7px)}",
-      "42%{clip-path:inset(65% 0 22% 0);transform:translateX(5px)}",
-      "49%{clip-path:inset(30% 0 55% 0);transform:translateX(-5px)}",
+      "7%{clip-path:inset(15% 0 72% 0);transform:translateX(-4px)}",
+      "14%{clip-path:inset(58% 0 28% 0);transform:translateX(5px)}",
+      "21%{clip-path:inset(7% 0 85% 0);transform:translateX(-2px)}",
+      "28%{clip-path:inset(80% 0 5% 0);transform:translateX(4px)}",
+      "35%{clip-path:inset(42% 0 45% 0);transform:translateX(-5px)}",
+      "42%{clip-path:inset(65% 0 22% 0);transform:translateX(3px)}",
+      "49%{clip-path:inset(30% 0 55% 0);transform:translateX(-3px)}",
     "}",
 
-    // RGB chromatic aberration
+    // Derin analog sismik rezonans gölgesi (Kromatik sapma yerine analog taş paraziti)
     "@keyframes cRgb{",
-      "0%{text-shadow:2px 0 rgba(255,0,64,.9),-2px 0 rgba(0,255,200,.9)}",
-      "33%{text-shadow:-3px 0 rgba(0,180,255,.8),3px 0 rgba(255,0,180,.8)}",
-      "66%{text-shadow:2px 0 rgba(255,220,0,.7),-2px 0 rgba(80,0,255,.7)}",
-      "100%{text-shadow:2px 0 rgba(255,0,64,.9),-2px 0 rgba(0,255,200,.9)}",
+      "0%{text-shadow:1.5px 0 rgba(225,29,72,.75),-1.5px 0 rgba(245,158,11,.3);}",
+      "50%{text-shadow:-2px 0 rgba(245,158,11,.5),2px 0 rgba(225,29,72,.6);}",
+      "100%{text-shadow:1.5px 0 rgba(225,29,72,.75),-1.5px 0 rgba(245,158,11,.3);}",
     "}",
 
-    // Moving scan line top to bottom
+    // Sinyal tarama çizgisinin yukarıdan aşağıya akışı
     "@keyframes cScan{",
-      "0%{top:-2px;opacity:.55}",
-      "100%{top:100%;opacity:.12}",
+      "0%{top:-2px;opacity:.3}",
+      "100%{top:100%;opacity:.05}",
     "}",
 
-    // Source ID flicker
+    // Kaynak ID titremesi
     "@keyframes cSourceId{",
-      "0%,45%,47%,90%,100%{opacity:.6}",
-      "46%,91%{opacity:.05}",
+      "0%,45%,47%,90%,100%{opacity:.5}",
+      "46%,91%{opacity:.1}",
     "}"
   ].join("");
 
@@ -121,14 +112,14 @@ function corruptText(text, intensity) {
   return result;
 }
 
-// Fake corrupted source ID for display
+// Bozunmuş yeraltı istasyon / rezonans blok kodları
 var SOURCE_IDS = [
-  "SRC: ██-■■",
-  "SRC: [ERR]",
-  "SRC: E-1█",
-  "SRC: ????",
-  "SRC: .....:",
-  "SRC: UNKNOWN"
+  "HAT: 🜁_■■",
+  "FREKANS: [BOZUK]",
+  "BLOK: K-1█",
+  "DİZİN: ????",
+  "REZONANS: ...:",
+  "SİNYAL: MEÇHUL"
 ];
 
 function randomSourceId() {
@@ -149,35 +140,35 @@ export default function CorruptMessageBubble(props) {
   var [displayText, setDisplayText] = useState(function() {
     return corruptText(text, baseIntensity);
   });
-  var [sourceId, setSourceId] = useState("SRC: ██-■■");
+  var [sourceId, setSourceId] = useState("HAT: 🜁_■■");
 
   useEffect(function() {
     injectStyles();
   }, []);
 
   useEffect(function() {
-    // Main corruption ticker
+    // Ana parazit tetikleyicisi
     var ticker = setInterval(function() {
       var intensity = isBurstingRef.current
-        ? Math.min(0.95, baseIntensity * 5)
+        ? Math.min(0.92, baseIntensity * 4.5)
         : baseIntensity;
       setDisplayText(corruptText(text, intensity));
-    }, 125);
+    }, 130);
 
-    // Burst trigger: random heavy corruption spike
+    // Ani sismik dalgalanma patlamaları
     var burster = setInterval(function() {
-      if (Math.random() < 0.2) {
+      if (Math.random() < 0.22) {
         isBurstingRef.current = true;
         setTimeout(function() {
           isBurstingRef.current = false;
-        }, 200 + Math.random() * 600);
+        }, 180 + Math.random() * 500);
       }
-    }, 1800);
+    }, 1900);
 
-    // Source ID flicker
+    // Sinyal ID yanıp sönmesi
     var sourceTicker = setInterval(function() {
       setSourceId(randomSourceId());
-    }, 600 + Math.random() * 400);
+    }, 700 + Math.random() * 400);
 
     return function() {
       clearInterval(ticker);
@@ -188,60 +179,57 @@ export default function CorruptMessageBubble(props) {
 
   return (
     <div
-      className="relative overflow-hidden border bg-slate-950/75"
-      style={{ animation: "cBorder 3.2s infinite" }}
+      className="relative overflow-hidden border bg-neutral-950 font-mono rounded-xs"
+      style={{ animation: "cBorder 3.5s infinite" }}
     >
-      {/* CRT horizontal scanlines overlay */}
+      {/* Telsiz parazit perdeleri overlay */}
       <div
         className="pointer-events-none absolute inset-0 z-0"
         style={{
-          backgroundImage: "repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.14) 2px,rgba(0,0,0,0.14) 4px)"
+          backgroundImage: "repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.2) 2px,rgba(0,0,0,0.2) 4px)"
         }}
         aria-hidden="true"
       />
 
-      {/* Moving scan line */}
+      {/* Hareketli analog tarama çizgisi */}
       <div
-        className="pointer-events-none absolute left-0 right-0 z-20 h-px bg-white/22"
-        style={{ animation: "cScan 2.2s linear infinite" }}
+        className="pointer-events-none absolute left-0 right-0 z-20 h-px bg-stone-800/45"
+        style={{ animation: "cScan 2.5s linear infinite" }}
         aria-hidden="true"
       />
 
-      {/* Source ID header */}
+      {/* Üst İstasyon/Sinyal Başlığı */}
       <div
-        className="border-b border-current px-3 py-1.5"
-        style={{
-          borderColor: "rgba(251,113,133,.25)",
-          animation: "cSourceId 3s infinite"
-        }}
+        className="border-b border-stone-900 px-3 py-1.5"
+        style={{ animation: "cSourceId 3.2s infinite" }}
       >
-        <span className="font-mono text-[9px] tracking-[0.25em] text-rose-400/70">
-          {sourceId} &nbsp;|&nbsp; SIGNAL CORRUPTED
+        <span className="font-mono text-[9px] tracking-widest font-black text-rose-700/80 uppercase">
+          {sourceId} &nbsp;|&nbsp; REZONANS_KAYBI
         </span>
       </div>
 
-      {/* Content area */}
-      <div className="relative px-4 py-3">
+      {/* Mesaj İçerik Alanı */}
+      <div className="relative px-3.5 py-2.5">
 
-        {/* RGB + clip glitch overlay */}
+        {/* Rezonans ve yırtılma katmanı */}
         <p
-          className="pointer-events-none absolute left-0 right-0 top-0 select-none px-4 py-3 text-sm leading-6 text-rose-400 sm:text-base"
-          style={{ animation: "cGlitch 6s infinite, cRgb 1.7s infinite" }}
+          className="pointer-events-none absolute left-0 right-0 top-0 select-none px-3.5 py-2.5 text-xs leading-relaxed tracking-wide text-rose-700/70"
+          style={{ animation: "cGlitch 5s infinite, cRgb 2s infinite" }}
           aria-hidden="true"
         >
           {displayText}
         </p>
 
-        {/* Main text with flicker */}
+        {/* Parazitli Titrek Ana Metin */}
         <p
-          className="relative z-10 text-sm leading-6 text-rose-300 sm:text-base"
-          style={{ animation: "cFlicker 5.5s infinite" }}
+          className="relative z-10 text-xs leading-relaxed tracking-wide text-rose-600 font-bold"
+          style={{ animation: "cFlicker 6s infinite" }}
         >
           {displayText}
         </p>
       </div>
 
-      {/* Screen-reader accessible original text */}
+      {/* Ekran okuyucular için orijinal metin */}
       <span className="sr-only">{text}</span>
     </div>
   );
