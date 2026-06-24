@@ -59,11 +59,11 @@ export default function PuzzleRenderer({
   if (puzzle.type === "breath_control") {
     return (
       <BreathControlMinigame
-        difficulty={puzzle.difficulty || 1}
-        hitsNeeded={puzzle.hitsNeeded ?? puzzle.roundsNeeded ?? 3}
-        echoLabel={puzzle.echoLabel ?? puzzle.echoDistance ?? "ECHO YAKIN"}
-        onSuccess={() => onSubmit("BREATH_SUCCESS")}
-        onFail={() => onSubmit("BREATH_FAIL")}
+        difficulty={puzzle.difficulty ?? 1}
+        hitsNeeded={puzzle.hitsNeeded ?? 3}
+        echoLabel={puzzle.echoLabel ?? "ECHO YAKIN"}
+        onSuccess={onSuccess}
+        onFail={onFail}
       />
     );
   }
