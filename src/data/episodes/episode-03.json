@@ -1,94 +1,83 @@
 {
   "id": "episode_03",
   "episode": 3,
-  "title": "Tıbbi Kanat",
+  "title": "Derin",
   "startNodeId": "ep03_n01",
-  "episodeObjective": "Tıbbi Kanat'ı araştır. Ne olduğunu anla.",
+  "episodeObjective": "Yatay tüneli araştır. Emre'nin izini bul.",
 
   "puzzles": {
 
-    "tibbi_ofis_kodu": {
-      "id": "tibbi_ofis_kodu",
-      "type": "code",
-      "title": "OFİS KİLİDİ",
-      "description": "Kapı üst düzey personel yetki kodu istiyor. İpucu odanın içinde gizli.",
-      "prompt": "4 BASAMAKLI KOD",
-      "placeholder": "----",
-      "inputMode": "numeric",
-      "maxLength": 4,
-      "submitLabel": "AÇ",
-      "acceptedAnswers": ["4117"],
-      "successNodeId": "ep03_n10_ofis_progress",
-      "failureNodeId": "ep03_n09_fail",
+    "p_ep03_yazit_giris": {
+      "id": "p_ep03_yazit_giris",
+      "type": "yazit_cozme",
+      "title": "TÜNEL GİRİŞİ — UYARI YAZITI",
+      "description": "Girişteki sembol dizisini bilinen sözlükle çöz.",
+      "glyphsToDecode": ["◆", "○"],
+      "lexicon": [
+        { "glyph": "△", "meaning": "IŞIK" },
+        { "glyph": "▽", "meaning": "KAÇIN" },
+        { "glyph": "○", "meaning": "YOL" },
+        { "glyph": "◆", "meaning": "KARANLIK" }
+      ],
+      "prompt": "İKİ SEMBOLİN BİRLEŞİK ANLAMINI YAZ",
+      "placeholder": "iki kelime...",
+      "acceptedAnswers": ["KARANLIK YOL", "KARANLIĞIN YOLU", "KARANLIKTAKI YOL"],
+      "successNodeId": "ep03_n04_yazit_ok",
+      "failureNodeId": "ep03_n04_yazit_fail",
       "submitCooldownMs": 400
     },
 
-    "hasta_kaydi_decrypt": {
-      "id": "hasta_kaydi_decrypt",
-      "type": "decrypt",
-      "title": "HASTA KAYDI ŞİFRELEME",
-      "description": "Dosyaya erişebilmek için denek kodunu girmeniz gerekiyor.",
-      "prompt": "DENEK KODU GİR",
-      "placeholder": "E--",
-      "inputMode": "text",
-      "maxLength": 3,
-      "submitLabel": "ERİŞ",
-      "seed": "E17",
-      "acceptedAnswers": ["E17", "e17", "E-17"],
-      "successNodeId": "ep03_n12_decrypt_progress",
-      "failureNodeId": "ep03_n11_fail",
-      "submitCooldownMs": 400
-    },
-
-    "echo_breath_tibbi": {
-      "id": "echo_breath_tibbi",
-      "type": "breath_control",
-      "difficulty": 3,
-      "hitsNeeded": 4,
-      "echoLabel": "ECHO — TIBBİ KANAT",
-      "successNodeId": "ep03_echo_ok",
+    "p_ep03_eko_harita": {
+      "id": "p_ep03_eko_harita",
+      "type": "eko_haritasi",
+      "title": "YATAY TÜNEL — AKUSTİK HARİTA",
+      "description": "Hücrelere eko sinyali göndererek güvenli geçişi bul.",
+      "gridData": [
+        [1, 0, 3, 1],
+        [1, 0, 0, 3],
+        [3, 1, 0, 2],
+        [1, 1, 1, 1]
+      ],
+      "targetCoords": { "r": 2, "c": 3 },
+      "maxScans": 8,
+      "acceptedAnswers": ["2,3"],
+      "successNodeId": "ep03_cp01",
       "failureNodeId": "ep03_hard_fail"
     },
 
-    "echo_breath_ses": {
-      "id": "echo_breath_ses",
+    "p_ep03_karalti_saklan": {
+      "id": "p_ep03_karalti_saklan",
       "type": "breath_control",
-      "difficulty": 4,
-      "hitsNeeded": 4,
-      "echoLabel": "ECHO 0.1m — TAKLİT YAPIYOR",
-      "successNodeId": "ep03_ses_dinle",
+      "difficulty": 2,
+      "hitsNeeded": 10,
+      "echoLabel": "SİNYAL: TÜNEL İÇİNDE TARAMA",
+      "acceptedAnswers": [true],
+      "successNodeId": "ep03_tehlike_gecti_saklan",
       "failureNodeId": "ep03_hard_fail"
     },
 
-    "ses_kaydi_isolation": {
-      "id": "ses_kaydi_isolation",
-      "type": "echo_isolation",
-      "title": "SES KAYDI İZOLASYONU",
-      "description": "Üç farklı sinyal aynı anda geliyor. E-17'nin Döngü 14 kaydını izole et.",
-      "submitLabel": "SİNYALİ İZOLE ET",
-      "acceptedAnswers": ["elias_cycle14"],
-      "successNodeId": "ep03_n15_ses_progress",
-      "failureNodeId": "ep03_n15_ses_fail",
-      "signals": [
-        {
-          "id": "elias_cycle14",
-          "label": "E-17 / DÖNGÜ 14 KAYDI",
-          "preview": "...Kira'yı sistemde...",
-          "isTarget": true
-        },
-        {
-          "id": "echo_rezonans",
-          "label": "THE ECHO — REZONANS",
-          "preview": "...Elias... buraya gel...",
-          "isTarget": false
-        },
-        {
-          "id": "unknown_arsiv",
-          "label": "UNKNOWN — ARŞİV PARÇASI",
-          "preview": "...henüz zamanı değil...",
-          "isTarget": false
-        }
-      ]
+    "p_ep03_karalti_dur": {
+      "id": "p_ep03_karalti_dur",
+      "type": "breath_control",
+      "difficulty": 2,
+      "hitsNeeded": 10,
+      "echoLabel": "SİNYAL: REZONANS YAKIN — HAREKETSİZ KAL",
+      "acceptedAnswers": [true],
+      "successNodeId": "ep03_tehlike_gecti_dur",
+      "failureNodeId": "ep03_hard_fail"
+    },
+
+    "p_ep03_muhur_vibrasyon": {
+      "id": "p_ep03_muhur_vibrasyon",
+      "type": "vibration_rhythm",
+      "title": "MÜHÜR REZONANS KİLİDİ",
+      "description": "Sismik dalga mühür bölgesine kilitlendiğinde kilidi tetikle. Oda kapısı antik bir titreşim sistemiyle kilitlenmiş.",
+      "targetHits": 4,
+      "speedMultiplier": 1.1,
+      "maxFailures": 4,
+      "acceptedAnswers": [true],
+      "successNodeId": "ep03_n10_muhur_acildi",
+      "failureNodeId": "ep03_hard_fail"
     }
 
   },
@@ -97,943 +86,568 @@
 
     "ep03_n01": {
       "id": "ep03_n01",
-      "speaker": "ELIAS",
+      "speaker": "SİSTEM",
       "events": [
-        { "type": "systemAlert", "text": "[TIBBİ KANAT — GİRİŞ BAŞARIYLA YAPILDI]", "pauseAfterMs": 2000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "İçerisi gerçekten zifiri karanlık.", "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Yine de gözlerimi zorlayınca etrafta bazı tıbbi ekipmanlar ve boş yataklar seçebiliyorum.",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2800 },
-        { "type": "message", "speaker": "ELIAS", "text": "İleride, odanın tam ucunda soluk bir konsol ışığı süzülüyor.",
-        "pauseAfterMs": 3500 },
-        { "type": "statChange", "changes": { "fear": 8, "curiosity": 10 }, "pauseAfterMs": 300 }
+        { "type": "systemAlert", "text": "KATMAN KÖPRÜSÜ: TELSIZ YENİDEN SENKRONİZE EDİLDİ", "pauseAfterMs": 2500 },
+        { "type": "realTimeWait", "seconds": 3 },
+        {
+          "type": "relationshipDialogue",
+          "conditions": { "trust": { "gte": 30 } },
+          "trueText": "Yine bağlandım. İyi. Yokluğunu hissediyorum artık.",
+          "falseText": "Telsiz açık. Sinyal var mı?"
+        },
+        { "type": "realTimeWait", "seconds": 4 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Tablet bırakmış Güneş Yıldız. Sürükleme izleri yatay tünele gidiyor. Bu ikisi bağlantılı.", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Emre de aşağıya indi demişti. Ama not defterinin işaret ettiği şey burası.", "pauseAfterMs": 4000 },
+        { "type": "statChange", "changes": { "curiosity": 8 }, "pauseAfterMs": 100 }
       ],
       "choices": [
         {
-          "id": "c1_isik",
-          "text": "Temkinli ol: Doğrudan o soluk ışığa doğru ilerle.",
-          "nextNodeId": "ep03_n02a",
-          "effects": { "riskPattern": 3, "curiosity": 8 }
+          "id": "c1_tunel",
+          "text": "Yatay tünele gir. Güneş'in izini takip et.",
+          "nextNodeId": "ep03_n02_tunel",
+          "effects": { "riskPattern": 5, "curiosity": 8 }
         },
         {
-          "id": "c1_bekle",
-          "text": "Stratejik davran: Kıpırdamadan bekle, gözlerinin karanlığa alışmasına izin ver.",
-          "nextNodeId": "ep03_n02b",
-          "effects": { "humanity": 3, "fear": -2 }
+          "id": "c1_emre",
+          "text": "Önce Emre'nin hangi yöne gittiğini anla.",
+          "nextNodeId": "ep03_n02_emre",
+          "effects": { "emreBaglantisi": 8, "trust": 3 }
         }
       ]
     },
 
-    "ep03_n02a": {
-      "id": "ep03_n02a",
-      "speaker": "ELIAS",
+    "ep03_n02_tunel": {
+      "id": "ep03_n02_tunel",
+      "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Işığa doğru adımlıyorum.",
-        "pauseAfterMs": 2500 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Yatay tünelin girişindeyim. Tavanı alçak, genişliği dar.", "pauseAfterMs": 3000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Ve girişte bir yazıt var. Kazmış biri buraya.", "pauseAfterMs": 3500 },
+        { "type": "statChange", "changes": { "curiosity": 5 }, "pauseAfterMs": 100 }
+      ],
+      "nextNodeId": "ep03_n03_yazit"
+    },
+
+    "ep03_n02_emre": {
+      "id": "ep03_n02_emre",
+      "speaker": "JONES",
+      "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Merdivenin alt basamağını fenerle tarıyorum.", "pauseAfterMs": 2500 },
+        { "type": "realTimeWait", "seconds": 4 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Taşa kazınmış bir ok. Emre'nin işi bu, çizginin kalınlığından anlıyorum.", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 2000 },
+        { "type": "message", "speaker": "JONES", "text": "Yatay tüneli gösteriyor.", "pauseAfterMs": 3000 },
+        {
+          "type": "relationshipDialogue",
+          "conditions": { "emreBaglantisi": { "gte": 25 } },
+          "trueText": "Bana yol bırakmış. Bilerek.",
+          "falseText": "Oraya gitmiş demek."
+        },
+        { "type": "statChange", "changes": { "emreBaglantisi": 12, "curiosity": 8 }, "pauseAfterMs": 100 }
+      ],
+      "nextNodeId": "ep03_n03_yazit"
+    },
+
+    "ep03_n03_yazit": {
+      "id": "ep03_n03_yazit",
+      "speaker": "JONES",
+      "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Tünel girişine yaklaştım. İki sembol var taşın üstünde, derin oyulmuş.", "pauseAfterMs": 3500 },
+        {
+          "type": "relationshipDialogue",
+          "conditions": { "emreBaglantisi": { "gte": 20 } },
+          "trueText": "Emre burada olsaydı 10 saniyede çözerdi. Ben bakıyorum.",
+          "falseText": "Bunları çözmem lazım."
+        },
         { "type": "realTimeWait", "seconds": 3 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Kahretsin, karanlıkta göremediğim sert bir şeye çarptım.",
-        "pauseAfterMs": 2000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Eski bir tekerlekli sandalymiş, büyük bir gürültüyle yere devrildi.",
-        "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 4500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bu tesisi tasarlayan dahi mühendislerin buraya neden tek bir acil durum lambası bile koymadığını gerçekten çok merak ediyorum.",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Neyse, bu sorduğum soruya bir cevap alamayacak olsam da şimdilik durumu anlayışla karşılıyorum.",
-        "pauseAfterMs": 4000 },
-        { "type": "statChange", "changes": { "humanity": 8 }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_n03"
+        { "type": "puzzle", "puzzleId": "p_ep03_yazit_giris" }
+      ]
     },
 
-    "ep03_n02b": {
-      "id": "ep03_n02b",
-      "speaker": "ELIAS",
+    "ep03_n04_yazit_fail": {
+      "id": "ep03_n04_yazit_fail",
+      "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Olduğum yerde kalıyorum. Karanlıkta gözlerim yavaş yavaş ortama adapte oluyor.",
-        "pauseAfterMs": 3000 },
-        { "type": "realTimeWait", "seconds": 8 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Şekiller yavaş yavaş netleşmeye başladı: Paslı sedyeler, metal koruma rayları ve terk edilmiş bir tekerlekli sandalye.",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Hepsi tamamen boş duruyor.",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ancak bu geniş odanın yakın bir geçmişte aktif olarak kullanıldığı her halinden belli.",
-        "pauseAfterMs": 4000 },
-        { "type": "statChange", "changes": { "curiosity": 8, "fear": 5 }, "pauseAfterMs": 300 }
+        { "type": "systemAlert", "text": "HATA // ANLAMSAL EŞLEŞMESİ BAŞARISIZ", "pauseAfterMs": 2000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Yanlış. Sembollere tekrar bak. İki sembol, iki kelime.", "pauseAfterMs": 3000 }
       ],
-      "nextNodeId": "ep03_n03"
+      "nextNodeId": "ep03_n03_yazit"
     },
 
-    "ep03_n03": {
-      "id": "ep03_n03",
-      "speaker": "ELIAS",
+    "ep03_n04_yazit_ok": {
+      "id": "ep03_n04_yazit_ok",
+      "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Duvarda eski bir askılık gözüme çarpıyor.",
-        "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Üzerinde beyaz bir kıyafet asılı duruyor.",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Hemen yanındaki tezgâhın üzerinde ise küçük bir personel kimlik etiketi var.",
-        "pauseAfterMs": 3500 }
+        { "type": "systemAlert", "text": "YAZIT DEŞİFRE EDİLDİ", "pauseAfterMs": 1500 },
+        { "type": "progressTask", "title": "SEMBOLLER ANALİZ EDİLİYOR", "duration": 2500 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "'Karanlık Yol.'", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 2000 },
+        { "type": "message", "speaker": "JONES", "text": "Aydınlatıcı. Ben zaten karanlıkta giriyordum.", "pauseAfterMs": 3500 },
+        { "type": "statChange", "changes": { "curiosity": 10, "humanity": 5 }, "pauseAfterMs": 100 }
+      ],
+      "nextNodeId": "ep03_n05_tunel_ici"
+    },
+
+    "ep03_n05_tunel_ici": {
+      "id": "ep03_n05_tunel_ici",
+      "speaker": "JONES",
+      "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Tünelin içindeyim. Hava burada farklı. Daha ağır, neredeyse basınçlı.", "pauseAfterMs": 3500 },
+        { "type": "realTimeWait", "seconds": 4 },
+        { "type": "typing", "speaker": "JONES", "duration": 2800 },
+        { "type": "message", "speaker": "JONES", "text": "Yerde bir şey var. Spiral bağlamalı saha defteri.", "pauseAfterMs": 3000 },
+        {
+          "type": "relationshipDialogue",
+          "conditions": { "riskPattern": { "gte": 15 } },
+          "trueText": "Aldım. Devam ederken okuyacağım.",
+          "falseText": "Durup açtım. Tek sayfa."
+        },
+        {
+          "type": "file",
+          "fileId": "ep03_guenes_notlari",
+          "fileType": "log",
+          "title": "GÜNEŞ YILDIZ — SAHA NOTU",
+          "content": "Jeoloji: Mineral analizi — İkinci Kat Alt Koridor\n\nBu tünel insan yapımı değil.\nKaya formasyonları doğal ama yönlendirilmiş.\nBir şey bu tüneli zamanla aşındırmış.\n\nYaşayan bir şey.\n\nNot: Gece 2:14 — [buradan sonra kalem kaymış,\nyazı yarıda kesiliveriyor]",
+          "caption": "Yatay tünel girişinde yerde bulundu.",
+          "source": "İKİNCİ KAT — YATAY TÜNEL",
+          "tags": ["guenes", "jeoloji", "tunel", "yasayan"],
+          "correlationTags": ["guenes_yildiz", "karaltilar", "tunel_koken"],
+          "message": "[GÜNEŞ YILDIZ'IN SAHA NOTU ARŞİVLENDİ]",
+          "pauseAfterMs": 2500
+        },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "'Yaşayan bir şey.' Bu tüneli aşındırmış.", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 2000 },
+        { "type": "message", "speaker": "JONES", "text": "Gece 2:14'te yazmayı bırakmış. Ve ben şu an buradayım.", "pauseAfterMs": 4000 },
+        { "type": "statChange", "changes": { "fear": 12, "curiosity": 15, "memory": ["ep03_guenes_not_bulundu"] }, "pauseAfterMs": 100 }
       ],
       "choices": [
         {
-          "id": "c2_etiket",
-          "text": "Tezgâhtaki etiketi eline al ve üzerinde ne yazdığını derinlemesine incele.",
-          "nextNodeId": "ep03_n04_etiket",
+          "id": "c3_ilerle",
+          "text": "İlerle. Ne bulduğunu görmek istiyorum.",
+          "nextNodeId": "ep03_n06_eko_hazirlik",
+          "effects": { "curiosity": 8, "riskPattern": 3 }
+        },
+        {
+          "id": "c3_eko_once",
+          "text": "Dur. Önce ilerini akustik olarak tara.",
+          "nextNodeId": "ep03_n06_eko_hazirlik",
+          "effects": { "trust": 5 }
+        }
+      ]
+    },
+
+    "ep03_n06_eko_hazirlik": {
+      "id": "ep03_n06_eko_hazirlik",
+      "speaker": "JONES",
+      "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Tünel karanlık ve bu elektrikli olmayan ekipmanla devam etmek çılgınlık.", "pauseAfterMs": 3000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2800 },
+        { "type": "message", "speaker": "JONES", "text": "Ama elimde Güneş'in bıraktığı akustik tıklatma aracı var. Eko haritası çıkarabilirim.", "pauseAfterMs": 3500 },
+        { "type": "systemAlert", "text": "AKUSTİK TARAMA MODU AKTİF", "tone": "warning" },
+        { "type": "puzzle", "puzzleId": "p_ep03_eko_harita" }
+      ]
+    },
+
+    "ep03_cp01": {
+      "id": "ep03_cp01",
+      "speaker": "JONES",
+      "events": [
+        { "type": "checkpoint", "checkpointId": "ep03_cp01", "pauseAfterMs": 100 },
+        { "type": "systemAlert", "text": "GEÇİT BULUNDU — DEVAM EDİLİYOR", "pauseAfterMs": 1500 },
+        { "type": "typing", "speaker": "JONES", "duration": 2000 },
+        { "type": "message", "speaker": "JONES", "text": "Güvenli geçidi buldum. İlerliyorum.", "pauseAfterMs": 2500 },
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "backgroundEvent", "delay": 500, "event": { "type": "systemAlert", "text": "ANOMALİ // REZONANS HAREKETI — SOL DUVAR", "tone": "critical" } },
+        { "type": "typing", "speaker": "JONES", "duration": 1500 },
+        { "type": "message", "speaker": "JONES", "text": "Dur.", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 1800 },
+        { "type": "message", "speaker": "JONES", "text": "Sol duvar. Bir şey var.", "pauseAfterMs": 3000 },
+        { "type": "statChange", "changes": { "fear": 20 }, "pauseAfterMs": 100 }
+      ],
+      "choices": [
+        {
+          "id": "c4_saklan",
+          "text": "Karanlıkta dur. Hareketsiz kal.",
+          "nextNodeId": "ep03_n07_saklan",
+          "effects": { "trust": 8 }
+        },
+        {
+          "id": "c4_kose",
+          "text": "Geçitteki köşeye çekil, duvara yapış.",
+          "nextNodeId": "ep03_n07_kaç",
+          "effects": { "riskPattern": 3 }
+        }
+      ]
+    },
+
+    "ep03_n07_saklan": {
+      "id": "ep03_n07_saklan",
+      "speaker": "JONES",
+      "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 1500 },
+        { "type": "message", "speaker": "JONES", "text": "Feneri söndürdüm. Hareket yok.", "pauseAfterMs": 2500 },
+        { "type": "systemAlert", "text": "AKUSTİK DURUM: SİNYAL TÜNEL İÇİNDE TARAMA YAPIYOR", "tone": "warning" },
+        { "type": "puzzle", "puzzleId": "p_ep03_karalti_dur" }
+      ]
+    },
+
+    "ep03_n07_kaç": {
+      "id": "ep03_n07_kaç",
+      "speaker": "JONES",
+      "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 1500 },
+        { "type": "message", "speaker": "JONES", "text": "Köşeye geçtim. Sırtım taşa. Feneri kapadım.", "pauseAfterMs": 2500 },
+        { "type": "systemAlert", "text": "AKUSTİK DURUM: REZONANS YAKIN — HAREKETSİZ KAL", "tone": "critical" },
+        { "type": "puzzle", "puzzleId": "p_ep03_karalti_saklan" }
+      ]
+    },
+
+    "ep03_tehlike_gecti_dur": {
+      "id": "ep03_tehlike_gecti_dur",
+      "speaker": "JONES",
+      "events": [
+        { "type": "realTimeWait", "seconds": 12 },
+        { "type": "typing", "speaker": "JONES", "duration": 2000 },
+        { "type": "message", "speaker": "JONES", "text": "Geçti. Sol duvardan içeri çekildi.", "pauseAfterMs": 3000 },
+        {
+          "type": "relationshipDialogue",
+          "conditions": { "trust": { "gte": 30 } },
+          "trueText": "Dur dedinde duruyorum artık. Bu iyi bir şey.",
+          "falseText": "Hareketsizdim. İşe yaradı."
+        },
+        { "type": "statChange", "changes": { "fear": -8, "trust": 10, "timesNearDeath": 1, "memory": ["ep03_karalti_tünel_atlatti"] }, "pauseAfterMs": 100 }
+      ],
+      "nextNodeId": "ep03_n08_oda"
+    },
+
+    "ep03_tehlike_gecti_saklan": {
+      "id": "ep03_tehlike_gecti_saklan",
+      "speaker": "JONES",
+      "events": [
+        { "type": "realTimeWait", "seconds": 12 },
+        { "type": "typing", "speaker": "JONES", "duration": 2000 },
+        { "type": "message", "speaker": "JONES", "text": "Geçti. Yanımdan süzüldü, dokunmadı.", "pauseAfterMs": 3000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Bu kadarı da sinir yeter.", "pauseAfterMs": 3000 },
+        { "type": "statChange", "changes": { "fear": -5, "humanity": 5, "timesNearDeath": 1 }, "pauseAfterMs": 100 }
+      ],
+      "nextNodeId": "ep03_n08_oda"
+    },
+
+    "ep03_n08_oda": {
+      "id": "ep03_n08_oda",
+      "speaker": "JONES",
+      "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Tünel genişledi. Aniden.", "pauseAfterMs": 3500 },
+        { "type": "realTimeWait", "seconds": 4 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Feneri kaldırıyorum. Bu bir oda değil. Çok daha büyük. Tavan 6-7 metre olabilir.", "pauseAfterMs": 4000 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Duvarlar tamamen yazıtlarla kaplı. Tünel girişindeki semboller, binlerce kez yinelenmiş.", "pauseAfterMs": 4000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Ve tam karşıda taş bir kapı. Mühürlü.", "pauseAfterMs": 4000 },
+        { "type": "statChange", "changes": { "curiosity": 20, "fear": 5 }, "pauseAfterMs": 100 }
+      ],
+      "choices": [
+        {
+          "id": "c5_duvarlar",
+          "text": "Duvarlardaki yazıtlara bak önce.",
+          "nextNodeId": "ep03_n09_duvar_yazit",
           "effects": { "curiosity": 12 }
         },
         {
-          "id": "c2_aski",
-          "text": "Askılıkta asılı duran beyaz laboratuvar kıyafetine yaklaşıp gözlemle.",
-          "nextNodeId": "ep03_n04_aski",
-          "effects": { "curiosity": 8, "riskPattern": 2 }
+          "id": "c5_kapi",
+          "text": "Direkt mühürlü kapıya git.",
+          "nextNodeId": "ep03_n09_kapi",
+          "effects": { "riskPattern": 3 }
         }
       ]
     },
 
-    "ep03_n04_etiket": {
-      "id": "ep03_n04_etiket",
-      "speaker": "ELIAS",
+    "ep03_n09_duvar_yazit": {
+      "id": "ep03_n09_duvar_yazit",
+      "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Tezgâha doğru eğilip etiketi elime aldım.",
-        "pauseAfterMs": 2500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Duvardaki yazıtlar. Üç farklı el.", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "En altta antik semboller. Ortada ise daha yeni bir yazı: 'AÇILMAZ — 1987'", "pauseAfterMs": 4000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Ve üstte, taze: 'J →'", "pauseAfterMs": 4500 },
+        {
+          "type": "relationshipDialogue",
+          "conditions": { "emreBaglantisi": { "gte": 30 } },
+          "trueText": "J. Jones. Emre benim için işaret bırakmış.",
+          "falseText": "J. Benim adımın baş harfi."
+        },
+        { "type": "statChange", "changes": { "emreBaglantisi": 20, "curiosity": 15, "memory": ["ep03_j_oku_emre"] }, "pauseAfterMs": 100 }
+      ],
+      "nextNodeId": "ep03_n09_kapi"
+    },
+
+    "ep03_n09_kapi": {
+      "id": "ep03_n09_kapi",
+      "speaker": "JONES",
+      "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Kapıyı inceliyorum. Üç farklı zaman diliminin izi var burada da.", "pauseAfterMs": 3500 },
         {
           "type": "file",
-          "fileId": "ep03_kira_etiket",
+          "fileId": "ep03_muhur_analiz",
           "fileType": "log",
-          "title": "KİŞİSEL ETİKET — K.H.",
-          "content": "Dr. K. Hernandez\nNörobilim Birimi\nÇalışan No: #4117\n\n[SON GÖREV YERİ: TIBBİ KANAT — OFİS 4]",
-          "caption": "Tıbbi Kanat tezgâhının üzerinde bulundu.",
-          "source": "TIBBİ KANAT",
-          "tags": ["kira", "hernandez", "4117"],
-          "correlationTags": ["kira", "identity"],
-          "message": "[KİŞİSEL ETİKET SİSTEME ARŞİVLENDİ]",
+          "title": "MÜHÜR ANALİZİ — BÜYÜK ODA KAPISI",
+          "content": "Üç katmanlı mühür:\n\n1. ANTİK — Sembolik: Karaltı uyarı\n   motifleri ile çevrilmiş kapı çerçevesi.\n\n2. 1987 — El yazısı: 'AÇILMAZ'\n   Şiddetle yazılmış, iki kez altı\n   çizilmiş.\n\n3. GÜNCEL — 'J →'\n   Kazınmış değil, tebeşirle.\n   Silinip yazılmış tekrar tekrar.",
+          "caption": "Büyük oda mühürlü kapısında incelendi.",
+          "source": "İKİNCİ KAT — BÜYÜK ODA",
+          "tags": ["muhur", "1987", "emre", "antik"],
+          "correlationTags": ["emre", "1987_gizlendi", "karaltilar"],
+          "message": "[MÜHÜR ANALİZİ ARŞİVLENDİ]",
           "pauseAfterMs": 2500
         },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Dr. K. Hernandez. Nörobilim Birimi.", "pauseAfterMs": 3500 },
-        { "type": "realTimeWait", "seconds": 5 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 4200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bu isim... İçimde çok garip, tarif edilemez bir sızı uyandırıyor.",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "İlk odadaki o eski metal kupa gibi. Nereden hatırladığımı bir türlü kafamda çözemiyorum.",
-        "pauseAfterMs": 4500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Fakat bu insanı geçmişte çok yakından tanıdığımdan kesinlikle eminim. Bir zamanlar...",
-        "pauseAfterMs": 5000 },
-        { "type": "statChange", "changes": { "humanity": 15, "identityFracture": 8, "curiosity": 12 }, "pauseAfterMs": 300 }
+        { "type": "typing", "speaker": "JONES", "duration": 2800 },
+        { "type": "message", "speaker": "JONES", "text": "Tebeşirle. Emre tebeşirle yazmış. Tekrar tekrar.", "pauseAfterMs": 4000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Kapıya elimi koydum. Titreşim hissediyorum. İçeriden.", "pauseAfterMs": 4000 },
+        { "type": "statChange", "changes": { "curiosity": 20, "fear": 10, "emreBaglantisi": 10 }, "pauseAfterMs": 100 }
       ],
       "choices": [
         {
-          "id": "c3_kim",
-          "text": "UNKNOWN hattını köşeye sıkıştır: 'Bu isim de kim? Onu kesinlikle tanıyorsun.'",
-          "nextNodeId": "ep03_n05_kim",
-          "effects": { "curiosity": 10, "trust": 3 }
+          "id": "c6_ac",
+          "text": "Aç. Ne olursa olsun içeri girmen lazım.",
+          "nextNodeId": "ep03_n10_muhur_puzzle",
+          "effects": { "riskPattern": 8, "emreBaglantisi": 5 }
         },
         {
-          "id": "c3_4117",
-          "text": "Sayısal verilere odaklan: '4117' çalışan kodunun şifre değerini analiz et.",
-          "nextNodeId": "ep03_n05_4117",
-          "effects": { "curiosity": 12, "riskPattern": 2 }
+          "id": "c6_dinle",
+          "text": "Dur. İçeriden gelen titreşimi dinle önce.",
+          "nextNodeId": "ep03_n10_dinle",
+          "effects": { "trust": 8, "curiosity": 5 }
         }
       ]
     },
 
-    "ep03_n04_aski": {
-      "id": "ep03_n04_aski",
-      "speaker": "ELIAS",
+    "ep03_n10_dinle": {
+      "id": "ep03_n10_dinle",
+      "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 2800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Askılığın yanına gidip kumaşa dokunuyorum.",
-        "pauseAfterMs": 2500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bir laboratuvar önlüğü bu. Kumaşı beyaz renkli ama zamanla nemden sararmış.",
-        "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ayrıca tezgâhta bir etiket dökümanı daha var, önce ona baksam çok daha mantıklı olacak.",
-        "pauseAfterMs": 3500 },
-        { "type": "statChange", "changes": { "curiosity": 8 }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_n04_etiket"
-    },
-
-    "ep03_n05_kim": {
-      "id": "ep03_n05_kim",
-      "speaker": "UNKNOWN",
-      "events": [
-        { "type": "typing", "speaker": "UNKNOWN", "duration": 4200 },
-        { "type": "message", "speaker": "UNKNOWN", "text": "Bu kritik soruya şu an için net bir yanıt vermem maalesef mümkün değil.",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Yani onun kim olduğunu çok iyi biliyorsun ama bilerek benden saklıyorsun, öyle mi?",
-        "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "UNKNOWN", "duration": 1500 },
-        { "type": "message", "speaker": "UNKNOWN", "text": "...",
-        "pauseAfterMs": 5000 },
-        { "type": "statChange", "changes": { "trust": -4, "resentment": 5, "curiosity": 12 }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_n06_yol"
-    },
-
-    "ep03_n05_kim_trust": {
-      "id": "ep03_n05_kim_trust",
-      "speaker": "UNKNOWN",
-      "events": [
-        { "type": "typing", "speaker": "UNKNOWN", "duration": 5000 },
-        { "type": "message", "speaker": "UNKNOWN", "text": "Kendisi bu gizli projenin baş nörobilim uzmanıydı. Zamanında doğrudan seninle birlikte omuz omuza çalıştı.",
-        "pauseAfterMs": 5000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Peki o zaman durum buysa, şu an neden burada yanımda değil?",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "UNKNOWN", "duration": 4500 },
-        { "type": "message", "speaker": "UNKNOWN", "text": "Dürüst olmak gerekirse bunun trajik cevabını senin benden çok daha iyi bilmen gerekiyor.",
-        "pauseAfterMs": 5000 },
-        { "type": "statChange", "changes": { "trust": 5, "identityFracture": 10, "memory": ["ep03_unknown_kira_ipucu"] }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_n06_yol"
-    },
-
-    "ep03_n05_4117": {
-      "id": "ep03_n05_4117",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bu kod muhtemelen doktora ait bir çalışan kimlik numarası: 4117.",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ve etiketin altındaki konum notunda 'Tıbbi Kanat, Ofis 4' ibaresi netçe yer alıyor.",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bu dört basamaklı numara, ileride duran kilitli kapının erişim şifresi olabilir.",
-        "pauseAfterMs": 4000 },
-        { "type": "statChange", "changes": { "curiosity": 15, "memory": ["ep03_4117_kodu_bulundu"] }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_n06_yol"
-    },
-
-    "ep03_n06_yol": {
-      "id": "ep03_n06_yol",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Koridorun sonundaki o loş ışık artık çok daha belirgin. Tam altında çelik bir kapı yükseliyor.",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Kapının üzerindeki kararmış metal levhada 'OFİS 4' yazılı.",
-        "pauseAfterMs": 3500 }
-      ],
-      "choices": [
-        {
-          "id": "c4_ofis",
-          "text": "Doğrudan ilerle: Vakit kaybetmeden Ofis 4 kapısına yönel.",
-          "nextNodeId": "ep03_n07_echo_oncesi",
-          "effects": { "riskPattern": 3, "curiosity": 8 }
-        },
-        {
-          "id": "c4_odayi_tara",
-          "text": "Tedbirli ol: Kapıyı kurcalamadan önce bulunduğun geniş odayı iyice tara.",
-          "nextNodeId": "ep03_n06_tarama",
-          "effects": { "curiosity": 12, "fear": -3 }
-        }
-      ]
-    },
-
-    "ep03_n06_tarama": {
-      "id": "ep03_n06_tarama",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Etraftaki paslı tıbbi yatakları yakından inceliyorum. Üzerlerinde hiç ceset veya kimse yok.",
-        "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 4000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ancak yatakların kenarlarında kalın deri sabitleme kayışları ve derin sıkma izleri var; birilerinin buraya zorla bağlandığı ve direndiği çok açık.",
-        "pauseAfterMs": 4500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Burası kesinlikle sıradan bir iyileşme veya tedavi odası değilmiş.",
-        "pauseAfterMs": 4000 },
-        { "type": "statChange", "changes": { "fear": 10, "curiosity": 10, "memory": ["ep03_bant_izleri"] }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_n07_echo_oncesi"
-    },
-
-    "ep03_n07_echo_oncesi": {
-      "id": "ep03_n07_echo_oncesi",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "realTimeWait", "seconds": 4 },
-        { "type": "backgroundEvent", "delay": 1000, "event": { "type": "systemAlert", "text": "[REZONANS SEVİYESİ: %88 — TAKLİT PROTOKOLÜ]" } },
-        { "type": "typing", "speaker": "ELIAS", "duration": 1800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bir dakika... Dur, kıpırdama.",
-        "pauseAfterMs": 3000 },
-        { "type": "realTimeWait", "seconds": 4 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "O malum dondurucu soğukluk yeniden hissettirdi kendini, ensen ürperiyor.",
-        "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "And hemen arkamdaki karanlık koridordan tekinsiz bir ses dalgası yükseliyor.",
-        "pauseAfterMs": 3500 },
-        { "type": "realTimeWait", "seconds": 5 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bu ses... İnanılmaz ama bir insan sesine benziyor.",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Net bir şekilde, fısıldayarak benim ismimi söyledi.",
-        "pauseAfterMs": 5000 },
-        { "type": "systemAlert", "text": "[THE ECHO — TIBBİ KANAT — MESAFE: 3.1m — FREKANS TAKLİDİ AKTİF]", "pauseAfterMs": 2000 },
-        { "type": "statChange", "changes": { "fear": 28, "echoProximity": 35, "mentalStability": -8 }, "pauseAfterMs": 300 }
-      ],
-      "choices": [
-        {
-          "id": "c5_saklan",
-          "text": "Gizlen: Hemen en yakın tıbbi yatağın arkasına çök ve saklan.",
-          "nextNodeId": "ep03_n08_saklan",
-          "effects": { "humanity": 3, "fear": 5 }
-        },
-        {
-          "id": "c5_kac",
-          "text": "Kaç: Panikle doğrudan önündeki Ofis 4 kapısına doğru koş.",
-          "nextNodeId": "ep03_n08_kac",
-          "effects": { "riskPattern": 6, "fear": 8 }
-        },
-        {
-          "id": "c5_ses",
-          "text": "Yüzleş: Risk al ve sese odaklan: 'Bu ses de neyin nesi? Dinlemek istiyorum.'",
-          "condition": { "fear": { "gte": 40 } },
-          "nextNodeId": "ep03_n08_ses",
-          "effects": { "riskPattern": 12, "curiosity": 15, "mentalStability": -5 }
-        }
-      ]
-    },
-
-    "ep03_n08_saklan": {
-      "id": "ep03_n08_saklan",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 2000 },
-        { "type": "message", "speaker": "ELIAS", "text": "En yakın tıbbi yatağın hemen arkasına çömeldim.",
-        "pauseAfterMs": 2500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Yatağın demir rayları buz gibi. Kalp atışlarımı ve nefesimi kontrol etmeye çalışıyorum.",
-        "pauseAfterMs": 2000 },
-        { "type": "systemAlert", "text": "[THE ECHO — MESAFE: 1.8m — ETRAFI TARIYOR]", "pauseAfterMs": 1500 },
-        { "type": "puzzle", "puzzleId": "echo_breath_tibbi" }
-      ]
-    },
-
-    "ep03_n08_kac": {
-      "id": "ep03_n08_kac",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 1800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ofis 4 kapısına doğru hızla depar atıyorum.",
-        "pauseAfterMs": 2000 },
-        { "type": "glitch", "duration": 600, "pauseAfterMs": 400 },
-        { "type": "systemAlert", "text": "[THE ECHO — MESAFE: 1.1m — HIZLI REZONANS TAKİBİ TESPİT EDİLDİ]", "pauseAfterMs": 1500 },
-        { "type": "puzzle", "puzzleId": "echo_breath_tibbi" }
-      ]
-    },
-
-    "ep03_n08_ses": {
-      "id": "ep03_n08_ses",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 2200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Korkudan titreyerek yavaşça sesin geldiği zifiri karanlığa doğru dönüyorum.",
-        "pauseAfterMs": 2500 },
-        { "type": "typing", "speaker": "UNKNOWN", "duration": 2500 },
-        { "type": "message", "speaker": "UNKNOWN", "text": "Elias, sakın bunu yapma! Zihnini ona açma, dinleme onu!",
-        "pauseAfterMs": 2500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ama bu şey doğrudan benim gerçek ismimi haykırdı.",
-        "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Üstelik hafızamın derinliklerinden gelen inanılmaz tanıdık bir ses tonu. Nereden bildiğimi çözemiyorum ama ruhumu acıtıyor.",
-        "pauseAfterMs": 4000 },
-        { "type": "systemAlert", "text": "[THE ECHO — MESAFE: 0.3m — DOĞRUDAN SES TAKLİT PROTOKOLÜ AKTİF]", "pauseAfterMs": 1500 },
-        { "type": "puzzle", "puzzleId": "echo_breath_ses" }
-      ]
-    },
-
-    "ep03_ses_dinle": {
-      "id": "ep03_ses_dinle",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "realTimeWait", "seconds": 10 },
-        { "type": "systemAlert", "text": "[SİNYAL REZONANSI KRAL — BAĞLANTI ANLIK DALGALANIYOR]", "pauseAfterMs": 500 },
-        { "type": "signalLost", "pauseAfterMs": 3000 },
-        { "type": "systemAlert", "text": "[BAĞLANTI YENİDEN KİLİTLENDİ]", "pauseAfterMs": 1000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "O dondurucu hava dalgası nihayet çekildi. Fakat o fısıltı hâlâ beynimin içinde çekiç gibi yankılanıyor.",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 4200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Anomali o tanıdık sesi sadece beni avlamak ve kandırmak için taklit etti, biliyorum. Gerçek değildi ama hissettirdiği şey korkunç derecede gerçekçiydi.",
-        "pauseAfterMs": 4500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Geçmişimde bana tam olarak o tonda seslenen kişi kimdi? Kim vardı hayatımda öyle?",
-        "pauseAfterMs": 4500 },
-        { "type": "statChange", "changes": { "fear": -5, "echoProximity": -30, "timesNearDeath": 1, "identityFracture": 12, "curiosity": 20, "memory": ["ep03_echo_taklit_sesi"] }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_n09_ofis_kapi"
-    },
-
-    "ep03_echo_ok": {
-      "id": "ep03_echo_ok",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "realTimeWait", "seconds": 15 },
-        { "type": "systemAlert", "text": "[BAĞLANTI DALGALANMASI DÜZELTİLDİ]", "pauseAfterMs": 500 },
-        { "type": "signalLost", "pauseAfterMs": 2000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Tekinsiz soğukluk yavaşça odanın köşelerinden çekildi.",
-        "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 4000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ancak o ses... Açıkça benim adımı haykırdı. O canavar varlık benim gerçek adımı nereden bilebilir ki?",
-        "pauseAfterMs": 4500 },
-        { "type": "statChange", "changes": { "fear": -5, "echoProximity": -25, "mentalStability": -5, "memory": ["ep03_echo_isim_seslendi"] }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_n09_ofis_kapi"
-    },
-
-    "ep03_n09_ofis_kapi": {
-      "id": "ep03_n09_ofis_kapi",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "checkpoint", "checkpointId": "ep03_cp01", "pauseAfterMs": 100 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ofis 4 kapısının tam önündeyim. Giriş için panel dijital yetki kodu istiyor.",
-        "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Az önce tezgâhta bulduğum etikette ne yazıyordu? K.H. çalışan numarası: #4117.",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bu çalışan kimlik numarasını kapı kodu olarak tuşlamayı deneyeceğim.",
-        "pauseAfterMs": 4000 },
-        { "type": "puzzle", "puzzleId": "tibbi_ofis_kodu" }
-      ]
-    },
-
-    "ep03_n09_fail": {
-      "id": "ep03_n09_fail",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "systemAlert", "text": "[YETKİSİZ ERİŞİM DENEMESİ — PANEL BLOKE]", "pauseAfterMs": 2000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Girdiğim şifre kombinasyonu yanlış çıktı. Etiketteki çalışan numarasını tekrar kontrol ediyorum: K.H. #4117. Kesinlikle bu olmalı.",
-        "pauseAfterMs": 3500 }
-      ],
-      "nextNodeId": "ep03_n09_ofis_kapi"
-    },
-
-    "tibbi_ofis_kodu_success": {
-      "id": "ep03_n10_ofis_progress",
-      "speaker": "SYSTEM",
-      "events": [
-        { "type": "systemAlert", "text": "[ERİŞİM KODU ONAYLANDI — OFİS 4 YETKİLENDİRİLDİ]", "pauseAfterMs": 1000 },
-        { "type": "progressTask", "title": "OFİS ELEKTRONİK KİLİDİ ÇÖZÜLÜYOR", "duration": 4000 },
-        { "type": "nextNodeId", "nextNodeId": "ep03_n10_ofis" }
-      ]
-    },
-
-    "ep03_n10_ofis": {
-      "id": "ep03_n10_ofis",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "systemAlert", "text": "[OFİS 4 — ERİŞİM İZNİ VERİLDİ]", "pauseAfterMs": 2000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Kilit mekanizması mekanik bir klik sesiyle başarıyla açıldı.",
-        "pauseAfterMs": 2500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "İçeride eski bir çalışma masası, etrafa panikle saçılmış dökümanlar ve ekranı yeşil renkte açık duran bir bilgisayar terminali var.",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ofisin duvarı tamamen mantar panolarla kaplı: Tıbbi grafikler, formüller ve detaylı beyin tomografisi görüntüleri asılmış.",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 4200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ve tüm bu dökümanların, dosyaların üzerinde kalın kırmızı harflerle aynı kod damgalanmış: E-17.",
-        "pauseAfterMs": 5000 },
-        { "type": "statChange", "changes": { "fear": 12, "identityFracture": 10, "curiosity": 20 }, "pauseAfterMs": 300 }
-      ],
-      "choices": [
-        {
-          "id": "c6_dosyalar",
-          "text": "Veri tabanını kurcala: Masanın üzerindeki bilgisayar dosyalarını sisteme okut.",
-          "nextNodeId": "ep03_n11_decrypt",
-          "effects": { "curiosity": 12, "riskPattern": 3 }
-        },
-        {
-          "id": "c6_duvara_bak",
-          "text": "Görsel kanıtları incele: Duvardaki tıbbi grafikleri ve beyin taramalarını yakından oku.",
-          "nextNodeId": "ep03_n10_duvar",
-          "effects": { "curiosity": 10 }
-        }
-      ]
-    },
-
-    "ep03_n10_duvar": {
-      "id": "ep03_n10_duvar",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Beyin tomografilerini tek tek inceliyorum. Her bir tarama farklı bir kronolojik döngüye ait olarak etiketlenmiş.",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 4200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Kenara el yazısıyla iliştirilmiş bir not var: 'Döngü 23 – Zihinsel direnç maksimuma ulaştı. Döngü 24 – Tam bellek sıfırlama protokolü kalıcı olarak gerekli.'",
-        "pauseAfterMs": 4500 },
-        { "type": "backgroundEvent", "delay": 1000, "event": { "type": "systemAlert", "text": "[UYARI: KİŞİSEL VERİ EŞLEŞMESİ TESPİT EDİLDİ]" } },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Aman Tanrım... Tüm bu panoda sergilenenler doğrudan benim kendi beynimin döküm döküm görüntüleri.",
-        "pauseAfterMs": 4000 },
-        { "type": "statChange", "changes": { "identityFracture": 12, "fear": 8, "memory": ["ep03_beyin_goruntuleri"] }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_n11_decrypt"
-    },
-
-    "ep03_n11_decrypt": {
-      "id": "ep03_n11_decrypt",
-      "speaker": "SYSTEM",
-      "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bilgisayarın dosya veri sistemine eriştim ancak veriler yüksek düzeyde askeri şifrelemeyle korunuyor.",
-        "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Açılması için geçerli bir denek şifre kodu istiyor. Benim kodum tam olarak neydi?",
-        "pauseAfterMs": 3500 },
-        { "type": "puzzle", "puzzleId": "hasta_kaydi_decrypt" }
-      ]
-    },
-
-    "ep03_n11_fail": {
-      "id": "ep03_n11_fail",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "systemAlert", "text": "[GEÇERSİZ ŞİFRE — DECRYPT İŞLEMİ ENGELLENDİ]", "pauseAfterMs": 2000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Girdiğim denek kodu sistem tarafından reddedildi. İlk bölümdeki o tıbbi kimlik kartımda tam olarak ne yazıyordu?",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Kombinasyon kesinlikle: E-17.",
-        "pauseAfterMs": 3000 }
-      ],
-      "nextNodeId": "ep03_n11_decrypt"
-    },
-
-    "hasta_kaydi_decrypt_success": {
-      "id": "ep03_n12_decrypt_progress",
-      "speaker": "SYSTEM",
-      "events": [
-        { "type": "systemAlert", "text": "[DENEK KODU DOĞRULANDI — ARŞİV ÇÖZÜLÜYOR]", "pauseAfterMs": 1000 },
-        { "type": "progressTask", "title": "HASTA VERİ TABANI DE-ŞİFRE EDİLİYOR", "duration": 5000 },
-        { "type": "nextNodeId", "nextNodeId": "ep03_n12_dosyalar" }
-      ]
-    },
-
-    "ep03_n12_dosyalar": {
-      "id": "ep03_n12_dosyalar",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "systemAlert", "text": "[HASTA VERİ TABANI — E-17 — ERİŞİM ONAYLANDI]", "pauseAfterMs": 2000 },
-        {
-          "type": "file",
-          "fileId": "ep03_elias_dosya",
-          "fileType": "log",
-          "title": "HASTA DOSYASI — E-17",
-          "content": "Denek Kaydı: E-17 (Elias Voss)\nToplam Gerçekleşen Döngü: 26\nGüncel Aktif Döngü: 27\nSağlık Durumu: AKTİF\n\nÖnemli Not: Döngü 23 esnasında denekte maksimum zihinsel direnç gözlemlenmiştir.\nDöngü 24-26: Tam kapsamlı sıfırlama protokolü başarıyla uygulanmıştır.\n\n[SİSTEMDE 14 ADET SES KAYDI BULUNMAKTADIR]\n[ERİŞİM YETKİSİ: KISITLI PROTOKOL]",
-          "caption": "Ofis 4 ana bilgisayar arşivi. E-17 hasta denek kartı.",
-          "source": "TIBBİ KANAT / OFİS 4",
-          "tags": ["e17", "elias", "dongu_26", "ses_kaydi"],
-          "correlationTags": ["e17", "identity", "loop"],
-          "message": "[HASTA DOSYASI BAŞARIYLA LOGLANDI]",
-          "pauseAfterMs": 2500
-        },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Tam 26 koca döngü boyunca sıfırlanmışım...",
-        "pauseAfterMs": 3500 },
-        { "type": "realTimeWait", "seconds": 5 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ve bu silinen hayatların, döngülerin her biri tek tek bendim.",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 4000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Benden önceki her Elias tam olarak aynı zifiri odada uyandı, aynı kırık terminali elinde tuttu ve aynı eski kupaya bakıp derin bir özlem duydu.",
-        "pauseAfterMs": 5000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ve ne yazık ki hepsinin kaçış umudu tam olarak bu odanın sınırlarında son buldu.",
-        "pauseAfterMs": 5000 },
-        { "type": "statChange", "changes": { "identityFracture": 18, "fear": 15, "curiosity": 22 }, "pauseAfterMs": 300 }
-      ],
-      "choices": [
-        {
-          "id": "c7_devam",
-          "text": "Kararlı ol: Araştırmaya devam et, bilgisayarda başka neler saklanıyor bak.",
-          "nextNodeId": "ep03_n13_ceket",
-          "effects": { "riskPattern": 3, "curiosity": 10 }
-        },
-        {
-          "id": "c7_dur",
-          "text": "Sakinleş: Bir anlığına dur ve derin bir nefes alarak zihnini toparlamaya çalış.",
-          "nextNodeId": "ep03_n12_dur",
-          "effects": { "humanity": 8, "mentalStability": 5 }
-        }
-      ]
-    },
-
-    "ep03_n12_dur": {
-      "id": "ep03_n12_dur",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 2000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Gözlerimi sımsıkı kapatıp ciğerlerime derin bir nefes çekiyorum.",
-        "pauseAfterMs": 3000 },
-        { "type": "realTimeWait", "seconds": 10 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 4200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Tam 26 kez bu masanın önünde bulundum ve 26 kez her şeyi tamamen unutup başa sardım.",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ancak şimdi, yani bu sıra dışı 27. uyanışımda her şeyin bilincindeyim. Bu durum kesinlikle oyunun kurallarını değiştirecek.",
-        "pauseAfterMs": 4500 },
-        { "type": "statChange", "changes": { "mentalStability": 8, "hope": true }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_n13_ceket"
-    },
-
-    "ep03_n13_ceket": {
-      "id": "ep03_n13_ceket",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 3000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Askılıkta asılı duran o eski laboratuvar önlüğüne dönüyorum yeniden.",
-        "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Kumaşa yaklaşıp göğüs cebinin hemen üzerine işlenmiş isme dikkatlice bakıyorum.",
-        "pauseAfterMs": 3500 },
-        { "type": "realTimeWait", "seconds": 5 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Üzerinde iplikle net bir şekilde yazan isim: E. VOSS.",
-        "pauseAfterMs": 6000 },
         { "type": "realTimeWait", "seconds": 6 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Siktir... Bu ceket doğrudan bana ait.",
-        "pauseAfterMs": 5000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ben bu deney tesisinde kilit altında tutulan çaresiz bir kurban değil, buradaki en yetkili araştırmacılardan biriydim.",
-        "pauseAfterMs": 4500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 4000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Tüm bu deneysel sistemi, bu lanet döngü protokolünü aslında bizzat ben kurmuşum.",
-        "pauseAfterMs": 6000 },
-        { "type": "statChange", "changes": { "identityFracture": 20, "fear": 18, "mentalStability": -12, "memory": ["ep03_ceket_bulundu"] }, "pauseAfterMs": 300 }
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Düzenli. Ritmik. Bu Karaltı değil.", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 2800 },
+        { "type": "message", "speaker": "JONES", "text": "Bu kapının mekanizması. Titreşime tepki veriyor. Açılabilir.", "pauseAfterMs": 4000 },
+        { "type": "statChange", "changes": { "curiosity": 10, "trust": 5 }, "pauseAfterMs": 100 }
       ],
-      "choices": [
-        {
-          "id": "c8_giy",
-          "text": "Gerçeği kabullen: Önlüğü askıdan al ve geçmişinin bir parçası olarak üzerine giy.",
-          "nextNodeId": "ep03_n13a_giy",
-          "effects": { "identityFracture": 10, "humanity": -5, "memory": ["ep03_ceket_giyildi"] }
-        },
-        {
-          "id": "c8_birak",
-          "text": "Geçmişi reddet: Önlüğü askılıkta bırak, o caniye ait hiçbir şeye dokunmak istemiyorsun.",
-          "nextNodeId": "ep03_n13b_birak",
-          "effects": { "mentalStability": 5, "humanity": 8 }
-        },
-        {
-          "id": "c8_unknown_sor",
-          "text": "Bağlantıyı kullan: UNKNOWN hattına hesap sor: 'Ben gerçekten bu canavar sistemin kurucusu muyum?'",
-          "condition": { "trust": { "gte": 30 } },
-          "nextNodeId": "ep03_n13c_unknown",
-          "effects": { "trust": 3, "dependency": 5 }
-        }
+      "nextNodeId": "ep03_n10_muhur_puzzle"
+    },
+
+    "ep03_n10_muhur_puzzle": {
+      "id": "ep03_n10_muhur_puzzle",
+      "speaker": "JONES",
+      "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Kapı kenarında bir çizgi var. Sismik rezonans mekanizması. Duvara vurarak frekans oluşturmam lazım.", "pauseAfterMs": 3500 },
+        { "type": "systemAlert", "text": "SISMIK REzONANS MODU — KİLİTLEME BEKLENİYOR", "tone": "warning" },
+        { "type": "puzzle", "puzzleId": "p_ep03_muhur_vibrasyon" }
       ]
     },
 
-    "ep03_n13a_giy": {
-      "id": "ep03_n13a_giy",
-      "speaker": "ELIAS",
+    "ep03_n10_muhur_acildi": {
+      "id": "ep03_n10_muhur_acildi",
+      "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Önlüğü askıdan yavaşça alıp üzerime geçiriyorum.",
-        "pauseAfterMs": 3000 },
+        { "type": "systemAlert", "text": "MÜHÜR REZONANSLA AÇILDI", "pauseAfterMs": 1500 },
+        { "type": "progressTask", "title": "KAPI MEKANİZMASI DEVREYE GİRİYOR", "duration": 3000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Kapı içe doğru çekildi. Çok ağır, milim milim hareket ediyor.", "pauseAfterMs": 3500 },
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "İçerisi. Odanın hava farkı tenimde. Ve içeride bir şey var.", "pauseAfterMs": 4000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2800 },
+        { "type": "message", "speaker": "JONES", "text": "Büyük. Antik. Ve çok eskiden burada. Bu bir odadan daha fazlası.", "pauseAfterMs": 4500 },
+        { "type": "statChange", "changes": { "curiosity": 25, "fear": 15, "memory": ["ep03_buyuk_oda_acildi"] }, "pauseAfterMs": 100 }
+      ],
+      "nextNodeId": "ep03_n11_yeni_soru"
+    },
+
+    "ep03_n11_yeni_soru": {
+      "id": "ep03_n11_yeni_soru",
+      "speaker": "JONES",
+      "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Odanın ortasında taştan yapılmış büyük bir merkez var. Üzerinde yüzlerce sembol.", "pauseAfterMs": 4000 },
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Ve zemine bakıyorum.", "pauseAfterMs": 3000 },
+        { "type": "realTimeWait", "seconds": 4 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "İz var. Taze. Emre'nin botları. Buradaydı.", "pauseAfterMs": 4500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Ama bu oda tek çıkışlı. Kapı. Ve Emre içeriden kilitlememiş.", "pauseAfterMs": 4500 },
+        {
+          "type": "relationshipDialogue",
+          "conditions": { "emreBaglantisi": { "gte": 35 } },
+          "trueText": "Emre nereye gitti? Bu odadan çıkış yok.",
+          "falseText": "İzler burada bitiyor. Bu mantıklı değil."
+        },
+        { "type": "statChange", "changes": { "fear": 18, "curiosity": 20, "emreBaglantisi": 15, "memory": ["ep03_emre_izi_bitti"] }, "pauseAfterMs": 100 }
+      ],
+      "nextNodeId": "ep03_n12_kirilgan"
+    },
+
+    "ep03_n12_kirilgan": {
+      "id": "ep03_n12_kirilgan",
+      "speaker": "JONES",
+      "events": [
         { "type": "realTimeWait", "seconds": 8 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 4500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Üzerime tam olarak oturdu; sanki geçmişte bunu binlerce kez giymişim gibi korkunç bir aşinalık hissi var.",
-        "pauseAfterMs": 4500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 4000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bunca zamandır beni bu zifiri hücreye kapatıp kurban eden o acımasız zalimin kim olduğunu deli gibi merak ediyordum.",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Meğerse aynada aradığım cevap doğrudan kendimmişim.",
-        "pauseAfterMs": 5000 },
-        { "type": "statChange", "changes": { "identityFracture": 8, "curiosity": 10 }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_cp02"
-    },
-
-    "ep03_n13b_birak": {
-      "id": "ep03_n13b_birak",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ceketi askılıkta öylece bırakıyorum, yerinde çürüsün.",
-        "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 4200 },
-        { "type": "message", "speaker": "ELIAS", "text": "O ceketi zamanında kibirle giymiş olan insanın şu an tam olarak kim olduğuna dair en ufak bir fikrim yok.",
-        "pauseAfterMs": 4500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bu ağır gerçeği tamamen sırtlanmaya ve kendimden nefret etmeye henüz hazır değilim.",
-        "pauseAfterMs": 4000 },
-        { "type": "statChange", "changes": { "mentalStability": 8, "humanity": 5 }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_cp02"
-    },
-
-    "ep03_n13c_unknown": {
-      "id": "ep03_n13c_unknown",
-      "speaker": "UNKNOWN",
-      "events": [
-        { "type": "typing", "speaker": "UNKNOWN", "duration": 5000 },
-        { "type": "message", "speaker": "UNKNOWN", "text": "Sen tam olarak bu önlükle, yani o kritik 23. döngüde bu ofisten kalıcı olarak firar etmek istemiştin.",
-        "pauseAfterMs": 5000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Peki ya sonra ne oldu? Neden hücrede uyandım o zaman?",
-        "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "UNKNOWN", "duration": 4500 },
-        { "type": "message", "speaker": "UNKNOWN", "text": "Ve kaçmadan hemen önce tesisteki tüm ana yazılım sistemini tamamen sabote edip çökertmeyi denedin.",
-        "pauseAfterMs": 5000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Peki bunu başarabildim mi bari? Sisteme hasar verebildim mi?",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "UNKNOWN", "duration": 2500 },
-        { "type": "message", "speaker": "UNKNOWN", "text": "Ne yazık ki hayır, ana savunma protokolleri seni sınırda engelledi.",
-        "pauseAfterMs": 5000 },
-        { "type": "statChange", "changes": { "trust": 6, "identityFracture": 8, "memory": ["ep03_unknown_23_dongu_sirri"] }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_cp02"
-    },
-
-    "ep03_cp02": {
-      "id": "ep03_cp02",
-      "speaker": "SYSTEM",
-      "events": [
-        { "type": "checkpoint", "checkpointId": "ep03_cp02", "pauseAfterMs": 100 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bilgisayar veri klasöründe tam 14 adet eski ses log kaydı listeleniyor.",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Dosyalar şifreli değil ancak parazitli Echo rezonans sinyalleriyle dalga boyu tamamen birbirine karışmış durumda.",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Eğer içlerinden bir tanesini frekans filtreleme arayüzüyle doğru dalga boyunda izole etmeyi başarırsak dinleyebiliriz.",
-        "pauseAfterMs": 4000 },
-        { "type": "statChange", "changes": { "curiosity": 15 }, "pauseAfterMs": 300 }
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Operatör. Bana dürüst bir şey söyleyeyim.", "pauseAfterMs": 4000 },
+        { "type": "realTimeWait", "seconds": 3 },
+        { "type": "typing", "speaker": "JONES", "duration": 4000 },
+        { "type": "message", "speaker": "JONES", "text": "Ben hayatımda hiç kimse için sorumluluk almadım. Fotoğraf çektim, gezdim, bağ kurmadan geçtim.", "pauseAfterMs": 4500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Şu an Emre'yi, Güneş Yıldız'ı, geri kalan herkesi düşünüyorum. Ve bu ağırlık... yeni.", "pauseAfterMs": 5000 },
+        { "type": "statChange", "changes": { "humanity": 18, "trust": 5, "mentalStability": -5 }, "pauseAfterMs": 100 },
+        { "type": "checkpoint", "checkpointId": "ep03_cp02", "pauseAfterMs": 100 }
       ],
       "choices": [
         {
-          "id": "c9_izole",
-          "text": "Teknolojiyi kullan: Ses temizleme arayüzünü aç ve ses kaydını izole etmeye başla.",
-          "nextNodeId": "ep03_n14_seslog",
-          "effects": { "curiosity": 12, "riskPattern": 3 }
+          "id": "c7_dayan",
+          "text": "Bu ağırlığı taşıyabilirsin. Devam et.",
+          "nextNodeId": "ep03_n13_dayan",
+          "effects": { "trust": 10, "mentalStability": 8 }
         },
         {
-          "id": "c9_unknown",
-          "text": "Destek iste: UNKNOWN hattına bağlanıp bu bozuk kayıt arşivleri hakkında bilgi talep et.",
-          "nextNodeId": "ep03_n14_unknown",
-          "effects": { "trust": 3, "dependency": 5 }
+          "id": "c7_emre",
+          "text": "Emre seni bunun için seçti. Bunu biliyor muydun?",
+          "nextNodeId": "ep03_n13_emre_secti",
+          "effects": { "emreBaglantisi": 12, "humanity": 8 }
         }
       ]
     },
 
-    "ep03_n14_unknown": {
-      "id": "ep03_n14_unknown",
-      "speaker": "UNKNOWN",
+    "ep03_n13_dayan": {
+      "id": "ep03_n13_dayan",
+      "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "UNKNOWN", "duration": 4200 },
-        { "type": "message", "speaker": "UNKNOWN", "text": "Döngü 14'e ait olan gizli ses kaydını izole edip dinlemen gerekiyor. Ancak duyacaklarına şimdiden zihnen hazır ol.",
-        "pauseAfterMs": 4500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Kayıt dosyasının, o dalganın içinde tam olarak ne saklanıyor?",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "UNKNOWN", "duration": 3500 },
-        { "type": "message", "speaker": "UNKNOWN", "text": "Doğrudan senin bizzat kendi ellerinle inşa ettiğin geçmişin var.",
-        "pauseAfterMs": 5000 },
-        { "type": "statChange", "changes": { "fear": 10, "curiosity": 15 }, "pauseAfterMs": 300 }
-      ],
-      "nextNodeId": "ep03_n14_seslog"
-    },
-
-    "ep03_n14_seslog": {
-      "id": "ep03_n14_seslog",
-      "speaker": "SYSTEM",
-      "events": [
-        { "type": "typing", "speaker": "ELIAS", "duration": 3000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Ses izolasyon filtre yazılımını aktif hale getirdim. Panele şu an aynı anda üç farklı sinyal akışı vuruyor.",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "İçlerinden hedef sinyali seçip kilitlemek zorundayım. Hangisi Döngü 14'teki bana ait olan ses dalgası?",
-        "pauseAfterMs": 4000 },
-        { "type": "puzzle", "puzzleId": "ses_kaydi_isolation" }
-      ]
-    },
-
-    "ses_kaydi_isolation_success": {
-      "id": "ep03_n15_ses_progress",
-      "speaker": "SYSTEM",
-      "events": [
-        { "type": "systemAlert", "text": "[HEDEF SİNYAL FREKANSI BULUNDU — PARAZİTLER TEMİZLENİYOR]", "pauseAfterMs": 1000 },
-        { "type": "progressTask", "title": "DÖNGÜ 14 SES FREKANSI İZOLE EDİLİYOR", "duration": 4500 },
-        { "type": "nextNodeId", "nextNodeId": "ep03_n15_ses_ok" }
-      ]
-    },
-
-    "ep03_n15_ses_ok": {
-      "id": "ep03_n15_ses_ok",
-      "speaker": "ELIAS",
-      "events": [
-        { "type": "systemAlert", "text": "[E-17 / DÖNGÜ 14 SES KAYDI — BAŞARIYLA OYNATILIYOR]", "pauseAfterMs": 2000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Temizlenen ses dosyasını hoparlörden oynatıyorum, dinle.",
-        "pauseAfterMs": 3000 },
-        { "type": "realTimeWait", "seconds": 6 },
-        { "type": "corruptMessage", "speaker": "ELIAS", "text": "...Kira'yı bu sistemin zihinsel labirentinde öylece tek başına bıraktım... Gerçekten başka hiçbir çarem kalmamıştı... Tek kurtuluş yolu sistemi dışarıdan tamamen kapatmak...", "corruption": "medium", "pauseAfterMs": 5000 },
-        { "type": "realTimeWait", "seconds": 5 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bu...",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bu kayıttaki ses kesinlikle benim kendi orijinal sesim.",
-        "pauseAfterMs": 4000 },
-        { "type": "realTimeWait", "seconds": 5 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Kira'yı, yani Dr. Hernandez'i bu rezonans sisteminin içinde tek başına deliliğe terk ettiğimi söylüyorum.",
-        "pauseAfterMs": 5000 },
-        { "type": "realTimeWait", "seconds": 5 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "Operatör... Hey, orada mısın?",
-        "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bunca zamandır bizimle panelle konuşan UNKNOWN gerçekte kim? Sinyalin ardındaki asıl kişi Kira mı?",
-        "pauseAfterMs": 5000 },
-        { "type": "statChange", "changes": { "identityFracture": 22, "fear": 20, "curiosity": 25, "memory": ["ep03_ses_kaydi_kira"] }, "pauseAfterMs": 300 }
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Tamam.", "pauseAfterMs": 3000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Odayı araştırmam lazım. Emre bir yerden geçmiş. Bulmam gerekiyor.", "pauseAfterMs": 3500 },
+        { "type": "statChange", "changes": { "trust": 5, "riskPattern": 3 }, "pauseAfterMs": 100 }
       ],
       "nextNodeId": "ep03_son"
     },
 
-    "ep03_n15_ses_fail": {
-      "id": "ep03_n15_ses_fail",
-      "speaker": "ELIAS",
+    "ep03_n13_emre_secti": {
+      "id": "ep03_n13_emre_secti",
+      "speaker": "JONES",
       "events": [
-        { "type": "systemAlert", "text": "[HATALI SİNYAL KİLİTLEMESİ — İZOLASYON SEVİYESİ YETERSİZ]", "pauseAfterMs": 2000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Sinyal dalgası yüksek frekanstan dolayı elimden kaçtı ancak parazitlerin arasından net bir kelime yakalamayı başardım.",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Kayıt kesilmeden hemen önce net bir şekilde 'Kira' dedi.",
-        "pauseAfterMs": 5000 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3800 },
-        { "type": "message", "speaker": "ELIAS", "text": "Tezgâhta bulduğum o paslı kimlik kartında yazan isimle tamamen uyuşuyor: K. Hernandez. Yani Kira...",
-        "pauseAfterMs": 4500 },
-        { "type": "statChange", "changes": { "identityFracture": 10, "curiosity": 18, "memory": ["ep03_ses_kira_kelimesi"] }, "pauseAfterMs": 300 }
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Seçti mi, yoksa biliyordu muydu bunları başından?", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "İkisi çok farklı şeyler.", "pauseAfterMs": 3500 },
+        {
+          "type": "relationshipDialogue",
+          "conditions": { "emreBaglantisi": { "gte": 40 } },
+          "trueText": "Fark etmez. Her iki durumda da güveniyorum ona.",
+          "falseText": "Fark etmez. Şu an buradayım."
+        },
+        { "type": "statChange", "changes": { "emreBaglantisi": 8, "humanity": 5 }, "pauseAfterMs": 100 }
       ],
       "nextNodeId": "ep03_son"
     },
 
     "ep03_son": {
       "id": "ep03_son",
-      "speaker": "ELIAS",
+      "speaker": "JONES",
       "events": [
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Odada kalacağım biraz. Merkez taşı inceleyeceğim.", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Güneş'in notu 'yaşayan bir şey bu tüneli aşındırmış' diyordu. Bu oda onun merkezi gibi.", "pauseAfterMs": 4500 },
+        { "type": "typing", "speaker": "JONES", "duration": 2800 },
+        { "type": "message", "speaker": "JONES", "text": "Ve Emre benim için işaret bırakmış. Burada bir şey keşfetti. Muhtemelen devam etti.", "pauseAfterMs": 4000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Nereye?", "pauseAfterMs": 5000 },
         { "type": "realTimeWait", "seconds": 8 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3200 },
-        { "type": "message", "speaker": "ELIAS", "text": "UNKNOWN? Ses ver artık, beni duyuyor musun?",
-        "pauseAfterMs": 4000 },
-        { "type": "realTimeWait", "seconds": 10 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2500 },
-        { "type": "message", "speaker": "ELIAS", "text": "Hâlâ orada, frekans hattının ucunda mısın diyorum?",
-        "pauseAfterMs": 5000 },
-        { "type": "realTimeWait", "seconds": 10 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 2000 },
-        { "type": "message", "speaker": "ELIAS", "text": "Bu korkunç yolculuğun başından beri ilk kez...",
-        "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "ELIAS", "duration": 3500 },
-        { "type": "message", "speaker": "ELIAS", "text": "İlk kez sorduğum hayati sorulara hiçbir şekilde yanıt vermiyor, mutlak bir sessizlik var.",
-        "pauseAfterMs": 5000 },
-        { "type": "realTimeWait", "seconds": 15 },
-        { "type": "systemAlert", "text": "[ELIAS MEŞGUL — OFİS 4 TERMINAL BAŞINDA REAKSİYON BEKLİYOR]", "pauseAfterMs": 2000 },
+        { "type": "systemAlert", "text": "TELSİZ DURUMU: KAŞİF BÜYÜK ODADA — ANALİZ YAPIYOR", "tone": "waiting" },
         {
           "type": "characterBusy",
-          "id": "ep03_bekleme_busy",
-          "character": "ELIAS",
-          "status": "OFİS 4 — UNKNOWN TELSİZ YANITI BEKLENİYOR",
+          "id": "ep03_oda_analiz",
+          "character": "JONES",
+          "status": "BÜYÜK ODADA — ARAŞTIRIYOR",
           "durationMs": 600000,
           "returnNodeId": "ep04_n01",
-          "message": "[ELIAS MEŞGUL]",
-          "notificationTitle": "PROJECT ECHO",
-          "notificationBody": "Elias panelle nihayet yeniden bağlantı kurdu ve şok edici yeni bir sinyal dalgası gönderdi.",
+          "message": "[JONES MEŞGUL]",
+          "notificationTitle": "KATMAN PROJESİ",
+          "notificationBody": "Jones telsiz rezonans hattına geri döndü.",
           "tone": "waiting"
         }
       ],
       "choices": [
         {
           "id": "ep03_bitis",
-          "text": "Elias'ın derin zihinsel sessizliği bozmasını ve terminal panelini yeniden aktif etmesini bekle.",
+          "text": "Telsiz başında kal ve Jones'un dönmesini bekle.",
           "nextEpisodeId": "episode_04",
           "nextNodeId": "ep04_n01"
         }
       ]
     },
 
-"ep03_hard_fail": {
-  "id": "ep03_hard_fail",
-  "speaker": "SYSTEM",
-  "events": [
-    { "type": "glitch", "duration": 2000, "pauseAfterMs": 800 },
-    {
-      "type": "corruptMessage",
-      "speaker": "SYSTEM",
-      "text": "████ THE ECHO TIBBİ KANATTA SENİ TAMAMEN ELE GEÇİRDİ ████",
-      "corruption": "extreme",
-      "pauseAfterMs": 2500
-    },
-    { "type": "glitch", "duration": 3000, "pauseAfterMs": 1000 },
-    {
-      "type": "statChange",
-      "changes": {
-        "fear": 30,
-        "timesNearDeath": 1,
-        "mentalStability": -15
-      },
-      "pauseAfterMs": 300
-    },
-    {
-      "type": "loopReset",
-      "style": "blackout_loader",
-      "loaderDurationMs": 4000,
-      "fadeInMs": 800,
-      "fadeOutMs": 600,
-      "loaderMessage": "DÖNGÜ 27 — ANOMALİ SIFIRLAMASI",
-      "subMessage": "Kritik zihinsel hasar. Bellek sıfırlama protokolü tetiklendi.",
-      "pauseAfterMs": 0
+    "ep03_hard_fail": {
+      "id": "ep03_hard_fail",
+      "speaker": "SİSTEM",
+      "events": [
+        { "type": "glitch", "duration": 2000, "pauseAfterMs": 800 },
+        {
+          "type": "corruptMessage",
+          "speaker": "SİSTEM",
+          "text": "░░░ KRİTİK HATA // KARALTI REZONANSI KAŞİFİ SAPTADI ░░░",
+          "corruption": "extreme",
+          "pauseAfterMs": 2500
+        },
+        { "type": "glitch", "duration": 2500, "pauseAfterMs": 500 },
+        { "type": "systemAlert", "text": "HATA: TELSIZ KÖPRÜSÜ ÇÖKTÜ", "tone": "critical" },
+        { "type": "systemAlert", "text": "SON GÜVENLİ KAYIT NOKTASINA DÖNÜLÜYOR", "tone": "warning" },
+        {
+          "type": "statChange",
+          "changes": { "fear": 25, "timesNearDeath": 1, "mentalStability": -20 },
+          "pauseAfterMs": 100
+        },
+        {
+          "type": "loopReset",
+          "style": "blackout_loader",
+          "loaderDurationMs": 3500,
+          "fadeInMs": 800,
+          "fadeOutMs": 600,
+          "loaderMessage": "TELSİZ FREKANSI YENİDEN SENKRONİZE EDİLİYOR",
+          "subMessage": "Son kayıt noktasına dönülüyor.",
+          "pauseAfterMs": 0
+        }
+      ],
+      "choices": [
+        {
+          "id": "restart_ep03",
+          "text": "Frekansı yeniden yakala ve devam et.",
+          "nextNodeId": "ep03_cp01",
+          "restoreCheckpoint": "ep03_cp01"
+        }
+      ]
     }
-  ],
-  "choices": [
-    {
-      "id": "restart_ep03",
-      "text": "Sinyali yeniden toparla ve baştan başla.",
-      "nextNodeId": "ep03_cp01",
-      "restoreCheckpoint": "ep03_cp01"
-    }
-  ]
-}
 
   }
 }
