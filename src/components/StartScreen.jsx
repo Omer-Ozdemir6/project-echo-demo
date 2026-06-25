@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import SettingsModal from "./SettingsModal";
 import { getGameText } from "../i18n/gameText";
 import ProducerLogoAnimation from "./ProducerLogoAnimation";
@@ -25,7 +25,27 @@ export default function StartScreen({
   const [connMsg, setConnMsg] = useState("");
   const [isTitleFading, setIsTitleFading] = useState(false); // Başlık fade out kontrolü
 
+  // Müzik için referans - En üst seviyede tanımlı (Component mount oldukça yaşamaya devam eder)
+  const audioRef = useRef(null);
+
   const language = settings?.language || "en";
+
+  // MÜZİK YÖNETİMİ: titleReveal anında başlar, sadece oyun başlatılınca durur.
+  useEffect(() => {
+    if (introStep === "titleReveal" && !audioRef.current) {
+      audioRef.current = new Audio("/audio/echo-protocol-main-theme.mp3");
+      audioRef.current.loop = true;
+      audioRef.current.play().catch(err => console.log("Müzik başlatılamadı:", err));
+    }
+  }, [introStep]);
+
+  // Oyun başladığında müziği durduran temizleyici
+  const stopMusic = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+  };
 
   // YENİ EKLENEN: Uyarılar Zamanlayıcısı (Fade In/Out)
   useEffect(() => {
@@ -111,6 +131,7 @@ export default function StartScreen({
   const handleAcceptBriefing = () => {
     if (isButtonLoading) return;
     setIsButtonLoading(true);
+    stopMusic(); // Oyun başlarken durdur
     setTimeout(() => setIsLeaving(true), 1000);
     setTimeout(() => { setIntroStep("loading"); setIsLeaving(false); }, 1800);
   };
@@ -140,9 +161,7 @@ export default function StartScreen({
           }
           .animate-fade-in-out { animation: fadeInOutWarnings 3s forwards; }
         `}</style>
-        <p key={warningStage} className="tracking-[0.2em] uppercase text-sm md:text-base animate-fade-in-out">
-          {warningStage === 0 ? "HEADPHONES ARE HIGHLY RECOMMENDED" : "THIS GAME SAVES AUTOMATICALLY"}
-        </p>
+
       </main>
     );
   }
@@ -162,7 +181,7 @@ export default function StartScreen({
     return (
       <main className="relative min-h-dvh bg-neutral-950 font-mono select-none text-stone-600">
         <div className="fixed bottom-8 right-8 flex items-center gap-6">
-          <span className="text-[10px] tracking-widest opacity-50 text-amber-600 font-bold">TUNNEL_SIGNAL_SEARCH_</span>
+          <span className="text-[10px] tracking-widest opacity-50 text-amber-600 font-bold">TUNNEL SIGNAL SEARCH </span>
           <div className="relative w-6 h-6">
             {[...Array(8)].map((_, i) => (
               <div key={i} className="absolute w-1 h-1 bg-amber-500 rounded-full animate-pulse" style={{ top: `${50 + 40 * Math.sin((i * Math.PI) / 4)}%`, left: `${50 + 40 * Math.cos((i * Math.PI) / 4)}%`, transform: "translate(-50%, -50%)", animationDelay: `${i * 0.15}s`, animationDuration: "1.2s" }} />
@@ -245,10 +264,7 @@ export default function StartScreen({
   if (introStep === "titleReveal") {
     return (
       <main 
-        className={[
-          "fixed inset-0 grid place-items-center bg-black text-white font-mono cursor-pointer select-none transition-opacity duration-1000",
-          isTitleFading ? "opacity-0" : "opacity-100"
-        ].join(" ")}
+        className={["fixed inset-0 grid place-items-center bg-black text-white font-mono cursor-pointer select-none transition-opacity duration-1000", isTitleFading ? "opacity-0" : "opacity-100"].join(" ")}
         onClick={handleTitleClick}
       >
         <div className="text-center">
@@ -265,21 +281,19 @@ export default function StartScreen({
       <img src="/echo-menu-bg.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-80" draggable={false} />
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
       
-
       <section className="relative z-10 ml-20 flex flex-col">
         <h1 className="text-5xl tracking-[0.2em] text-white mb-2 uppercase font-light">{gameTitle}</h1>
         {subtitle && <p className="text-sm tracking-[0.5em] text-stone-500 uppercase mb-12">{subtitle}</p>}
         
         <div className="flex flex-col gap-6 w-80">
-          <button onClick={onContinue} disabled={!hasSavedGame} className="flex flex-col border-l-2 border-stone-600 pl-4 py-2 hover:border-amber-600 transition-all text-left">
+          <button onClick={() => { stopMusic(); onContinue(); }} disabled={!hasSavedGame} className="flex flex-col border-l-2 border-stone-600 pl-4 py-2 hover:border-amber-600 transition-all text-left">
             <span className="text-lg uppercase">Devam Et</span>
             <span className="text-[10px] text-stone-500">Son Kayıt: Bölüm 1</span>
           </button>
-          <button onClick={() => setIntroStep("briefing")} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Yeni Oyun</button>
+          <button onClick={() => { stopMusic(); setIntroStep("briefing"); }} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Yeni Oyun</button>
           <button onClick={onOpenCredits} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Künye</button>
           <button onClick={() => setIsSettingsOpen(true)} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Ayarlar</button>
         </div>
-
       </section>
 
       {isSettingsOpen && (
