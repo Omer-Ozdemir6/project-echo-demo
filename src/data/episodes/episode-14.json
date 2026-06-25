@@ -1,1577 +1,539 @@
 {
   "id": "episode_14",
-  "title": "OMEGA — FINAL DIRECTOR'S CUT V8",
-  "startNodeId": "e14_n01",
-  "designVersion": "episode_14_final_directors_cut_v8_rebuilt",
-  "episodeObjective": "Discover who or what existed in the chamber before Eva, recover or sacrifice the foundation logs, and reveal OMEGA as the deeper source beneath Incident Alpha.",
-  "rulesApplied": [
-    "Director's Cut 30-rule pass.",
-    "Humanization Pass V4: character first, lore second.",
-    "ECHO V5 consequence pass: irreversible loss and visible trust reaction.",
-    "Episode 13 V8 continuity preserved: Eva was the First Resident and the station was active before crew arrival.",
-    "Episode 14 now advances the mystery from Eva to Omega instead of repeating the seventh-person manifest reveal.",
-    "UNKNOWN drives story with concrete clues, not generic fear lines.",
-    "Every visible choice group has exactly two choices.",
-    "Noah is written as fragile and human before giving information.",
-    "Hale reacts defensively and reveals fear without becoming an exposition machine.",
-    "Episode 15 chain flags are explicit."
-  ],
+  "episode": 14,
+  "title": "Beşinci",
+  "startNodeId": "ep14_n01",
+  "episodeObjective": "Beşinci kata in.",
+
   "puzzles": {
-    "memory_reconstruction_714": {
-      "id": "memory_reconstruction_714",
-      "type": "code",
-      "title": "MEMORY RECONSTRUCTION",
-      "description": "Reconstruct the missing incident access code using previously recovered evidence.",
-      "prompt": "ENTER INCIDENT ACCESS CODE",
-      "placeholder": "7.14",
-      "inputMode": "text",
-      "maxLength": 8,
-      "submitLabel": "RECONSTRUCT",
+
+    "p_ep14_yazi_coz": {
+      "id": "p_ep14_yazi_coz",
+      "type": "yazit_cozme",
+      "title": "BEŞİNCİ KAT — BİLİNMEYEN YAZI SİSTEMİ",
+      "description": "Güneş bu sembollerin üçünü biliyor. Duvardaki mesajı çöz ve gir.",
+      "alphabet": [
+        { "symbol": "◈", "meaning": "HATIRLA"  },
+        { "symbol": "⟐", "meaning": "KİŞİ"     },
+        { "symbol": "⊞", "meaning": "KAPIDIR"  }
+      ],
+      "question": "◈  ⟐  ⊞",
+      "submitLabel": "MESAJI ÇÖZDÜM",
+      "hint": "Semboller soldan sağa okunur. Güneş'in söylediği anlamları birleştir.",
       "acceptedAnswers": [
-        "714",
-        "7.14",
-        "0714"
+        "HATIRLA KİŞİ KAPIDIR",
+        "HATIRLAYIN KİŞİ KAPIDIR",
+        "HATIRLA KİŞİ KAPISIDIR"
       ],
-      "successNodeId": "e14_n08_access_granted",
-      "failureNodeId": "e14_fail",
-      "titleKey": "episode_14.memory_reconstruction_714.puzzle0.title",
-      "descriptionKey": "episode_14.memory_reconstruction_714.puzzle0.description",
-      "promptKey": "episode_14.memory_reconstruction_714.puzzle0.prompt",
-      "placeholderKey": "episode_14.memory_reconstruction_714.puzzle0.placeholder",
-      "submitLabelKey": "episode_14.memory_reconstruction_714.puzzle0.submitLabel"
-    },
-    "omega_origin_correlation_14": {
-      "id": "omega_origin_correlation_14",
-      "type": "matching",
-      "title": "OMEGA ORIGIN CORRELATION",
-      "description": "Match each recovered foundation record with the correct conclusion.",
-      "submitLabel": "CONFIRM OMEGA ORIGIN",
-      "acceptedAnswers": [
-        "MATCH_CONFIRMED"
-      ],
-      "successNodeId": "e14_n15_origin_confirmed",
-      "failureNodeId": "e14_n14_fail",
-      "leftItems": [
-        {
-          "id": "chamber_date",
-          "label": "CHAMBER DISCOVERY DATE"
-        },
-        {
-          "id": "station_date",
-          "label": "STATION DEPLOYMENT DATE"
-        },
-        {
-          "id": "original_subject",
-          "label": "ORIGINAL SUBJECT"
-        }
-      ],
-      "rightItems": [
-        {
-          "id": "older_than_station",
-          "label": "OLDER THAN STATION"
-        },
-        {
-          "id": "built_after_chamber",
-          "label": "BUILT AFTER CHAMBER"
-        },
-        {
-          "id": "omega",
-          "label": "OMEGA"
-        }
-      ],
-      "pairs": [
-        {
-          "leftId": "chamber_date",
-          "rightId": "older_than_station"
-        },
-        {
-          "leftId": "station_date",
-          "rightId": "built_after_chamber"
-        },
-        {
-          "leftId": "original_subject",
-          "rightId": "omega"
-        }
-      ],
-      "titleKey": "episode_14.omega_origin_correlation_14.puzzle1.title",
-      "descriptionKey": "episode_14.omega_origin_correlation_14.puzzle1.description",
-      "submitLabelKey": "episode_14.omega_origin_correlation_14.puzzle1.submitLabel"
+      "successNodeId": "ep14_cp01",
+      "failureNodeId": "ep14_yazit_fail"
     }
+
   },
+
   "nodes": {
-    "e14_n01": {
-      "id": "e14_n01",
-      "speaker": "NOAH",
+
+    "ep14_n01": {
+      "id": "ep14_n01",
+      "speaker": "SİSTEM",
       "events": [
+        { "type": "systemAlert", "text": "KATMAN KÖPRÜSÜ: REZONANS HATTI AKTİF — DÖRDÜNCÜ KAT", "pauseAfterMs": 2500 },
+        { "type": "realTimeWait", "seconds": 4 },
         {
-          "type": "typing",
-          "duration": 1400
+          "type": "relationshipDialogue",
+          "conditions": { "trust": { "gte": 55 } },
+          "trueText": "Güneş hazır. Ben de hazırım sanırım.",
+          "falseText": "Güneş bekliyor. Ben de."
         },
-        {
-          "type": "message",
-          "text": "I forgot my room again.",
-          "textKey": "episode_14.e14_n01.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Just for a second.",
-          "textKey": "episode_14.e14_n01.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Ten seconds, maybe.",
-          "textKey": "episode_14.e14_n01.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Then I remembered hers.",
-          "textKey": "episode_14.e14_n01.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Eva's?",
-          "speaker": "MAYA",
-          "textKey": "episode_14.e14_n01.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "textKey": "episode_14.e14_n01.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "That's the part I hate.",
-          "textKey": "episode_14.e14_n01.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "It was older than Eva.",
-          "textKey": "episode_14.e14_n01.event15.text"
-        }
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Beşinci kat. Emre inemedi. Önceki Jones'lar inemedi ya da inmedi.", "pauseAfterMs": 4000 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Güneş basamakların başında duruyor. Yüzüne bakıyorum. Korkmuyor. Bu iyi değil. Korkan biri, korktuğu şeyi en az biraz tanımıyordur.", "pauseAfterMs": 5000 },
+        { "type": "statChange", "changes": { "fear": 10, "curiosity": 10 }, "pauseAfterMs": 100 }
       ],
       "choices": [
         {
-          "id": "ask_noah_room",
-          "text": "NOAH, DESCRIBE THE ROOM.",
-          "effects": {
-            "noahTrust": 3,
-            "danger": 2,
-            "signalStrength": -1,
-            "askedNoahOmegaRoom": true
-          },
-          "nextNodeId": "e14_n02_noah_room",
-          "textKey": "episode_14.e14_n01.choice0.text"
+          "id": "c1_sor",
+          "text": "\"Girmeden önce bilmem gereken şeyler var.\"",
+          "nextNodeId": "ep14_A01",
+          "effects": { "trust": 5, "curiosity": 10 }
         },
         {
-          "id": "ask_hale_older_than_eva",
-          "text": "HALE, WHAT WAS OLDER THAN EVA?",
-          "effects": {
-            "haleTrust": -3,
-            "danger": 2,
-            "signalStrength": -1,
-            "pressedHaleOmegaEarly": true
-          },
-          "nextNodeId": "e14_n02_hale",
-          "textKey": "episode_14.e14_n01.choice1.text"
+          "id": "c1_hazir",
+          "text": "\"Hazırım. İnelim.\"",
+          "nextNodeId": "ep14_B01",
+          "effects": { "riskPattern": 5, "emreBaglantisi": 3 }
         }
       ]
     },
-    "e14_n02_noah_room": {
-      "id": "e14_n02_noah_room",
-      "speaker": "NOAH",
+
+    "ep14_A01": {
+      "id": "ep14_A01",
+      "speaker": "JONES",
       "events": [
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "The room was narrow.",
-          "textKey": "episode_14.e14_n02_noah_room.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Not built for people.",
-          "textKey": "episode_14.e14_n02_noah_room.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Too smooth.",
-          "textKey": "episode_14.e14_n02_noah_room.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "No corners where corners should be.",
-          "textKey": "episode_14.e14_n02_noah_room.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "I remember standing inside it.",
-          "textKey": "episode_14.e14_n02_noah_room.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "textKey": "episode_14.e14_n02_noah_room.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Not standing.",
-          "textKey": "episode_14.e14_n02_noah_room.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Being remembered by it.",
-          "textKey": "episode_14.e14_n02_noah_room.event15.text"
-        }
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "\"Beşinci katta ne var?\"", "pauseAfterMs": 3500 },
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "JONES", "duration": 4000 },
+        { "type": "message", "speaker": "JONES", "text": "Güneş cevaplamadı hemen. \"Onlar\" dedi. Başka bir şey söylemedi.", "pauseAfterMs": 4500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3200 },
+        { "type": "message", "speaker": "JONES", "text": "\"Ve?\" dedim.", "pauseAfterMs": 3000 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "\"Ve sen\" dedi.", "pauseAfterMs": 5000 },
+        { "type": "statChange", "changes": { "fear": 8, "onlarFarkındalığı": 8 }, "pauseAfterMs": 100 }
       ],
-      "nextNodeId": "e14_n03_foundation"
+      "nextNodeId": "ep14_A02"
     },
-    "e14_n02_hale": {
-      "id": "e14_n02_hale",
-      "speaker": "HALE",
+
+    "ep14_A02": {
+      "id": "ep14_A02",
+      "speaker": "JONES",
       "events": [
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "You think Eva was the secret.",
-          "textKey": "episode_14.e14_n02_hale.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Eva was the warning.",
-          "textKey": "episode_14.e14_n02_hale.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "The station was already wrong before she arrived.",
-          "textKey": "episode_14.e14_n02_hale.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "And before you ask—",
-          "textKey": "episode_14.e14_n02_hale.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "no, that does not make me feel better.",
-          "textKey": "episode_14.e14_n02_hale.event9.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "halePressure": 3,
-            "haleTrust": -2
-          }
-        }
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "\"Ne yapmamamı söylersin?\"", "pauseAfterMs": 3500 },
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "JONES", "duration": 4500 },
+        { "type": "message", "speaker": "JONES", "text": "\"432 Hz'i kesme\" dedi. \"Hiç. İnersek, çıkarsak, nerede olursan ol. Keseceğini hissedersen bana söyle. Önce bana.\"", "pauseAfterMs": 5000 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "\"Neden?\"", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 4000 },
+        { "type": "message", "speaker": "JONES", "text": "\"Frekansı kesersen onların sesini duymazsın. Onların sesi olmayan yerde — yalnızca onlar kalır. Ve sen olmayacaksın.\"", "pauseAfterMs": 5500 },
+        { "type": "statChange", "changes": { "fear": 10, "memory": ["ep14_432hz_kesme_uyari_gunes"] }, "pauseAfterMs": 100 }
       ],
-      "nextNodeId": "e14_n03_foundation"
+      "nextNodeId": "ep14_A03"
     },
-    "e14_n03_foundation": {
-      "id": "e14_n03_foundation",
-      "speaker": "SYSTEM",
+
+    "ep14_A03": {
+      "id": "ep14_A03",
+      "speaker": "JONES",
       "events": [
-        {
-          "type": "systemAlert",
-          "text": "[FOUNDATION ARCHIVE TRACE DETECTED]",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n03_foundation.event0.text"
-        },
-        {
-          "type": "file",
-          "id": "foundation_index_shadow",
-          "fileId": "foundation_index_shadow",
-          "fileType": "log",
-          "title": "FOUNDATION INDEX SHADOW",
-          "content": "PUBLIC STATION DEPLOYMENT: 2194\nFOUNDATION CHAMBER DISCOVERY: 2181\nINDEX CONFLICT: chamber record predates station record by 13 years.\nORIGINAL SUBJECT FIELD: LOCKED\nACCESS MARKER: 7.14",
-          "caption": "Foundation archive shadow showing the chamber predates the station.",
-          "source": "FOUNDATION_ARCHIVE",
-          "tags": [
-            "foundation",
-            "chamber",
-            "prestation",
-            "omega",
-            "7.14"
-          ],
-          "correlationTags": [
-            "omega_origin",
-            "foundation_record",
-            "station_before_crew"
-          ],
-          "message": "[FOUNDATION INDEX SHADOW ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_14.e14_n03_foundation.event1.title",
-          "contentKey": "episode_14.e14_n03_foundation.event1.content",
-          "captionKey": "episode_14.e14_n03_foundation.event1.caption",
-          "messageKey": "episode_14.e14_n03_foundation.event1.message"
-        },
-        {
-          "type": "glitch",
-          "duration": 1000,
-          "pauseAfterMs": 600
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "THE CHAMBER IS OLDER.",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n03_foundation.event3.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "EVA WAS NOT FIRST.",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n03_foundation.event4.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "HALE NEVER SAW THE BEGINNING.",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n03_foundation.event5.text"
-        }
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Defterime baktım. Üçüncü ziyaretten kalma notum vardı.", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "'Sistemi kapat. 432 Hz olmadan geçme.' Geçmişteki ben de aynı şeyi söylüyordu.", "pauseAfterMs": 4500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Hazırım.", "pauseAfterMs": 4000 },
+        { "type": "statChange", "changes": { "memory": ["ep14_ucuncu_not_432hz"], "mentalStability": 5 }, "pauseAfterMs": 100 }
+      ],
+      "nextNodeId": "ep14_n05_inis"
+    },
+
+    "ep14_B01": {
+      "id": "ep14_B01",
+      "speaker": "JONES",
+      "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "\"Hazırım.\"", "pauseAfterMs": 3000 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Güneş bana baktı. Uzun. \"Biliyorum\" dedi. \"432 Hz'i kesme. Beşinci katta özellikle.\"", "pauseAfterMs": 4500 },
+        { "type": "typing", "speaker": "JONES", "duration": 2800 },
+        { "type": "message", "speaker": "JONES", "text": "\"Tamam.\"", "pauseAfterMs": 3500 },
+        { "type": "statChange", "changes": { "memory": ["ep14_432hz_kesme_uyari_gunes"] }, "pauseAfterMs": 100 }
+      ],
+      "nextNodeId": "ep14_n05_inis"
+    },
+
+    "ep14_n05_inis": {
+      "id": "ep14_n05_inis",
+      "speaker": "JONES",
+      "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Basamaklara basıyorum. İlki. İkincisi. Üçüncüsü.", "pauseAfterMs": 3500 },
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Dördüncü kattaki turuncu ışık yavaşça söndü. Değil — azaldı. Hâlâ var ama artık ısıtmıyor.", "pauseAfterMs": 4000 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Sıcaklık düştü. Aniden.", "pauseAfterMs": 3500 },
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Beşinci kata adım attım.", "pauseAfterMs": 5000 },
+        { "type": "statChange", "changes": { "fear": 5, "curiosity": 15 }, "pauseAfterMs": 100 }
+      ],
+      "nextNodeId": "ep14_n06_besinci"
+    },
+
+    "ep14_n06_besinci": {
+      "id": "ep14_n06_besinci",
+      "speaker": "JONES",
+      "events": [
+        { "type": "realTimeWait", "seconds": 8 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Burada renk yok. Üçüncü katta mavi, dördüncüde turuncu. Burada tam karanlığın bir adım ötesi — gözlerimin adapte etmeye çalıştığı ama edemediği bir şey.", "pauseAfterMs": 5000 },
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "JONES", "duration": 4000 },
+        { "type": "message", "speaker": "JONES", "text": "Duvarlar oyulmuş değil. Büyümüş. Spiral koridorlar, giderek daralan, bir kabuğun iç kıvrımları gibi. Ve tavan çok yüksekte — fenerimle bile göremiyorum nerede bitiyor.", "pauseAfterMs": 5500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Güneş yanımda. \"Duvara bakma\" dedi. \"Köşenden bak.\"", "pauseAfterMs": 4000 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Anlamadım. Ama yaptım.", "pauseAfterMs": 4000 },
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "JONES", "duration": 4000 },
+        { "type": "message", "speaker": "JONES", "text": "Duvar... tarif edemiyorum. Fotoğraf olsaydı bir kelime etmezdim.", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Arızalı fotoğrafçıyım. Kelimelerle yapmam lazım bunu.", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Güneş: \"Neden anlatıyorsun?\"", "pauseAfterMs": 3000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2000 },
+        { "type": "message", "speaker": "JONES", "text": "\"Alışkanlık.\"", "pauseAfterMs": 5000 },
+        { "type": "statChange", "changes": { "humanity": 10, "curiosity": 15 }, "pauseAfterMs": 100 }
+      ],
+      "nextNodeId": "ep14_n07_onlar"
+    },
+
+    "ep14_n07_onlar": {
+      "id": "ep14_n07_onlar",
+      "speaker": "JONES",
+      "events": [
+        { "type": "realTimeWait", "seconds": 10 },
+        { "type": "typing", "speaker": "JONES", "duration": 4000 },
+        { "type": "message", "speaker": "JONES", "text": "Duvarda bir şey var. Hareket etmiyor. Ben de hareket etmiyorum. Ama oraya bakıyorum ve bir şeyin bana bakması gerektiğini hissediyorum.", "pauseAfterMs": 5000 },
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Doğrudan baktım. Hiçbir şey yok.", "pauseAfterMs": 3500 },
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Köşemden baktım. Derinlik var. Taşın içinde geriye giden derinlik. Burada duran ama çok büyük olan bir şey.", "pauseAfterMs": 5000 },
+        { "type": "realTimeWait", "seconds": 8 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Korkmadım.", "pauseAfterMs": 4000 },
+        { "type": "realTimeWait", "seconds": 4 },
+        { "type": "typing", "speaker": "JONES", "duration": 2000 },
+        { "type": "message", "speaker": "JONES", "text": "Bu daha kötü.", "pauseAfterMs": 6000 },
+        { "type": "statChange", "changes": { "onlarFarkındalığı": 25, "fear": 15, "humanity": 15 }, "pauseAfterMs": 100 }
       ],
       "choices": [
         {
-          "id": "reconstruct_714",
-          "text": "USE 7.14 ACCESS CODE.",
-          "effects": {
-            "danger": 3,
-            "signalStrength": -2,
-            "startedFoundationAccess": true
-          },
-          "nextNodeId": "e14_n04_puzzle",
-          "textKey": "episode_14.e14_n03_foundation.choice0.text"
+          "id": "c2_432_koru",
+          "text": "432 Hz aktif tut. Güneş ve önceki notlar uyardı.",
+          "nextNodeId": "ep14_n08_yazit",
+          "effects": { "trust": 10 }
         },
         {
-          "id": "backup_foundation_index",
-          "text": "BACK UP FOUNDATION INDEX.",
-          "effects": {
-            "danger": 1,
-            "signalStrength": 2,
-            "backedUpFoundationIndex": true
-          },
-          "nextNodeId": "e14_n03_backup",
-          "textKey": "episode_14.e14_n03_foundation.choice1.text"
+          "id": "c2_kes",
+          "text": "Frekansı kes. Burada organizma yok. Belki sessiz ilerlersek daha iyi.",
+          "nextNodeId": "ep14_death_node",
+          "effects": { "riskPattern": 15 }
         }
       ]
     },
-    "e14_n03_backup": {
-      "id": "e14_n03_backup",
-      "speaker": "SYSTEM",
+
+    "ep14_death_node": {
+      "id": "ep14_death_node",
+      "speaker": "SİSTEM",
       "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 2000 },
+        { "type": "message", "speaker": "JONES", "text": "Frekansı kestim. Sessizlik.", "pauseAfterMs": 3000 },
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Duvarlar daha yakın.", "pauseAfterMs": 3500 },
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Güneş bir şey söylüyor. Duyamıyorum. Çok uzak.", "pauseAfterMs": 4000 },
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Emre. Emre nerede?", "pauseAfterMs": 3500 },
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "JONES", "duration": 2000 },
+        { "type": "message", "speaker": "JONES", "text": "Ben kimim?", "pauseAfterMs": 4000 },
+        { "type": "glitch", "duration": 3000, "pauseAfterMs": 800 },
         {
-          "type": "systemAlert",
-          "text": "[FOUNDATION INDEX BACKED UP]",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n03_backup.event0.text"
+          "type": "corruptMessage",
+          "speaker": "SİSTEM",
+          "text": "████ JONES AYDIN — KİMLİK SİNYALİ KAYBOLDU ████",
+          "corruption": "extreme",
+          "pauseAfterMs": 2500
         },
+        { "type": "glitch", "duration": 4000, "pauseAfterMs": 1000 },
+        { "type": "systemAlert", "text": "JONES AYDIN HATIRALARINI KAYBETTİ — BEŞİNCİ KAT", "tone": "critical" },
+        { "type": "realTimeWait", "seconds": 4 },
         {
-          "type": "statChange",
-          "changes": {
-            "signalStrength": 3,
-            "danger": -1
-          }
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Good.",
-          "speaker": "MAYA",
-          "textKey": "episode_14.e14_n03_backup.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "I like having one copy of the nightmare before we open the next one.",
-          "speaker": "MAYA",
-          "textKey": "episode_14.e14_n03_backup.event5.text"
-        }
-      ],
-      "nextNodeId": "e14_n04_puzzle"
-    },
-    "e14_n04_puzzle": {
-      "id": "e14_n04_puzzle",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[FOUNDATION ACCESS REQUIRES INCIDENT CODE]",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n04_puzzle.event0.text"
-        },
-        {
-          "type": "puzzle",
-          "puzzleId": "memory_reconstruction_714",
-          "pauseAfterMs": 700
-        }
-      ],
-      "choices": []
-    },
-    "e14_fail": {
-      "id": "e14_fail",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[ACCESS DENIED]",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_fail.event0.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "danger": 4,
-            "signalStrength": -5,
-            "morale": -1
-          }
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "speaker": "HALE",
-          "textKey": "episode_14.e14_fail.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "7.14 is not a date.",
-          "textKey": "episode_14.e14_fail.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Not a memory.",
-          "textKey": "episode_14.e14_fail.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "A wound with numbers on it.",
-          "textKey": "episode_14.e14_fail.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Try the emergency frequency.",
-          "speaker": "MAYA",
-          "textKey": "episode_14.e14_fail.event11.text"
-        },
-        {
-          "type": "puzzle",
-          "puzzleId": "memory_reconstruction_714",
-          "pauseAfterMs": 700
-        }
-      ],
-      "choices": []
-    },
-    "e14_n08_access_granted": {
-      "id": "e14_n08_access_granted",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[FOUNDATION ACCESS ACCEPTED]",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n08_access_granted.event0.text"
-        },
-        {
-          "type": "progressTask",
-          "id": "foundation_record_restore_14",
-          "title": "FOUNDATION RECORD RESTORE",
-          "subtitle": "Opening pre-station chamber archive",
-          "duration": 42000,
-          "completeText": "[FOUNDATION RECORD RESTORED]",
-          "tone": "system",
-          "pauseAfterMs": 700,
-          "titleKey": "episode_14.e14_n08_access_granted.event1.title",
-          "completeTextKey": "episode_14.e14_n08_access_granted.event1.completeText"
-        },
-        {
-          "type": "file",
-          "id": "foundation_record_01",
-          "fileId": "foundation_record_01",
-          "fileType": "log",
-          "title": "FOUNDATION RECORD 01",
-          "content": "FOUNDATION RECORD\nCHAMBER DISCOVERY: 2181\nSTATION DEPLOYMENT: 2194\nPUBLIC PURPOSE: relay platform\nPRIVATE PURPOSE: containment architecture\nORIGINAL SUBJECT: REDACTED\nWARNING: subject was present before structure.",
-          "caption": "Foundation record confirming the chamber existed before the station was deployed.",
-          "source": "FOUNDATION_ARCHIVE",
-          "tags": [
-            "foundation",
-            "containment",
-            "omega",
-            "prestation"
-          ],
-          "correlationTags": [
-            "omega_origin",
-            "foundation_record",
-            "containment_truth"
-          ],
-          "message": "[FOUNDATION RECORD 01 ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_14.e14_n08_access_granted.event2.title",
-          "contentKey": "episode_14.e14_n08_access_granted.event2.content",
-          "captionKey": "episode_14.e14_n08_access_granted.event2.caption",
-          "messageKey": "episode_14.e14_n08_access_granted.event2.message"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Present before structure.",
-          "speaker": "NOAH",
-          "textKey": "episode_14.e14_n08_access_granted.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "That sentence should not exist.",
-          "speaker": "MAYA",
-          "textKey": "episode_14.e14_n08_access_granted.event6.text"
+          "type": "loopReset",
+          "style": "blackout_loader",
+          "loaderDurationMs": 6000,
+          "fadeInMs": 1500,
+          "fadeOutMs": 1000,
+          "loaderMessage": "JONES AYDIN HAYATINI KAYBETTİ",
+          "subMessage": "Güneş ve üçüncü ziyaret notu uyarmıştı. 432 Hz beşinci katta hayattır.",
+          "pauseAfterMs": 0
         }
       ],
       "choices": [
         {
-          "id": "recover_foundation_logs",
-          "text": "RECOVER FOUNDATION LOGS.",
-          "effects": {
-            "foundationLogsRecovered": true,
-            "coreInstability": true,
-            "danger": 6,
-            "signalStrength": -5,
-            "irreversibleConsequence": "core_instability_from_foundation_recovery",
-            "episode15CoreState": "unstable"
-          },
-          "nextNodeId": "e14_n09_recover",
-          "textKey": "episode_14.e14_n08_access_granted.choice0.text"
+          "id": "death_cp",
+          "text": "Son kayıt noktasından devam et.",
+          "nextNodeId": "ep14_cp01",
+          "restoreCheckpoint": "ep14_cp01"
         },
         {
-          "id": "stabilize_core_first",
-          "text": "STABILIZE CORE FIRST.",
-          "effects": {
-            "foundationLogsLost": true,
-            "coreStable": true,
-            "danger": 2,
-            "signalStrength": 3,
-            "irreversibleConsequence": "foundation_logs_lost",
-            "episode15FoundationState": "logs_lost"
-          },
-          "nextNodeId": "e14_n09_stabilize",
-          "textKey": "episode_14.e14_n08_access_granted.choice1.text"
+          "id": "death_restart",
+          "text": "Baştan başla.",
+          "nextNodeId": "ep01_n01",
+          "restoreCheckpoint": "ep01_n01"
         }
       ]
     },
-    "e14_n09_recover": {
-      "id": "e14_n09_recover",
-      "speaker": "SYSTEM",
+
+    "ep14_n08_yazit": {
+      "id": "ep14_n08_yazit",
+      "speaker": "JONES",
       "events": [
-        {
-          "type": "progressTask",
-          "id": "foundation_logs_recovery_14",
-          "title": "FOUNDATION LOG RECOVERY",
-          "subtitle": "Pulling original chamber logs before core purge",
-          "duration": 36000,
-          "completeText": "[FOUNDATION LOGS RECOVERED]",
-          "tone": "danger",
-          "pauseAfterMs": 700,
-          "titleKey": "episode_14.e14_n09_recover.event0.title",
-          "completeTextKey": "episode_14.e14_n09_recover.event0.completeText"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[CORE INSTABILITY DETECTED]",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n09_recover.event1.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "coreInstability": true,
-            "danger": 5,
-            "signalStrength": -4
-          }
-        },
-        {
-          "type": "file",
-          "id": "foundation_log_recovered",
-          "fileId": "foundation_log_recovered",
-          "fileType": "log",
-          "title": "FOUNDATION LOG RECOVERED",
-          "content": "LOG RECOVERED\nSUBJECT CHAMBER ACTIVE BEFORE CONSTRUCTION\nFIRST CONTAINMENT FAILURE: before Eva Thorne arrival\nORIGINAL SUBJECT DESIGNATION: OMEGA\nNOTE: crew was never told about pre-Eva containment.",
-          "caption": "Recovered foundation log revealing Omega as original subject.",
-          "source": "FOUNDATION_ARCHIVE",
-          "tags": [
-            "omega",
-            "foundation",
-            "containment_failure",
-            "pre_eva"
-          ],
-          "correlationTags": [
-            "omega_origin",
-            "pre_eva_subject",
-            "incident_alpha"
-          ],
-          "message": "[FOUNDATION LOG RECOVERED ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_14.e14_n09_recover.event3.title",
-          "contentKey": "episode_14.e14_n09_recover.event3.content",
-          "captionKey": "episode_14.e14_n09_recover.event3.caption",
-          "messageKey": "episode_14.e14_n09_recover.event3.message"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Omega.",
-          "speaker": "NOAH",
-          "textKey": "episode_14.e14_n09_recover.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "That is not a name.",
-          "speaker": "HALE",
-          "textKey": "episode_14.e14_n09_recover.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Neither was cargo.",
-          "speaker": "MAYA",
-          "textKey": "episode_14.e14_n09_recover.event9.text"
-        }
-      ],
-      "nextNodeId": "e14_n10_after_consequence"
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Güneş bir duvara işaret etti. Üç sembol. Daha önce görmediğim bir sistem.", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "\"Bu üçünü biliyorum\" dedi. \"Yıllar içinde öğrendim.\" Sembolleri gösterdi.", "pauseAfterMs": 4000 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "\"Bu neden önemli?\"", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "\"Çünkü bu mesaj sana yazıldı\" dedi. \"Hep sana yazıldı. Ben yıllarca buradayım. Bana değil.\"", "pauseAfterMs": 5000 },
+        { "type": "statChange", "changes": { "curiosity": 20, "fear": 10, "onlarFarkındalığı": 10 }, "pauseAfterMs": 100 },
+        { "type": "puzzle", "puzzleId": "p_ep14_yazi_coz" }
+      ]
     },
-    "e14_n09_stabilize": {
-      "id": "e14_n09_stabilize",
-      "speaker": "SYSTEM",
+
+    "ep14_yazit_fail": {
+      "id": "ep14_yazit_fail",
+      "speaker": "JONES",
       "events": [
-        {
-          "type": "progressTask",
-          "id": "core_stabilization_14",
-          "title": "CORE STABILIZATION",
-          "subtitle": "Prioritizing system integrity over foundation log recovery",
-          "duration": 34000,
-          "completeText": "[CORE STABILIZED]",
-          "tone": "system",
-          "pauseAfterMs": 700,
-          "titleKey": "episode_14.e14_n09_stabilize.event0.title",
-          "completeTextKey": "episode_14.e14_n09_stabilize.event0.completeText"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[FOUNDATION LOG CACHE PURGED]",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n09_stabilize.event1.text"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[FOUNDATION LOGS LOST]",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n09_stabilize.event2.text"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "foundationLogsLost": true,
-            "coreStable": true,
-            "signalStrength": 4,
-            "danger": -1
-          }
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Core is stable.",
-          "speaker": "HALE",
-          "textKey": "episode_14.e14_n09_stabilize.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "And the first logs are gone.",
-          "speaker": "MAYA",
-          "textKey": "episode_14.e14_n09_stabilize.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Some answers only survive if something breaks.",
-          "speaker": "NOAH",
-          "textKey": "episode_14.e14_n09_stabilize.event9.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "YOU SAVED THE CAGE.",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n09_stabilize.event10.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "NOT WHAT WAS INSIDE.",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n09_stabilize.event11.text"
-        }
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Yanlış. Güneş düzeltti: \"Hatırla. Kişi. Kapidir. Üçü birleşince bir cümle.\"", "pauseAfterMs": 4000 }
       ],
-      "nextNodeId": "e14_n10_after_consequence"
+      "nextNodeId": "ep14_n08_yazit"
     },
-    "e14_n10_after_consequence": {
-      "id": "e14_n10_after_consequence",
-      "speaker": "NOAH",
+
+    "ep14_cp01": {
+      "id": "ep14_cp01",
+      "speaker": "JONES",
       "events": [
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "I keep remembering a voice.",
-          "textKey": "episode_14.e14_n10_after_consequence.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Not Eva.",
-          "textKey": "episode_14.e14_n10_after_consequence.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Older.",
-          "textKey": "episode_14.e14_n10_after_consequence.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Angrier.",
-          "textKey": "episode_14.e14_n10_after_consequence.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "And I don't think it belongs to a person.",
-          "textKey": "episode_14.e14_n10_after_consequence.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Don't do that.",
-          "speaker": "HALE",
-          "textKey": "episode_14.e14_n10_after_consequence.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Don't turn a sound into a monster just because you're afraid of it.",
-          "speaker": "HALE",
-          "textKey": "episode_14.e14_n10_after_consequence.event13.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "I'm afraid because it sounds like it knows me.",
-          "speaker": "NOAH",
-          "textKey": "episode_14.e14_n10_after_consequence.event15.text"
-        }
+        { "type": "checkpoint", "checkpointId": "ep14_cp01", "pauseAfterMs": 100 },
+        { "type": "typing", "speaker": "JONES", "duration": 4000 },
+        { "type": "message", "speaker": "JONES", "text": "'Hatırlayan kişi kapıdır.' Ben — her seferinde geri dönen, not bırakan, hatırlayan kişi — bir kapıyım.", "pauseAfterMs": 5000 },
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Hangi şeyin kapısıyım? Güneş cevaplamadı. Sadece ileriye işaret etti.", "pauseAfterMs": 5000 },
+        { "type": "statChange", "changes": { "onlarFarkındalığı": 15, "curiosity": 20, "memory": ["ep14_hatirlayin_kisi_kapidir"] }, "pauseAfterMs": 100 }
+      ],
+      "nextNodeId": "ep14_n09_emre"
+    },
+
+    "ep14_n09_emre": {
+      "id": "ep14_n09_emre",
+      "speaker": "JONES",
+      "events": [
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "JONES", "duration": 2800 },
+        { "type": "message", "speaker": "JONES", "text": "Emre. Koridorun karanlık ucunda.", "pauseAfterMs": 3500 },
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "EMRE", "duration": 3500 },
+        { "type": "message", "speaker": "EMRE", "text": "O kafeteryada bana kızdın. Kahve yanlış gelmişti.", "pauseAfterMs": 5000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "\"Ben kızmamıştım.\"", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "EMRE", "duration": 3000 },
+        { "type": "message", "speaker": "EMRE", "text": "Kızmıştın. Gözlerin sola kayar kızınca.", "pauseAfterMs": 5000 },
+        { "type": "realTimeWait", "seconds": 8 },
+        { "type": "typing", "speaker": "JONES", "duration": 4000 },
+        { "type": "message", "speaker": "JONES", "text": "Emre bunu biliyor. Sekiz yıldır biliyor. Değişiyor ama bunu hâlâ biliyor.", "pauseAfterMs": 5000 },
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "EMRE", "duration": 4000 },
+        { "type": "message", "speaker": "EMRE", "text": "Aşağıda bir şey var Jones. Ve o şey—", "pauseAfterMs": 2000 },
+        { "type": "realTimeWait", "seconds": 4 },
+        { "type": "typing", "speaker": "EMRE", "duration": 2500 },
+        { "type": "message", "speaker": "EMRE", "text": "◈ ⟐ ⊞.", "pauseAfterMs": 3000 },
+        { "type": "realTimeWait", "seconds": 4 },
+        { "type": "typing", "speaker": "EMRE", "duration": 2500 },
+        { "type": "message", "speaker": "EMRE", "text": "—seni istiyor.", "pauseAfterMs": 5000 },
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Emre az önce sembolleri sesle söyledi. İnsan sesi değildi. Ve fark etmedi.", "pauseAfterMs": 5000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "\"Ne dedin az önce?\"", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "EMRE", "duration": 2000 },
+        { "type": "message", "speaker": "EMRE", "text": "Ne?", "pauseAfterMs": 4000 },
+        { "type": "statChange", "changes": { "emreDeğişim": 3, "emreBaglantisi": 5, "fear": 20, "humanity": 15 }, "pauseAfterMs": 100 }
       ],
       "choices": [
         {
-          "id": "ask_hale_omega",
-          "text": "HALE, WHAT IS OMEGA?",
-          "effects": {
-            "askedHaleOmega": true,
-            "haleTrust": -4,
-            "danger": 3,
-            "signalStrength": -2
-          },
-          "nextNodeId": "e14_n11_hale",
-          "textKey": "episode_14.e14_n10_after_consequence.choice0.text"
+          "id": "c3_geri",
+          "text": "\"Geri çıkalım. İkimiz de. Şimdi.\"",
+          "nextNodeId": "ep14_n10_geri",
+          "effects": { "emreBaglantisi": 8, "trust": 8 }
         },
         {
-          "id": "ask_noah_voice",
-          "text": "NOAH, FOLLOW THE VOICE.",
-          "effects": {
-            "noahFollowedOmegaVoice": true,
-            "noahTrust": 3,
-            "danger": 5,
-            "signalStrength": -3
-          },
-          "nextNodeId": "e14_n11_noah",
-          "textKey": "episode_14.e14_n10_after_consequence.choice1.text"
+          "id": "c3_sor",
+          "text": "\"Ne istiyor benden? Neden özellikle ben?\"",
+          "nextNodeId": "ep14_n10_sor",
+          "effects": { "curiosity": 15, "onlarFarkındalığı": 10, "riskPattern": 5 }
         }
       ]
     },
-    "e14_n11_hale": {
-      "id": "e14_n11_hale",
-      "speaker": "HALE",
+
+    "ep14_n10_geri": {
+      "id": "ep14_n10_geri",
+      "speaker": "JONES",
       "events": [
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Omega was a label.",
-          "textKey": "episode_14.e14_n11_hale.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "A warning label.",
-          "textKey": "episode_14.e14_n11_hale.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "The kind you put on a door when you don't know how to describe what's behind it.",
-          "textKey": "episode_14.e14_n11_hale.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "You asked what came before Eva.",
-          "textKey": "episode_14.e14_n11_hale.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Fine.",
-          "textKey": "episode_14.e14_n11_hale.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Something did.",
-          "textKey": "episode_14.e14_n11_hale.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "And the first smart thing anyone did was stop calling it alive.",
-          "textKey": "episode_14.e14_n11_hale.event13.text"
-        }
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "\"Geri çıkalım Emre. İkimiz.\"", "pauseAfterMs": 3500 },
+        { "type": "realTimeWait", "seconds": 8 },
+        { "type": "typing", "speaker": "EMRE", "duration": 3500 },
+        { "type": "message", "speaker": "EMRE", "text": "Emre...", "pauseAfterMs": 4000 },
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "EMRE", "duration": 3000 },
+        { "type": "message", "speaker": "EMRE", "text": "Ben... burada.", "pauseAfterMs": 5000 },
+        { "type": "typing", "speaker": "JONES", "duration": 4000 },
+        { "type": "message", "speaker": "JONES", "text": "'Emre burada.' Üçüncü şahıs. 'Burdayım' demiyor. 'Emre burada' diyor. Sanki başka birinin yerini tarif ediyor.", "pauseAfterMs": 5500 },
+        { "type": "statChange", "changes": { "emreDeğişim": 2, "emreBaglantisi": -5, "fear": 12 }, "pauseAfterMs": 100 }
       ],
-      "nextNodeId": "e14_n12_origin_records"
+      "nextNodeId": "ep14_n11_cikar"
     },
-    "e14_n11_noah": {
-      "id": "e14_n11_noah",
-      "speaker": "NOAH",
+
+    "ep14_n10_sor": {
+      "id": "ep14_n10_sor",
+      "speaker": "JONES",
       "events": [
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "It's under the room.",
-          "textKey": "episode_14.e14_n11_noah.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "textKey": "episode_14.e14_n11_noah.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "It's inside the room under the room.",
-          "textKey": "episode_14.e14_n11_noah.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "That doesn't make sense.",
-          "textKey": "episode_14.e14_n11_noah.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "I know.",
-          "textKey": "episode_14.e14_n11_noah.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "But it feels true.",
-          "textKey": "episode_14.e14_n11_noah.event11.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Something is breathing where the station should be silent.",
-          "textKey": "episode_14.e14_n11_noah.event13.text"
-        }
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "\"Neden ben? Güneş burada. Sen burada. Neden özellikle ben?\"", "pauseAfterMs": 4000 },
+        { "type": "realTimeWait", "seconds": 8 },
+        { "type": "typing", "speaker": "EMRE", "duration": 4500 },
+        { "type": "message", "speaker": "EMRE", "text": "Çünkü sen hatırlıyorsun. Her seferinde geliyor, her seferinde not bırakıyor ve her seferinde geri dönüyorsun. Onlar için... bu bir dil.", "pauseAfterMs": 5500 },
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "EMRE", "duration": 3500 },
+        { "type": "message", "speaker": "EMRE", "text": "Fotoğrafçısın. Kayıt yapansın.", "pauseAfterMs": 4000 },
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "\"Kamera bozuk.\"", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "EMRE", "duration": 3000 },
+        { "type": "message", "speaker": "EMRE", "text": "Başka yolları var.", "pauseAfterMs": 6000 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "'Başka yolları var.' Emre bunu söyledi. Ve ben bunun ne anlama geldiğini bilmek istemiyorum.", "pauseAfterMs": 5000 },
+        { "type": "statChange", "changes": { "onlarFarkındalığı": 20, "fear": 20, "curiosity": 10 }, "pauseAfterMs": 100 }
       ],
-      "nextNodeId": "e14_n12_origin_records"
+      "nextNodeId": "ep14_n11_cikar"
     },
-    "e14_n12_origin_records": {
-      "id": "e14_n12_origin_records",
-      "speaker": "SYSTEM",
+
+    "ep14_n11_cikar": {
+      "id": "ep14_n11_cikar",
+      "speaker": "JONES",
       "events": [
-        {
-          "type": "file",
-          "id": "omega_origin_index",
-          "fileId": "omega_origin_index",
-          "fileType": "log",
-          "title": "OMEGA ORIGIN INDEX",
-          "content": "CHAMBER DISCOVERY: 2181\nSTATION DEPLOYMENT: 2194\nCONTAINMENT STRUCTURE: built after chamber discovery\nORIGINAL SUBJECT: OMEGA\nBIOLOGICAL STATUS: INCONCLUSIVE\nVOICE STATUS: ACTIVE WITHOUT INTERFACE",
-          "caption": "Omega origin index tying the chamber, station deployment, and original subject together.",
-          "source": "FOUNDATION_ARCHIVE",
-          "tags": [
-            "omega",
-            "origin",
-            "chamber",
-            "voice",
-            "foundation"
-          ],
-          "correlationTags": [
-            "omega_origin",
-            "foundation_record",
-            "not_human"
-          ],
-          "message": "[OMEGA ORIGIN INDEX ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_14.e14_n12_origin_records.event0.title",
-          "contentKey": "episode_14.e14_n12_origin_records.event0.content",
-          "captionKey": "episode_14.e14_n12_origin_records.event0.caption",
-          "messageKey": "episode_14.e14_n12_origin_records.event0.message"
-        },
-        {
-          "type": "systemAlert",
-          "text": "[OMEGA ORIGIN CORRELATION REQUIRED]",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n12_origin_records.event1.text"
-        },
-        {
-          "type": "puzzle",
-          "puzzleId": "omega_origin_correlation_14",
-          "pauseAfterMs": 700
-        }
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Güneş kolumdan tuttu. \"Zamanı\" dedi.", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Emre'ye baktım. Gitmiyordu.", "pauseAfterMs": 4000 },
+        { "type": "realTimeWait", "seconds": 8 },
+        { "type": "typing", "speaker": "JONES", "duration": 2800 },
+        { "type": "message", "speaker": "JONES", "text": "\"Emre.\"", "pauseAfterMs": 3500 },
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "EMRE", "duration": 2500 },
+        { "type": "message", "speaker": "EMRE", "text": "Git Jones.", "pauseAfterMs": 5000 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Bu sefer kendi ismi yerine benimkini söyledi. Bu fark önemli.", "pauseAfterMs": 4500 },
+        { "type": "typing", "speaker": "JONES", "duration": 2800 },
+        { "type": "message", "speaker": "JONES", "text": "Güneş'le çıktım. Emre kaldı.", "pauseAfterMs": 4500 },
+        { "type": "statChange", "changes": { "emreBaglantisi": -8, "humanity": 20, "fear": -10 }, "pauseAfterMs": 100 }
       ],
-      "choices": []
+      "nextNodeId": "ep14_n12_yenisoru"
     },
-    "e14_n14_fail": {
-      "id": "e14_n14_fail",
-      "speaker": "SYSTEM",
+
+    "ep14_n12_yenisoru": {
+      "id": "ep14_n12_yenisoru",
+      "speaker": "JONES",
       "events": [
+        { "type": "realTimeWait", "seconds": 8 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Dördüncü kata çıktım. Güneş yanımda. Basamakların üstünde oturdum.", "pauseAfterMs": 4000 },
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "JONES", "duration": 4000 },
+        { "type": "message", "speaker": "JONES", "text": "'Hatırlayan kişi kapıdır.' Ben kapıyım. Emre 'başka yolları var' dedi. Ve aşağıda bir şey var — ve o şey beni istiyor.", "pauseAfterMs": 5500 },
+        { "type": "realTimeWait", "seconds": 6 },
         {
-          "type": "systemAlert",
-          "text": "[OMEGA ORIGIN CORRELATION FAILED]",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n14_fail.event0.text"
+          "type": "relationshipDialogue",
+          "conditions": { "emreBaglantisi": { "gte": 40 } },
+          "trueText": "Emre'yi buradan çıkarabilirsem... ama o artık çıkmak istemiyor olabilir. Bu farklı bir şey.",
+          "falseText": "Emre içeride. Seçim yapmam lazım. Ama hangi seçimi? Henüz bilmiyorum."
         },
-        {
-          "type": "statChange",
-          "changes": {
-            "danger": 4,
-            "signalStrength": -5
-          }
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "No.",
-          "speaker": "MAYA",
-          "textKey": "episode_14.e14_n14_fail.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Chamber first.",
-          "textKey": "episode_14.e14_n14_fail.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Station after.",
-          "textKey": "episode_14.e14_n14_fail.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Original subject is Omega.",
-          "textKey": "episode_14.e14_n14_fail.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "It's not a timeline if you refuse to look at where it starts.",
-          "speaker": "HALE",
-          "textKey": "episode_14.e14_n14_fail.event11.text"
-        },
-        {
-          "type": "puzzle",
-          "puzzleId": "omega_origin_correlation_14",
-          "pauseAfterMs": 700
-        }
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "JONES", "duration": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Üç şey yapabilirdim. Hepsini görüyorum.", "pauseAfterMs": 4000 },
+        { "type": "typing", "speaker": "JONES", "duration": 4000 },
+        { "type": "message", "speaker": "JONES", "text": "Ama hangisi olduğunu sana henüz söylemiyorum. Bu kararı vermeden önce bilmem gereken şeyler var.", "pauseAfterMs": 5000 },
+        { "type": "statChange", "changes": { "humanity": 10, "curiosity": 10 }, "pauseAfterMs": 100 }
       ],
-      "choices": []
+      "nextNodeId": "ep14_son"
     },
-    "e14_n15_origin_confirmed": {
-      "id": "e14_n15_origin_confirmed",
-      "speaker": "SYSTEM",
+
+    "ep14_son": {
+      "id": "ep14_son",
+      "speaker": "JONES",
       "events": [
+        { "type": "realTimeWait", "seconds": 8 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Operatör. Sen de görüyorsundur bu üç yolu.", "pauseAfterMs": 4500 },
+        { "type": "realTimeWait", "seconds": 6 },
         {
-          "type": "systemAlert",
-          "text": "[OMEGA ORIGIN CONFIRMED]",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n15_origin_confirmed.event0.text"
+          "type": "relationshipDialogue",
+          "conditions": { "trust": { "gte": 60 } },
+          "trueText": "EP01'den beri buradasın. Her şeyi gördün. Ben unutuyordum, sen hatırlıyordun. Şimdi ne yapmalıyım?",
+          "falseText": "Karar yaklaşıyor. Ama henüz değil."
         },
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "systemAlert", "text": "TELSİZ DURUMU: KAŞİF DÖRDÜNCÜ KAT — GÜNEŞİN YANINDA — DİNLENİYOR", "tone": "waiting" },
         {
-          "type": "statChange",
-          "changes": {
-            "signalStrength": 4,
-            "danger": 4
-          }
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Everything didn't start with Eva.",
-          "speaker": "NOAH",
-          "textKey": "episode_14.e14_n15_origin_confirmed.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "What?",
-          "speaker": "MAYA",
-          "textKey": "episode_14.e14_n15_origin_confirmed.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "She wasn't first.",
-          "speaker": "NOAH",
-          "textKey": "episode_14.e14_n15_origin_confirmed.event7.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Noah...",
-          "speaker": "HALE",
-          "textKey": "episode_14.e14_n15_origin_confirmed.event9.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Somebody was already inside the chamber.",
-          "speaker": "NOAH",
-          "textKey": "episode_14.e14_n15_origin_confirmed.event11.text"
-        },
-        {
-          "type": "glitch",
-          "duration": 1200,
-          "pauseAfterMs": 700
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "CORRECT.",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n15_origin_confirmed.event13.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "OMEGA WAS HERE FIRST.",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n15_origin_confirmed.event14.text"
+          "type": "characterBusy",
+          "id": "ep14_bekleme",
+          "character": "JONES",
+          "status": "DÖRDÜNCÜ KAT — BEŞİNCİ KAT BASAMAKLARI",
+          "durationMs": 720000,
+          "returnNodeId": "ep15_n01",
+          "message": "[JONES MEŞGUL]",
+          "notificationTitle": "KATMAN PROJESİ",
+          "notificationBody": "Jones telsiz rezonans hattına geri döndü.",
+          "tone": "waiting"
         }
       ],
       "choices": [
         {
-          "id": "open_omega_master_record",
-          "text": "OPEN OMEGA MASTER RECORD.",
-          "effects": {
-            "openedOmegaMasterRecord": true,
-            "danger": 6,
-            "signalStrength": -4
-          },
-          "nextNodeId": "e14_n16_master",
-          "textKey": "episode_14.e14_n15_origin_confirmed.choice0.text"
-        },
-        {
-          "id": "secure_omega_index_first",
-          "text": "SECURE OMEGA INDEX FIRST.",
-          "effects": {
-            "securedOmegaIndex": true,
-            "danger": 2,
-            "signalStrength": 3
-          },
-          "nextNodeId": "e14_n16_secure",
-          "textKey": "episode_14.e14_n15_origin_confirmed.choice1.text"
-        }
-      ]
-    },
-    "e14_n16_secure": {
-      "id": "e14_n16_secure",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "systemAlert",
-          "text": "[OMEGA INDEX SECURED]",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n16_secure.event0.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Good.",
-          "speaker": "MAYA",
-          "textKey": "episode_14.e14_n16_secure.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "I don't know what good means anymore, but good.",
-          "speaker": "MAYA",
-          "textKey": "episode_14.e14_n16_secure.event4.text"
-        }
-      ],
-      "nextNodeId": "e14_n16_master"
-    },
-    "e14_n16_master": {
-      "id": "e14_n16_master",
-      "speaker": "SYSTEM",
-      "events": [
-        {
-          "type": "file",
-          "id": "omega_master_record",
-          "fileId": "omega_master_record",
-          "fileType": "file",
-          "title": "OMEGA MASTER RECORD",
-          "content": "OMEGA MASTER RECORD\nACCESS: PARTIAL\nSUBJECT TYPE: NON-HUMAN / UNRESOLVED\nCONTAINMENT CLASS: FIRST CHAMBER\nINTERACTION WARNING: subject imitates memory before language\nINCIDENT LINK: ALPHA / EVA THORNE / DOOR 12",
-          "caption": "Partial Omega master record. Subject type is marked non-human or unresolved.",
-          "source": "RESTRICTED_FOUNDATION_ARCHIVE",
-          "tags": [
-            "omega",
-            "nonhuman",
-            "first_chamber",
-            "incident_alpha",
-            "eva_thorne"
-          ],
-          "correlationTags": [
-            "omega_origin",
-            "not_human",
-            "incident_alpha"
-          ],
-          "message": "[OMEGA MASTER RECORD ARCHIVED TO DATA BANK]",
-          "pauseAfterMs": 900,
-          "titleKey": "episode_14.e14_n16_master.event0.title",
-          "contentKey": "episode_14.e14_n16_master.event0.content",
-          "captionKey": "episode_14.e14_n16_master.event0.caption",
-          "messageKey": "episode_14.e14_n16_master.event0.message"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Non-human slash unresolved.",
-          "speaker": "MAYA",
-          "textKey": "episode_14.e14_n16_master.event2.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "That's not a category.",
-          "speaker": "NOAH",
-          "textKey": "episode_14.e14_n16_master.event4.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "It is when the category keeps changing.",
-          "speaker": "HALE",
-          "textKey": "episode_14.e14_n16_master.event6.text"
-        }
-      ],
-      "nextNodeId": "e14_n17_final"
-    },
-    "e14_n17_final": {
-      "id": "e14_n17_final",
-      "speaker": "MAYA",
-      "events": [
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Omega?",
-          "textKey": "episode_14.e14_n17_final.event1.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "That's impossible.",
-          "speaker": "NOAH",
-          "textKey": "episode_14.e14_n17_final.event3.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Eva wasn't the first resident.",
-          "speaker": "NOAH",
-          "textKey": "episode_14.e14_n17_final.event5.text"
-        },
-        {
-          "type": "typing",
-          "duration": 1400
-        },
-        {
-          "type": "message",
-          "text": "Then who was?",
-          "speaker": "MAYA",
-          "textKey": "episode_14.e14_n17_final.event7.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "THE FIRST RESIDENT",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n17_final.event8.text"
-        },
-        {
-          "type": "corruptMessage",
-          "speaker": "UNKNOWN",
-          "text": "WAS NEVER HUMAN.",
-          "pauseAfterMs": 700,
-          "textKey": "episode_14.e14_n17_final.event9.text"
-        },
-        {
-          "type": "signalLost",
-          "duration": 3000,
-          "message": "[SIGNAL LOST]",
-          "restoreMessage": "[SIGNAL RESTORED]",
-          "pauseAfterMs": 700,
-          "messageKey": "episode_14.e14_n17_final.event10.message",
-          "restoreMessageKey": "episode_14.e14_n17_final.event10.restoreMessage"
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "omegaRevealed": true,
-            "danger": 7,
-            "signalStrength": -6
-          }
-        }
-      ],
-      "choices": [
-        {
-          "id": "access_omega_archive",
-          "text": "ACCESS OMEGA ARCHIVE.",
-          "effects": {
-            "accessingOmegaArchive": true,
-            "omegaRevealed": true,
-            "danger": 5,
-            "signalStrength": -4,
-            "episode15StartMode": "omega_archive"
-          },
+          "id": "ep14_bitis",
+          "text": "Telsiz başında kal. Jones'un dönmesini bekle.",
           "nextEpisodeId": "episode_15",
-          "textKey": "episode_14.e14_n17_final.choice0.text"
+          "nextNodeId": "ep15_n01"
+        }
+      ]
+    },
+
+    "ep14_hard_fail": {
+      "id": "ep14_hard_fail",
+      "speaker": "SİSTEM",
+      "events": [
+        { "type": "glitch", "duration": 2000, "pauseAfterMs": 800 },
+        {
+          "type": "corruptMessage",
+          "speaker": "SİSTEM",
+          "text": "░░░ SİNYAL KAYBI // YENİDEN SENKRONİZE EDİLİYOR ░░░",
+          "corruption": "extreme",
+          "pauseAfterMs": 2500
+        },
+        { "type": "systemAlert", "text": "SON GÜVENLİ KAYIT NOKTASINA DÖNÜLÜYOR", "tone": "warning" },
+        {
+          "type": "statChange",
+          "changes": { "fear": 15, "timesNearDeath": 1, "mentalStability": -10 },
+          "pauseAfterMs": 100
         },
         {
-          "id": "secure_foundation_records",
-          "text": "SECURE FOUNDATION RECORDS.",
-          "effects": {
-            "securedFoundationRecords": true,
-            "omegaRevealed": true,
-            "danger": 2,
-            "signalStrength": 3,
-            "episode15StartMode": "secure_foundation_records"
-          },
-          "nextEpisodeId": "episode_15",
-          "textKey": "episode_14.e14_n17_final.choice1.text"
+          "type": "loopReset",
+          "style": "blackout_loader",
+          "loaderDurationMs": 3500,
+          "loaderMessage": "TELSİZ FREKANSI YENİDEN SENKRONİZE EDİLİYOR",
+          "subMessage": "Son kayıt noktasına dönülüyor.",
+          "pauseAfterMs": 0
+        }
+      ],
+      "choices": [
+        {
+          "id": "restart_ep14",
+          "text": "Devam et.",
+          "nextNodeId": "ep14_cp01",
+          "restoreCheckpoint": "ep14_cp01"
         }
       ]
     }
-  },
-  "relationshipConsequenceSystem": {
-    "episode14PersistentFlags": [
-      "askedNoahOmegaRoom",
-      "pressedHaleOmegaEarly",
-      "backedUpFoundationIndex",
-      "foundationLogsRecovered",
-      "coreInstability",
-      "foundationLogsLost",
-      "coreStable",
-      "askedHaleOmega",
-      "noahFollowedOmegaVoice",
-      "openedOmegaMasterRecord",
-      "securedOmegaIndex",
-      "omegaRevealed",
-      "accessingOmegaArchive",
-      "securedFoundationRecords"
-    ],
-    "episode15UsageNotes": {
-      "foundationLogsRecovered": "Episode 15 has more Omega data available but the core should be unstable.",
-      "coreInstability": "Signal glitches, station instability, and system errors should be stronger.",
-      "foundationLogsLost": "Some foundation logs are permanently gone; Omega truth must be reconstructed with gaps.",
-      "coreStable": "Station systems are calmer but evidence is missing.",
-      "pressedHaleOmegaEarly": "Hale begins Episode 15 defensive and afraid of Omega questions.",
-      "noahFollowedOmegaVoice": "Noah is more connected to Omega's voice and may be less stable.",
-      "omegaRevealed": "Episode 15 must open with Omega as the central question.",
-      "accessingOmegaArchive": "Episode 15 starts aggressively inside Omega archive.",
-      "securedFoundationRecords": "Episode 15 starts safer but slower, with foundation records protected."
-    }
-  },
-  "directorCut": {
-    "version": "FINAL_DIRECTORS_CUT_V8",
-    "sourceEpisode": "episode_14",
-    "coreRewrite": "Rebuilt from uploaded Episode 14 JSON. The repeated Eva/seventh-manifest investigation was replaced with a deeper Omega/Foundation Archive arc.",
-    "majorChanges": [
-      "Episode objective changed from 'who was Eva/seventh' to 'who or what existed before Eva'.",
-      "Preserved 7.14 puzzle as Foundation Access code.",
-      "Replaced Eva identity correlation with Omega origin correlation.",
-      "UNKNOWN now pushes story: chamber older, Eva not first, Omega was here first.",
-      "Added irreversible consequence: Recover Foundation Logs causes core instability.",
-      "Added irreversible consequence: Stabilize Core loses foundation logs.",
-      "Noah opens as human and damaged before giving information.",
-      "Hale is defensive and fearful, not a clean lore narrator.",
-      "Final reveal changes Episode 15 hook to: The First Resident was never human."
-    ],
-    "qualityTarget": {
-      "concreteObjective": "10/10",
-      "humanization": "10/10",
-      "unknownStoryFunction": "10/10",
-      "consequence": "10/10",
-      "horror": "10/10",
-      "cliffhanger": "10/10",
-      "rulesCompliance": "9.5/10"
-    },
-    "nextEpisode": "episode_15"
-  },
-  "titleKey": "episode_14.meta.episode0.title"
+
+  }
 }

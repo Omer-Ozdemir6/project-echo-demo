@@ -19,9 +19,23 @@ export default function StartScreen({
   const [isLeaving, setIsLeaving] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
+  
+  // YENİ EKLENEN STATELER
+  const [warningStage, setWarningStage] = useState(0);
+  const [connMsg, setConnMsg] = useState("");
+  const [isTitleFading, setIsTitleFading] = useState(false); // Başlık fade out kontrolü
 
   const language = settings?.language || "en";
 
+  // YENİ EKLENEN: Uyarılar Zamanlayıcısı (Fade In/Out)
+  useEffect(() => {
+    if (introStep !== "warnings") return;
+    const t1 = setTimeout(() => setWarningStage(1), 3000);
+    const t2 = setTimeout(() => setIntroStep("disclaimer"), 6000);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [introStep]);
+
+  // ORİJİNAL: Yasal Uyarı Zamanlayıcısı
   useEffect(() => {
     if (introStep !== "disclaimer") return;
     const leaveTimer = setTimeout(() => setIsLeaving(true), 3600);
@@ -29,12 +43,54 @@ export default function StartScreen({
     return () => { clearTimeout(leaveTimer); clearTimeout(nextTimer); };
   }, [introStep]);
 
+  // ORİJİNAL: İlk Açılış Ara Yükleme Zamanlayıcısı -> Doğrudan Sistem Bağlantısına Geçiş
   useEffect(() => {
     if (introStep !== "initialLoading") return;
-    const menuTimer = setTimeout(() => setIntroStep("start"), 2500);
+    const menuTimer = setTimeout(() => setIntroStep("systemConnection"), 2500);
     return () => clearTimeout(menuTimer);
   }, [introStep]);
 
+  // YENİ EKLENEN: Sistem Bağlantısı Zamanlayıcısı (Jones konuşmadan terminal stili)
+  useEffect(() => {
+    if (introStep !== "systemConnection") return;
+    const msgs = [
+      "SİNYAL ARANIYOR...",
+      "GÜVENLİK PROTOKOLLERİ AŞILIYOR...",
+      "FREKANS EŞLEŞTİRİLİYOR...",
+      "BAĞLANTI KURULDU."
+    ];
+    let i = 0;
+    setConnMsg(msgs[i]);
+    const interval = setInterval(() => {
+      i++;
+      if (i >= msgs.length) {
+        clearInterval(interval);
+        setTimeout(() => setIntroStep("blackout"), 500);
+      } else {
+        setConnMsg(msgs[i]);
+      }
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [introStep]);
+
+  // YENİ EKLENEN: Tam Kararma Ekranı (Bağlantıdan sonra anlık boşluk)
+  useEffect(() => {
+    if (introStep !== "blackout") return;
+    const t = setTimeout(() => setIntroStep("titleReveal"), 1000);
+    return () => clearTimeout(t);
+  }, [introStep]);
+
+  // YENİ EKLENEN: Echo Protocol Yazısı (4 saniye bekler, sonra 1 saniye fade out)
+  useEffect(() => {
+    if (introStep !== "titleReveal") return;
+    const t = setTimeout(() => {
+      setIsTitleFading(true);
+      setTimeout(() => setIntroStep("start"), 1000);
+    }, 4000);
+    return () => clearTimeout(t);
+  }, [introStep]);
+
+  // ORİJİNAL: Brifing Metinlerinin Ekrana Sırayla Gelme Zamanlayıcıları
   useEffect(() => {
     if (introStep !== "briefing") return;
     const timers = [
@@ -44,12 +100,14 @@ export default function StartScreen({
     return () => timers.forEach(clearTimeout);
   }, [introStep]);
 
+  // ORİJİNAL: Brifing Sonrası Derin Bağlantı Yükleme Ekranı Zamanlayıcısı
   useEffect(() => {
     if (introStep !== "loading") return;
     const t = setTimeout(() => { onStart?.(); }, 4000);
     return () => clearTimeout(t);
   }, [introStep, onStart]);
 
+  // ORİJİNAL: Buton İşlevi
   const handleAcceptBriefing = () => {
     if (isButtonLoading) return;
     setIsButtonLoading(true);
@@ -57,7 +115,37 @@ export default function StartScreen({
     setTimeout(() => { setIntroStep("loading"); setIsLeaving(false); }, 1800);
   };
 
-  if (introStep === "producerLogo") return <ProducerLogoAnimation src="/red-door-logo.jpg" alt="Red Door" onComplete={() => setIntroStep("disclaimer")} />;
+  // Tıklama ile Başlığı Kapatma İşlevi
+  const handleTitleClick = () => {
+    if (isTitleFading) return;
+    setIsTitleFading(true);
+    setTimeout(() => setIntroStep("start"), 1000);
+  };
+
+
+  // --- AŞAMALAR ---
+
+  if (introStep === "producerLogo") return <ProducerLogoAnimation src="/red-door-logo.jpg" alt="Red Door" onComplete={() => setIntroStep("warnings")} />;
+
+  // YENİ EKLENEN: Uyarılar (Fade in - Fade out)
+  if (introStep === "warnings") {
+    return (
+      <main className="fixed inset-0 grid place-items-center bg-black font-mono text-stone-300 select-none">
+        <style>{`
+          @keyframes fadeInOutWarnings {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+          }
+          .animate-fade-in-out { animation: fadeInOutWarnings 3s forwards; }
+        `}</style>
+        <p key={warningStage} className="tracking-[0.2em] uppercase text-sm md:text-base animate-fade-in-out">
+          {warningStage === 0 ? "HEADPHONES ARE HIGHLY RECOMMENDED" : "THIS GAME SAVES AUTOMATICALLY"}
+        </p>
+      </main>
+    );
+  }
 
   if (introStep === "disclaimer") {
     return (
@@ -105,6 +193,7 @@ export default function StartScreen({
     );
   }
 
+  // YALNIZCA YENİ OYUN (Loading): Açılış sekansından çıkarıldı, sadece Yeni Oyun ile tetiklenir
   if (introStep === "loading") {
     return (
       <main className="fixed inset-0 flex items-center justify-center bg-neutral-950 font-mono select-none text-stone-500">
@@ -127,14 +216,55 @@ export default function StartScreen({
     );
   }
 
+  // YENİ EKLENEN: Sistem Bağlantı Ekranı
+  if (introStep === "systemConnection") {
+    return (
+      <main className="fixed inset-0 grid place-items-center bg-black font-mono text-amber-600 select-none">
+        <style>{`
+          @keyframes fadeInOutSystem {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+          }
+          .sys-anim { animation: fadeInOutSystem 2s forwards; }
+        `}</style>
+        <p key={connMsg} className="tracking-widest text-lg sys-anim uppercase">
+          {connMsg}
+        </p>
+      </main>
+    );
+  }
+
+  // YENİ EKLENEN: Tam Siyah Bekleme Ekranı
+  if (introStep === "blackout") {
+    return <main className="fixed inset-0 bg-black cursor-default select-none" />;
+  }
+
+  // YENİ EKLENEN: Başlık Ekranı (Fade out ile Ana Menüye geçer)
+  if (introStep === "titleReveal") {
+    return (
+      <main 
+        className={[
+          "fixed inset-0 grid place-items-center bg-black text-white font-mono cursor-pointer select-none transition-opacity duration-1000",
+          isTitleFading ? "opacity-0" : "opacity-100"
+        ].join(" ")}
+        onClick={handleTitleClick}
+      >
+        <div className="text-center">
+          <h1 className="text-5xl md:text-7xl tracking-[0.4em] uppercase font-light leading-snug">
+            ECHO<br/>PROTOCOL
+          </h1>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="relative flex min-h-dvh items-center justify-start bg-black font-mono select-none overflow-hidden text-stone-300">
       <img src="/echo-menu-bg.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-80" draggable={false} />
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
       
-      <div className="absolute right-10 top-20 text-[14px] text-stone-500 opacity-40 font-serif italic text-right leading-relaxed rotate-90 tracking-widest">
-        GERİ DÖNDÜĞÜNDE <br/> BANA İNANMA <br/> — JONES
-      </div>
 
       <section className="relative z-10 ml-20 flex flex-col">
         <h1 className="text-5xl tracking-[0.2em] text-white mb-2 uppercase font-light">{gameTitle}</h1>
@@ -143,14 +273,13 @@ export default function StartScreen({
         <div className="flex flex-col gap-6 w-80">
           <button onClick={onContinue} disabled={!hasSavedGame} className="flex flex-col border-l-2 border-stone-600 pl-4 py-2 hover:border-amber-600 transition-all text-left">
             <span className="text-lg uppercase">Devam Et</span>
-            <span className="text-[10px] text-stone-500">Son Kayıt: Bölüm 13</span>
+            <span className="text-[10px] text-stone-500">Son Kayıt: Bölüm 1</span>
           </button>
           <button onClick={() => setIntroStep("briefing")} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Yeni Oyun</button>
-          <button onClick={onOpenCredits} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Kayıtlar // Künye</button>
+          <button onClick={onOpenCredits} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Künye</button>
           <button onClick={() => setIsSettingsOpen(true)} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Ayarlar</button>
         </div>
 
-        <p className="mt-24 text-[11px] text-stone-600 italic">“Hafıza güvenilmez. Gerçeklik değişken.”</p>
       </section>
 
       {isSettingsOpen && (
