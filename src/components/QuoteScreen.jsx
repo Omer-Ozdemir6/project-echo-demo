@@ -153,17 +153,14 @@ export default function QuoteScreen({ quote, onComplete, language = "en" }) {
             );
           })}
 
-          {author && (
+{author && (
             <div
-              className={[
-                "mt-16 text-right text-sm font-normal tracking-[0.2em] text-amber-600/60 uppercase not-italic font-mono transition-all duration-[2000ms]",
-                customElements,
-                authorBlowAway ? "wind-particles" : ""
-              ].join(" ")}
-              style={!authorBlowAway ? {
+              className="mt-16 text-right text-sm font-normal tracking-[0.2em] text-amber-600/60 uppercase not-italic font-mono transition-all duration-[2500ms]"
+              style={{
                 opacity: authorVisible ? 1 : 0,
                 transform: authorVisible ? "translateX(0)" : "translateX(-10px)",
-              } : undefined}
+                filter: authorVisible ? "blur(0px)" : "blur(3px)",
+              }}
             >
               — {author}
             </div>
