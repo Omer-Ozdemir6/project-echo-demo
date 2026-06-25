@@ -58,10 +58,17 @@ export default function CreditsScreen({ onClose }) {
               : "w-full text-center transform translate-y-0"
           }
         >
-          {/* Sığınak Kapısı Simgesi / Logo alanı */}
-          <div className="mx-auto mb-16 w-12 h-12 border-2 border-dashed border-amber-900/40 rounded-full flex items-center justify-center text-amber-600/40 font-black text-xs select-none">
-            🜁
-          </div>
+{/* Sığınak Kapısı Simgesi / Logo alanı */}
+<div className="mx-auto mb-16 flex flex-col items-center justify-center select-none">
+  <div className="w-12 h-12 border-2 border-dashed border-amber-900/40 rounded-full flex items-center justify-center text-amber-600/40 font-black text-xs">
+    🜁
+  </div>
+  <img 
+    src="/red-door-logo.jpg" 
+    alt="Red Door" 
+    className="mt-4 w-16 h-auto opacity-80" 
+  />
+</div>
 
           <h1 className="mb-28 text-2xl tracking-[0.4em] font-bold text-stone-100 sm:text-3xl uppercase">
             PROJECT ECHO
