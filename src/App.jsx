@@ -313,6 +313,59 @@ function App() {
   }, [phase, gameState.busyState?.busyUntil]);
 
   useEffect(() => {
+  // Scroll'u kapat
+  document.documentElement.style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
+
+  document.body.style.position = "fixed";
+  document.body.style.width = "100%";
+  document.body.style.height = "100%";
+  document.body.style.touchAction = "none";
+  document.body.style.overscrollBehavior = "none";
+
+  const preventDefault = (e) => e.preventDefault();
+
+  // Mouse wheel
+  window.addEventListener("wheel", preventDefault, {
+    passive: false,
+  });
+
+  // Mobil scroll
+  window.addEventListener("touchmove", preventDefault, {
+    passive: false,
+  });
+
+  // Zoom
+  window.addEventListener("gesturestart", preventDefault);
+  window.addEventListener("gesturechange", preventDefault);
+
+  // Ctrl + MouseWheel zoom
+  const preventZoom = (e) => {
+    if (e.ctrlKey) e.preventDefault();
+  };
+
+  window.addEventListener("wheel", preventZoom, {
+    passive: false,
+  });
+
+  return () => {
+    window.removeEventListener("wheel", preventDefault);
+    window.removeEventListener("touchmove", preventDefault);
+    window.removeEventListener("gesturestart", preventDefault);
+    window.removeEventListener("gesturechange", preventDefault);
+    window.removeEventListener("wheel", preventZoom);
+
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
+    document.body.style.position = "";
+    document.body.style.width = "";
+    document.body.style.height = "";
+    document.body.style.touchAction = "";
+    document.body.style.overscrollBehavior = "";
+  };
+}, []);
+
+  useEffect(() => {
     if (phase !== "booting" || !activeStep) return;
 
     return runBootStep({

@@ -1080,7 +1080,7 @@
       ]
     },
 
-    "ep01_hard_fail": {
+   "ep01_hard_fail": {
       "id": "ep01_hard_fail",
       "speaker": "SİSTEM",
       "events": [
@@ -1092,9 +1092,7 @@
           "corruption": "extreme",
           "pauseAfterMs": 2500
         },
-        { "type": "glitch", "duration": 2500, "pauseAfterMs": 500 },
         { "type": "systemAlert", "text": "HATA: REZONANS BAĞLANTI KÖPRÜSÜ ÇÖKTÜ", "tone": "critical" },
-        { "type": "systemAlert", "text": "SİNYAL: SON GÜVENLİ GERİ YÜKLENİYOR...", "tone": "warning" },
         {
           "type": "statChange",
           "changes": { "fear": 25, "timesNearDeath": 1, "mentalStability": -20 },
@@ -1107,20 +1105,19 @@
           "fadeInMs": 800,
           "fadeOutMs": 600,
           "loaderMessage": "TELSİZ FREKANSI RE-SENKRONİZE EDİLİYOR",
-          "subMessage": "İlk katman sismik güvenli noktasına dönülüyor.",
-          "pauseAfterMs": 0
+          "subMessage": "Güvenli noktaya dönülüyor...",
+          "pauseAfterMs": 500
         }
       ],
       "choices": [
         {
           "id": "restart_1",
-          "text": "Frekansı yeniden yakala ve son kayıt noktasından devam et.",
-          "nextNodeId": "ep01_n16_titresim",
-          "restoreCheckpoint": "ep01_cp01"
+          "text": "Sinyali tekrar yakala ve denemeye devam et.",
+          "nextNodeId": "ep01_n16_titresim"
         },
         {
           "id": "restart_2",
-          "text": "Sinyali zorla, bağlantıyı tekrar kur.",
+          "text": "Telsizi resetle ve bir önceki güvenli noktadan başlat.",
           "nextNodeId": "ep01_n16_titresim",
           "restoreCheckpoint": "ep01_cp01"
         }

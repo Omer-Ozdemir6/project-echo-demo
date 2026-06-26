@@ -13,7 +13,11 @@ import episode_11 from "./episode-11.json";
 import episode_12 from "./episode-12.json";
 import episode_13 from "./episode-13.json";
 import episode_14 from "./episode-14.json";
-
+import episode_15 from "./episode-15.json";
+import episode_16 from "./episode-16.json";
+import episode_17 from "./episode-17.json";
+import episode_18 from "./episode-18.json";
+import episode_19 from "./episode-19.json";
 
 const locale = {
   ...game,
@@ -31,6 +35,11 @@ const locale = {
   ...episode_12,
   ...episode_13,
   ...episode_14,
+  ...episode_15,
+  ...episode_16,
+  ...episode_17,
+  ...episode_18,
+  ...episode_19,
 };
 
 export default locale;

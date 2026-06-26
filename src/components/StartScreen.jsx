@@ -19,6 +19,7 @@ export default function StartScreen({
   const [isLeaving, setIsLeaving] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
+  const [showProducerLogo, setShowProducerLogo] = useState(false);
   
   // YENİ EKLENEN STATELER
   const [warningStage, setWarningStage] = useState(0);
@@ -29,6 +30,18 @@ export default function StartScreen({
   const audioRef = useRef(null);
 
   const language = settings?.language || "en";
+
+useEffect(() => {
+  if (introStep !== "producerLogo") return;
+
+  setShowProducerLogo(false);
+
+  const timer = setTimeout(() => {
+    setShowProducerLogo(true);
+  }, 5500);
+
+  return () => clearTimeout(timer);
+}, [introStep]);
 
   // MÜZİK YÖNETİMİ: titleReveal anında başlar, sadece oyun başlatılınca durur.
   useEffect(() => {
@@ -146,7 +159,19 @@ export default function StartScreen({
 
   // --- AŞAMALAR ---
 
-  if (introStep === "producerLogo") return <ProducerLogoAnimation src="/red-door-logo.jpg" alt="Red Door" onComplete={() => setIntroStep("warnings")} />;
+  if (introStep === "producerLogo") {
+  return (
+    <main className="fixed inset-0 bg-black">
+      {showProducerLogo && (
+        <ProducerLogoAnimation
+          src="/red-door-logo.jpg"
+          alt="Red Door"
+          onComplete={() => setIntroStep("warnings")}
+        />
+      )}
+    </main>
+  );
+}
 
   // YENİ EKLENEN: Uyarılar (Fade in - Fade out)
   if (introStep === "warnings") {
@@ -161,7 +186,6 @@ export default function StartScreen({
           }
           .animate-fade-in-out { animation: fadeInOutWarnings 3s forwards; }
         `}</style>
-
       </main>
     );
   }
@@ -212,7 +236,6 @@ export default function StartScreen({
     );
   }
 
-  // YALNIZCA YENİ OYUN (Loading): Açılış sekansından çıkarıldı, sadece Yeni Oyun ile tetiklenir
   if (introStep === "loading") {
     return (
       <main className="fixed inset-0 flex items-center justify-center bg-neutral-950 font-mono select-none text-stone-500">
@@ -222,7 +245,6 @@ export default function StartScreen({
           <p className="font-bold text-rose-600">[ UYARI: DERİN KATMANDA BELİRSİZ HAREKETLİLİK TESPİT EDİLDİ ]</p>
           <p>TELSİZ KANALI FREKANS KİLİDİ STABİLİZASYONU...</p>
         </div>
-        {/* Dönen tekerlek geri eklendi */}
         <div className="fixed bottom-8 right-8 flex items-center gap-4 text-stone-400">
           <span className="text-[10px] tracking-wider uppercase font-bold opacity-50 text-amber-500">LINKING_</span>
           <div className="relative w-6 h-6">
@@ -235,7 +257,6 @@ export default function StartScreen({
     );
   }
 
-  // YENİ EKLENEN: Sistem Bağlantı Ekranı
   if (introStep === "systemConnection") {
     return (
       <main className="fixed inset-0 grid place-items-center bg-black font-mono text-amber-600 select-none">
@@ -255,12 +276,10 @@ export default function StartScreen({
     );
   }
 
-  // YENİ EKLENEN: Tam Siyah Bekleme Ekranı
   if (introStep === "blackout") {
     return <main className="fixed inset-0 bg-black cursor-default select-none" />;
   }
 
-  // YENİ EKLENEN: Başlık Ekranı (Fade out ile Ana Menüye geçer)
   if (introStep === "titleReveal") {
     return (
       <main 
@@ -277,28 +296,30 @@ export default function StartScreen({
   }
 
   return (
-    <main className="relative flex min-h-dvh items-center justify-start bg-black font-mono select-none overflow-hidden text-stone-300">
-      <img src="/echo-menu-bg.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-80" draggable={false} />
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
-      
-      <section className="relative z-10 ml-20 flex flex-col">
-        <h1 className="text-5xl tracking-[0.2em] text-white mb-2 uppercase font-light">{gameTitle}</h1>
-        {subtitle && <p className="text-sm tracking-[0.5em] text-stone-500 uppercase mb-12">{subtitle}</p>}
+    <div className="fade-in-transition bg-black min-h-dvh">
+      <main className="relative flex min-h-dvh items-center justify-start bg-black font-mono select-none overflow-hidden text-stone-300">
+        <img src="/echo-menu-bg.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-80" draggable={false} />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
         
-        <div className="flex flex-col gap-6 w-80">
-          <button onClick={() => { stopMusic(); onContinue(); }} disabled={!hasSavedGame} className="flex flex-col border-l-2 border-stone-600 pl-4 py-2 hover:border-amber-600 transition-all text-left">
-            <span className="text-lg uppercase">Devam Et</span>
-            <span className="text-[10px] text-stone-500">Son Kayıt: Bölüm 1</span>
-          </button>
-          <button onClick={() => { stopMusic(); setIntroStep("briefing"); }} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Yeni Oyun</button>
-          <button onClick={onOpenCredits} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Künye</button>
-          <button onClick={() => setIsSettingsOpen(true)} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Ayarlar</button>
-        </div>
-      </section>
+        <section className="relative z-10 ml-20 flex flex-col">
+          <h1 className="text-5xl tracking-[0.2em] text-white mb-2 uppercase font-light">{gameTitle}</h1>
+          {subtitle && <p className="text-sm tracking-[0.5em] text-stone-500 uppercase mb-12">{subtitle}</p>}
+          
+          <div className="flex flex-col gap-6 w-80">
+            <button onClick={() => { stopMusic(); onContinue(); }} disabled={!hasSavedGame} className="flex flex-col border-l-2 border-stone-600 pl-4 py-2 hover:border-amber-600 transition-all text-left">
+              <span className="text-lg uppercase">Devam Et</span>
+              <span className="text-[10px] text-stone-500">Son Kayıt: Bölüm 1</span>
+            </button>
+            <button onClick={() => { setIntroStep("briefing"); }} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Yeni Oyun</button>
+            <button onClick={onOpenCredits} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Künye</button>
+            <button onClick={() => setIsSettingsOpen(true)} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Ayarlar</button>
+          </div>
+        </section>
 
-      {isSettingsOpen && (
-        <SettingsModal settings={settings} onChangeSettings={onChangeSettings} onReset={onReset} onClose={() => setIsSettingsOpen(false)} />
-      )}
-    </main>
+        {isSettingsOpen && (
+          <SettingsModal settings={settings} onChangeSettings={onChangeSettings} onReset={onReset} onClose={() => setIsSettingsOpen(false)} />
+        )}
+      </main>
+    </div>
   );
 }
