@@ -2,7 +2,7 @@ import memoryEngine from "./memoryEngine";
 import injuryEngine from "./injuryEngine";
 import { isDead } from "./deathEngine";
 
-function clamp(value, min = 0, max = 100) {
+function clamp(value, min = 0, max = 2000) {
   const number = Number(value);
   if (Number.isNaN(number)) return min;
   return Math.min(max, Math.max(min, number));

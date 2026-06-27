@@ -1,9 +1,8 @@
 import eventConfig from "../config/eventConfig.json";
 
 export function scheduleEvent(
-save,
-eventId,
-currentEpisode
+ save,
+ eventId
 ) {
 const config =
 eventConfig[eventId];
@@ -16,27 +15,22 @@ save.scheduledEvents =
 save.scheduledEvents || [];
 
 if (
-  gameState.completedEvents.includes(eventId)
-) {
-  return;
-}
+  save.completedEvents.includes(eventId)
+ ) {
+  return save;
+ }
 
 const alreadyScheduled =
-  gameState.scheduledEvents.some(
+  save.scheduledEvents.some(
     event => event.id === eventId
   );
 
 if (alreadyScheduled) {
-  return;
-}
+  return save;
+ }
 
 save.scheduledEvents.push({
 id: eventId,
-sourceEpisode:
-currentEpisode,
-triggerEpisode:
-currentEpisode +
-config.triggerAfterEpisodes,
 status: "pending"
 });
 
@@ -44,8 +38,8 @@ return save;
 }
 
 export function getTriggeredEvents(
-save,
-currentEpisode
+ save,
+ currentEpisode
 ) {
 return (
 save?.scheduledEvents || []
@@ -55,14 +49,10 @@ event.status !== "pending"
 ) {
 return false;
 }
-
-```
 return (
   currentEpisode >=
   event.triggerEpisode
 );
-```
-
 });
 }
 
@@ -112,19 +102,16 @@ return false;
 }
 
 if (
-config.requiredFlags
-) {
-const allFlagsExist =
-config.requiredFlags.every(
-(flag) =>
-save.flags?.[flag]
-);
-
-```
-if (!allFlagsExist) {
+  config.requiredFlags
+ ) {
+ if (
+   !config.requiredFlags.every(
+     (flag) =>
+     save.flags?.[flag]
+   )
+ ) {
   return false;
-}
-```
+ }
 
 }
 

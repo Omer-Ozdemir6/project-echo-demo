@@ -91,7 +91,7 @@ function playSingleEvent({
   onProgressTaskEnd,
   onCharacterBusyStart,
   onLoopReset,
-  signalStrength = 100
+  onStatBasedRouting
 }) {
   if (!event || typeof event !== "object") return 0;
 
@@ -376,7 +376,41 @@ function playSingleEvent({
     return event.pauseAfterMs ?? 500;
   }
 
-  // ─── hafıza / döngü sıfırlanması (loopReset) ──────────────────────────────
+  // ─── statBasedRouting (ending route) ──────────────────────────────────────
+   if (event.type === "statBasedRouting") {
+     const resolveRoute = (routes, stats) => {
+       const sorted = [...routes].sort((a, b) => (a.priority || 99) - (b.priority || 99));
+       for (const r of sorted) {
+         if (r.default) return r;
+         const ok = Object.entries(r.conditions || {}).every(([stat, cond]) => {
+           const v = stats?.stats?.[stat] ?? 0;
+           if (cond.gte !== undefined && v < cond.gte) return false;
+           if (cond.lte !== undefined && v > cond.lte) return false;
+           return true;
+         });
+         if (ok) return r;
+       }
+       return sorted[sorted.length - 1];
+     };
+
+     const route = resolveRoute(event.routes, save);
+
+     const routingTimer = setTimeout(() => {
+       onMessage?.({
+         type: "systemAlert",
+         speaker: "SİSTEM",
+         sender: "system",
+         text: "KARAR HEDEFİNE GÖRE YÖNLENDİRİLİYOR...",
+         tone: "system"
+       });
+       onStatBasedRouting?.(route);
+     }, delay);
+
+     timers.push(routingTimer);
+     return (event.pauseAfterMs ?? 2000) + 1000;
+   }
+
+   // ─── hafıza / döngü sıfırlanması (loopReset) ──────────────────────────────
   if (event.type === "loopReset") {
     const fadeInMs = event.fadeInMs ?? 800;
     const loaderDurationMs = event.loaderDurationMs ?? 4000;
@@ -479,14 +513,15 @@ export function playNodeEvents({
   onGlitchStop,
   onSignalLost,
   onSignalRestored,
-  onStatChange,
-  onCollectFile,
-  onPuzzleStart,
-  onProgressTaskStart,
-  onProgressTaskEnd,
-  onCharacterBusyStart,
-  onLoopReset,
-  onComplete,
+onStatChange,
+   onCollectFile,
+   onPuzzleStart,
+   onProgressTaskStart,
+   onProgressTaskEnd,
+   onCharacterBusyStart,
+   onLoopReset,
+   onStatBasedRouting,
+   onComplete,
   save,
   signalStrength
 }) {
@@ -497,29 +532,31 @@ export function playNodeEvents({
   const hasBlockingEvent = events.some(
     (event) =>
       event.type === "characterBusy" ||
-      event.type === "loopReset"
+      event.type === "loopReset" ||
+      event.type === "statBasedRouting"
   );
 
-  const handlers = {
-    timers,
-    translate,
-    onTypingStart,
-    onTypingStop,
-    onMessage,
-    onGlitchStart,
-    onGlitchStop,
-    onSignalLost,
-    onSignalRestored,
-    onCharacterBusyStart,
-    onLoopReset,
-    onStatChange,
-    onCollectFile,
-    onPuzzleStart,
-    onProgressTaskStart,
-    onProgressTaskEnd,
-    save,
-    signalStrength
-  };
+const handlers = {
+     timers,
+     translate,
+     onTypingStart,
+     onTypingStop,
+     onMessage,
+     onGlitchStart,
+     onGlitchStop,
+     onSignalLost,
+     onSignalRestored,
+     onCharacterBusyStart,
+     onLoopReset,
+     onStatChange,
+     onStatBasedRouting,
+     onCollectFile,
+     onPuzzleStart,
+     onProgressTaskStart,
+     onProgressTaskEnd,
+     save,
+     signalStrength
+   };
 
   events.forEach((event) => {
     if (event.type === "backgroundEvent") {

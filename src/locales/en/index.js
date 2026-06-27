@@ -39,7 +39,7 @@ const locale = {
   ...episode_16,
   ...episode_17,
   ...episode_18,
-  ...episode_19,
+  ...episode_19
 };
 
 export default locale;

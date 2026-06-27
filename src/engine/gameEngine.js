@@ -1,6 +1,5 @@
 import { DEFAULT_EPISODE_ID, getEpisode, correlations } from "../data";
 import { applyChoice } from "./choiceEngine";
-import { getTriggeredEvents } from "./eventEngine";
 import { calculateEnding } from "./endingEngine";
 import stateManager from "./stateManager";
 

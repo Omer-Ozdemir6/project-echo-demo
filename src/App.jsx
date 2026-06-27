@@ -21,6 +21,7 @@ import { runBootStep } from "./engine/bootEngine";
 import { evaluateConditions } from "./engine/conditionEngine";
 import stateManager from "./engine/stateManager";
 import ContinueLoadingScreen from "./components/ContinueLoadingScreen";
+import LoopResetScreen from "./components/LoopResetScreen";
 
 import gameConfig from "./data/game.config.json";
 import bootConfig from "./data/boot.config.json";
@@ -39,7 +40,8 @@ import CreditsScreen from "./components/CreditsScreen";
 import "./index.css";
 
 function App() {
-  const [phase, setPhase] = useState("start");
+   const [phase, setPhase] = useState("start");
+   const [loopResetState, setLoopResetState] = useState(null);
 
   const [bootAttempt, setBootAttempt] = useState(1);
   const [bootStepIndex, setBootStepIndex] = useState(0);
@@ -516,15 +518,36 @@ function App() {
         });
       },
 
-      onStatChange: (changes) => {
-        setGameState((prev) => {
-          const nextState = stateManager.applyEffects(prev, changes);
-          saveGameState(nextState);
-          return nextState;
-        });
-      },
+onStatChange: (changes) => {
+         setGameState((prev) => {
+           const nextState = stateManager.applyEffects(prev, changes);
+           saveGameState(nextState);
+           return nextState;
+         });
+       },
 
-      onComplete: () => {
+       onStatBasedRouting: (route) => {
+         if (route?.nextEpisodeId || route?.nextNodeId) {
+           setTimeout(() => {
+             setGameState((prev) => {
+               const nextState = {
+                 ...prev,
+                 episodeId: route.nextEpisodeId ? route.nextEpisodeId : prev.episodeId,
+                 currentNodeId: route.nextNodeId || prev.currentNodeId
+               };
+               saveGameState(nextState);
+               return nextState;
+             });
+           }, 1000);
+         }
+       },
+
+       onLoopReset: (resetState) => {
+         setLoopResetState(resetState);
+         setPhase("loopReset");
+       },
+
+       onComplete: () => {
         if (gameState.busyState) return;
 
         setNodeFinished(true);
@@ -747,17 +770,47 @@ function App() {
     );
   }
 
-  if (phase === "transmissionInit") {
-    return (
-      <TransmissionInitScreen
-        config={bootConfig.transmissionInit}
-        onComplete={() => setPhase("game")}
-        language={settings.language}
-      />
-    );
-  }
+if (phase === "transmissionInit") {
+     return (
+       <TransmissionInitScreen
+         config={bootConfig.transmissionInit}
+         onComplete={() => setPhase("game")}
+         language={settings.language}
+       />
+     );
+   }
 
-  if (!currentNode) {
+   if (phase === "loopReset") {
+     return (
+       <LoopResetScreen
+         loaderMessage={loopResetState?.loaderMessage}
+         subMessage={loopResetState?.subMessage}
+         visible={true}
+         loaderDurationMs={loopResetState?.loaderDurationMs}
+         autoRestoreCheckpointAfterLoader={loopResetState?.autoRestoreCheckpointAfterLoader}
+         restoreCheckpointId={loopResetState?.restoreCheckpointId}
+         onComplete={(result) => {
+           setLoopResetState(null);
+           if (result?.autoRestore && gameState.checkpoint) {
+             setGameState((prev) => {
+               const checkpoint = prev.checkpoint;
+               const episodeId = checkpoint.episodeId || (checkpoint.episode ? `episode_${checkpoint.episode}` : prev.episodeId);
+               const nextState = {
+                 ...prev,
+                 episodeId,
+                 currentNodeId: checkpoint.nodeId || prev.currentNodeId
+               };
+               saveGameState(nextState);
+               return nextState;
+             });
+           }
+           setPhase("game");
+         }}
+       />
+     );
+   }
+
+   if (!currentNode) {
     return (
       <MissingNodeScreen
         nodeId={gameState.currentNodeId}
@@ -798,14 +851,14 @@ function App() {
       progressTask={progressTask}
       canShowChoices={canShowChoices}
       activePuzzle={activePuzzle}
-      onChoice={handleChoice}
-      onPuzzleSubmit={handlePuzzleSubmit}
-      onFileRead={handleFileRead}
-      onReset={handleReset}
-      settings={settings}
-      onChangeSettings={setSettings}
-    />
-  );
-}
+onChoice={handleChoice}
+       onPuzzleSubmit={handlePuzzleSubmit}
+       onFileRead={handleFileRead}
+       onReset={handleReset}
+       settings={settings}
+       onChangeSettings={setSettings}
+     />
+   );
+ }
 
-export default App;
+ export default App;
