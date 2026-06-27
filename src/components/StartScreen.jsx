@@ -44,36 +44,27 @@ export default function StartScreen({
     20: "Anlat"
   };
   
-  // YENİ EKLENEN STATELER
   const [warningStage, setWarningStage] = useState(0);
   const [connMsg, setConnMsg] = useState("");
-  const [isTitleFading, setIsTitleFading] = useState(false); // Başlık fade out kontrolü
+  const [isTitleFading, setIsTitleFading] = useState(false);
   
-  // StartScreen bileşeninin içindeki tanımlamalar kısmına ekle:
-  const savedGameString = localStorage.getItem("project_echo_progress"); // "game_save" yerine kendi kayıt anahtarını yaz
+  const savedGameString = localStorage.getItem("project_echo_progress");
   const saveData = savedGameString ? JSON.parse(savedGameString) : null;
 
   console.log("TARAYICIDAKİ KAYIT VERİSİ:", saveData);
-  // const hasSavedGame = !!saveData; // SİLİNDİ: Çakışmayı önlemek için. Prop olarak geliyor.
 
-  // Müzik için referans - En üst seviyede tanımlı (Component mount oldukça yaşamaya devam eder)
   const audioRef = useRef(null);
-
   const language = settings?.language || "en";
 
 useEffect(() => {
   if (introStep !== "producerLogo") return;
-
   setShowProducerLogo(false);
-
   const timer = setTimeout(() => {
     setShowProducerLogo(true);
   }, 5500);
-
   return () => clearTimeout(timer);
 }, [introStep]);
 
-  // MÜZİK YÖNETİMİ: titleReveal anında başlar, sadece oyun başlatılınca durur.
   useEffect(() => {
     if (introStep === "titleReveal" && !audioRef.current) {
       audioRef.current = new Audio("/audio/echo-protocol-main-theme.mp3");
@@ -82,7 +73,6 @@ useEffect(() => {
     }
   }, [introStep]);
 
-  // Oyun başladığında müziği durduran temizleyici
   const stopMusic = () => {
     if (audioRef.current) {
       audioRef.current.pause();
@@ -90,7 +80,6 @@ useEffect(() => {
     }
   };
 
-  // YENİ EKLENEN: Uyarılar Zamanlayıcısı (Fade In/Out)
   useEffect(() => {
     if (introStep !== "warnings") return;
     const t1 = setTimeout(() => setWarningStage(1), 3000);
@@ -98,7 +87,6 @@ useEffect(() => {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [introStep]);
 
-  // ORİJİNAL: Yasal Uyarı Zamanlayıcısı
   useEffect(() => {
     if (introStep !== "disclaimer") return;
     const leaveTimer = setTimeout(() => setIsLeaving(true), 3600);
@@ -106,21 +94,20 @@ useEffect(() => {
     return () => { clearTimeout(leaveTimer); clearTimeout(nextTimer); };
   }, [introStep]);
 
-  // ORİJİNAL: İlk Açılış Ara Yükleme Zamanlayıcısı -> Doğrudan Sistem Bağlantısına Geçiş
   useEffect(() => {
     if (introStep !== "initialLoading") return;
     const menuTimer = setTimeout(() => setIntroStep("systemConnection"), 2500);
     return () => clearTimeout(menuTimer);
   }, [introStep]);
 
-  // YENİ EKLENEN: Sistem Bağlantısı Zamanlayıcısı (Jones konuşmadan terminal stili)
   useEffect(() => {
     if (introStep !== "systemConnection") return;
     const msgs = [
-      "SİNYAL ARANIYOR...",
-      "GÜVENLİK PROTOKOLLERİ AŞILIYOR...",
-      "FREKANS EŞLEŞTİRİLİYOR...",
-      "BAĞLANTI KURULDU."
+      getGameText("connection.msg1", "SİNYAL ARANIYOR...", language),
+      getGameText("connection.msg2", "GÜVENLİK PROTOKOLLERİ AŞILIYOR...", language),
+      getGameText("connection.msg3", "FREKANS EŞLEŞTİRİLİYOR...",language
+      ),
+      getGameText("connection.msg4", "BAĞLANTI KURULDU.",language)
     ];
     let i = 0;
     setConnMsg(msgs[i]);
@@ -136,14 +123,12 @@ useEffect(() => {
     return () => clearInterval(interval);
   }, [introStep]);
 
-  // YENİ EKLENEN: Tam Kararma Ekranı (Bağlantıdan sonra anlık boşluk)
   useEffect(() => {
     if (introStep !== "blackout") return;
     const t = setTimeout(() => setIntroStep("titleReveal"), 1000);
     return () => clearTimeout(t);
   }, [introStep]);
 
-  // YENİ EKLENEN: Echo Protocol Yazısı (4 saniye bekler, sonra 1 saniye fade out)
   useEffect(() => {
     if (introStep !== "titleReveal") return;
     const t = setTimeout(() => {
@@ -153,7 +138,6 @@ useEffect(() => {
     return () => clearTimeout(t);
   }, [introStep]);
 
-  // ORİJİNAL: Brifing Metinlerinin Ekrana Sırayla Gelme Zamanlayıcıları
   useEffect(() => {
     if (introStep !== "briefing") return;
     const timers = [
@@ -163,47 +147,40 @@ useEffect(() => {
     return () => timers.forEach(clearTimeout);
   }, [introStep]);
 
-  // ORİJİNAL: Brifing Sonrası Derin Bağlantı Yükleme Ekranı Zamanlayıcısı
   useEffect(() => {
     if (introStep !== "loading") return;
     const t = setTimeout(() => { onStart?.(); }, 4000);
     return () => clearTimeout(t);
   }, [introStep, onStart]);
 
-  // ORİJİNAL: Buton İşlevi
   const handleAcceptBriefing = () => {
     if (isButtonLoading) return;
     setIsButtonLoading(true);
-    stopMusic(); // Oyun başlarken durdur
+    stopMusic();
     setTimeout(() => setIsLeaving(true), 1000);
     setTimeout(() => { setIntroStep("loading"); setIsLeaving(false); }, 1800);
   };
 
-  // Tıklama ile Başlığı Kapatma İşlevi
   const handleTitleClick = () => {
     if (isTitleFading) return;
     setIsTitleFading(true);
     setTimeout(() => setIntroStep("start"), 1000);
   };
 
-
-  // --- AŞAMALAR ---
-
   if (introStep === "producerLogo") {
-  return (
-    <main className="fixed inset-0 bg-black">
-      {showProducerLogo && (
-        <ProducerLogoAnimation
-          src="/red-door-logo.jpg"
-          alt="Red Door"
-          onComplete={() => setIntroStep("warnings")}
-        />
-      )}
-    </main>
-  );
-}
+    return (
+      <main className="fixed inset-0 bg-black">
+        {showProducerLogo && (
+          <ProducerLogoAnimation
+            src="/red-door-logo.jpg"
+            alt="Red Door"
+            onComplete={() => setIntroStep("warnings")}
+          />
+        )}
+      </main>
+    );
+  }
 
-  // YENİ EKLENEN: Uyarılar (Fade in - Fade out)
   if (introStep === "warnings") {
     return (
       <main className="fixed inset-0 grid place-items-center bg-black font-mono text-stone-300 select-none">
@@ -235,10 +212,22 @@ useEffect(() => {
     return (
       <main className="relative min-h-dvh bg-neutral-950 font-mono select-none text-stone-600">
         <div className="fixed bottom-8 right-8 flex items-center gap-6">
-          <span className="text-[10px] tracking-widest opacity-50 text-amber-600 font-bold">TUNNEL SIGNAL SEARCH </span>
+          <span className="text-[10px] tracking-widest opacity-50 text-amber-600 font-bold">
+            {getGameText("loading.signalSearch", "TUNNEL SIGNAL SEARCH")}
+          </span>
           <div className="relative w-6 h-6">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="absolute w-1 h-1 bg-amber-500 rounded-full animate-pulse" style={{ top: `${50 + 40 * Math.sin((i * Math.PI) / 4)}%`, left: `${50 + 40 * Math.cos((i * Math.PI) / 4)}%`, transform: "translate(-50%, -50%)", animationDelay: `${i * 0.15}s`, animationDuration: "1.2s" }} />
+              <div 
+                key={i} 
+                className="absolute w-1 h-1 bg-amber-500 rounded-full animate-pulse" 
+                style={{ 
+                  top: `${50 + 40 * Math.sin((i * Math.PI) / 4)}%`, 
+                  left: `${50 + 40 * Math.cos((i * Math.PI) / 4)}%`, 
+                  transform: "translate(-50%, -50%)", 
+                  animationDelay: `${i * 0.15}s`, 
+                  animationDuration: "1.2s" 
+                }} 
+              />
             ))}
           </div>
         </div>
@@ -250,13 +239,21 @@ useEffect(() => {
     return (
       <main className="fixed inset-0 grid place-items-center bg-black px-8 py-16 font-mono select-none text-stone-300">
         <section className="w-full max-w-2xl text-center space-y-12 transition-opacity duration-1000 ease-in-out" style={{ opacity: isLeaving ? 0 : 1 }}>
-          {briefingStage >= 1 && <p className="text-sm leading-relaxed tracking-wide text-stone-300/90 max-w-xl mx-auto animate-[startScreenFadeIn_1s_both]">Nevşehir kazı alanı tescilsiz alt katmanları; yüksek frekans bozulmaları, mühürlenmiş antik oda mimarileri ve kayıp ekspedisyon kayıtları barındırmaktadır. Lütfen sinyal takibini dikkatle sürdürün.</p>}
+          {briefingStage >= 1 && (
+            <p className="text-sm leading-relaxed tracking-wide text-stone-300/90 max-w-xl mx-auto animate-[startScreenFadeIn_1s_both]">
+              {getGameText("briefing.line1", "Nevşehir kazı alanı tescilsiz alt katmanları; yüksek frekans bozulmaları, mühürlenmiş antik oda mimarileri ve kayıp ekspedisyon kayıtları barındırmaktadır. Lütfen sinyal takibini dikkatle sürdürün.", language)}
+            </p>
+          )}
           {briefingStage >= 2 && (
             <div className="space-y-12 animate-[startScreenFadeIn_1s_both]">
-              <p className="text-sm leading-relaxed tracking-wide text-stone-300/90 max-w-xl mx-auto">Şu an Katman Projesi telsiz köprüsünü yürütüyorsunuz. Amacınız yer altı sığınak ağında mahsur kalan Jones Aydın ile bağlantıyı korumak ve mühürlü mırıldanmaları filtrelemektir. Rezonans sapmalarına yanıt vermeyin. Sadece rehberlik edin, fotoğrafları arşivleyin ve Jones'u yüzeye çıkarın.</p>
+              <p className="text-sm leading-relaxed tracking-wide text-stone-300/90 max-w-xl mx-auto">
+                {getGameText("briefing.line2", "Şu an Katman Projesi telsiz köprüsünü yürütüyorsunuz. Amacınız yer altı sığınak ağında mahsur kalan Jones Aydın ile bağlantıyı korumak ve mühürlü mırıldanmaları filtrelemektir. Rezonans sapmalarına yanıt vermeyin. Sadece rehberlik edin, fotoğrafları arşivleyin ve Jones'u yüzeye çıkarın.", language)}
+              </p>
               <div className="pt-4">
                 <button type="button" onClick={handleAcceptBriefing} disabled={isButtonLoading} className={["text-xs tracking-[0.3em] uppercase transition-all duration-300 bg-transparent text-amber-500 font-bold border-b border-transparent pb-1", isButtonLoading ? "opacity-30 cursor-not-allowed" : "hover:text-white hover:border-white"].join(" ")}>
-                  {isButtonLoading ? "BAĞLANTI_KURULUYOR..." : "FREKANSI_BAĞLA"}
+                  {isButtonLoading 
+                    ? getGameText("briefing.button.loading", "BAĞLANTI KURULUYOR...") 
+                    : getGameText("briefing.button.accept", "FREKANSI BAĞLA")}
                 </button>
               </div>
             </div>
@@ -270,13 +267,17 @@ useEffect(() => {
     return (
       <main className="fixed inset-0 flex items-center justify-center bg-neutral-950 font-mono select-none text-stone-500">
         <div className="w-full max-w-md text-left px-6 space-y-2 text-[11px] tracking-widest opacity-60">
-          <p>YERALTI ODALARI AKUSTİK VERİSİ AYRIŞTIRILIYOR...</p>
-          <p>DUVAR KAZINTILARI FOTOĞRAF ANALİZİ AKTİF...</p>
-          <p className="font-bold text-rose-600">[ UYARI: DERİN KATMANDA BELİRSİZ HAREKETLİLİK TESPİT EDİLDİ ]</p>
-          <p>TELSİZ KANALI FREKANS KİLİDİ STABİLİZASYONU...</p>
+          <p>{getGameText("loading.status1", "YERALTI ODALARI AKUSTİK VERİSİ AYRIŞTIRILIYOR...")}</p>
+          <p>{getGameText("loading.status2", "DUVAR KAZINTILARI FOTOĞRAF ANALİZİ AKTİF...")}</p>
+          <p className="font-bold text-rose-600">
+            {getGameText("loading.warning", "[ UYARI: DERİN KATMANDA BELİRSİZ HAREKETLİLİK TESPİT EDİLDİ ]",language)}
+          </p>
+          <p>{getGameText("loading.status3", "TELSİZ KANALI FREKANS KİLİDİ STABİLİZASYONU...",language)}</p>
         </div>
         <div className="fixed bottom-8 right-8 flex items-center gap-4 text-stone-400">
-          <span className="text-[10px] tracking-wider uppercase font-bold opacity-50 text-amber-500">LINKING_</span>
+          <span className="text-[10px] tracking-wider uppercase font-bold opacity-50 text-amber-500">
+            {getGameText("loading.linking", "LINKING_")}
+          </span>
           <div className="relative w-6 h-6">
             {[...Array(8)].map((_, i) => (
               <div key={i} className="absolute w-[3px] h-[3px] bg-amber-500 rounded-full animate-pulse" style={{ top: `${50 + 42 * Math.sin((i * Math.PI) / 4)}%`, left: `${50 + 42 * Math.cos((i * Math.PI) / 4)}%`, transform: "translate(-50%,-50%)", animationDelay: `${i * 0.15}s`, animationDuration: "1.2s" }} />
@@ -336,28 +337,26 @@ useEffect(() => {
           {subtitle && <p className="text-sm tracking-[0.5em] text-stone-500 uppercase mb-12">{subtitle}</p>}
           
           <div className="flex flex-col gap-6 w-80">
-<button 
-  onClick={() => { stopMusic(); onContinue(); }} 
-  disabled={!hasSavedGame} 
-  className="flex flex-col border-l-2 border-stone-600 pl-4 py-2 hover:border-amber-600 transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed"
->
-  <span className="text-lg uppercase">Devam Et</span>
-  <span className="text-[10px] text-stone-500">
-    {hasSavedGame && saveData 
-      ? (() => {
-          // "episode_01" metnindeki harfleri atıp sadece sayıyı alıyoruz (örnek: 1)
-          const rawId = saveData.episodeId || "";
-          const epNum = parseInt(rawId.replace(/\D/g, ''), 10) || 1; 
-          const epTitle = EPISODE_TITLES[epNum] || "Bilinmeyen Bölüm";
-          
-          return `Son Kayıt: Bölüm ${epNum} - ${epTitle}`;
-        })()
-      : "Kayıt bulunamadı"}
-  </span>
-</button>
-            <button onClick={() => { setIntroStep("briefing"); }} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Yeni Oyun</button>
-            <button onClick={onOpenCredits} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Künye</button>
-            <button onClick={() => setIsSettingsOpen(true)} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Ayarlar</button>
+            <button 
+              onClick={() => { stopMusic(); onContinue(); }} 
+              disabled={!hasSavedGame} 
+              className="flex flex-col border-l-2 border-stone-600 pl-4 py-2 hover:border-amber-600 transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span className="text-lg uppercase">{getGameText("start.menu.continue", "Devam Et",language)}</span>
+              <span className="text-[10px] text-stone-500">
+                {hasSavedGame && saveData 
+                  ? (() => {
+                      const rawId = saveData.episodeId || "";
+                      const epNum = parseInt(rawId.replace(/\D/g, ''), 10) || 1; 
+                      const epTitle = EPISODE_TITLES[epNum] || "Bilinmeyen Bölüm";
+                      return `${getGameText("start.menu.saveDate", "Son Kayıt")}: Bölüm ${epNum} - ${epTitle}`;
+                    })()
+                  : getGameText("start.menu.noSave", "Kayıt bulunamadı")}
+              </span>
+            </button>
+            <button onClick={() => { setIntroStep("briefing"); }} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">{getGameText("start.menu.newGame", "Yeni Oyun",language)}</button>
+            <button onClick={onOpenCredits} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">{getGameText("start.menu.credits", "Künye",language)}</button>
+            <button onClick={() => setIsSettingsOpen(true)} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">{getGameText("start.menu.settings", "Ayarlar",language)}</button>
           </div>
         </section>
 

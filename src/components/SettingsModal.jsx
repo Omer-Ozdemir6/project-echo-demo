@@ -1,12 +1,13 @@
 import { useState, useMemo } from "react";
+import { getGameText } from "../i18n/gameText";
 
 const SUPPORTED_LANGUAGES = [
-  { code: "en", label: "ENGLISH" },
-  { code: "tr", label: "TÜRKÇE" },
-  { code: "de", label: "DEUTSCH" },
-  { code: "fr", label: "FRANÇAIS" },
-  { code: "es", label: "ESPAÑOL" },
-  { code: "ja", label: "日本語" }
+  { code: "en", label: getGameText("settings.lang.en", "ENGLISH") },
+  { code: "tr", label: getGameText("settings.lang.tr", "TÜRKÇE") },
+  { code: "de", label: getGameText("settings.lang.de", "DEUTSCH") },
+  { code: "fr", label: getGameText("settings.lang.fr", "FRANÇAIS") },
+  { code: "es", label: getGameText("settings.lang.es", "ESPAÑOL") },
+  { code: "ja", label: getGameText("settings.lang.ja", "日本語") }
 ];
 
 const ScanlineOverlay = () => (
@@ -65,10 +66,10 @@ export default function SettingsModal({
         <header className="flex items-start justify-between gap-4 border-b border-stone-900 pb-4 mb-4">
           <div>
             <p className={`m-0 text-[9px] tracking-[0.35em] font-black uppercase ${currentTheme.accentText}`}>
-              {showResetConfirm ? "SİSTEM_MÜDAHALESİ" : "FREKANS_ARAYÜZÜ"}
+              {showResetConfirm ? getGameText("settings.header.intervention", "SİSTEM_MÜDAHALESİ") : getGameText("settings.header.interface", "FREKANS_ARAYÜZÜ")}
             </p>
             <h2 className={`mt-1 text-xs tracking-[0.25em] font-bold uppercase transition-colors duration-300 ${currentTheme.headerText}`}>
-              {showResetConfirm ? "KRİTİK_UYARI" : "AYARLAR_PANELİ"}
+              {showResetConfirm ? getGameText("settings.header.critical", "KRİTİK_UYARI") : getGameText("settings.header.panel", "AYARLAR_PANELİ")}
             </h2>
           </div>
 
@@ -77,7 +78,7 @@ export default function SettingsModal({
             onClick={onClose}
             className="border border-stone-900 bg-stone-950/40 px-4 py-2 text-[9px] tracking-[0.2em] font-bold text-stone-500 transition hover:bg-rose-950/20 hover:text-rose-500 hover:border-rose-900 rounded-xs"
           >
-            [KAPAT]
+            {getGameText("settings.button.close", "[KAPAT]")}
           </button>
         </header>
 
@@ -87,7 +88,7 @@ export default function SettingsModal({
           {/* 1. LANGUAGE SELECTOR */}
           <div className={`border p-3 rounded-xs bg-black/30 ${currentTheme.panelBg}`}>
             <p className={`mb-3 text-[9px] tracking-[0.25em] font-bold uppercase ${currentTheme.accentText}`}>
-              &gt; TELSİZ_DİL_SEÇİMİ
+              &gt; {getGameText("settings.label.language", "TELSİZ_DİL_SEÇİMİ")}
             </p>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
               {SUPPORTED_LANGUAGES.map((lang) => (
@@ -114,7 +115,7 @@ export default function SettingsModal({
           {/* 2. TEXT SPEED CONTROLLER */}
           <div className={`border p-3 rounded-xs bg-black/30 ${currentTheme.panelBg}`}>
             <p className={`mb-3 text-[9px] tracking-[0.25em] font-bold uppercase ${currentTheme.accentText}`}>
-              &gt; METİN_AKIŞ_HIZI
+              &gt; {getGameText("settings.label.speed", "METİN_AKIŞ_HIZI")}
             </p>
             <div className="grid grid-cols-3 gap-2">
               {["slow", "normal", "fast"].map((speed) => (
@@ -129,7 +130,7 @@ export default function SettingsModal({
                       : "border-stone-900 text-stone-600 hover:bg-amber-950/5 hover:text-amber-400 hover:border-stone-800"
                   ].join(" ")}
                 >
-                  {speed === "slow" ? "YAVAŞ" : speed === "normal" ? "NORMAL" : "HIZLI"}
+                  {speed === "slow" ? getGameText("settings.speed.slow", "YAVAŞ") : speed === "normal" ? getGameText("settings.speed.normal", "NORMAL") : getGameText("settings.speed.fast", "HIZLI")}
                 </button>
               ))}
             </div>
@@ -142,10 +143,10 @@ export default function SettingsModal({
               onClick={() => updateSetting("soundEnabled", !soundEnabled)}
               className={`border p-3.5 text-left transition rounded-xs bg-black/30 flex flex-col justify-between h-20 border-stone-900/60 ${currentTheme.panelBg} hover:border-stone-800`}
             >
-              <span className={`block text-[9px] tracking-[0.25em] font-bold uppercase ${currentTheme.accentText}`}>SES_KANAL_BAĞLANTI</span>
+              <span className={`block text-[9px] tracking-[0.25em] font-bold uppercase ${currentTheme.accentText}`}>{getGameText("settings.toggle.sound", "SES_KANAL_BAĞLANTI")}</span>
               <div className="w-full flex items-center justify-between mt-2 border-t border-stone-900/40 pt-1.5">
                 <span className={`text-[10px] font-bold tracking-widest ${soundEnabled ? "text-amber-500 font-black" : "text-stone-600"}`}>
-                  {soundEnabled ? "[ SES_AÇIK ]" : "[ SESSİZ ]"}
+                  {soundEnabled ? getGameText("settings.toggle.on", "[ SES_AÇIK ]") : getGameText("settings.toggle.off", "[ SESSİZ ]")}
                 </span>
                 <div className={`w-1.5 h-1.5 rounded-full ${soundEnabled ? "bg-amber-500 shadow-[0_0_6px_#f59e0b]" : "bg-stone-900"}`} />
               </div>
@@ -156,10 +157,10 @@ export default function SettingsModal({
               onClick={() => updateSetting("vibrationEnabled", !vibrationEnabled)}
               className={`border p-3.5 text-left transition rounded-xs bg-black/30 flex flex-col justify-between h-20 border-stone-900/60 ${currentTheme.panelBg} hover:border-stone-800`}
             >
-              <span className={`block text-[9px] tracking-[0.25em] font-bold uppercase ${currentTheme.accentText}`}>HAPTİK_TİTREŞİM_TEPKİSİ</span>
+              <span className={`block text-[9px] tracking-[0.25em] font-bold uppercase ${currentTheme.accentText}`}>{getGameText("settings.toggle.vibration", "HAPTİK_TİTREŞİM_TEPKİSİ")}</span>
               <div className="w-full flex items-center justify-between mt-2 border-t border-stone-900/40 pt-1.5">
                 <span className={`text-[10px] font-bold tracking-widest ${vibrationEnabled ? "text-amber-500 font-black" : "text-stone-600"}`}>
-                  {vibrationEnabled ? "[ AKTİF ]" : "[ STABİL ]"}
+                  {vibrationEnabled ? getGameText("settings.toggle.active", "[ AKTİF ]") : getGameText("settings.toggle.stable", "[ STABİL ]")}
                 </span>
                 <div className={`w-1.5 h-1.5 rounded-full ${vibrationEnabled ? "bg-amber-500 shadow-[0_0_6px_#f59e0b]" : "bg-stone-900"}`} />
               </div>
@@ -173,7 +174,7 @@ export default function SettingsModal({
               onClick={onReturnToMenu}
               className="w-full border border-amber-950 bg-amber-950/5 py-3.5 text-[9px] tracking-[0.25em] text-amber-500/80 font-black transition hover:bg-amber-950/15 hover:text-white hover:border-amber-900 uppercase rounded-xs"
             >
-              ⎋ ANA MENÜYE DÖN (GÜVENLİ KAYIT)
+              {getGameText("settings.button.menu", "⎋ ANA MENÜYE DÖN (GÜVENLİ KAYIT)")}
             </button>
           )}
 
@@ -184,16 +185,16 @@ export default function SettingsModal({
               onClick={() => setShowResetConfirm(true)}
               className="w-full border border-rose-950 bg-rose-950/5 py-3.5 text-[9px] tracking-[0.25em] text-rose-500/80 font-black transition hover:bg-rose-900/20 hover:border-rose-900 hover:text-white uppercase rounded-xs"
             >
-              🚨 BELLEK ARŞİVİNİ TEMİZLE [RESET]
+              {getGameText("settings.button.reset", "🚨 BELLEK ARŞİVİNİ TEMİZLE [RESET]")}
             </button>
           ) : (
             <div className="border border-rose-900/40 bg-rose-950/5 p-4 rounded-xs space-y-4 animate-[bootLineIn_0.15s_ease-out_both]">
               <div>
                 <p className="text-[9px] tracking-[0.3em] text-rose-600 font-black uppercase flex items-center gap-2">
-                  <span className="animate-pulse text-xs">🛑</span> YETKİLENDİRME_GEREKLİ
+                  <span className="animate-pulse text-xs">🛑</span> {getGameText("settings.reset.warning.title", "YETKİLENDİRME_GEREKLİ")}
                 </p>
                 <p className="mt-2 text-[11px] leading-relaxed tracking-wide text-rose-400/60 text-justify font-mono">
-                  KRİTİK PROSEDÜR: Bu işlem Jones Aydın'ın yer altı sığınak ağındaki tüm ilerlemesini, toplanan bulguları, keşif koordinatlarını ve döngü hafızasını kalıcı olarak sıfırlayacaktır. Bu işlem geri alınamaz.
+                  {getGameText("settings.reset.warning.desc", "KRİTİK PROSEDÜR: Bu işlem Jones Aydın'ın yer altı sığınak ağındaki tüm ilerlemesini, toplanan bulguları, keşif koordinatlarını ve döngü hafızasını kalıcı olarak sıfırlayacaktır. Bu işlem geri alınamaz.")}
                 </p>
               </div>
 
@@ -204,7 +205,7 @@ export default function SettingsModal({
                   onClick={() => setShowResetConfirm(false)}
                   className="border border-stone-900 bg-stone-950 py-3 text-[9px] tracking-[0.2em] text-stone-500 font-bold transition hover:bg-stone-900 hover:text-stone-300 rounded-xs"
                 >
-                  TEMİZLİĞİ_İPTAL_ET
+                  {getGameText("settings.reset.abort", "TEMİZLİĞİ_İPTAL_ET")}
                 </button>
 
                 <button
@@ -213,7 +214,7 @@ export default function SettingsModal({
                   onClick={onReset}
                   className="border border-rose-700 bg-rose-950/20 py-3 text-[9px] tracking-[0.2em] text-rose-300 font-black transition hover:bg-rose-600 hover:text-white rounded-xs shadow-[0_0_15px_rgba(220,38,38,0.1)]"
                 >
-                  HAFIZAYI_SIFIRLA
+                  {getGameText("settings.reset.execute", "HAFIZAYI_SIFIRLA")}
                 </button>
               </div>
             </div>
@@ -222,9 +223,9 @@ export default function SettingsModal({
 
         {/* PANEL FOOTER INFRASTRUCTURE */}
         <div className="mt-4 pt-3 border-t border-stone-900 flex items-center justify-between text-[8px] text-stone-600 tracking-widest font-mono uppercase font-black">
-          <div>KATMAN_OS_SURUM: v2.8_DONGU_28</div>
+          <div>{getGameText("settings.footer.version", "KATMAN_OS_SURUM: v2.8_DONGU_28")}</div>
           <div className={showResetConfirm ? "text-rose-800 animate-pulse" : "text-amber-700"}>
-            {showResetConfirm ? "GUVENLI_VERI_EZME_AKTIF" : "SISTEM_STABIL"}
+            {showResetConfirm ? getGameText("settings.footer.warning", "GUVENLI_VERI_EZME_AKTIF") : getGameText("settings.footer.stable", "SISTEM_STABIL")}
           </div>
         </div>
       </section>

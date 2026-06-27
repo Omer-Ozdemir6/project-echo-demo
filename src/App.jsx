@@ -173,6 +173,7 @@ function App() {
 
   // ── Settings kaydet ───────────────────────────────────────────────────────
   useEffect(() => {
+    console.log("Ayarlar değişti, yeni dil:", settings.language);
     localStorage.setItem("echo_settings", JSON.stringify(settings));
   }, [settings]);
 
@@ -358,7 +359,7 @@ function App() {
           {
             ...message,
             sender:  message.sender  || "character",
-            speaker: message.speaker || currentNode.speaker
+            speaker: message.speaker || currentNode?.speaker || "SYSTEM"
           }
         ]);
       },

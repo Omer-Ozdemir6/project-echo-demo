@@ -18,6 +18,8 @@ import episode_16 from "./episode-16.json";
 import episode_17 from "./episode-17.json";
 import episode_18 from "./episode-18.json";
 import episode_19 from "./episode-19.json";
+import StartScreen from "./StartScreen.json";
+import SettingsModal from "./SettingsModal.json"
 
 const locale = {
   ...game,
@@ -39,7 +41,10 @@ const locale = {
   ...episode_16,
   ...episode_17,
   ...episode_18,
-  ...episode_19
+  ...episode_19,
+  ...StartScreen,
+  ...SettingsModal
+
 };
 
 export default locale;

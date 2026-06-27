@@ -1,119 +1,104 @@
 import fs from 'fs';
 import path from 'path';
 
-// Klasör Yolları
 const EPISODES_DIR = './src/data/episodes';
 const REACT_FILES = [
-    './src/components/StartScreen.jsx',
-    './src/components/SettingsModal.jsx',
-    './src/components/OperatorBriefing.jsx',
-    './src/components/BootSequence.jsx'
+    { path: './src/components/StartScreen.jsx', name: 'StartScreen.json' },
+    { path: './src/components/SettingsModal.jsx', name: 'SettingsModal.json' },
+    { path: './src/components/OperatorBriefing.jsx', name: 'OperatorBriefing.json' },
+    { path: './src/components/BootSequence.jsx', name: 'BootSequence.json' },
+    { path: './src/components/ContinueLoadingScreen.jsx', name: 'ContinueLoadingScreen.json' },
+    { path: './src/components/RebootConfirmScreen.jsx', name: 'RebootConfirmScreen.json' }
 ];
 
-// DİLLER (Buraya yeni dil ekleyebilirsin)
 const LANGUAGES = [
     { code: 'tr', localeDir: './src/locales/tr', masterFile: './src/locales/master_tr.json' },
     { code: 'en', localeDir: './src/locales/en', masterFile: './src/locales/master_en.json' }
 ];
 
-// Çeviri hazırlığı
 let masterTranslations = { tr: {}, en: {} };
 
-// Klasörleri hazırla
 LANGUAGES.forEach(lang => {
-    if (!fs.existsSync(lang.localeDir)) {
-        fs.mkdirSync(lang.localeDir, { recursive: true });
-    }
+    if (!fs.existsSync(lang.localeDir)) fs.mkdirSync(lang.localeDir, { recursive: true });
 });
 
-// Metin Çıkarma Fonksiyonları
-function extractTextFromNode(nodeId, node, translations) {
-    if (node.events) {
-        node.events.forEach((event, idx) => {
-            const baseKey = `${nodeId}_event_${idx}`;
-            if (event.text) translations[`${baseKey}_text`] = event.text;
-            if (event.trueText) translations[`${baseKey}_trueText`] = event.trueText;
-            if (event.falseText) translations[`${baseKey}_falseText`] = event.falseText;
-            if (event.loaderMessage) translations[`${baseKey}_loaderMessage`] = event.loaderMessage;
-            if (event.subMessage) translations[`${baseKey}_subMessage`] = event.subMessage;
-            if (event.characterBusyMessage) translations[`${baseKey}_characterBusyMessage`] = event.characterBusyMessage;
-        });
-    }
-    if (node.choices) {
-        node.choices.forEach((choice, idx) => {
-            if (choice.text) {
-                const choiceKey = choice.id || `c${idx}`;
-                translations[`${nodeId}_choice_${choiceKey}`] = choice.text;
-            }
-        });
-    }
+// Yardımcı: Metni tüm dillere ve master'a işler
+function saveTranslations(fileName, translations) {
+    if (Object.keys(translations).length === 0) return;
+    
+    LANGUAGES.forEach(lang => {
+        const localeFilePath = path.join(lang.localeDir, fileName);
+        // Var olanı oku veya boş obje başlat
+        let existing = {};
+        if (fs.existsSync(localeFilePath)) {
+            existing = JSON.parse(fs.readFileSync(localeFilePath, 'utf-8'));
+        }
+        const updated = { ...existing, ...translations };
+        fs.writeFileSync(localeFilePath, JSON.stringify(updated, null, 2), 'utf-8');
+        
+        // Master'a ekle
+        Object.assign(masterTranslations[lang.code], updated);
+    });
+    console.log(`✓ İşlendi: ${fileName}`);
 }
 
-function extractTextFromPuzzles(puzzleId, puzzle, translations) {
-    if (puzzle.echoLabel) {
-        translations[`puzzle_${puzzleId}_echoLabel`] = puzzle.echoLabel;
-    }
-}
+function processJsxFile(fileObj) {
+    if (!fs.existsSync(fileObj.path)) return;
 
-function processJsxFile(filePath) {
-    const content = fs.readFileSync(filePath, 'utf-8');
-    // getGameText("key", "default_text") desenini yakalar
-    const regex = /getGameText\(\s*["']([^"']+)["']\s*,\s*["']([^"']+)["']/g;
+    const content = fs.readFileSync(fileObj.path, 'utf-8');
+    
+    // Gelişmiş Regex: Hem anahtarı hem de değeri yakalar
+    // Bu Regex: getGameText("key", "değer") kalıbını arar
+    const regex = /getGameText\(\s*['"`]([^'"`]+)['"`]\s*,\s*['"`]([^'"`]+)['"`]/g;
+    
     let match;
+    const translations = {};
+    let foundCount = 0;
 
     while ((match = regex.exec(content)) !== null) {
-        const [_, key, value] = match;
-        // Her iki dil için de varsayılan değer olarak İngilizce/Türkçe metni ata
-        masterTranslations.tr[key] = value;
-        masterTranslations.en[key] = value; 
+        // match[1] = anahtar (key), match[2] = varsayılan değer (değer)
+        translations[match[1]] = match[2]; 
+        foundCount++;
     }
-    console.log(`✓ JSX Tarandı: ${path.basename(filePath)}`);
+
+    if (foundCount > 0) {
+        console.log(`✓ Tarandı: ${fileObj.name} (${foundCount} metin bulundu)`);
+        saveTranslations(fileObj.name, translations);
+    }
 }
 
 function processEpisodeFile(filePath, fileName) {
     const rawData = fs.readFileSync(filePath, 'utf-8');
     const data = JSON.parse(rawData);
-    const fileTranslations = {};
+    const translations = {};
 
     if (data.nodes) {
         for (const [nodeId, node] of Object.entries(data.nodes)) {
-            extractTextFromNode(nodeId, node, fileTranslations);
+            if (node.events) node.events.forEach((e, i) => {
+                if (e.text) translations[`${nodeId}_event_${i}_text`] = e.text;
+                // ... diğer alanlar (trueText, falseText vs)
+            });
+            if (node.choices) node.choices.forEach((c, i) => {
+                if (c.text) translations[`${nodeId}_choice_${c.id || i}`] = c.text;
+            });
         }
     }
-    if (data.puzzles) {
-        for (const [puzzleId, puzzle] of Object.entries(data.puzzles)) {
-            extractTextFromPuzzles(puzzleId, puzzle, fileTranslations);
-        }
-    }
-
-    if (Object.keys(fileTranslations).length > 0) {
-        // Her dil için kaydet
-        LANGUAGES.forEach(lang => {
-            const localeFilePath = path.join(lang.localeDir, fileName);
-            fs.writeFileSync(localeFilePath, JSON.stringify(fileTranslations, null, 2), 'utf-8');
-            Object.assign(masterTranslations[lang.code], fileTranslations);
-        });
-        console.log(`✓ Çıkartıldı: ${fileName}`);
-    }
+    saveTranslations(fileName, translations);
 }
 
 // --- ANA İŞLEM ---
 console.log("--- ÇEVİRİ METİNLERİ AYIKLANIYOR ---");
 
-// 1. JSON Bölümleri tara
-const files = fs.readdirSync(EPISODES_DIR).filter(file => file.endsWith('.json') && file.startsWith('episode-'));
-files.forEach(file => processEpisodeFile(path.join(EPISODES_DIR, file), file));
+const files = fs.readdirSync(EPISODES_DIR).filter(f => f.endsWith('.json'));
+files.forEach(f => processEpisodeFile(path.join(EPISODES_DIR, f), f));
 
-// 2. React bileşenlerini tara
-REACT_FILES.forEach(file => {
-    if (fs.existsSync(file)) processJsxFile(file);
-    else console.warn(`⚠ Dosya bulunamadı: ${file}`);
+REACT_FILES.forEach(f => {
+    if (fs.existsSync(f.path)) processJsxFile(f);
+    else console.warn(`⚠ Dosya bulunamadı: ${f.path}`);
 });
 
-// 3. Master Dosyaları Kaydet
 LANGUAGES.forEach(lang => {
     fs.writeFileSync(lang.masterFile, JSON.stringify(masterTranslations[lang.code], null, 2), 'utf-8');
-    console.log(`✅ ${lang.code.toUpperCase()} Master güncellendi: ${lang.masterFile}`);
 });
 
-console.log(`\n🎉 İşlem başarıyla tamamlandı!`);
+console.log(`\n🎉 Tüm metinler başarıyla ayrıştırıldı.`);
