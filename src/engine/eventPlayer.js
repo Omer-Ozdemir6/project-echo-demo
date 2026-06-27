@@ -130,23 +130,26 @@ function playSingleEvent({
   }
 
   // ─── standart diyalog mesajı (message) ────────────────────────────────────
-  if (event.type === "message") {
-    const messageTimer = setTimeout(() => {
-      onTypingStop?.();
+if (event.type === "message") {
+      // 1. Değeri burada yerel bir değişkene atayın
+      const currentSignal = typeof signalStrength !== 'undefined' ? signalStrength : 100;
 
-      onMessage?.({
-        type: "message",
-        speaker: event.speaker,
-        sender: event.sender,
-        textKey: event.textKey,
-        fallbackText: event.text,
-        text: corruptTextBySignal(
-          resolveText(event, "textKey", "text", translate),
-          signalStrength
-        ),
-        tone: event.tone || event.mood || "calm"
-      });
-    }, delay);
+const messageTimer = setTimeout(() => {
+            onTypingStop?.();
+
+            onMessage?.({
+                type: "message",
+                speaker: event.speaker,
+                sender: event.sender,
+                textKey: event.textKey,
+                fallbackText: event.text,
+                text: corruptTextBySignal(
+                    resolveText(event, "textKey", "text", translate),
+                    currentSignal // Buraya currentSignal'i ver
+                ),
+                tone: event.tone || event.mood || "calm"
+            });
+        }, delay);
 
     timers.push(messageTimer);
 

@@ -270,8 +270,12 @@ function App() {
   }, [phase, activeStep, bootStepIndex, bootAttempt, currentBoot]);
 
   // ── Ana oyun döngüsü ──────────────────────────────────────────────────────
+// ── Ana oyun döngüsü ──────────────────────────────────────────────────────
   useEffect(() => {
     if (phase !== "game" || !currentNode) return;
+
+    // 1. Yeni düğüme geçildiğinde ekranı temizle
+    setVisibleMessages([]); 
 
     setIsTyping(false);
     setIsGlitching(false);
@@ -280,9 +284,11 @@ function App() {
     setNodeFinished(false);
 
     return playNodeEvents({
-      events:         currentNode.events || [],
-      save:           gameState,
-      signalStrength: gameState.signalStrength,
+      events: currentNode.events || [],
+      save: gameState,
+      
+      // 2. Hata almamak için güvenli erişim (gameState varsa signalStrength'i al, yoksa 100)
+      signalStrength: gameState?.signalStrength ?? 100,
 
       translate: (key, fallback = "") => getGameText(key, fallback, settings.language),
 
@@ -346,6 +352,7 @@ function App() {
       onProgressTaskEnd:   ()     => setProgressTask(null),
 
       onMessage: (message) => {
+        console.log("Terminal'e yeni mesaj geldi:", message);
         setVisibleMessages((prev) => [
           ...prev,
           {
