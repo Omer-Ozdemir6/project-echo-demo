@@ -490,6 +490,17 @@ function playSingleEvent({
     return duration + (event.pauseAfterMs ?? 900);
   }
 
+  if (event.type === "checkpoint") {
+  const checkpointTimer = setTimeout(() => {
+    onCheckpoint?.({
+      checkpointId: event.checkpointId,
+      nodeId: event.nodeId
+    });
+  }, delay);
+  timers.push(checkpointTimer);
+  return event.pauseAfterMs ?? 0;
+}
+
   // ─── istatistik değişim tetikleyicisi (statChange) ──────────────────────────
   if (event.type === "statChange") {
     const statTimer = setTimeout(() => {
@@ -504,8 +515,10 @@ function playSingleEvent({
 }
 
 export function playNodeEvents({
-  events = [],
+  events,
   translate,
+  save,
+  signalStrength,
   onTypingStart,
   onTypingStop,
   onMessage,
@@ -513,17 +526,16 @@ export function playNodeEvents({
   onGlitchStop,
   onSignalLost,
   onSignalRestored,
-onStatChange,
-   onCollectFile,
-   onPuzzleStart,
-   onProgressTaskStart,
-   onProgressTaskEnd,
-   onCharacterBusyStart,
-   onLoopReset,
-   onStatBasedRouting,
-   onComplete,
-  save,
-  signalStrength
+  onStatChange,
+  onCollectFile,
+  onPuzzleStart,
+  onProgressTaskStart,
+  onProgressTaskEnd,
+  onCharacterBusyStart,
+  onLoopReset,
+  onStatBasedRouting,
+  onCheckpoint,      // ← YENİ
+  onComplete,
 }) {
   const timers = [];
   let accumulatedDelay = 0;
@@ -536,27 +548,28 @@ onStatChange,
       event.type === "statBasedRouting"
   );
 
-const handlers = {
-     timers,
-     translate,
-     onTypingStart,
-     onTypingStop,
-     onMessage,
-     onGlitchStart,
-     onGlitchStop,
-     onSignalLost,
-     onSignalRestored,
-     onCharacterBusyStart,
-     onLoopReset,
-     onStatChange,
-     onStatBasedRouting,
-     onCollectFile,
-     onPuzzleStart,
-     onProgressTaskStart,
-     onProgressTaskEnd,
-     save,
-     signalStrength
-   };
+  const handlers = {
+    timers,
+    translate,
+    save,
+    signalStrength,
+    onTypingStart,
+    onTypingStop,
+    onMessage,
+    onGlitchStart,
+    onGlitchStop,
+    onSignalLost,
+    onSignalRestored,
+    onCharacterBusyStart,
+    onLoopReset,
+    onStatChange,
+    onStatBasedRouting,
+    onCheckpoint,     // ← YENİ
+    onCollectFile,
+    onPuzzleStart,
+    onProgressTaskStart,
+    onProgressTaskEnd,
+  };
 
   events.forEach((event) => {
     if (event.type === "backgroundEvent") {

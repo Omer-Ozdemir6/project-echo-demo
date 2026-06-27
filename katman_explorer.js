@@ -367,8 +367,8 @@ function simulate(nodes, puzzles, startId, n=10_000) {
     });
 
     // Eşikler — JSON'daki statBasedRouting conditions ile senkronize tutun
-    const TB = { emreBaglantisi:500, trust:300, humanity:850 };
-    const TC = { onlarFarkındalığı:165, curiosity:1400, humanity:820 };
+    const TB = { emreBaglantisi: 460, trust: 260, humanity: 845 };
+    const TC = { onlarFarkındalığı: 140, curiosity: 1370, humanity: 825 };
 
     console.log('\nROUTING EŞİK ANALİZİ (JSON koşullarıyla):');
     [

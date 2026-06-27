@@ -40,8 +40,13 @@ import CreditsScreen from "./components/CreditsScreen";
 import "./index.css";
 
 function App() {
-   const [phase, setPhase] = useState("start");
-   const [loopResetState, setLoopResetState] = useState(null);
+  const [phase, setPhase] = useState("start");
+  const [loopResetState, setLoopResetState] = useState(null);
+
+  // ── Stat Deduplication ────────────────────────────────────────────────────
+  // Her node için statChange sadece 1 kez uygulanır.
+  // Ölüp checkpoint'e dönünce aynı node'dan geçince stat iki kez artmaz.
+  const visitedForStatsRef = useRef(new Set());
 
   const [bootAttempt, setBootAttempt] = useState(1);
   const [bootStepIndex, setBootStepIndex] = useState(0);
@@ -69,14 +74,11 @@ function App() {
         };
   });
 
-  // Kayıtlı oyun kontrolü
   const hasSavedGame = localStorage.getItem("project_echo_progress") !== null;
 
-  // 🚀 Continue butonu artık save dosyasını yükleyip state'e aktarıyor
   function continueGame() {
     const saveData = localStorage.getItem("project_echo_progress");
     if (!saveData) return;
-
     try {
       const parsedSave = JSON.parse(saveData);
       setGameState(parsedSave);
@@ -91,87 +93,53 @@ function App() {
 
   const currentBoot =
     bootAttempt === 1 ? bootConfig.firstAttempt : bootConfig.secondAttempt;
-
   const activeStep = currentBoot?.[bootStepIndex];
 
   const introAudioRef = useRef(null);
 
   function startIntroAudio() {
     if (!settings.soundEnabled || introAudioRef.current) return;
-
     const audio = new Audio();
     audio.src = "/audio/link-start.mp3";
     audio.loop = true;
     audio.volume = 0.85;
     audio.preload = "auto";
-
-    audio.addEventListener("loadedmetadata", () => {});
-
-    audio.addEventListener("error", () => {
-      console.error("AUDIO ERROR:", audio.error);
-    });
-
+    audio.addEventListener("error", () => console.error("AUDIO ERROR:", audio.error));
     introAudioRef.current = audio;
-
-    audio.play().catch((error) => {
-      console.warn("INTRO AUDIO PLAY FAILED:", error);
-    });
+    audio.play().catch((e) => console.warn("INTRO AUDIO PLAY FAILED:", e));
   }
 
   function stopIntroAudio() {
     if (!introAudioRef.current) return;
-
     introAudioRef.current.pause();
     introAudioRef.current.currentTime = 0;
     introAudioRef.current = null;
   }
 
   function showCharacterReturnNotification(busyState) {
-    if (!busyState) return;
-
-    if (typeof window === "undefined" || !("Notification" in window)) {
-      return;
-    }
-
+    if (!busyState || typeof window === "undefined" || !("Notification" in window)) return;
     const title = busyState.notificationTitle || "Incoming Transmission";
-    const body =
-      busyState.notificationBody ||
-      `${busyState.character || "Someone"} has returned.`;
-
+    const body  = busyState.notificationBody || `${busyState.character || "Someone"} has returned.`;
     if (Notification.permission === "granted") {
       new Notification(title, { body });
-      return;
-    }
-
-    if (Notification.permission === "default") {
-      Notification.requestPermission().then((permission) => {
-        if (permission === "granted") {
-          new Notification(title, { body });
-        }
+    } else if (Notification.permission === "default") {
+      Notification.requestPermission().then((p) => {
+        if (p === "granted") new Notification(title, { body });
       });
     }
   }
 
   function buildResolvedBusyState(prevState) {
     const busy = prevState.busyState;
-
-    if (!busy?.busyUntil || Date.now() < busy.busyUntil) {
-      return prevState;
-    }
-
+    if (!busy?.busyUntil || Date.now() < busy.busyUntil) return prevState;
     const nextEpisodeId = busy.returnEpisodeId || prevState.episodeId;
-    const nextEpisode = getCurrentEpisode({
-      ...prevState,
-      episodeId: nextEpisodeId
-    });
-
-    const nextNodeId = busy.returnNodeId || nextEpisode?.startNodeId;
-
+    const nextEpisode   = getCurrentEpisode({ ...prevState, episodeId: nextEpisodeId });
+    const nextNodeId    = busy.returnNodeId || nextEpisode?.startNodeId;
     return {
       ...prevState,
-      episodeId: nextEpisodeId,
+      episodeId:     nextEpisodeId,
       currentNodeId: nextNodeId,
-      busyState: null,
+      busyState:     null,
       activePuzzleId: null,
       activeWaitTask: null,
       history: [
@@ -191,11 +159,7 @@ function App() {
 
   function startGame() {
     startIntroAudio();
-
-    runIntroTimeline({
-      timeline: gameConfig.introTimeline,
-      onPhaseChange: setPhase
-    });
+    runIntroTimeline({ timeline: gameConfig.introTimeline, onPhaseChange: setPhase });
   }
 
   function startRecoveryBoot() {
@@ -207,197 +171,137 @@ function App() {
     setPhase("booting");
   }
 
+  // ── Settings kaydet ───────────────────────────────────────────────────────
   useEffect(() => {
     localStorage.setItem("echo_settings", JSON.stringify(settings));
   }, [settings]);
 
+  // ── Episode değişince visitedForStats'ı sıfırla ───────────────────────────
+  // Yeni bölüm = stat takibini temizle. Ölüm döngüsü temizlemesi ayrı.
+  useEffect(() => {
+    visitedForStatsRef.current = new Set();
+  }, [gameState.episodeId]);
+
+  // ── Intro audio ───────────────────────────────────────────────────────────
   useEffect(() => {
     let logoAudioStopTimer;
-
-    if (!settings.soundEnabled) {
-      stopIntroAudio();
-      return undefined;
-    }
-
+    if (!settings.soundEnabled) { stopIntroAudio(); return undefined; }
     if (phase === "logo") {
-      logoAudioStopTimer = setTimeout(() => {
-        stopIntroAudio();
-      }, 2200);
+      logoAudioStopTimer = setTimeout(() => stopIntroAudio(), 2200);
     }
-
-    if (
-      phase === "start" ||
-      phase === "game" ||
-      phase === "booting" ||
-      phase === "rebootConfirm" ||
-      phase === "credits"
-    ) {
+    if (["start","game","booting","rebootConfirm","credits"].includes(phase)) {
       stopIntroAudio();
     }
-
-    return () => {
-      clearTimeout(logoAudioStopTimer);
-    };
+    return () => clearTimeout(logoAudioStopTimer);
   }, [phase, settings.soundEnabled]);
 
+  // ── Pending notifications ─────────────────────────────────────────────────
   useEffect(() => {
     if (phase !== "game") return;
-
-    const pendingNotifications = gameState.pendingNotifications || [];
-
-    if (!pendingNotifications.length) return;
-
-    pendingNotifications.forEach((notification) => {
+    const pending = gameState.pendingNotifications || [];
+    if (!pending.length) return;
+    pending.forEach((n) => {
       setVisibleMessages((prev) => [
         ...prev,
-        {
-          type: "systemAlert",
-          text: notification.message || "[NEW CONNECTION DETECTED]",
-          sender: "system",
-          speaker: "SYSTEM"
-        }
+        { type: "systemAlert", text: n.message || "[NEW CONNECTION DETECTED]", sender: "system", speaker: "SYSTEM" }
       ]);
     });
-
-    setGameState((prevState) => {
-      const nextState = clearPendingNotifications(prevState);
-      saveGameState(nextState);
-      return nextState;
+    setGameState((prev) => {
+      const next = clearPendingNotifications(prev);
+      saveGameState(next);
+      return next;
     });
   }, [phase, gameState.pendingNotifications?.length]);
 
+  // ── Active wait task resolver ─────────────────────────────────────────────
   useEffect(() => {
-    const resolvedState = resolveActiveWaitTask(gameState);
-
+    const resolved = resolveActiveWaitTask(gameState);
     if (
-      resolvedState.episodeId !== gameState.episodeId ||
-      resolvedState.currentNodeId !== gameState.currentNodeId ||
-      Boolean(resolvedState.activeWaitTask) !== Boolean(gameState.activeWaitTask)
+      resolved.episodeId     !== gameState.episodeId     ||
+      resolved.currentNodeId !== gameState.currentNodeId ||
+      Boolean(resolved.activeWaitTask) !== Boolean(gameState.activeWaitTask)
     ) {
-      setGameState(resolvedState);
-      saveGameState(resolvedState);
+      setGameState(resolved);
+      saveGameState(resolved);
     }
   }, [gameState]);
 
+  // ── Character busy timer ──────────────────────────────────────────────────
   useEffect(() => {
     if (phase !== "game" || !gameState.busyState) return;
-
-    const busy = gameState.busyState;
+    const busy        = gameState.busyState;
     const remainingMs = Math.max(0, busy.busyUntil - Date.now());
 
     function resolveBusyAndContinue(shouldNotify = false) {
       setGameState((prev) => {
         if (!prev.busyState) return prev;
-
-        const nextState = buildResolvedBusyState(prev);
-
-        if (nextState === prev) return prev;
-
-        if (shouldNotify) {
-          showCharacterReturnNotification(prev.busyState);
-        }
-
-        saveGameState(nextState);
-        return nextState;
+        const next = buildResolvedBusyState(prev);
+        if (next === prev) return prev;
+        if (shouldNotify) showCharacterReturnNotification(prev.busyState);
+        saveGameState(next);
+        return next;
       });
     }
 
-    if (remainingMs <= 0) {
-      resolveBusyAndContinue(false);
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      resolveBusyAndContinue(true);
-    }, remainingMs);
-
+    if (remainingMs <= 0) { resolveBusyAndContinue(false); return; }
+    const timer = setTimeout(() => resolveBusyAndContinue(true), remainingMs);
     return () => clearTimeout(timer);
   }, [phase, gameState.busyState?.busyUntil]);
 
+  // ── Scroll / zoom lock ────────────────────────────────────────────────────
   useEffect(() => {
-  // Scroll'u kapat
-  document.documentElement.style.overflow = "hidden";
-  document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow            = "hidden";
+    document.body.style.position            = "fixed";
+    document.body.style.width               = "100%";
+    document.body.style.height              = "100%";
+    document.body.style.touchAction         = "none";
+    document.body.style.overscrollBehavior  = "none";
 
-  document.body.style.position = "fixed";
-  document.body.style.width = "100%";
-  document.body.style.height = "100%";
-  document.body.style.touchAction = "none";
-  document.body.style.overscrollBehavior = "none";
+    const preventDefault = (e) => e.preventDefault();
+    const preventZoom    = (e) => { if (e.ctrlKey) e.preventDefault(); };
 
-  const preventDefault = (e) => e.preventDefault();
+    window.addEventListener("wheel",        preventDefault, { passive: false });
+    window.addEventListener("touchmove",    preventDefault, { passive: false });
+    window.addEventListener("gesturestart", preventDefault);
+    window.addEventListener("gesturechange",preventDefault);
+    window.addEventListener("wheel",        preventZoom,    { passive: false });
 
-  // Mouse wheel
-  window.addEventListener("wheel", preventDefault, {
-    passive: false,
-  });
+    return () => {
+      window.removeEventListener("wheel",        preventDefault);
+      window.removeEventListener("touchmove",    preventDefault);
+      window.removeEventListener("gesturestart", preventDefault);
+      window.removeEventListener("gesturechange",preventDefault);
+      window.removeEventListener("wheel",        preventZoom);
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow            = "";
+      document.body.style.position            = "";
+      document.body.style.width               = "";
+      document.body.style.height              = "";
+      document.body.style.touchAction         = "";
+      document.body.style.overscrollBehavior  = "";
+    };
+  }, []);
 
-  // Mobil scroll
-  window.addEventListener("touchmove", preventDefault, {
-    passive: false,
-  });
-
-  // Zoom
-  window.addEventListener("gesturestart", preventDefault);
-  window.addEventListener("gesturechange", preventDefault);
-
-  // Ctrl + MouseWheel zoom
-  const preventZoom = (e) => {
-    if (e.ctrlKey) e.preventDefault();
-  };
-
-  window.addEventListener("wheel", preventZoom, {
-    passive: false,
-  });
-
-  return () => {
-    window.removeEventListener("wheel", preventDefault);
-    window.removeEventListener("touchmove", preventDefault);
-    window.removeEventListener("gesturestart", preventDefault);
-    window.removeEventListener("gesturechange", preventDefault);
-    window.removeEventListener("wheel", preventZoom);
-
-    document.documentElement.style.overflow = "";
-    document.body.style.overflow = "";
-    document.body.style.position = "";
-    document.body.style.width = "";
-    document.body.style.height = "";
-    document.body.style.touchAction = "";
-    document.body.style.overscrollBehavior = "";
-  };
-}, []);
-
+  // ── Boot sequence ─────────────────────────────────────────────────────────
   useEffect(() => {
     if (phase !== "booting" || !activeStep) return;
-
     return runBootStep({
-      activeStep,
-      bootStepIndex,
-      bootAttempt,
-      currentBoot,
+      activeStep, bootStepIndex, bootAttempt, currentBoot,
       criticalErrorHoldMs: bootConfig.criticalErrorHoldMs,
-      afterBootHoldMs: bootConfig.afterBootHoldMs,
-      onProgress: setBootProgress,
-      onStepComplete: (completedStep) => {
-        setCompletedSteps((prev) => [...prev, completedStep]);
-      },
-      onCriticalError: (holdMs) => {
+      afterBootHoldMs:     bootConfig.afterBootHoldMs,
+      onProgress:    setBootProgress,
+      onStepComplete:(step) => setCompletedSteps((prev) => [...prev, step]),
+      onCriticalError:(holdMs) => {
         setShowError(true);
-
-        setTimeout(() => {
-          setShowError(false);
-          setPhase("rebootConfirm");
-        }, holdMs);
+        setTimeout(() => { setShowError(false); setPhase("rebootConfirm"); }, holdMs);
       },
-      onNextStep: () => {
-        setBootStepIndex((prev) => prev + 1);
-      },
-      onBootComplete: () => {
-        setPhase("transmissionInit");
-      }
+      onNextStep:   () => setBootStepIndex((prev) => prev + 1),
+      onBootComplete:() => setPhase("transmissionInit")
     });
   }, [phase, activeStep, bootStepIndex, bootAttempt, currentBoot]);
 
+  // ── Ana oyun döngüsü ──────────────────────────────────────────────────────
   useEffect(() => {
     if (phase !== "game" || !currentNode) return;
 
@@ -408,14 +312,13 @@ function App() {
     setNodeFinished(false);
 
     return playNodeEvents({
-      events: currentNode.events || [],
-      save: gameState,
+      events:         currentNode.events || [],
+      save:           gameState,
       signalStrength: gameState.signalStrength,
 
-      translate: (key, fallback = "") => {
-        return getGameText(key, fallback, settings.language);
-      },
+      translate: (key, fallback = "") => getGameText(key, fallback, settings.language),
 
+      // ── characterBusy ─────────────────────────────────────────────────────
       onCharacterBusyStart: (busy) => {
         setIsTyping(false);
         setIsGlitching(false);
@@ -424,194 +327,184 @@ function App() {
         setNodeFinished(false);
 
         setGameState((prev) => {
-          const nextState = {
+          const next = {
             ...prev,
             activePuzzleId: null,
             activeWaitTask: null,
             busyState: {
-              id: busy.id,
-              character: busy.character,
-              status: busy.status,
-              busyUntil: Date.now() + busy.durationMs,
-              returnNodeId: busy.returnNodeId,
-              returnEpisodeId: busy.returnEpisodeId,
+              id:                busy.id,
+              character:         busy.character,
+              status:            busy.status,
+              busyUntil:         Date.now() + busy.durationMs,
+              returnNodeId:      busy.returnNodeId,
+              returnEpisodeId:   busy.returnEpisodeId,
               notificationTitle: busy.notificationTitle,
-              notificationBody: busy.notificationBody
+              notificationBody:  busy.notificationBody
             },
             history: [
               ...(prev.history || []),
               {
-                type: "characterBusyStart",
-                busyId: busy.id,
-                character: busy.character,
-                status: busy.status,
-                returnNodeId: busy.returnNodeId,
+                type:            "characterBusyStart",
+                busyId:          busy.id,
+                character:       busy.character,
+                status:          busy.status,
+                returnNodeId:    busy.returnNodeId,
                 returnEpisodeId: busy.returnEpisodeId || prev.episodeId,
-                startedAt: new Date().toISOString()
+                startedAt:       new Date().toISOString()
               }
             ]
           };
-
-          saveGameState(nextState);
-          return nextState;
+          saveGameState(next);
+          return next;
         });
       },
 
       onTypingStart: () => setIsTyping(true),
-      onTypingStop: () => setIsTyping(false),
-
+      onTypingStop:  () => setIsTyping(false),
       onGlitchStart: () => setIsGlitching(true),
-      onGlitchStop: () => setIsGlitching(false),
+      onGlitchStop:  () => setIsGlitching(false),
 
       onSignalLost: (message) => {
         setSignalStatus({ type: "lost", message });
-
-        setGameState((prev) => {
-          return applySignalLost(prev);
-        });
+        setGameState((prev) => applySignalLost(prev));
       },
 
       onSignalRestored: (message) => {
         setSignalStatus({ type: "restored", message });
-
-        setTimeout(() => {
-          setSignalStatus(null);
-        }, 1200);
+        setTimeout(() => setSignalStatus(null), 1200);
       },
 
-      onProgressTaskStart: (task) => {
-        setProgressTask(task);
-      },
-
-      onProgressTaskEnd: () => {
-        setProgressTask(null);
-      },
+      onProgressTaskStart: (task) => setProgressTask(task),
+      onProgressTaskEnd:   ()     => setProgressTask(null),
 
       onMessage: (message) => {
-        const enrichedMessage = {
-          ...message,
-          sender: message.sender || "character",
-          speaker: message.speaker || currentNode.speaker
-        };
-
-        setVisibleMessages((prev) => [...prev, enrichedMessage]);
+        setVisibleMessages((prev) => [
+          ...prev,
+          {
+            ...message,
+            sender:  message.sender  || "character",
+            speaker: message.speaker || currentNode.speaker
+          }
+        ]);
       },
 
       onCollectFile: (file) => {
-        setGameState((prevState) => {
-          const nextState = collectFile(prevState, {
-            ...file,
-            collectedAt: new Date().toISOString(),
-            isNew: true
-          });
-
-          saveGameState(nextState);
-          return nextState;
+        setGameState((prev) => {
+          const next = collectFile(prev, { ...file, collectedAt: new Date().toISOString(), isNew: true });
+          saveGameState(next);
+          return next;
         });
       },
 
       onPuzzleStart: (puzzleId) => {
-        setGameState((prevState) => {
-          const nextState = setActivePuzzle(prevState, puzzleId);
-          saveGameState(nextState);
-          return nextState;
+        setGameState((prev) => {
+          const next = setActivePuzzle(prev, puzzleId);
+          saveGameState(next);
+          return next;
         });
       },
 
-onStatChange: (changes) => {
-         setGameState((prev) => {
-           const nextState = stateManager.applyEffects(prev, changes);
-           saveGameState(nextState);
-           return nextState;
-         });
-       },
+      // ── statChange — deduplication ile ────────────────────────────────────
+      // Aynı node'dan tekrar geçince (ölüm sonrası) stat iki kez artmaz.
+      onStatChange: (changes) => {
+        const nodeId = currentNode?.id;
+        if (nodeId && visitedForStatsRef.current.has(nodeId)) return;
+        if (nodeId) visitedForStatsRef.current.add(nodeId);
 
-       onStatBasedRouting: (route) => {
-         if (route?.nextEpisodeId || route?.nextNodeId) {
-           setTimeout(() => {
-             setGameState((prev) => {
-               const nextState = {
-                 ...prev,
-                 episodeId: route.nextEpisodeId ? route.nextEpisodeId : prev.episodeId,
-                 currentNodeId: route.nextNodeId || prev.currentNodeId
-               };
-               saveGameState(nextState);
-               return nextState;
-             });
-           }, 1000);
-         }
-       },
+        setGameState((prev) => {
+          const next = stateManager.applyEffects(prev, changes);
+          saveGameState(next);
+          return next;
+        });
+      },
 
-       onLoopReset: (resetState) => {
-         setLoopResetState(resetState);
-         setPhase("loopReset");
-       },
+      // ── checkpoint — konumu ve stat'ları kaydet ────────────────────────────
+      onCheckpoint: () => {
+        setGameState((prev) => {
+          const next = {
+            ...prev,
+            checkpoint: {
+              nodeId:    prev.currentNodeId,
+              episodeId: prev.episodeId,
+            },
+            // Checkpoint anındaki stat snapshot — ölüm sonrası bu değere dönülür
+            checkpointStats: { ...(prev.stats || {}) },
+          };
+          saveGameState(next);
+          return next;
+        });
+      },
 
-       onComplete: () => {
+      // ── statBasedRouting — sona yönlendirme ──────────────────────────────
+      onStatBasedRouting: (route) => {
+        if (route?.nextEpisodeId || route?.nextNodeId) {
+          setTimeout(() => {
+            setGameState((prev) => {
+              const next = {
+                ...prev,
+                episodeId:     route.nextEpisodeId || prev.episodeId,
+                currentNodeId: route.nextNodeId    || prev.currentNodeId
+              };
+              saveGameState(next);
+              return next;
+            });
+          }, 1000);
+        }
+      },
+
+      // ── loopReset — ölüm ekranına geç ────────────────────────────────────
+      onLoopReset: (resetState) => {
+        setLoopResetState(resetState);
+        setPhase("loopReset");
+      },
+
+      // ── onComplete — normal node akışı ────────────────────────────────────
+      onComplete: () => {
         if (gameState.busyState) return;
-
         setNodeFinished(true);
 
-        // BRANCHING
+        // Branching
         if (currentNode?.branching?.length) {
-          const matchedBranch = currentNode.branching.find((branch) =>
-            evaluateConditions(gameState, branch.conditions)
+          const matched = currentNode.branching.find((b) =>
+            evaluateConditions(gameState, b.conditions)
           );
-
-          const targetNodeId =
-            matchedBranch?.nextNodeId || currentNode.defaultNextNodeId;
-
-          if (targetNodeId) {
+          const targetId = matched?.nextNodeId || currentNode.defaultNextNodeId;
+          if (targetId) {
             setTimeout(() => {
               setGameState((prev) => {
-                const nextState = {
-                  ...prev,
-                  currentNodeId: targetNodeId
-                };
-
-                saveGameState(nextState);
-                return nextState;
+                const next = { ...prev, currentNodeId: targetId };
+                saveGameState(next);
+                return next;
               });
             }, 500);
-
             return;
           }
         }
 
-        // NORMAL NODE FLOW
+        // Normal node geçişi
         if (currentNode?.nextNodeId) {
           setTimeout(() => {
             setGameState((prev) => {
-              const nextState = {
-                ...prev,
-                currentNodeId: currentNode.nextNodeId
-              };
-
-              saveGameState(nextState);
-              return nextState;
+              const next = { ...prev, currentNodeId: currentNode.nextNodeId };
+              saveGameState(next);
+              return next;
             });
           }, 500);
-
           return;
         }
 
-        // EPISODE TRANSITION
+        // Episode geçişi
         if (currentNode?.nextEpisodeId) {
           setTimeout(() => {
             setGameState((prev) => {
-              const nextEpisode = getCurrentEpisode({
+              const nextEp   = getCurrentEpisode({ ...prev, episodeId: currentNode.nextEpisodeId });
+              const next = {
                 ...prev,
-                episodeId: currentNode.nextEpisodeId
-              });
-
-              const nextState = {
-                ...prev,
-                episodeId: currentNode.nextEpisodeId,
-                currentNodeId: nextEpisode.startNodeId
+                episodeId:     currentNode.nextEpisodeId,
+                currentNodeId: nextEp?.startNodeId
               };
-
-              saveGameState(nextState);
-              return nextState;
+              saveGameState(next);
+              return next;
             });
           }, 500);
         }
@@ -619,67 +512,47 @@ onStatChange: (changes) => {
     });
   }, [phase, currentNode?.id]);
 
+  // ── Seçim ─────────────────────────────────────────────────────────────────
   function handleChoice(choiceId) {
     if (gameState.busyState) return;
-
-    const selectedChoice = currentNode?.choices?.find(
-      (choice) => choice.id === choiceId
-    );
-
-    if (selectedChoice) {
+    const selected = currentNode?.choices?.find((c) => c.id === choiceId);
+    if (selected) {
       setVisibleMessages((prev) => [
         ...prev,
         {
-          type: "playerMessage",
-          text: getGameText(
-            selectedChoice.textKey,
-            selectedChoice.text,
-            settings.language
-          ),
-          sender: "player",
+          type:    "playerMessage",
+          text:    getGameText(selected.textKey, selected.text, settings.language),
+          sender:  "player",
           speaker: "YOU"
         }
       ]);
     }
-
     setNodeFinished(false);
-
-    const nextState = chooseOption(gameState, choiceId);
-    setGameState(nextState);
-    saveGameState(nextState);
+    const next = chooseOption(gameState, choiceId);
+    setGameState(next);
+    saveGameState(next);
   }
 
+  // ── Puzzle cevabı ─────────────────────────────────────────────────────────
   function handlePuzzleSubmit(answer) {
     if (!activePuzzle) return;
-
     const result = submitPuzzleAnswer(gameState, activePuzzle.id, answer);
-
     setVisibleMessages((prev) => [
       ...prev,
-      {
-        type: "playerMessage",
-        text: answer,
-        sender: "player",
-        speaker: "YOU"
-      },
-      {
-        type: "systemAlert",
-        text: result.isCorrect ? "[ACCESS GRANTED]" : "[ACCESS DENIED]",
-        sender: "system",
-        speaker: "SYSTEM"
-      }
+      { type: "playerMessage", text: answer,          sender: "player", speaker: "YOU"    },
+      { type: "systemAlert",   text: result.isCorrect ? "[ACCESS GRANTED]" : "[ACCESS DENIED]",
+        sender: "system", speaker: "SYSTEM" }
     ]);
-
     setNodeFinished(false);
     setGameState(result.nextState);
     saveGameState(result.nextState);
   }
 
   function handleFileRead(fileId) {
-    setGameState((prevState) => {
-      const nextState = markFileAsRead(prevState, fileId);
-      saveGameState(nextState);
-      return nextState;
+    setGameState((prev) => {
+      const next = markFileAsRead(prev, fileId);
+      saveGameState(next);
+      return next;
     });
   }
 
@@ -688,6 +561,7 @@ onStatChange: (changes) => {
     window.location.reload();
   }
 
+  // ── Render ────────────────────────────────────────────────────────────────
   if (phase === "start") {
     return (
       <StartScreen
@@ -705,11 +579,7 @@ onStatChange: (changes) => {
   }
 
   if (phase === "credits") {
-    return (
-      <CreditsScreen
-        onClose={() => setPhase("start")}
-      />
-    );
+    return <CreditsScreen onClose={() => setPhase("start")} />;
   }
 
   if (phase === "continueLoading") {
@@ -726,22 +596,14 @@ onStatChange: (changes) => {
   }
 
   if (phase === "quote") {
-    return (
-      <QuoteScreen
-        quote={gameConfig.introQuote}
-        language={settings.language}
-      />
-    );
+    return <QuoteScreen quote={gameConfig.introQuote} language={settings.language} />;
   }
 
   if (phase === "logo") {
     return (
       <LogoScreen
         gameTitle={gameConfig.gameTitle}
-        onComplete={() => {
-          stopIntroAudio();
-          setPhase("booting");
-        }}
+        onComplete={() => { stopIntroAudio(); setPhase("booting"); }}
       />
     );
   }
@@ -770,47 +632,56 @@ onStatChange: (changes) => {
     );
   }
 
-if (phase === "transmissionInit") {
-     return (
-       <TransmissionInitScreen
-         config={bootConfig.transmissionInit}
-         onComplete={() => setPhase("game")}
-         language={settings.language}
-       />
-     );
-   }
+  if (phase === "transmissionInit") {
+    return (
+      <TransmissionInitScreen
+        config={bootConfig.transmissionInit}
+        onComplete={() => setPhase("game")}
+        language={settings.language}
+      />
+    );
+  }
 
-   if (phase === "loopReset") {
-     return (
-       <LoopResetScreen
-         loaderMessage={loopResetState?.loaderMessage}
-         subMessage={loopResetState?.subMessage}
-         visible={true}
-         loaderDurationMs={loopResetState?.loaderDurationMs}
-         autoRestoreCheckpointAfterLoader={loopResetState?.autoRestoreCheckpointAfterLoader}
-         restoreCheckpointId={loopResetState?.restoreCheckpointId}
-         onComplete={(result) => {
-           setLoopResetState(null);
-           if (result?.autoRestore && gameState.checkpoint) {
-             setGameState((prev) => {
-               const checkpoint = prev.checkpoint;
-               const episodeId = checkpoint.episodeId || (checkpoint.episode ? `episode_${checkpoint.episode}` : prev.episodeId);
-               const nextState = {
-                 ...prev,
-                 episodeId,
-                 currentNodeId: checkpoint.nodeId || prev.currentNodeId
-               };
-               saveGameState(nextState);
-               return nextState;
-             });
-           }
-           setPhase("game");
-         }}
-       />
-     );
-   }
+  if (phase === "loopReset") {
+    return (
+      <LoopResetScreen
+        loaderMessage={loopResetState?.loaderMessage}
+        subMessage={loopResetState?.subMessage}
+        visible={true}
+        loaderDurationMs={loopResetState?.loaderDurationMs}
+        autoRestoreCheckpointAfterLoader={loopResetState?.autoRestoreCheckpointAfterLoader}
+        restoreCheckpointId={loopResetState?.restoreCheckpointId}
+        onComplete={(result) => {
+          setLoopResetState(null);
 
-   if (!currentNode) {
+          if (result?.autoRestore && gameState.checkpoint) {
+            // Yeni deneme: stat ve visited takibini sıfırla
+            visitedForStatsRef.current = new Set();
+
+            setGameState((prev) => {
+              const cp  = prev.checkpoint;
+              const epId = cp.episodeId
+                || (cp.episode ? `episode_${cp.episode}` : prev.episodeId);
+
+              const next = {
+                ...prev,
+                episodeId:     epId,
+                currentNodeId: cp.nodeId || prev.currentNodeId,
+                // Checkpoint anındaki stat'lara dön — stat inflation önlenir
+                stats: prev.checkpointStats || prev.stats,
+              };
+              saveGameState(next);
+              return next;
+            });
+          }
+
+          setPhase("game");
+        }}
+      />
+    );
+  }
+
+  if (!currentNode) {
     return (
       <MissingNodeScreen
         nodeId={gameState.currentNodeId}
@@ -820,16 +691,14 @@ if (phase === "transmissionInit") {
     );
   }
 
-  const visibleChoices = (currentNode?.choices || []).filter((choice) =>
-    evaluateConditions(gameState, choice.conditions)
+  const visibleChoices = (currentNode?.choices || []).filter((c) =>
+    evaluateConditions(gameState, c.conditions)
   );
-
-  const hasChoices = visibleChoices.length > 0;
 
   const canShowChoices =
     !gameState.busyState &&
     nodeFinished &&
-    hasChoices &&
+    visibleChoices.length > 0 &&
     !activePuzzle &&
     !isTyping &&
     !isGlitching &&
@@ -840,10 +709,7 @@ if (phase === "transmissionInit") {
     <TerminalScreen
       config={gameConfig}
       gameState={gameState}
-      currentNode={{
-        ...currentNode,
-        choices: canShowChoices ? visibleChoices : []
-      }}
+      currentNode={{ ...currentNode, choices: canShowChoices ? visibleChoices : [] }}
       visibleMessages={visibleMessages}
       isTyping={isTyping}
       isGlitching={isGlitching}
@@ -851,14 +717,14 @@ if (phase === "transmissionInit") {
       progressTask={progressTask}
       canShowChoices={canShowChoices}
       activePuzzle={activePuzzle}
-onChoice={handleChoice}
-       onPuzzleSubmit={handlePuzzleSubmit}
-       onFileRead={handleFileRead}
-       onReset={handleReset}
-       settings={settings}
-       onChangeSettings={setSettings}
-     />
-   );
- }
+      onChoice={handleChoice}
+      onPuzzleSubmit={handlePuzzleSubmit}
+      onFileRead={handleFileRead}
+      onReset={handleReset}
+      settings={settings}
+      onChangeSettings={setSettings}
+    />
+  );
+}
 
- export default App;
+export default App;
