@@ -14,17 +14,47 @@ export default function StartScreen({
   onChangeSettings,
   onReset
 }) {
+  
   const [introStep, setIntroStep] = useState("producerLogo");
   const [briefingStage, setBriefingStage] = useState(0);
   const [isLeaving, setIsLeaving] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [showProducerLogo, setShowProducerLogo] = useState(false);
+  const EPISODE_TITLES = {
+    1: "Uyanış",
+    2: "Geçit",
+    3: "Derin",
+    4: "Rezonans",
+    5: "Işık",
+    6: "Bekleyiş",
+    7: "Gölge",
+    8: "Ses",
+    9: "Yüz Yüze",
+    10: "İz",
+    11: "1987",
+    12: "Tanık",
+    13: "Yankı",
+    14: "Beşinci",
+    15: "Seçim",
+    16: "Yukarı",
+    17: "Sabah",
+    18: "Kilit",
+    19: "Birlikte",
+    20: "Anlat"
+  };
   
   // YENİ EKLENEN STATELER
   const [warningStage, setWarningStage] = useState(0);
   const [connMsg, setConnMsg] = useState("");
   const [isTitleFading, setIsTitleFading] = useState(false); // Başlık fade out kontrolü
+  
+  // StartScreen bileşeninin içindeki tanımlamalar kısmına ekle:
+  const savedGameString = localStorage.getItem("project_echo_progress"); // "game_save" yerine kendi kayıt anahtarını yaz
+  const saveData = savedGameString ? JSON.parse(savedGameString) : null;
+
+  console.log("TARAYICIDAKİ KAYIT VERİSİ:", saveData);
+  // const hasSavedGame = !!saveData; // SİLİNDİ: Çakışmayı önlemek için. Prop olarak geliyor.
 
   // Müzik için referans - En üst seviyede tanımlı (Component mount oldukça yaşamaya devam eder)
   const audioRef = useRef(null);
@@ -306,10 +336,25 @@ useEffect(() => {
           {subtitle && <p className="text-sm tracking-[0.5em] text-stone-500 uppercase mb-12">{subtitle}</p>}
           
           <div className="flex flex-col gap-6 w-80">
-            <button onClick={() => { stopMusic(); onContinue(); }} disabled={!hasSavedGame} className="flex flex-col border-l-2 border-stone-600 pl-4 py-2 hover:border-amber-600 transition-all text-left">
-              <span className="text-lg uppercase">Devam Et</span>
-              <span className="text-[10px] text-stone-500">Son Kayıt: Bölüm 1</span>
-            </button>
+<button 
+  onClick={() => { stopMusic(); onContinue(); }} 
+  disabled={!hasSavedGame} 
+  className="flex flex-col border-l-2 border-stone-600 pl-4 py-2 hover:border-amber-600 transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  <span className="text-lg uppercase">Devam Et</span>
+  <span className="text-[10px] text-stone-500">
+    {hasSavedGame && saveData 
+      ? (() => {
+          // "episode_01" metnindeki harfleri atıp sadece sayıyı alıyoruz (örnek: 1)
+          const rawId = saveData.episodeId || "";
+          const epNum = parseInt(rawId.replace(/\D/g, ''), 10) || 1; 
+          const epTitle = EPISODE_TITLES[epNum] || "Bilinmeyen Bölüm";
+          
+          return `Son Kayıt: Bölüm ${epNum} - ${epTitle}`;
+        })()
+      : "Kayıt bulunamadı"}
+  </span>
+</button>
             <button onClick={() => { setIntroStep("briefing"); }} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Yeni Oyun</button>
             <button onClick={onOpenCredits} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Künye</button>
             <button onClick={() => setIsSettingsOpen(true)} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">Ayarlar</button>

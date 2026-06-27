@@ -1,334 +1,180 @@
 {
-  "id": "episode_01_part_01",
-  "title": "First Contact",
-  "startNodeId": "boot_contact",
-
-  "nodes": {
-
-    "boot_contact": {
-      "id": "boot_contact",
-
-      "events": [
-        {
-          "type": "typing",
-          "duration": 2000
-        },
-
-        {
-          "type": "message",
-          "speaker": "SYSTEM",
-          "text": "LINK STABILIZED"
-        },
-
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-
-        {
-          "type": "relationshipDialogue",
-          "speaker": "ELIAS",
-
-          "variants": {
-            "TRUSTING": "Orada olduğunu biliyordum.",
-            "CAUTIOUS": "Birisi varsa cevap versin.",
-            "BROKEN": "Lütfen cevap ver...",
-            "REBELLIOUS": "Bu şey gerçekten çalışıyor mu?"
-          }
-        }
-      ],
-
-      "choices": [
-        {
-          "id": "answer_friendly",
-          "text": "Buradayım.",
-
-          "effects": {
-            "trust": 3
-          },
-
-          "memory": [
-            "answered_first_call"
-          ],
-
-          "nextNodeId": "friendly_reply"
-        },
-
-        {
-          "id": "answer_cold",
-          "text": "Kimsin?",
-
-          "effects": {
-            "resentment": 2
-          },
-
-          "memory": [
-            "suspicious_first_contact"
-          ],
-
-          "nextNodeId": "cold_reply"
-        }
-      ]
-    },
-
-    "friendly_reply": {
-
-      "id": "friendly_reply",
-
-      "events": [
-
-        {
-          "type": "message",
-          "speaker": "ELIAS",
-          "text": "Tamam..."
-        },
-
-        {
-          "type": "typing",
-          "duration": 1200
-        },
-
-        {
-          "type": "message",
-          "speaker": "ELIAS",
-          "text": "Garip gelecek ama birinin cevap vereceğini düşünmemiştim."
-        }
-      ],
-
-      "choices": [
-        {
-          "id": "ask_name",
-          "text": "Adın ne?",
-
-          "effects": {
-            "trust": 2
-          },
-
-          "memory": [
-            "asked_name"
-          ],
-
-          "nextNodeId": "name_conversation"
-        },
-
-        {
-          "id": "ask_location",
-          "text": "Neredesin?",
-
-          "nextNodeId": "location_conversation"
-        }
-      ]
-    },
-
-    "cold_reply": {
-
-      "id": "cold_reply",
-
-      "events": [
-
-        {
-          "type": "message",
-          "speaker": "ELIAS",
-          "text": "Bilmiyorum."
-        },
-
-        {
-          "type": "typing",
-          "duration": 1000
-        },
-
-        {
-          "type": "message",
-          "speaker": "ELIAS",
-          "text": "Yani adımı biliyorum ama nerede olduğumu bilmiyorum."
-        }
-      ],
-
-      "choices": [
-        {
-          "id": "continue_cold",
-          "text": "Devam et.",
-
-          "nextNodeId": "name_conversation"
-        }
-      ]
-    },
-
-    "name_conversation": {
-
-      "id": "name_conversation",
-
-      "events": [
-
-        {
-          "type": "message",
-          "speaker": "ELIAS",
-          "text": "Elias."
-        },
-
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-
-        {
-          "type": "message",
-          "speaker": "ELIAS",
-          "text": "En azından öyle olduğumu düşünüyorum."
-        }
-      ],
-
-      "choices": [
-        {
-          "id": "joke_about_name",
-          "text": "Bundan da emin değil misin?",
-
-          "effects": {
-            "trust": 2
-          },
-
-          "memory": [
-            "lighthearted_operator"
-          ],
-
-          "nextNodeId": "fear_topic"
-        },
-
-        {
-          "id": "serious_about_name",
-          "text": "Bu iyi bir başlangıç.",
-
-          "nextNodeId": "fear_topic"
-        }
-      ]
-    },
-
-    "location_conversation": {
-
-      "id": "location_conversation",
-
-      "events": [
-        {
-          "type": "message",
-          "speaker": "ELIAS",
-          "text": "Karanlık bir odadayım."
-        },
-
-        {
-          "type": "message",
-          "speaker": "ELIAS",
-          "text": "Ve bunun ne kadar kötü duyulduğunun farkındayım."
-        }
-      ],
-
-      "choices": [
-        {
-          "id": "continue_location",
-          "text": "Sakin ol.",
-
-          "effects": {
-            "trust": 2
-          },
-
-          "nextNodeId": "fear_topic"
-        }
-      ]
-    },
-
-    "fear_topic": {
-
-      "id": "fear_topic",
-
-      "events": [
-
-        {
-          "type": "message",
-          "speaker": "ELIAS",
-          "text": "Sana bir şey sorabilir miyim?"
-        }
-      ],
-
-      "choices": [
-        {
-          "id": "allow_question",
-          "text": "Sor.",
-
-          "nextNodeId": "fear_question"
-        }
-      ]
-    },
-
-    "fear_question": {
-
-      "id": "fear_question",
-
-      "events": [
-
-        {
-          "type": "message",
-          "speaker": "ELIAS",
-          "text": "İnsan tamamen yalnız kaldığında ne kadar sürede korkmaya başlar?"
-        }
-      ],
-
-      "choices": [
-        {
-          "id": "comfort_elias",
-
-          "text": "Yalnız değilsin.",
-
-          "effects": {
-            "trust": 4
-          },
-
-          "memory": [
-            "comforted_elias"
-          ],
-
-          "nextNodeId": "part_end"
-        },
-
-        {
-          "id": "logical_answer",
-
-          "text": "Kişiye göre değişir.",
-
-          "nextNodeId": "part_end"
-        }
-      ]
-    },
-
-    "part_end": {
-
-      "id": "part_end",
-
-      "events": [
-
-        {
-          "type": "message",
-          "speaker": "ELIAS",
-          "text": "Anladım."
-        },
-
-        {
-          "type": "typing",
-          "duration": 1500
-        },
-
-        {
-          "type": "message",
-          "speaker": "ELIAS",
-          "text": "Sanırım bu konuşma düşündüğümden daha önemli olacak."
-        },
-
-        {
-          "type": "message",
-          "speaker": "SYSTEM",
-          "text": "EPISODE 01 - PART 01 COMPLETE"
-        }
-      ],
-
-      "choices": []
-    }
-  }
+  "ep01_n01_event_0_text": "KATMAN KÖPRÜSÜ KURULDU — TELSİZ REZONANSI AKTİF",
+  "ep01_n01_event_3_text": "Alo? Sesim geliyor mu?",
+  "ep01_n01_event_5_text": "Orada kimse var mı?",
+  "ep01_n01_choice_c1_buradayim": "Buradayım. Frekansını sabitledim, seni duyuyorum.",
+  "ep01_n01_choice_c1_kimsin": "Duyuyorum. Sen kimsin? Bu hatta nasıl girdin?",
+  "ep01_n01_b_event_1_text": "Şükürler olsun... Bir an delirdiğimi sandım.",
+  "ep01_n01_b_event_3_text": "Burası... çok karanlık. Hiçbir şey göremiyorum.",
+  "ep01_n01_b_event_5_text": "Ah... Başım çatlayacak gibi.",
+  "ep01_n01_b_choice_c1_durumunne": "Sakin ol. Yaralandın mı? Durumun ne?",
+  "ep01_n01_b_choice_c1_neredesin": "Neredesin şu an? Etrafında ne var?",
+  "ep01_n01_devam_event_1_text": "Telsiz ekranım yeşil yanıyor. Demek bu sinyali sen gönderiyorsun.",
+  "ep01_n01_devam_event_3_text": "Büyük bir gürültü koptu. Tavan mı çöktü, bir yere mi düştüm hatırlamıyorum.",
+  "ep01_n01_devam_event_5_text": "Bekle. Kalkmayı deneyeceğim.",
+  "ep01_n01_devam_choice_c2_yavas": "Yavaş ol, bir yerini kırmış olabilirsin.",
+  "ep01_n01_devam_choice_c2_etraf": "Dikkatli ol. Kalkar kalkmaz bana etrafı tarif et.",
+  "ep01_n02_kamera_event_2_text": "Ayaktayım... Her yerim toz içinde ama kırığım yok sanırım.",
+  "ep01_n02_kamera_event_4_text": "Fakat kameram paramparça olmuş. Lens çatlamış. Öldü koca oğlan.",
+  "ep01_n02_kamera_choice_c3_bosver": "Kamerayı boşver. Hayatta olduğuna şükret.",
+  "ep01_n02_kamera_choice_c3_kotu": "Kötü olmuş. Ama şu an daha büyük sorunlarımız var.",
+  "ep01_n02_kamera_b_event_1_text": "Oysa Nevşehir'e sadece bu anları çekmek için inmiştim.",
+  "ep01_n02_kamera_b_event_3_text": "Neyse... Artık gözüm kulağım sensin.",
+  "ep01_n02_kamera_b_choice_c3_anladim": "Anladım. Hadi şimdi etrafına iyi bak, ne görüyorsun?",
+  "ep01_n02_kamera_b_choice_c3_fener": "Bir ışık kaynağı bulmaya çalış. Orada neler var?",
+  "ep01_n04_oda_event_1_text": "Telefonun fenerini açtım. Ortalık loş bir sarılığa büründü.",
+  "ep01_n04_oda_event_3_text": "Basık bir zindandayım sanki. Tavan burnumun ucunda bitiyor.",
+  "ep01_n04_oda_choice_c_cikis": "Bir çıkış yolu görebiliyor musun?",
+  "ep01_n04_oda_choice_c_etraf": "Etrafta işe yarar bir şeyler var mı?",
+  "ep01_n04_oda_b_event_1_text": "Sol tarafta paslı metal bir kapı var. Pervazına bir şey kazınmış: 03-12.",
+  "ep01_n04_oda_b_event_3_text": "Sağ köşede ise iki tane sırt çantası ve çelik bir kutu duruyor.",
+  "ep01_n04_oda_b_choice_c4_cantalar": "Önce o çantalara bak. Kimin onlar?",
+  "ep01_n04_oda_b_choice_c4_kutu": "Şu çelik kutuda ne var? Yakından incele.",
+  "ep01_n05_cantalar_event_1_text": "Çantalara doğru çömeldim. İçinde 'Katman Projesi' damgalı fener ve ölçüm cihazları var.",
+  "ep01_n05_cantalar_event_3_text": "Bekle... Çantalardan biri Emre Koç adına etiketlenmiş!",
+  "ep01_n05_cantalar_event_5_text": "Bizim Emre... Demek ki o da buralarda.",
+  "ep01_n05_cantalar_choice_c_baska": "Çantada başka bir ipucu var mı?",
+  "ep01_n05_cantalar_choice_c_seslen": "Belki yakınlardadır. Seslenmeyi denesene?",
+  "ep01_n05_cantalar_b_event_1_text": "Seslenmek tehlikeli olabilir, burası tekinsiz.",
+  "ep01_n05_cantalar_b_event_3_text": "Ama bekle... Çantanın gözünde buruşturulmuş bir kâğıt var.",
+  "ep01_n05_cantalar_b_choice_c5_oku": "Hemen çıkarıp oku, ne yazıyor?",
+  "ep01_n05_cantalar_b_choice_c5_dikkat": "Dikkatlice aç. Emre sana bir not bırakmış olabilir.",
+  "ep01_n05_kutu_ilk_event_1_text": "Kutuyu inceliyorum. Sarı bir etiket var üzerinde.",
+  "ep01_n05_kutu_ilk_event_3_text": "Zar zor okunuyor: 'ACİL MALZEME KİTİ — KOD: ODA NUMARASI'",
+  "ep01_n05_kutu_ilk_choice_c_sifre_biliyorsun": "Oda numarasını biliyoruz. 03-12. Şifreyi gir.",
+  "ep01_n05_kutu_ilk_choice_c_oda_ney": "Dur önce, etrafta bir kâğıt yoktu mu? Kontrol et.",
+  "ep01_n05_kutu_ilk_b_event_1_text": "03-12... Kapıdaki yazı. Oda numarası bu olmalı.",
+  "ep01_n05_kutu_ilk_b_event_3_text": "Ama dur — şu çantalara da bakmam lazım. Orada bir kâğıt parçası var.",
+  "ep01_n05_kutu_ilk_b_choice_c5_kutu_kagit": "O kâğıtta ne var? Hemen bak.",
+  "ep01_n05_kutu_ilk_b_choice_c5_once_not": "Emre'nin notu olabilir. Önce onu oku.",
+  "ep01_n06_not_event_1_text": "Bu... Emre'nin el yazısı.",
+  "ep01_n06_not_choice_c_saskin": "İkinci kat mı? Ama daha birinci kattayız.",
+  "ep01_n06_not_choice_c_uyari": "Sessiz olmanı istiyor. Bu çok önemli.",
+  "ep01_n06_not_b_event_1_text": "Biz daha birinci katın haritasını çıkaramadık Emre! İkinci kata ne ara indin?",
+  "ep01_n06_not_b_event_3_text": "Ve en önemlisi: 'Sakın ses çıkarma' diye uyarmış.",
+  "ep01_n06_not_b_event_5_text": "Kahve söz vermiş bir de. Emre bilir benim zayıf noktamı.",
+  "ep01_n06_not_b_choice_c6_emre_ne": "Sence neden ses çıkarma diyor? Emre korkmaz kolay kolay.",
+  "ep01_n06_not_b_choice_c6_acil_kit": "Bunu sonra konuşuruz, önce o çelik kutuyu aç.",
+  "ep01_n07_emre_dusun_event_1_text": "Bilmiyorum... Emre kolay panikleyen biri değildir.",
+  "ep01_n07_emre_dusun_event_3_text": "Büyük harflerle 'ses çıkarma' yazıyorsa, ortada gerçek bir tehlike var demektir.",
+  "ep01_n07_emre_dusun_event_5_text": "Her neyse. Şu kutuya bakmalıyım — telefon fenerinin pili bitecek.",
+  "ep01_n07_emre_dusun_choice_c_haklisin": "Haklısın. Emre ne diyorsa ciddiye al.",
+  "ep01_n07_emre_dusun_choice_c_acele": "Zaman kaybetme, kutunun şifresini gir: 0312.",
+  "ep01_n07_kit_event_1_text": "Kutunun başındayım. Üzerinde bir kod paneli var.",
+  "ep01_n09_kit_fail_event_0_text": "HATA // REZONANS MASKESİ UYUMSUZ",
+  "ep01_n09_kit_fail_event_2_text": "Açılmadı. Kod yanlış mı? Etrafta başka numara yoktu.",
+  "ep01_n09_kit_fail_choice_c_tekrar": "Tekrar dene. Kapıdaki numara '03-12' yani 0312.",
+  "ep01_n09_kit_fail_choice_c_dikkatli": "Dikkatlice yaz, tek tek: sıfır, üç, bir, iki.",
+  "ep01_n10_kit_acildi_event_0_text": "KİLİT DURUMU: AÇIK",
+  "ep01_n10_kit_acildi_event_2_text": "Harika, açıldı!",
+  "ep01_n10_kit_acildi_event_4_text": "İçinde askeri bir fener, sargı bezi ve eski bir kâğıt rulosu var.",
+  "ep01_n10_kit_acildi_choice_c_fener_al": "Feneri hemen aç, etrafı daha net görelim.",
+  "ep01_n10_kit_acildi_choice_c_sargi_al": "Önce yaralarını sar, sonra feneri açarsın.",
+  "ep01_n10_kit_acildi_b_event_1_text": "İyiyim, feneri açtım. Oh be... En azından kör gibi dolaşmayacağım.",
+  "ep01_n10_kit_acildi_b_choice_c7_kagit": "O kâğıt rulosu neye benziyor? Tarihi var mı?",
+  "ep01_n10_kit_acildi_b_choice_c7_notu_oku": "Hemen oku — içinde ne olduğunu anlamalıyız.",
+  "ep01_n10_b_kit_devam_event_1_text": "Dur bakayım... Kenarları yanmış, sırılsıklam bir saha günlüğü bu.",
+  "ep01_n10_b_kit_devam_choice_c_bu_ne": "Bu bizim ekipten birinin notu mu?",
+  "ep01_n10_b_kit_devam_choice_c_titresim_ne": "'Karanlıkta hareket eden' de ne demek oluyor?",
+  "ep01_n10_c_kit_devam_event_1_text": "Bu not bizim ekipten kimseye ait değil. Çok daha eski.",
+  "ep01_n10_c_kit_devam_event_3_text": "Yani... biz bu sığınağı bulan ilk ekip değiliz. Bizden önce de birileri buradaymış.",
+  "ep01_n10_c_kit_devam_event_5_text": "Dur bir saniye. Bu eski not ile Emre'nin notu aynı şeyi söylüyor: 'Sessiz kal. Geri dönme.' Biri yıllar önce yazmış, biri bugün.",
+  "ep01_n10_c_kit_devam_choice_c8_titresim": "İkisi de aynı uyarıyı veriyor. Bu tesadüf olamaz.",
+  "ep01_n10_c_kit_devam_choice_c8_cik": "Analiz sonra. Şu an buradan çıkman lazım.",
+  "ep01_n11_koridor_event_1_text": "Odadan çıktım. Devasa bir koridordayım şu an.",
+  "ep01_n11_koridor_event_3_text": "Sağlı sollu mühürlü taş kapılar var. Terkedilmiş bir maden ocağı gibi.",
+  "ep01_n11_koridor_choice_c_ses_var_mi": "Herhangi bir ses duyuyor musun?",
+  "ep01_n11_koridor_choice_c_dikkat_et": "Dikkatli adımlarla ilerle. Gözünü dört aç.",
+  "ep01_n11_koridor_b_event_1_text": "Bekle...",
+  "ep01_n11_koridor_b_event_4_text": "Hayır... İleride hareket eden bir şey yok. Fenerin ışık oyunuymuş. Kafayı yiyorum.",
+  "ep01_n11_koridor_b_event_6_text": "Duvarlarda inanılmaz motifler var. Solucan gibi kıvrımlı kazıntılar.",
+  "ep01_n11_koridor_b_choice_c9_motif": "O motifleri biraz daha incele.",
+  "ep01_n11_koridor_b_choice_c9_ilerle": "Emre bekliyor. Koridordan hızlıca geç.",
+  "ep01_n12_motifler_event_1_text": "Feneri duvara yaklaştırıyorum.",
+  "ep01_n12_motifler_event_3_text": "Yukarıdan aşağıya akan, kıvrımlı şekiller. Ama garip olan şu...",
+  "ep01_n12_motifler_choice_c_ne_garip": "Garip olan ne?",
+  "ep01_n12_motifler_choice_c_ne_gordun": "Bir şeyi mi fark ettin?",
+  "ep01_n12_motifler_b_event_1_text": "Hepsi panikle çizilmiş gibi tek bir yönü, koridorun sonunu işaret ediyor.",
+  "ep01_n12_motifler_b_event_3_text": "Şurada göz sandığım oyuklar var. Ama çevrelerindeki hareketli çizgileri izliyorlar.",
+  "ep01_n12_motifler_b_choice_c10_motif_uyari": "Bu bir yol tarifi değil. Bence uyarı.",
+  "ep01_n12_motifler_b_choice_c10_son_kapi": "Sadece eski bir çizim. Devam et.",
+  "ep01_n15_motif_analiz_event_1_text": "Haklısın.",
+  "ep01_n15_motif_analiz_event_3_text": "Bu figürler bize yol göstermiyor. Bir şeyden kaçıyorlar.",
+  "ep01_n15_motif_analiz_event_5_text": "Sessiz kalan figürlere dokunulmamış, hareket edenler çevrelenmiş.",
+  "ep01_n15_motif_analiz_event_7_text": "Sanırım tek bir mesaj var: Sessiz ol.",
+  "ep01_n15_motif_analiz_choice_c11_sessiz_ol": "Emre'nin notuyla aynı uyarı. Sessizce ilerle.",
+  "ep01_n15_motif_analiz_choice_c11_dikkat_et": "Her adımını hesaplayarak at. Acele etme.",
+  "ep01_n15_son_kapi_event_1_text": "Haklısın. Duvara bakıp fantastik senaryolar kurmayayım.",
+  "ep01_n15_son_kapi_event_3_text": "Ben yola devam ediyorum.",
+  "ep01_n15_son_kapi_choice_c11_devam_et": "Güzel, adımlarını sağlam at. İlerleyelim.",
+  "ep01_n15_son_kapi_choice_c11_sessiz_kal": "Ama yine de fazla ses çıkarma. Ne olur ne olmaz.",
+  "ep01_n12_ilerle_event_1_text": "Doğru. Emre aşağıda bekliyor.",
+  "ep01_n12_ilerle_event_3_text": "Zaten duvarlardaki o kıvrımlı şekiller çok tekinsiz hissettiriyor.",
+  "ep01_n12_ilerle_event_5_text": "Hızlanıyorum.",
+  "ep01_n12_ilerle_choice_c11_hizlan": "Sessizliği koruyarak hızlıca geç.",
+  "ep01_n12_ilerle_choice_c11_kosma": "Koşma. Sadece seri ve sessiz ol.",
+  "ep01_n16_titresim_event_4_text": "Dur. dur. dur. dur.",
+  "ep01_n16_titresim_event_6_text": "Bekle.",
+  "ep01_n16_titresim_event_8_text": "Zemin titriyor.",
+  "ep01_n16_titresim_choice_c_neoluyor": "Ne oluyor? Deprem mi?",
+  "ep01_n16_titresim_choice_c_sakinol": "Sakin kal! Ayakta durmaya çalış.",
+  "ep01_n16_titresim_b_event_0_trueText": "Tamam... Sakin olmaya çalışıyorum.",
+  "ep01_n16_titresim_b_event_0_falseText": "Deprem değil, deprem değil...",
+  "ep01_n16_titresim_b_event_2_text": "Hayır! Duvarların içinden geliyor!",
+  "ep01_n16_titresim_b_event_4_text": "Ritmik bir sürtünme sesi...",
+  "ep01_n16_titresim_b_event_6_text": "Çok yakın! O şey buraya geliyor!",
+  "ep01_n16_titresim_b_event_8_text": "Fener pırpır ediyor...",
+  "ep01_n16_titresim_b_event_10_text": "Ne yapayım?!",
+  "ep01_n16_titresim_b_choice_c12_dur": "Kıpırdama! Nefes bile alma, olduğun yerde kal!",
+  "ep01_n16_titresim_b_choice_c12_kos": "Koş! Tüm gücünle koridorun sonuna koş!",
+  "ep01_n17_dur_event_1_text": "Kıpırdamıyorum.",
+  "ep01_n17_dur_event_3_text": "Nefes... almıyorum.",
+  "ep01_n17_dur_event_5_text": "Çok karanlık...",
+  "ep01_n17_dur_event_6_text": "AKUSTİK DURUM: ANOMALİ DOĞRUDAN ÜZERİNİZE YAKLAŞIYOR",
+  "ep01_n17_kos_event_1_text": "Koşuyorum!",
+  "ep01_n17_kos_event_3_text": "Botlarım çok ses yapıyor!",
+  "ep01_n17_kos_event_5_text": "Kahretsin!",
+  "ep01_n17_kos_event_7_text": "KRİTİK UYARI: KARALTI REZONANSI PEŞİNİZDE — MESAFE: 0.8m",
+  "ep01_tehlike_gecti_dur_event_2_text": "Yanımdan geçti...",
+  "ep01_tehlike_gecti_dur_event_4_text": "Sıcaklığını, statik elektriğini tenimde hissettim. Kalbim duracaktı az daha.",
+  "ep01_tehlike_gecti_dur_choice_c_gectimi": "Tehlike geçti mi? Güvende misin?",
+  "ep01_tehlike_gecti_dur_choice_c_nefesal": "Derin bir nefes al. Artık hareket edebilirsin.",
+  "ep01_tehlike_gecti_kos_event_2_text": "Kendimi yere fırlattım!",
+  "ep01_tehlike_gecti_kos_event_4_text": "Ah... Duvarın çatlağına sızdım. Kıl payı kurtuldum.",
+  "ep01_tehlike_gecti_kos_choice_c_yaralandinmi": "Yaralandın mı?! Ses ver!",
+  "ep01_tehlike_gecti_kos_choice_c_ucuz": "Çok tehlikeliydi... İyi misin?",
+  "ep01_n18_son_kapi_event_2_text": "Feneri tekrar açtım. Hâlâ titriyorum.",
+  "ep01_n18_son_kapi_event_4_text": "Koridorun sonundaki devasa taş kapıya ulaştım.",
+  "ep01_n18_son_kapi_choice_c_kapi_acik_mi": "Kapı açık mı? İçeri girebilecek misin?",
+  "ep01_n18_son_kapi_choice_c_kontrol_et": "Mekanizmayı kontrol et, nasıl açılıyor?",
+  "ep01_n18_son_kapi_b_event_1_text": "Ama kilit sürgüsü... içeride kalmış.",
+  "ep01_n18_son_kapi_b_event_3_text": "Eğer ilk ekip aşağı indiyse... bu kapıyı arkalarından kim kilitledi?",
+  "ep01_n18_son_kapi_b_choice_c13_zorla": "Mandalı sertçe sars, belki gevşer.",
+  "ep01_n18_son_kapi_b_choice_c13_dinle": "Kulağını taşa daya, içeriyi dinle.",
+  "ep01_n19_zorla_event_1_text": "Mandalı var gücümle sarstım. Demir pası döküldü.",
+  "ep01_n19_zorla_event_3_text": "Olmuyor. Taş duvarlar yerinden oynamıyor.",
+  "ep01_n19_zorla_event_5_text": "Bir alet bulmadan bunu dışarıdan patlatmak imkânsız.",
+  "ep01_n19_zorla_choice_c_baskayol": "Sakinleş. Başka bir yol bulacağız.",
+  "ep01_n19_zorla_choice_c_alet_ara": "Etrafta kapıyı kıracak bir şey yok mu?",
+  "ep01_n19_dinle_event_1_text": "Kulağımı soğuk taşa yasladım.",
+  "ep01_n19_dinle_event_4_text": "Derinden bir uğultu geliyor... Hayır, bir mırıldanma.",
+  "ep01_n19_dinle_event_6_text": "Emre'nin sesi! İçeride bir yerde hayatta!",
+  "ep01_n19_dinle_choice_c_emremi": "Emre mi? Emin misin?",
+  "ep01_n19_dinle_choice_c_seslen": "Seslen ona! Belki seni duyar!",
+  "ep01_son_event_1_trueText": "Emre'nin sesini duydum. Canlı. İçeride. Bu kapıyı açacağım.",
+  "ep01_son_event_1_falseText": "Ne olursa olsun bu kapıyı aşmak zorundayım.",
+  "ep01_son_event_3_text": "Burada oturup mandalı gevşetmek için bir plan yapacağım.",
+  "ep01_son_event_5_text": "Sakın bir yere kaybolma. Sana ihtiyacım var.",
+  "ep01_son_event_7_text": "TELSİZ DURUMU: KAŞİF KAPI ÖNÜNDE — PLAN YAPIYOR",
+  "ep01_son_choice_ep01_bitis_1": "Bekliyorum. Dikkatli düşün.",
+  "ep01_son_choice_ep01_bitis_2": "Ben buradayım. Hiçbir yere gitmiyorum.",
+  "ep01_hard_fail_event_1_text": "░░░ KILAVUZ HESAPLAMA HATASI // SİSMİK KARALTI HEDEFİ YAKALADI ░░░",
+  "ep01_hard_fail_event_2_text": "HATA: REZONANS BAĞLANTI KÖPRÜSÜ ÇÖKTÜ",
+  "ep01_hard_fail_event_4_loaderMessage": "TELSİZ FREKANSI RE-SENKRONİZE EDİLİYOR",
+  "ep01_hard_fail_event_4_subMessage": "Güvenli noktaya dönülüyor...",
+  "ep01_hard_fail_choice_restart_1": "Sinyali tekrar yakala ve denemeye devam et.",
+  "ep01_hard_fail_choice_restart_2": "Telsizi resetle ve bir önceki güvenli noktadan başlat.",
+  "puzzle_p_ep01_karaltı_dur_echoLabel": "SİNYAL: YAKLAŞIYOR",
+  "puzzle_p_ep01_karaltı_saklan_echoLabel": "SİNYAL: DEHLİZDE PARAZİT",
+  "puzzle_p_ep01_karaltı_kos_echoLabel": "UYARI: REZONANS PEŞİNDE"
 }
