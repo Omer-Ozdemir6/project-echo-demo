@@ -2,6 +2,7 @@ import { DEFAULT_EPISODE_ID, getEpisode, correlations } from "../data";
 import { applyChoice } from "./choiceEngine";
 import { calculateEnding } from "./endingEngine";
 import stateManager from "./stateManager";
+import { Preferences } from '@capacitor/preferences';
 
 const STORAGE_KEY = "project_echo_progress";
 
@@ -331,18 +332,20 @@ function checkCorrelations(gameState) {
 // EXPORTS — READ
 // ─────────────────────────────────────────────
 
-export function getInitialGameState() {
+export async function loadGameData() {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (!saved) return createFreshGameState();
-    const parsed = JSON.parse(saved);
+    const { value } = await Preferences.get({ key: STORAGE_KEY });
+    if (!value) return createFreshGameState();
+    
+    const parsed = JSON.parse(value);
     const normalized = normalizeGameState(parsed);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+    
+    // Güvenlik amaçlı formatlanmış veriyi tekrar yaz
+    await Preferences.set({ key: STORAGE_KEY, value: JSON.stringify(normalized) });
     return normalized;
-  } catch {
-    const freshState = createFreshGameState();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(freshState));
-    return freshState;
+  } catch (error) {
+    console.error("Kayıt okuma hatası, yeni oyun başlatılıyor:", error);
+    return createFreshGameState();
   }
 }
 
@@ -423,7 +426,7 @@ export function chooseOption(gameState, choiceId) {
     });
 
     nextState = applyObserverMode(nextState);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+    saveGameState(nextState);
     return nextState;
   }
 
@@ -476,13 +479,23 @@ export function chooseOption(gameState, choiceId) {
     default: break;
   }
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+  saveGameState(nextState);
   return nextState;
 }
 
 // ─────────────────────────────────────────────
 // EXPORTS — PUZZLE
 // ─────────────────────────────────────────────
+
+export function saveGameState(gameState) {
+  const normalizedState = normalizeGameState(gameState);
+  Preferences.set({ key: STORAGE_KEY, value: JSON.stringify(normalizedState) })
+    .catch(error => console.error("Kayıt yazma hatası:", error));
+}
+
+export async function resetGame() {
+  await Preferences.remove({ key: STORAGE_KEY });
+}
 
 export function submitPuzzleAnswer(gameState, puzzleId, answer) {
   const normalizedState = normalizeGameState(gameState);
@@ -508,7 +521,7 @@ export function submitPuzzleAnswer(gameState, puzzleId, answer) {
       solvedPuzzles: { ...normalizedState.solvedPuzzles, [puzzleId]: true },
       history: [...normalizedState.history, { type: "puzzle", episodeId: episode.id, puzzleId, answer, result: "success", nextNodeId }]
     });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+    saveGameState(nextState);
     return { isCorrect: true, puzzle, nextState };
   }
 
@@ -518,21 +531,21 @@ export function submitPuzzleAnswer(gameState, puzzleId, answer) {
     currentNodeId: nextNodeId,
     history: [...normalizedState.history, { type: "puzzle", episodeId: episode.id, puzzleId, answer, result: "failure", nextNodeId }]
   });
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+  saveGameState(nextState);
   return { isCorrect: false, puzzle, nextState };
 }
 
 export function clearActivePuzzle(gameState) {
   const normalizedState = normalizeGameState(gameState);
   const nextState = normalizeGameState({ ...normalizedState, activePuzzleId: null });
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+  saveGameState(nextState);
   return nextState;
 }
 
 export function setActivePuzzle(gameState, puzzleId) {
   const normalizedState = normalizeGameState(gameState);
   const nextState = normalizeGameState({ ...normalizedState, activePuzzleId: puzzleId });
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+  saveGameState(nextState);
   return nextState;
 }
 
@@ -573,7 +586,7 @@ export function resolveActiveWaitTask(gameState) {
     history: [...normalizedState.history, { type: "waitTaskComplete", waitTaskId: waitTask.id, episodeId: nextEpisodeId, nextNodeId: completeNodeId }]
   });
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+  saveGameState(nextState);
   return nextState;
 }
 
@@ -630,7 +643,7 @@ export function collectFile(gameState, file) {
     ]
   });
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+  saveGameState(nextState);
   return nextState;
 }
 
@@ -643,7 +656,7 @@ export function markFileAsRead(gameState, fileId) {
     )
   });
   const nextState = checkCorrelations(readState);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+  saveGameState(nextState);
   return nextState;
 }
 
@@ -654,21 +667,8 @@ export function markFileAsRead(gameState, fileId) {
 export function clearPendingNotifications(gameState) {
   const normalizedState = normalizeGameState(gameState);
   const nextState = normalizeGameState({ ...normalizedState, pendingNotifications: [] });
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+  saveGameState(nextState);
   return nextState;
-}
-
-// ─────────────────────────────────────────────
-// EXPORTS — SAVE / RESET
-// ─────────────────────────────────────────────
-
-export function saveGameState(gameState) {
-  const normalizedState = normalizeGameState(gameState);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizedState));
-}
-
-export function resetGame() {
-  localStorage.removeItem(STORAGE_KEY);
 }
 
 // ─────────────────────────────────────────────

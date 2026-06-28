@@ -2,14 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 const EPISODES_DIR = './src/data/episodes';
-const REACT_FILES = [
-    { path: './src/components/StartScreen.jsx', name: 'StartScreen.json' },
-    { path: './src/components/SettingsModal.jsx', name: 'SettingsModal.json' },
-    { path: './src/components/OperatorBriefing.jsx', name: 'OperatorBriefing.json' },
-    { path: './src/components/BootSequence.jsx', name: 'BootSequence.json' },
-    { path: './src/components/ContinueLoadingScreen.jsx', name: 'ContinueLoadingScreen.json' },
-    { path: './src/components/RebootConfirmScreen.jsx', name: 'RebootConfirmScreen.json' }
-];
+const COMPONENTS_DIR = './src/components'; // Artık burayı otomatik tarayacağız
 
 const LANGUAGES = [
     { code: 'tr', localeDir: './src/locales/tr', masterFile: './src/locales/master_tr.json' },
@@ -18,46 +11,52 @@ const LANGUAGES = [
 
 let masterTranslations = { tr: {}, en: {} };
 
+// Klasörleri hazırla
 LANGUAGES.forEach(lang => {
     if (!fs.existsSync(lang.localeDir)) fs.mkdirSync(lang.localeDir, { recursive: true });
 });
 
-// Yardımcı: Metni tüm dillere ve master'a işler
+// Otomatik dosya bulucu (alt klasörler dahil)
+function getFiles(dir, fileList = []) {
+    fs.readdirSync(dir).forEach(file => {
+        const filePath = path.join(dir, file);
+        if (fs.statSync(filePath).isDirectory()) {
+            getFiles(filePath, fileList);
+        } else if (file.endsWith('.jsx')) {
+            fileList.push({ path: filePath, name: file.replace('.jsx', '.json') });
+        }
+    });
+    return fileList;
+}
+
 function saveTranslations(fileName, translations) {
     if (Object.keys(translations).length === 0) return;
     
     LANGUAGES.forEach(lang => {
         const localeFilePath = path.join(lang.localeDir, fileName);
-        // Var olanı oku veya boş obje başlat
         let existing = {};
         if (fs.existsSync(localeFilePath)) {
             existing = JSON.parse(fs.readFileSync(localeFilePath, 'utf-8'));
         }
         const updated = { ...existing, ...translations };
         fs.writeFileSync(localeFilePath, JSON.stringify(updated, null, 2), 'utf-8');
-        
-        // Master'a ekle
         Object.assign(masterTranslations[lang.code], updated);
     });
     console.log(`✓ İşlendi: ${fileName}`);
 }
 
 function processJsxFile(fileObj) {
-    if (!fs.existsSync(fileObj.path)) return;
-
     const content = fs.readFileSync(fileObj.path, 'utf-8');
     
-    // Gelişmiş Regex: Hem anahtarı hem de değeri yakalar
-    // Bu Regex: getGameText("key", "değer") kalıbını arar
-    const regex = /getGameText\(\s*['"`]([^'"`]+)['"`]\s*,\s*['"`]([^'"`]+)['"`]/g;
+    // Regex: getGameText("key", "default") veya getGameText("key") yakalar
+    const regex = /getGameText\(\s*['"`]([^'"`]+)['"`](?:\s*,\s*['"`]([^'"`]*)['"`])?/g;
     
     let match;
     const translations = {};
     let foundCount = 0;
 
     while ((match = regex.exec(content)) !== null) {
-        // match[1] = anahtar (key), match[2] = varsayılan değer (değer)
-        translations[match[1]] = match[2]; 
+        translations[match[1]] = match[2] || ""; 
         foundCount++;
     }
 
@@ -76,7 +75,6 @@ function processEpisodeFile(filePath, fileName) {
         for (const [nodeId, node] of Object.entries(data.nodes)) {
             if (node.events) node.events.forEach((e, i) => {
                 if (e.text) translations[`${nodeId}_event_${i}_text`] = e.text;
-                // ... diğer alanlar (trueText, falseText vs) eklenebilir
             });
             if (node.choices) node.choices.forEach((c, i) => {
                 if (c.text) translations[`${nodeId}_choice_${c.id || i}`] = c.text;
@@ -87,21 +85,20 @@ function processEpisodeFile(filePath, fileName) {
 }
 
 // --- ANA İŞLEM ---
-console.log("--- ÇEVİRİ METİNLERİ AYIKLANIYOR ---");
+console.log("--- ÇEVİRİ METİNLERİ OTOMATİK AYIKLANIYOR ---");
 
-// GÜNCELLEME: Sadece 'episode-' ile başlayan ve '.json' ile biten ham dosyaları al, merged_story'i yoksay
+// 1. Epizotları tara
 const files = fs.readdirSync(EPISODES_DIR)
     .filter(f => f.startsWith('episode-') && f.endsWith('.json'));
-
 files.forEach(f => processEpisodeFile(path.join(EPISODES_DIR, f), f));
 
-REACT_FILES.forEach(f => {
-    if (fs.existsSync(f.path)) processJsxFile(f);
-    else console.warn(`⚠ Dosya bulunamadı: ${f.path}`);
-});
+// 2. Componentleri otomatik tara
+const componentFiles = getFiles(COMPONENTS_DIR);
+componentFiles.forEach(f => processJsxFile(f));
 
+// 3. Master dosyaları güncelle
 LANGUAGES.forEach(lang => {
     fs.writeFileSync(lang.masterFile, JSON.stringify(masterTranslations[lang.code], null, 2), 'utf-8');
 });
 
-console.log(`\n🎉 Tüm metinler başarıyla ayrıştırıldı.`);
+console.log(`\n🎉 İşlem tamamlandı. Tüm componentler ve epizotlar tarandı.`);
