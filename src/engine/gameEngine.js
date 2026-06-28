@@ -85,11 +85,17 @@ function applyObserverMode(state) {
 // ─────────────────────────────────────────────
 
 function createFreshGameState() {
-  const episode = getEpisode(DEFAULT_EPISODE_ID);
+  const episodeId = DEFAULT_EPISODE_ID;
+  const episode = getEpisode(episodeId);
+
+  // GÜVENLİK KONTROLÜ: Epizot bulunamazsa çökmesini engeller
+  if (!episode) {
+    console.error(`KRİTİK HATA: Epizot bulunamadı: ${episodeId}. Lütfen DEFAULT_EPISODE_ID ve merged_story.json anahtarlarını kontrol edin.`);
+  }
 
   return {
-    episodeId: DEFAULT_EPISODE_ID,
-    currentNodeId: episode.startNodeId,
+    episodeId: episodeId,
+    currentNodeId: episode ? episode.startNodeId : "error_node",
     history: [],
     stats: {
       trust: 50,
@@ -152,7 +158,7 @@ function createFreshGameState() {
     },
     checkpoint: {
       episode: 1,
-      nodeId: episode.startNodeId,
+      nodeId: episode ? episode.startNodeId : "error_node",
       timestamp: null
     },
     endings: {

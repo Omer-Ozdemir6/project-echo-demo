@@ -275,8 +275,7 @@ function App() {
   useEffect(() => {
     if (phase !== "game" || !currentNode) return;
 
-    // 1. Yeni düğüme geçildiğinde ekranı temizle
-    setVisibleMessages([]); 
+
 
     setIsTyping(false);
     setIsGlitching(false);

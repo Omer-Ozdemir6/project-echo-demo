@@ -26,34 +26,45 @@
         {
           "type": "systemAlert",
           "text": "KATMAN // DÖRDÜNCÜ KAT // DERİN ODA",
-          "tone": "critical",
-          "textKey": "episode_09.ep09_n01.event0.text"
+          "tone": "critical"
         },
         {
           "type": "realTimeWait",
           "seconds": 4
         },
         {
-          "type": "message",
-          "speaker": "JONES",
-          "text": "Orada mısın?",
-          "textKey": "episode_09.ep09_n01.event2.text"
+          "type": "relationshipDialogue",
+          "conditions": {
+            "emreDeğişim": {
+              "gte": 60
+            }
+          },
+          "trueText": "Orada mısın?",
+          "falseText": "Orada mısın?"
         },
         {
           "type": "realTimeWait",
           "seconds": 12
         },
         {
-          "type": "message",
-          "speaker": "JONES",
-          "text": "Tavandan toz dökülüyor. Turuncu ışık... duvarın içinden nefes alıyor gibi titreşiyor.",
-          "textKey": "episode_09.ep09_n01.event4.text"
+          "type": "relationshipDialogue",
+          "conditions": {
+            "emreDeğişim": {
+              "gte": 60
+            }
+          },
+          "trueText": "Tavandan toz dökülüyor. Turuncu ışık... duvarın içinden nefes alıyor gibi titreşiyor. Bu benim tanıdığım yerden daha derin.",
+          "falseText": "Tavandan toz dökülüyor. Turuncu ışık... duvarın içinden nefes alıyor gibi titreşiyor."
         },
         {
-          "type": "message",
-          "speaker": "JONES",
-          "text": "Eskiden bu kadrajı kaçırmazdım. Vizörden baktım. Sonra... hayır, çekmedim. Flaş istemiyorum. Sanki makinenin deklanşörü bile burada yabancı bir ses.",
-          "textKey": "episode_09.ep09_n01.event5.text"
+          "type": "relationshipDialogue",
+          "conditions": {
+            "trust": {
+              "gte": 45
+            }
+          },
+          "trueText": "Eskiden bu kadrajı kaçırmazdım. Vizörden baktım. Sonra... hayır, çekmedim. Flaş istemiyorum. Sanki makinenin deklanşörü bile burada yabancı bir ses.",
+          "falseText": "Makinemi çıkardım. Sonra koydum geri. Buraya flaş vurmak istemiyorum."
         }
       ],
       "nextNodeId": "ep09_n02_emre_geldi"
@@ -70,7 +81,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Kimse konuşmuyor. Sadece birbirimize bakıyoruz.",
-          "textKey": "episode_09.ep09_n02_emre_geldi.event1.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -80,7 +91,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Neden yaklaşmıyor? Neden hep aynı mesafede duruyor?",
-          "textKey": "episode_09.ep09_n02_emre_geldi.event3.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -90,7 +101,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Yiyecek... getirdin mi?",
-          "textKey": "episode_09.ep09_n02_emre_geldi.event5.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -100,7 +111,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Çantandan aldım.",
-          "textKey": "episode_09.ep09_n02_emre_geldi.event7.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -110,7 +121,24 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "...Peki. Makul.",
-          "textKey": "episode_09.ep09_n02_emre_geldi.event9.text"
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "relationshipDialogue",
+          "conditions": {
+            "trust": {
+              "gte": 45
+            }
+          },
+          "trueText": "8 yıl. 8 yılda kaç kere çay içtik. Ve ilk söylediği şey 'makul'.",
+          "falseText": "Bu ses tonu... Emre'nin tonu değil."
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "emreDeğişim": 5,
+            "fear": 8
+          }
         }
       ],
       "choices": [
@@ -121,8 +149,7 @@
           "effects": {
             "emreBaglantisi": -5,
             "emreDeğişim": 3
-          },
-          "textKey": "episode_09.ep09_n02_emre_geldi.choice0.text"
+          }
         },
         {
           "id": "c1_iyisin",
@@ -132,8 +159,7 @@
             "trust": 5,
             "emreBaglantisi": 5,
             "emreDeğişim": 2
-          },
-          "textKey": "episode_09.ep09_n02_emre_geldi.choice1.text"
+          }
         }
       ]
     },
@@ -145,7 +171,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "\"Beni neden kaçtın?\"",
-          "textKey": "episode_09.ep09_A01.event0.text"
+          "pauseAfterMs": 2000
         },
         {
           "type": "realTimeWait",
@@ -155,7 +181,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Kaçmadım. Hazır... değildin.",
-          "textKey": "episode_09.ep09_A01.event2.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -165,7 +191,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Bunu söylemek istemedim.",
-          "textKey": "episode_09.ep09_A01.event4.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -175,7 +201,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "...Ben mi söyledim?",
-          "textKey": "episode_09.ep09_A01.event6.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -185,22 +211,35 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Bana bakıyor. Uzun zamandır. Gözünü hiç kırpmadı.",
-          "textKey": "episode_09.ep09_A01.event8.text"
+          "pauseAfterMs": 4000
         },
         {
-          "type": "message",
-          "speaker": "JONES",
-          "text": "Bir adım attım. O atmadı.",
-          "textKey": "episode_09.ep09_A01.event9.text"
-        },
-        {
-          "type": "message",
-          "speaker": "JONES",
-          "text": "Ama aramızdaki mesafe... yine aynı.",
-          "textKey": "episode_09.ep09_A01.event10.text"
+          "type": "statChange",
+          "changes": {
+            "emreDeğişim": 8,
+            "fear": 5,
+            "emreBaglantisi": -3
+          }
         }
       ],
-      "nextNodeId": "ep09_n03_cizim"
+      "choices": [
+        {
+          "id": "c_a01_yaklas",
+          "text": "Bir adım at. Yaklaş.",
+          "nextNodeId": "ep09_A01_b",
+          "effects": {
+            "emreBaglantisi": 5
+          }
+        },
+        {
+          "id": "c_a01_dur",
+          "text": "Dur. Mesafeyi koru. Onu izle.",
+          "nextNodeId": "ep09_A01_b",
+          "effects": {
+            "curiosity": 5
+          }
+        }
+      ]
     },
     "ep09_B01": {
       "id": "ep09_B01",
@@ -210,7 +249,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "\"İyisin değil mi?\"",
-          "textKey": "episode_09.ep09_B01.event0.text"
+          "pauseAfterMs": 2000
         },
         {
           "type": "realTimeWait",
@@ -220,7 +259,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Tanımlamak zor. Ama... fena değil. Sanırım.",
-          "textKey": "episode_09.ep09_B01.event2.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -230,7 +269,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Bunu söylemek istemedim.",
-          "textKey": "episode_09.ep09_B01.event4.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -240,7 +279,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "...Ben mi söyledim?",
-          "textKey": "episode_09.ep09_B01.event6.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -250,22 +289,35 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Bana bakıyor. Uzun zamandır. Gözünü hiç kırpmadı.",
-          "textKey": "episode_09.ep09_B01.event8.text"
+          "pauseAfterMs": 4000
         },
         {
-          "type": "message",
-          "speaker": "JONES",
-          "text": "Bir adım attım. O atmadı.",
-          "textKey": "episode_09.ep09_B01.event9.text"
-        },
-        {
-          "type": "message",
-          "speaker": "JONES",
-          "text": "Ama aramızdaki mesafe... yine aynı.",
-          "textKey": "episode_09.ep09_B01.event10.text"
+          "type": "statChange",
+          "changes": {
+            "emreDeğişim": 5,
+            "humanity": 8,
+            "emreBaglantisi": 3
+          }
         }
       ],
-      "nextNodeId": "ep09_n03_cizim"
+      "choices": [
+        {
+          "id": "c_b01_yaklas",
+          "text": "Bir adım at. Yaklaş.",
+          "nextNodeId": "ep09_B01_b",
+          "effects": {
+            "emreBaglantisi": 5
+          }
+        },
+        {
+          "id": "c_b01_dur",
+          "text": "Dur. Mesafeyi koru. Onu izle.",
+          "nextNodeId": "ep09_B01_b",
+          "effects": {
+            "trust": 5
+          }
+        }
+      ]
     },
     "ep09_n03_cizim": {
       "id": "ep09_n03_cizim",
@@ -275,7 +327,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "\"Çantanda bir çizim vardı. Kafeterya. İkimiz.\"",
-          "textKey": "episode_09.ep09_n03_cizim.event0.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -285,7 +337,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Onu göreceksin diye koydum.",
-          "textKey": "episode_09.ep09_n03_cizim.event2.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -295,7 +347,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Hatırlıyor musun...",
-          "textKey": "episode_09.ep09_n03_cizim.event4.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -305,7 +357,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "İzmir dönüşü... Arabayı sen kullanmıştın.",
-          "textKey": "episode_09.ep09_n03_cizim.event6.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -315,7 +367,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "...Yok. Boş ver.",
-          "textKey": "episode_09.ep09_n03_cizim.event8.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -325,7 +377,18 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Bir anlığına, eski Emre geri geldi sanki. Ama sadece bir anlığına.",
-          "textKey": "episode_09.ep09_n03_cizim.event10.text"
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "humanity": 12,
+            "emreBaglantisi": 8,
+            "emreDeğişim": 5,
+            "memory": [
+              "ep09_eski_emre_bir_an"
+            ]
+          }
         }
       ],
       "nextNodeId": "ep09_n04_onlar"
@@ -338,13 +401,13 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Burası hiçbir zaman bizim olmadı. Biz... misafiriz.",
-          "textKey": "episode_09.ep09_n04_onlar.event0.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "message",
           "speaker": "JONES",
           "text": "\"Hâlâ buradalar mı?\"",
-          "textKey": "episode_09.ep09_n04_onlar.event1.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -354,7 +417,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Duvar hafif titredi.",
-          "textKey": "episode_09.ep09_n04_onlar.event3.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -364,17 +427,45 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Hayır. Titreyen duvar değildi. Onun sesiydi.",
-          "textKey": "episode_09.ep09_n04_onlar.event5.text"
+          "pauseAfterMs": 4000
         },
         {
-          "type": "realTimeWait",
-          "seconds": 4
+          "type": "statChange",
+          "changes": {
+            "onlarFarkındalığı": 15,
+            "fear": 10
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c_onlar_yanlış",
+          "text": "\"Yanlış soru ne? Doğrusunu sor.\"",
+          "nextNodeId": "ep09_n04_onlar_b",
+          "effects": {
+            "curiosity": 8,
+            "onlarFarkındalığı": 5
+          }
         },
+        {
+          "id": "c_onlar_bekle",
+          "text": "Sessiz kal. Onun cevap vermesini bekle.",
+          "nextNodeId": "ep09_n04_onlar_b",
+          "effects": {
+            "trust": 8
+          }
+        }
+      ]
+    },
+    "ep09_n04_onlar_b": {
+      "id": "ep09_n04_onlar_b",
+      "speaker": "JONES",
+      "events": [
         {
           "type": "message",
           "speaker": "EMRE",
           "text": "Yanlış soru.",
-          "textKey": "episode_09.ep09_n04_onlar.event7.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -384,20 +475,20 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Bekledim. Ama başka bir şey söylemedi.",
-          "textKey": "episode_09.ep09_n04_onlar.event9.text"
+          "pauseAfterMs": 4000
         }
       ],
       "nextNodeId": "ep09_n05_blackout1"
     },
     "ep09_n05_blackout1": {
-      "id": "ep09_blackout1",
+      "id": "ep09_n05_blackout1",
       "speaker": "JONES",
       "events": [
         {
           "type": "message",
           "speaker": "EMRE",
           "text": "Dördüncü katta bir şey var. Onu gören her insan—",
-          "textKey": "episode_09.ep09_n05_blackout1.event0.text"
+          "pauseAfterMs": 2000
         },
         {
           "type": "realTimeWait",
@@ -407,7 +498,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Emre?",
-          "textKey": "episode_09.ep09_n05_blackout1.event2.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -417,13 +508,13 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "—değişiyor.",
-          "textKey": "episode_09.ep09_n05_blackout1.event4.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "message",
           "speaker": "JONES",
           "text": "\"Ne zaman?\"",
-          "textKey": "episode_09.ep09_n05_blackout1.event5.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -433,7 +524,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "...bir saniye.",
-          "textKey": "episode_09.ep09_n05_blackout1.event7.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -443,7 +534,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Ne diyordum?",
-          "textKey": "episode_09.ep09_n05_blackout1.event9.text"
+          "pauseAfterMs": 4000
         }
       ],
       "choices": [
@@ -451,13 +542,17 @@
           "id": "c2_bekle",
           "text": "Bekle.",
           "nextNodeId": "ep09_n05_bekle",
-          "textKey": "episode_09.ep09_n05_blackout1.choice0.text"
+          "effects": {
+            "trust": 5
+          }
         },
         {
           "id": "c2_dokun",
           "text": "Omzuna dokun.",
           "nextNodeId": "ep09_n05_dokun",
-          "textKey": "episode_09.ep09_n05_blackout1.choice1.text"
+          "effects": {
+            "emreBaglantisi": 5
+          }
         }
       ]
     },
@@ -469,7 +564,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Bekledim. Sessizce. Omuzları gevşedi.",
-          "textKey": "episode_09.ep09_n05_bekle.event0.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -479,7 +574,13 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Neredeydik?",
-          "textKey": "episode_09.ep09_n05_bekle.event2.text"
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "trust": 5
+          }
         }
       ],
       "nextNodeId": "ep09_n06_devam"
@@ -492,7 +593,14 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Omzuna dokundum. Çekti kendini. Bir saniye, kimin dokunduğunu anlayamadı.",
-          "textKey": "episode_09.ep09_n05_dokun.event0.text"
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "emreDeğişim": 5,
+            "fear": 5
+          }
         }
       ],
       "nextNodeId": "ep09_n06_devam"
@@ -505,7 +613,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Onlar bili—",
-          "textKey": "episode_09.ep09_n06_devam.event0.text"
+          "pauseAfterMs": 1500
         },
         {
           "type": "realTimeWait",
@@ -515,7 +623,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "—yor.",
-          "textKey": "episode_09.ep09_n06_devam.event2.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -525,7 +633,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Jones...",
-          "textKey": "episode_09.ep09_n06_devam.event4.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -535,7 +643,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Hayır. Bana artık öyle deme.",
-          "textKey": "episode_09.ep09_n06_devam.event6.text"
+          "pauseAfterMs": 5000
         },
         {
           "type": "realTimeWait",
@@ -545,7 +653,17 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Yutkundum. Harika. Şimdi isimler de bozuluyor.",
-          "textKey": "episode_09.ep09_n06_devam.event8.text"
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "emreDeğişim": 15,
+            "fear": 12,
+            "memory": [
+              "ep09_emre_adini_reddetti"
+            ]
+          }
         }
       ],
       "choices": [
@@ -553,13 +671,17 @@
           "id": "c3_hayir",
           "text": "\"Ben bir şey demedim.\"",
           "nextNodeId": "ep09_n07_hayir",
-          "textKey": "episode_09.ep09_n06_devam.choice0.text"
+          "effects": {
+            "curiosity": 5
+          }
         },
         {
           "id": "c3_devam",
           "text": "\"Devam et.\"",
           "nextNodeId": "ep09_n07_devam",
-          "textKey": "episode_09.ep09_n06_devam.choice1.text"
+          "effects": {
+            "emreBaglantisi": 5
+          }
         }
       ]
     },
@@ -571,7 +693,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "\"Ben bir şey demedim.\"",
-          "textKey": "episode_09.ep09_n07_hayir.event0.text"
+          "pauseAfterMs": 2000
         },
         {
           "type": "realTimeWait",
@@ -581,7 +703,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "...Emin misin?",
-          "textKey": "episode_09.ep09_n07_hayir.event2.text"
+          "pauseAfterMs": 4000
         }
       ],
       "nextNodeId": "ep09_n08_selin_temas"
@@ -594,7 +716,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "\"Devam et.\"",
-          "textKey": "episode_09.ep09_n07_devam.event0.text"
+          "pauseAfterMs": 2000
         },
         {
           "type": "realTimeWait",
@@ -604,7 +726,16 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Onlar biliyor. Ne zaman gitmen gerektiğini.",
-          "textKey": "episode_09.ep09_n07_devam.event2.text"
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "onlarFarkındalığı": 10,
+            "memory": [
+              "ep09_onlar_biliyor"
+            ]
+          }
         }
       ],
       "nextNodeId": "ep09_n08_selin_temas"
@@ -617,7 +748,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Telsiz bağlantı istiyor. Selin. Emre karşımda.",
-          "textKey": "episode_09.ep09_n08_selin_temas.event0.text"
+          "pauseAfterMs": 3000
         }
       ],
       "choices": [
@@ -625,43 +756,57 @@
           "id": "c4_selin",
           "text": "Selin'i aç.",
           "nextNodeId": "ep09_n08a_selin",
-          "textKey": "episode_09.ep09_n08_selin_temas.choice0.text"
+          "effects": {
+            "selinTrust": 3
+          }
         },
         {
           "id": "c4_emre",
           "text": "Emre'de kal.",
           "nextNodeId": "ep09_n08b_emre",
-          "textKey": "episode_09.ep09_n08_selin_temas.choice1.text"
+          "effects": {
+            "emreBaglantisi": 5
+          }
         }
       ]
     },
     "ep09_n08a_selin": {
       "id": "ep09_n08a_selin",
-      "speaker": "JONES",
+      "speaker": "SELİN",
       "events": [
         {
-          "type": "message",
-          "speaker": "SELİN",
-          "text": "Emre ile konuşuyorsun. Dikkatli ol.",
-          "textKey": "episode_09.ep09_n08a_selin.event0.text"
+          "type": "relationshipDialogue",
+          "conditions": {
+            "selinTrust": {
+              "gte": 20
+            }
+          },
+          "trueText": "Emre ile konuşuyorsun. Dikkatli ol. Ve dinle — 'Yanlış soru' diyorsa sana doğru soruyu soruyor demektir.",
+          "falseText": "Emre ile konuşuyorsun. Dikkatli ol."
         },
         {
           "type": "signalLost",
-          "message": "[S.A-47 KOPTU]",
-          "messageKey": "episode_09.ep09_n08a_selin.event1.message"
+          "duration": 1500,
+          "message": "[S.A-47 KOPTU]"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "selinTrust": 5
+          }
         }
       ],
       "nextNodeId": "ep09_n09_harita"
     },
     "ep09_n08b_emre": {
       "id": "ep09_n08b_emre",
-      "speaker": "JONES",
+      "speaker": "EMRE",
       "events": [
         {
           "type": "message",
           "speaker": "EMRE",
           "text": "Kapatmanı istemiyorum. Ama...",
-          "textKey": "episode_09.ep09_n08b_emre.event0.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -671,7 +816,14 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Kapatmanı istemiyorum.",
-          "textKey": "episode_09.ep09_n08b_emre.event2.text"
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "emreBaglantisi": 8,
+            "emreDeğişim": 5
+          }
         }
       ],
       "nextNodeId": "ep09_n09_harita"
@@ -684,7 +836,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Karanlıkta bir şey fark ettim. Platformun arkasında... aşağıya inen basamaklar var.",
-          "textKey": "episode_09.ep09_n09_harita.event0.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -694,7 +846,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Oraya bakma.",
-          "textKey": "episode_09.ep09_n09_harita.event2.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -704,7 +856,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "\"Neden?\"",
-          "textKey": "episode_09.ep09_n09_harita.event4.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -714,7 +866,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Çünkü orası beşinci kat.",
-          "textKey": "episode_09.ep09_n09_harita.event6.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -724,7 +876,17 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "İnemedim.",
-          "textKey": "episode_09.ep09_n09_harita.event8.text"
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "curiosity": 20,
+            "fear": 10,
+            "memory": [
+              "ep09_besinci_kat_var"
+            ]
+          }
         }
       ],
       "nextNodeId": "ep09_n10_tehlike"
@@ -741,13 +903,13 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Duvarda titreşim. 432 Hz frekansı takip ediyor.",
-          "textKey": "episode_09.ep09_n10_tehlike.event1.text"
+          "pauseAfterMs": 3500
         },
         {
           "type": "message",
           "speaker": "JONES",
           "text": "Frekansı kesersem organizmalar gelir. Tutarsam bu şey.",
-          "textKey": "episode_09.ep09_n10_tehlike.event2.text"
+          "pauseAfterMs": 4000
         }
       ],
       "choices": [
@@ -755,13 +917,17 @@
           "id": "c5_kes",
           "text": "Frekansı kes.",
           "nextNodeId": "ep09_n10_kes",
-          "textKey": "episode_09.ep09_n10_tehlike.choice0.text"
+          "effects": {
+            "riskPattern": 8
+          }
         },
         {
           "id": "c5_tut",
           "text": "Frekansı tut.",
           "nextNodeId": "ep09_n10_tut",
-          "textKey": "episode_09.ep09_n10_tehlike.choice1.text"
+          "effects": {
+            "trust": 8
+          }
         }
       ]
     },
@@ -773,7 +939,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Kesildi. Tek başımayım.",
-          "textKey": "episode_09.ep09_n10_kes.event0.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "puzzle",
@@ -789,7 +955,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Frekansı tuttum. Emre bir ses çıkardı. İnsan sesine benzemiyor.",
-          "textKey": "episode_09.ep09_n10_tut.event0.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -799,7 +965,17 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Evrilmiş Karaltı çekildi.",
-          "textKey": "episode_09.ep09_n10_tut.event2.text"
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "emreDeğişim": 10,
+            "onlarFarkındalığı": 15,
+            "memory": [
+              "ep09_emre_karaltilari_kovar"
+            ]
+          }
         }
       ],
       "nextNodeId": "ep09_cp01"
@@ -813,10 +989,14 @@
           "checkpointId": "ep09_cp01"
         },
         {
-          "type": "message",
-          "speaker": "JONES",
-          "text": "Emre ile karşılıklı duruyoruz. Bu adam tanıdığım Emre mi?",
-          "textKey": "episode_09.ep09_cp01.event1.text"
+          "type": "relationshipDialogue",
+          "conditions": {
+            "emreDeğişim": {
+              "gte": 60
+            }
+          },
+          "trueText": "Emre ile karşılıklı duruyoruz. Bu adamın 8 yıllık Emre'yle ilişkisi ne?",
+          "falseText": "Emre ile karşılıklı duruyoruz. Bu adam tanıdığım Emre mi?"
         }
       ],
       "nextNodeId": "ep09_n11_selin_twist"
@@ -829,7 +1009,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Selin...",
-          "textKey": "episode_09.ep09_n11_selin_twist.event0.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -839,7 +1019,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Hayır...",
-          "textKey": "episode_09.ep09_n11_selin_twist.event2.text"
+          "pauseAfterMs": 3000
         },
         {
           "type": "realTimeWait",
@@ -849,7 +1029,17 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Önce o buldu seni.",
-          "textKey": "episode_09.ep09_n11_selin_twist.event4.text"
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "selinTrust": -5,
+            "curiosity": 15,
+            "memory": [
+              "ep09_selin_once_buldu"
+            ]
+          }
         }
       ],
       "choices": [
@@ -857,13 +1047,19 @@
           "id": "c6_inaniyorum",
           "text": "\"Sana inanıyorum.\"",
           "nextNodeId": "ep09_n11_inaniyorum",
-          "textKey": "episode_09.ep09_n11_selin_twist.choice0.text"
+          "effects": {
+            "emreBaglantisi": 10,
+            "selinTrust": -5
+          }
         },
         {
           "id": "c6_selin_hakli",
           "text": "\"Selin haklı. Bir şey saklıyorsun.\"",
           "nextNodeId": "ep09_n11_selin_hakli",
-          "textKey": "episode_09.ep09_n11_selin_twist.choice1.text"
+          "effects": {
+            "selinTrust": 5,
+            "emreBaglantisi": -5
+          }
         }
       ]
     },
@@ -875,7 +1071,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Bana değil. Gördüklerine inan.",
-          "textKey": "episode_09.ep09_n11_inaniyorum.event0.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -885,7 +1081,16 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Selin yukarıda... ama o da değişiyor. Aşağıyı şimdiden hissediyor.",
-          "textKey": "episode_09.ep09_n11_inaniyorum.event2.text"
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "emreBaglantisi": 8,
+            "memory": [
+              "ep09_selin_de_degisiyor"
+            ]
+          }
         }
       ],
       "nextNodeId": "ep09_son"
@@ -898,7 +1103,7 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Bunu söylemeni o istiyor.",
-          "textKey": "episode_09.ep09_n11_selin_hakli.event0.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -908,7 +1113,14 @@
           "type": "message",
           "speaker": "EMRE",
           "text": "Yukarıda olabilir... ama zihni çoktan burada.",
-          "textKey": "episode_09.ep09_n11_selin_hakli.event2.text"
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "selinTrust": -3,
+            "curiosity": 10
+          }
         }
       ],
       "nextNodeId": "ep09_son"
@@ -925,7 +1137,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Arkamı döndüm.",
-          "textKey": "episode_09.ep09_son.event1.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -935,8 +1147,42 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Gitmişti.",
-          "textKey": "episode_09.ep09_son.event3.text"
+          "pauseAfterMs": 5000
         },
+        {
+          "type": "relationshipDialogue",
+          "conditions": {
+            "emreBaglantisi": {
+              "gte": 40
+            }
+          },
+          "trueText": "Kahve söz vermiştin, Emre. Hâlâ gelmedi.",
+          "falseText": "8 yıl. Ve bu."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c_son_feneri_tut",
+          "text": "Feneri yere tut. Bak.",
+          "nextNodeId": "ep09_son_b",
+          "effects": {
+            "curiosity": 5
+          }
+        },
+        {
+          "id": "c_son_bekle",
+          "text": "Bir an ol. Nefes al.",
+          "nextNodeId": "ep09_son_b",
+          "effects": {
+            "mentalStability": 5
+          }
+        }
+      ]
+    },
+    "ep09_son_b": {
+      "id": "ep09_son_b",
+      "speaker": "JONES",
+      "events": [
         {
           "type": "realTimeWait",
           "seconds": 10
@@ -945,7 +1191,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Feneri yere, az önce durduğu noktaya tuttum.",
-          "textKey": "episode_09.ep09_son.event5.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -955,7 +1201,7 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Kalın bir toz katmanı var.",
-          "textKey": "episode_09.ep09_son.event7.text"
+          "pauseAfterMs": 4000
         },
         {
           "type": "realTimeWait",
@@ -965,16 +1211,48 @@
           "type": "message",
           "speaker": "JONES",
           "text": "Ama hiç ayak izi yok.",
-          "textKey": "episode_09.ep09_son.event9.text"
+          "pauseAfterMs": 8000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 25,
+            "emreDeğişim": 10,
+            "memory": [
+              "ep09_emre_iz_birakmiyor"
+            ]
+          }
+        },
+        {
+          "type": "systemAlert",
+          "text": "TELSİZ DURUMU: KAŞİF DÖRDÜNCÜ KAT — DERİN ODA",
+          "tone": "waiting"
+        },
+        {
+          "type": "characterBusy",
+          "id": "ep09_bekleme",
+          "character": "JONES",
+          "status": "DÖRDÜNCÜ KAT — DERİN ODA",
+          "durationMs": 600000,
+          "returnNodeId": "ep10_n01",
+          "message": "[JONES MEŞGUL]",
+          "notificationTitle": "KATMAN PROJESİ",
+          "notificationBody": "Jones telsiz rezonans hattına geri döndü.",
+          "tone": "waiting"
         }
       ],
       "choices": [
         {
-          "id": "ep09_bitis",
+          "id": "ep09_bitis_1",
           "text": "Bekle.",
           "nextEpisodeId": "episode_10",
-          "nextNodeId": "ep10_n01",
-          "textKey": "episode_09.ep09_son.choice0.text"
+          "nextNodeId": "ep10_n01"
+        },
+        {
+          "id": "ep09_bitis_2",
+          "text": "İz bırakmıyor. Ama buradaydı.",
+          "nextEpisodeId": "episode_10",
+          "nextNodeId": "ep10_n01"
         }
       ]
     },
@@ -984,14 +1262,96 @@
       "events": [
         {
           "type": "glitch",
-          "duration": 2000
+          "duration": 2000,
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "SİSTEM",
+          "text": "░░░ KRİTİK HATA // 432 Hz KESİLDİ — KOLONİ SAPTADI ░░░",
+          "corruption": "extreme",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "glitch",
+          "duration": 2500,
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "systemAlert",
+          "text": "SON GÜVENLİ KAYIT NOKTASINA DÖNÜLÜYOR",
+          "tone": "warning"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 20,
+            "timesNearDeath": 1,
+            "mentalStability": -15
+          }
         },
         {
           "type": "loopReset",
-          "loaderMessage": "TELSİZ FREKANSI SENKRONİZE EDİLİYOR"
+          "style": "blackout_loader",
+          "loaderDurationMs": 3500,
+          "fadeInMs": 800,
+          "fadeOutMs": 600,
+          "loaderMessage": "TELSİZ FREKANSI YENİDEN SENKRONİZE EDİLİYOR",
+          "subMessage": "Son kayıt noktasına dönülüyor."
+        }
+      ],
+      "choices": [
+        {
+          "id": "restart_ep09_cp",
+          "text": "Emre ile yüzleşme sahnesine dön.",
+          "nextNodeId": "ep09_cp01",
+          "restoreCheckpoint": "ep09_cp01"
+        },
+        {
+          "id": "restart_ep09_bas",
+          "text": "Bu bölümün başından başla.",
+          "nextNodeId": "ep09_n01",
+          "restoreCheckpoint": "ep09_n01"
         }
       ]
+    },
+    "ep09_A01_b": {
+      "id": "ep09_A01_b",
+      "speaker": "JONES",
+      "events": [
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Bir adım attım. O atmadı.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Ama aramızdaki mesafe... yine aynı.",
+          "pauseAfterMs": 4000
+        }
+      ],
+      "nextNodeId": "ep09_n03_cizim"
+    },
+    "ep09_B01_b": {
+      "id": "ep09_B01_b",
+      "speaker": "JONES",
+      "events": [
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Bir adım attım. O atmadı.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Ama aramızdaki mesafe... yine aynı.",
+          "pauseAfterMs": 4000
+        }
+      ],
+      "nextNodeId": "ep09_n03_cizim"
     }
-  },
-  "titleKey": "episode_09.meta.episode0.title"
+  }
 }

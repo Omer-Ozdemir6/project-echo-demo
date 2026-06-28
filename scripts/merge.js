@@ -5,13 +5,12 @@ import { execSync } from 'child_process';
 const DATA_DIR = path.join(process.cwd(), 'src', 'data', 'episodes');
 const outputFile = path.join(DATA_DIR, 'merged_story.json');
 
-// Dosyaları isme göre sırala (Böylece ep-01, ep-02 diye düzgün birleşir)
+// 1. Bölümleri isme göre sırala (01, 02... sırasını korur)
 const files = fs.readdirSync(DATA_DIR)
     .filter(f => f.startsWith('episode-') && f.endsWith('.json'))
     .sort(); 
 
-let masterData = { nodes: {}, puzzles: {} };
-let previousLastNodeId = null;
+let masterData = {}; // Artık bölümleri anahtarlayan bir obje olacak
 
 console.log(`--- MERGE İŞLEMİ BAŞLADI: ${files.length} bölüm ---`);
 
@@ -19,34 +18,30 @@ files.forEach((file) => {
     const filePath = path.join(DATA_DIR, file);
     const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     
-    // 1. Çakışma Kontrolü
-    Object.keys(content.nodes).forEach(id => {
-        if (masterData.nodes[id]) {
-            console.error(`❌ ÇAKIŞMA: '${id}' düğümü birden fazla dosyada mevcut!`);
-            process.exit(1);
-        }
-    });
+    // Dosya isminden episode_01 gibi anahtar oluştur
+    const episodeId = file.replace('episode-', '').replace('.json', '');
+    const fullEpisodeId = `episode_${episodeId}`;
 
-    // 2. Otomatik Köprü Kurma (Önceki bölümün sonu -> Mevcut bölümün başı)
-    if (previousLastNodeId && content.startNodeId) {
-        if (masterData.nodes[previousLastNodeId]) {
-            masterData.nodes[previousLastNodeId].nextNodeId = content.startNodeId;
-            console.log(`✓ KÖPRÜ KURULDU: ${previousLastNodeId} -> ${content.startNodeId}`);
-        }
+    // Validasyon: Bölümün başlangıç düğümü var mı?
+    if (!content.startNodeId) {
+        console.error(`❌ HATA: '${file}' dosyasında 'startNodeId' eksik!`);
+        process.exit(1);
     }
 
-    // 3. Birleştirme
-    masterData.nodes = { ...masterData.nodes, ...content.nodes };
-    masterData.puzzles = { ...masterData.puzzles, ...content.puzzles };
+    // Epizot objesini masterData içine ekle
+    masterData[fullEpisodeId] = {
+        id: fullEpisodeId,
+        startNodeId: content.startNodeId,
+        nodes: content.nodes || {},
+        puzzles: content.puzzles || {}
+    };
 
-    // Bir sonraki iterasyon için bu bölümün son düğümünü bul
-    // (Bölüm dosyalarında 'endNodeId' veya '_son' ile biten bir düğüm olduğunu varsayıyoruz)
-    const lastNode = Object.keys(content.nodes).find(id => id.endsWith('_son'));
-    previousLastNodeId = lastNode || Object.keys(content.nodes).pop(); 
+    console.log(`✓ Epizot eklendi: ${fullEpisodeId}`);
 });
 
+// JSON dosyasını kaydet
 fs.writeFileSync(outputFile, JSON.stringify(masterData, null, 2));
-console.log(`✓ ${files.length} bölüm birleştirildi.`);
+console.log(`\n🎉 ${files.length} bölüm başarıyla birleştirildi: ${outputFile}`);
 
 // --- OTOMATİK VALIDASYON ---
 try {

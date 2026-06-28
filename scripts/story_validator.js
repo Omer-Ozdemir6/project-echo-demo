@@ -4,27 +4,40 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_FILE = path.join(__dirname, '..', 'src', 'data', 'episodes', 'merged_story.json');
-const { nodes, puzzles } = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+const rawData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+
+// DÜZELTME: merged_story artık epizotlardan oluşuyor. 
+// Tüm node'ları ve puzzle'ları tek bir havuzda birleştiriyoruz.
+const nodes = {};
+const puzzles = {};
+
+Object.values(rawData).forEach(episode => {
+    Object.assign(nodes, episode.nodes || {});
+    Object.assign(puzzles, episode.puzzles || {});
+});
 
 function validate() {
     console.log("--- TEST BAŞLIYOR: GRAFİK ANALİZİ ---");
     
     const visited = new Set();
-    const queue = ["ep01_n01"]; // Başlangıç noktan
+    const queue = ["ep01_n01"]; 
     visited.add("ep01_n01");
 
-    // 1. Grafik Gezintisi (Reachability Analysis)
+    // 1. Grafik Gezintisi
     while (queue.length > 0) {
         const id = queue.shift();
         const node = nodes[id];
         if (!node) continue;
 
-        // Olası tüm çıkış yollarını topla
         const nextNodes = [];
         if (node.nextNodeId) nextNodes.push(node.nextNodeId);
-        if (node.choices) node.choices.forEach(c => nextNodes.push(c.nextNodeId));
         
-        // Puzzle bağlantılarını ekle
+        // Choice'lardaki nextNodeId ve nextEpisodeId geçişlerini topla
+        if (node.choices) node.choices.forEach(c => {
+            if (c.nextNodeId) nextNodes.push(c.nextNodeId);
+        });
+        
+        // Puzzle bağlantıları
         node.events?.filter(e => e.type === 'puzzle').forEach(e => {
             const p = puzzles[e.puzzleId || e.puzzleType];
             if (p) {
@@ -44,11 +57,9 @@ function validate() {
     // 2. Yetim Düğüm Tespiti
     let errorCount = 0;
     Object.keys(nodes).forEach(id => {
-        // HATA GİDERME: choice veya sistem düğümlerini analiz dışı bırak
         if (id === 'choices' || id.includes('hard_fail')) return;
 
         if (!visited.has(id)) {
-            // Eğer düğümün isminde 'kapanış' varsa veya 'isFinalNode' true ise yetim sayma
             const isFinalNode = id.includes('kapanış') || nodes[id].isFinalNode;
             
             if (!isFinalNode) {

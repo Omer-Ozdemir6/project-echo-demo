@@ -1,47 +1,24 @@
 import correlations from "./correlations.json";
 
-const episodeModules = import.meta.glob(
-  "./episodes/episode-*.json",
-  {
-    eager: true,
-    import: "default"
+// Birleştirilmiş hikaye dosyasını doğru yoldan (episodes klasörünün içinden) çekiyoruz
+import mergedStory from "./episodes/merged_story.json"; 
+
+// HATA AYIKLAMA İÇİN: Konsola JSON dosyasının gelip gelmediğini yazdırıyoruz
+console.log("📦 YÜKLENEN HİKAYE VERİSİ:", mergedStory);
+
+export const episodes = mergedStory;
+export const DEFAULT_EPISODE_ID = "episode_01";
+
+export function getEpisode(episodeId = DEFAULT_EPISODE_ID) {
+  // Aranan epizotu değişkene al
+  const ep = episodes[episodeId] || episodes[DEFAULT_EPISODE_ID];
+  
+  // Eğer epizot hala bulunamazsa (JSON boşsa veya yol yanlışsa) uyar
+  if (!ep) {
+    console.error(`🚨 getEpisode HATASI: '${episodeId}' bulunamadı! JSON verisi boş olabilir.`);
   }
-);
-
-function toEpisodeId(path) {
-  const match = path.match(/episode-(.+)\.json$/);
-
-  if (!match) {
-    return null;
-  }
-
-  return `episode_${match[1]}`;
-}
-
-export const episodes =
-  Object.fromEntries(
-    Object.entries(episodeModules)
-      .map(([path, episode]) => [
-        toEpisodeId(path),
-        episode
-      ])
-      .filter(([episodeId]) =>
-        Boolean(episodeId)
-      )
-  );
-
-
-
-export const DEFAULT_EPISODE_ID =
-  "episode_01";
-
-export function getEpisode(
-  episodeId = DEFAULT_EPISODE_ID
-) {
-  return (
-    episodes[episodeId] ||
-    episodes[DEFAULT_EPISODE_ID]
-  );
+  
+  return ep;
 }
 
 export { correlations };

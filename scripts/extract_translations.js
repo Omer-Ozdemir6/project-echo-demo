@@ -76,7 +76,7 @@ function processEpisodeFile(filePath, fileName) {
         for (const [nodeId, node] of Object.entries(data.nodes)) {
             if (node.events) node.events.forEach((e, i) => {
                 if (e.text) translations[`${nodeId}_event_${i}_text`] = e.text;
-                // ... diğer alanlar (trueText, falseText vs)
+                // ... diğer alanlar (trueText, falseText vs) eklenebilir
             });
             if (node.choices) node.choices.forEach((c, i) => {
                 if (c.text) translations[`${nodeId}_choice_${c.id || i}`] = c.text;
@@ -89,7 +89,10 @@ function processEpisodeFile(filePath, fileName) {
 // --- ANA İŞLEM ---
 console.log("--- ÇEVİRİ METİNLERİ AYIKLANIYOR ---");
 
-const files = fs.readdirSync(EPISODES_DIR).filter(f => f.endsWith('.json'));
+// GÜNCELLEME: Sadece 'episode-' ile başlayan ve '.json' ile biten ham dosyaları al, merged_story'i yoksay
+const files = fs.readdirSync(EPISODES_DIR)
+    .filter(f => f.startsWith('episode-') && f.endsWith('.json'));
+
 files.forEach(f => processEpisodeFile(path.join(EPISODES_DIR, f), f));
 
 REACT_FILES.forEach(f => {
