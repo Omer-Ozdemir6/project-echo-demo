@@ -85,7 +85,7 @@ function applyObserverMode(state) {
 // FRESH STATE
 // ─────────────────────────────────────────────
 
-function createFreshGameState() {
+export function createFreshGameState() {
   const episodeId = DEFAULT_EPISODE_ID;
   const episode = getEpisode(episodeId);
 
@@ -180,6 +180,8 @@ function createFreshGameState() {
     busyState: null
   };
 }
+
+export const getInitialGameState = createFreshGameState;
 
 // ─────────────────────────────────────────────
 // NORMALIZE
@@ -711,3 +713,4 @@ export function applySignalLost(gameState) {
   saveGameState(nextState);
   return nextState;
 }
+
