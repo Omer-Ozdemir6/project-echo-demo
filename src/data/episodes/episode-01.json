@@ -592,7 +592,7 @@
       "speaker": "JONES",
       "events": [
         { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Kesinlikle tesadüf olamaz.Anlaşılan burada herkes aynı şeye maruz kalıyor.Odadan çıktım. Devasa bir koridordayım şu an.", "pauseAfterMs": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Kesinlikle tesadüf olamaz.Anlaşılan burada herkes aynı şeye maruz kalıyor.", "pauseAfterMs": 3000 },
                 { "type": "typing", "speaker": "JONES", "duration": 3500 },
         { "type": "message", "speaker": "JONES", "text": "Tamam şimdi odadan çıktım.Şu an Devasa bir koridordayım.", "pauseAfterMs": 3000 },
         { "type": "typing", "speaker": "JONES", "duration": 3500 },
@@ -643,28 +643,41 @@
       ]
     },
 
-    "ep01_n12_motifler": {
-      "id": "ep01_n12_motifler",
-      "speaker": "JONES",
-      "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Feneri duvara yaklaştırıyorum.", "pauseAfterMs": 2500 },
-                        { "type": "typing", "speaker": "JONES", "duration": 3500 },
-        { "type": "message", "speaker": "JONES", "text": "Bana biraz zaman ver.Bunları biraz incelemek istiyorum", "pauseAfterMs": 3500 },
-
-                {
-          "type": "characterBusy",
-          "id": "ep01_bekleme",
-          "character": "JONES",
-          "status": "DUVARIN ÖNÜNDE — MEŞGUL",
-          "durationMs": 12000,
-          "returnNodeId": "ep01_n12_motifler",
-          "returnEpisodeId": "episode_01",
-          "message": "[JONES İNCELİYOR]",
-          "notificationTitle": "KATMAN PROJESİ",
-          "notificationBody": "Jones telsiz rezonans hattına geri döndü.",
-          "tone": "waiting"
-        }]},
+"ep01_n12_motifler": {
+  "id": "ep01_n12_motifler",
+  "speaker": "JONES",
+  "events": [
+    { "type": "typing", "speaker": "JONES", "duration": 2500 },
+    { "type": "message", "speaker": "JONES", "text": "Feneri duvara yaklaştırıyorum.", "pauseAfterMs": 2500 },
+    { "type": "typing", "speaker": "JONES", "duration": 3500 },
+    { "type": "message", "speaker": "JONES", "text": "Bana biraz zaman ver. Bunları incelemem lazım.", "pauseAfterMs": 3500 }
+  ],
+  "choices": [
+    {
+      "id": "c_incele_baslat",
+      "text": "Tamam, incele.",
+      "nextNodeId": "ep01_n12_motifler_busy" 
+    }
+  ]
+},
+"ep01_n12_motifler_busy": {
+  "id": "ep01_n12_motifler_busy",
+  "events": [
+    {
+      "type": "characterBusy",
+      "id": "ep01_bekleme",
+      "character": "JONES",
+      "status": "DUVARIN ÖNÜNDE — MEŞGUL",
+      "durationMs": 12000,
+      "returnNodeId": "ep01_n12_motifler_2",
+      "returnEpisodeId": "episode_01",
+      "message": "[JONES İNCELİYOR]",
+      "notificationTitle": "KATMAN PROJESİ",
+      "notificationBody": "Jones telsiz rezonans hattına geri döndü.",
+      "tone": "waiting"
+    }
+  ]
+},
             "ep01_n12_motifler_2": {
       "id": "ep01_n12_motifler",
       "speaker": "JONES",
