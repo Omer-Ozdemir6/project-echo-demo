@@ -343,16 +343,7 @@ useEffect(() => {
               className="flex flex-col border-l-2 border-stone-600 pl-4 py-2 hover:border-amber-600 transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <span className="text-lg uppercase">{getGameText("start.menu.continue", "Devam Et",language)}</span>
-              <span className="text-[10px] text-stone-500">
-                {hasSavedGame && saveData 
-                  ? (() => {
-                      const rawId = saveData.episodeId || "";
-                      const epNum = parseInt(rawId.replace(/\D/g, ''), 10) || 1; 
-                      const epTitle = EPISODE_TITLES[epNum] || "Bilinmeyen Bölüm";
-                      return `${getGameText("start.menu.saveDate", "Son Kayıt")}: Bölüm ${epNum} - ${epTitle}`;
-                    })()
-                  : getGameText("start.menu.noSave", "Kayıt bulunamadı")}
-              </span>
+
             </button>
             <button onClick={() => { setIntroStep("briefing"); }} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">{getGameText("start.menu.newGame", "Yeni Oyun",language)}</button>
             <button onClick={onOpenCredits} className="text-left border-l-2 border-transparent pl-4 hover:border-amber-600 transition-all uppercase">{getGameText("start.menu.credits", "Künye",language)}</button>

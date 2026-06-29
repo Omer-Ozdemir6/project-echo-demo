@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Preferences } from "@capacitor/preferences";
+import { App as CapApp } from "@capacitor/app";
 import {
   chooseOption,
   getCurrentNode,
@@ -265,12 +266,21 @@ function App() {
     }
   }, [gameState]);
 
-  // ── Character busy timer ──────────────────────────────────────────────────
+  // ── Character busy timer — Capacitor-safe ────────────────────────────────
+  //
+  // Sorun: Mobil'de app arka plana geçince setTimeout ölüyor.
+  // Çözüm: App ön plana her döndüğünde (visibilitychange + CapApp.appStateChange)
+  // kalan süreyi yeniden hesapla — geçtiyse anında çöz, geçmediyse
+  // kalan süre için yeni timer kur.
+  //
   useEffect(() => {
     if (phase !== "game" || !gameState.busyState) return;
-    const busy = gameState.busyState;
-    const remainingMs = Math.max(0, busy.busyUntil - Date.now());
 
+    const busy = gameState.busyState;
+    let timer = null;
+    let capListener = null;
+
+    // ── Resolve fonksiyonu ────────────────────────────────────────────────
     function resolveBusyAndContinue(shouldNotify = false) {
       setGameState((prev) => {
         if (!prev.busyState) return prev;
@@ -282,12 +292,58 @@ function App() {
       });
     }
 
-    if (remainingMs <= 0) {
-      resolveBusyAndContinue(false);
-      return;
+    // ── Kontrol + timer kurma ─────────────────────────────────────────────
+    // Her çağrıda kalan süreyi hesaplar:
+    // - Süre geçtiyse: anında resolve
+    // - Geçmediyse: kalan süre için setTimeout kur
+    function checkAndSchedule(shouldNotifyOnResolve = true) {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+      const remainingMs = Math.max(0, busy.busyUntil - Date.now());
+      if (remainingMs <= 0) {
+        resolveBusyAndContinue(shouldNotifyOnResolve);
+      } else {
+        timer = setTimeout(
+          () => resolveBusyAndContinue(true),
+          remainingMs
+        );
+      }
     }
-    const timer = setTimeout(() => resolveBusyAndContinue(true), remainingMs);
-    return () => clearTimeout(timer);
+
+    // ── İlk çalıştırma ───────────────────────────────────────────────────
+    // App ilk yüklenince / phase "game"e geçince kontrol et.
+    // Kullanıcı zaten açık olan uygulamaya bakıyorsa bildirim gösterme.
+    checkAndSchedule(false);
+
+    // ── Browser visibility (web + hibrit mobil) ───────────────────────────
+    // Sekme/uygulama ön plana gelince kalan süreyi yeniden hesapla.
+    function handleVisibilityChange() {
+      if (document.visibilityState === "visible") {
+        checkAndSchedule(true);
+      }
+    }
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // ── Capacitor native app state (iOS / Android) ────────────────────────
+    // visibilitychange bazen geç gelir; Capacitor listener daha güvenilir.
+    CapApp.addListener("appStateChange", ({ isActive }) => {
+      if (isActive) checkAndSchedule(true);
+    })
+      .then((listener) => {
+        capListener = listener;
+      })
+      .catch(() => {
+        // Web ortamında çalışıyorsa CapApp listener olmayabilir — sorun değil.
+      });
+
+    // ── Cleanup ───────────────────────────────────────────────────────────
+    return () => {
+      if (timer) clearTimeout(timer);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (capListener?.remove) capListener.remove();
+    };
   }, [phase, gameState.busyState?.busyUntil]);
 
   // ── Boot sequence ─────────────────────────────────────────────────────────
@@ -334,7 +390,6 @@ function App() {
       translate: (key, fallback = "") =>
         getGameText(key, fallback, settings.language),
 
-      // ── characterBusy ─────────────────────────────────────────────────────
       onCharacterBusyStart: (busy) => {
         setIsTyping(false);
         setIsGlitching(false);
@@ -425,12 +480,10 @@ function App() {
         });
       },
 
-      // ── statChange — deduplication ─────────────────────────────────────────
       onStatChange: (changes) => {
         const nodeId = currentNode?.id;
         if (nodeId && visitedForStatsRef.current.has(nodeId)) return;
         if (nodeId) visitedForStatsRef.current.add(nodeId);
-
         setGameState((prev) => {
           const next = stateManager.applyEffects(prev, changes);
           saveGameState(next);
@@ -438,7 +491,6 @@ function App() {
         });
       },
 
-      // ── checkpoint ─────────────────────────────────────────────────────────
       onCheckpoint: () => {
         setGameState((prev) => {
           const next = {
@@ -454,7 +506,6 @@ function App() {
         });
       },
 
-      // ── statBasedRouting ───────────────────────────────────────────────────
       onStatBasedRouting: (route) => {
         if (route?.nextEpisodeId || route?.nextNodeId) {
           setTimeout(() => {
@@ -471,18 +522,15 @@ function App() {
         }
       },
 
-      // ── loopReset ──────────────────────────────────────────────────────────
       onLoopReset: (resetState) => {
         setLoopResetState(resetState);
         setPhase("loopReset");
       },
 
-      // ── onComplete ─────────────────────────────────────────────────────────
       onComplete: () => {
         if (gameState.busyState) return;
         setNodeFinished(true);
 
-        // Branching
         if (currentNode?.branching?.length) {
           const matched = currentNode.branching.find((b) =>
             evaluateConditions(gameState, b.conditions)
@@ -501,7 +549,6 @@ function App() {
           }
         }
 
-        // Normal node geçişi
         if (currentNode?.nextNodeId) {
           setTimeout(() => {
             setGameState((prev) => {
@@ -516,7 +563,6 @@ function App() {
           return;
         }
 
-        // Episode geçişi
         if (currentNode?.nextEpisodeId) {
           setTimeout(() => {
             setGameState((prev) => {
@@ -565,12 +611,7 @@ function App() {
     const result = submitPuzzleAnswer(gameState, activePuzzle.id, answer);
     setVisibleMessages((prev) => [
       ...prev,
-      {
-        type: "playerMessage",
-        text: answer,
-        sender: "player",
-        speaker: "YOU"
-      },
+      { type: "playerMessage", text: answer, sender: "player", speaker: "YOU" },
       {
         type: "systemAlert",
         text: result.isCorrect ? "[ACCESS GRANTED]" : "[ACCESS DENIED]",
@@ -693,18 +734,13 @@ function App() {
         restoreCheckpointId={loopResetState?.restoreCheckpointId}
         onComplete={(result) => {
           setLoopResetState(null);
-
           if (result?.autoRestore && gameState.checkpoint) {
             visitedForStatsRef.current = new Set();
-
             setGameState((prev) => {
               const cp = prev.checkpoint;
               const epId =
                 cp.episodeId ||
-                (cp.episode
-                  ? `episode_${cp.episode}`
-                  : prev.episodeId);
-
+                (cp.episode ? `episode_${cp.episode}` : prev.episodeId);
               const next = {
                 ...prev,
                 episodeId: epId,
@@ -715,7 +751,6 @@ function App() {
               return next;
             });
           }
-
           setPhase("game");
         }}
       />
@@ -750,7 +785,10 @@ function App() {
     <TerminalScreen
       config={gameConfig}
       gameState={gameState}
-      currentNode={{ ...currentNode, choices: canShowChoices ? visibleChoices : [] }}
+      currentNode={{
+        ...currentNode,
+        choices: canShowChoices ? visibleChoices : []
+      }}
       visibleMessages={visibleMessages}
       isTyping={isTyping}
       isGlitching={isGlitching}
