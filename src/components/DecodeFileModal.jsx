@@ -5,21 +5,43 @@ export default function DecodeFileModal({ file, onComplete, onClose, language = 
   const [cryptoStream, setCryptoStream] = useState("");
   const [glitch, setGlitch] = useState(false);
 
-  // Bulgu türüne göre yeraltı / sığınak renk paleti eşlemesi
+  // Derinlik, taş ve antik bulgu türlerine göre yeraltı renk paleti eşlemesi
   const theme = useMemo(() => {
-    if (file?.type === "map") return { text: "text-amber-500", border: "border-amber-950 shadow-[0_0_40px_rgba(245,158,11,0.05)]", corner: "border-amber-600" };
-    if (file?.type === "log" || file?.type === "crew") return { text: "text-stone-300", border: "border-stone-900", corner: "border-stone-600" };
-    return { text: "text-rose-600", border: "border-rose-950 shadow-[0_0_40px_rgba(220,38,38,0.05)]", corner: "border-rose-700" };
+    // Haritalar ve Keşifler: Kadim parşömen, meşale ateşi ve altın amber tonları
+    if (file?.type === "map") {
+      return { 
+        text: "text-amber-500", 
+        border: "border-amber-950/70 shadow-[0_0_35px_rgba(245,158,11,0.04)]", 
+        corner: "border-amber-700",
+        badge: "bg-amber-950/40 text-amber-500 border-amber-900/60"
+      };
+    }
+    // Günlükler ve Ekip Kayıtları: Rutubetli taşlar, askeri mat yeşil ve yosun tonları
+    if (file?.type === "log" || file?.type === "crew") {
+      return { 
+        text: "text-emerald-600", 
+        border: "border-stone-900 shadow-[inset_0_0_30px_rgba(0,0,0,0.95)]", 
+        corner: "border-stone-600",
+        badge: "bg-stone-900/50 text-stone-400 border-stone-800"
+      };
+    }
+    // Kritik/Tehlikeli Bulgular: Derin çatlaklar, sığınak acil durum alarmı ve kan kırmızı tonlar
+    return { 
+      text: "text-rose-600", 
+      border: "border-rose-950/50 shadow-[0_0_35px_rgba(220,38,38,0.04)]", 
+      corner: "border-rose-800",
+      badge: "bg-rose-950/40 text-rose-500 border-rose-900/60"
+    };
   }, [file?.type]);
 
-  // 1. Organik İlerleme (Mikro Duraksamalı ve Değişken İvme)
+  // 1. Organik İlerleme (Sismik Duraksamalı Yeraltı Akustik Algoritması)
   useEffect(() => {
     if (!file) return;
 
     setProgress(0);
     setGlitch(false);
 
-    const duration = 2200; // Sinyal ayrıştırma gerilim süresi (2.2 saniye)
+    const duration = 2200; // Sinyalin taştan süzülme süresi
     const startedAt = Date.now();
     let streamInterval;
 
@@ -27,23 +49,23 @@ export default function DecodeFileModal({ file, onComplete, onClose, language = 
       const elapsed = Date.now() - startedAt;
       let nextProgress = (elapsed / duration) * 100;
 
-      // Mağara derinliği sismik parazit simülasyonu: Sinyal %42 ve %80 dolaylarında takılma yaşar
-      if (nextProgress > 42 && nextProgress < 49) nextProgress = 44;
+      // Sismik parazit simülasyonu: Sinyal yoğun taş katmanlarında (%42 ve %80) takılır
+      if (nextProgress > 42 && nextProgress < 49) nextProgress = 43;
       if (nextProgress > 80 && nextProgress < 85) nextProgress = 81;
 
       const rounded = Math.min(100, Math.round(nextProgress));
       setProgress(rounded);
 
       if (rounded < 100) {
-        // Telsiz gürültüsüne bağlı anlık dalga bozulması (glitch) tetikle
-        if (Math.random() > 0.98) {
+        // Mağara derinliği statik gürültüsü ve anlık sinyal kırılması
+        if (Math.random() > 0.97) {
           setGlitch(true);
-          setTimeout(() => setGlitch(false), 80);
+          setTimeout(() => setGlitch(false), 70);
         }
         requestAnimationFrame(updateProgress);
       } else {
         clearInterval(streamInterval);
-        // Tamamlandığında ayrıştırılmış bulguyu sisteme aktarır
+        // Çözümleme bittiğinde veriyi antik arşive süz
         setTimeout(() => {
           onComplete?.(file);
         }, 600);
@@ -52,22 +74,22 @@ export default function DecodeFileModal({ file, onComplete, onClose, language = 
 
     requestAnimationFrame(updateProgress);
 
-    // 2. Canlı Akan Akustik Ham Veri Matrisi (Parazitli Ham Sinyal Kodları)
+    // 2. Canlı Akan Akustik Ham Veri (Kadim Rün ve Sismik Dalga Sembolleri)
     streamInterval = setInterval(() => {
-      const chars = "01X_█░REZONANS_K_";
+      const chars = "▒░█▓ΔΩΘΞ𐎔𐏟_YANKI_K";
       let fakeStream = "";
       for (let i = 0; i < 4; i++) {
         fakeStream += chars[Math.floor(Math.random() * chars.length)];
       }
-      setCryptoStream(`[HAM_AKUSTİK: ${fakeStream.trim()}]`);
-    }, 70);
+      setCryptoStream(`[REZONANS: ${fakeStream.trim()}]`);
+    }, 80);
 
     return () => {
       clearInterval(streamInterval);
     };
   }, [file, onComplete]);
 
-  // Hücresel Retro Blok Çubuğu (Yenilenen Kare Bloklar)
+  // Hücresel Taş Blok Çubuğu
   const bar = useMemo(() => {
     const filled = Math.round(progress / 10);
     return "█".repeat(filled) + "░".repeat(10 - filled);
@@ -77,62 +99,75 @@ export default function DecodeFileModal({ file, onComplete, onClose, language = 
 
   return (
     <div
-      className="fixed inset-0 z-[190] grid place-items-center bg-black/90 backdrop-blur-xs p-4 select-none font-mono"
+      className="fixed inset-0 z-[190] grid place-items-center bg-black/95 backdrop-blur-xs p-4 select-none font-mono"
       onClick={onClose}
     >
-      {/* Tarama Çizgileri Perdesi */}
-      <div className="pointer-events-none absolute inset-0 z-50 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.01),rgba(255,255,255,0.01)_2px,transparent_2px,transparent_5px)] opacity-25" />
+      {/* RUTUBET VE DEHLİZ HAVA KATMANI (FAINT GRID EFFECT) */}
+      <div className="pointer-events-none absolute inset-0 z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.3)_50%)] bg-[length:100%_6px] opacity-20 mix-blend-overlay" />
 
       <section
         className={[
-          "relative z-[191] w-full max-w-md border bg-neutral-950 p-6 border-b-2 rounded-xs transition-all duration-150",
+          "relative z-[191] w-full max-w-md border bg-gradient-to-b from-stone-950 to-neutral-950 p-6 rounded-xs transition-all duration-150 border-stone-900/80",
           theme.border,
-          glitch ? "animate-[screenGlitch_0.08s_infinite] scale-[1.01]" : ""
+          glitch ? "animate-[screenGlitch_0.1s_infinite] opacity-90 translate-y-[0.5px]" : ""
         ].join(" ")}
         onClick={(event) => event.stopPropagation()}
       >
-        {/* Antik Kesim Taş Braketleri */}
+        {/* ANTİK KESİM TAŞ BRAKETLERİ (KÖŞE DETAYLARI) */}
         <div className={`absolute -top-0.5 -left-0.5 h-3 w-3 border-t-2 border-l-2 ${theme.corner}`} />
+        <div className={`absolute -top-0.5 -right-0.5 h-3 w-3 border-t-2 border-r-2 ${theme.corner}`} />
+        <div className={`absolute -bottom-0.5 -left-0.5 h-3 w-3 border-b-2 border-l-2 ${theme.corner}`} />
         <div className={`absolute -bottom-0.5 -right-0.5 h-3 w-3 border-b-2 border-r-2 ${theme.corner}`} />
 
-        {/* Üst Akustik Sinyal Satırı */}
-        <div className="flex items-center justify-between border-b border-stone-900 pb-2.5 mb-4 text-[8px] text-stone-600 tracking-widest font-black uppercase">
-          <span>SİNYAL_VERİ_AYRIŞTIRMA</span>
-          <span>DİZİN_{file.type || "BULGU"}</span>
+        {/* ÜST AKUSTİK SİNYAL SATIRI */}
+        <div className="flex items-center justify-between border-b border-stone-900 pb-2.5 mb-4 text-[8px] text-stone-600 tracking-[0.2em] font-black uppercase">
+          <div className="flex items-center gap-1.5">
+            <span className={`w-1 h-1 rounded-full ${progress >= 100 ? 'bg-amber-600' : 'bg-stone-700 animate-pulse'}`} />
+            <span>KADİM_YANKI_ANALİZÖRÜ</span>
+          </div>
+          <span>KOD_DEHLİZ_30</span>
         </div>
 
-        {/* Bulgular Başlığı */}
-        <h2 className="mb-5 truncate text-xs tracking-[0.18em] text-stone-300 font-bold uppercase pl-2 border-l border-stone-900">
-          {file.title || "KATMAN_BULGU_AKTI.LOG"}
-        </h2>
+        {/* BULGULAR VE ANALİZ KATMANI BAŞLIĞI */}
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <h2 className="m-0 truncate text-xs tracking-[0.15em] text-stone-400 font-bold uppercase pl-2 border-l border-stone-800">
+            {file.title || "KATMAN_BULGU_AKTI.LOG"}
+          </h2>
+          <span className={`shrink-0 text-[8px] font-black tracking-widest border px-1.5 py-0.5 rounded-2xs uppercase ${theme.badge}`}>
+            {file.type || "BULGU"}
+          </span>
+        </div>
 
-        {/* Telsiz Deşifre Hücresi */}
-        <div className="border border-stone-900 bg-black p-4 font-mono rounded-xs relative">
+        {/* TELSİZ VE DEŞİFRE HÜCRESİ (DEEP EXPEDITION INTERFACE) */}
+        <div className="border border-stone-950 bg-black/80 p-4 font-mono rounded-xs relative shadow-[inset_0_0_15px_rgba(0,0,0,0.9)]">
           
           {/* Anlık Durum Göstergesi */}
-          <div className="flex items-center justify-between mb-3">
-            <p className={`text-[10px] tracking-[0.2em] font-bold uppercase m-0 ${progress >= 100 ? "text-amber-500" : theme.text}`}>
-              {progress >= 100 ? "✓ FREKANS_KİLİDİ_SAĞLANDI" : "⚡ SİNYAL_DALGASI_FİLTRELENİYOR..."}
+          <div className="flex items-center justify-between mb-3.5">
+            <p className={`text-[10px] tracking-[0.15em] font-bold uppercase m-0 ${progress >= 100 ? "text-amber-500" : theme.text}`}>
+              {progress >= 100 ? "✓ REZONANS_DENGELENDİ" : "⚓ DEHLİZ_SESİ_FİLTRELENİYOR..."}
             </p>
-            <span className="text-[8px] text-stone-700 animate-pulse font-mono tracking-wider">
-              {progress >= 100 ? "[STABLE_LOG]" : cryptoStream}
+            <span className="text-[8px] text-stone-600 font-mono tracking-wider shrink-0">
+              {progress >= 100 ? "[HARİTALANDI]" : cryptoStream}
             </span>
           </div>
 
           {/* Kare Bloklu Yükleme Çubuğu */}
-          <div className="text-sm tracking-[0.15em] text-stone-300 flex items-center justify-between border-y border-stone-900/50 py-2.5 my-3">
-            <span className="font-light tracking-[0.05em] opacity-60 text-xs">{bar}</span>
-            <span className={`font-mono font-bold text-xs min-w-[40px] text-right ${progress >= 100 ? "text-amber-500" : "text-stone-500"}`}>
+          <div className="text-sm tracking-[0.12em] text-stone-400 flex items-center justify-between border-y border-stone-900/60 py-3 my-3 bg-neutral-950/50 px-2 rounded-2xs">
+            <span className="font-light tracking-[0.05em] text-stone-600 text-xs selection:bg-transparent">{bar}</span>
+            <span className={`font-mono font-bold text-xs min-w-[35px] text-right ${progress >= 100 ? "text-amber-500" : "text-stone-500"}`}>
               %{progress}
             </span>
           </div>
 
           {/* Alt Durum Sızıntı Logu */}
-          <p className="mt-3 text-[8px] tracking-[0.15em] text-stone-600 uppercase font-black m-0">
-            {progress >= 100
-              ? "&gt; VERİ ARŞİVE BAĞLANDI // AKUSTİK HARİTA GÜNCELLENİYOR"
-              : "&gt; DERİN DEHLİZ AKUSTİK VERİSİ ÖN BELLEĞE ALINIYOR"}
-          </p>
+          <div className="mt-3 text-[8px] tracking-[0.12em] text-stone-600 uppercase font-black m-0 flex items-start">
+            <span className="text-stone-800 mr-1.5 font-black">&gt;</span>
+            <p className="m-0 flex-1 leading-normal">
+              {progress >= 100
+                ? "KADİM KATMAN VERİSİ ÇÖZÜLDÜ // TABLOLAŞTIRMA TAMAM"
+                : "TAŞ BLOKLARDAN YANSIYAN SES FREKANSLARI DERLENİYOR"}
+            </p>
+          </div>
         </div>
       </section>
     </div>
