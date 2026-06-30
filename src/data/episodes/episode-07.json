@@ -126,11 +126,12 @@
         {
           "type": "statChange",
           "changes": {
-            "selinTrust": 5,
+            "trust": 5,
             "curiosity": 12,
             "memory": [
               "ep07_432hz_geldi"
-            ]
+            ],
+            "selinTrust": 5
           }
         }
       ],
@@ -187,9 +188,9 @@
           "text": "432 Hz'i hemen yayınla. Selin'e güven.",
           "nextNodeId": "ep07_A01",
           "effects": {
-            "selinTrust": 8,
-            "trust": 5,
-            "curiosity": 10
+            "trust": 10,
+            "curiosity": 10,
+            "selinTrust": 8
           }
         },
         {
@@ -263,6 +264,7 @@
           "type": "statChange",
           "changes": {
             "curiosity": 15,
+            "trust": 5,
             "selinTrust": 5
           }
         }
@@ -293,14 +295,19 @@
       "speaker": "JONES",
       "events": [
         {
-          "type": "typing",
+          "type": "conditionalMessage",
           "speaker": "JONES",
-          "duration": 3200
-        },
-        {
-          "type": "message",
-          "speaker": "JONES",
-          "text": "Etrafımda 4-5 metrelik bir alan oluştu. Boş. Onlar sınırda bekliyor.",
+          "cases": [
+            {
+              "choiceId": "c_a01_anlam",
+              "text": "Doğal olmadığını sen de görüyorsun demek. Etrafımda 4-5 metrelik bir alan oluştu. Boş. Onlar sınırda bekliyor."
+            },
+            {
+              "choiceId": "c_a01_mesaj",
+              "text": "Mesaj diyorsun — haklı olabilirsin. Etrafımda 4-5 metrelik bir alan oluştu. Boş. Onlar sınırda bekliyor, sanki bir cevap dinliyorlar gibi."
+            }
+          ],
+          "default": "Etrafımda 4-5 metrelik bir alan oluştu. Boş. Onlar sınırda bekliyor.",
           "pauseAfterMs": 4000
         },
         {
@@ -483,9 +490,20 @@
           "pauseAfterMs": 4500
         },
         {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Bir şey daha: organizmaların geri çekilme yönü rastgele değil. Hepsi güneye doğru. Tam güney. Sanki güneyde bir şey var ki onlara 'çekilin' diyor.",
+          "pauseAfterMs": 4500
+        },
+        {
           "type": "statChange",
           "changes": {
-            "onlarFarkındalığı": 10,
+            "onlarFarkındalığı": 18,
             "curiosity": 10,
             "fear": 5
           }
@@ -765,6 +783,22 @@
       "speaker": "JONES",
       "events": [
         {
+          "type": "conditionalMessage",
+          "speaker": "JONES",
+          "cases": [
+            {
+              "choiceId": "c_salon_girintiler",
+              "text": "Girintilere yaklaştım. Duvara elimi koydum. Yüzey pürüzsüz — yıllarca kullanılmış gibi, sürtünmeden cilalanmış."
+            },
+            {
+              "choiceId": "c_salon_platform",
+              "text": "Platforma yürüdüm. Yakından bakınca yüzeyinde ince çizikler var — dairesel, merkeze doğru."
+            }
+          ],
+          "default": "Salonu inceliyorum.",
+          "pauseAfterMs": 4000
+        },
+        {
           "type": "typing",
           "speaker": "JONES",
           "duration": 3200
@@ -971,9 +1005,10 @@
         {
           "type": "statChange",
           "changes": {
-            "emreDeğişim": 35,
+            "onlarFarkındalığı": 15,
             "fear": 20,
-            "emreBaglantisi": -5
+            "emreBaglantisi": -5,
+            "emreDeğişim": 35
           }
         }
       ],
@@ -1174,6 +1209,37 @@
         }
       ]
     },
+    "ep07_n12_siluet_b": {
+      "id": "ep07_n12_siluet_b",
+      "speaker": "JONES",
+      "events": [
+        {
+          "type": "realTimeWait",
+          "seconds": 6
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Yüzünü göremedim. Işık yetmedi. Ama bir saniye — tam bir saniye — birbirimize baktık.",
+          "pauseAfterMs": 6000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "emreBaglantisi": 15,
+            "fear": 10,
+            "onlarFarkındalığı": 5,
+            "emreDeğişim": 5
+          }
+        }
+      ],
+      "nextNodeId": "ep07_n13_kayip"
+    },
     "ep07_n13_kayip": {
       "id": "ep07_n13_kayip",
       "speaker": "JONES",
@@ -1287,6 +1353,30 @@
           "speaker": "JONES",
           "text": "Taze. Benim adım boyumla aynı. Ama sol ayak biraz daha basıyor.",
           "pauseAfterMs": 6000
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 4
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Dur. Kendi izlerime baktım daha dikkatli. Benim izlerim de garip — sol ayak biraz fazla dışa basıyor. Ben sol ayağımı dışa basmam normalde.",
+          "pauseAfterMs": 5500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 5,
+            "memory": [
+              "ep07_kendi_izi_garip"
+            ]
+          }
         }
       ],
       "choices": [
@@ -1347,12 +1437,13 @@
         {
           "type": "statChange",
           "changes": {
-            "emreDeğişim": 5,
+            "onlarFarkındalığı": 5,
             "fear": 15,
             "emreBaglantisi": 10,
             "memory": [
               "ep07_emre_yaninda_yurumis"
-            ]
+            ],
+            "emreDeğişim": 5
           }
         }
       ],
@@ -1401,6 +1492,66 @@
         {
           "type": "realTimeWait",
           "seconds": 8
+        },
+        {
+          "type": "statTieredAlert",
+          "stat": "trust",
+          "tiers": [
+            {
+              "gte": 60,
+              "text": "GÜVEN: GÜÇLENİYOR"
+            },
+            {
+              "gte": 30,
+              "text": "GÜVEN: STABİL"
+            },
+            {
+              "gte": 0,
+              "text": "GÜVEN: ZAYIFLIYOR"
+            }
+          ],
+          "tone": "waiting",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "statTieredAlert",
+          "stat": "emreBaglantisi",
+          "tiers": [
+            {
+              "gte": 70,
+              "text": "EMRE BAĞI: GÜÇLÜ"
+            },
+            {
+              "gte": 35,
+              "text": "EMRE BAĞI: ORTA"
+            },
+            {
+              "gte": 0,
+              "text": "EMRE BAĞI: ZAYIF"
+            }
+          ],
+          "tone": "waiting",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "statTieredAlert",
+          "stat": "onlarFarkındalığı",
+          "tiers": [
+            {
+              "gte": 25,
+              "text": "ONLAR FARKINDALIĞI: YÜKSEK"
+            },
+            {
+              "gte": 10,
+              "text": "ONLAR FARKINDALIĞI: ORTA"
+            },
+            {
+              "gte": 0,
+              "text": "ONLAR FARKINDALIĞI: DÜŞÜK"
+            }
+          ],
+          "tone": "waiting",
+          "pauseAfterMs": 1500
         },
         {
           "type": "systemAlert",
@@ -1479,37 +1630,21 @@
           "loaderMessage": "TELSİZ FREKANSI YENİDEN SENKRONİZE EDİLİYOR",
           "subMessage": "Son kayıt noktasına dönülüyor."
         }
-      ]
-    },
-    "ep07_n12_siluet_b": {
-      "id": "ep07_n12_siluet_b",
-      "speaker": "JONES",
-      "events": [
-        {
-          "type": "realTimeWait",
-          "seconds": 6
-        },
-        {
-          "type": "typing",
-          "speaker": "JONES",
-          "duration": 3800
-        },
-        {
-          "type": "message",
-          "speaker": "JONES",
-          "text": "Yüzünü göremedim. Işık yetmedi. Ama bir saniye — tam bir saniye — birbirimize baktık.",
-          "pauseAfterMs": 6000
-        },
-        {
-          "type": "statChange",
-          "changes": {
-            "emreBaglantisi": 15,
-            "fear": 10,
-            "emreDeğişim": 5
-          }
-        }
       ],
-      "nextNodeId": "ep07_n13_kayip"
+      "choices": [
+        {
+          "id": "restart_ep07_cp",
+          "text": "Salon girişinden devam et.",
+          "nextNodeId": "ep07_n09_kirilgan",
+          "restoreCheckpoint": "ep07_cp01"
+        },
+        {
+          "id": "restart_ep07_bas",
+          "text": "Dördüncü katın başından — frekans kararından başla.",
+          "nextNodeId": "ep07_n02_canta",
+          "restoreCheckpoint": "ep07_n02_canta"
+        }
+      ]
     }
   }
 }

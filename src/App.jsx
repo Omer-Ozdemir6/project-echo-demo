@@ -585,25 +585,31 @@ function App() {
   }, [phase, currentNode?.id]);
 
   // ── Seçim ─────────────────────────────────────────────────────────────────
-  function handleChoice(choiceId) {
-    if (gameState.busyState) return;
-    const selected = currentNode?.choices?.find((c) => c.id === choiceId);
-    if (selected) {
-      setVisibleMessages((prev) => [
-        ...prev,
-        {
-          type: "playerMessage",
-          text: getGameText(selected.textKey, selected.text, settings.language),
-          sender: "player",
-          speaker: "YOU"
-        }
-      ]);
-    }
-    setNodeFinished(false);
-    const next = chooseOption(gameState, choiceId);
-    setGameState(next);
-    saveGameState(next);
+function handleChoice(choiceId) {
+  if (gameState.busyState) return;
+  
+  const selected = currentNode?.choices?.find((c) => c.id === choiceId);
+  if (selected) {
+    setVisibleMessages((prev) => [
+      ...prev,
+      {
+        type: "playerMessage",
+        text: getGameText(selected.textKey, selected.text, settings.language),
+        sender: "player",
+        speaker: "YOU"
+      }
+    ]);
   }
+  setNodeFinished(false);
+  
+  // State'e lastChoiceId'yi ekliyoruz
+  setGameState(prev => {
+    const next = chooseOption(prev, choiceId);
+    const updatedState = { ...next, lastChoiceId: choiceId }; // <--- EKLENEN SATIR
+    saveGameState(updatedState);
+    return updatedState;
+  });
+}
 
   // ── Puzzle cevabı ─────────────────────────────────────────────────────────
   function handlePuzzleSubmit(answer) {

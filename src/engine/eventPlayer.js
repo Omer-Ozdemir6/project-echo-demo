@@ -113,6 +113,45 @@ function playSingleEvent({
     return ms + (event.pauseAfterMs ?? 500);
   }
 
+  // ─── şartlı mesaj (conditionalMessage) ──────────────────────────────────
+  if (event.type === "conditionalMessage") {
+    const conditionalTimer = setTimeout(() => {
+      onTypingStop?.();
+      const matched = event.cases.find(c => c.choiceId === save.lastChoiceId);
+      const text = matched ? matched.text : event.default;
+      if (text) {
+        onMessage?.({
+          type: "message",
+          speaker: event.speaker || "JONES",
+          sender: "character",
+          text: text,
+          tone: "calm"
+        });
+      }
+    }, delay);
+    timers.push(conditionalTimer);
+    return event.pauseAfterMs ?? 2000;
+  }
+
+  // ─── stat bazlı sistem uyarısı (statTieredAlert) ────────────────────────
+  if (event.type === "statTieredAlert") {
+    const alertTimer = setTimeout(() => {
+      const value = save.stats?.[event.stat] ?? 0;
+      const tier = event.tiers.find(t => value >= t.gte) || event.tiers[event.tiers.length - 1];
+      if (tier) {
+        onMessage?.({
+          type: "systemAlert",
+          speaker: "SİSTEM",
+          sender: "system",
+          text: tier.text,
+          tone: event.tone || "neutral"
+        });
+      }
+    }, delay);
+    timers.push(alertTimer);
+    return event.pauseAfterMs ?? 1500;
+  }
+
   // ─── yazıyor efekti (typing) ──────────────────────────────────────────────
   if (event.type === "typing") {
     const duration = event.duration || 1000;

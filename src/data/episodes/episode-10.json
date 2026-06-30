@@ -48,18 +48,8 @@
         { "type": "statChange", "changes": { "mentalStability": -10, "fear": 12 } }
       ],
       "choices": [
-        {
-          "id": "c1_incele",
-          "text": "Oturduğu yeri, dokunduğu şeyleri incele. İz mutlaka var.",
-          "nextNodeId": "ep10_A01",
-          "effects": { "curiosity": 10, "mentalStability": -3 }
-        },
-        {
-          "id": "c1_ilerle",
-          "text": "Bırak. Açıklanamaz şeylere takılma. İlerle.",
-          "nextNodeId": "ep10_B01",
-          "effects": { "riskPattern": 5, "mentalStability": 5 }
-        }
+        { "id": "c1_incele", "text": "Oturduğu yeri, dokunduğu şeyleri incele. İz mutlaka var.", "nextNodeId": "ep10_A01", "effects": { "curiosity": 10, "mentalStability": -3 } },
+        { "id": "c1_ilerle", "text": "Bırak. Açıklanamaz şeylere takılma. İlerle.", "nextNodeId": "ep10_B01", "effects": { "riskPattern": 5, "mentalStability": 5 } }
       ]
     },
 
@@ -89,21 +79,16 @@
         { "type": "realTimeWait", "seconds": 8 },
         { "type": "typing", "speaker": "JONES", "duration": 3200 },
         { "type": "message", "speaker": "JONES", "text": "Bunu buraya nasıl getirdim? Çantama koymadım. Kesinlikle koymadım.", "pauseAfterMs": 4500 },
-        { "type": "statChange", "changes": { "mentalStability": -8, "fear": 8 } }
+        { "type": "realTimeWait", "seconds": 5 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "İsim: Jones Aydın. Fotoğrafçı. Aylık: izinli. Bu kartı neden buraya getirdim? Bilinçsizce. Ya da bir önceki ben getirdi.", "pauseAfterMs": 5000 },
+        { "type": "typing", "speaker": "JONES", "duration": 3200 },
+        { "type": "message", "speaker": "JONES", "text": "Ve şu an elimde tutuyorum. Bu kart burada olması gereken tek şey. Ben kayıt yapan biriyim. Ama hiçbir şey kayıt edemedim.", "pauseAfterMs": 5000 },
+        { "type": "statChange", "changes": { "mentalStability": -8, "fear": 8, "memory": ["ep10_onceki_ben_getirdi"] } }
       ],
       "choices": [
-        {
-          "id": "c_a02_not",
-          "text": "Bunu not defterine geçir. Gazeteci olduğunu unutma.",
-          "nextNodeId": "ep10_A02_b",
-          "effects": { "curiosity": 8 }
-        },
-        {
-          "id": "c_a02_devam",
-          "text": "Ya da koydum ve hatırlamıyorum. Devam et.",
-          "nextNodeId": "ep10_A02_b",
-          "effects": { "mentalStability": -3 }
-        }
+        { "id": "c_a02_not", "text": "Bunu not defterine geçir. Gazeteci olduğunu unutma.", "nextNodeId": "ep10_A02_b", "effects": { "curiosity": 8 } },
+        { "id": "c_a02_devam", "text": "Ya da koydum ve hatırlamıyorum. Devam et.", "nextNodeId": "ep10_A02_b", "effects": { "mentalStability": -3 } }
       ]
     },
 
@@ -111,8 +96,16 @@
       "id": "ep10_A02_b",
       "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Ya da koydum ve hatırlamıyorum.", "pauseAfterMs": 5000 },
+        {
+          "type": "conditionalMessage",
+          "speaker": "JONES",
+          "cases": [
+            { "choiceId": "c_a02_not", "text": "Not ettim. Gazeteciyim — kayıt tutmazsam neye yarar bu meslek. Tarih, yer, ne hissettiğim. Hepsi yazılı." },
+            { "choiceId": "c_a02_devam", "text": "Ya da koydum ve hatırlamıyorum." }
+          ],
+          "default": "Ya da koydum ve hatırlamıyorum.",
+          "pauseAfterMs": 5000
+        },
         {
           "type": "file",
           "fileId": "jones_gozlem_1",
@@ -162,18 +155,8 @@
         { "type": "statChange", "changes": { "fear": 8 } }
       ],
       "choices": [
-        {
-          "id": "c_malzeme_yeter",
-          "text": "İki gün. Yeterli. Devam et.",
-          "nextNodeId": "ep10_n05_malzeme_b",
-          "effects": { "mentalStability": 3 }
-        },
-        {
-          "id": "c_malzeme_az",
-          "text": "İki gün az. Önce yukarıya, malzeme al.",
-          "nextNodeId": "ep10_n05_malzeme_b",
-          "effects": { "trust": 5 }
-        }
+        { "id": "c_malzeme_yeter", "text": "İki gün. Yeterli. Devam et.", "nextNodeId": "ep10_n05_malzeme_b", "effects": { "mentalStability": 3 } },
+        { "id": "c_malzeme_az", "text": "İki gün az. Önce yukarıya, malzeme al.", "nextNodeId": "ep10_n05_malzeme_b", "effects": { "trust": 5 } }
       ]
     },
 
@@ -181,8 +164,16 @@
       "id": "ep10_n05_malzeme_b",
       "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 2800 },
-        { "type": "message", "speaker": "JONES", "text": "İki günde ya çıkacağım ya da...", "pauseAfterMs": 4500 },
+        {
+          "type": "conditionalMessage",
+          "speaker": "JONES",
+          "cases": [
+            { "choiceId": "c_malzeme_yeter", "text": "İki günde ya çıkacağım ya da..." },
+            { "choiceId": "c_malzeme_az", "text": "Yukarı çıkmayı düşündüm. Ama yol en az altı saat — gidiş dönüş. Bu da malzemeden daha fazlasını tüketir. İki günde ya çıkacağım ya da..." }
+          ],
+          "default": "İki günde ya çıkacağım ya da...",
+          "pauseAfterMs": 5000
+        },
         { "type": "realTimeWait", "seconds": 5 },
         { "type": "typing", "speaker": "JONES", "duration": 2000 },
         { "type": "message", "speaker": "JONES", "text": "Ya da.", "pauseAfterMs": 5000 },
@@ -202,18 +193,8 @@
         { "type": "statChange", "changes": { "humanity": 5 } }
       ],
       "choices": [
-        {
-          "id": "c_sakal_fark_etmez",
-          "text": "Kaç gün olduğu fark etmez. Devam edeceksin.",
-          "nextNodeId": "ep10_n06_sakal_b",
-          "effects": { "mentalStability": 3 }
-        },
-        {
-          "id": "c_sakal_dusun",
-          "text": "Zaman önemli. Düşün: bu süreç ne kadar uzuyor?",
-          "nextNodeId": "ep10_n06_sakal_b",
-          "effects": { "curiosity": 5 }
-        }
+        { "id": "c_sakal_fark_etmez", "text": "Kaç gün olduğu fark etmez. Devam edeceksin.", "nextNodeId": "ep10_n06_sakal_b", "effects": { "mentalStability": 3 } },
+        { "id": "c_sakal_dusun", "text": "Zaman önemli. Düşün: bu süreç ne kadar uzuyor?", "nextNodeId": "ep10_n06_sakal_b", "effects": { "curiosity": 5 } }
       ]
     },
 
@@ -242,18 +223,8 @@
         { "type": "statChange", "changes": { "mentalStability": -5, "fear": 5 } }
       ],
       "choices": [
-        {
-          "id": "c_kir_konus",
-          "text": "Ben buradayım. Söyle, ne düşünüyorsun?",
-          "nextNodeId": "ep10_n07_b1",
-          "effects": { "trust": 8, "humanity": 5 }
-        },
-        {
-          "id": "c_kir_sessiz",
-          "text": "Sessizle. Sadece topaklan.",
-          "nextNodeId": "ep10_n07_b2",
-          "effects": { "mentalStability": 5 }
-        }
+        { "id": "c_kir_konus", "text": "Ben buradayım. Söyle, ne düşünüyorsun?", "nextNodeId": "ep10_n07_b1", "effects": { "trust": 8, "humanity": 5 } },
+        { "id": "c_kir_sessiz", "text": "Sessizle. Sadece toparlan.", "nextNodeId": "ep10_n07_b2", "effects": { "mentalStability": 5 } }
       ]
     },
 
@@ -340,18 +311,8 @@
         { "type": "statChange", "changes": { "curiosity": 20, "fear": 8 } }
       ],
       "choices": [
-        {
-          "id": "c2_izole",
-          "text": "Sesi izole et. Kim olduğunu anla.",
-          "nextNodeId": "ep10_n08_izole",
-          "effects": { "curiosity": 15 }
-        },
-        {
-          "id": "c2_dinle",
-          "text": "Sadece dinle. Müdahale etme.",
-          "nextNodeId": "ep10_n08_dinle",
-          "effects": { "trust": 5, "mentalStability": 3 }
-        }
+        { "id": "c2_izole", "text": "Sesi izole et. Kim olduğunu anla.", "nextNodeId": "ep10_n08_izole", "effects": { "curiosity": 15 } },
+        { "id": "c2_dinle", "text": "Sadece dinle. Müdahale etme.", "nextNodeId": "ep10_n08_dinle", "effects": { "trust": 5, "mentalStability": 3 } }
       ]
     },
 
@@ -393,18 +354,8 @@
         { "type": "statChange", "changes": { "curiosity": 15, "fear": 8 } }
       ],
       "choices": [
-        {
-          "id": "c_gunes_canli",
-          "text": "Güneş. Güneş Yıldız. Canlı mı bu?",
-          "nextNodeId": "ep10_n09_gunes_net_b",
-          "effects": { "curiosity": 10 }
-        },
-        {
-          "id": "c_gunes_kayit",
-          "text": "Kayıt mı bu? Ne zaman kaydedilmiş?",
-          "nextNodeId": "ep10_n09_gunes_net_b",
-          "effects": { "trust": 5 }
-        }
+        { "id": "c_gunes_canli", "text": "Güneş. Güneş Yıldız. Canlı mı bu?", "nextNodeId": "ep10_n09_gunes_net_b", "effects": { "curiosity": 10 } },
+        { "id": "c_gunes_kayit", "text": "Kayıt mı bu? Ne zaman kaydedilmiş?", "nextNodeId": "ep10_n09_gunes_net_b", "effects": { "trust": 5 } }
       ]
     },
 
@@ -415,8 +366,16 @@
         { "type": "realTimeWait", "seconds": 8 },
         { "type": "typing", "speaker": "JONES", "duration": 3200 },
         { "type": "message", "speaker": "JONES", "text": "Güneş Yıldız. Selin'in ekibinden. EP02'de tabletini bulmuştum. Sürükleme izleri vardı.", "pauseAfterMs": 4500 },
-        { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Bu kayıt mı? Canlı mı? Tarih yok, zaman damgası yok.", "pauseAfterMs": 4500 },
+        {
+          "type": "conditionalMessage",
+          "speaker": "JONES",
+          "cases": [
+            { "choiceId": "c_gunes_canli", "text": "Canlı olmalı sanırım — ses titreşimi gerçek zamanlı bir sinyal gibi geliyordu, kayıt sesleri böyle dalgalanmaz." },
+            { "choiceId": "c_gunes_kayit", "text": "Tarih yok, zaman damgası yok. Kayıt olsaydı en azından bir saat bilgisi takılı olurdu genelde. Bu da onu daha ürkütücü kılıyor — bu şu an oluyor." }
+          ],
+          "default": "Bu kayıt mı? Canlı mı? Tarih yok, zaman damgası yok.",
+          "pauseAfterMs": 5000
+        },
         {
           "type": "file",
           "fileId": "jones_not_03_gunes_baglanti",
@@ -441,6 +400,10 @@
       "events": [
         { "type": "typing", "speaker": "JONES", "duration": 3000 },
         { "type": "message", "speaker": "JONES", "text": "Ses kesildi. Kanal kapandı.", "pauseAfterMs": 3500 },
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Kayıt olsaydı statik farklı olurdu. Gerçek zamanlı ses — fizik bunu söylüyor. Güneş Yıldız şu an aşağıda ve bağlantı kuruyor.", "pauseAfterMs": 4500 },
+        { "type": "typing", "speaker": "JONES", "duration": 2800 },
+        { "type": "message", "speaker": "JONES", "text": "Ya da kurabiliyordu. Bağlantı kesildi.", "pauseAfterMs": 3500 },
         { "type": "typing", "speaker": "JONES", "duration": 3500 },
         { "type": "message", "speaker": "JONES", "text": "Emre'nin 'biz gördük' dediğini hatırlıyorum. Biz. Eğer Güneş da aşağıdaysa...", "pauseAfterMs": 4500 },
         { "type": "typing", "speaker": "JONES", "duration": 2800 },
@@ -488,18 +451,8 @@
         { "type": "statChange", "changes": { "mentalStability": -15, "fear": 15, "selinTrust": 8 } }
       ],
       "choices": [
-        {
-          "id": "c3_hayir",
-          "text": "\"Hayır. Ben hâlâ Jones'um. Tesadüf.\"",
-          "nextNodeId": "ep10_n11_hayir",
-          "effects": { "mentalStability": 5, "selinTrust": -3 }
-        },
-        {
-          "id": "c3_ne_demek",
-          "text": "\"Ne demek istiyorsun? Açıkla.\"",
-          "nextNodeId": "ep10_n11_ne_demek",
-          "effects": { "curiosity": 12, "selinTrust": 5 }
-        }
+        { "id": "c3_hayir", "text": "\"Hayır. Ben hâlâ Jones'um. Tesadüf.\"", "nextNodeId": "ep10_n11_hayir", "effects": { "mentalStability": 5, "selinTrust": -3 } },
+        { "id": "c3_ne_demek", "text": "\"Ne demek istiyorsun? Açıkla.\"", "nextNodeId": "ep10_n11_ne_demek", "effects": { "curiosity": 12, "selinTrust": 5 } }
       ]
     },
 
@@ -532,11 +485,21 @@
         { "type": "message", "speaker": "SELİN", "text": "Bu yer konuşma biçimini değiştiriyor. Önce kelimeler. Sonra düşünceler.", "pauseAfterMs": 5000 },
         { "type": "typing", "speaker": "SELİN", "duration": 3500 },
         { "type": "message", "speaker": "SELİN", "text": "Babam döndüğünde başka türlü cümleler kuruyordu. Ben fark etmedim. Yıllarca.", "pauseAfterMs": 5000 },
+        { "type": "realTimeWait", "seconds": 6 },
+        { "type": "typing", "speaker": "SELİN", "duration": 3800 },
+        { "type": "message", "speaker": "SELİN", "text": "Dikkat et Jones. Ve bu bölümü bitirdiğinde yukarıya çık. Malzeme al. Dinlen.", "pauseAfterMs": 5000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Sen yukarıya çıkmamı mı söylüyorsun?", "pauseAfterMs": 4000 },
+        { "type": "realTimeWait", "seconds": 4 },
+        { "type": "typing", "speaker": "SELİN", "duration": 2000 },
+        { "type": "message", "speaker": "SELİN", "text": "...", "pauseAfterMs": 3000 },
         { "type": "glitch", "duration": 400, "pauseAfterMs": 300 },
         { "type": "signalLost", "duration": 1500, "message": "[S.A-47 KOPTU]" },
         { "type": "typing", "speaker": "JONES", "duration": 3500 },
         { "type": "message", "speaker": "JONES", "text": "Önce kelimeler. Sonra düşünceler. Selin kendi babasından konuşuyor. Ben burada kaç gündür varım?", "pauseAfterMs": 5000 },
-        { "type": "statChange", "changes": { "fear": 15, "mentalStability": -8, "selinTrust": 10, "memory": ["ep10_selin_baba_kelimeler"] } }
+        { "type": "typing", "speaker": "JONES", "duration": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Selin bana çık dedi. Ama soruma cevap vermedi. Bu da bir cevap aslında.", "pauseAfterMs": 4500 },
+        { "type": "statChange", "changes": { "fear": 15, "mentalStability": -8, "selinTrust": 10, "memory": ["ep10_selin_baba_kelimeler", "ep10_selin_cik_dedi"] } }
       ],
       "nextNodeId": "ep10_n12_karar"
     },
@@ -558,18 +521,8 @@
         { "type": "statChange", "changes": { "humanity": 15 } }
       ],
       "choices": [
-        {
-          "id": "c4_in",
-          "text": "Beşinci kata in. Cevaplar orada.",
-          "nextNodeId": "ep10_n13_in",
-          "effects": { "riskPattern": 10, "emreBaglantisi": 5 }
-        },
-        {
-          "id": "c4_emre_bekle",
-          "text": "Emre'yi bekle. Onunla birlikte hareket et.",
-          "nextNodeId": "ep10_n13_bekle",
-          "effects": { "trust": 8, "emreBaglantisi": 8 }
-        }
+        { "id": "c4_in", "text": "Beşinci kata in. Cevaplar orada.", "nextNodeId": "ep10_n13_in", "effects": { "riskPattern": 10, "emreBaglantisi": 5 } },
+        { "id": "c4_emre_bekle", "text": "Emre'yi bekle. Onunla birlikte hareket et.", "nextNodeId": "ep10_n13_bekle", "effects": { "trust": 8, "emreBaglantisi": 8 } }
       ]
     },
 
@@ -584,18 +537,8 @@
         { "type": "statChange", "changes": { "fear": 5 } }
       ],
       "choices": [
-        {
-          "id": "c_in_neden",
-          "text": "Neden inemedi? Sormadım bunu.",
-          "nextNodeId": "ep10_n13_in_b",
-          "effects": { "curiosity": 8 }
-        },
-        {
-          "id": "c_in_uyard",
-          "text": "'İnemedim' bir uyarı. Dinle.",
-          "nextNodeId": "ep10_n13_in_b",
-          "effects": { "trust": 5 }
-        }
+        { "id": "c_in_neden", "text": "Neden inemedi? Sormadım bunu.", "nextNodeId": "ep10_n13_in_b", "effects": { "curiosity": 8 } },
+        { "id": "c_in_uyard", "text": "'İnemedim' bir uyarı. Dinle.", "nextNodeId": "ep10_n13_in_b", "effects": { "trust": 5 } }
       ]
     },
 
@@ -648,6 +591,50 @@
           "falseText": "Bunların hepsini yazdım. Notlar çantamda."
         },
         { "type": "realTimeWait", "seconds": 5 },
+        {
+          "type": "statTieredAlert",
+          "stat": "trust",
+          "tiers": [
+            { "gte": 60, "text": "GÜVEN: GÜÇLENİYOR" },
+            { "gte": 30, "text": "GÜVEN: STABİL" },
+            { "gte": 0,  "text": "GÜVEN: ZAYIFLIYOR" }
+          ],
+          "tone": "waiting",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "statTieredAlert",
+          "stat": "emreDeğişim",
+          "tiers": [
+            { "gte": 100, "text": "EMRE DEĞİŞİM: KRİTİK" },
+            { "gte": 70,  "text": "EMRE DEĞİŞİM: YÜKSEK" },
+            { "gte": 0,   "text": "EMRE DEĞİŞİM: İZLENİYOR" }
+          ],
+          "tone": "waiting",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "statTieredAlert",
+          "stat": "selinTrust",
+          "tiers": [
+            { "gte": 60, "text": "SELİN GÜVENİ: GÜÇLÜ" },
+            { "gte": 30, "text": "SELİN GÜVENİ: ORTA" },
+            { "gte": 0,  "text": "SELİN GÜVENİ: ZAYIF" }
+          ],
+          "tone": "waiting",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "statTieredAlert",
+          "stat": "mentalStability",
+          "tiers": [
+            { "gte": 60, "text": "ZİHİNSEL DAYANIKLILIK: STABİL" },
+            { "gte": 30, "text": "ZİHİNSEL DAYANIKLILIK: ZORLANIYOR" },
+            { "gte": 0,  "text": "ZİHİNSEL DAYANIKLILIK: KRİTİK" }
+          ],
+          "tone": "waiting",
+          "pauseAfterMs": 1500
+        },
         { "type": "systemAlert", "text": "TELSİZ DURUMU: KAŞİF DÖRDÜNCÜ KAT — DERİN ODA — BEKLİYOR", "tone": "waiting" },
         {
           "type": "characterBusy",
@@ -662,6 +649,10 @@
           "notificationBody": "Jones telsiz rezonans hattına geri döndü.",
           "tone": "waiting"
         }
+      ],
+      "choices": [
+        { "id": "ep10_bitis_1", "text": "Telsiz başında kal. Jones'un dönmesini bekle.", "nextEpisodeId": "episode_11", "nextNodeId": "ep11_n01" },
+        { "id": "ep10_bitis_2", "text": "Ben buradayım. Notların orada — gerçek onlar.", "nextEpisodeId": "episode_11", "nextNodeId": "ep11_n01" }
       ]
     },
 
@@ -684,18 +675,8 @@
         }
       ],
       "choices": [
-        {
-          "id": "restart_ep10_cp",
-          "text": "Frekansı yeniden yakala ve devam et.",
-          "nextNodeId": "ep10_cp01",
-          "restoreCheckpoint": "ep10_cp01"
-        },
-        {
-          "id": "restart_ep10_bas",
-          "text": "Bu bölümün başından başla.",
-          "nextNodeId": "ep10_n01",
-          "restoreCheckpoint": "ep10_n01"
-        }
+        { "id": "restart_ep10_cp", "text": "Frekansı yeniden yakala ve devam et.", "nextNodeId": "ep10_n09_gunes_sonrasi", "restoreCheckpoint": "ep10_cp01" },
+        { "id": "restart_ep10_bas", "text": "Bu bölümün başından başla.", "nextNodeId": "ep10_n01", "restoreCheckpoint": "ep10_n01" }
       ]
     }
 

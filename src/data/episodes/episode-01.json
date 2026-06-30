@@ -7,7 +7,7 @@
   "initialState": {
     "fear": 15, "curiosity": 0, "humanity": 50, "trust": 10,
     "mentalStability": 100, "riskPattern": 0, "timesNearDeath": 0,
-    "emreBaglantisi": 0, "memory": []
+    "emreBaglantisi": 0, "onlarFarkındalığı": 0, "selinTrust": 0, "emreDeğişim": 0, "memory": []
   },
 
   "puzzles": {
@@ -73,18 +73,8 @@
         { "type": "message", "speaker": "JONES", "text": "Orada kimse var mı?", "pauseAfterMs": 2500 }
       ],
       "choices": [
-        {
-          "id": "c1_buradayim",
-          "text": "Buradayım. Frekansını sabitledim, seni duyuyorum.",
-          "nextNodeId": "ep01_A01",
-          "effects": { "trust": 10, "humanity": 5 }
-        },
-        {
-          "id": "c1_kimsin",
-          "text": "Duyuyorum. Sen kimsin? Bu hatta nasıl girdin?",
-          "nextNodeId": "ep01_B01",
-          "effects": { "trust": 5, "curiosity": 5 }
-        }
+        { "id": "c1_buradayim", "text": "Buradayım. Frekansını sabitledim, seni duyuyorum.", "nextNodeId": "ep01_A01", "effects": { "trust": 10, "humanity": 5 } },
+        { "id": "c1_kimsin", "text": "Duyuyorum. Sen kimsin? Bu hatta nasıl girdin?", "nextNodeId": "ep01_B01", "effects": { "trust": 5, "curiosity": 5 } }
       ]
     },
 
@@ -98,18 +88,8 @@
         { "type": "message", "speaker": "JONES", "text": "Her yerim toz içinde. Başım çatlayacak gibi ama ayaktayım.", "pauseAfterMs": 2500 }
       ],
       "choices": [
-        {
-          "id": "c_A01_emre",
-          "text": "Kimsin. Bana adını söyle?",
-          "nextNodeId": "ep01_A02_2",
-          "effects": { "mentalStability": -5, "humanity": 5 }
-        },
-        {
-          "id": "c_A01_yavas",
-          "text": "Yavaş kalk. Bir yerini kırmış olabilirsin.",
-          "nextNodeId": "ep01_A02",
-          "effects": { "humanity": 10, "trust": 5 }
-        }
+        { "id": "c_A01_emre", "text": "Emre orada olmalı. Emre Koç, arkadaşın. Yanında mıydı?", "nextNodeId": "ep01_A02", "effects": { "emreBaglantisi": 5, "humanity": 5 } },
+        { "id": "c_A01_yavas", "text": "Yavaş kalk. Bir yerini kırmış olabilirsin.", "nextNodeId": "ep01_A02", "effects": { "humanity": 10, "trust": 5 } }
       ]
     },
 
@@ -118,51 +98,14 @@
       "speaker": "JONES",
       "events": [
         { "type": "typing", "speaker": "JONES", "duration": 2000 },
-        { "type": "message", "speaker": "JONES", "text": "Kalktım.Şimdi ayaktayım. Herhangi bir kırığım görünmüyor.Ama kameram", "pauseAfterMs": 2000 },
+        { "type": "message", "speaker": "JONES", "text": "Kalktım. Telefonun fenerini açtım.", "pauseAfterMs": 2000 },
         { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Lanet olsun. Lens çatlamış. Oysa Nevşehir'e sadece bu anları çekmek için gelmiştim. Öldü koca oğlan.", "pauseAfterMs": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Kamerama baktım. Lens çatlamış. Oysa Nevşehir'e sadece bu anları çekmek için inmiştim. Öldü koca oğlan.", "pauseAfterMs": 3500 },
         { "type": "statChange", "changes": { "humanity": 5 } }
       ],
       "choices": [
-        {
-          "id": "c_A02_bosver",
-          "text": "Kamerayı boşver şimdilik. Etrafında ne var?",
-          "nextNodeId": "ep01_A03",
-          "effects": { "trust": 5 }
-        },
-        {
-          "id": "c_A02_uzuldum",
-          "text": "Üzüldüm. Ama şu an daha büyük sorunların var.",
-          "nextNodeId": "ep01_A03",
-          "effects": { "humanity": 5 }
-        }
-      ]
-    },
-        "ep01_A02_2": {
-      "id": "ep01_A02_2",
-      "speaker": "JONES",
-      "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 2000 },
-        { "type": "message", "speaker": "JONES", "text": "Peki.Adımı mı istiyorsun.İsmim Jones. Kısa süreli bir hafıza kaybı yaşıyor gibiyim.", "pauseAfterMs": 2000 },
-        { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Ama beni ve adımı bu kadar merak etmen gerçekten çok ilginç yabancı.", "pauseAfterMs": 3500 },
-                { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Kameram. Lanet olsun Lens çatlamış. Oysa Nevşehir'e sadece bu anları çekmek için geldim.Sonuç herşey berbat.", "pauseAfterMs": 3500 },
-        { "type": "statChange", "changes": { "humanity": 5 } }
-      ],
-      "choices": [
-        {
-          "id": "c_A02_bosver",
-          "text": "Kamerayı boşver şimdilik. Etrafında ne var?",
-          "nextNodeId": "ep01_A03",
-          "effects": { "trust": 5 }
-        },
-        {
-          "id": "c_A02_uzuldum",
-          "text": "Üzüldüm. Ama şu an daha büyük sorunların var.",
-          "nextNodeId": "ep01_A03",
-          "effects": { "humanity": 5 }
-        }
+        { "id": "c_A02_bosver", "text": "Kamerayı boşver şimdilik. Etrafında ne var?", "nextNodeId": "ep01_A03", "effects": { "trust": 5 } },
+        { "id": "c_A02_uzuldum", "text": "Üzüldüm. Ama şu an daha büyük sorunların var.", "nextNodeId": "ep01_A03", "effects": { "humanity": 5 } }
       ]
     },
 
@@ -179,18 +122,8 @@
         { "type": "statChange", "changes": { "emreBaglantisi": 10, "memory": ["ep01_oda_numarasi_0312"] } }
       ],
       "choices": [
-        {
-          "id": "c_A03_canta",
-          "text": "Emre'nin çantasını aç. İçinde ne var?",
-          "nextNodeId": "ep01_A04",
-          "effects": { "curiosity": 5 }
-        },
-        {
-          "id": "c_A03_dikkat",
-          "text": "Dikkatli aç. Emre bir şey bırakmış olabilir.",
-          "nextNodeId": "ep01_A04",
-          "effects": { "trust": 5, "emreBaglantisi": 5 }
-        }
+        { "id": "c_A03_canta", "text": "Emre'nin çantasını aç. İçinde ne var?", "nextNodeId": "ep01_A04", "effects": { "curiosity": 5 } },
+        { "id": "c_A03_dikkat", "text": "Dikkatli aç. Emre bir şey bırakmış olabilir.", "nextNodeId": "ep01_A04", "effects": { "trust": 5, "emreBaglantisi": 5 } }
       ]
     },
 
@@ -204,18 +137,8 @@
         { "type": "message", "speaker": "JONES", "text": "Ön gözde buruşturulmuş bir kâğıt parçası. El yazısına bakıyorum... Emre'ninkine benziyor.", "pauseAfterMs": 2500 }
       ],
       "choices": [
-        {
-          "id": "c_A04_oku",
-          "text": "Hemen aç, oku.",
-          "nextNodeId": "ep01_n06_not",
-          "effects": { "curiosity": 5 }
-        },
-        {
-          "id": "c_A04_emre",
-          "text": "Sanırım emre senin için çok önemli birisi",
-          "nextNodeId": "ep01_n06_not",
-          "effects": { "emreBaglantisi": 5 }
-        }
+        { "id": "c_A04_oku", "text": "Hemen aç, oku.", "nextNodeId": "ep01_n06_not", "effects": { "curiosity": 5 } },
+        { "id": "c_A04_emre", "text": "Dikkatli aç. Emre'nin notu bu.", "nextNodeId": "ep01_n06_not", "effects": { "emreBaglantisi": 5 } }
       ]
     },
 
@@ -224,23 +147,13 @@
       "speaker": "JONES",
       "events": [
         { "type": "typing", "speaker": "JONES", "duration": 2000 },
-        { "type": "message", "speaker": "JONES", "text": "Tamam.Ben Jones Yeraltındayım, tavan çöktü, bilincimi kaybettim. Kameramı kontrol ettim ve kırık — lens dağılmış, yani bu artık işe yaramaz.", "pauseAfterMs": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Tamam. Durum değerlendirmesi: Yeraltındayım, tavan çöktü, bilincimi kaybettim. Kamera kırık — lens dağılmış, işe yaramaz.", "pauseAfterMs": 3000 },
         { "type": "typing", "speaker": "JONES", "duration": 2500 },
         { "type": "message", "speaker": "JONES", "text": "Bu sinyal tuhaf. 432 Hz civarı, standart telsiz frekansı değil. Kim var karşımda?", "pauseAfterMs": 3000 }
       ],
       "choices": [
-        {
-          "id": "c_B01_tara",
-          "text": "Bunu sonra konuşuruz. Önce etrafını incele.",
-          "nextNodeId": "ep01_B02",
-          "effects": { "curiosity": 5 }
-        },
-        {
-          "id": "c_B01_kalk",
-          "text": "Anladım. Şimdi kalk ve bana odayı tarif et.",
-          "nextNodeId": "ep01_B02",
-          "effects": { "trust": 5 }
-        }
+        { "id": "c_B01_tara", "text": "Bunu sonra konuşuruz. Önce etrafını sistematik tara.", "nextNodeId": "ep01_B02", "effects": { "curiosity": 5 } },
+        { "id": "c_B01_kalk", "text": "Anladım. Şimdi kalk ve odayı tarif et.", "nextNodeId": "ep01_B02", "effects": { "trust": 5 } }
       ]
     },
 
@@ -249,24 +162,14 @@
       "speaker": "JONES",
       "events": [
         { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Solda paslı metal bir kapı var. Pervazında '03-12' kazınmış.", "pauseAfterMs": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Solda paslı metal bir kapı var. Pervazında '03-12' kazınmış — oda numarası ya da olası bir şifre. Not aldım.", "pauseAfterMs": 3500 },
         { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Sağda iki sırt çantası ve çelik bir kutu görüyorum. Üzerinde etiket var: 'ACİL MALZEME KİTİ — KOD: ODA NUMARASI.'", "pauseAfterMs": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Sağda iki sırt çantası ve çelik bir kutu. Üzerinde etiket var: 'ACİL MALZEME KİTİ — KOD: ODA NUMARASI.'", "pauseAfterMs": 3500 },
         { "type": "statChange", "changes": { "curiosity": 10, "memory": ["ep01_oda_numarasi_0312"] } }
       ],
       "choices": [
-        {
-          "id": "c_B02_kutu",
-          "text": "Bu numara önemli olabilir.",
-          "nextNodeId": "ep01_B03",
-          "effects": { "curiosity": 5, "riskPattern": 3 }
-        },
-        {
-          "id": "c_B02_canta",
-          "text": "Çantalara bak önce. Kimin bunlar?",
-          "nextNodeId": "ep01_B03",
-          "effects": { "curiosity": 5 }
-        }
+        { "id": "c_B02_kutu", "text": "0312 olabilir. Kutuyu dene.", "nextNodeId": "ep01_B03", "effects": { "curiosity": 5, "riskPattern": 3 } },
+        { "id": "c_B02_canta", "text": "Çantalara bak önce. Kimin bunlar?", "nextNodeId": "ep01_B03", "effects": { "curiosity": 5 } }
       ]
     },
 
@@ -283,18 +186,8 @@
         { "type": "statChange", "changes": { "emreBaglantisi": 5 } }
       ],
       "choices": [
-        {
-          "id": "c_B03_oku",
-          "text": "Hemen aç.",
-          "nextNodeId": "ep01_B04",
-          "effects": { "curiosity": 5 }
-        },
-        {
-          "id": "c_B03_dikkat",
-          "text": "Dikkatlice aç. Yırtılmasın.",
-          "nextNodeId": "ep01_B04",
-          "effects": { "trust": 3 }
-        }
+        { "id": "c_B03_oku", "text": "Hemen aç. El yazısını tanıyacaksın.", "nextNodeId": "ep01_B04", "effects": { "curiosity": 5 } },
+        { "id": "c_B03_dikkat", "text": "Dikkatlice aç. Yırtılmasın.", "nextNodeId": "ep01_B04", "effects": { "trust": 3 } }
       ]
     },
 
@@ -305,21 +198,11 @@
         { "type": "typing", "speaker": "JONES", "duration": 2500 },
         { "type": "message", "speaker": "JONES", "text": "Kâğıdı açtım. Tarih yok, imza yok — ama içeriğe bakılırsa beni tanıyan biri yazmış.", "pauseAfterMs": 3000 },
         { "type": "typing", "speaker": "JONES", "duration": 2000 },
-        { "type": "message", "speaker": "JONES", "text": "Emre. El yazısı onun.Bekle, bunu sana da gönderiyorum.", "pauseAfterMs": 2000 }
+        { "type": "message", "speaker": "JONES", "text": "Emre. El yazısı onun.", "pauseAfterMs": 2000 }
       ],
       "choices": [
-        {
-          "id": "c_B04_oku",
-          "text": "Oku. Ne yazıyor?",
-          "nextNodeId": "ep01_n06_not",
-          "effects": { "curiosity": 5 }
-        },
-        {
-          "id": "c_B04_emre",
-          "text": "Emre'nin notu. İyi ki bulmuşsun.",
-          "nextNodeId": "ep01_n06_not",
-          "effects": { "emreBaglantisi": 5 }
-        }
+        { "id": "c_B04_oku", "text": "Oku. Ne yazıyor?", "nextNodeId": "ep01_n06_not", "effects": { "curiosity": 5 } },
+        { "id": "c_B04_emre", "text": "Emre'nin notu. İyi ki bulmuşsun.", "nextNodeId": "ep01_n06_not", "effects": { "emreBaglantisi": 5 } }
       ]
     },
 
@@ -344,18 +227,8 @@
         }
       ],
       "choices": [
-        {
-          "id": "c_saskin",
-          "text": "İkinci kat mı? Biz şu an neredeyiz ki.",
-          "nextNodeId": "ep01_n06_not_b",
-          "effects": { "curiosity": 5 }
-        },
-        {
-          "id": "c_uyari",
-          "text": "Sessiz olmanı istiyor. Bu çok önemli.",
-          "nextNodeId": "ep01_n06_not_b",
-          "effects": { "fear": 5 }
-        }
+        { "id": "c_saskin", "text": "İkinci kat mı? Biz şu an neredeyiz ki.", "nextNodeId": "ep01_n06_not_b", "effects": { "curiosity": 5 } },
+        { "id": "c_uyari", "text": "Sessiz olmanı istiyor. Bu çok önemli.", "nextNodeId": "ep01_n06_not_b", "effects": { "fear": 5 } }
       ]
     },
 
@@ -364,7 +237,7 @@
       "speaker": "JONES",
       "events": [
         { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Biz daha bulunduğumuz katı tanımıyoruz! İkinci kata acaba nasıl indin? Burası kaç katlı olabilir?", "pauseAfterMs": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Biz daha bulunduğumuz katı tanımıyoruz! İkinci kata nasıl indin?", "pauseAfterMs": 3000 },
         { "type": "typing", "speaker": "JONES", "duration": 3500 },
         { "type": "message", "speaker": "JONES", "text": "Ve en önemlisi: 'Sakın ses çıkarma' diye uyarmış.", "pauseAfterMs": 3000 },
         { "type": "typing", "speaker": "JONES", "duration": 3000 },
@@ -372,18 +245,8 @@
         { "type": "statChange", "changes": { "fear": 10, "emreBaglantisi": 20, "curiosity": 5, "memory": ["ep01_kahve_sozu"] } }
       ],
       "choices": [
-        {
-          "id": "c6_emre_ne",
-          "text": "Sence neden ses çıkarma diyor?",
-          "nextNodeId": "ep01_n07_emre_dusun",
-          "effects": { "humanity": 10, "emreBaglantisi": 5 }
-        },
-        {
-          "id": "c6_acil_kit",
-          "text": "Bunu sonra konuşuruz, önce o çelik kutuyu aç.",
-          "nextNodeId": "ep01_n07_kit",
-          "effects": { "curiosity": 5, "riskPattern": 2 }
-        }
+        { "id": "c6_emre_ne", "text": "Sence neden ses çıkarma diyor? Emre korkmaz kolay kolay.", "nextNodeId": "ep01_n07_emre_dusun", "effects": { "humanity": 10, "emreBaglantisi": 5 } },
+        { "id": "c6_acil_kit", "text": "Bunu sonra konuşuruz, önce o çelik kutuyu aç.", "nextNodeId": "ep01_n07_kit", "effects": { "curiosity": 5, "riskPattern": 2 } }
       ]
     },
 
@@ -399,18 +262,8 @@
         { "type": "message", "speaker": "JONES", "text": "Ses çıkarma uyarısı. Motifler. Eski not. Hepsi aynı şeyi söylüyor — burada bir şey var.", "pauseAfterMs": 3000 }
       ],
       "choices": [
-        {
-          "id": "c_haklisin",
-          "text": "Haklısın. Emre ne diyorsa ciddiye al.",
-          "nextNodeId": "ep01_n07_kit",
-          "effects": { "trust": 8, "emreBaglantisi": 5 }
-        },
-        {
-          "id": "c_acele",
-          "text": "Anladım. Kutunun şifresini girelim.",
-          "nextNodeId": "ep01_n07_kit",
-          "effects": { "curiosity": 5 }
-        }
+        { "id": "c_haklisin", "text": "Haklısın. Emre ne diyorsa ciddiye al.", "nextNodeId": "ep01_n07_kit", "effects": { "trust": 8, "emreBaglantisi": 5 } },
+        { "id": "c_acele", "text": "Anladım. Kutunun şifresini girelim.", "nextNodeId": "ep01_n07_kit", "effects": { "curiosity": 5 } }
       ]
     },
 
@@ -433,18 +286,8 @@
         { "type": "message", "speaker": "JONES", "text": "Açılmadı. Kod yanlış mı? Etrafta başka numara yoktu.", "pauseAfterMs": 3000 }
       ],
       "choices": [
-        {
-          "id": "c_tekrar",
-          "text": "Tekrar dene. Kapıdaki yazı 03-12.",
-          "nextNodeId": "ep01_n07_kit",
-          "effects": { "curiosity": 3 }
-        },
-        {
-          "id": "c_dikkatli",
-          "text": "Dikkatlice yazalım, tek tek: sıfır, üç, bir, iki.",
-          "nextNodeId": "ep01_n07_kit",
-          "effects": { "trust": 3 }
-        }
+        { "id": "c_tekrar", "text": "Tekrar dene. Kapıdaki yazı: 03-12 yani 0312.", "nextNodeId": "ep01_n07_kit", "effects": { "curiosity": 3 } },
+        { "id": "c_dikkatli", "text": "Dikkatlice yaz, tek tek: sıfır, üç, bir, iki.", "nextNodeId": "ep01_n07_kit", "effects": { "trust": 3 } }
       ]
     },
 
@@ -459,18 +302,8 @@
         { "type": "message", "speaker": "JONES", "text": "İçinde askeri bir fener, sargı bezi ve eski bir kâğıt rulosu var.", "pauseAfterMs": 3000 }
       ],
       "choices": [
-        {
-          "id": "c_fener_al",
-          "text": "Feneri hemen aç, etrafı daha net görelim.",
-          "nextNodeId": "ep01_n10_kit_acildi_b",
-          "effects": { "curiosity": 5 }
-        },
-        {
-          "id": "c_sargi_al",
-          "text": "Önce yaralarını sar, sonra feneri açarsın.",
-          "nextNodeId": "ep01_n10_kit_acildi_b",
-          "effects": { "humanity": 8 }
-        }
+        { "id": "c_fener_al", "text": "Feneri hemen aç, etrafı daha net görelim.", "nextNodeId": "ep01_n10_kit_acildi_b", "effects": { "curiosity": 5 } },
+        { "id": "c_sargi_al", "text": "Önce yaralarını sar, sonra feneri açarsın.", "nextNodeId": "ep01_n10_kit_acildi_b", "effects": { "humanity": 8 } }
       ]
     },
 
@@ -478,24 +311,20 @@
       "id": "ep01_n10_kit_acildi_b",
       "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Önemli bir yaram yok ben iyiyim, feneri açtım. Oh be... En azından kör gibi dolaşmayacağım.", "pauseAfterMs": 2500 },
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Feneri tutarken garip bir his var. Sanki bu modeli daha önce de kullanmışım gibi. Herhalde kafam düzgün çalışmıyor hâlâ.", "pauseAfterMs": 3000 }
+        {
+          "type": "conditionalMessage",
+          "speaker": "JONES",
+          "cases": [
+            { "choiceId": "c_fener_al", "text": "Feneri açtım. Oh be... En azından kör gibi dolaşmayacağım." },
+            { "choiceId": "c_sargi_al", "text": "Yaralarımı sardım, kanama durdu. Şimdi feneri de açıyorum — oh be, en azından kör gibi dolaşmayacağım." }
+          ],
+          "default": "Etrafı biraz toparladım. Feneri de açtım.",
+          "pauseAfterMs": 2500
+        }
       ],
       "choices": [
-        {
-          "id": "c7_kagit",
-          "text": "O kâğıt rulosu neye benziyor? Tarihi var mı?",
-          "nextNodeId": "ep01_n10_b_kit_devam",
-          "effects": { "curiosity": 8 }
-        },
-        {
-          "id": "c7_notu_oku",
-          "text": "Hemen oku — içinde ne olduğunu anlamalıyız.",
-          "nextNodeId": "ep01_n10_b_kit_devam",
-          "effects": { "curiosity": 5 }
-        }
+        { "id": "c7_kagit", "text": "O kâğıt rulosu neye benziyor? Tarihi var mı?", "nextNodeId": "ep01_n10_b_kit_devam", "effects": { "curiosity": 8 } },
+        { "id": "c7_notu_oku", "text": "Hemen oku — içinde ne olduğunu anlamalıyız.", "nextNodeId": "ep01_n10_b_kit_devam", "effects": { "curiosity": 5 } }
       ]
     },
 
@@ -520,18 +349,8 @@
         }
       ],
       "choices": [
-        {
-          "id": "c_bu_ne",
-          "text": "Bu sizin ekipten birinin notu mu?",
-          "nextNodeId": "ep01_n10_c_kit_devam",
-          "effects": { "curiosity": 5 }
-        },
-        {
-          "id": "c_titresim_ne",
-          "text": "'Karanlıkta hareket eden' de ne demek oluyor?",
-          "nextNodeId": "ep01_n10_c_kit_devam",
-          "effects": { "fear": 8 }
-        }
+        { "id": "c_bu_ne", "text": "Bu bizim ekipten birinin notu mu?", "nextNodeId": "ep01_n10_c_kit_devam", "effects": { "curiosity": 5 } },
+        { "id": "c_titresim_ne", "text": "'Karanlıkta hareket eden' de ne demek oluyor?", "nextNodeId": "ep01_n10_c_kit_devam", "effects": { "fear": 8 } }
       ]
     },
 
@@ -545,21 +364,13 @@
         { "type": "message", "speaker": "JONES", "text": "Yani... biz bu sığınağı bulan ilk ekip değiliz. Bizden önce de birileri buradaymış.", "pauseAfterMs": 3000 },
         { "type": "typing", "speaker": "JONES", "duration": 3500 },
         { "type": "message", "speaker": "JONES", "text": "Dur bir saniye. Bu eski not ile Emre'nin notu aynı şeyi söylüyor: 'Sessiz kal. Geri dönme.' Biri yıllar önce yazmış, biri bugün.", "pauseAfterMs": 4000 },
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Garip bir his var içimde — bu kâğıdı elime alırken sanki daha önce de yaşamışım gibi bir şey. Saçma. Yorgunum herhalde.", "pauseAfterMs": 3000 },
         { "type": "statChange", "changes": { "curiosity": 20, "fear": 10, "memory": ["ep01_onceki_ekspedisyon", "ep01_iki_not_baglandi"] } }
       ],
       "choices": [
-        {
-          "id": "c8_titresim",
-          "text": "İkisi de aynı uyarıyı veriyor. Bu tesadüf olamaz.",
-          "nextNodeId": "ep01_n11_koridor_1",
-          "effects": { "fear": 5, "onlarFarkındalığı": 8 }
-        },
-        {
-          "id": "c8_cik",
-          "text": "Analizi sonra yaparız. Şu an buradan çıkman lazım.",
-          "nextNodeId": "ep01_n11_koridor",
-          "effects": { "riskPattern": 3 }
-        }
+        { "id": "c8_titresim", "text": "İkisi de aynı uyarıyı veriyor. Bu tesadüf olamaz.", "nextNodeId": "ep01_n11_koridor", "effects": { "fear": 5, "onlarFarkındalığı": 8 } },
+        { "id": "c8_cik", "text": "Analizi sonra yaparız. Şu an buradan çıkman lazım.", "nextNodeId": "ep01_n11_koridor", "effects": { "riskPattern": 3 } }
       ]
     },
 
@@ -568,49 +379,13 @@
       "speaker": "JONES",
       "events": [
         { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Tamam.Odadan çıktım. Devasa bir koridordayım şu an.", "pauseAfterMs": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Odadan çıktım. Devasa bir koridordayım şu an.", "pauseAfterMs": 3000 },
         { "type": "typing", "speaker": "JONES", "duration": 3500 },
         { "type": "message", "speaker": "JONES", "text": "Sağlı sollu mühürlü taş kapılar var. Terkedilmiş bir maden ocağı gibi.", "pauseAfterMs": 3000 }
       ],
       "choices": [
-        {
-          "id": "c_ses_var_mi",
-          "text": "Herhangi bir ses duyuyor musun?",
-          "nextNodeId": "ep01_n11_koridor_b",
-          "effects": { "fear": 5 }
-        },
-        {
-          "id": "c_dikkat_et",
-          "text": "Dikkatli adımlarla ilerle. Gözünü dört aç.",
-          "nextNodeId": "ep01_n11_koridor_b",
-          "effects": { "trust": 5 }
-        }
-      ]
-    },
-       "ep01_n11_koridor_1": {
-      "id": "ep01_n11_koridor_1",
-      "speaker": "JONES",
-      "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Kesinlikle tesadüf olamaz.Anlaşılan burada herkes aynı şeye maruz kalıyor.", "pauseAfterMs": 3000 },
-                { "type": "typing", "speaker": "JONES", "duration": 3500 },
-        { "type": "message", "speaker": "JONES", "text": "Tamam şimdi odadan çıktım.Şu an Devasa bir koridordayım.", "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "JONES", "duration": 3500 },
-        { "type": "message", "speaker": "JONES", "text": "Sağlı sollu mühürlü taş kapılar var. Terkedilmiş bir maden ocağı gibi.", "pauseAfterMs": 3000 }
-      ],
-      "choices": [
-        {
-          "id": "c_ses_var_mi",
-          "text": "Herhangi bir ses duyuyor musun?",
-          "nextNodeId": "ep01_n11_koridor_b",
-          "effects": { "fear": 5 }
-        },
-        {
-          "id": "c_dikkat_et",
-          "text": "Dikkatli adımlarla ilerle. Gözünü dört aç.",
-          "nextNodeId": "ep01_n11_koridor_b",
-          "effects": { "trust": 5 }
-        }
+        { "id": "c_ses_var_mi", "text": "Herhangi bir ses duyuyor musun?", "nextNodeId": "ep01_n11_koridor_b", "effects": { "fear": 5 } },
+        { "id": "c_dikkat_et", "text": "Dikkatli adımlarla ilerle. Gözünü dört aç.", "nextNodeId": "ep01_n11_koridor_b", "effects": { "trust": 5 } }
       ]
     },
 
@@ -622,85 +397,29 @@
         { "type": "message", "speaker": "JONES", "text": "Bekle...", "pauseAfterMs": 2000 },
         { "type": "realTimeWait", "seconds": 2 },
         { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Hayır... İleride hareket eden bir şey var sandım.Sanırım Fenerin ışık oyunuydu. Ben burada kafayı yiyorum.", "pauseAfterMs": 3000 },
+        { "type": "message", "speaker": "JONES", "text": "Hayır... İleride hareket eden bir şey yok. Fenerin ışık oyunuymuş. Kafayı yiyorum.", "pauseAfterMs": 3000 },
         { "type": "typing", "speaker": "JONES", "duration": 3500 },
         { "type": "message", "speaker": "JONES", "text": "Duvarlarda inanılmaz motifler var. Solucan gibi kıvrımlı kazıntılar.", "pauseAfterMs": 3000 },
         { "type": "statChange", "changes": { "curiosity": 5, "fear": 5 } }
       ],
       "choices": [
-        {
-          "id": "c9_motif",
-          "text": "O motifleri biraz daha incele.",
-          "nextNodeId": "ep01_n12_motifler",
-          "effects": { "curiosity": 15 }
-        },
-        {
-          "id": "c9_ilerle",
-          "text": "Emre bekliyor. Koridordan hızlıca geç.",
-          "nextNodeId": "ep01_n12_ilerle",
-          "effects": { "riskPattern": 5, "emreBaglantisi": 5 }
-        }
+        { "id": "c9_motif", "text": "O motifleri biraz daha incele.", "nextNodeId": "ep01_n12_motifler", "effects": { "curiosity": 15 } },
+        { "id": "c9_ilerle", "text": "Emre bekliyor. Koridordan hızlıca geç.", "nextNodeId": "ep01_n12_ilerle", "effects": { "riskPattern": 5, "emreBaglantisi": 5 } }
       ]
     },
 
-"ep01_n12_motifler": {
-  "id": "ep01_n12_motifler",
-  "speaker": "JONES",
-  "events": [
-    { "type": "typing", "speaker": "JONES", "duration": 2500 },
-    { "type": "message", "speaker": "JONES", "text": "Feneri duvara yaklaştırıyorum.", "pauseAfterMs": 2500 },
-    { "type": "typing", "speaker": "JONES", "duration": 3500 },
-    { "type": "message", "speaker": "JONES", "text": "Bana biraz zaman ver. Bunları incelemem lazım.", "pauseAfterMs": 3500 }
-  ],
-  "choices": [
-    {
-      "id": "c_incele_baslat",
-      "text": "Tamam, incele.",
-      "nextNodeId": "ep01_n12_motifler_busy" 
-    }
-  ]
-},
-"ep01_n12_motifler_busy": {
-  "id": "ep01_n12_motifler_busy",
-  "events": [
-    {
-      "type": "characterBusy",
-      "id": "ep01_bekleme",
-      "character": "JONES",
-      "status": "DUVARIN ÖNÜNDE — MEŞGUL",
-      "durationMs": 12000,
-      "returnNodeId": "ep01_n12_motifler_2",
-      "returnEpisodeId": "episode_01",
-      "message": "[JONES İNCELİYOR]",
-      "notificationTitle": "KATMAN PROJESİ",
-      "notificationBody": "Jones telsiz rezonans hattına geri döndü.",
-      "tone": "waiting"
-    }
-  ]
-},
-            "ep01_n12_motifler_2": {
+    "ep01_n12_motifler": {
       "id": "ep01_n12_motifler",
       "speaker": "JONES",
       "events": [
+        { "type": "typing", "speaker": "JONES", "duration": 2500 },
+        { "type": "message", "speaker": "JONES", "text": "Feneri duvara yaklaştırıyorum.", "pauseAfterMs": 2500 },
         { "type": "typing", "speaker": "JONES", "duration": 3500 },
-        { "type": "message", "speaker": "JONES", "text": "Duvardaki motiflere çok dikkatli baktım", "pauseAfterMs": 3500 },
-                { "type": "typing", "speaker": "JONES", "duration": 3500 },
         { "type": "message", "speaker": "JONES", "text": "Yukarıdan aşağıya akan, kıvrımlı şekiller. Ama garip olan şu...", "pauseAfterMs": 3500 }
       ],
-     
       "choices": [
-        {
-          "id": "c_ne_garip",
-          "text": "Garip olan ne?",
-          "nextNodeId": "ep01_n12_motifler_b",
-          "effects": { "curiosity": 5 }
-        },
-        {
-          "id": "c_ne_gordun",
-          "text": "Bir şeyi mi fark ettin?",
-          "nextNodeId": "ep01_n12_motifler_b",
-          "effects": { "curiosity": 5 }
-        }
+        { "id": "c_ne_garip", "text": "Garip olan ne?", "nextNodeId": "ep01_n12_motifler_b", "effects": { "curiosity": 5 } },
+        { "id": "c_ne_gordun", "text": "Bir şeyi mi fark ettin?", "nextNodeId": "ep01_n12_motifler_b", "effects": { "curiosity": 5 } }
       ]
     },
 
@@ -714,18 +433,8 @@
         { "type": "message", "speaker": "JONES", "text": "Şurada göz sandığım oyuklar var. Ama çevrelerindeki hareketli çizgileri izliyorlar.", "pauseAfterMs": 3000 }
       ],
       "choices": [
-        {
-          "id": "c10_motif_uyari",
-          "text": "Bu bir yol tarifi değil. Bence uyarı.",
-          "nextNodeId": "ep01_n15_motif_analiz",
-          "effects": { "curiosity": 10, "onlarFarkındalığı": 5 }
-        },
-        {
-          "id": "c10_son_kapi",
-          "text": "Sadece eski bir çizim. Devam et.",
-          "nextNodeId": "ep01_n15_son_kapi",
-          "effects": { "riskPattern": 3 }
-        }
+        { "id": "c10_motif_uyari", "text": "Bu bir yol tarifi değil. Bence uyarı.", "nextNodeId": "ep01_n15_motif_analiz", "effects": { "curiosity": 10, "onlarFarkındalığı": 5 } },
+        { "id": "c10_son_kapi", "text": "Sadece eski bir çizim. Devam et.", "nextNodeId": "ep01_n15_son_kapi", "effects": { "riskPattern": 3 } }
       ]
     },
 
@@ -742,18 +451,8 @@
         { "type": "statChange", "changes": { "memory": ["ep01_motifler_uyari"], "onlarFarkındalığı": 5 } }
       ],
       "choices": [
-        {
-          "id": "c11_sessiz_ol",
-          "text": "Emre'nin notuyla aynı uyarı. Sessizce ilerle.",
-          "nextNodeId": "ep01_n16_titresim",
-          "effects": { "trust": 5 }
-        },
-        {
-          "id": "c11_dikkat_et",
-          "text": "Her adımını hesaplayarak at. Acele etme.",
-          "nextNodeId": "ep01_n16_titresim",
-          "effects": { "humanity": 5 }
-        }
+        { "id": "c11_sessiz_ol", "text": "Emre'nin notuyla aynı uyarı. Sessizce ilerle.", "nextNodeId": "ep01_n16_titresim", "effects": { "trust": 5 } },
+        { "id": "c11_dikkat_et", "text": "Her adımını hesaplayarak at. Acele etme.", "nextNodeId": "ep01_n16_titresim", "effects": { "humanity": 5 } }
       ]
     },
 
@@ -767,18 +466,8 @@
         { "type": "message", "speaker": "JONES", "text": "Ben yola devam ediyorum.", "pauseAfterMs": 2000 }
       ],
       "choices": [
-        {
-          "id": "c11_devam_et",
-          "text": "Güzel, adımlarını sağlam at. İlerleyelim.",
-          "nextNodeId": "ep01_n16_titresim",
-          "effects": { "trust": 5 }
-        },
-        {
-          "id": "c11_sessiz_kal",
-          "text": "Ama yine de fazla ses çıkarma. Ne olur ne olmaz.",
-          "nextNodeId": "ep01_n16_titresim",
-          "effects": { "fear": 5 }
-        }
+        { "id": "c11_devam_et", "text": "Güzel, adımlarını sağlam at. İlerleyelim.", "nextNodeId": "ep01_n16_titresim", "effects": { "trust": 5 } },
+        { "id": "c11_sessiz_kal", "text": "Ama yine de fazla ses çıkarma. Ne olur ne olmaz.", "nextNodeId": "ep01_n16_titresim", "effects": { "fear": 5 } }
       ]
     },
 
@@ -794,17 +483,8 @@
         { "type": "message", "speaker": "JONES", "text": "Hızlanıyorum.", "pauseAfterMs": 2000 }
       ],
       "choices": [
-        {
-          "id": "c11_hizlan",
-          "text": "Sessizliği koruyarak hızlıca geç.",
-          "nextNodeId": "ep01_E01"
-        },
-        {
-          "id": "c11_kosma",
-          "text": "Koşma. Sadece seri ve sessiz ol.",
-          "nextNodeId": "ep01_E01",
-          "effects": { "trust": 5 }
-        }
+        { "id": "c11_hizlan", "text": "Sessizliği koruyarak hızlıca geç.", "nextNodeId": "ep01_E01" },
+        { "id": "c11_kosma", "text": "Koşma. Sadece seri ve sessiz ol.", "nextNodeId": "ep01_E01", "effects": { "trust": 5 } }
       ]
     },
 
@@ -819,18 +499,8 @@
         { "type": "statChange", "changes": { "onlarFarkındalığı": 3, "fear": 5 } }
       ],
       "choices": [
-        {
-          "id": "c_E01_devam",
-          "text": "Durma. O şeyleri kafana takma.",
-          "nextNodeId": "ep01_E02",
-          "effects": { "trust": 5 }
-        },
-        {
-          "id": "c_E01_bak",
-          "text": "Dur bir saniye. Ne anlama geliyor bunlar?",
-          "nextNodeId": "ep01_E02_2",
-          "effects": { "curiosity": 5, "onlarFarkındalığı": 3 }
-        }
+        { "id": "c_E01_devam", "text": "Durma. O şeyleri kafana takma.", "nextNodeId": "ep01_E02", "effects": { "trust": 5 } },
+        { "id": "c_E01_bak", "text": "Dur bir saniye. Ne anlama geliyor bunlar?", "nextNodeId": "ep01_E02", "effects": { "curiosity": 5, "onlarFarkındalığı": 3 } }
       ]
     },
 
@@ -845,44 +515,8 @@
         { "type": "statChange", "changes": { "fear": 5 } }
       ],
       "choices": [
-        {
-          "id": "c_E02_devam",
-          "text": "Sakin ol. Dikkatli ilerle.",
-          "nextNodeId": "ep01_n16_titresim",
-          "effects": { "trust": 5 }
-        },
-        {
-          "id": "c_E02_dur",
-          "text": "Dur. Bu titreme soğuktan değil.",
-          "nextNodeId": "ep01_n16_titresim",
-          "effects": { "fear": 5, "onlarFarkındalığı": 3 }
-        }
-      ]
-    },
-
-        "ep01_E02_2": {
-      "id": "ep01_E02_2",
-      "speaker": "JONES",
-      "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 2000 },
-        { "type": "message", "speaker": "JONES", "text": "inan bende bilmiyorum.Koridorun sonuna yaklaşıyorum. Hava değişti. Daha soğuk.", "pauseAfterMs": 2500 },
-        { "type": "typing", "speaker": "JONES", "duration": 2000 },
-        { "type": "message", "speaker": "JONES", "text": "Fener bir an titredi.", "pauseAfterMs": 2000 },
-        { "type": "statChange", "changes": { "fear": 5 } }
-      ],
-      "choices": [
-        {
-          "id": "c_E02_devam",
-          "text": "Sakin ol. Dikkatli ilerle.",
-          "nextNodeId": "ep01_n16_titresim",
-          "effects": { "trust": 5 }
-        },
-        {
-          "id": "c_E02_dur",
-          "text": "Dur. Bu titreme soğuktan değil.",
-          "nextNodeId": "ep01_n16_titresim",
-          "effects": { "fear": 5, "onlarFarkındalığı": 3 }
-        }
+        { "id": "c_E02_devam", "text": "Sakin ol. Dikkatli ilerle.", "nextNodeId": "ep01_n16_titresim", "effects": { "trust": 5 } },
+        { "id": "c_E02_dur", "text": "Dur. Bu titreme soğuktan değil.", "nextNodeId": "ep01_n16_titresim", "effects": { "fear": 5, "onlarFarkındalığı": 3 } }
       ]
     },
 
@@ -903,18 +537,8 @@
         { "type": "message", "speaker": "JONES", "text": "Zemin titriyor.", "pauseAfterMs": 2000 }
       ],
       "choices": [
-        {
-          "id": "c_neoluyor",
-          "text": "Ne oluyor? Deprem mi?",
-          "nextNodeId": "ep01_n16_titresim_b",
-          "effects": { "fear": 5 }
-        },
-        {
-          "id": "c_sakinol",
-          "text": "Sakin kal! Ayakta durmaya çalış.",
-          "nextNodeId": "ep01_n16_titresim_b",
-          "effects": { "trust": 8 }
-        }
+        { "id": "c_neoluyor", "text": "Ne oluyor? Deprem mi?", "nextNodeId": "ep01_n16_titresim_b", "effects": { "fear": 5 } },
+        { "id": "c_sakinol", "text": "Sakin kal! Ayakta durmaya çalış.", "nextNodeId": "ep01_n16_titresim_b", "effects": { "trust": 8 } }
       ]
     },
 
@@ -941,18 +565,8 @@
         { "type": "statChange", "changes": { "fear": 30 } }
       ],
       "choices": [
-        {
-          "id": "c12_dur",
-          "text": "Kıpırdama! Nefes bile alma, olduğun yerde kal!",
-          "nextNodeId": "ep01_n17_dur",
-          "effects": { "trust": 10 }
-        },
-        {
-          "id": "c12_kos",
-          "text": "Koş! Tüm gücünle koridorun sonuna koş!",
-          "nextNodeId": "ep01_n17_kos",
-          "effects": { "riskPattern": 15, "mentalStability": -15 }
-        }
+        { "id": "c12_dur", "text": "Kıpırdama! Nefes bile alma, olduğun yerde kal!", "nextNodeId": "ep01_n17_dur", "effects": { "trust": 10 } },
+        { "id": "c12_kos", "text": "Koş! Tüm gücünle koridorun sonuna koş!", "nextNodeId": "ep01_n17_kos", "effects": { "riskPattern": 15, "mentalStability": -15 } }
       ]
     },
 
@@ -995,22 +609,12 @@
         { "type": "typing", "speaker": "JONES", "duration": 2000 },
         { "type": "message", "speaker": "JONES", "text": "Yanımdan geçti...", "pauseAfterMs": 2500 },
         { "type": "typing", "speaker": "JONES", "duration": 3500 },
-        { "type": "message", "speaker": "JONES", "text": "Sıcaklığını tenimde hissettim. Kalbim duracaktı az daha.", "pauseAfterMs": 3500 },
+        { "type": "message", "speaker": "JONES", "text": "Sıcaklığını, statik elektriğini tenimde hissettim. Kalbim duracaktı az daha.", "pauseAfterMs": 3500 },
         { "type": "statChange", "changes": { "trust": 15, "mentalStability": 5, "memory": ["ep01_karaltı_durarak_kurtuldu"] } }
       ],
       "choices": [
-        {
-          "id": "c_gectimi",
-          "text": "Tehlike geçti mi? Güvende misin?",
-          "nextNodeId": "ep01_n18_son_kapi",
-          "effects": { "humanity": 5 }
-        },
-        {
-          "id": "c_nefesal",
-          "text": "Derin bir nefes al. Artık hareket edebilirsin.",
-          "nextNodeId": "ep01_n18_son_kapi",
-          "effects": { "trust": 5 }
-        }
+        { "id": "c_gectimi", "text": "Tehlike geçti mi? Güvende misin?", "nextNodeId": "ep01_n18_son_kapi", "effects": { "humanity": 5 } },
+        { "id": "c_nefesal", "text": "Derin bir nefes al. Artık hareket edebilirsin.", "nextNodeId": "ep01_n18_son_kapi", "effects": { "trust": 5 } }
       ]
     },
 
@@ -1026,18 +630,8 @@
         { "type": "statChange", "changes": { "fear": 15, "mentalStability": -10, "timesNearDeath": 1, "memory": ["ep01_karaltı_kosarak_kurtuldu"] } }
       ],
       "choices": [
-        {
-          "id": "c_yaralandinmi",
-          "text": "Yaralandın mı?! Ses ver!",
-          "nextNodeId": "ep01_n18_son_kapi",
-          "effects": { "humanity": 10 }
-        },
-        {
-          "id": "c_ucuz",
-          "text": "Çok tehlikeliydi... İyi misin?",
-          "nextNodeId": "ep01_n18_son_kapi",
-          "effects": { "trust": 5 }
-        }
+        { "id": "c_yaralandinmi", "text": "Yaralandın mı?! Ses ver!", "nextNodeId": "ep01_n18_son_kapi", "effects": { "humanity": 10 } },
+        { "id": "c_ucuz", "text": "Çok tehlikeliydi... İyi misin?", "nextNodeId": "ep01_n18_son_kapi", "effects": { "trust": 5 } }
       ]
     },
 
@@ -1052,18 +646,8 @@
         { "type": "message", "speaker": "JONES", "text": "Koridorun sonundaki devasa taş kapıya ulaştım.", "pauseAfterMs": 3000 }
       ],
       "choices": [
-        {
-          "id": "c_kapi_acik_mi",
-          "text": "Kapı açık mı? İçeri girebilecek misin?",
-          "nextNodeId": "ep01_n18_son_kapi_b",
-          "effects": { "curiosity": 5 }
-        },
-        {
-          "id": "c_kontrol_et",
-          "text": "Mekanizmayı kontrol et, nasıl açılıyor?",
-          "nextNodeId": "ep01_n18_son_kapi_b",
-          "effects": { "curiosity": 5 }
-        }
+        { "id": "c_kapi_acik_mi", "text": "Kapı açık mı? İçeri girebilecek misin?", "nextNodeId": "ep01_n18_son_kapi_b", "effects": { "curiosity": 5 } },
+        { "id": "c_kontrol_et", "text": "Mekanizmayı kontrol et, nasıl açılıyor?", "nextNodeId": "ep01_n18_son_kapi_b", "effects": { "curiosity": 5 } }
       ]
     },
 
@@ -1078,18 +662,8 @@
         { "type": "statChange", "changes": { "curiosity": 20, "memory": ["ep01_iceridengiden_kapi"] } }
       ],
       "choices": [
-        {
-          "id": "c13_zorla",
-          "text": "Mandalı sertçe sars, belki gevşer.",
-          "nextNodeId": "ep01_n19_zorla",
-          "effects": { "riskPattern": 10 }
-        },
-        {
-          "id": "c13_dinle",
-          "text": "Kulağını taşa daya, içeriyi dinle.",
-          "nextNodeId": "ep01_n19_dinle",
-          "effects": { "trust": 5, "curiosity": 10 }
-        }
+        { "id": "c13_zorla", "text": "Mandalı sertçe sars, belki gevşer.", "nextNodeId": "ep01_n19_zorla", "effects": { "riskPattern": 10 } },
+        { "id": "c13_dinle", "text": "Kulağını taşa daya, içeriyi dinle.", "nextNodeId": "ep01_n19_dinle", "effects": { "trust": 5, "curiosity": 10 } }
       ]
     },
 
@@ -1106,18 +680,8 @@
         { "type": "statChange", "changes": { "riskPattern": 5, "mentalStability": -5 } }
       ],
       "choices": [
-        {
-          "id": "c_baskayol",
-          "text": "Sakinleş. Başka bir yol bulacağız.",
-          "nextNodeId": "ep01_son",
-          "effects": { "trust": 5 }
-        },
-        {
-          "id": "c_alet_ara",
-          "text": "Etrafta kapıyı kıracak bir şey yok mu?",
-          "nextNodeId": "ep01_son",
-          "effects": { "curiosity": 5 }
-        }
+        { "id": "c_baskayol", "text": "Sakinleş. Başka bir yol bulacağız.", "nextNodeId": "ep01_son", "effects": { "trust": 5 } },
+        { "id": "c_alet_ara", "text": "Etrafta kapıyı kıracak bir şey yok mu?", "nextNodeId": "ep01_son", "effects": { "curiosity": 5 } }
       ]
     },
 
@@ -1135,18 +699,8 @@
         { "type": "statChange", "changes": { "emreBaglantisi": 25, "curiosity": 10, "memory": ["ep01_emre_sesi_duyuldu"] } }
       ],
       "choices": [
-        {
-          "id": "c_emremi",
-          "text": "Emre mi? Emin misin?",
-          "nextNodeId": "ep01_son",
-          "effects": { "trust": 5 }
-        },
-        {
-          "id": "c_seslen",
-          "text": "Seslen ona! Belki seni duyar!",
-          "nextNodeId": "ep01_son",
-          "effects": { "riskPattern": 5 }
-        }
+        { "id": "c_emremi", "text": "Emre mi? Emin misin?", "nextNodeId": "ep01_son", "effects": { "trust": 5 } },
+        { "id": "c_seslen", "text": "Seslen ona! Belki seni duyar!", "nextNodeId": "ep01_son", "effects": { "riskPattern": 5 } }
       ]
     },
 
@@ -1156,23 +710,40 @@
       "events": [
         { "type": "typing", "speaker": "JONES", "duration": 2500 },
         {
-          "type": "relationshipDialogue",
-          "conditions": { "emreBaglantisi": { "gte": 40 } },
-          "trueText": "Emre'nin sesini duydum. Canlı. İçeride. Bu kapıyı açacağım.",
-          "falseText": "Ne olursa olsun bu kapıyı aşmak zorundayım."
+          "type": "conditionalMessage",
+          "speaker": "JONES",
+          "cases": [
+            { "choiceId": "c_emremi", "text": "Emre'nin sesini duydum. Canlı. İçeride. Bu kapıyı açacağım." },
+            { "choiceId": "c_seslen", "text": "Sesi duydum, seslendim de. Emre içeride — artık eminim. Bu kapıyı açacağım." },
+            { "choiceId": "c_baskayol", "text": "Ses duymadım ama bu kapının ardında bir şey — ya da biri — var. Ne olursa olsun aşmak zorundayım." },
+            { "choiceId": "c_alet_ara", "text": "Hiçbir şey duymadım, sadece sessizlik. Ama pes etmiyorum. Bu kapıyı aşacağım." }
+          ],
+          "default": "Ne olursa olsun bu kapıyı aşmak zorundayım.",
+          "pauseAfterMs": 3000
         },
         { "type": "typing", "speaker": "JONES", "duration": 3000 },
         { "type": "message", "speaker": "JONES", "text": "Burada oturup mandalı gevşetmek için bir plan yapacağım.", "pauseAfterMs": 3000 },
         { "type": "typing", "speaker": "JONES", "duration": 2000 },
         { "type": "message", "speaker": "JONES", "text": "Sakın bir yere kaybolma. Sana ihtiyacım var.", "pauseAfterMs": 2500 },
         { "type": "realTimeWait", "seconds": 3 },
+        {
+          "type": "statTieredAlert",
+          "stat": "trust",
+          "tiers": [
+            { "gte": 60, "text": "GÜVEN SEVİYESİ: GÜÇLÜ — JONES SANA TAM GÜVENİYOR" },
+            { "gte": 30, "text": "GÜVEN SEVİYESİ: NORMAL — BAĞLANTI STABİL" },
+            { "gte": 0,  "text": "GÜVEN SEVİYESİ: ZAYIF — JONES HÂLÂ TEDİRGİN" }
+          ],
+          "tone": "waiting",
+          "pauseAfterMs": 1500
+        },
         { "type": "systemAlert", "text": "TELSİZ DURUMU: KAŞİF KAPI ÖNÜNDE — PLAN YAPIYOR", "tone": "waiting" },
         {
           "type": "characterBusy",
           "id": "ep01_bekleme",
           "character": "JONES",
           "status": "KAPI ÖNÜNDE — MEŞGUL",
-          "durationMs": 12000,
+          "durationMs": 480000,
           "returnNodeId": "ep02_n01",
           "returnEpisodeId": "episode_02",
           "message": "[JONES PLAN YAPIYOR]",
@@ -1182,18 +753,8 @@
         }
       ],
       "choices": [
-        {
-          "id": "ep01_bekle_1",
-          "text": "Telsiz başında kal. Jones'un dönmesini bekle.",
-          "nextEpisodeId": "episode_02",
-          "nextNodeId": "ep02_n01"
-        },
-        {
-          "id": "ep01_bekle_2",
-          "text": "Bekleyeceğim. Hazır olduğunda devam edeceğiz.",
-          "nextEpisodeId": "episode_02",
-          "nextNodeId": "ep02_n01"
-        }
+        { "id": "ep01_bekle_1", "text": "Telsiz başında kal. Jones'un dönmesini bekle.", "nextEpisodeId": "episode_02", "nextNodeId": "ep02_n01" },
+        { "id": "ep01_bekle_2", "text": "Bekleyeceğim. Hazır olduğunda devam edeceğiz.", "nextEpisodeId": "episode_02", "nextNodeId": "ep02_n01" }
       ]
     },
 
@@ -1217,18 +778,8 @@
         }
       ],
       "choices": [
-        {
-          "id": "restart_1",
-          "text": "Sinyali tekrar yakala ve denemeye devam et.",
-          "nextNodeId": "ep01_n16_titresim",
-          "restoreCheckpoint": "ep01_cp01"
-        },
-        {
-          "id": "restart_2",
-          "text": "Telsizi resetle ve bir önceki güvenli noktadan başlat.",
-          "nextNodeId": "ep01_n16_titresim",
-          "restoreCheckpoint": "ep01_cp01"
-        }
+        { "id": "restart_1", "text": "Sinyali tekrar yakala ve denemeye devam et.", "nextNodeId": "ep01_n16_titresim", "restoreCheckpoint": "ep01_cp01" },
+        { "id": "restart_2", "text": "Telsizi resetle ve bir önceki güvenli noktadan başlat.", "nextNodeId": "ep01_n16_titresim", "restoreCheckpoint": "ep01_cp01" }
       ]
     }
 

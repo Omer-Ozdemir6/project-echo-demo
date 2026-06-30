@@ -36,8 +36,15 @@ export default function ContinueLoadingScreen({
   const echoProximity = saveData?.stats?.echoProximity ?? 0;
   const lastContact = saveData?.relationship?.currentState || "CAUTIOUS";
 
-  // Oyuncu dostu lokasyon ve bölüm dönüşümleri
-  const formattedEpisode = EPISODE_TITLES[rawEpisode] || `KATMAN OTURUMU // ${rawEpisode.toUpperCase()}`;
+  // 1. ADIM: Bölüm ID'sini engine ile uyumlu hale getirmek için normalize ediyoruz (örn: episode_2 -> episode_02)
+  let normalizedEpisode = rawEpisode;
+  const epMatch = rawEpisode.match(/^episode_(\d)$/);
+  if (epMatch) {
+    normalizedEpisode = `episode_0${epMatch[1]}`;
+  }
+
+  // 2. ADIM: Eğer başlık varsa yazacak, yoksa tamamen boş kalacak (Kullanıcı isteği)
+  const formattedEpisode = EPISODE_TITLES[normalizedEpisode] || "";
   const locationName = LOCATION_LOOKUP[rawCheckpoint] || "Bilinmeyen Dehliz";
 
   // DİNAMİK LOG MESAJLARI: Save verisine göre yeraltı rezonans akışı oluşturma
@@ -73,7 +80,7 @@ export default function ContinueLoadingScreen({
     return () => {
       clearInterval(messageTimer);
       clearInterval(lineTimer);
-      clearTimeout(completeTimer);
+      clearInterval(completeTimer);
     };
   }, [onComplete, dynamicMessages.length]);
 
@@ -101,8 +108,9 @@ export default function ContinueLoadingScreen({
           </div>
 
           {/* Orta Kısım: Sinematik Konum Doğrulama */}
+          {/* Sadece görünür satır yeterliyse VE formattedEpisode boş değilse render edilir */}
           <div className="space-y-3.5 border-y border-stone-900 bg-stone-950/20 py-6 text-sm text-stone-400 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
-            {visibleLines >= 1 && (
+            {visibleLines >= 1 && formattedEpisode && (
               <p className="text-xs tracking-[0.25em] text-amber-600/80 font-bold uppercase animate-[startScreenFadeIn_0.3s_ease-out_both]">
                 {formattedEpisode}
               </p>

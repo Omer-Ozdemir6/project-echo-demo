@@ -49,18 +49,6 @@ export default function TerminalScreen({
 
   const busyTitle = busyState?.displayText || busyState?.message || `[${busyCharacter} — ${busyStatus}]`;
 
-  const terminalTitle = getGameText(
-    config?.terminalTitleKey,
-    config?.terminalTitle || "KATMAN_FREKANS_KONTROL",
-    language
-  );
-
-  const terminalSubtitle = getGameText(
-    config?.terminalSubtitleKey,
-    config?.terminalSubtitle || "UZAKTAN_ARKEOLOJİK_SİNYAL_MASASI",
-    language
-  );
-
   const collectedFiles = gameState.collectedFiles || [];
   const unreadFileCount = collectedFiles.filter((file) => file.isNew).length;
 
@@ -193,7 +181,7 @@ export default function TerminalScreen({
       >
         <div className="shrink-0">
           <header className="mb-4 border-b border-stone-900 pb-4">
-            <div className="grid grid-cols-[auto_1fr_auto] items-start gap-4">
+            <div className="flex items-start justify-between gap-4">
               
               {/* SOL BUTON: Arşiv / Veri Bankası */}
               <button
@@ -216,17 +204,7 @@ export default function TerminalScreen({
                 )}
               </button>
 
-              {/* ORTA: Antik Katman Başlıkları */}
-              <div className="min-w-0 text-center">
-                <h1 className={`m-0 truncate text-xs sm:text-sm font-bold tracking-[0.3em] transition-colors duration-500 uppercase ${signalValue < 20 ? 'text-rose-600' : 'text-amber-500'}`}>
-                  {terminalTitle}
-                </h1>
-                <p className="mt-1.5 truncate text-[8px] tracking-[0.25em] text-stone-600 uppercase font-black">
-                  {terminalSubtitle}
-                </p>
-              </div>
-
-              {/* SAĞ BUTON GRUBU: Ayarlar ve Sıfırlama */}
+              {/* SAĞ BUTON GRUBU: Ayarlar */}
               <div className="flex items-center gap-3">
                 <button
                   type="button"
@@ -238,14 +216,6 @@ export default function TerminalScreen({
                   aria-label="Open settings"
                 >
                   ⚙
-                </button>
-
-                <button
-                  type="button"
-                  onClick={onReset}
-                  className="border border-stone-900 bg-transparent px-2.5 py-1.5 text-[10px] tracking-[0.18em] text-stone-600 font-bold transition hover:border-rose-900 hover:bg-rose-950/10 hover:text-rose-500 rounded-xs"
-                >
-                  BAĞLANTIYI_KOPAR
                 </button>
               </div>
             </div>

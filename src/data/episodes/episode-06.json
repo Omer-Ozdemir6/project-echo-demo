@@ -4,7 +4,6 @@
   "title": "Bekleyiş",
   "startNodeId": "ep06_n01",
   "episodeObjective": "Emre'yi bekle. Eğer dönmezse in.",
-
   "puzzles": {
     "p_ep06_karalti_kamp": {
       "id": "p_ep06_karalti_kamp",
@@ -12,57 +11,118 @@
       "difficulty": 2,
       "hitsNeeded": 10,
       "echoLabel": "KARALTI — KAMP SINIRI — KARANLIK KÖŞE",
-      "acceptedAnswers": [true],
+      "acceptedAnswers": [
+        true
+      ],
       "successNodeId": "ep06_tehlike_gecti_dur",
       "failureNodeId": "ep06_hard_fail"
     }
   },
-
   "nodes": {
-
     "ep06_n01": {
       "id": "ep06_n01",
       "speaker": "JONES",
       "events": [
-        { "type": "systemAlert", "text": "KATMAN KÖPRÜSÜ: REZONANS HATTI AKTİF", "pauseAfterMs": 2500 },
-        { "type": "realTimeWait", "seconds": 4 },
+        {
+          "type": "systemAlert",
+          "text": "KATMAN KÖPRÜSÜ: REZONANS HATTI AKTİF",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 4
+        },
         {
           "type": "relationshipDialogue",
-          "conditions": { "trust": { "gte": 45 } },
+          "conditions": {
+            "trust": {
+              "gte": 45
+            }
+          },
           "trueText": "İki saat oldu. Hâlâ kamptayım.",
           "falseText": "Telsiz açık. İki saat geçti."
         },
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Emre dönmedi.", "pauseAfterMs": 4000 },
-        { "type": "realTimeWait", "seconds": 4 },
-        { "type": "typing", "speaker": "JONES", "duration": 2800 },
-        { "type": "message", "speaker": "JONES", "text": "Bekliyorum. Bu doğru mu? Bilmiyorum. Ama şu an elimden gelen tek şey bu.", "pauseAfterMs": 4500 },
-        { "type": "statChange", "changes": { "selinTrust": 5 } }
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Emre dönmedi.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 4
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Bekliyorum. Bu doğru mu? Bilmiyorum. Ama şu an elimden gelen tek şey bu.",
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "trust": 5,
+            "selinTrust": 5
+          }
+        }
       ],
       "choices": [
         {
           "id": "c1_notlar",
           "text": "Emre'nin notlarını oku. Bir şeyler kaçırdın belki.",
           "nextNodeId": "ep06_A01",
-          "effects": { "curiosity": 12, "trust": 3 }
+          "effects": {
+            "curiosity": 12,
+            "trust": 3
+          }
         },
         {
           "id": "c1_dinlen",
           "text": "Dinlen. Güç topla. Ve düşün.",
           "nextNodeId": "ep06_B01",
-          "effects": { "mentalStability": 8, "humanity": 5 }
+          "effects": {
+            "mentalStability": 8,
+            "humanity": 5
+          }
         }
       ]
     },
-
     "ep06_A01": {
       "id": "ep06_A01",
       "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 2800 },
-        { "type": "message", "speaker": "JONES", "text": "Emre'nin notlarını başından okuyorum. İlk günü daha önce görmemiştim.", "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "JONES", "duration": 3200 },
-        { "type": "message", "speaker": "JONES", "text": "Birinci günde bir şeyden bahsetmiş. İnce, yüksek frekanslı bir ses. 'Kulağımdan gitmiyor' demiş.", "pauseAfterMs": 4000 },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Emre'nin notlarını başından okuyorum. İlk günü daha önce görmemiştim.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Birinci günde bir şeyden bahsetmiş. İnce, yüksek frekanslı bir ses. 'Kulağımdan gitmiyor' demiş.",
+          "pauseAfterMs": 4000
+        },
         {
           "type": "file",
           "fileId": "ep06_emre_not_ek",
@@ -71,26 +131,70 @@
           "content": "Birinci saatte bir ses duymaya başladım.\nİnce, yüksek frekanslı.\nOrganizmalardan gelmiyor.\nZeminden geliyor.\n\nKulağımdan gidip gitmiyor.\n\nKaydedmeye çalıştım.\nTelsiz o frekansı tutmuyor.\nSanki bant dışı.\n\nNot: Babası da duymuş muydu bunu?\nSelin'e sormam lazım.",
           "caption": "Emre'nin birinci gün ek notları — kamp çantası iç cebi.",
           "source": "ÜÇÜNCÜ KAT — KAMP",
-          "tags": ["emre", "ses", "frekans", "selin_baba"],
-          "correlationTags": ["emre_zinciri", "selin_zinciri", "frekans", "dorduncu_kat_ses"],
+          "tags": [
+            "emre",
+            "ses",
+            "frekans",
+            "selin_baba"
+          ],
+          "correlationTags": [
+            "emre_zinciri",
+            "selin_zinciri",
+            "frekans",
+            "dorduncu_kat_ses"
+          ],
           "message": "[EK NOT ARŞİVLENDİ]",
           "pauseAfterMs": 2500
         },
-        { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Selin'e sormam lazım demiş. Emre bağlantıyı çoktan kurmuştu.", "pauseAfterMs": 4000 },
-        { "type": "statChange", "changes": { "curiosity": 15, "memory": ["ep06_emre_ses_duydu"] } }
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Selin'e sormam lazım demiş. Emre bağlantıyı çoktan kurmuştu.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "curiosity": 15,
+            "memory": [
+              "ep06_emre_ses_duydu"
+            ]
+          }
+        }
       ],
       "nextNodeId": "ep06_A02"
     },
-
     "ep06_A02": {
       "id": "ep06_A02",
       "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 2800 },
-        { "type": "message", "speaker": "JONES", "text": "Not defterinin orta kısmında katlanmış bir kağıt var. Kaçırmışım.", "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "El çizimi bir harita. Dördüncü kat.", "pauseAfterMs": 3500 },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Not defterinin orta kısmında katlanmış bir kağıt var. Kaçırmışım.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "El çizimi bir harita. Dördüncü kat.",
+          "pauseAfterMs": 3500
+        },
         {
           "type": "file",
           "fileId": "ep06_emre_harita",
@@ -99,60 +203,262 @@
           "content": "DÖRDÜNCÜ KAT — EL ÇİZİMİ\n[Emre'nin el yazısıyla]\n\nGiriş: Zemin paneli (yukarıdan)\nKoridor: Dar, turuncu ışık\nMerkez: [Büyük daire]\n\nDaire içinde tek kelime: ONLAR\n\nOk işaretleri dairenin etrafını\ngösteriyor. İçini değil.\nDışını gösteriyor.",
           "caption": "Not defterinin orta sayfalarında katlanmış bulundu.",
           "source": "ÜÇÜNCÜ KAT — KAMP",
-          "tags": ["emre", "harita", "dorduncu_kat", "onlar"],
-          "correlationTags": ["dorduncu_kat", "onlar_zinciri", "gizem"],
+          "tags": [
+            "emre",
+            "harita",
+            "dorduncu_kat",
+            "onlar"
+          ],
+          "correlationTags": [
+            "dorduncu_kat",
+            "onlar_zinciri",
+            "gizem"
+          ],
           "message": "[EMRE'NİN HARİTASI ARŞİVLENDİ]",
           "pauseAfterMs": 2500
         },
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "ONLAR. Dairenin dışını gösteriyor. Selin'in babası da 'onları gördüm' demişti.", "pauseAfterMs": 4500 },
-        { "type": "statChange", "changes": { "curiosity": 18, "fear": 8, "memory": ["ep06_harita_onlar"] } }
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "ONLAR. Dairenin dışını gösteriyor. Selin'in babası da 'onları gördüm' demişti.",
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "curiosity": 18,
+            "fear": 8,
+            "memory": [
+              "ep06_harita_onlar"
+            ]
+          }
+        }
       ],
       "nextNodeId": "ep06_A03"
     },
-
     "ep06_A03": {
       "id": "ep06_A03",
       "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Defterin en arkasında bir şey daha var. Çizim.", "pauseAfterMs": 3500 },
-        { "type": "realTimeWait", "seconds": 5 },
-        { "type": "typing", "speaker": "JONES", "duration": 3500 },
-        { "type": "message", "speaker": "JONES", "text": "Kafeteryada iki kişi. Arkadan. Küçük, hızlı çizilmiş. Ama ben ve Emre'yiz bunlar.", "pauseAfterMs": 4500 },
-        { "type": "typing", "speaker": "JONES", "duration": 3200 },
-        { "type": "message", "speaker": "JONES", "text": "Emre bizi saha defterine çizmiş. Burada. Bu yerde.", "pauseAfterMs": 5000 },
-        { "type": "statChange", "changes": { "humanity": 20, "emreBaglantisi": 12 } }
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Defterin en arkasında bir şey daha var. Çizim.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 5
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Kafeteryada iki kişi. Arkadan. Küçük, hızlı çizilmiş. Ama ben ve Emre'yiz bunlar.",
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Emre bizi saha defterine çizmiş. Burada. Bu yerde.",
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "humanity": 20,
+            "emreBaglantisi": 12
+          }
+        }
+      ],
+      "nextNodeId": "ep06_A04_defter_derin"
+    },
+    "ep06_A04_defter_derin": {
+      "id": "ep06_A04_defter_derin",
+      "speaker": "JONES",
+      "events": [
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Defterin sayfalarını baştan sona, tek tek okumaya başladım. Acelem yok artık. Vaktim var.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 4
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Birinci gün: 'Biyolüminesan organizmaların 12 Hz'e tepkisi beklentimin üzerinde.' Bilim dili. Emre henüz korkmamış.",
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "İkinci gün: 'Daha derin bir ses var. Telsiz tutmuyor ama kulağım tutuyor.' Bu ses — Selin'in babasının mırıldandığı ses.",
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Dördüncü gün: 'Güneş burada. Anlıyor beni. Başkaları anlamıyordu.'",
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Güneş Yıldız. Tableti EP02'de bulmuştum. Demek ki Emre onu tanımış. Aşağıda buluşmuşlar.",
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "curiosity": 15,
+            "emreBaglantisi": 8,
+            "memory": [
+              "ep06_emre_gunes_taniyor"
+            ]
+          }
+        }
       ],
       "nextNodeId": "ep06_n07_alti_saat"
     },
-
     "ep06_B01": {
       "id": "ep06_B01",
       "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Sırtımı ışığın en yoğun olduğu duvara dayadım. Gözlerimi kapamak istedim.", "pauseAfterMs": 3500 },
-        { "type": "realTimeWait", "seconds": 6 },
-        { "type": "typing", "speaker": "JONES", "duration": 3500 },
-        { "type": "message", "speaker": "JONES", "text": "Kapayamadım. Aklım burada değil gibi hissettim ama gözlerim kapanmıyordu. Bu yerin bir özelliği mi?", "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Emre ilk günden ses duyduğunu yazmıştı. Ben de bir şeyler duyar gibiyim ama net değil.", "pauseAfterMs": 4500 },
-        { "type": "statChange", "changes": { "mentalStability": 5, "fear": 5, "memory": ["ep06_ses_hissediliyor"] } }
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Sırtımı ışığın en yoğun olduğu duvara dayadım. Gözlerimi kapamak istedim.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 6
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Kapayamadım. Aklım burada değil gibi hissettim ama gözlerim kapanmıyordu. Bu yerin bir özelliği mi?",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Emre ilk günden ses duyduğunu yazmıştı. Ben de bir şeyler duyar gibiyim ama net değil.",
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "mentalStability": 5,
+            "fear": 5,
+            "memory": [
+              "ep06_ses_hissediliyor"
+            ]
+          }
+        }
       ],
       "nextNodeId": "ep06_B02"
     },
-
     "ep06_B02": {
       "id": "ep06_B02",
       "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 2800 },
-        { "type": "message", "speaker": "JONES", "text": "Emre'nin defterini açtım. Arkasına baktım. Çizim var, hızlı yapılmış.", "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "JONES", "duration": 3200 },
-        { "type": "message", "speaker": "JONES", "text": "İki kişi, kafeteryada. Arkadan. Biziz. Emre bizi buraya taşımış.", "pauseAfterMs": 4500 },
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Ve harita buldum. Dördüncü kata ait. Ortasında 'ONLAR' yazıyor.", "pauseAfterMs": 4000 },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Emre'nin defterini açtım. Arkasına baktım. Çizim var, hızlı yapılmış.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "İki kişi, kafeteryada. Arkadan. Biziz. Emre bizi buraya taşımış.",
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Ve harita buldum. Dördüncü kata ait. Ortasında 'ONLAR' yazıyor.",
+          "pauseAfterMs": 4000
+        },
         {
           "type": "file",
           "fileId": "ep06_emre_harita",
@@ -161,326 +467,961 @@
           "content": "DÖRDÜNCÜ KAT — EL ÇİZİMİ\n[Emre'nin el yazısıyla]\n\nGiriş: Zemin paneli (yukarıdan)\nKoridor: Dar, turuncu ışık\nMerkez: [Büyük daire]\n\nDaire içinde tek kelime: ONLAR\n\nOk işaretleri dairenin etrafını\ngösteriyor. İçini değil.\nDışını gösteriyor.",
           "caption": "Not defterinin orta sayfalarında katlanmış bulundu.",
           "source": "ÜÇÜNCÜ KAT — KAMP",
-          "tags": ["emre", "harita", "dorduncu_kat", "onlar"],
-          "correlationTags": ["dorduncu_kat", "onlar_zinciri", "gizem"],
+          "tags": [
+            "emre",
+            "harita",
+            "dorduncu_kat",
+            "onlar"
+          ],
+          "correlationTags": [
+            "dorduncu_kat",
+            "onlar_zinciri",
+            "gizem"
+          ],
           "message": "[EMRE'NİN HARİTASI ARŞİVLENDİ]",
           "pauseAfterMs": 2500
         },
-        { "type": "statChange", "changes": { "humanity": 15, "curiosity": 10, "memory": ["ep06_harita_onlar"] } }
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Çizimin altında küçük bir not daha var: 'Kafeteryada — masa başında. Ne zaman çizdim bunu? Hatırlamıyorum bile.'",
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Emre hatırlamadığı bir anı çizmiş. Ve onu buraya, bu defterin arkasına, bilerek taşımış. Neden?",
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "humanity": 15,
+            "curiosity": 10,
+            "memory": [
+              "ep06_harita_onlar"
+            ]
+          }
+        }
       ],
       "nextNodeId": "ep06_n07_alti_saat"
     },
-
     "ep06_n07_alti_saat": {
       "id": "ep06_n07_alti_saat",
       "speaker": "JONES",
       "events": [
-        { "type": "realTimeWait", "seconds": 8 },
-        { "type": "systemAlert", "text": "TELSİZ DURUM: KAŞİF — ÜÇÜNCÜ KAT — 6. SAAT", "tone": "warning", "pauseAfterMs": 2000 },
-        { "type": "typing", "speaker": "JONES", "duration": 2000 },
-        { "type": "message", "speaker": "JONES", "text": "Altı saat.", "pauseAfterMs": 4000 },
-        { "type": "realTimeWait", "seconds": 6 },
-        { "type": "typing", "speaker": "JONES", "duration": 3500 },
-        { "type": "message", "speaker": "JONES", "text": "Beklemek her şeyi büyütüyor. Emre'nin o notu: 'Değiştim mi? Bilmiyorum.'", "pauseAfterMs": 5000 },
-        { "type": "realTimeWait", "seconds": 4 },
-        { "type": "typing", "speaker": "JONES", "duration": 3800 },
-        { "type": "message", "speaker": "JONES", "text": "Değişmek ne demek burada? Bu yer insanı nasıl değiştirir?", "pauseAfterMs": 4500 },
+        {
+          "type": "realTimeWait",
+          "seconds": 8
+        },
+        {
+          "type": "systemAlert",
+          "text": "TELSİZ DURUM: KAŞİF — ÜÇÜNCÜ KAT — 6. SAAT",
+          "tone": "warning",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Altı saat.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 6
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Beklemek her şeyi büyütüyor. Emre'nin o notu: 'Değiştim mi? Bilmiyorum.'",
+          "pauseAfterMs": 5000
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 4
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3800
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Değişmek ne demek burada? Bu yer insanı nasıl değiştirir?",
+          "pauseAfterMs": 4500
+        },
         {
           "type": "relationshipDialogue",
-          "conditions": { "emreBaglantisi": { "gte": 45 } },
+          "conditions": {
+            "emreBaglantisi": {
+              "gte": 45
+            }
+          },
           "trueText": "Ve neden Emre 8 yılda bunu hiç söylemedi? Böyle bir yer biliyor gibiydi sanki.",
           "falseText": "Neden bu soruyu soramıyorum ona yüzüne karşı?"
         },
-        { "type": "statChange", "changes": { "humanity": 15, "mentalStability": -8, "fear": 5 } }
+        {
+          "type": "statChange",
+          "changes": {
+            "humanity": 15,
+            "mentalStability": -8,
+            "fear": 5
+          }
+        }
       ],
       "choices": [
         {
           "id": "c_degisim_fark",
           "text": "Emre değiştiğini fark etmeden mi değişti?",
           "nextNodeId": "ep06_n07_b",
-          "effects": { "emreBaglantisi": 8, "curiosity": 5 }
+          "effects": {
+            "emreBaglantisi": 8,
+            "curiosity": 5
+          }
         },
         {
           "id": "c_degisim_yer",
           "text": "Her yer insanı değiştirir. Burası sadece daha derin.",
           "nextNodeId": "ep06_n07_b",
-          "effects": { "humanity": 5, "trust": 5 }
+          "effects": {
+            "humanity": 5,
+            "trust": 5
+          }
         }
       ]
     },
-
     "ep06_n07_b": {
       "id": "ep06_n07_b",
       "speaker": "JONES",
       "events": [
         {
           "type": "relationshipDialogue",
-          "conditions": { "emreBaglantisi": { "gte": 45 } },
+          "conditions": {
+            "emreBaglantisi": {
+              "gte": 45
+            }
+          },
           "trueText": "Emre değiştiyse bile hâlâ Emre. O notu benim için yazan adam hâlâ Emre.",
           "falseText": "Değişmek bitmek değil. Emre bilir bunu."
         },
-        { "type": "realTimeWait", "seconds": 4 },
-        { "type": "statChange", "changes": { "emreBaglantisi": 5, "humanity": 5 } }
+        {
+          "type": "realTimeWait",
+          "seconds": 4
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "emreBaglantisi": 5,
+            "humanity": 5
+          }
+        }
       ],
       "nextNodeId": "ep06_n08_tehlike"
     },
-
     "ep06_n08_tehlike": {
       "id": "ep06_n08_tehlike",
       "speaker": "JONES",
       "events": [
-        { "type": "realTimeWait", "seconds": 4 },
-        { "type": "backgroundEvent", "delay": 200, "event": {
-          "type": "systemAlert", "text": "ANOMALİ // KARALTI — KAMP KÖŞESİ — KARANLIK", "tone": "critical"
-        }},
-        { "type": "typing", "speaker": "JONES", "duration": 2000 },
-        { "type": "message", "speaker": "JONES", "text": "Bekle.", "pauseAfterMs": 3000 },
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Kampın karanlık köşesinden titreşim. Işık orayı tam örtmüyor.", "pauseAfterMs": 3500 },
-        { "type": "statChange", "changes": { "fear": 15 } }
+        {
+          "type": "realTimeWait",
+          "seconds": 4
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 200,
+          "event": {
+            "type": "systemAlert",
+            "text": "ANOMALİ // KARALTI — KAMP KÖŞESİ — KARANLIK",
+            "tone": "critical"
+          }
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Bekle.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Kampın karanlık köşesinden titreşim. Işık orayı tam örtmüyor.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 15
+          }
+        }
       ],
       "choices": [
         {
           "id": "c2_isik",
           "text": "Işığın tam ortasına çekil. Hemen.",
           "nextNodeId": "ep06_n08_geri",
-          "effects": { "trust": 8 }
+          "effects": {
+            "trust": 8
+          }
         },
         {
           "id": "c2_dur",
           "text": "Kıpırdama. Olduğun yerde taş kes.",
           "nextNodeId": "ep06_n08_dur",
-          "effects": { "riskPattern": 3 }
+          "effects": {
+            "riskPattern": 3
+          }
         }
       ]
     },
-
     "ep06_n08_geri": {
       "id": "ep06_n08_geri",
       "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 2000 },
-        { "type": "message", "speaker": "JONES", "text": "Işığın yoğun merkezine çekildim. Hızlı, sessiz.", "pauseAfterMs": 2500 },
-        { "type": "realTimeWait", "seconds": 10 },
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Köşeye yaklaştı. Işık sınırında durdu. Geri çekildi.", "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "JONES", "duration": 2800 },
-        { "type": "message", "speaker": "JONES", "text": "Organizmalar çalışıyor. 12 Hz. Her seferinde bu.", "pauseAfterMs": 3500 },
-        { "type": "statChange", "changes": { "fear": -8, "trust": 8, "memory": ["ep06_isik_koru_geri"] } }
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Işığın yoğun merkezine çekildim. Hızlı, sessiz.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 10
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Köşeye yaklaştı. Işık sınırında durdu. Geri çekildi.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Organizmalar çalışıyor. 12 Hz. Her seferinde bu.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": -8,
+            "trust": 8,
+            "memory": [
+              "ep06_isik_koru_geri"
+            ]
+          }
+        }
       ],
       "nextNodeId": "ep06_n09_tehlike_gecti"
     },
-
     "ep06_n08_dur": {
       "id": "ep06_n08_dur",
       "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 1500 },
-        { "type": "message", "speaker": "JONES", "text": "Taş. Kıpırdamıyorum.", "pauseAfterMs": 2500 },
-        { "type": "systemAlert", "text": "KARALTI — KAMP SINIRI — HAREKETSİZ KAL", "tone": "critical" },
-        { "type": "puzzle", "puzzleId": "p_ep06_karalti_kamp" }
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 1500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Taş. Kıpırdamıyorum.",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "systemAlert",
+          "text": "KARALTI — KAMP SINIRI — HAREKETSİZ KAL",
+          "tone": "critical"
+        },
+        {
+          "type": "puzzle",
+          "puzzleId": "p_ep06_karalti_kamp"
+        }
       ]
     },
-
     "ep06_tehlike_gecti_dur": {
       "id": "ep06_tehlike_gecti_dur",
       "speaker": "JONES",
       "events": [
-        { "type": "realTimeWait", "seconds": 12 },
-        { "type": "typing", "speaker": "JONES", "duration": 2000 },
-        { "type": "message", "speaker": "JONES", "text": "Işık sınırına geldi, bekledi, döndü.", "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Organizmalar neden işe yarıyor bilmeden de işe yarıyor.", "pauseAfterMs": 3500 },
-        { "type": "statChange", "changes": { "fear": -5, "timesNearDeath": 1 } }
+        {
+          "type": "realTimeWait",
+          "seconds": 12
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Işık sınırına geldi, bekledi, döndü.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Organizmalar neden işe yarıyor bilmeden de işe yarıyor.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": -5,
+            "timesNearDeath": 1
+          }
+        }
       ],
       "nextNodeId": "ep06_n09_tehlike_gecti"
     },
-
     "ep06_n09_tehlike_gecti": {
       "id": "ep06_n09_tehlike_gecti",
       "speaker": "JONES",
       "events": [
-        { "type": "checkpoint", "checkpointId": "ep06_cp01" },
-        { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Haritaya bakıyorum. 'ONLAR' kelimesi. Oklar dışarıyı gösteriyor.", "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "JONES", "duration": 3500 },
-        { "type": "message", "speaker": "JONES", "text": "İçi değil, dışını. Bu ne demek? İçeridekiler dışarı mı çıkıyor? Yoksa dışarıdakiler içeri mi giriyor?", "pauseAfterMs": 4500 },
-        { "type": "realTimeWait", "seconds": 5 },
+        {
+          "type": "checkpoint",
+          "checkpointId": "ep06_cp01"
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Haritaya bakıyorum. 'ONLAR' kelimesi. Oklar dışarıyı gösteriyor.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "İçi değil, dışını. Bu ne demek? İçeridekiler dışarı mı çıkıyor? Yoksa dışarıdakiler içeri mi giriyor?",
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 5
+        },
         {
           "type": "relationshipDialogue",
-          "conditions": { "curiosity": { "gte": 40 } },
+          "conditions": {
+            "curiosity": {
+              "gte": 40
+            }
+          },
           "trueText": "Emre'nin notu: 'Babası da duymuş muydu bu sesi?' Selin'e sormalıyım bunu.",
           "falseText": "Selin'in babası da görmüştü onları. Yaşıyorlardı dedi."
         },
-        { "type": "statChange", "changes": { "curiosity": 15, "fear": 8 } }
+        {
+          "type": "statChange",
+          "changes": {
+            "curiosity": 15,
+            "fear": 8,
+            "onlarFarkındalığı": 10
+          }
+        }
       ],
       "nextNodeId": "ep06_n11_selin"
     },
-
     "ep06_n11_selin": {
       "id": "ep06_n11_selin",
       "speaker": "JONES",
       "events": [
-        { "type": "realTimeWait", "seconds": 4 },
-        { "type": "backgroundEvent", "delay": 300, "event": {
-          "type": "systemAlert", "text": "S.A-47 KANALI: AKTİF", "tone": "warning"
-        }},
-        { "type": "realTimeWait", "seconds": 3 },
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Selin. Emre'nin notlarında bir şey buldum. Birinci gün bir ses duymuş. Telsiz tutmuyormuş o frekansı.", "pauseAfterMs": 4000 },
-        { "type": "realTimeWait", "seconds": 5 },
-        { "type": "statChange", "changes": { "memory": ["ep06_selin_ucuncu_temas"] } }
+        {
+          "type": "realTimeWait",
+          "seconds": 4
+        },
+        {
+          "type": "backgroundEvent",
+          "delay": 300,
+          "event": {
+            "type": "systemAlert",
+            "text": "S.A-47 KANALI: AKTİF",
+            "tone": "warning"
+          }
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 3
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Selin. Emre'nin notlarında bir şey buldum. Birinci gün bir ses duymuş. Telsiz tutmuyormuş o frekansı.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 5
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "memory": [
+              "ep06_selin_ucuncu_temas"
+            ]
+          }
+        }
       ],
       "nextNodeId": "ep06_n12_selin_mesaj"
     },
-
     "ep06_n12_selin_mesaj": {
       "id": "ep06_n12_selin_mesaj",
       "speaker": "SELİN",
       "events": [
-        { "type": "typing", "speaker": "SELİN", "duration": 4000 },
+        {
+          "type": "typing",
+          "speaker": "SELİN",
+          "duration": 4000
+        },
         {
           "type": "relationshipDialogue",
-          "conditions": { "selinTrust": { "gte": 15 } },
+          "conditions": {
+            "selinTrust": {
+              "gte": 15
+            }
+          },
           "trueText": "Biliyorum o sesi. Babam da duymuştu.",
           "falseText": "O ses... Evet. Devam et."
         },
-        { "type": "realTimeWait", "seconds": 5 },
-        { "type": "typing", "speaker": "SELİN", "duration": 4500 },
-        { "type": "message", "speaker": "SELİN", "text": "Babam geri döndükten sonra uyuyamıyordu. Hiç. Haftalarca.", "pauseAfterMs": 4500 },
-        { "type": "typing", "speaker": "SELİN", "duration": 4000 },
-        { "type": "message", "speaker": "SELİN", "text": "Sonra mırıldanmaya başladı. Aynı sesi. Sürekli. Farkında olmadan.", "pauseAfterMs": 4500 },
-        { "type": "realTimeWait", "seconds": 4 },
-        { "type": "typing", "speaker": "SELİN", "duration": 4500 },
-        { "type": "message", "speaker": "SELİN", "text": "Kaydettim bir kez. Frekansını ölçtüm. Sana göndereceğim, bekle —", "pauseAfterMs": 3000 },
-        { "type": "glitch", "duration": 600, "pauseAfterMs": 300 },
-        { "type": "signalLost", "duration": 2000, "message": "[S.A-47 KANALI KESİLDİ]" },
-        { "type": "systemAlert", "text": "KANAL S.A-47: OFFLİNE", "tone": "warning" },
-        { "type": "realTimeWait", "seconds": 4 },
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Tam o anda.", "pauseAfterMs": 4000 },
-        { "type": "statChange", "changes": { "selinTrust": 10, "curiosity": 20, "memory": ["ep06_selin_baba_ses_frekansi"] } }
+        {
+          "type": "realTimeWait",
+          "seconds": 5
+        },
+        {
+          "type": "typing",
+          "speaker": "SELİN",
+          "duration": 4500
+        },
+        {
+          "type": "message",
+          "speaker": "SELİN",
+          "text": "Babam geri döndükten sonra uyuyamıyordu. Hiç. Haftalarca.",
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "typing",
+          "speaker": "SELİN",
+          "duration": 4000
+        },
+        {
+          "type": "message",
+          "speaker": "SELİN",
+          "text": "Sonra mırıldanmaya başladı. Aynı sesi. Sürekli. Farkında olmadan.",
+          "pauseAfterMs": 4500
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 4
+        },
+        {
+          "type": "typing",
+          "speaker": "SELİN",
+          "duration": 4500
+        },
+        {
+          "type": "message",
+          "speaker": "SELİN",
+          "text": "Kaydettim bir kez. Frekansını ölçtüm. Sana göndereceğim, bekle —",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "glitch",
+          "duration": 600,
+          "pauseAfterMs": 300
+        },
+        {
+          "type": "signalLost",
+          "duration": 2000,
+          "message": "[S.A-47 KANALI KESİLDİ]"
+        },
+        {
+          "type": "systemAlert",
+          "text": "KANAL S.A-47: OFFLİNE",
+          "tone": "warning"
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 4
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Tam o anda.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "trust": 8,
+            "curiosity": 20,
+            "memory": [
+              "ep06_selin_baba_ses_frekansi"
+            ],
+            "selinTrust": 10
+          }
+        }
       ],
       "choices": [
         {
           "id": "c3_tekrar",
           "text": "Selin'i tekrar ara. Frekansı göndersin.",
           "nextNodeId": "ep06_n13_tekrar",
-          "effects": { "curiosity": 8, "selinTrust": -3 }
+          "effects": {
+            "curiosity": 8,
+            "selinTrust": -3
+          }
         },
         {
           "id": "c3_bekle",
           "text": "Bekle. Bağlantı düzelirse döner.",
           "nextNodeId": "ep06_n13_bekle",
-          "effects": { "trust": 8, "selinTrust": 3 }
+          "effects": {
+            "trust": 10,
+            "selinTrust": 3
+          }
         }
       ]
     },
-
     "ep06_n13_tekrar": {
       "id": "ep06_n13_tekrar",
       "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "S.A-47 kanalına bağlanmaya çalışıyorum.", "pauseAfterMs": 3000 },
-        { "type": "realTimeWait", "seconds": 8 },
-        { "type": "systemAlert", "text": "S.A-47: YANIT YOK", "tone": "warning" },
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Cevap vermiyor. Frekansı alamadım.", "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Belki aşağıda öğrenirim. Emre o sesi duymuştu zaten.", "pauseAfterMs": 4000 },
-        { "type": "statChange", "changes": { "curiosity": 5 } }
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "S.A-47 kanalına bağlanmaya çalışıyorum.",
+          "pauseAfterMs": 3000
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 8
+        },
+        {
+          "type": "systemAlert",
+          "text": "S.A-47: YANIT YOK",
+          "tone": "warning"
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Cevap vermiyor. Frekansı alamadım.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Belki aşağıda öğrenirim. Emre o sesi duymuştu zaten.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "curiosity": 5
+          }
+        }
       ],
       "nextNodeId": "ep06_n14_karar"
     },
-
     "ep06_n13_bekle": {
       "id": "ep06_n13_bekle",
       "speaker": "JONES",
       "events": [
-        { "type": "realTimeWait", "seconds": 10 },
-        { "type": "systemAlert", "text": "S.A-47: OFFLİNE", "tone": "warning" },
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Dönmedi. Selin bu sefer hazır değildi konuşmaya. Ya da bağlantı gerçekten koptu.", "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "JONES", "duration": 2800 },
-        { "type": "message", "speaker": "JONES", "text": "Frekansı başka bir yerden bulacağım.", "pauseAfterMs": 3500 },
-        { "type": "statChange", "changes": { "trust": 5, "selinTrust": 3 } }
+        {
+          "type": "realTimeWait",
+          "seconds": 10
+        },
+        {
+          "type": "systemAlert",
+          "text": "S.A-47: OFFLİNE",
+          "tone": "warning"
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Dönmedi. Selin bu sefer hazır değildi konuşmaya. Ya da bağlantı gerçekten koptu.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Frekansı başka bir yerden bulacağım.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "trust": 8,
+            "selinTrust": 3
+          }
+        }
       ],
       "nextNodeId": "ep06_n14_karar"
     },
-
     "ep06_n14_karar": {
       "id": "ep06_n14_karar",
       "speaker": "JONES",
       "events": [
-        { "type": "realTimeWait", "seconds": 6 },
-        { "type": "systemAlert", "text": "TELSİZ DURUM: KAŞİF — ÜÇÜNCÜ KAT — 8. SAAT", "tone": "warning", "pauseAfterMs": 2000 },
-        { "type": "typing", "speaker": "JONES", "duration": 2000 },
-        { "type": "message", "speaker": "JONES", "text": "Sekiz saat.", "pauseAfterMs": 4000 },
-        { "type": "realTimeWait", "seconds": 5 },
-        { "type": "typing", "speaker": "JONES", "duration": 3500 },
-        { "type": "message", "speaker": "JONES", "text": "Emre dönmüyor. Bu bekleyiş sona erdi.", "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Emre'nin notları, harita, Selin'in frekansı — hepsinin cevabı aşağıda.", "pauseAfterMs": 4000 },
-        { "type": "statChange", "changes": { "curiosity": 10, "emreBaglantisi": 8 } }
+        {
+          "type": "realTimeWait",
+          "seconds": 6
+        },
+        {
+          "type": "systemAlert",
+          "text": "TELSİZ DURUM: KAŞİF — ÜÇÜNCÜ KAT — 8. SAAT",
+          "tone": "warning",
+          "pauseAfterMs": 2000
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Sekiz saat.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 5
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Emre dönmüyor. Bu bekleyiş sona erdi.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Emre'nin notları, harita, Selin'in frekansı — hepsinin cevabı aşağıda.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "curiosity": 10,
+            "emreBaglantisi": 8
+          }
+        }
       ],
       "choices": [
         {
           "id": "c4_simdi",
           "text": "Hemen in. Beklemenin sonu yok.",
           "nextNodeId": "ep06_n15_inis",
-          "effects": { "riskPattern": 5, "emreBaglantisi": 5 }
+          "effects": {
+            "riskPattern": 5,
+            "emreBaglantisi": 5
+          }
         },
         {
           "id": "c4_hazirlan",
           "text": "Bir dakika. Son bir kontrol yap, sonra in.",
           "nextNodeId": "ep06_n15_hazirlan",
-          "effects": { "trust": 8, "mentalStability": 5 }
+          "effects": {
+            "trust": 8,
+            "mentalStability": 5
+          }
         }
       ]
     },
-
     "ep06_n15_inis": {
       "id": "ep06_n15_inis",
       "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "Dördüncü kata açılan noktaya gidiyorum. Emre'nin haritasından.", "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "JONES", "duration": 2800 },
-        { "type": "message", "speaker": "JONES", "text": "Emre orada. Hâlâ Emre. Buna inanıyorum.", "pauseAfterMs": 4000 },
-        { "type": "statChange", "changes": { "emreBaglantisi": 8, "riskPattern": 3 } }
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Dördüncü kata açılan noktaya gidiyorum. Emre'nin haritasından.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Emre orada. Hâlâ Emre. Buna inanıyorum.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "emreBaglantisi": 8,
+            "riskPattern": 3
+          }
+        }
       ],
       "nextNodeId": "ep06_son"
     },
-
     "ep06_n15_hazirlan": {
       "id": "ep06_n15_hazirlan",
       "speaker": "JONES",
       "events": [
-        { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Emre'nin thermos çayından bir yudum aldım. Soğumuş. Nasıl yaptığını hâlâ bilmiyorum.", "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "JONES", "duration": 3200 },
-        { "type": "message", "speaker": "JONES", "text": "Fener tamam. Pil tamam. Harita cebimde.", "pauseAfterMs": 3500 },
-        { "type": "typing", "speaker": "JONES", "duration": 2500 },
-        { "type": "message", "speaker": "JONES", "text": "İniyorum.", "pauseAfterMs": 3500 },
-        { "type": "statChange", "changes": { "mentalStability": 5, "humanity": 8 } }
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Emre'nin thermos çayından bir yudum aldım. Soğumuş. Nasıl yaptığını hâlâ bilmiyorum.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Fener tamam. Pil tamam. Harita cebimde.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2500
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "İniyorum.",
+          "pauseAfterMs": 3500
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "mentalStability": 5,
+            "humanity": 8
+          }
+        }
       ],
       "nextNodeId": "ep06_son"
     },
-
     "ep06_son": {
       "id": "ep06_son",
       "speaker": "JONES",
       "events": [
-        { "type": "realTimeWait", "seconds": 5 },
-        { "type": "typing", "speaker": "JONES", "duration": 3000 },
-        { "type": "message", "speaker": "JONES", "text": "Operatör. Sekiz saat bekledi bu adam. Sekiz saat sabır.", "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "JONES", "duration": 3200 },
-        { "type": "message", "speaker": "JONES", "text": "Artık inmek zorundayım. Dördüncü katta ne var, kim var — öğreneceğim.", "pauseAfterMs": 4000 },
-        { "type": "typing", "speaker": "JONES", "duration": 2800 },
-        { "type": "message", "speaker": "JONES", "text": "Telsizi açık bırakıyorum. Kaybolmayalım.", "pauseAfterMs": 4000 },
-        { "type": "realTimeWait", "seconds": 6 },
-        { "type": "systemAlert", "text": "TELSİZ DURUMU: KAŞİF DÖRDÜNCÜ KATA İNİYOR", "tone": "waiting" },
+        {
+          "type": "realTimeWait",
+          "seconds": 5
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3000
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Operatör. Sekiz saat bekledi bu adam. Sekiz saat sabır.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 3200
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Artık inmek zorundayım. Dördüncü katta ne var, kim var — öğreneceğim.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "typing",
+          "speaker": "JONES",
+          "duration": 2800
+        },
+        {
+          "type": "message",
+          "speaker": "JONES",
+          "text": "Telsizi açık bırakıyorum. Kaybolmayalım.",
+          "pauseAfterMs": 4000
+        },
+        {
+          "type": "realTimeWait",
+          "seconds": 6
+        },
+        {
+          "type": "statTieredAlert",
+          "stat": "trust",
+          "tiers": [
+            {
+              "gte": 60,
+              "text": "GÜVEN: GÜÇLENİYOR"
+            },
+            {
+              "gte": 30,
+              "text": "GÜVEN: STABİL"
+            },
+            {
+              "gte": 0,
+              "text": "GÜVEN: ZAYIFLIYOR"
+            }
+          ],
+          "tone": "waiting",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "statTieredAlert",
+          "stat": "emreBaglantisi",
+          "tiers": [
+            {
+              "gte": 70,
+              "text": "EMRE BAĞI: GÜÇLÜ"
+            },
+            {
+              "gte": 35,
+              "text": "EMRE BAĞI: ORTA"
+            },
+            {
+              "gte": 0,
+              "text": "EMRE BAĞI: ZAYIF"
+            }
+          ],
+          "tone": "waiting",
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "statTieredAlert",
+          "stat": "onlarFarkındalığı",
+          "tiers": [
+            {
+              "gte": 25,
+              "text": "ONLAR FARKINDALIĞI: YÜKSEK"
+            },
+            {
+              "gte": 10,
+              "text": "ONLAR FARKINDALIĞI: ORTA"
+            },
+            {
+              "gte": 0,
+              "text": "ONLAR FARKINDALIĞI: DÜŞÜK"
+            }
+          ],
+          "tone": "waiting",
+          "pauseAfterMs": 1500
+        },
+        {
+          "type": "systemAlert",
+          "text": "TELSİZ DURUMU: KAŞİF DÖRDÜNCÜ KATA İNİYOR",
+          "tone": "waiting"
+        },
         {
           "type": "characterBusy",
           "id": "ep06_inis",
@@ -494,18 +1435,56 @@
           "notificationBody": "Jones telsiz rezonans hattına geri döndü.",
           "tone": "waiting"
         }
+      ],
+      "choices": [
+        {
+          "id": "ep06_bitis_1",
+          "text": "Telsiz başında kal ve Jones'un dönmesini bekle.",
+          "nextEpisodeId": "episode_07",
+          "nextNodeId": "ep07_n01"
+        },
+        {
+          "id": "ep06_bitis_2",
+          "text": "Kaybolmayız. Seni takip ediyorum.",
+          "nextEpisodeId": "episode_07",
+          "nextNodeId": "ep07_n01"
+        }
       ]
     },
-
     "ep06_hard_fail": {
       "id": "ep06_hard_fail",
       "speaker": "SİSTEM",
       "events": [
-        { "type": "glitch", "duration": 2000, "pauseAfterMs": 800 },
-        { "type": "corruptMessage", "speaker": "SİSTEM", "text": "░░░ KRİTİK HATA // KARALTI SAPTADI ░░░", "corruption": "extreme", "pauseAfterMs": 2500 },
-        { "type": "glitch", "duration": 2500, "pauseAfterMs": 500 },
-        { "type": "systemAlert", "text": "SON GÜVENLİ KAYIT NOKTASINA DÖNÜLÜYOR", "tone": "warning" },
-        { "type": "statChange", "changes": { "fear": 20, "timesNearDeath": 1, "mentalStability": -15 } },
+        {
+          "type": "glitch",
+          "duration": 2000,
+          "pauseAfterMs": 800
+        },
+        {
+          "type": "corruptMessage",
+          "speaker": "SİSTEM",
+          "text": "░░░ KRİTİK HATA // KARALTI SAPTADI ░░░",
+          "corruption": "extreme",
+          "pauseAfterMs": 2500
+        },
+        {
+          "type": "glitch",
+          "duration": 2500,
+          "pauseAfterMs": 500
+        },
+        {
+          "type": "systemAlert",
+          "text": "SON GÜVENLİ KAYIT NOKTASINA DÖNÜLÜYOR",
+          "tone": "warning"
+        },
+        {
+          "type": "statChange",
+          "changes": {
+            "fear": 20,
+            "timesNearDeath": 1,
+            "mentalStability": -15
+          }
+        },
         {
           "type": "loopReset",
           "style": "blackout_loader",
@@ -520,7 +1499,7 @@
         {
           "id": "restart_ep06_cp",
           "text": "Kamp güvenli noktasından devam et.",
-          "nextNodeId": "ep06_cp01",
+          "nextNodeId": "ep06_n09_tehlike_gecti",
           "restoreCheckpoint": "ep06_cp01"
         },
         {
@@ -531,6 +1510,5 @@
         }
       ]
     }
-
   }
 }

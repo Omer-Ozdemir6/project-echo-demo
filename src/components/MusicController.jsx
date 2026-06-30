@@ -1,20 +1,4 @@
-// MusicController.jsx
-// src/components/MusicController.jsx
-//
-// Bu component'i GameEngine veya App'in içine bir kez koy.
-// Props olarak currentEpisodeId ve currentNodeId geçir.
-//
-// Kullanım örneği (GameEngine.jsx içinde):
-//
-//   import MusicController from './MusicController';
-//
-//   <MusicController
-//     episodeId={currentEpisodeId}
-//     nodeId={currentNodeId}
-//     enabled={musicEnabled}
-//   />
-
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMusicManager } from '../hooks/useMusicManager';
 import { MUSIC_LAYERS } from '../config/musicConfig';
 
@@ -23,35 +7,30 @@ export default function MusicController({
   nodeId,     // örn. 'ep07_n05_karar'
   enabled = true,
 }) {
-  const music    = useMusicManager();
-  const prevEp   = useRef(null);
-  const prevNode = useRef(null);
+  const music = useMusicManager();
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolumeState] = useState(1.0);
 
-  // ─── Episode değişince müzik geçişi ──────────────────────────────────────
+  // ─── Tek Bir Efekt ile Tüm Ses Durumunu Yönetme ───────────────────────────
   useEffect(() => {
-    if (!enabled) { music.stop(); return; }
-    if (!episodeId || episodeId === prevEp.current) return;
-    prevEp.current = episodeId;
-    music.playForEpisode(episodeId);
-  }, [episodeId, enabled]);
+    // 1. Eğer müzik kapatıldıysa sistemi durdur
+    if (!enabled) {
+      music.stop();
+      return;
+    }
 
-  // ─── Node değişince override kontrolü ────────────────────────────────────
-  useEffect(() => {
-    if (!enabled) return;
-    if (!nodeId || nodeId === prevNode.current) return;
-    prevNode.current = nodeId;
-    music.playForNode(nodeId);
-  }, [nodeId, enabled]);
+    // 2. Eğer hem node hem episode varsa, öncelik spesifik node müziğindedir (Örn: Tehdit anı)
+    if (nodeId) {
+      music.playForNode(nodeId);
+    } 
+    // 3. Eğer node spesifik bir şey istemiyorsa genel episode müziğini çal
+    else if (episodeId) {
+      music.playForEpisode(episodeId);
+    }
 
-  // ─── Enabled değişince ───────────────────────────────────────────────────
-  useEffect(() => {
-    if (!enabled) music.stop();
-    else if (episodeId) music.playForEpisode(episodeId);
-  }, [enabled]);
+  }, [episodeId, nodeId, enabled]); // Sadece bu girdiler değiştiğinde tetiklenir
 
-  // ─── Volume ──────────────────────────────────────────────────────────────
+  // ─── Volume & Mute İşlemleri ─────────────────────────────────────────────
   const handleVolumeChange = (e) => {
     const val = parseFloat(e.target.value);
     setVolumeState(val);
@@ -63,25 +42,23 @@ export default function MusicController({
     setIsMuted(muted);
   };
 
-  // ─── UI — köşede küçük müzik kontrolü ────────────────────────────────────
   return (
     <div
       style={{
-        position:   'fixed',
-        bottom:     '16px',
-        right:      '16px',
-        zIndex:     1000,
-        display:    'flex',
-        alignItems: 'center',
-        gap:        '8px',
-        background: 'rgba(0,0,0,0.7)',
-        border:     '1px solid rgba(255,255,255,0.1)',
-        borderRadius:'8px',
-        padding:    '8px 12px',
+        position:    'fixed',
+        bottom:      '16px',
+        right:       '16px',
+        zIndex:      1000,
+        display:     'flex',
+        alignItems:  'center',
+        gap:         '8px',
+        background:  'rgba(0,0,0,0.8)',
+        border:      '1px solid rgba(255,255,255,0.1)',
+        borderRadius:'4px',
+        padding:     '8px 12px',
         backdropFilter:'blur(4px)',
       }}
     >
-      {/* Mute butonu */}
       <button
         onClick={handleMute}
         style={{
@@ -89,16 +66,14 @@ export default function MusicController({
           border:     'none',
           color:      isMuted ? '#666' : '#aaa',
           cursor:     'pointer',
-          fontSize:   '16px',
+          fontSize:   '14px',
           padding:    0,
-          lineHeight: 1,
         }}
         title={isMuted ? 'Sesi aç' : 'Sesi kapat'}
       >
         {isMuted ? '🔇' : '🔊'}
       </button>
 
-      {/* Volume slider */}
       <input
         type="range"
         min="0"
@@ -107,52 +82,26 @@ export default function MusicController({
         value={isMuted ? 0 : volume}
         onChange={handleVolumeChange}
         style={{
-          width:      '70px',
-          accentColor:'#4a9eff',
+          width:      '60px',
+          accentColor:'#f59e0b',
           cursor:     'pointer',
         }}
-        title="Ses seviyesi"
       />
 
-      {/* Şu an çalan track etiketi */}
       <span
         style={{
-          fontSize:  '10px',
-          color:     '#555',
-          minWidth:  '80px',
+          fontSize:  '9px',
+          color:     '#78716c',
+          minWidth:  '70px',
           textAlign: 'right',
           fontFamily:'monospace',
+          letterSpacing: '1px'
         }}
       >
         {music.isPlaying()
-          ? MUSIC_LAYERS[music.getCurrentTrack()]?.label || '...'
-          : '—'}
+          ? MUSIC_LAYERS[music.getCurrentTrack()]?.label || 'TRACK_ACTIVE'
+          : 'SESSIZ'}
       </span>
     </div>
   );
 }
-
-
-// ─── Sadece hook kullanmak istersen (UI olmadan) ──────────────────────────────
-//
-// GameEngine.jsx içinde:
-//
-//   import { useMusicManager } from '../hooks/useMusicManager';
-//
-//   const music = useMusicManager();
-//
-//   // Episode geçişlerinde:
-//   useEffect(() => {
-//     music.playForEpisode(currentEpisodeId);
-//   }, [currentEpisodeId]);
-//
-//   // Node geçişlerinde:
-//   useEffect(() => {
-//     music.playForNode(currentNodeId);
-//   }, [currentNodeId]);
-//
-//   // Ölüm anında:
-//   music.playForNode('ep04_death_node');
-//
-//   // Checkpoint'te:
-//   music.playForNode('ep04_cp01');

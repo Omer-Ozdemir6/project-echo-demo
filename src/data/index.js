@@ -53,10 +53,19 @@ export const DEFAULT_EPISODE_ID = "episode_01";
  * @param {string} episodeId 
  */
 export function getEpisode(episodeId = DEFAULT_EPISODE_ID) {
-  const ep = episodes[episodeId];
+  let normalizedId = episodeId;
+
+  // Eğer gelen ID "episode_2" gibi tek haneliyse, onu "episode_02" formatına getirir
+  const match = episodeId.match(/^episode_(\d)$/);
+  if (match) {
+    normalizedId = `episode_0${match[1]}`;
+  }
+
+  // Önce normalize edilmiş haliyle ara, bulamazsa orijinal haliyle dene
+  const ep = episodes[normalizedId] || episodes[episodeId];
   
   if (!ep) {
-    console.warn(`⚠️ getEpisode: '${episodeId}' bulunamadı. Varsayılan bölüme dönülüyor.`);
+    console.warn(`⚠️ getEpisode: '${episodeId}' (Normalize: '${normalizedId}') bulunamadı. Varsayılan bölüme dönülüyor.`);
     return episodes[DEFAULT_EPISODE_ID];
   }
   
